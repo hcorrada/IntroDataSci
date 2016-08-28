@@ -10,7 +10,7 @@ type: index
 
 Check the [logistics page](logistics.html) for more information, including the official syllabus.
 
-[ELMS](https://myelms.umd.edu/courses/1177854)
+[ELMS](https://myelms.umd.edu/courses/1177854)  
 [Piazza](https://piazza.com/class/ije6l0thr383ii)
 
 ## Calendar

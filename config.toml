@@ -44,28 +44,28 @@ googleAnalytics = ""
 
 
 [[menu.main]]
-	name   = "Material"
+	name   = "Home"
 	url    = "/"
 	weight = 0
 
 [[menu.main]]
-	name   = "Getting started"
-	url    = "getting-started/"
+	name   = "Logistics"
+	url    = "logistics.html"
 	weight = 10
 
 [[menu.main]]
-	name   = "Adding content"
-	url    = "adding-content/"
+	name   = "Lecture Notes"
+	url    = "lecture-notes/"
 	weight = 20
 
 [[menu.main]]
-	name   = "Roadmap"
-	url    = "roadmap/"
+	name   = "Resources"
+	url    = "resources.html"
 	weight = 30
 
 [[menu.main]]
-	name   = "License"
-	url    = "license/"
+	name   = "Projects"
+	url    = "projects/"
 	weight = 40
 
 
