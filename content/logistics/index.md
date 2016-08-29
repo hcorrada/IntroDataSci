@@ -53,7 +53,7 @@ There is no required textbook, the [lecture notes](lecture-notes/) will serve as
 *  [G. James, D. Witten, T. Hastie and R. Tibshirani. Introduction to Statistical Learning with Applications in R. Springer 2013.](http://www-bcf.usc.edu/~gareth/ISL/). A free PDF of this book can be downloaded at their site.  
 *  [EMC Education Services. Data Science & Big Analytics: Discovering, Analyzing, Visualizing and Presenting Data. Wiley, 2015](http://www.wiley.com/WileyCDA/WileyTitle/productCd-111887613X.html)
 
-Additional readings will be posted in ELMS [{{ site.elms_url }}]({{ site.elms_url}}).
+Additional readings will be posted in ELMS [{{< elmurl >}}]({{< elmurl >}}).
 
 Additional resources listed [here](resources.html)
 

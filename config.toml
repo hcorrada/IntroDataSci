@@ -33,10 +33,13 @@ googleAnalytics = ""
     	primary = "deep-orange"
     	accent  = "blue"
 
-    [params.font]
+ [params.font]
     	text = "Roboto"
     	code = "Roboto Mono"
 
+ [params.links]
+      elms   = "https://myelms.umd.edu/courses/1177854"
+      piazza = "https://piazza.com/class/ije6l0thr383ii"
 
 [social]
 	twitter = "hcorrada"

@@ -4,6 +4,8 @@ title: "CMSC320: Introduction to Data Science"
 type: index
 ---
 
+## Course Information
+
 *	Instructor:  
     [H&eacute;ctor Corrada Bravo](http://www.cbcb.umd.edu/~hcorrada)  
     Center for Bioinformatics and Computational Biology  
@@ -23,8 +25,8 @@ type: index
 
 Check the [logistics page](logistics/) for more information, including the official syllabus.
 
-[ELMS](https://myelms.umd.edu/courses/1177854)  
-[Piazza](https://piazza.com/class/ije6l0thr383ii)
+Grades and assignments posted in [ELMS]({{< elmurl >}}).  
+Discussion and questions in [Piazza]({{< piazzaurl >}}).
 
 ## Calendar
 
