@@ -4,8 +4,6 @@ title: "CMSC320: Introduction to Data Science"
 type: index
 ---
 
-Introduction to Data Science class at the [University of Maryland](http://umd.edu) [Department of Computer Science](http://cs.umd.edu)
-
 **Instructor**: Héctor Corrada Bravo <hcorrada@umiacs.umd.edu>  
 **TAs**: Nick Thieme <nick.thieme5@gmail.com>  
 **Lecture Times**: Tuesday and Thursday, 2:00pm-3:15pm, CSI 1121
