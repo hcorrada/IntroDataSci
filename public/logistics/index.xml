@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Logistics on CMSC320 Introduction to Data Science</title>
+    <link>http://www.hcbravo.org/logistics/</link>
+    <description>Recent content in Logistics on CMSC320 Introduction to Data Science</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 29 Aug 2016 05:41:03 -0400</lastBuildDate>
+    <atom:link href="http://www.hcbravo.org/logistics/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Logistics</title>
+      <link>http://www.hcbravo.org/logistics/</link>
+      <pubDate>Mon, 29 Aug 2016 05:41:03 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/logistics/</guid>
+      <description>
+
+&lt;p&gt;This page constiutes the official syllabus for this class.&lt;/p&gt;
+
+&lt;h2 id=&#34;course-information&#34;&gt;Course Information&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Introduction to Data Science&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;CMSC320 Fall 2016&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Lecture Meeting Times&lt;br /&gt;
+Monday and Wednesday, 2:00pm-3:15pm, CSI 3117&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Instructor:&lt;br /&gt;
+&lt;a href=&#34;http://www.cbcb.umd.edu/~hcorrada&#34;&gt;H&amp;eacute;ctor Corrada Bravo&lt;/a&gt;&lt;br /&gt;
+Center for Bioinformatics and Computational Biology&lt;br /&gt;
+Department of Computer Science&lt;br /&gt;
+&lt;a href=&#34;mailto:hcorrada@umiacs.umd.edu&#34;&gt;hcorrada@umiacs.umd.edu&lt;/a&gt;&lt;br /&gt;
+Office: 3114F Biomolecular Sciences Building&lt;br /&gt;
+Phone Number: 301-405-2481&lt;br /&gt;
+&lt;strong&gt;Office Hours:&lt;/strong&gt; Friday 1:00pm-2:00pm AVW 3223 and by appointment&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Communication:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;For course related questions, use &lt;a href=&#34;https://piazza.com/class/isg1noi5k0765h
+&#34;&gt;Piazza&lt;/a&gt; as indicated below.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;For any other communication (e.g., absences accomodations etc.) email me including &lt;code&gt;[CMSC320]&lt;/code&gt; in the message subject.&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;TAs:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Virinchi Srinivas (Graduate)&lt;br /&gt;
+&lt;a href=&#34;mailto:virinchimnm@gmail.com&#34;&gt;virinchimnm@gmail.com&lt;/a&gt;&lt;br /&gt;
+Office Hours: TBD&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Nolan Crane (Undergraduate)&lt;br /&gt;
+&lt;a href=&#34;mailto:ncrane@umd.edu&#34;&gt;ncrane@umd.edu&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Anant Dalela (Undergraduate)&lt;br /&gt;
+&lt;a href=&#34;mailto:adalela@umd.edu&#34;&gt;adalela@umd.edu&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We will use the class Piazza site &lt;a href=&#34;https://piazza.com/class/isg1noi5k0765h
+&#34;&gt;https://piazza.com/class/isg1noi5k0765h
+&lt;/a&gt; for questions, dicussion and announcements. Assignments and grades for the class will be posted to the class ELMS site: &lt;a href=&#34;https://myelms.umd.edu/courses/1199381
+&#34;&gt;https://myelms.umd.edu/courses/1199381
+&lt;/a&gt;.
+In case of an extended emergency closure, announcements on policy and procedures will be posted to Piazza.&lt;/p&gt;
+
+&lt;h2 id=&#34;textbook-and-resources&#34;&gt;Textbook and Resources:&lt;/h2&gt;
+
+&lt;p&gt;There is no required textbook, the &lt;a href=&#34;http://www.hcbravo.org/
+/lecture-notes/&#34;&gt;lecture notes&lt;/a&gt; will serve as the primary material. However, we will be drawing heavily from these sources:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.manning.com/zumel/&#34;&gt;N. Zumel and J. Mount. Practical Data Science with R. Manning Publications Co. 2014&lt;/a&gt;.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www-bcf.usc.edu/~gareth/ISL/&#34;&gt;G. James, D. Witten, T. Hastie and R. Tibshirani. Introduction to Statistical Learning with Applications in R. Springer 2013.&lt;/a&gt;. A free PDF of this book can be downloaded at their site.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.wiley.com/WileyCDA/WileyTitle/productCd-111887613X.html&#34;&gt;EMC Education Services. Data Science &amp;amp; Big Analytics: Discovering, Analyzing, Visualizing and Presenting Data. Wiley, 2015&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Additional readings will be posted in ELMS &lt;a href=&#34;https://myelms.umd.edu/courses/1199381
+&#34;&gt;https://myelms.umd.edu/courses/1199381
+&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Additional class resources are listed &lt;a href=&#34;http://www.hcbravo.org/
+/resources/&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;course-description-goals-and-expectations&#34;&gt;Course Description, Goals and Expectations&lt;/h2&gt;
+
+&lt;p&gt;Data science encapsulates the interdisciplinary activities required to
+ create data-centric products and applications that address specific
+ scientific, socio-political or business questions.
+ It has drawn tremendous attention from both academia and industry and
+ is making deep inroads in industry, government, health and journalism.&lt;/p&gt;
+
+&lt;p&gt;This course focuses on (i) data management systems, (i) exploratory and statistical data analysis,
+(ii) data and information visualization, and (iv) the presentation
+and communication of analysis results.
+It will be centered around case studies and projects drawing extensively from applications.&lt;/p&gt;
+
+&lt;h3 id=&#34;expected-outcomes&#34;&gt;Expected outcomes&lt;/h3&gt;
+
+&lt;p&gt;1) Students will be able to create specific requirements for a
+data-centric application used to address a specific problem or
+question&lt;br /&gt;
+2) Students will be able to identify and select appropriate tools:
+language, libraries and data resources, to meet specific requirements
+for a data-centric application&lt;br /&gt;
+3) Students will be able to build and disseminate a data-centric
+application from a set of specific requirements using existing tools,
+libraries, data resources and publishing mechanisms.&lt;/p&gt;
+
+&lt;h3 id=&#34;expectations-for-students&#34;&gt;Expectations for Students&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;There will be reading assignments. Students are expected to have read the material &lt;strong&gt;before&lt;/strong&gt; class.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Students are expected to attend lectures. Active participation is expected. There will be graded work done in class.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Assignments are to be handed-in electronically or in class as instructed on their due date. Late assignments will not be accepted.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;There will be graded work to be done in class. Students not in class that day, except for an excused absence, will not be able to complete that work outside class.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Students may discuss homeworks and projects in groups. However, each
+student must write and/or program solutions independently.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Posting project solutions in a public online location without
+express consent and permission from the instructor is a violation of
+academic integrity policy.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Cell phone usage is &lt;strong&gt;prohibited&lt;/strong&gt; during lecture, laptop use will be allowed to the extent that students &lt;strong&gt;demonstrably&lt;/strong&gt; use it to follow along an in-class analysis or demonstration.&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;You can earn full credit for class participation in three ways:&lt;br /&gt;
+(1) lecture participation, asking questions and answering your peers questions,&lt;br /&gt;
+(2) piazza participation, asking and answering questions on piazza,&lt;br /&gt;
+(3) regular attendance to office hours.&lt;br /&gt;
+To earn full credit you should aim to ask or answer a question at least once every two weeks on lecture or on piazza; or attend office hours at least once a month (this can include just going to my office hours to chat about computer science, data, science, software engineering, etc.).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;grading-procedures&#34;&gt;Grading Procedures&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Projects (35%)&lt;/li&gt;
+&lt;li&gt;In-class work (15%)&lt;/li&gt;
+&lt;li&gt;Written homework (20%)&lt;/li&gt;
+&lt;li&gt;Midterm exam (10%)&lt;/li&gt;
+&lt;li&gt;Final exam (15%)&lt;/li&gt;
+&lt;li&gt;Class participation (5%)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;tentative-course-schedule&#34;&gt;Tentative Course Schedule&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Preliminaries:
+What is Data Science? Who is a Data Scientist? The scope of Data Science: the open data movement, science, business, government, education, sport, and more. Introduction to the R data analysis environment. Formulating data-centric answers to scientific, business and social questions. Best practices: organizing projects, managing collaborations and expectations.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Data Management Principles:
+Data scraping, tidying, cleaning and summarization. Basics of database systems and SQL. Exploratory Data Analysis. Exploration at scale: introduction to map reduce.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Computational and Statistical Data Analysis:
+From exploration to inference: statistical and probabilistic models. Linear modeling: regression and prediction. Introduction to Machine Learning: unsupervised methods, SVMs, tree-based methods&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Data Mining:
+Regression and prediction at scale. Mining time series and data streams.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Communicating with data:
+Writing with and about data: communicating the result of a data analysis. Information visualization, visualizing for an audience. Putting it together: interactive data dissemination on the web (d3.js and related technologies).&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Consult the &lt;a href=&#34;http://www.hcbravo.org/
+&#34;&gt;class home page&lt;/a&gt; for an up-to-date course schedule.&lt;/p&gt;
+
+&lt;h2 id=&#34;university-policies-and-resources&#34;&gt;University Policies and Resources&lt;/h2&gt;
+
+&lt;p&gt;Policies relevant to Undergraduate Courses are found here: &lt;a href=&#34;http://ugst.umd.edu/courserelatedpolicies.html&#34;&gt;http://ugst.umd.edu/courserelatedpolicies.html&lt;/a&gt;. Topics that are addressed in these various policies include academic integrity, student and instructor conduct, accessibility and accommodations, attendance and excused absences, grades and appeals, copyright and intellectual property.&lt;/p&gt;
+
+&lt;h2 id=&#34;course-evaluations&#34;&gt;Course evaluations&lt;/h2&gt;
+
+&lt;p&gt;Course evaluations are important and that the department and faculty
+take student feedback seriously.  Students can go to &lt;a href=&#34;http://www.courseevalum.umd.edu&#34;&gt;http://www.courseevalum.umd.edu&lt;/a&gt; to complete their evaluations.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
