@@ -1,7 +1,6 @@
 ---
 date: 2016-08-30T22:23:52-04:00
 title: R for Data Science Primer
-type: index
 ---
 
 An introduction to the R programming language and data analysis environment
