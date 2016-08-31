@@ -19,14 +19,14 @@
 
 &lt;p&gt;An introduction to the R programming language and data analysis environment&lt;/p&gt;
 
-&lt;p&gt;Part I: (&lt;a href=&#34;RIntro_lab.html&#34;&gt;html&lt;/a&gt;) (&lt;a href=&#34;RIntro_lab.Rmd&#34;&gt;Rmarkdown&lt;/a&gt;)&lt;br /&gt;
-Part II: (&lt;a href=&#34;RIntro_lab2.html&#34;&gt;html&lt;/a&gt;) (&lt;a href=&#34;RIntro_lab2.Rmd&#34;&gt;Rmarkdown&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;Part I: (&lt;a href=&#34;RIntro_lab/&#34;&gt;html&lt;/a&gt;) (&lt;a href=&#34;RIntro_lab.Rmd&#34;&gt;Rmarkdown&lt;/a&gt;)&lt;br /&gt;
+Part II: (&lt;a href=&#34;RIntro_lab2/&#34;&gt;html&lt;/a&gt;) (&lt;a href=&#34;RIntro_lab2.Rmd&#34;&gt;Rmarkdown&lt;/a&gt;)&lt;/p&gt;
 
 &lt;h2 id=&#34;additional-resources&#34;&gt;Additional Resources&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.hcbravo.org/IntroDataSci/
-/resources.html#r&#34;&gt;Course resource page&lt;/a&gt;&lt;/li&gt;
+resources/#r&#34;&gt;Course resource page&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Zumen &amp;amp; Mount, Appendix A&lt;/li&gt;
 &lt;li&gt;Wickham, H. &lt;a href=&#34;http://adv-r.had.co.nz/&#34;&gt;Advanced R&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://rmarkdown.rstudio.com/&#34;&gt;Rmarkdown&lt;/a&gt;&lt;/li&gt;
@@ -142,7 +142,10 @@ dataset portal maintained by CMU.&lt;/li&gt;
       <pubDate>Mon, 29 Aug 2016 08:54:27 -0400</pubDate>
       
       <guid>http://www.hcbravo.org/IntroDataSci/lecture-notes/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;introduction/&#34;&gt;Introduction:&lt;/a&gt; What is Data Science&lt;/p&gt;
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;introduction/&#34;&gt;Introduction:&lt;/a&gt; What is Data Science&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;rintro/&#34;&gt;R for Data Science Primer:&lt;/a&gt; An introduction to the R programming language and data analysis environment&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     
