@@ -6,7 +6,7 @@
     <td>
         <ul>
         {{ range .covers }}
-            <li>{{ .title }}</li>
+            <li>{{ with .notes }}<a href="{{ absURL . }}">{{ end }}{{ .title }}{{ with .notes }}</a> {{ end }}</li>
         {{ end }}
         </ul>
     </td>
