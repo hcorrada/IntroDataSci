@@ -6,7 +6,7 @@ title: R for Data Science Primer
 An introduction to the R programming language and data analysis environment
 
 Part I: ([html](RIntro_lab/)) ([Rmarkdown](RIntro_lab.Rmd))  
-Part II: ([html](RIntro_lab2/)) ([Rmarkdown](RIntro_lab2.Rmd))
+Part II: COMING SOON
 
 
 ## Additional Resources
