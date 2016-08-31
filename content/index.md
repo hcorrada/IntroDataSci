@@ -19,10 +19,9 @@ type: index
 *	Lecture Meeting Times    
     Monday and Wendesday, 2:00pm-3:15pm, CSI 3117  
 
-Check the [logistics page](logistics/) for more information, including the official syllabus.
-
+Check the [calendar page](calendar/) for up-to-date course calendar.  
+Check the [logistics page](logistics/) for more information, including the official syllabus.  
 Grades and assignments posted in [ELMS]({{< elmurl >}}).  
 Discussion and questions in [Piazza]({{< piazzaurl >}}).
 
-## Calendar
 

@@ -45,6 +45,10 @@ googleAnalytics = ""
 	twitter = "hcorrada"
 	github  = "hcorrada"
 
+[[menu.main]]
+  name = "Calendar"
+  url  = "calendar/"
+  weight = 5
 
 [[menu.main]]
 	name   = "Logistics"

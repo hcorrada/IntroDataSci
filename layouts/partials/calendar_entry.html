@@ -1,0 +1,29 @@
+<tr>
+    <td>
+        {{ .date }}
+    </td>
+
+    <td>
+        <ul>
+        {{ range .covers }}
+            <li>{{ .title }}</li>
+        {{ end }}
+        </ul>
+    </td>
+
+    <td>
+        <ul>
+        {{ range .readings }}
+            <li>{{ .title }}</li>
+        {{ end }}
+        </ul>
+    </td>
+
+    <td>
+        <ul>
+        {{ range .workdue }}
+            <li>{{ .title }}</li>
+        {{ end }}
+        </ul>
+    </td>
+</tr>
