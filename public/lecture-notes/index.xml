@@ -89,7 +89,7 @@ resources/#r&#34;&gt;Course resource page&lt;/a&gt;&lt;/li&gt;
 
 &lt;meta name=&#34;author&#34; content=&#34;CMSC320&#34; /&gt;
 
-&lt;meta name=&#34;date&#34; content=&#34;2016-08-30&#34; /&gt;
+&lt;meta name=&#34;date&#34; content=&#34;2016-08-31&#34; /&gt;
 
 &lt;title&gt;Introduction to R&lt;/title&gt;
 
@@ -196,7 +196,7 @@ $(document).ready(function () {
 
 &lt;h1 class=&#34;title toc-ignore&#34;&gt;Introduction to R&lt;/h1&gt;
 &lt;h4 class=&#34;author&#34;&gt;&lt;em&gt;CMSC320&lt;/em&gt;&lt;/h4&gt;
-&lt;h4 class=&#34;date&#34;&gt;&lt;em&gt;2016-08-30&lt;/em&gt;&lt;/h4&gt;
+&lt;h4 class=&#34;date&#34;&gt;&lt;em&gt;2016-08-31&lt;/em&gt;&lt;/h4&gt;
 
 &lt;/div&gt;
 
@@ -218,7 +218,7 @@ $(document).ready(function () {
 &lt;li&gt;&lt;a href=&#34;http://www.revolutionanalytics.com/get-revolution-r&#34;&gt;Revolution R&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;You can also find bindings for commonly used editors and IDEs, like &lt;a href=&#34;http://ess.r-project.org/&#34;&gt;emacs&lt;/a&gt; and &lt;a href=&#34;http://www.walware.de/goto/statet&#34;&gt;eclipse&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Resources for learning and reading about R are listed in our &lt;a href=&#34;http://www.hcbravo.org/IntroDataScience/resources.html&#34;&gt;course page&lt;/a&gt;. Of note are the &lt;a href=&#34;http://swirlstats.com/&#34;&gt;swirl project&lt;/a&gt; and Data Camp’s [introduction to R] course.&lt;/p&gt;
+&lt;p&gt;Resources for learning and reading about R are listed in our &lt;a href=&#34;http://www.hcbravo.org/IntroDataScience/resources/&#34;&gt;course page&lt;/a&gt;. Of note are the &lt;a href=&#34;http://swirlstats.com/&#34;&gt;swirl project&lt;/a&gt; and DataCamp’s [introduction to R] course.&lt;/p&gt;
 &lt;p&gt;One of the biggest strengths of the R ecosystem is the variety and quality of packages for data analysis available. R uses a package system (like Python and Ruby for instance). Packages are divided into two classes: &lt;strong&gt;base&lt;/strong&gt; which are packages installed when R is installed, includes packages for basic statistics, computing with probability distributions, plotting and graphics, matrix manipulations and other), all other packages are available in &lt;a href=&#34;http://cran.r-project.org&#34;&gt;CRAN&lt;/a&gt;. We will be using a fair number of these packages through the course of the semester.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;how-to-think-about-r&#34; class=&#34;section level2&#34;&gt;
@@ -241,7 +241,7 @@ $(document).ready(function () {
 &lt;h2&gt;A simple data analysis to get us going&lt;/h2&gt;
 &lt;p&gt;I’m going to do a very simple analysis of Baltimore crime to show off R. We’ll use data downloaded from Baltimore City’s awesome open data site (this was downloaded a couple of years ago so if you download now, you will get different results).&lt;/p&gt;
 &lt;p&gt;The repository for this particular data is here. &lt;a href=&#34;https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt&#34; class=&#34;uri&#34;&gt;https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;First, make sure you can get Rstudio running. See &lt;a href=&#34;http://www.hcbravo.org/IntroDataSci/homeworks/rocker.html&#34;&gt;this page&lt;/a&gt; for instructions.&lt;/p&gt;
+&lt;p&gt;First, make sure you can get Rstudio running. See &lt;a href=&#34;http://www.hcbravo.org/IntroDataSci/homeworks/rocker/&#34;&gt;this page&lt;/a&gt; for instructions.&lt;/p&gt;
 &lt;p&gt;We recommend that you use Rstudio for this class. Once open you will see Rstudio is organized into multiple panes. You will have a console into which you can write and execute commands directly. You will also have an editor pane where you can edit R source code. R scripts (only containing commands) are stored in &lt;code&gt;.R&lt;/code&gt; files, Rmarkdown files (containing both commands and text) are stored in &lt;code&gt;.Rmd&lt;/code&gt; files. You can follow along by writing commands shown here either in an &lt;code&gt;R&lt;/code&gt;, or &lt;code&gt;Rmd&lt;/code&gt; file and executing commands from the editor pane.&lt;/p&gt;
 &lt;div id=&#34;getting-data&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Getting data&lt;/h3&gt;
