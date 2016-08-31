@@ -1,0 +1,191 @@
+A quick analysis of Baltimore crime
+========================================================
+
+I'm going to do a very simple analysis of Baltimore crime to show off R. We'll use data downloaded from Baltimore City's awesome open data site (this was downloaded a couple of years ago so if you download now, you will get different results). 
+
+### Getting data
+
+* Arrest data: https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt 
+* CCTV data: https://data.baltimorecity.gov/Crime/CCTV-Locations/hdyb-27ak 
+
+Let's load the data:
+```{r}
+arrest_tab=read.csv("BPD_Arrests.csv", stringsAsFactors=FALSE)
+cctv_tab=read.csv("CCTV_Locations.csv", stringsAsFactors=FALSE)
+
+# these columns are mislabeled, so fix them
+tmp=arrest_tab$sex
+arrest_tab$sex=arrest_tab$race
+arrest_tab$race=tmp
+```
+
+### Exploring data
+
+```{r}
+# dimension of table (data.frame)
+dim(arrest_tab)
+
+# what are the columns
+names(arrest_tab)
+
+# what is the average arrest age?
+mean(arrest_tab$age)
+
+# the range of arrest ages
+range(arrest_tab$age)
+
+# how many arrests per sex
+table(arrest_tab$sex)
+
+# what are the most common offenses
+head(sort(table(arrest_tab$incidentOffense),decreasing=TRUE))
+
+# what are the offenses that only happen once
+tab <- table(arrest_tab$incidentOffense)
+tab[tab == 1]
+
+# range of arrests after removing those w/ age==0
+range(arrest_tab$age[arrest_tab$age>0])
+```
+
+Offenses by sex
+
+```{r}
+tab <- table(arrest_tab$incidentOffense, arrest_tab$sex)
+```
+
+Let's see a table of arrests by sex and race
+```{r}
+table(sex=arrest_tab$sex,race=arrest_tab$race)
+```
+
+A histogram of age
+
+```{r}
+hist(arrest_tab$age,nc=100)
+with(arrest_tab,hist(age[sex=="M"],nc=100)) # males only
+with(arrest_tab,hist(age[sex=="F"],nc=100)) # females only
+
+```
+
+### Are males and females arrested at different ages on average?
+
+Let's take a look at how age depends on sex. Let's plot age as a function of sex first (notice how we indicate that sex is a `factor`). 
+
+```{r}
+plot(arrest_tab$age~factor(arrest_tab$sex))
+```
+
+One of the neat things about R is that statistical model building and testing is built-in. The model we use is $y_i=\beta_0+\beta_1 x_i$ where $y_i$ is age of sample (example) $i$ and $x_i$ is an indicator variable $x_i \in \{0,1\}$ with $x_i=1$ if the $i$-th record (example) is male. You can check that $\beta_1$ is the difference in mean age between females and males.
+We use the formula syntax to build a linear regression model. 
+
+```{r}
+# let's ignore those records with missing sex
+fit=lm(age~factor(sex),data=arrest_tab,subset=arrest_tab$sex %in% c("M","F"))
+summary(fit)
+```
+
+We see that $\beta_1 \approx -0.2$ meaning that the arrest age for males is about 2.5 months younger. So there is very little difference in the average age (which is what the linear model is testing) but we see that the probability of observing this difference from a sample of this size **when there is no difference in average age** is small $p \approx 0.01$. Since we have a very large number of examples, or records, this testing framework will declare very small differences as *statistically significant*. We'll return to this theme later in class.
+
+
+### Geographic distribution of arrests.
+
+First we need to extract latitude and longitude from location, we'll use some string functions to do this
+
+```{r}
+tmp=gsub("\\)","",gsub("\\(","",arrest_tab$Location))
+tmp=strsplit(tmp,split=",")
+arrest_tab$lon=as.numeric(sapply(tmp,function(x) x[2]))
+arrest_tab$lat=as.numeric(sapply(tmp,function(x) x[1]))
+```
+
+Now let's plot
+
+```{r}
+plot(arrest_tab$lon, arrest_tab$lat, xlab="Longitude", ylab="Latitude", main="Arrests in Baltimore")
+```
+
+We can also use density estimates to make this nicer:
+
+```{r}
+smoothScatter(arrest_tab$lat, arrest_tab$lon, xlab="Latitude", ylab="Longitude", main="Arrests in Baltimore")
+```
+
+Let's make this fancier using the `ggplot2` graphics systems and the `maps` package containing map data.
+
+```{r}
+library(maps)
+library(ggplot2)
+
+balto_map = subset(map_data("county", region="maryland"),subregion=="baltimore city")
+plt=ggplot()
+plt=plt+geom_polygon(data=balto_map,aes(x=long,y=lat),color="white",fill="gray40")
+plt=plt+geom_point(data=arrest_tab,aes(x=lon,y=lat),color="blue",alpha=.1)
+print(plt)
+```
+
+Now let's add CCTV cameras.
+
+```{r}
+tmp=gsub("\\)","",gsub("\\(","",cctv_tab$Location))
+tmp=strsplit(tmp,split=",")
+cctv_tab$lon=as.numeric(sapply(tmp,function(x) x[2]))
+cctv_tab$lat=as.numeric(sapply(tmp,function(x) x[1]))
+
+plt=ggplot()
+plt=plt+geom_polygon(data=balto_map,aes(x=long,y=lat),color="white",fill="gray40")
+plt=plt+geom_point(data=arrest_tab,aes(x=lon,y=lat),color="blue",alpha=.1)
+plt=plt+geom_point(data=cctv_tab,aes(x=lon,y=lat),color="red")
+print(plt)
+```
+
+### A challenge
+
+Is there any relationship between the number of CCTV cameras and the number of arrests? Divide the city into a grid and plot the number of CCTV cameras vs. the number of arrests.
+
+```{r}
+# step 1: divide city intro grid for arrest data
+# step 1a: find the range of latitude and longitude
+latRange=range(arrest_tab$lat,na.rm=TRUE)
+lonRange=range(arrest_tab$lon,na.rm=TRUE)
+
+# step 1b: discretize latitude into 50 bins
+latGrid=seq(min(latRange),max(latRange),len=50)
+latFactor=cut(arrest_tab$lat,breaks=latGrid)
+
+# now longitude
+lonGrid=seq(min(lonRange),max(lonRange),len=50)
+lonFactor=cut(arrest_tab$lon,breaks=lonGrid)
+
+# step 1c: make a factor indicating geographic grid location
+gridFactor=factor(paste(lonFactor,latFactor,sep=":"))
+
+# step 2: do the same for the cctv data
+latFactor=cut(cctv_tab$lat,breaks=latGrid)
+lonFactor=cut(cctv_tab$lon,breaks=lonGrid)
+cctvGridFactor=factor(paste(lonFactor,latFactor,sep=":"))
+
+arrestTab=table(gridFactor)
+cctvTab=table(cctvGridFactor)
+m=match(names(cctvTab),names(arrestTab))
+plot(arrestTab[m]~factor(cctvTab),xlab="Number of CCTV cameras", ylab="Number of Arrests")
+```
+
+
+### Extra analyses
+
+As part of Project 1 you will add to this analysis. Please use the following template:
+
+#### Your name(s) here
+
+What question are you asking?:
+
+What is the code you use to answer it?:
+
+```{r yourname}
+plot(1:10,1:10)
+# code goes here
+```
+
+What did you observe?
+
