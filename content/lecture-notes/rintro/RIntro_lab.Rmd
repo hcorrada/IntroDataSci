@@ -1,7 +1,7 @@
 ---
 title: "Introduction to R"
 author: "CMSC320"
-date: "February 2, 2016"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -16,6 +16,13 @@ R is a computational environment for data analysis. It is designed around a _fun
 R is an offspring of S, a language created in AT&T Labs by John Chambers (now at Stanford) and others in 1976 with the goal of creating an environment for statistical computing and data analysis. The standard for the language in current use was settled in 1998. That same year, "S" won the ACM Software System award, awarded to software systems "that have a lasting influence, reflected in contributions to concepts, in commercial acceptance, or both".
 
 In 1991, Robert Gentleman and Ross Ihaka created R to provide an open source implementation of the S language and environment. They also redesigned the language to enforce lexical scoping rules. It has been maintained by the R core group since 1997, and in 2015 an R consortium, including Microsoft, Google, and others, was created.
+
+Along with Python it is one of the most popular environments for data analysis (e.g., figure below from [KDNuggets 2016 software survey](http://www.kdnuggets.com/2016/06/r-python-top-analytics-data-mining-data-science-software.html)) 
+```{r, echo=FALSE, fig.width=6}
+knitr::include_graphics("kdnuggets-2016.jpg")
+```
+
+We use it for this class because we find that besides it being a state-of-the-art data analysis environment, it provides a clean end-to-end platform for teaching material across the data management-modeling-communication spectrum that we study in class. 
 
 ## Availability and eco-system
 
@@ -74,6 +81,11 @@ To make use of this dataset we want to assign the result of calling `read.csv` (
 arrest_tab <- read.csv("BPD_Arrests.csv", stringsAsFactors=FALSE)
 ```
 
+```{r echo=FALSE}
+arrest_tab$race <- factor(arrest_tab$race)
+arrest_tab$sex <- factor(arrest_tab$sex)
+arrest_tab$incidentOffense <- factor(arrest_tab$incidentOffense)
+```
 Now we can ask what _type_ of value is stored in the `arrest_tab` variable:
 
 ```{r type}
