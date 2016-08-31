@@ -33,7 +33,7 @@ R is freely available at [http://www.r-project.org/](http://www.r-project.org/).
 
 You can also find bindings for commonly used editors and IDEs, like [emacs](http://ess.r-project.org/) and [eclipse](http://www.walware.de/goto/statet).
 
-Resources for learning and reading about R are listed in our [course page](http://www.hcbravo.org/IntroDataScience/resources.html). Of note are the [swirl project](http://swirlstats.com/) and Data Camp's [introduction to R] course.
+Resources for learning and reading about R are listed in our [course page](http://www.hcbravo.org/IntroDataScience/resources/). Of note are the [swirl project](http://swirlstats.com/) and DataCamp's [introduction to R] course.
 
 One of the biggest strengths of the R ecosystem is the variety and quality of packages for data analysis available. R uses a package system (like Python and Ruby for instance). Packages are divided into two classes: **base** which are packages installed when R is installed, includes packages for basic statistics, computing with probability distributions, plotting and graphics, matrix manipulations and other), all other packages are available in [CRAN](http://cran.r-project.org). We will be using a fair number of these packages through the course of the semester.
 
@@ -57,7 +57,7 @@ I'm going to do a very simple analysis of Baltimore crime to show off R. We'll u
 
 The repository for this particular data is here. [https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt](https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt) 
 
-First, make sure you can get Rstudio running. See [this page](http://www.hcbravo.org/IntroDataSci/homeworks/rocker.html) for instructions.
+First, make sure you can get Rstudio running. See [this page](http://www.hcbravo.org/IntroDataSci/homeworks/rocker/) for instructions.
 
 We recommend that you use Rstudio for this class. Once open you will see Rstudio is organized into multiple panes. You will have a console into which you can write and execute commands directly. You will also have an editor pane where you can edit R source code. R scripts (only containing commands) are stored in `.R` files, Rmarkdown files (containing both commands and text) are stored in `.Rmd` files. You can follow along by writing commands shown here either in an `R`, or `Rmd` file and executing commands from the editor pane.
 
