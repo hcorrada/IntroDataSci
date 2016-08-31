@@ -14,6 +14,10 @@ status = "draft"
 title = "R for Data Science Primer (1)"
 notes = "lecture-notes/rintro/"
 
+[[day02.prep]]
+title = "Setting up R"
+link = "/homeworks/rocker/"
+
 [day03]
 date = "9/5"
 status = "draft"

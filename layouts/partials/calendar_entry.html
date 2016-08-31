@@ -13,8 +13,8 @@
 
     <td>
         <ul>
-        {{ range .readings }}
-            <li>{{ .title }}</li>
+        {{ range .prep }}
+            <li>{{ with .link }}<a href="{{ absURL . }}">{{ end }}{{ .title }}{{ with .link }}</a>{{ end }}</li>
         {{ end }}
         </ul>
     </td>
