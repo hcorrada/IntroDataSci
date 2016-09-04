@@ -4,7 +4,7 @@ status = "draft"
 
 [[day01.covers]]
 title = "What is Data Science, Course Introduction and Logistics"
-notes = "lecture-notes/introduction/"
+notes = "lecture-note/introduction/"
 
 [day02]
 date = "8/31"
@@ -12,7 +12,7 @@ status = "draft"
 
 [[day02.covers]]
 title = "R for Data Science Primer (1)"
-notes = "lecture-notes/rintro/"
+notes = "lecture-note/rintro/"
 
 [[day02.prep]]
 title = "Setting up R"
@@ -30,6 +30,7 @@ date = "9/7"
 
 [[day04.covers]]
 title = "R for Data Science Primer (2)"
+
 
 [day05]
 date = "9/12"
