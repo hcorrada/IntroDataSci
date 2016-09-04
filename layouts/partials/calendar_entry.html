@@ -22,7 +22,7 @@
     <td>
         <ul>
         {{ range .workdue }}
-            <li>{{ .title }}</li>
+            <li>{{ with .link }}<a href="{{ absURL . }}">{{ end }}{{ .title }}{{ with .link }}</a>{{ end }}</li>
         {{ end }}
         </ul>
     </td>

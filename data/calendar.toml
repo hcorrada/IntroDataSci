@@ -32,6 +32,14 @@ date = "9/7"
 title = "R for Data Science Primer (2)"
 notes = "lecture-note/rintro/"
 
+[day04a]
+[[day04a.covers]]
+title = "NOT A LECTURE DAY"
+
+[[day04a.workdue]]
+title = "R first exercise"
+link = "https://myelms.umd.edu/courses/1199381/assignments/4270809"
+
 [day05]
 date = "9/12"
 
