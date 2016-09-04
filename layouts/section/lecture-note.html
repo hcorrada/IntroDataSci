@@ -19,10 +19,11 @@
 
 	<article class="article">
 		<div class="wrapper">
-			<h1>Pages in {{ .Title }}</h1>
+			<h1>Lecture Notes</h1>
 
 			{{ range .Site.Data.lectures }}
-			<a href="{{ .url }}" title="{{ .Title }}">
+      {{ if not .hide }}
+      <a href="{{ .url }}" title="{{ .Title }}">
 				<h2>{{ .title }}</h2>
 			</a>
 
@@ -30,6 +31,7 @@
 			{{ printf "%s" .excerpt | markdownify }}
 
 			<hr>
+      {{ end }}
 			{{ end }}
 
 			<aside class="copyright" role="note">
