@@ -1,106 +1,106 @@
-[introduction]
+[01-introduction]
 title  = "Introduction"
 excerpt  = "What is Data Science"
 url  = "introduction"
 hide  = false
 
-[rintro]
+[02-rintro]
 title  = "R for Data Science primer"
 excerpt  = "An introduction to the R programming language and data analysis environment"
 url  = "rintro"
 hide  = false
 
-[preliminaries]
+[03-preliminaries]
 title  = "Measurement and data types"
 excerpt  = "Examples of data sets, data types and measurements"
 url  = "datatypes"
 hide  = true
 
-[best_practice]
+[04-best_practices]
 title  = "Best practices for Data Science projects"
 excerpt  = "Tips for organizing and managing data science projects"
 url  = "best_practices"
 hide  = true
 
-[tidy]
+[05-tidy]
 title = "Tidy data and data models"
 excerpt = "How to get data into shape before analysis"
 url = "tidy"
 hide = false
 
-[wrangling]
+[06-wrangling]
 title = "Data Wrangling"
 excerpt = "Data management and manipulation"
 url = "wrangling"
 hide = false
 
-[eda]
+[07-eda]
 title = "Exploratory Data Analysis"
 excerpt = "Data visualization and summarization"
 url = "eda"
 hide = false
 
-[mapreduce]
+[08-mapreduce]
 title = "Data summarization and aggregation at scale"
 excerpt = "Systems for large scale data processing"
 url = "mapreduce"
 hide = true
 
-[statlearn]
+[09-statlearn]
 title  = "Introduction to Statistical Learning"
 excerpt = "Introduction to randomness, distributions, inference and testing"
 url = "statlearn"
 hide = false
 
-[linear_models]
+[10-linear_models]
 title = "Linear models for regression and classification"
 excerpt = "Basic models for regression and classification"
 url = "linear_models"
 hide = false
 
-[tree_methods]
+[11-tree_methods]
 title = "Tree-based learning methods"
 excerpt = "Decision and regression trees and random forests."
 url = "tree_methods"
 hide = false
 
-[evaluation]
+[12-evaluation]
 title = "Evaluating model performance via resampling"
 excerpt = "How to use sampling methods to evaluate statistical models"
 url = "evaluation"
 hide = false
 
-[svms]
+[13-svms]
 title = "The support vector machine"
 excerpt = "Linear and non-linear regression and classification with support vector machines"
 url = "svms"
 hide = false
 
-[pca]
+[14-pca]
 title = "Unsupervised learning methods"
 excerpt = "Exploratory Data Analysis of high-dimensional data using dimensionality reduction"
 url = "pca"
 hide = false
 
-[large_scale]
+[15-large_scale]
 title = "Analysis at scale"
 excerpt = "Systems and algorithms for data summarization and learning on large datasets"
 url = "large_scale"
 hide = false
 
-[sentiment]
+[16-sentiment]
 title = "Text mining and sentiment analysis"
 excerpt = "Basics of text mining and sentiment analysis"
 url = "sentiment"
 hide = false
 
-[presentation]
+[17-presentation]
 title = "Communicating results of data analyses"
 excerpt = "How to use narrative and visualization to communicate results of data analysis"
 url = "presentation"
 hide = false
 
-[interactive]
+[18-interactive]
 title = "Web-based interactive visualization"
 excerpt = "Building web applications for interactive and exploratory data analysis and presentation"
 url = "interactive"

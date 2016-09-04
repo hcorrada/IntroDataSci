@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Lecture-notes on CMSC320 Introduction to Data Science</title>
-    <link>http://www.hcbravo.org/IntroDataSci/lecture-notes/</link>
+    <link>http://www.hcbravo.org/IntroDataSci/lecture-note/</link>
     <description>Recent content in Lecture-notes on CMSC320 Introduction to Data Science</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 30 Aug 2016 22:23:52 -0400</lastBuildDate>
-    <atom:link href="http://www.hcbravo.org/IntroDataSci/lecture-notes/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://www.hcbravo.org/IntroDataSci/lecture-note/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>R for Data Science Primer</title>
-      <link>http://www.hcbravo.org/IntroDataSci/lecture-notes/rintro/</link>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/</link>
       <pubDate>Tue, 30 Aug 2016 22:23:52 -0400</pubDate>
       
-      <guid>http://www.hcbravo.org/IntroDataSci/lecture-notes/rintro/</guid>
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/</guid>
       <description>
 
 &lt;p&gt;An introduction to the R programming language and data analysis environment&lt;/p&gt;
@@ -36,10 +36,10 @@ resources/#r&#34;&gt;Course resource page&lt;/a&gt;&lt;/li&gt;
     
     <item>
       <title>Lecture Notes: Introduction</title>
-      <link>http://www.hcbravo.org/IntroDataSci/lecture-notes/introduction/</link>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/introduction/</link>
       <pubDate>Mon, 29 Aug 2016 08:59:01 -0400</pubDate>
       
-      <guid>http://www.hcbravo.org/IntroDataSci/lecture-notes/introduction/</guid>
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/introduction/</guid>
       <description>
 
 &lt;p&gt;What is Data Science?&lt;/p&gt;
@@ -58,24 +58,11 @@ resources/#r&#34;&gt;Course resource page&lt;/a&gt;&lt;/li&gt;
     </item>
     
     <item>
-      <title>CMSC320 Lecture Notes</title>
-      <link>http://www.hcbravo.org/IntroDataSci/lecture-notes/</link>
-      <pubDate>Mon, 29 Aug 2016 08:54:27 -0400</pubDate>
-      
-      <guid>http://www.hcbravo.org/IntroDataSci/lecture-notes/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;introduction/&#34;&gt;Introduction:&lt;/a&gt; What is Data Science&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;rintro/&#34;&gt;R for Data Science Primer:&lt;/a&gt; An introduction to the R programming language and data analysis environment&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
       <title></title>
-      <link>http://www.hcbravo.org/IntroDataSci/lecture-notes/rintro/RIntro_lab/</link>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/RIntro_lab/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://www.hcbravo.org/IntroDataSci/lecture-notes/rintro/RIntro_lab/</guid>
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/RIntro_lab/</guid>
       <description>&lt;!DOCTYPE html&gt;
 
 &lt;html xmlns=&#34;http://www.w3.org/1999/xhtml&#34;&gt;
@@ -805,10 +792,10 @@ $(document).ready(function () {
     
     <item>
       <title></title>
-      <link>http://www.hcbravo.org/IntroDataSci/lecture-notes/rintro/RIntro_lab2/</link>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/RIntro_lab2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://www.hcbravo.org/IntroDataSci/lecture-notes/rintro/RIntro_lab2/</guid>
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/RIntro_lab2/</guid>
       <description>&lt;!DOCTYPE html&gt;
 
 &lt;html xmlns=&#34;http://www.w3.org/1999/xhtml&#34;&gt;
