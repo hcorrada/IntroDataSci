@@ -1,0 +1,76 @@
+---
+title: "R Exercise"
+author: "Your Name Here"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In this exercise you will create your first submission using R Markdown. We will see more information about R Markdown in class, but you can also take a look below for some preliminary information.
+
+Fill in your answers to the five questions below in the format requested (see example). Knit the file into a PDF and submit on ELMS.
+
+## Loading data
+
+You can use the following snippet, which we also used in the lecture notes used in class:
+
+```{r download, echo=FALSE}
+if (!file.exists("BPD_Arrests.csv")) {
+  download.file("http://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv", destfile="BPD_Arrests.csv")
+}
+
+arrest_tab <- read.csv("BPD_Arrests.csv", stringsAsFactors=FALSE)
+
+arrest_tab$race <- factor(arrest_tab$race)
+arrest_tab$sex <- factor(arrest_tab$sex)
+arrest_tab$incidentOffense <- factor(arrest_tab$incidentOffense)
+```
+## Example
+
+Use this format for each of the questions below: 
+- question: The question, which we provide
+- code: The code you used to answer it in an R code chunk
+- statement: A succint prose statement (use complete sentences please) of the answer to the question.
+
+**Question 0**: What is the minimum arrest age in the dataset?
+
+```{r q0}
+min(arrest_tab$age)
+```
+
+The minimum arrest age is 0.
+
+## The questions
+
+**Question 1**: What is the age of the oldest person arrested in the dataset?
+
+**Question 2**: What is the neighborhood with the least number of arrests?
+
+**Question 3**: What is the median arrest age?
+
+**Question 4**: What is the median arrest age in the SOUTHERN district?
+
+**Question 5**: What is the mean age of females arrested in the “Federal Hill” neighborhood?
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
