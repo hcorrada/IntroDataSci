@@ -20,7 +20,7 @@ We will use [Rocker](https://github.com/rocker-org/rocker), a project built on t
 of packages providing analysis tools and datasets we will use throughout the semester. You
 can read more about Rocker in [this introduction](http://dirk.eddelbuettel.com/blog/2014/10/23/)
 
-Instructions on how to setup are found [here]({{< baseurl >}}/homeworks/rocker.html)
+Instructions on how to setup are found [here]({{< baseurl >}}homeworks/rocker)
 
 ## Other Resources
 
