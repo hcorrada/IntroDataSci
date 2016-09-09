@@ -1,0 +1,122 @@
+---
+title: "Measurements and data types"
+author: "CMSC320"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In this section we discuss different data types we will run across in different datasets. Let's use our arrest dataset for since we've become familiar with it by now.
+
+As a reminder, this is how you can obtain that dataset:
+
+```{r}
+if (!file.exists("BPD_Arrests.csv")) {
+  download.file("http://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv", destfile="BPD_Arrests.csv")
+}
+arrest_tab <- read.csv("BPD_Arrests.csv", stringsAsFactors=FALSE)
+
+# remember there's a naming issue in this dataset we need to fix
+colnames(arrest_tab)[3:4] <- c("race", "sex")
+```
+
+
+## Entities and attributes
+
+As a reminder, we are using the term _entities_ to refer to the objects to which data in a dataset refers to. For instance, in our example dataset, each arrest is an _entity_. In a rectangular dataset, as we've seen before, this usually corresponds to rows in a table. We then say that a dataset contains _attributes_ for each entity. For instance, attributes of each arrest would be the person's _age_, the type of offense, the location, etc. In a rectangular dataset, this corresponds to the columns in a table.
+
+This language of _entities_ and _attributes_ is commonly used in the database literature. In statistics you may see _experimental units_ or _samples_ for _entities_ and _covariates_ for _attributes_. In other instances _observations_ for _entities_ and _variables_ for _attributes_. In Machine Learning you may see _example_ for _entities_ and _features_ for _attributes_. For the most part, all of these are exchangable. 
+
+This unit is concerned with the types of data we may encounter as _attributes_ in data analyses.
+
+## Categorical data
+
+A categorical attribute for a given entity can take only one of a finite set of examples. For example, the `sex` variable can only have value `M`, `F`, or `` (we'll talk about missing data later in the semester).
+
+```{r}
+table(arrest_tab$sex)
+```
+
+The result of a coin flip is categorical: `heads` or `tails`. The outcome of rolling an 8-sided die is categorical: `one`, `two`, ..., `eight`. Can you think of other examples?
+
+### Factors in R
+
+We said that R is designed for data analysis. My favorite example of how that manifests itself is the `factor` datatype. If you look at your dataset now, `arrest_tab$sex` is a vector of strings:
+
+```{r}
+class(arrest_tab$sex)
+summary(arrest_tab$sex)
+```
+
+However, as a measurement, or attribute, it should only take one of two values (or three depending on how you record missing, unknown or unspecified). So, in R, that categorical data type is called a _factor_. Notice what the `summary` function does after turning the `sex` attribute into a _factor_:
+
+```{r}
+arrest_tab$sex <- factor(arrest_tab$sex)
+summary(arrest_tab$sex)
+```
+
+This distinction shows up in many other places where functions have very different behavior when called on a vector of strings and when called on a factor (e.g., functions that make plots, or functions that learn statistical models).
+
+The possible values a _factor_ can take are called _levels_:
+
+```{r}
+levels(arrest_tab$sex)
+```
+
+Exercise: you should transform the `race` attribute into a factor as well. How many levels does it have?
+
+Another note, when we used `read.csv` above to read our dataset from a text file, we used the argument `stringsAsFactors`. See if you can understand what that argument is used for.
+
+## Discrete numeric data
+
+These are attributes that can take specific values from elements of ordered, discrete (possibly infinite) sets. The most common set in this case would be the non-negative positive integers. This data is commonly the result of counting processes. In our example dataset, age, measured in years, is a discrete attribute.
+
+Frequently, we obtain datasets as the result of summarizing, or aggregating other underlying data. In our case, we could construct a new dataset containing the number of arrests per neighborhood: 
+
+```{r}
+library(dplyr)
+arrest_tab %>%
+  group_by(neighborhood) %>%
+  summarize(number_of_arrests=n()) %>%
+  head()
+```
+
+In this new dataset, the _entities_ are each neighborhood, the `number_of_arrests` attribute is a _discrete_ attribute.
+
+Other examples: the number of students in a class is discrete, the number of friends for a specific Facebook user. Can you think of other datasets?
+
+Distinctions between categorical and discrete numerical data is that categorical data is not ordered and finite, discrete numeric data is (possibly) infite and ordered.
+
+## Continuous numeric data
+
+These are attributes that can take any value in a continuous set. For example, a person's height, in say inches, can take any number (within the range of human heights). In our example dataset we do not have this type of data. However, here is another dataset we can use to look at this datatype:
+
+```{r}
+data(cars)
+head(cars)
+plot(cars$speed, cars$dist, pch=19, xlab="speed (mph)", ylab="stopping distance (ft)")
+```
+
+The distinction between continuous and discrete is a bit tricky since measurements that have finite precision are, in a sense, discrete. Remember, however, that continuity is not a property of the specific dataset you have in hand, but rather of the process you are measuring. The number of arrests in a neighborhood cannot, in principle, be fractional, regardless of the precision at which we measure this. If we had the appropriate tool, we could measure a person's height with infinite precision. This distinction is very important when we build statistical models of datasets for analysis. For now, think of discrete data as the result of counting, and continuous data the result of some physical measurement.
+
+## Other fun examples
+
+Consider a dataset of images like the super-famous [MNIST dataset of handwritten digits](https://www.kaggle.com/c/digit-recognizer). This dataset contains images of handwritten digits. So each image is an _entity_. Each image has a _label_ attribute which states which of the digits 0,1,...9 is represented by the image. What type of data is this (categorical, continuous numeric, or discrete numeric)? 
+
+Now, each image is represented by grayscale values in a 28x28 grid. That's 784 attributes, one for each square in the grid, containing a grayscale value. Now what type of data are these other 784 attributes?
+
+## Other important datatypes
+
+The three datatypes we saw above encompass a fairly large swath of data you will come across. Our arrest dataset contains other important datatypes that we will run across frequently:
+
+- Datetime: Date and time of some event or observation (e.g., `arrestDate`, `arrestTime`)  
+- Geolocation: Latitude and Longitude of some event or observation (e.g., `Location.`)  
+
+## Units
+
+Something that we tend to forget but is **extremely** important for the modeling and interpretation of data is that attributes are for the most part _measurements_ and that they have _units_. For example, age of a person can be measured in different units: _years_, _months_, etc. These can be converted to one another, but nonetheless in a given dataset, that _attribute_ or measurement will be recorded in some specific units. Similar arguments go for distances and times, for example. In other cases, we may have unitless measurements (we will see later an example of this when we do _dimensionality reduction_). In these cases, it is worth thinking about _why_ your measurements are unit-less.
+
+When performing analyses that try to summarize the effect of some measurement or attribute on another, units matter a lot! We will see the importance of this in our _regression_ section. For now, make sure you make a mental note of units for each measurement you come across. This will force you to think about where and how your data was obtained, which will become very important when modeling and interpreting the results of these models. 
