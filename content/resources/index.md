@@ -47,5 +47,8 @@ dataset portal maintained by CMU.
 * Yet another list of public datasets:
 [https://github.com/caesar0301/awesome-public-datasets](https://github.com/caesar0301/awesome-public-datasets)
 * And yet another list of public datasets: [http://blog.bigml.com/list-of-public-data-sources-fit-for-machine-learning/#national_governments](http://blog.bigml.com/list-of-public-data-sources-fit-for-machine-learning/#national_governments)
-
+* [Airbnb data](http://insideairbnb.com/get-the-data.html)  
+* [NYC Taxi ride data](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml)
+* [Resources for data journalism with R](http://rddj.info)  
+* [Algorithms and datasets for computational social science and digital humanities](http://ropengov.github.io/)  
 
