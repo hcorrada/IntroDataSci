@@ -1,8 +1,8 @@
 ---
 title: "R Exercise"
 author: "Your Name Here"
-date: "`r Sys.Date()`"
-output: pdf_document
+date: '`r Sys.Date()`'
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -52,6 +52,12 @@ The minimum arrest age is 0.
 **Question 3**: What is the median arrest age?
 
 **Question 4**: What is the median arrest age in the SOUTHERN district?
+
+```{r q4}
+index_vector <- arrest_tab$district == "SOUTHERN"
+arrest_subset <- arrest_tab[index_vector,]
+median(arrest_subset$age)
+```
 
 **Question 5**: What is the mean age of females arrested in the “Federal Hill” neighborhood?
 
