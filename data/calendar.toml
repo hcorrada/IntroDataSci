@@ -50,8 +50,12 @@ link = "misc/first_exercise_answers.Rmd"
 date = "9/12"
 
 [[day05.covers]]
+title = "R Primer: a short note on pipes"
+notes = "lecture-note/rintro/"
+
+[[day05.covers]]
 title = "Data Preliminaries: measurement and data types"
-notes = "lecture-note/datatypes"
+notes = "lecture-note/datatypes/"
 
 [day06]
 date = "9/14"
