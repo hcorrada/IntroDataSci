@@ -42,11 +42,16 @@ title = "NOT A LECTURE DAY"
 title = "R first exercise"
 link = "https://myelms.umd.edu/courses/1199381/assignments/4270809"
 
+[[day04a.workdue]]
+title = "(answers)"
+link = "misc/first_exercise_answers.Rmd"
+
 [day05]
 date = "9/12"
 
 [[day05.covers]]
 title = "Data Preliminaries: measurement and data types"
+notes = "lecture-note/datatypes"
 
 [day06]
 date = "9/14"
