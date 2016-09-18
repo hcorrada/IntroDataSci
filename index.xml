@@ -6,8 +6,30 @@
     <description>Recent content on CMSC320 Introduction to Data Science</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Sep 2016 13:17:30 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 18 Sep 2016 15:00:57 -0400</lastBuildDate>
     <atom:link href="http://www.hcbravo.org/IntroDataSci/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Data Wrangling</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/wrangling/</link>
+      <pubDate>Sun, 18 Sep 2016 15:00:57 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/wrangling/</guid>
+      <description>
+
+&lt;p&gt;Data management and manipulation&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;wrangling_dplyr/&#34;&gt;Data wrangling with &lt;code&gt;dplyr&lt;/code&gt;&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;wrangling_sql/&#34;&gt;Data wrangling with SQL&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;additional-resources&#34;&gt;Additional Resources&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Introduction to &lt;code&gt;dplyr&lt;/code&gt;: &lt;a href=&#34;http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html&#34;&gt;http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dplyr&lt;/code&gt; Cheatsheet: &lt;a href=&#34;http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf&#34;&gt;http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Best Practices</title>
