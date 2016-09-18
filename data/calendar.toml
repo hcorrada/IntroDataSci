@@ -88,6 +88,16 @@ date = "9/21"
 title = "Data Wrangling 2: SQL"
 notes = "lecture-note/wrangling/"
 
+[day08a]
+date = "9/23"
+
+[[day08a.covers]]
+title = "NOT A LECTURE DAY"
+
+[[day08a.workdue]]
+title = "Data wrangling"
+link = "https://myelms.umd.edu/courses/1199381/assignments/4270819"
+
 #[[day08.covers]]
 #title = "Handling missing data"
 

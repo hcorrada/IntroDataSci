@@ -23,7 +23,7 @@ library(nycflights13)
 5. List the name of all airlines and the number of flights for each airline in flights table. The `airlines` table has airline names.
 
 6. (a): create a new column (use 'mutate') with total delay time for each flight  
-   (b): replace any missing *total delay times* with the minimum total delay time  
+   (b): replace any missing *total delay times* with the average total delay time of the remiaining flights.    
 
 
 
