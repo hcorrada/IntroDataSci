@@ -22,17 +22,18 @@ excerpt  = "Tips for organizing and managing data science projects"
 url  = "best_practices"
 hide  = false
 
-[05-tidy]
+[05-wrangling]
+title = "Data Wrangling"
+excerpt = "Data management and manipulation"
+url = "wrangling"
+hide = false
+
+[06-tidy]
 title = "Tidy data and data models"
 excerpt = "How to get data into shape before analysis"
 url = "tidy"
 hide = true
 
-[06-wrangling]
-title = "Data Wrangling"
-excerpt = "Data management and manipulation"
-url = "wrangling"
-hide = true
 
 [07-eda]
 title = "Exploratory Data Analysis"
