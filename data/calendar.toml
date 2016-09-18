@@ -79,12 +79,14 @@ date = "9/19"
 
 [[day07.covers]]
 title = "Data Wrangling 1: dplyr"
+notes = "lecture-note/wrangling/"
 
 [day08]
 date = "9/21"
 
 [[day08.covers]]
 title = "Data Wrangling 2: SQL"
+notes = "lecture-note/wrangling/"
 
 #[[day08.covers]]
 #title = "Handling missing data"
