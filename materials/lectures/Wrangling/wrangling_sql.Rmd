@@ -1,7 +1,7 @@
 ---
 title: 'Data Wrangling: SQL'
 author: "CMSC320"
-date: "February 21, 2016"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -73,7 +73,7 @@ Remember also the distinction between a _Relation Schema_ (a list of attributes 
 
 The Structured Query Language (SQL) is both a _Data Definition Language_ and a _Data Manipulation Language_
 
-```{sql}
+```sql
 CREATE TABLE <name> ( <field> <domain>, ... )
 
 INSERT INTO <name> (<field names>) VALUES (<field values>)
@@ -98,7 +98,7 @@ Consider the following example schema:
 
 We use SQL as a _Data Definition Language_ to define this schema:
 
-```{sql}
+```sql
 create table movieExec (
   name char(30), 
   address char(100),
@@ -122,7 +122,7 @@ create table movie (
 
 Statements to add or remove data from a relation:
 
-```{sql}
+```sql
 insert into StarsIn values('King Kong', 2005, 'Naomi Watts'); 
 insert into StarsIn(starName, movieTitle, movieYear)
   values('Naomi Watts', 'King Kong', 2005); 
@@ -143,7 +143,7 @@ parts of SQL queries and the operations we used in `dplyr`. The basic construct 
 
 E.g.: movies produced by disney in 1990: note the *rename*
 
-```{sql}        
+```sql        
 select m.title, m.year
 from movie m
 where m.studioname = 'disney' and m.year = 1990
@@ -164,7 +164,7 @@ The **where** clause support a large number of different predicates and combinat
 
 We can include ordering, e.g., find distinct movies sorted by title
 
-```{sql}
+```sql
 select distinct title
 from movie
 where studioname = 'disney' and year = 1990
@@ -180,7 +180,7 @@ As expected, SQL has an idiom for grouping and summarizing (_conditioning_ as we
 
 E.g., compute the average movie length by year
 
-```{sql}
+```sql
 select name, avg(length) 
 from movie
 group by year
@@ -193,7 +193,7 @@ You can nest queries as an expression in an SFW query. We refer to these "subque
 
 E.g., find movie with the maximum length
 
-```{sql}
+```sql
 select title, year
 from movie
 where movie.length = (select max(length) from movie);
@@ -201,7 +201,7 @@ where movie.length = (select max(length) from movie);
 
 E.g., find movies with at least 5 stars: an example of a correlated subquery
 
-```{sql}
+```sql
 select * 
 from movies m
 where 5 >= (select count(*)
@@ -213,7 +213,7 @@ The nested subquery counts the number of actors for that movie.
 
 E.g., rank movies by their length. 
 
-```{sql}
+```sql
 select title, year, (select count(*) 
                     from movies m2
                     where m1.length <= m2.length) as rank
@@ -251,7 +251,7 @@ As an exercise you should try to answer our `dplyr` exercise questions using SQL
 
 - Set operations
 
-```{sql}
+```sql
 select name 
 from movieExec
 union/intersect/minus
@@ -261,7 +261,7 @@ from movieStar
 
 - Set Comparisons
 
-```{sql}
+```sql
 select *
 from movies
 where year in [1990, 1995, 2000];
@@ -284,7 +284,7 @@ You will get used to doing all at once
 
 - Examples:
 
-```{sql}
+```sql
 select title, year, me.name as producerName 
 from movies m, movieexec me
 where m.producerC# = me.cert#;
@@ -292,7 +292,7 @@ where m.producerC# = me.cert#;
 
 - Consider the query:
 
-```{sql}
+```sql
 select title, year, producerC#, count(starName) 
 from movies, starsIn
 where title = starsIn.movieTitle and year = starsIn.movieYear
@@ -303,7 +303,7 @@ group by title, year, producerC#
 - Need to use **outer joins**
 
 
-```{sql}
+```sql
 select title, year, producerC#, count(starName) 
 from movies left outer join starsIn
   on title = starsIn.movieTitle and year = starsIn.movieYear
@@ -317,7 +317,7 @@ So, if a tuple `(m1, 1990)` has no match in `starsIn`, we get `(m1, 1990, NULL)`
 
 #### Views
 
-```{sql}
+```sql
 create view DisneyMovies
 select *
 from movie m
@@ -330,7 +330,7 @@ Can use it in any place where a tablename is used. Views are used quite extensiv
 
 Value of any attribute can be NULL if value is unknown, or it is not applicable, or hidden, etc. It can lead to counterintuitive behavior. For example, the following query does not return movies where `length = NULL`
 
-```{sql}
+```sql
 select * from movies where length >= 120 or length <= 120`
 ```
 
@@ -352,7 +352,7 @@ Database management systems are software applications designed for very efficien
     - Predicates on the database that must always hold
     - Key Constraints: Specifiying something is a primary key or unique
 
-```{sql}
+```sql
 CREATE TABLE customer (
   ssn CHAR(9) PRIMARY KEY, 
   cname CHAR(15), address CHAR(30), city CHAR(10), 
@@ -367,7 +367,7 @@ Attribute constraints: Constraints on the values of attributes
   
 - Referential integrity: prevent dangling tuples
 
-```{sql}
+```sql
 CREATE TABLE  branch(bname CHAR(15) PRIMARY KEY, ...);
 CREATE TABLE loan(..., FOREIGN KEY bname REFERENCES branch);
 ```
@@ -377,7 +377,7 @@ CREATE TABLE loan(..., FOREIGN KEY bname REFERENCES branch);
 - Global Constraints
   - Single-table
 
-```{sql}
+```sql
 CREATE TABLE branch (...,
   bcity  CHAR(15), 
   assets INT, 
@@ -386,7 +386,7 @@ CREATE TABLE branch (...,
         
   - Multi-table
 
-```{sql}
+```sql
 CREATE ASSERTION loan-constraint
   CHECK (NOT EXISTS (
     SELECT   * 
