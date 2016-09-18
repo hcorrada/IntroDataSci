@@ -1,7 +1,7 @@
 ---
-title: "Data Wrangling"
+title: "Data Wrangling with `dplyr`"
 author: "CMSC320"
-date: "February 16, 2016"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -14,14 +14,15 @@ library(dplyr)
 ```
 
 
-In previous lectures we introduced the concept of _Tidy Data_, which specifies the structure we want in a dataset (or data table) before we start analysis. As a reminder, we want tidy data to satisfy the following:
+In previous lectures we discussed the `data.frame` to introduced the structure we usually see in a dataset before we start analysis: 
 
+1. Each attribute/variable forms a column
+2. Each entity/(observational unit) forms a row
+3. Each type of entity/(observation unit) forms a table
 
-1. Each variable forms a column
-2. Each observation forms a row
-3. Each type of observational unit forms a table
+Although we did not explicitly mentioned number 3, in more complex datasets we want to make sure we divide different entity types into their respective table. We will discuss this in more detail when we see data models (in the database sense) later on. We will refer to data organized in this fashion as _tidy data_.
 
-In this section we introduce operations and manipulations that commonly arise in analyses. We center our discussion around the idea that we are operating over tidy data, and we want to ensure that the operations we apply also generate tidy data as a result. We will then discuss common treatments for missing data and common data transformations used before analysis proceeds.
+In this section we introduce operations and manipulations that commonly arise in analyses. We center our discussion around the idea that we are operating over tidy data, and we want to ensure that the operations we apply also generate tidy data as a result. 
 
 ## `dplyr`
 
@@ -307,7 +308,7 @@ Filters the `flights` table to only include flights from airlines that
 
 Final note on `dplyr`
 ========================================
-- Very efficient implementation on these operations. Much more efficient than 'standard' R code
+- Very efficient implementation of these operations. 
 - More info: [http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
 - Cheatsheet: [http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
