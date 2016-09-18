@@ -1,0 +1,314 @@
+---
+title: "Data Wrangling"
+author: "CMSC320"
+date: "February 16, 2016"
+output: html_document
+---
+
+```{r, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+library(png)
+library(grid)
+library(tidyr)
+library(dplyr)
+```
+
+
+In previous lectures we introduced the concept of _Tidy Data_, which specifies the structure we want in a dataset (or data table) before we start analysis. As a reminder, we want tidy data to satisfy the following:
+
+
+1. Each variable forms a column
+2. Each observation forms a row
+3. Each type of observational unit forms a table
+
+In this section we introduce operations and manipulations that commonly arise in analyses. We center our discussion around the idea that we are operating over tidy data, and we want to ensure that the operations we apply also generate tidy data as a result. We will then discuss common treatments for missing data and common data transformations used before analysis proceeds.
+
+## `dplyr`
+
+We will use the `dplyr` package to introduce these oprations. I think it is one of the most beautiful tools created for data analysis. It clearly defines and efficiently implements most common data manipulation operations (verbs) one comes across in data analysis. It is built around tidy data principles. It also presents uniform treatment of multiple kinds of data sources (in memory files, partially loaded files, databases).
+
+It works best when used in conjuction with the non-standard _pipe_ operator (`%>%`) first introduced by the `magrittr` package. This simple syntactic sugar is extremely powerful. It is used to elegantly chain multiple manipulation operations:
+
+```{r, eval=FALSE}
+# suppose we wanted to apply two manipulations 
+filter_first_column <- function(data, arg) {
+  data[data[,1] == arg, ]
+}
+
+select_column <- function(data, col) {
+  data[,col]
+}
+
+# using standard function application
+select_column(filter_first_column(dat, 10), 2)
+
+# the pipe operator lhs %>% func_call(args) inserts lhs 
+# as the first argument of the func_call on the right hand side
+# using pipe operator, this is much more elegant
+dat %>%
+  filter_first_column(10) %>%
+  select_column(2)
+```
+
+A complete introduction to `dplyr` is found here: [http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
+
+We will use a dataset of inbound and outbound flights to New York City as an example:
+
+```{r}
+library(nycflights13)
+data(flights)
+```
+
+## Single-table manipulation
+
+We will first look at operations that work over a single table at a time. 
+
+Single table verbs:
+
+- `filter()` and `slice()`: subset observations (entities)    
+- `arrange()`: sort observations (entities)    
+- `select()` and `rename()`: subset variables (attributes)  
+- `distinct()`: make entities unique  
+- `mutate()` and `transmutate()`: add a new variable (attribute)  
+- `summarize()`: compute a summary statistics for one or more variables  
+- `sample_n()` and `sample_frac()`: sample observations from a data table   
+
+### Subsetting Observations
+
+The first fundamental operation we learned about early this semester is subsetting, or filtering, observations (entities, rows) in a dataset. Recall that we could subset by a set of indices (say, all even rows, this is used when splitting datasets to train and test statistical models). Much more useful is the ability to filter observations based on attribute values. 
+
+
+```{r, fig.width=8, fig.height=4, echo=FALSE}
+img <- readPNG("subset.png")
+grid.raster(img)
+```
+
+```{r, eval=FALSE}
+# include only flights on United Airlines
+flights %>% filter(carrier == "UA")
+
+# select even samples, note function `n` defined by dplyr
+flights %>% slice(seq(1, n(), by=2))
+```
+
+### Subsetting Variables
+
+On occasion, we may want to restrict a data analysis to a subset of variables (attributes, columns) to improve efficiency or interpretability. 
+
+```{r, fig.width=7, fig.height=3.5, echo=FALSE}
+img <- readPNG("select.png")
+grid.raster(img)
+```
+
+```{r, eval=FALSE}
+# select only month carrier and origin variables
+flights %>% select(month, carrier, origin)
+```
+
+On large, complex, datasets the ability to perform this selection based on properties of column/attribute names is very powerful. For instance, in the `billboard` dataset we saw in a previous unit, we can select columns using partial string matching:
+
+```{r, eval=FALSE}
+billboard %>%
+  select(starts_with("wk"))
+```
+
+### Creating New Variables
+
+One of the most common operations in data analysis is to create new variables (attributes), based on other existing attributes. 
+
+```{r, fig.width=8, fig.height=4, echo=FALSE}
+img <- readPNG("mutate.png")
+grid.raster(img)
+```
+
+These manipulations are used for transformations of existing single variables, for example, squaring a given varaible (`x -> x^2`), to make visualization or other downstream analysis more effective. In other cases, we may want to compute functions of existing variables to improve analysis or interpretation of a dataset.
+
+Here is an example creating a new variable as a function of two existing variables
+
+```{r, eval=FALSE}
+# add new variable with total delay
+flights %>% mutate(delay=dep_delay + arr_delay)
+```
+
+### Summarizing Data
+
+Much of statistical analysis, modeling and visualization is based on computing summaries (refered to as summary statistics) for variables (attributes), or other data features, of datasets. The `summarize` operation summarizes one variable (columns) over multiple observations (rowss) into a single value.
+
+```{r, fig.width=8, fig.height=4, echo=FALSE}
+img <- readPNG("summarize.png")
+grid.raster(img)
+```
+
+```{r, eval=FALSE}
+# compute mean total delay across all flights
+flights %>% 
+  mutate(delay = dep_delay + arr_delay) %>%
+  summarize(mean_delay = mean(delay, na.rm=TRUE),
+            min_delay = min(delay, na.rm=TRUE),
+            max_delay = max(delay, na.rm=TRUE))
+```
+
+### Grouping Data
+
+Aggregation and summarization also go hand in hand with data grouping, where aggregates, or even variable transformations are performed _conditioned_ on other variables. The notion of _conditioning_ is fundamental and we will see it very frequently through the course. It is the basis of statistical analysis and Machine Learning models for regression and prediction, and it is essential in understanding the design of effective visualizations.
+
+```{r, fig.width=6.5, fig.height=2.5, echo=FALSE}
+img <- readPNG("groupby.png")
+grid.raster(img)
+```
+
+So the goal is to group observations (rows) with the same value of one or
+more variables (columns). In the `dplyr` implementation, the `group_by` function in essence annotates the rows of a data table as belonging to a specific group. When `summarize` is the applied onto this annotated data table, summaries are computed for each group, rather than the whole table.
+
+```{r, eval=FALSE}
+# compute mean total delay per carrier
+flights %>%
+  mutate(delay = dep_delay + arr_delay) %>%
+  group_by(carrier) %>%
+  summarize(delay=mean(delay, na.rm=TRUE))
+```
+
+## Two-table manipulation
+
+We saw above, manipulations defined over single tables. In this section we look at efficient methods to combine data from multiple tables. The fundamental operation here is the `join`, which is a workhorse of database system design and impementation. The `join` operation combines rows from two tables to create a new single table, based on matching criteria specified over attributes of each of the two tables. 
+
+Consider the example of joining the `flights` and `airlines` table:
+
+```{r}
+head(flights)
+head(airlines)
+```
+
+Here, we want to add airline information to each flight. We can do so by joining the attributes of the respective airline from the `airlines` table with the `flights` table based on the values of attributes `flights$carrier` and `airlines$carrier`. Specifically, every row of `flights` with a specific value for `flights$carrier`, is joined with the the corresponding row in `airlines` with the same value for `airlines$carrier`. We will see four different ways of performing this operation that differ on how non-matching observations are handled.
+
+### Left Join 
+
+In this case, all observations on left operand (LHS) are retained:
+
+```{r, fig.width=6.5, fig.height=2.5, echo=FALSE}
+img <- readPNG("join_lhs.png")
+grid.raster(img)
+```
+
+```{r, fig.width=6.5, fig.height=2.5, echo=FALSE}
+img <- readPNG("left_join.png")
+grid.raster(img)
+```
+
+```{r, eval=FALSE}
+flights %>%
+  left_join(airlines, by="carrier")
+```
+
+RHS variables for LHS observations with no matching RHS observations are coded as `NA`.
+
+####  Right Join
+
+All observations on right operand (RHS) are retained:
+
+```{r, fig.width=6.5, fig.height=2.5, echo=FALSE}
+img <- readPNG("join_lhs.png")
+grid.raster(img)
+```
+
+```{r, fig.width=6.5, fig.height=2.5, echo=FALSE}
+img <- readPNG("right_join.png")
+grid.raster(img)
+```
+
+```{r, eval=FALSE}
+flights %>%
+  right_join(airlines, by="carrier")
+```
+
+LHS variables for RHS observations with no matching LHS observations are coded as `NA`.
+
+#### Inner Join
+
+Only observations matching on both tables are retained
+
+```{r, fig.width=6.5, fig.height=2.5, echo=FALSE}
+img <- readPNG("join_lhs.png")
+grid.raster(img)
+```
+
+```{r, fig.width=6.5, fig.height=2.5, echo=FALSE}
+img <- readPNG("inner_join.png")
+grid.raster(img)
+```
+
+```{r, eval=FALSE}
+flights %>%
+  inner_join(airlines, by="carrier")
+```
+
+
+
+#### Full Join 
+
+All observations are retained, regardless of matching condition
+
+```{r, fig.width=6.5, fig.height=2.5, echo=FALSE}
+img <- readPNG("join_lhs.png")
+grid.raster(img)
+```
+
+```{r, fig.width=6.5, fig.height=2.5, echo=FALSE}
+img <- readPNG("full_join.png")
+grid.raster(img)
+```
+
+```{r, eval=FALSE}
+flights %>%
+  full_join(airlines, by="carrier")
+```
+
+All values coded as `NA` for non-matching observations as appropriate.
+
+### Join conditions
+
+All join operations are based on a matching condition:
+
+```{r, eval=FALSE}
+flights %>%
+  left_join(airlines, by="carrier")
+```
+
+specifies to join observations where `flights$carrier` equals `airlines$carrier`.
+
+
+In this case, where no conditions are specified using the `by` argument:
+
+```{r, eval=FALSE}
+flights %>%
+  left_join(airlines)
+```
+
+a *natural join* is perfomed. In this case all variables with the same name in both tables are used in join condition.
+
+You can also specify join conditions on arbitrary attributes using the `by` argument.
+
+```{r, eval=FALSE}
+flights %>%
+  left_join(airlines, by=c("carrier" = "name"))
+```
+
+
+### Filtering Joins
+
+We've just seen *mutating joins* that create new tables. *Filtering joins* use join conditions to filter a specific table.
+
+```{r}
+flights %>% anti_join(airlines, by="carrier")
+```
+
+Filters the `flights` table to only include flights from airlines that
+*are not* included in the `airlines` table.
+
+Final note on `dplyr`
+========================================
+- Very efficient implementation on these operations. Much more efficient than 'standard' R code
+- More info: [http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
+- Cheatsheet: [http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+

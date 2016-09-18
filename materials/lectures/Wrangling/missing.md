@@ -1,0 +1,96 @@
+
+
+Missing Data 
+=======================================
+author: Hector Corrada Bravo
+date: CADi 2015
+
+Missing Data
+========================================
+
+When to remove? When to *impute*?
+
+- missing at random vs. missing systematically
+
+Missing Data
+========================================
+
+When to remove? When to *impute*?
+
+- data that is missing systematically can significantly bias
+an analysis
+- For example: 
+  - Want to predict how sick someone is from test result
+  - if doctors do not carry out the test because a patient
+    is too sick
+  - then the fact test is missing is a great predictor of how sick patient is
+
+Missing Data
+=====================================
+
+**First step**: understand *why* and *how* data may be missing
+
+I.e., talk to collaborator
+
+**Second step**: if a relatively small fraction of observations
+contain have missing values, then remove observations.
+
+Dealing with data missing at random
+=====================================
+
+- Categorical: encode missing as value
+
+
+```r
+is.missing <- is.na(tb2$iso2)
+tb2 %>% 
+  mutate(iso2_fixed=factor(
+    ifelse(!is.missing, tb2$iso2, "missing")))
+```
+
+Dealing with data missing at random
+=======================================
+
+- Numeric: impute
+- Simple method: replace missing values for a variable with mean of non-missing values
+
+
+```r
+is.missing <- is.na(flights$dep_delay)
+flights %>%
+  mutate(dep_delay_fixed = 
+           ifelse(!is.missing, dep_delay, 
+                  mean(dep_delay, na.rm=TRUE)))
+```
+
+Dealing with data missing at random
+=======================================
+
+- Numeric: impute
+- More complex method: replace missing values for a variable predicting from
+other variables when variables are related.
+
+
+```r
+is.missing <- is.na(flights$dep_delay)
+# use average delay condition on origin airport
+fit <- flights %>% lm(dep_delay~origin, data=.)
+flights %>%
+  mutate(dep_delay_fixed = 
+           ifelse(!is.missing, dep_delay, 
+                  predict(fit, newdata=flights)))
+```
+
+Dealing with data missing at random
+=======================================
+
+- Numeric: impute
+- In either case, a common approach is to add an additional indicator
+variable stating if continous missing measurement was imputed
+
+
+```r
+flights %>%
+  mutate(dep_delay_missing = is.na(dep_delay))
+```
+

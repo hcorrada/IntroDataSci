@@ -78,22 +78,22 @@ link = "https://myelms.umd.edu/courses/1199381/assignments/4270806"
 date = "9/19"
 
 [[day07.covers]]
-title = "Data tyding"
+title = "Data Wrangling 1: dplyr"
 
 [day08]
 date = "9/21"
 
 [[day08.covers]]
-title = "Data Wrangling 1: dplyr"
+title = "Data Wrangling 2: SQL"
 
-[[day08.covers]]
-title = "Handling missing data"
+#[[day08.covers]]
+#title = "Handling missing data"
 
 [day09]
 date = "9/26"
 
 [[day09.covers]]
-title = "Data Wrangling 2: SQL"
+title = "Data tyding"
 
 [day10]
 date = "9/28"

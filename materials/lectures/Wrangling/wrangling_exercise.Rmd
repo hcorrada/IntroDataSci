@@ -1,0 +1,29 @@
+---
+title: "Wrangling Exercise"
+author: "Hector Corrada Bravo"
+date: "6/21/2015"
+output: html_document
+---
+
+This is an exercise on data wrangling using the flights dataset:
+
+```{r, eval=FALSE}
+library(dplyr)
+library(nycflights13)
+```
+
+1. Filter flights to include only flights with an arrival delay greater than 2 hours (delays are recorded in minutes)  
+
+2. Select columns in the flights table that contain delay times (note that the function `matches` can be used to select columns with names that matches a regular expression. See `?dplyr::select`)  
+
+3. Find the minimum arrival delay (this can be a negative number) in the flights table. Use `summarize`.  
+
+4. Find minimum arrival delay (again, can be a negative number) in the flights table for each destination airport. Use `group_by' and 'summarize`.  
+
+5. List the name of all airlines and the number of flights for each airline in flights table. The `airlines` table has airline names.
+
+6. (a): create a new column (use 'mutate') with total delay time for each flight  
+   (b): replace any missing *total delay times* with the minimum total delay time  
+
+
+
