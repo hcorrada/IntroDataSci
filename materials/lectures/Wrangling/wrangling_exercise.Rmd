@@ -10,6 +10,8 @@ This is an exercise on data wrangling using the flights dataset:
 ```{r, eval=FALSE}
 library(dplyr)
 library(nycflights13)
+data(flights)
+data(airlines)
 ```
 
 1. Filter flights to include only flights with an arrival delay greater than 2 hours (delays are recorded in minutes)  

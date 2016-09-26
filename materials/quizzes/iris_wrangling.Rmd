@@ -1,0 +1,34 @@
+---
+title: "dplyr exercise"
+author: "CMSC320"
+date: "September 21, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Consider the following dataset of iris measurements (this is a very historically important dataset, btw):
+
+```{r, message=FALSE}
+library(dplyr)
+data(iris)
+
+iris <- as_data_frame(iris)
+iris
+```
+
+`Species` is a categorical variable indicating iris species for each flower measured. 
+Using `dplyr` code compute: 
+
+1. the average `Petal.Length` of each iris species
+2. the average of all four numeric variables for each iris species
+
+```{r}
+iris %>%
+  group_by(Species) %>%
+  summarize(mean(Petal.Length, na.rm=TRUE))
+```
+
+
