@@ -1,0 +1,337 @@
+---
+title: "Data Models"
+author: "CMSC320"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Some of this material is based on Amol Deshpande's material: [https://github.com/umddb/datascience-fall14/blob/master/lecture-notes/models.md](https://github.com/umddb/datascience-fall14/blob/master/lecture-notes/models.md)
+
+## Overview
+
+In this section we will principles of preparing and organizing data in a way that is amenable for analysis, both in modeling and visualization. We think of a _data model_ as a collection of concepts that describes how data is represented and accessed. As we will see in the examples of packages `tidyr` and `dplyr`, thinking explicitly about the structure of datasets allows us to design and write general purpose and efficient code. Also, thinking abstractly of data structure, beyond a specific implemetation, makes it easier to share data across programs and systems, and integrate data from different sources.
+
+Once we have thought about structure, we can then think about _semantics_: what does data represent? In this section, and in the course overall, we have thought about _structure_ and _semantics_ as follows:
+
+- **Structure**: We have assumed that data is organized in rectangular data structures (tables with rows and columns)
+- **Semantics**: We have discussed the notion of _values_, _attributes_, and _entities_. Recall that we can refer to _attributes_ as _variables_ and _entities_ as _observations_.
+
+In our previous section on datatypes, we used the following _data semantics_: a dataset is a collection of _values_, numeric or categorical, organized into _entities_ (_observations_) and _attributes_ (_variables_). Each _attribute_ contains values of a specific measurement across _entities_, and _entities_ collect all measurements across _attributes_. 
+
+In the database literature, we call this exercise of defining structure and semantics as _data modeling_. Data Modeling is the process of representing/capturing structure in data based on defining:
+
+- **Data model**: A collection of concepts that describes how data is represented and accessed  
+- **Schema**: A description of a specific collection of data, using a given data model  
+    
+The purpose of defining abstract data models is that it allows us to
+know the structure of the data/information (to some extent) and thus be able to write general purpose code. Lack of a data model makes it difficult to share data across programs, organizations, systems that need to be able to integrate information from multiple sources. We can also design algorithms and code that can significantly increase efficiency if we can assume general data structure. For instance, we can preprocess data to make access efficient (e.g., building a B-Tree on a field).
+
+A data model typically consists of:
+
+- Modeling Constructs: A collection of concepts used to represent the structure in the data. Typically we need to represent types of *entities*, their *attributes*, types of *relationships* between *entities*, and *relationship attributes*  
+- Integrity Constraints: Constraints to ensure data integrity (i.e., avoid errors)  
+- Manipulation Languages: Constructs for manipulating the data  
+    
+We desire that models are sufficiently _expressive_ so they can capture real-world data well, _easy to use_, and lend themselves to defining computational methods that have good performance.
+
+Some examples of data models are
+
+- Relational, Entity-relationship model, XML...
+- Object-oriented, Object-relational, RDF...
+- Current favorites in the industry: JSON, Protocol Buffers, [Avro](http://avro.apache.org/docs/current/), Thrift, Property Graph
+
+Why have so many models been defined? There is an inherent tension between descriptive power and ease of use/efficiency. More powerful, expressive, models can be applied to represent more datasets but also tend to be harder to use and query efficiently.
+
+Typically there are multiple levels of modeling. _Physical modeling_ concerns itself with how the data is physically stored. _Logical or Conceptual modeling_ concerns itself with type of information stored, the different entities, their attributes, and the relationships among those. There may be several layers of logical/conceptual models to restrict the information flow (for security and/or ease-of-use):
+
+- **Data independence:** The idea that you can change the representation of data w/o changing programs that operate on it.  
+- **Physical data independence:** I can change the layout of data on disk and my programs won't change
+    - index the data
+    - partition/distribute/replicate the data
+    - compress the data
+    - sort the data
+
+## Data models: A brief history
+
+- **1960's**: Computers finally become attractive, and enterprises start using it. Most applications initially used their own data stores.
+    - **Data base**: coined in military information systems to denote "shared data banks" by multiple applications
+        - Each application had its own format
+        - Although the data was there, basically unavailable to other programs
+            - Often original object code was lost
+        - Instead, define a data format, store it as a "data dictionary", and allow general-purpose "data-base management" software to access it
+    - Issues:
+        - How to write data dictionaries? How to access data?
+        - Disadvantages of integration: integrity, security, privacy concerns
+        - Who controls the data?
+    - Birth of "hierarchical model" and "network model"
+        - Both allowed "connecting" records of different types (e.g., connect "accounts" with "customers")
+        - Network model attempted to be very general and flexible
+            - Charlie Bachman received Turing Award 
+        - IBM designed its IMS hierarchical database in 1966 for the Apollo space program; still around today
+            - _.. more than 95 percent of the top Fortune 1000 companies use IMS to process more than 50 billion transactions a day and manage 15 million gigabytes of critical business data_ (from IBM Website on IMS)
+        - Predates *hard disks*
+        - However, both models exposed too much of the internal data structures/pointers etc to the users
+
+- **1970's**: Relational Model
+    - Origins in Set Theory
+        - Some early work by D.L.Childs (somewhat forgotten)
+        - Edgar F. "Ted" Codd: Developed the relational model
+    - Elegant, formal model that provided almost complete *data independence*
+        - Users didn't need to worry about how the data was stored, processed etc.
+        - High level query language (relational algebra)
+    - Notion of *normal forms*
+        - Allowed one to reason about and remove redundancies
+    - Led to two influential projects: INGRES (UC Berkeley), System R (IBM)
+        - Also paved the way for a 1977 startup called "Software Development Laboratories"
+        - Didn't care about IMS/IDMS compatibility (as IBM had to)
+    - Many debates in the early 70's between Relational Model proponents and Network Model proponents
+    - Don Chamberlin of IBM was an early CODASYL advocate (later co-invented SQL):
+      - _He (Codd) gave a seminar and a lot of us went to listen to him. This was as I say a revelation for me because Codd had a bunch of queries that were  fairly complicated queries and since I'd been studying CODASYL, I could imagine how those queries would have been represented in CODASYL by programs that were five pages long that would navigate through this labyrinth of pointers and stuff. Codd would sort of write them down as one-liners. These would be queries like, "Find the employees who earn more than their managers." [laughter] He just whacked them out and you could sort of read them, and they weren't complicated at all, and I said, "Wow." This was kind of a conversion experience for me, that I understood what the relational thing was about after that._
+
+- **1976**: Peter Chen proposed "Entity-Relationship Model"
+    - Allowed higher-level, conceptual modeling; easier for humans to think about
+    - Example
+
+        ![](er.png)
+
+- **1980**: Commercialization/wide-spread acceptance of relational model
+    - SQL emerged as a standard, in large part because of IBM's backing
+        - People still sometimes complain about its limitations
+
+- **Late 80's**: Object-oriented, object-relational databases
+    - Enriching the expressive power of relational model
+        - Set-valued attributes, aggregation, generalization,e tc.
+    - Object-oriented: to get around *impedance mismatch* between programming languages and databases
+    - Object-relational: allow user-defined types -- gets many benefits of object-oriented while keeping the essence of relational model
+        - No real differentiation today from pure relational model
+    - Other proposals for semantic data models
+
+## The Entity-Relationship and Relational Models
+
+The fundamental objects in this formalism are _entities_ and their _attributes_, as we have seen before, and _relationships_ and _relationship attributes_ which we saw briefly in a previous example, where 'rankings' and 'songs' are distinct types of entities and we define _relationships_ between them.
+
+![](er.png)
+
+Here, rectangles are _entitites_, diamonds and edges indicate _relationships_. Circles describe either entity or relationship _attributes_. Arrows are used indicate multiplicity of relationships (one-to-one, many-to-one, one-to-many, many-to-many):
+
+![](relationships.png)
+
+Think about what relationships are shown in this diagram?
+
+![](er2.png)
+
+In databases and general datasets we work on, both Entities and Relationships are represented as _Relations_ (tables) such that a unique entity/relationship is represented by a single row. This leads to the natural question of how are unique entities determined or defined. Here is where the concept of a _key_ comes in. This is an essential aspect of the Entity-Relationship and Relational models. 
+
+- A _key_ is a minimal set of _attributes_ that uniquely identifies an entity.
+- A _primary key_ is used in the ER model to specify a single key, although there may be multiple candidate _keys_
+- Relationships also have _keys_, defined by the set of keys of the entities participating in it.
+
+
+#### Exercise
+
+Consider the Lahman baseball dataset, included in your class materials
+
+```{r, eval=FALSE}
+library(Lahman)
+?Lahman
+```
+
+It contains information about, among other things: 
+
+- _Franchises_, these are the corporate team entities. Attributes for these can include, _year_established_, _city_, etc. 
+- _Teams_, which are the specific teams fielded by a franchise in a given season. Attributes for these can include, _year_, _wins_, _losses_, etc. 
+- _Players_, who are the people who play the game, attributes can include _name_, _school_attended_, etc. Also, there are season-specific attributes, like _batting average_, _home runs_, etc.
+- _Salaries_, which indicates how much a franchise is paying a player in a given season.
+
+**Draw an ER diagram describing this Schema**. Indicate keys as appropriate.
+
+
+### Late 90's-today
+
+One of the most restrictive aspects of the ER model is the need to specificy a data structure that applies to all objects in the dataset, and the need for _values_ stored in a given table (or relation) to be _atomic_. Recent data models attempt to address these shortcomings using semi-structured, complex, nested models.
+
+#### XML: eXtensible Markup Language 
+
+The data models described above are mostly defined for _structured data_: where a specific and consistent schema is assumed. XML is instead intended for *semi-structured* data, relying on flexible, self-describing schemas: 
+        
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Edited by XMLSpy -->
+<CATALOG>
+  <CD>
+    <TITLE>Empire Burlesque</TITLE>
+    <ARTIST>Bob Dylan</ARTIST>
+    <COUNTRY>USA</COUNTRY>
+    <COMPANY>Columbia</COMPANY>
+    <PRICE>10.90</PRICE>
+    <YEAR>1985</YEAR>
+  </CD>
+  <CD>
+    <TITLE>Hide your heart</TITLE>
+    <ARTIST>Bonnie Tyler</ARTIST>
+    <COUNTRY>UK</COUNTRY>
+    <COMPANY>CBS Records</COMPANY>
+    <PRICE>9.90</PRICE>
+    <YEAR>1988</YEAR>
+  </CD>
+  ...
+```
+
+#### RDF: Resource Description Framework
+
+Originally intended as a "metadata data model", its key construct is a "subject-predicate-object" triple: 
+    - E.g., subject=sky - predicate=has-the-color - object=blue
+
+Direct mapping to a labeled, directed multi-graph, typically stored in relational databases, or what are called "triple-stores". But some graph database products support it as well (e.g., DEX)
+        
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+
+<rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
+  <contact:fullName>Eric Miller</contact:fullName>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
+  <contact:mailbox rdf:resource="mailto:e.miller123(at)example"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
+  <contact:personalTitle>Dr.</contact:personalTitle>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
+  <rdf:type rdf:resource="http://www.w3.org/2000/10/swap/pim/contact#Person"/>
+</rdf:Description>
+</rdf:RDF>
+```
+
+![](Rdf_graph_for_Eric_Miller.png)
+
+#### JSON: Javascript Object Notation
+        
+Very similar to XML and seems to be replacing it for many purposes
+
+```json
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "isAlive": true,
+  "age": 25,
+  "height_cm": 167.6,
+  "address": {
+    "streetAddress": "21 2nd Street",
+    "city": "New York",
+    "state": "NY",
+    "postalCode": "10021-3100"
+  },
+  "phoneNumbers": [
+    {
+      "type": "home",
+      "number": "212 555-1234"
+    },
+    {
+      "type": "office",
+      "number": "646 555-4567"
+    }
+  ],
+  "children": [],
+  "spouse": null
+}
+```
+
+This is the format most contemporary data REST APIs use to transfer data. For instance, here is part of a JSON record from a Twitter stream:
+
+```json
+{
+  "created_at":"Sun May 05 14:01:34+00002013",
+  "id":331046012875583488,
+  "id_str":"331046012875583488",
+  "text":"\u0425\u043e\u0447\u0443, \u0447\u0442\u043e\u0431 \u0442\u044b \u0441\u0434\u0435\u043b\u0430\u043b \u0432\u0441\u0451 \u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e\u0435.\n \\,,\\ *_* \/,,\/",
+  "source":"\u003ca href=\"http:\/\/twitterfeed.com\"rel=\"nofollow\"\u003etwitterfeed\u003c\/a\u003e",
+  "in_reply_to_user_id_str":null,
+  "user":{
+    "id":548422428,
+    "id_str":"548422428",
+    "name":"\u0410\u0439\u0433\u0435\u0440\u0438\u043c \u041f\u043e\u0433\u043e\u0434\u0438\u043d\u0430",
+    "screen_name":"paddybyrny",
+    "location":"\u0420\u043e\u0441\u0441\u0438\u044f;\u0412\u043b\u0430\u0434\u0438\u0432\u043e\u0441\u0442\u043e\u043a",
+    "followers_count":4188,
+    "friends_count":4281,
+    "lang":"en",
+    "profile_background_image_url":"http:\/\/a0.twimg.com\/images\/themes\/theme1\/bg.png",
+  },
+  "geo":null,
+  "coordinates":null,
+  "entities":{
+    "hashtags":[],"symbols":[],"urls":[],"user_mentions":[]
+  },"favorited":false,"retweeted":false,"filter_level":"medium","lang":"ru"}
+```
+#### Property Graph Model
+
+Developed for graph databases, it is basically a edge- and vertex-labeled graph, with properties associated with each edge and vertex
+            
+![](property_graph.jpg)
+
+
+#### Related: Serialization formats
+
+- Need a way for programs/systems to send data to each other
+- Several recent technologies all based around schemas
+- [Protocol Buffers](https://code.google.com/p/protobuf/): Developed by Google
+- Schema is mostly relational, with support for optional fields and some other constructs
+- Schema specified using a `.proto` file
+
+```proto
+
+message Person {
+  required int32 id = 1;
+  required string name = 2;
+  optional string email = 3;
+}
+```
+
+- Compiled by `protoc` to produce C++, Java, or Python code
+- Programs can be written in any of those languages, e.g., C++:
+
+```c++
+Person person;
+person.set_id(123);
+person.set_name("Bob");
+person.set_email("bob@example.com");
+fstream out("person.pb", ios::out | ios::binary | ios::trunc);
+person.SerializeToOstream(&out);
+out.close();
+```
+
+- [Avro](http://avro.apache.org/): Richer data structures, JSON-specified schema
+
+```json
+{
+  "namespace": "example.avro",
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {"name": "name", "type": "string"},
+    {"name": "favorite_number",  "type": ["int", "null"]},
+    {"name": "favorite_color", "type": ["string", "null"]}
+  ]
+}
+```
+
+- [Thrift](https://thrift.apache.org/): Developed by Facebook, now Apache project
+    - Main goal to support Remote Procedure Calls across languages
+    
+### Using modern datamodels in R
+
+There are a number of packages to represent and manipulate data in these models in R:
+
+- `XML` and `xml2` available in CRAN
+- `jsonlite`, `rjson`, available in CRAN
+- `RProtoBuf` available in CRAN
+- [`ravro`](https://github.com/RevolutionAnalytics/ravro)
