@@ -10,5 +10,5 @@ How to get data into shape before analysis
 
 ### Readings and resources
 
-- [H. Wickham (2014). Tidy data. _Journal of Statistical Software_](file:///Users/hcorrada/Downloads/v59i10.pdf)  
+- [H. Wickham (2014). Tidy data. _Journal of Statistical Software_](https://www.jstatsoft.org/index.php/jss/article/view/v059i10/v59i10.pdf)
 - [H. Wickham (2016). R for Data Science](http://r4ds.had.co.nz/)
