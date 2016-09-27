@@ -1,7 +1,7 @@
 ---
-title: "Data visualization for EDA"
+title: "Data visualization for Exploratory Data Analysis"
 author: "CMSC320"
-date: "February 25, 2016"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -14,9 +14,9 @@ library(dplyr)
 ```
 
 
-We are now entering the last step of what we would want to do with a dataset before starting modeling using statistics or Machine Learning. We have seen manipulations and operations that prepare datasets into tidy (or normal form), compute summaries, remove or impute missing data and join tables to obtain organized, clean data tables that contain the observational units, or entities, we want to model. 
+We are now entering the last step of what we would want to do with a dataset before starting modeling using statistics or Machine Learning. We have seen manipulations and operations that prepare datasets into tidy (or normal form), compute summaries, and join tables to obtain organized, clean data tables that contain the observational units, or entities, we want to model statistically. 
 
-At this point, we want to perform additional _Exploratory Data Analysis_ to better understand the data at hand, and help us make decisions about appropriate modeling methods, or data transformations that may be helpful to do. Moreover, there are many instances where data modeling is not required to tell a clear and convincing story with data. Many times an effective visualization can lead to convincing conclusions.
+At this point, we want to perform _Exploratory Data Analysis_ to better understand the data at hand, and help us make decisions about appropriate statistical or Machine Learning methods, or data transformations that may be helpful to do. Moreover, there are many instances where statistical data modeling is not required to tell a clear and convincing story with data. Many times an effective visualization can lead to convincing conclusions.
 
 ### EDA (Exploratory Data Analysis)
 
@@ -32,7 +32,7 @@ Ultimately, the purpose of EDA is to spot problems in data (as part of data wran
 - skew
 - suggest possible modeling strategies (e.g., probability distributions)
   
-We also want to use EDA to understand relationship between pairs of variables, e.g. their correlation or covariance.
+We also want to use EDA to understand relationships between pairs of variables, e.g. their correlation or covariance.
 
 ## Visualization of single variables
 
@@ -222,8 +222,8 @@ batting %>%
 ### Faceting
 
 The last major component of exploratory analysis called `faceting` in visualization,
-corresponds to `conditioning` in modeling, we've seen it as the motivation of `grouping`
-when arranging data.
+corresponds to `conditioning` in statistical modeling, we've seen it as the motivation of `grouping`
+when wrangling data.
 
 ```{r}
 batting %>%
