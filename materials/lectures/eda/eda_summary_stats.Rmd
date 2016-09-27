@@ -1,7 +1,7 @@
 ---
 title: "EDA: summary statistics"
 author: "CMSC320"
-date: "March 1, 2016"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -39,7 +39,7 @@ library(ggplot2)
 data(diamonds)
 library(dplyr)
 
-hist(diamonds$dept, main="Depth Histogram", xlab="Depth", nclass=200)
+hist(diamonds$depth, main="Depth Histogram", xlab="Depth", nclass=200)
 ```
 
 (Here's some help interpreting these variables: [https://en.wikipedia.org/wiki/Diamond_(gemstone)#Gemological_characteristics](https://en.wikipedia.org/wiki/Diamond_(gemstone)#Gemological_characteristics)).
@@ -62,7 +62,7 @@ Now that we know the range over which data is distributed, we can figure out a f
 ```{r}
 median_depth <- median(diamonds$depth)
 
-hist(diamonds$dept, main="Depth Histogram", xlab="Depth", nclass=200)
+hist(diamonds$depth, main="Depth Histogram", xlab="Depth", nclass=200)
 abline(v=median_depth, lwd=2.3, col="red")
 ```
 
@@ -142,7 +142,7 @@ abline(v=our_mean, lwd=2.3, col="blue")
 And it serves as an estimate of central tendency of the dataset:
 
 ```{r}
-hist(diamonds$dept, main="Depth Histogram", xlab="Depth", nclass=200)
+hist(diamonds$depth, main="Depth Histogram", xlab="Depth", nclass=200)
 abline(v=median_depth, lwd=2.3, col="red")
 abline(v=our_mean, lwd=2.3, col="blue")
 ```
