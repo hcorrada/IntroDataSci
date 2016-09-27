@@ -39,7 +39,7 @@ hide = false
 title = "Exploratory Data Analysis"
 excerpt = "Data visualization and summarization"
 url = "eda"
-hide = true
+hide = false
 
 [08-mapreduce]
 title = "Data summarization and aggregation at scale"
