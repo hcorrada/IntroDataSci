@@ -28,13 +28,13 @@ This page constiutes the official syllabus for this class.
 *	TAs:
     - Virinchi Srinivas (Graduate)  
       <virinchimnm@gmail.com>  
-      Office Hours: Mondays 10-12   
+      Office Hours: Wednesday 10-12   
     - Nolan Crane (Undergraduate)  
       <ncrane@umd.edu>  
-      Office Hours: Tuesdays 2-3  
+      Office Hours: Thursdays 2-3  
     - Anant Dalela (Undergraduate)  
       <adalela@umd.edu>  
-      Office Hours: Thursdays 2-3  
+      Office Hours: Thursdays 3-4  
 
 We will use the class Piazza site [{{< piazzaurl >}}]({{< piazzaurl >}}) for questions, dicussion and announcements. Assignments and grades for the class will be posted to the class ELMS site: [{{< elmurl >}}]({{< elmurl >}}).
 In case of an extended emergency closure, announcements on policy and procedures will be posted to Piazza.
