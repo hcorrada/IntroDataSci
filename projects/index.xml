@@ -40,7 +40,7 @@
 
 &lt;meta name=&#34;author&#34; content=&#34;CMSC320&#34; /&gt;
 
-&lt;meta name=&#34;date&#34; content=&#34;2016-09-26&#34; /&gt;
+&lt;meta name=&#34;date&#34; content=&#34;2016-09-30&#34; /&gt;
 
 &lt;title&gt;Project 1&lt;/title&gt;
 
@@ -147,19 +147,21 @@ $(document).ready(function () {
 
 &lt;h1 class=&#34;title toc-ignore&#34;&gt;Project 1&lt;/h1&gt;
 &lt;h4 class=&#34;author&#34;&gt;&lt;em&gt;CMSC320&lt;/em&gt;&lt;/h4&gt;
-&lt;h4 class=&#34;date&#34;&gt;&lt;em&gt;2016-09-26&lt;/em&gt;&lt;/h4&gt;
+&lt;h4 class=&#34;date&#34;&gt;&lt;em&gt;2016-09-30&lt;/em&gt;&lt;/h4&gt;
 
 &lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Posted:&lt;/strong&gt; Sep 26, 2016&lt;br /&gt;
-&lt;strong&gt;Last Updated:&lt;/strong&gt; Sep 26, 2016&lt;br /&gt;
+&lt;strong&gt;Last Updated:&lt;/strong&gt; Sep 30, 2016&lt;br /&gt;
 &lt;strong&gt;Due:&lt;/strong&gt; Oct 10, 2016&lt;/p&gt;
 &lt;p&gt;You’ve been hired by a new space weather startup looking to disrupt the space weather reporting business. Your first project is to provide better data about the top 50 solar flares recorded so far than that shown by your competitor &lt;a href=&#34;https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares&#34;&gt;SpaceWeatherLive.com&lt;/a&gt;. To do this, they’ve pointed you to &lt;a href=&#34;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html&#34;&gt;this messy HTML page&lt;/a&gt; from NASA (&lt;a href=&#34;http://www.hcbravo.org/IntroDataSci/misc/waves_type2.html&#34;&gt;available here also&lt;/a&gt;) where you can get extra data your startup is going to post in your new spiffy site.&lt;/p&gt;
 &lt;p&gt;Of course, you don’t have access to the raw data for either of these two tables, so as an enterprising data scientist you will scrape this information directly from each HTML page using all the great tools available to you in R. By the way, you should read up a bit on &lt;a href=&#34;https://en.wikipedia.org/wiki/Solar_flare&#34;&gt;Solar Flares&lt;/a&gt;, &lt;a href=&#34;https://www.spaceweatherlive.com/en/help/what-is-a-coronal-mass-ejection-cme&#34;&gt;coronal mass ejections&lt;/a&gt;, &lt;a href=&#34;http://spaceweather.com/glossary/flareclasses.html&#34;&gt;the solar flare alphabet soup&lt;/a&gt;, &lt;a href=&#34;http://www.nasa.gov/topics/solarsystem/features/halloween_storms.html&#34;&gt;the scary storms of Halloween 2003&lt;/a&gt;, and &lt;a href=&#34;https://science.nasa.gov/science-news/science-at-nasa/2005/27jan_solarflares&#34;&gt;sickening solar flares&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Many of the operations used for the project are described in the book &lt;a href=&#34;http://r4ds.had.co.nz/&#34;&gt;R for Data Science&lt;/a&gt; by Hadley Wickham. I also highly recommend you look at the vignettes for the &lt;code&gt;readr&lt;/code&gt; package &lt;a href=&#34;https://cran.r-project.org/web/packages/readr/vignettes/column-types.html&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/readr/vignettes/column-types.html&lt;/a&gt;, and the &lt;code&gt;lubridate&lt;/code&gt; package &lt;a href=&#34;https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html&lt;/a&gt;, and this &lt;code&gt;rvest&lt;/code&gt; tutorial &lt;a href=&#34;http://stat4701.github.io/edav/2015/04/02/rvest_tutorial/&#34; class=&#34;uri&#34;&gt;http://stat4701.github.io/edav/2015/04/02/rvest_tutorial/&lt;/a&gt;.&lt;/p&gt;
-&lt;div id=&#34;step-1-scrape-your-competitors-data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Step 1: Scrape your competitor’s data&lt;/h2&gt;
+&lt;div id=&#34;part-1-data-scraping-and-preparation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Part 1: Data scraping and preparation&lt;/h2&gt;
+&lt;div id=&#34;step-1-scrape-your-competitors-data-10-pts&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 1: Scrape your competitor’s data (10 pts)&lt;/h3&gt;
 &lt;p&gt;Use the &lt;code&gt;rvest&lt;/code&gt; package to scrape data for the top 50 solar flares shown in &lt;a href=&#34;https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares&#34;&gt;SpaceWeatherLive.com&lt;/a&gt;. Steps to do this are:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;Use the &lt;code&gt;html&lt;/code&gt; function to read the html page from the url above&lt;/li&gt;
@@ -184,8 +186,8 @@ $(document).ready(function () {
 10    10    X7.1 2005/01/20   0720      06:36    07:01    07:26 MovieView archive
 # ... with 40 more rows&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;div id=&#34;step-2-tidy-the-top-50-solar-flare-data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Step 2: Tidy the top 50 solar flare data&lt;/h2&gt;
+&lt;div id=&#34;step-2-tidy-the-top-50-solar-flare-data-10-pts&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 2: Tidy the top 50 solar flare data (10 pts)&lt;/h3&gt;
 &lt;p&gt;Your next step is to make sure this table is usable using the &lt;code&gt;dplyr&lt;/code&gt; and &lt;code&gt;tidyr&lt;/code&gt; packages:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;Drop the last column of the table, since we are not going to use it moving forward.&lt;/li&gt;
@@ -208,8 +210,9 @@ $(document).ready(function () {
 9      9    X8.3 2003-11-02 17:03:00 2003-11-02 17:25:00 2003-11-02 17:39:00   0486
 10    10    X7.1 2005-01-20 06:36:00 2005-01-20 07:01:00 2005-01-20 07:26:00   0720
 # ... with 40 more rows&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;step-3.-scrape-the-nasa-data&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Step 3. Scrape the NASA data&lt;/h3&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-3.-scrape-the-nasa-data-15-pts&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 3. Scrape the NASA data (15 pts)&lt;/h3&gt;
 &lt;p&gt;Next you need to scrape the data in &lt;a href=&#34;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html&#34; class=&#34;uri&#34;&gt;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html&lt;/a&gt; (&lt;a href&gt;also available here&lt;/a&gt;) to get additional data about these solar flares. This table format is described here: &lt;a href=&#34;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html&#34; class=&#34;uri&#34;&gt;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html&lt;/a&gt;, and here:&lt;/p&gt;
 &lt;div id=&#34;nasa-data-description&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;NASA data description&lt;/h4&gt;
@@ -363,9 +366,8 @@ This work is supported by NASA’s Virtual Observatories Program
 #   cme_time &amp;lt;chr&amp;gt;, cme_angle &amp;lt;chr&amp;gt;, cme_width &amp;lt;chr&amp;gt;, cme_speed &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;step-4-tidy-the-nasa-the-table&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Step 4: Tidy the NASA the table&lt;/h2&gt;
+&lt;div id=&#34;step-4-tidy-the-nasa-the-table-15-pts&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Step 4: Tidy the NASA the table (15 pts)&lt;/h3&gt;
 &lt;p&gt;Now, we tidy up the NASA table. Here we will code missing observations properly, recode columns that correspond to more than one piece of information, treat dates and times appropriately, and finally convert each column to the appropriate data type.&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;Recode any missing entries as &lt;code&gt;NA&lt;/code&gt;. Refer to the data description in &lt;a href=&#34;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html&#34; class=&#34;uri&#34;&gt;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html&lt;/a&gt; (and above) to see how missing entries are encoded in each column.&lt;/li&gt;
@@ -392,27 +394,37 @@ This work is supported by NASA’s Virtual Observatories Program
 #   flare_classification &amp;lt;chr&amp;gt;, cme_angle &amp;lt;int&amp;gt;, cme_width &amp;lt;int&amp;gt;, cme_speed &amp;lt;int&amp;gt;, cme_halo &amp;lt;lgl&amp;gt;,
 #   cme_width_lb &amp;lt;lgl&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;div id=&#34;part-5-analysis&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Part 5: Analysis&lt;/h2&gt;
+&lt;/div&gt;
+&lt;div id=&#34;part-2-analysis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Part 2: Analysis&lt;/h2&gt;
 &lt;p&gt;Now that you have data from both sites, let’s start some analysis.&lt;/p&gt;
-&lt;div id=&#34;question-1-replication&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Question 1: Replication&lt;/h3&gt;
+&lt;div id=&#34;question-1-replication-10-pts&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Question 1: Replication (10 pts)&lt;/h3&gt;
 &lt;p&gt;Can you replicate the top 50 solar flare table in &lt;a href=&#34;https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares&#34;&gt;SpaceWeatherLive.com&lt;/a&gt; exactly using the data obtained from NASA? That is, if you get the top 50 solar flares from the NASA table based on their classification (e.g., &lt;code&gt;X28&lt;/code&gt; is the highest), do you get data for the same solar flare events?&lt;/p&gt;
 &lt;p&gt;Include code used to get the top 50 solar flares from the NASA table (be careful when ordering by classification, using &lt;code&gt;tidyr::separate&lt;/code&gt; here is useful). Write a sentence or two discussing how well you can replicate the SpaceWeatherLive data from the NASA data.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;question-2-integration&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Question 2: Integration&lt;/h3&gt;
+&lt;div id=&#34;question-2-integration-15-pts&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Question 2: Integration (15 pts)&lt;/h3&gt;
 &lt;p&gt;Write a function that finds the best matching row in the NASA data for each of the top 50 solar flares in the SpaceWeatherLive data. Here, you have to decide for yourself how you determine what is the best matching entry in the NASA data for each of the top 50 solar flares.&lt;/p&gt;
 &lt;p&gt;In your submission, include an explanation of how you are defining best matching rows across the two datasets in addition to the code used to find the best matches. Finally, use your function to add a new column to the NASA dataset indicating its rank according to SpaceWeatherLive, if it appears in that dataset.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;question-3-analysis&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Question 3: Analysis&lt;/h3&gt;
+&lt;div id=&#34;question-3-analysis-10-pts&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Question 3: Analysis (10 pts)&lt;/h3&gt;
 &lt;p&gt;Prepare one plot that shows the top 50 solar flares in context with all data available in the NASA dataset. Here are some possibilities (you can do something else)&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;&lt;p&gt;Plot attributes in the NASA dataset (e.g., starting or ending frequenciues, flare height or width) over time. Use graphical elements (e.g., text or points) to indicate flares in the top 50 classification.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Do flares in the top 50 tend to have Halo CMEs? You can make a barplot that compares the number (or proportion) of Halo CMEs in the top 50 flares vs. the dataset as a whole.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Do strong flares cluster in time? Plot the number of flares per month over time, add a graphical element to indicate (e.g., text or points) to indicate the number of strong flares (in the top 50) to see if they cluster.&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;submission&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Submission&lt;/h2&gt;
+&lt;p&gt;Prepare and knit an Rmarkdown file that includes for each step in Part 1: (a) code to carry out the step discussed, (b) output showing the output of your code, similar to the examples above, and (c) a short prose description of how your code works. For questions 1 and 2 of Part 2, follow the instructions there. For Question 3 of part 2 provide: (a) a short description (2 sentences) of what the intent of your plot is (think in terms of our discussion on how we show variation, co-variation in terms of central trend, spread, skew etc.), (b) code to produce your plot, (c) a short text description of your plot, and (d) a sentence or two of interpretation of your plot (again think of variation, co-variation, etc.).&lt;/p&gt;
+&lt;p&gt;Submit the resulting PDF to ELMS at: &lt;a href=&#34;https://myelms.umd.edu/courses/1199381/assignments/4294153&#34; class=&#34;uri&#34;&gt;https://myelms.umd.edu/courses/1199381/assignments/4294153&lt;/a&gt;&lt;/p&gt;
+&lt;div id=&#34;group-work&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Group work&lt;/h3&gt;
+&lt;p&gt;Working in groups in this project is encouraged but not required. If working on a group: (1) groups can be of 2 or 3 people, (2) each group member can submit the same writeup on ELMS, (3) in all cases, names of peers who worked in the group should be included in the writeup. As all group work and reflective of academic ethics code, there is an expectation that all group members will contribute equally in design, implementation and reporting of this work. If any student feels this expectation was not met when working on this project, they should contact the instructor team who will handle the situation as expediently and fairly as possible.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
