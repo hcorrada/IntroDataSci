@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 **Posted:** Sep 26, 2016  
-**Last Updated:** Sep 26, 2016  
+**Last Updated:** Sep 30, 2016  
 **Due:** Oct 10, 2016  
 
 You've been hired by a new space weather startup looking to disrupt the space weather reporting business. Your first project
@@ -21,7 +21,9 @@ Of course, you don't have access to the raw data for either of these two tables,
 
 Many of the operations used for the project are described in the book [R for Data Science](http://r4ds.had.co.nz/) by Hadley Wickham. I also highly recommend you look at the vignettes for the `readr` package https://cran.r-project.org/web/packages/readr/vignettes/column-types.html, and the `lubridate` package https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html, and this `rvest` tutorial http://stat4701.github.io/edav/2015/04/02/rvest_tutorial/.
 
-## Step 1: Scrape your competitor's data
+## Part 1: Data scraping and preparation
+
+### Step 1: Scrape your competitor's data (10 pts)
 
 Use the `rvest` package to scrape data for the top 50 solar flares shown in [SpaceWeatherLive.com](https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares). Steps to do this are:
 
@@ -51,7 +53,7 @@ The result should be a data frame, a `tibble` really with the first few rows as:
 # ... with 40 more rows
 ```
 
-## Step 2: Tidy the top 50 solar flare data
+### Step 2: Tidy the top 50 solar flare data (10 pts)
 
 Your next step is to make sure this table is usable using the `dplyr` and `tidyr` packages:
 
@@ -79,7 +81,7 @@ The result of this step should be a data frame with the first few rows as:
 # ... with 40 more rows
 ```
 
-### Step 3. Scrape the NASA data
+### Step 3. Scrape the NASA data (15 pts)
 
 Next you need to scrape the data in http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html ([also available here]())
 to get additional data about these solar flares. This table format is described here: http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html, and here:
@@ -252,7 +254,7 @@ The result of this step should be similar to:
 #   cme_time <chr>, cme_angle <chr>, cme_width <chr>, cme_speed <chr>
 ```
 
-## Step 4: Tidy the NASA the table
+### Step 4: Tidy the NASA the table (15 pts)
 
 Now, we tidy up the NASA table. Here we will code missing observations properly, recode columns that correspond to more than one piece of information, treat dates and times appropriately, and finally convert each column to the appropriate data type.
 
@@ -283,23 +285,23 @@ The output of this step should be similar to this (note the column types)
 #   cme_width_lb <lgl>
 ```
 
-## Part 5: Analysis
+## Part 2: Analysis
 
 Now that you have data from both sites, let's start some analysis.
 
-### Question 1: Replication
+### Question 1: Replication (10 pts)
 
 Can you replicate the top 50 solar flare table in [SpaceWeatherLive.com](https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares) exactly using the data obtained from NASA? That is, if you get the top 50 solar flares from the NASA table based on their classification (e.g., `X28` is the highest), do you get data for the same solar flare events?
 
 Include code used to get the top 50 solar flares from the NASA table (be careful when ordering by classification, using `tidyr::separate` here is useful). Write a sentence or two discussing how well you can replicate the SpaceWeatherLive data from the NASA data.
 
-### Question 2: Integration
+### Question 2: Integration (15 pts)
 
 Write a function that finds the best matching row in the NASA data for each of the top 50 solar flares in the SpaceWeatherLive data. Here, you have to decide for yourself how you determine what is the best matching entry in the NASA data for each of the top 50 solar flares.
 
 In your submission, include an explanation of how you are defining best matching rows across the two datasets in addition to the code used to find the best matches. Finally, use your function to add a new column to the NASA dataset indicating its rank according to SpaceWeatherLive, if it appears in that dataset.
 
-### Question 3: Analysis
+### Question 3: Analysis (10 pts)
 
 Prepare one plot that shows the top 50 solar flares in context with all data available in the NASA dataset. Here are some possibilities (you can do something else)
 
@@ -309,3 +311,13 @@ Prepare one plot that shows the top 50 solar flares in context with all data ava
 
 3. Do strong flares cluster in time? Plot the number of flares per month over time, add a graphical element to indicate (e.g., text or points) to indicate the number of strong flares (in the top 50) to see if they cluster.
 
+
+## Submission
+
+Prepare and knit an Rmarkdown file that includes for each step in Part 1: (a) code to carry out the step discussed, (b) output showing the output of your code, similar to the examples above, and (c) a short prose description of how your code works. For questions 1 and 2 of Part 2, follow the instructions there. For Question 3 of part 2 provide: (a) a short description (2 sentences) of what the intent of your plot is (think in terms of our discussion on how we show variation, co-variation in terms of central trend, spread, skew etc.), (b) code to produce your plot, (c) a short text description of your plot, and (d) a sentence or two of interpretation of your plot (again think of variation, co-variation, etc.).
+
+Submit the resulting PDF to ELMS at: 
+
+### Group work
+
+Working in groups in this project is encouraged but not required. If working on a group: (1) groups can be of 2 or 3 people, (2) each group member can submit the same writeup on ELMS, (3) in all cases, names of peers who worked in the group should be included in the writeup. As all group work and reflective of academic ethics code, there is an expectation that all group members will contribute equally in design, implementation and reporting of this work. If any student feels this expectation was not met when working on this project, they should contact the instructor team who will handle the situation as expediently and fairly as possible.
