@@ -1,0 +1,91 @@
+\documentclass[12pt]{article}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\title{CMSC320 Introduction to Data Science}
+
+\begin{document}
+\maketitle
+
+
+\section*{Finding Maxima/Minima using Derivatives}
+
+The value(s) at which a function attains its maximum value is called a \textit{maximum} of the function. Similarly, the value(s) at which a function attains its \textit{minimum} value is called a minimum of the function.\\
+
+In a smoothly changing function maxima or minima are found where the function flattens (slope becomes $0$). The first derivative of the function tells us where the slope is $0$. This is the \textit{first derivate test}.\\
+
+The derivate of the slope (the second derivative of the original function) can be useful to know if the value we found from first derivate test is a maxima or minima. When a function's slope is zero at $x$, and the second derivative at $x$ is:
+\begin{itemize}
+	\item less than 0, it is a local maximum
+	\item greater than 0, it is a local minimum
+	\item equal to 0, then the test fails (there may be other ways of finding out though)
+\end{itemize}
+This is called the \textit{second derivate test}.
+
+\subsection*{Steps to find Maxima/Minima of function $f(x)$}
+\begin{enumerate}
+	\item Find the value(s) at which $f(x)=0$ (First derivative test). i.e.,  Find x's such that $f^{'}(x)=0$. 
+	\item Find the value of the second derivative for each of the x's found in step 1 (Second derivative test).
+	\item If the value of the second derivative at $x$ is:
+	\begin{itemize}
+		\item less than 0, it is a local maximum
+		\item greater than 0, it is a local minimum
+		\item equal to 0, then the test fails (no minima or maxima)
+	\end{itemize}
+\end{enumerate}
+
+\section*{Notes on Finding Derivatives}
+\subsection*{Sum Rule}
+The derivative of the sum of two functions is the sum of the derivatives of the two functions: 
+
+\begin{eqnarray*}
+\frac{d}{dx}(f(x)+g(x)) = \frac{d}{dx}(f(x)) + \frac{d}{dx}(g(x))
+\end{eqnarray*}
+Similarly, the derivative of the difference of two functions is the difference of the derivatives of the two functions.
+
+
+\subsection*{Power Rule}
+If we have a function f(x) of the form $f(x)=x^{n}$ for any integer n,
+\begin{eqnarray*}
+\frac{d}{dx}(f(x)) = \frac{d}{dx}(x^{n}) = nx^{n-1}
+\end{eqnarray*}
+
+
+\subsection*{Chain Rule}
+If we have two functions of the form $f(x)$ and $g(x)$, the chain rule can be stated as follows:
+\begin{eqnarray*}
+\frac{d}{dx}(f(g(x)) = f^{'}(g(x)) g^{'}(x)
+\end{eqnarray*}
+
+\noindent \textit{Eg.} Differentiate $y=(3x+1)^{2}$ with respect to x.\\
+\textit{Solution.} Applying the above equation, we have the following: 
+\begin{eqnarray*}
+\frac{d}{dx}((3x+1)^{2}) = 2(3x+1)^{2-1} \frac{d}{dx}((3x+1)) = 2(3x+1)(3) = 6(3x+1)
+\end{eqnarray*}
+
+\subsection*{Product Rule}
+If we have two functions f(x) and g(x),
+
+\begin{eqnarray*}
+\frac{d}{dx}(f(x)g(x)) = f(x)\frac{d}{dx}(g(x)) + g(x)\frac{d}{dx}(f(x))
+= f(x)g'(x) + g(x)f'(x)
+\end{eqnarray*}
+
+\subsection*{Quotient Rule}
+If we have two functions f(x) and g(x) ($g(x)\neq 0$),
+
+\begin{eqnarray*}
+\frac{d}{dx}\frac{f(x)}{g(x)} = \left(\frac{g(x)\frac{d}{dx} (f(x)) - f(x)\frac{d}{dx} (g(x)) }{g(x)^{2}}\right)
+\end{eqnarray*}
+\\ \ \\
+\noindent A useful \href{http://tutorial.math.lamar.edu/pdf/Calculus_Cheat_Sheet_Derivatives.pdf}{useful calculus cheat sheet} and a
+\href{https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&ved=0ahUKEwi32ZGPvbbPAhUCdj4KHcdyDZAQFggnMAI&url=http%3A%2F%2Fwww.math.psu.edu%2Ftseng%2Fclass%2FMath140A%2FNotes-First_and_Second_Derivative_Tests.doc&usg=AFQjCNEUih6RsfXq933pFwmoPk0yOvc1Mg&sig2=zyxh1-zWe7TY7zYwnhpH8g&cad=rja}{discussion on finding maxima/minima} can be found in the embedded links.
+
+\end{document}
+
+
+

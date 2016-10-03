@@ -11,6 +11,7 @@ data exploration.
 
 ## Additional Resources
 
+- [Derivative review](/misc/derivative_cheat_sheet.pdf)  
 - [Zumen & Mount Ch. 3]({{< elmurl >}}/files/44629545)
 - [R for Data Science Ch. 7](http://r4ds.had.co.nz/exploratory-data-analysis.html)  
 - [ggplot2 cheatsheet](http://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf)  
