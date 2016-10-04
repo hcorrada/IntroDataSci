@@ -1,0 +1,92 @@
+---
+title: "EDA Activity"
+author: "CMSC320"
+date: "October 3, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Let's practice some EDA work. We're using the `Wage` dataset provided by the `ISLR` package. 
+
+```{r}
+library(tibble)
+library(dplyr)
+library(ggplot2)
+
+library(ISLR)
+data(Wage)
+
+wage <- as_tibble(Wage)
+wage
+```
+
+Let's warmup with one question:
+
+**Q0**: How are wages distributed overall across years?
+
+```{r, fig.width=3, fig.height=3, fig.align="center"}
+wage %>%
+  ggplot(aes(x=factor(year), y=wage, color=education)) +
+    geom_boxplot()
+```
+
+Now, on your own:
+
+**Q1**: How are wages distributed across years as a function of education? (Write the code to make this plot)
+
+```{r, echo=FALSE, fig.width=6, fig.height=3, fig.align="center"}
+wage %>%
+  ggplot(aes(x=factor(year), y=wage, color=education)) +
+    geom_boxplot()
+```
+
+**Q2**: How is the central tendency (e.g., median) of wage changing across years?
+
+```{r}
+# transform data
+wage %>%
+  group_by(year, education) %>%
+  summarize(med_wage=median(wage)) %>%
+
+# make the plot
+  ggplot(aes(x=year,y=med_wage, color=education)) +
+  geom_line()
+
+```
+
+**Q3**: How is median wage changing across years as a function of education?
+
+```{r}
+# transform data
+wage %>%
+  group_by(year) %>%
+  summarize(med_wage=median(wage)) %>%
+
+# make the plot
+  ggplot(aes(x=,y=)) +
+  geom_()
+
+```
+
+**Q4**: Is the wage gap between those with advanced degrees and those with less than a HS education changing over time?
+
+_Part 1_: How are you going to define the wage gap? 
+
+_Part 2_: Make a data frame with columns `year` and `wage_gap`.
+
+```{r}
+wage %>%
+  group_by(year, education) %>%
+  summarize(med_wage = median(wage)) %>%
+  filter(str_detect(education, "^1") | str_detect(education, "^5")) %>%
+  ungroup() %>%
+  spread(education, med_wage) %>%
+  select(year, hs=matches("^1"), ad=matches("^5")) %>%
+  mutate(gap = (1 - (hs / ad)) * 100) %>%
+  ggplot(aes(x=year, y=gap)) +
+    geom_line()
+```
+_Part 3_: Plot wage gap as a function of year.
