@@ -98,9 +98,6 @@ title = "NOT A LECTURE DAY"
 title = "Data wrangling"
 link = "https://myelms.umd.edu/courses/1199381/assignments/4270819"
 
-#[[day08.covers]]
-#title = "Handling missing data"
-
 [day09]
 date = "9/26"
 
@@ -126,13 +123,15 @@ notes = "lecture-note/eda/"
 date = "10/5"
 
 [[day12.covers]]
-title = "Introduction to Statistical Learning (1): Distributions and Statistics"
+title = "Exploratory Data Analysis (3): Transformations and missing data"
+notes = "lecture-note/eda/"
+
 
 [day13]
 date = "10/10"
 
 [[day13.covers]]
-title = "Introduction to Statistical Learning (2): Inference and testing"
+title = "Introduction to Statistical Learning (1): Distributions and Statistics"
 
 [[day13.workdue]]
 title = "Project 1: Data scraping and cleaning"
@@ -142,19 +141,19 @@ link = "projects/Project1/"
 date = "10/12"
 
 [[day14.covers]]
-title = "Introduction to Statistical Learning (3): Joint and conditional probability"
+title = "Introduction to Statistical Learning (2): Inference and testing"
 
 [day15]
 date = "10/17"
 
 [[day15.covers]]
-title = "Linear models for regression (1)"
+title = "Introduction to Statistical Learning (3): Joint and conditional probability"
 
 [day16]
 date = "10/19"
 
 [[day16.covers]]
-title = "Linear models for regression (2)"
+title = "Linear models for regression (1)"
 
 # gtwon seminar
 [day17]
@@ -167,49 +166,50 @@ title = "Midterm exam"
 date = "10/26"
 
 [[day18.covers]]
-title = "Linear models for classification"
+title = "Linear models for regression (2)"
 
 [day19]
 date = "10/31"
 
 [[day19.covers]]
-title = "Tree Methods"
+title = "Linear models for classification"
 
 [day20]
 date = "11/2"
 
 [[day20.covers]]
-title = "Beyond linear models for classification: SVMs and kNN"
+title = "Tree Methods"
 
 [day21]
 date = "11/7"
 
 [[day21.covers]]
-title = "Model evaluation using resampling"
+title = "Beyond linear models for classification: SVMs and kNN"
 
 [day22]
 date = "11/9"
 
 [[day22.covers]]
-title = "Dimensionality Reduction"
+title = "Model evaluation using resampling"
 
 [day23]
 date = "11/14"
 
 [[day23.covers]]
-title = "Clustering"
+title = "Dimensionality Reduction"
 
 [day24]
 date = "11/16"
 
 [[day24.covers]]
-title = "Text and sentiment analysis"
+title = "Clustering"
 
 [day25]
 date = "11/21"
 
 [[day25.covers]]
-title = "Time-series and forecasting"
+title = "Text and sentiment analysis"
+# title = "Time series analysis and forecasting"
 
 # thanksgiving
 [day26]

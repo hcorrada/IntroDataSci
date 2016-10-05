@@ -8,6 +8,8 @@ data exploration.
 
 [Lecture Notes: Data visualization for EDA](visualization_eda/)  
 [Lecture Notes: Data summarization for EDA](eda_summary_stats/)  
+[Lecture Notes: Data transformations](transformations/)  
+[Lecture Notes: Handling missing data](missing_data/)  
 
 ## Additional Resources
 
