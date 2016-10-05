@@ -1,0 +1,155 @@
+---
+title: "Data transformations"
+author: "CMSC320"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+library(png)
+library(grid)
+library(tidyr)
+library(dplyr)
+```
+
+
+Having a sense of how data is distributed, both from using visual or quantitative summaries, we can consider transformations of variables to ease both interpretation of data analyses and the application statistical and machine learning models to a dataset.
+
+## Centering and scaling
+
+A very common and important transformation  is to scale data to a common unit-less scale. Informally, you can think of this as transforming variables from whatever units they are measured (e.g., diamond depth percentage) into "standard deviations away from the mean" units (actually called _standard units_, or $z$-score). Given data $x = x_1, x_2, \ldots, x_n$, the transformation applied to obtain centered and scaled variable $z$ is:
+
+$$
+z_i = \frac{(x_i - \overline{x})}{\mathrm{sd}(x)}
+$$
+
+where $\overline{x}$ is the mean of data $x$, and $\mathrm{sd}(x)$ is its standard deviation.
+
+```{r}
+library(ggplot2)
+data(diamonds)
+
+diamonds %>%
+  mutate(scaled_depth = (depth - mean(depth)) / sd(depth)) %>%
+  ggplot(aes(x=scaled_depth)) +
+    geom_histogram(binwidth=.5)
+```
+
+Question: what is the mean of $z$? What is it's standard deviation? Another name for this transformation is to _standardize_ a variable.
+
+One useful result of applying this transformation to variables in a dataset is that all variables are in the same, and thus comparable units.
+
+On occasion, you will have use to apply transformations that only _center_ (but not scale) data:
+
+$$
+z_i = (x_i - \overline{x})
+$$
+
+Question: what is the mean of $z$ in this case? What is it's standard deviation?
+
+Or, apply transformations that only _scale_ (but not center) data:
+
+$$
+z_i = \frac{x_i}{\mathrm{sd}(x_i)}
+$$
+
+Question: what is the mean of $z$ in this case? What is it's standard deviation?
+
+
+## Treating categorical variables as numeric
+
+Many modeling algorithms work strictly on numeric measurements. For example, we will see methods to predict some variable given values for other variables such as linear regression or support vector machines, that are strictly defined for numeric measurements. In this case, we would need to transform categorical variables into something that we can treat as numeric. We will see more of this in later sections of the course but let's see a couple of important guidelines for _binary_ variables (categorical variables that only take two values, e.g., `health_insurance`).
+
+One option is to encode one value of the variable as 1 and the other as 0. For instance:
+
+```{r}
+library(ISLR)
+library(dplyr)
+data(Wage)
+
+Wage %>%
+  mutate(numeric_insurace = ifelse(health_ins == "1. Yes", 1, 0)) %>%
+  head()
+```
+
+Another option is to encode one value as 1 and the other as -1:
+
+```{r}
+Wage %>%
+  mutate(numeric_insurance = ifelse(health_ins == "1. Yes", 1, -1)) %>%
+  head()
+```
+
+The decision of which of these two transformations to use is based on the method to use or the goal of your analysis. For instance, when predicting someone's wage based on their health insurance status, the 0/1 encoding let's us make statements like: "on average, wage increases by $XX if a person has health insurance". On the other hand, a prediction algorithm called a Support Vector Machine is strictly defined on data coded as 1/-1.
+
+
+### Discretizing continuous values. 
+
+How about transforming data in the other direction, from continuous to discrete values. This can make it easier to compare differences related to continuous measurements: Do doctors prescribe a certain medication to older kids more often? Is there a difference in wage based on age?
+
+It is also a useful way of capturing non-linear relationships in data: we will see this in our regression and prediction unit. Two standard methods used for discretization are to use **equal-length** bins, where variable range is divided into bins _regardless_ of the data distribution:
+
+```{r, eval=FALSE}
+is.missing <- is.na(flights$dep_delay)
+flights %>% 
+  mutate(dep_delay_fixed = 
+           ifelse(!is.missing, dep_delay, 
+                  mean(dep_delay, na.rm=TRUE))) %>%
+  mutate(dep_delay_discrete = cut(dep_delay_fixed, breaks=100)) %>%
+  ggplot(aes(dep_delay_discrete)) +
+  geom_bar()
+```
+
+The second approach uses **equal-sized** bins, where the range is divided into bins _based_ on data distribution
+
+```{r, eval=FALSE}
+is.missing <- is.na(flights$dep_delay)
+flights %>% 
+  mutate(dep_delay_fixed = 
+           ifelse(!is.missing, dep_delay, 
+                  mean(dep_delay, na.rm=TRUE))) %>%
+  mutate(dep_delay_discrete = cut(dep_delay_fixed, 
+          breaks=quantile(dep_delay_fixed, probs=seq(0,1,len=11)))) %>%
+  ggplot(aes(dep_delay_discrete)) +
+  geom_bar()
+```
+
+In both cases, the `cut` function is used to apply discretization, with the `breaks` argument determining which method is applied. In the first example, `breaks=100` specifies that 100 bins of equal-length are to be used. In the second example, the `quantile` function is used to define 10 equal-sized bins.
+
+
+## Skewed Data
+
+In many data analysis, variables will have a _skewed_ distribution over their range. In the last section we saw one way of defining skew using quartiles and median. Variables with skewed distributions can be hard to incorporate into some modeling procedures, especially in the presence of other variables that are not skewed. In this case, applying a transformation to reduce skew will improve performance of models.
+
+Also, skewed data may arise when measuring *multiplicative* processes. This is very common in physical or biochemical processes. In this case, interpretation of data may be more intiuitive after a transformation.
+
+We have seen an example of skewed data previously when we looked at departure delays in our flights dataset.
+
+```{r echo=FALSE}
+library(dplyr)
+library(ggplot2)
+library(nycflights13)
+```
+
+```{r, fig.width=20}
+flights %>% ggplot(aes(x=dep_delay)) + geom_histogram(binwidth=30)
+```
+
+In many cases a logarithmic transform is an appropriate transformation to reduce data skew:
+
+- If values are all positive: apply `log2` transform
+- If some values are negative, two options
+  - Started Log: shift all values so they are positive, apply `log2`
+  - Signed Log: $sign(x) \times log2(abs(x) + 1)$.
+  
+  
+Here is a signed log transformation of departure delay data:
+
+```{r}
+flights %>%
+  mutate(transformed_dep_delay = sign(dep_delay) * log2(abs(dep_delay) + 1)) %>%
+  ggplot(aes(x=transformed_dep_delay)) +
+    geom_histogram(binwidth=1)
+```
+

@@ -1,0 +1,101 @@
+---
+title: "Handling missing data"
+author: "CMSC320"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+library(png)
+library(grid)
+library(tidyr)
+library(dplyr)
+library(readr)
+```
+
+We can now move on to a very important aspect of data preparation and transformation: how to deal with missing data? By missing data we mean values that are unrecorded, unknown or unspecified in a dataset. We saw an example of this when we looked at the tidy unit. Here is the tidy weather dataset again:
+
+```{r, eval=FALSE}
+data_dir <- "/home/ids_materials/tidy_unit"
+weather <- tbl_df(read.csv(file.path(data_dir, "weather.csv"), stringsAsFactors = FALSE))
+weather
+```
+
+```{r, echo=FALSE}
+data_dir <- "~/Teaching/CMSC320_Fall2016/materials/lectures/DataModels/tidyr/vignettes"
+weather <- read_csv(file.path(data_dir, "weather.csv"))
+weather
+```
+
+And the result of tidying this dataset:
+
+```{r}
+tidy_weather <- weather %>%
+  gather(day, temp, d1:d31) %>%
+  spread(element, temp)
+tidy_weather
+```
+
+In this dataset, temperature observations coded as `NA` are considered _missing_. Now, we can imagine that either the measurement failed in a specific day for a specific weather station, or that certain stations only measure temperatures on certain days of the month. Knowing which of these applies can change how we approach this missing data. As you can see, how to treat missing data depends highly on how the data was obtained, and the more you know about a dataset, the better decision you can make.
+
+In general, the central question with missing data is: Should we remove observations with missing values, or should we *impute* missing values? This also relates to the difference between values that are missing _at random_ vs. values that are missing _systematically_. In the weather example above, the first case (of failed measurements) could be thought of as missing _at random_, and the second case as missing _systematically_.
+
+
+Data that is missing systematically can significantly bias an analysis. For example: 
+Suppose we want to predict how sick someone is from test result. If doctors do not carry out the test because a patient is too sick, then the fact test is missing is a great predictor of how sick the patient is.
+
+
+So in general, the **first step** when dealing with missing data is to understand *why* and *how* data may be missing. I.e., talk to collaborator, or person who created the dataset. Once you know that, if a relatively small fraction of observations contain have missing values, then it may be safe to remove observations.
+
+```{r}
+tidy_weather_nomissing <- tidy_weather %>%
+  mutate(missing = is.na(tmax) | is.na(tmin)) %>%
+  filter(!missing) %>%
+  select(-missing)
+tidy_weather_nomissing
+```
+
+### Dealing with data missing at random
+
+In the case of categorical variables, a useful approach is to encode missing as a new category and include that in subsequent modeling.
+
+```{r, eval=FALSE}
+is.missing <- is.na(tb2$iso2)
+tb2 %>% 
+  mutate(iso2_fixed=factor(
+    ifelse(!is.missing, tb2$iso2, "missing")))
+```
+
+In the case of numeric values, we can use a simple method for imputation where we
+replace missing values for a variable with, for instance, the mean of non-missing values
+
+```{r, eval=FALSE}
+is.missing <- is.na(flights$dep_delay)
+flights %>%
+  mutate(dep_delay_fixed = 
+           ifelse(!is.missing, dep_delay, 
+                  mean(dep_delay, na.rm=TRUE)))
+```
+
+A more complex method is to replace missing values for a variable predicting from
+other variables when variables are related (we will see linear regression using the `lm` and `predict` functions later on)
+
+```{r, eval=FALSE}
+is.missing <- is.na(flights$dep_delay)
+# use average delay condition on origin airport
+fit <- flights %>% lm(dep_delay~origin, data=.)
+flights %>%
+  mutate(dep_delay_fixed = 
+           ifelse(!is.missing, dep_delay, 
+                  predict(fit, newdata=flights)))
+```
+
+In either case, a common approach is to add an additional indicator
+variable stating if numeric missing value was imputed
+
+```{r, eval=FALSE}
+flights %>%
+  mutate(dep_delay_missing = is.na(dep_delay))
+```
+
