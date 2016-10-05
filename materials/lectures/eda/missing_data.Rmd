@@ -18,7 +18,7 @@ We can now move on to a very important aspect of data preparation and transforma
 
 ```{r, eval=FALSE}
 data_dir <- "/home/ids_materials/tidy_unit"
-weather <- tbl_df(read.csv(file.path(data_dir, "weather.csv"), stringsAsFactors = FALSE))
+weather <- read_csv(file.path(data_dir, "weather.csv"))
 weather
 ```
 
