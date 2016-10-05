@@ -40,7 +40,6 @@
 
 &lt;meta name=&#34;author&#34; content=&#34;CMSC320&#34; /&gt;
 
-&lt;meta name=&#34;date&#34; content=&#34;2016-09-30&#34; /&gt;
 
 &lt;title&gt;Project 1&lt;/title&gt;
 
@@ -147,13 +146,12 @@ $(document).ready(function () {
 
 &lt;h1 class=&#34;title toc-ignore&#34;&gt;Project 1&lt;/h1&gt;
 &lt;h4 class=&#34;author&#34;&gt;&lt;em&gt;CMSC320&lt;/em&gt;&lt;/h4&gt;
-&lt;h4 class=&#34;date&#34;&gt;&lt;em&gt;2016-09-30&lt;/em&gt;&lt;/h4&gt;
 
 &lt;/div&gt;
 
 
 &lt;p&gt;&lt;strong&gt;Posted:&lt;/strong&gt; Sep 26, 2016&lt;br /&gt;
-&lt;strong&gt;Last Updated:&lt;/strong&gt; Sep 30, 2016&lt;br /&gt;
+&lt;strong&gt;Last Updated:&lt;/strong&gt; Oct 05, 2016&lt;br /&gt;
 &lt;strong&gt;Due:&lt;/strong&gt; Oct 10, 2016&lt;/p&gt;
 &lt;p&gt;You’ve been hired by a new space weather startup looking to disrupt the space weather reporting business. Your first project is to provide better data about the top 50 solar flares recorded so far than that shown by your competitor &lt;a href=&#34;https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares&#34;&gt;SpaceWeatherLive.com&lt;/a&gt;. To do this, they’ve pointed you to &lt;a href=&#34;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html&#34;&gt;this messy HTML page&lt;/a&gt; from NASA (&lt;a href=&#34;http://www.hcbravo.org/IntroDataSci/misc/waves_type2.html&#34;&gt;available here also&lt;/a&gt;) where you can get extra data your startup is going to post in your new spiffy site.&lt;/p&gt;
 &lt;p&gt;Of course, you don’t have access to the raw data for either of these two tables, so as an enterprising data scientist you will scrape this information directly from each HTML page using all the great tools available to you in R. By the way, you should read up a bit on &lt;a href=&#34;https://en.wikipedia.org/wiki/Solar_flare&#34;&gt;Solar Flares&lt;/a&gt;, &lt;a href=&#34;https://www.spaceweatherlive.com/en/help/what-is-a-coronal-mass-ejection-cme&#34;&gt;coronal mass ejections&lt;/a&gt;, &lt;a href=&#34;http://spaceweather.com/glossary/flareclasses.html&#34;&gt;the solar flare alphabet soup&lt;/a&gt;, &lt;a href=&#34;http://www.nasa.gov/topics/solarsystem/features/halloween_storms.html&#34;&gt;the scary storms of Halloween 2003&lt;/a&gt;, and &lt;a href=&#34;https://science.nasa.gov/science-news/science-at-nasa/2005/27jan_solarflares&#34;&gt;sickening solar flares&lt;/a&gt;.&lt;/p&gt;
@@ -213,7 +211,7 @@ $(document).ready(function () {
 &lt;/div&gt;
 &lt;div id=&#34;step-3.-scrape-the-nasa-data-15-pts&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Step 3. Scrape the NASA data (15 pts)&lt;/h3&gt;
-&lt;p&gt;Next you need to scrape the data in &lt;a href=&#34;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html&#34; class=&#34;uri&#34;&gt;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html&lt;/a&gt; (&lt;a href&gt;also available here&lt;/a&gt;) to get additional data about these solar flares. This table format is described here: &lt;a href=&#34;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html&#34; class=&#34;uri&#34;&gt;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html&lt;/a&gt;, and here:&lt;/p&gt;
+&lt;p&gt;Next you need to scrape the data in &lt;a href=&#34;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html&#34; class=&#34;uri&#34;&gt;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html&lt;/a&gt; (&lt;a href=&#34;http://www.hcbravo.org/IntroDataSci/misc/waves_type2.html&#34;&gt;also available here&lt;/a&gt;) to get additional data about these solar flares. This table format is described here: &lt;a href=&#34;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html&#34; class=&#34;uri&#34;&gt;http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html&lt;/a&gt;, and here:&lt;/p&gt;
 &lt;div id=&#34;nasa-data-description&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;NASA data description&lt;/h4&gt;
 &lt;div class=&#34;Section1&#34;&gt;
