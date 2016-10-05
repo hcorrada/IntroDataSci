@@ -1,7 +1,6 @@
 ---
 title: "Project 1"
 author: "CMSC320"
-date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -10,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 **Posted:** Sep 26, 2016  
-**Last Updated:** Sep 30, 2016  
+**Last Updated:** `r format(Sys.Date(), "%b %d, %Y")`  
 **Due:** Oct 10, 2016  
 
 You've been hired by a new space weather startup looking to disrupt the space weather reporting business. Your first project
@@ -83,7 +82,7 @@ The result of this step should be a data frame with the first few rows as:
 
 ### Step 3. Scrape the NASA data (15 pts)
 
-Next you need to scrape the data in http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html ([also available here]())
+Next you need to scrape the data in http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html ([also available here](/misc/waves_type2.html))
 to get additional data about these solar flares. This table format is described here: http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html, and here:
 
 #### NASA data description
