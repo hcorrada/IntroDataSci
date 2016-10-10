@@ -132,6 +132,7 @@ date = "10/10"
 
 [[day13.covers]]
 title = "Introduction to Statistical Learning (1): Distributions and Statistics"
+notes = "lecture-note/statlearn/"
 
 [[day13.workdue]]
 title = "Project 1: Data scraping and cleaning"
@@ -142,12 +143,14 @@ date = "10/12"
 
 [[day14.covers]]
 title = "Introduction to Statistical Learning (2): Inference and testing"
+notes = "lecture-note/statlearn/"
 
 [day15]
 date = "10/17"
 
 [[day15.covers]]
 title = "Introduction to Statistical Learning (3): Joint and conditional probability"
+notes = "lecture-note/statlearn/"
 
 [day16]
 date = "10/19"

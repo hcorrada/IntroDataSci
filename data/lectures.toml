@@ -51,7 +51,7 @@ hide = true
 title  = "Introduction to Statistical Learning"
 excerpt = "Introduction to randomness, distributions, inference and testing"
 url = "statlearn"
-hide = true
+hide = false
 
 [10-linear_models]
 title = "Linear models for regression and classification"
