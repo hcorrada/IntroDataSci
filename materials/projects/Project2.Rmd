@@ -1,0 +1,220 @@
+---
+title: "Project 2: Wrangling and EDA"
+author: "CMSC320"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Posted:** Oct 19, 2016  
+**Last Updated:** `r format(Sys.Date(), "%b %d, %Y")`  
+**Due:** Oct 31, 2016  
+
+In this project you will apply your data wrangling and exploratory data analysis
+skills to baseball data. In particular, we want to know how well did Moneyball work
+for the Oakland A's. Was it worthy of a movie?
+
+![](moneyball.jpg)
+
+# A bit of background
+
+We'll be looking at data about teams in Major League Baseball. A couple of important points:
+
+- Major League Baseball is a professional baseball league, where teams pay players to play baseball.
+- The goal of each team is to win as many games out of a 162 game season as possible.
+- Teams win games by scoring more runs than their adversary.
+- In principle, better players are costlier, so teams that want good players need to spend more money.
+- Teams that spend the most, frequently win the most.
+
+So, the question is, how can a team that can't spend so much win? The basic idea that Oakland (and other teams)
+used is to *redefine* what makes a player *good*. I.e., figure out what player characteristics translated into *wins*. Once they
+realized that teams were not really pricing players using these characteristics, they could exploit this to pay for undervalued players,
+players that were *good* according to their metrics, but were not recognized as such by other teams, and therefore not as expensive.
+
+You can get more information about this period in baseball history from:
+
+- [Wikipedia](http://en.wikipedia.org/wiki/Moneyball)  
+- [The Moneyball book](http://www.amazon.com/Moneyball-The-Winning-Unfair-Game/dp/0393324818)  
+- [The Moneyball movie](http://www.imdb.com/title/tt1210166/)  
+
+# The Data
+
+You will be using data from a very useful database on baseball teams, players and seasons curated by Sean Lahman available at [http://www.seanlahman.com/baseball-archive/statistics/](http://www.seanlahman.com/baseball-archive/statistics/). The database has been made available as a `sqlite` database [https://github.com/jknecht/baseball-archive-sqlite](https://github.com/jknecht/baseball-archive-sqlite). `sqlite` is a light-weight, file-based database management system that is well suited for small projects and prototypes. Both `sqlite` and the Lahman `sqlite` database are installed in the Docker container we are using in class http://www.hcbravo.org/IntroDataSci/homeworks/rocker/. You can read more about the dataset here: [http://seanlahman.com/files/database/readme2014.txt](http://seanlahman.com/files/database/readme2014.txt).
+
+There are a number of ways you can use SQL to interact with this dataset:
+
+1) Using the `dplyr` R package as described here: [https://cran.r-project.org/web/packages/dplyr/vignettes/databases.html](https://cran.r-project.org/web/packages/dplyr/vignettes/databases.html).:
+
+```{r eval=FALSE}
+library(dplyr)
+lahman_con <- src_sqlite("/home/ids_materials/lahman_sqlite/lahman2014.sqlite")
+
+# let's calculate total payroll per year for the Americal League (AL)
+# save the query as a string
+salary_query <- 
+  "SELECT yearID, sum(salary) as total_payroll 
+   FROM Salaries 
+   WHERE lgID == 'AL'
+   GROUP BY yearID"
+
+# send the query to the database
+query_result <- lahman_con %>% tbl(sql(salary_query))
+
+# at this point the query is not computed completely. To load the result
+# of the query as a table in R use the collect function
+result <- collect(query_result)
+```
+
+Be sure to read carefully the section on lazy evaluation and the purpose of the `collect` function.
+
+2) Another way of using SQL within R is using the `RSQLite` package. This package implements the core database API `DBI` for SQLite.
+
+```{r eval=FALSE}
+library(RSQLite)
+library(tibble)
+
+lahman_con <- dbConnect(RSQLite::SQLite(), "/home/ids_materials/lahman_sqlite/lahman2014.sqlite")
+
+query_object <- lahman_con %>%
+  dbSendQuery(salary_query)
+
+result <- dbFetch(query_object) %>% as_tibble()
+
+# some cleanup code
+dbClearResult(query_object)
+dbDisconnect(lahman_con)
+```
+
+In this case, table `result` does not contain all rows of the query result, as data is moved from the database to R in batches. See `?dbSendQuery` for more information.
+
+
+3) Finally, you can use SQL outside R completely using the `sqlite3` command line interface. For example, given the running Docker container for class, you can start a `sqlite3` command line session by running the following on your host machine:
+
+```{bash eval=FALSE}
+docker exec -i -t -u rstudio ids sqlite3 /home/ids_materials/lahman_sqlite/lahman2014.sqlite
+```
+
+There you can run SQL queries on the database. You can see documentation for the `sqlite3` command line interface here:
+[https://www.sqlite.org/cli.html](https://www.sqlite.org/cli.html).
+
+You would run the example query above using
+
+```{bash eval=FALSE}
+sqlite> select yearID, sum(salary) as total_payroll from Salaries where lgID == 'AL' group by yearID;
+```
+
+This would print the result to the screen. If you want to do subsequent analysis on the result of query you could (a) create a table
+based on the query, or (b) create a view based on the query. The distinction is subtle, in (a) the query result is physically stored in the
+database like a regular table which may impact disk use for very large datasets, in (b) the query (may) be recomputed any time the view is referred to which can lead to performance issues when the view is used frequently. 
+
+For (a) you would do
+
+```{bash eval=FALSE}
+sqlite> create table al_payrolls as select yearID, sum(salary) as total_payroll from Salaries where lgID == 'AL' group by yearID;
+```
+
+For (b) you would use
+
+```{bash eval=FALSE}
+sqlite> create table al_payrolls as select yearID, sum(salary) as total_payroll from Salaries where lgID == 'AL' group by yearID;
+```
+
+(you can't do both as written since you are using the same name `al_salaries`).
+
+Regardless of which of the two you use, you can load the result to R using the methods described above, where instead of sending the
+original query, you would `select * from al_salaries`.
+
+Note that you can write a SQL script, a file containing a series of SQL expressions and evaluate them using the `.read` sqlite command:
+
+```{bash eval=FALSE}
+sqlite> .read baseball_queries.sql
+```
+
+
+For quick exploratory jobs, using `dplyr` (method (1) above) is cleanest and easiest to use. I recommend that you use it for your
+project. This way you can keep SQL and R code in a single Rmarkdown document to improve reproducibility and organization.
+Also, you can download the sqlite file directly from github at https://github.com/jknecht/baseball-archive-sqlite/raw/master/lahman2014.sqlite if you would rather not use the course Docker container. If you are using Docker you may need to `docker pull hcorrada/idsdocker` if you are using sqlite to do your work. 
+
+# The question
+
+We want to understand how efficient teams have been historically at spending money and getting wins in return. In the case of Moneyball, one would expect that Oakland was not much more efficient than other teams in their spending before 2000, were much more efficient (they made a movie about it after all) between 2000 and 2005, and by then other teams may have caught up. Your job in this project is to see how this is reflected in the data we have.
+
+# Wrangling
+
+The data you need to answer these questions is in the `Salaries` and `Teams` tables of the database.
+
+**Problem 1** Using SQL compute a relation containing the total payroll and winning percentage (number of wins / number of games * 100) for each team (that is, for each `teamID` and `yearID` combination). You should include other columns that will help when performing EDA later on (e.g., franchise ids, number of wins, number of games).
+
+Include the SQL code you used to create this relation in your writeup. Describe how you dealt with any missing data in these two relations. Specifically, indicate if there is missing data in either table, and how the type of join you used determines how you dealt with this missing data.
+
+# Exploratory data analysis
+
+## Payroll distribution
+
+**Problem 2**. Write code to produce plots that illustrate the distribution of payrolls across teams conditioned on time (from 1990-2014).
+
+**Question 1**. What statements can you make about the distribution of payrolls conditioned on time based on these plots? Remember you can make statements in terms of central tendency, spread, etc.
+
+**Problem 3**. Write code to produce plots that specifically show at least one of the statements you made in Question 1. For example, if you make a statement that there is a trend for payrolls to decrease over time, make a plot of a statistic for central tendency (e.g., mean payroll) vs. time to show that specficially.
+
+## Correlation between payroll and winning percentage
+
+**Problem 4**. Write code to discretize year into five time periods (using the `cut` function with parameter `breaks=5`) and then make a scatterplot showing mean winning percentage (y-axis) vs. mean payroll (x-axis) for each of the five time periods. You could add a regression line (using `geom_smooth(method=lm)`) in each scatter plot to ease interpretation.
+
+**Question 2**. What can you say about team payrolls across these periods? Are there any teams that standout as being particularly good at paying for wins across these time periods? What can you say about the Oakland A's spending efficiency across these time periods (labeling points in the scatterplot can help interpretation).
+
+# Data transformations
+
+## Standardization across years
+
+It looks like comparing payrolls across years is problematic so let's do a transformation that will help with these comparisons.
+
+**Problem 5**. Write `dplyr` code to create a new variable in your dataset that standardizes payroll conditioned on year. So, this column for team $i$ in year $j$ should equal
+
+$$
+\mathrm{standardized\_payroll}_{ij}=\frac{\mathrm{payroll}_{ij} - \overline{\mathrm{payroll}_{\cdot j}}}{s_{\cdot j}}
+$$
+
+where $\overline{\mathrm{payroll}_{\cdot j}}$ is the average payroll for year $j$, and $s_{\cdot j}$ is the
+standard deviation of payroll for year $j$.
+
+**Problem 6**. Repeat the same plots as Problem 4, but use this new standardized payroll variable.
+
+**Question 3**. Discuss how the plots from Problem 4 and Problem 6 reflect the transformation you did on the payroll variable.
+
+## Expected wins
+
+It's hard to see global trends across time periods using these multiple plots, but now that we have standardized payrolls across time, we can look at a single plot showing correlation between winning percentage and payroll across time.
+
+**Problem 7**. Make a single scatter plot of winning percentage (y-axis) vs. standardized payroll (x-axis). Add a regression line to highlight the relationship (again using `geom_smooth(method=lm)`).
+
+The regression line gives you expected winning percentage as a function of standardized payroll. Looking at the regression line, it looks like teams
+that spend roughly the average payroll in a given year will win 50% of their games (i.e. `win_pct` is .5 when `standardized_payroll` is 0), and teams increase 5% wins for every 2 standard units of payroll (i.e., `win_pct` is .55 when `standardized_payroll` is 2). We will see how this is done in general using linear regression later in the course.
+
+From these observations we can calculate the _expected win percentage_ for team $i$ in year $j$ as
+
+$$
+\mathrm{expected\_win\_pct}_{ij} = 0.5 + 0.025 \times \mathrm{standardized\_payroll}_{ij}
+$$
+
+## Spending efficiency
+
+Using this result, we can now create a single plot that makes it easier to compare teams efficiency. The idea is to create a new measurement unit for each team based on their winning percentage and their expected winning percentage that we can plot across time summarizing how efficient each team is in their spending.
+
+**Problem 8**. Write `dplyr` code to calculate spending efficiency for each team
+
+$$
+\mathrm{efficiency}_{ij} = \mathrm{win\_pct}_{ij} - \mathrm{expected\_win\_pct}_{ij}
+$$
+
+for team $i$ in year $j$, where `expected_win_pct` is given above.
+
+Make a line plot with year on the x-axis and efficiency on the y-axis. A good set of teams to plot are Oakland, the New York Yankees, Boston, Atlanta and Tampa Bay (teamIDs `OAK`, `BOS`, `NYA`, `ATL`, `TBA`). That plot can be hard to read since there is so much year to year variation for each team. One way to improve it is to use `geom_smooth` instead of `geom_line`.
+
+**Question 4**. What can you learn from this plot compared to the set of plots you looked at in Question 2 and 3?
+
+## What to turn in
+
+Knit your Rmarkdown file containing all code and text to solve each problem and answer each question. Submit to ELMS at [https://myelms.umd.edu/courses/1177854/assignments/4131990](https://myelms.umd.edu/courses/1177854/assignments/4131990).
