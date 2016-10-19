@@ -380,7 +380,7 @@ H_1: \, & p > .5 & \textrm{(alternative)}
 \end{align}
 $$
 
-Note: this is a one-sided test vs. a two sided test where the null hypothesis is that $p=.5$ and the alternative is $p \neq .5$. According to the CLT, estimates $\hat{p}$ of $p$ from $n$ samples would be distributed as $N(.5, \frac{\sqrt{.5(1-.5)}}{\sqrt{n}})$ (we use $p=.5$ as this is the worst case for the hypothesis we want to test).
+Note: this is a _one-sided_ test vs. a _two-sided_ test where the null hypothesis is that $p=.5$ and the alternative is $p \neq .5$. According to the CLT, estimates $\hat{p}$ of $p$ from $n$ samples would be distributed as $N(.5, \frac{\sqrt{.5(1-.5)}}{\sqrt{n}})$ (we use $p=.5$ as this is the worst case for the hypothesis we want to test).
 
 Once we do have our sample of $n$ tweets we can get an estimate $\hat{p}$ as we did before. If we see that $\hat{p}$ (sample mean from our sample of tweets) is _too far_ from $p=.5$ then we could reject the _null_ hypothesis since the estimate we derived from the data we have is not statistically consistent with the _null_ hypothesis. Now, how do we say our estimate $\hat{p}$ is too far? Here, we use the probability model given by the CLT. If $P(Y \geq \hat{p}) \geq .95$ under the null model (of $p=.5$), we say it is too far and we reject.
 
@@ -396,7 +396,7 @@ tab <- tab %>%
 knitr::kable(tab)
 ```
 
-Notice that rejection occurs when the parameter value for the null hypothesis $p=.5$ is outside the 95% confidence interval.
+Notice that rejection occurs when the parameter value for the null hypothesis $p=.5$ is outside the 95% confidence interval. Another note, these results hold for $n$ sufficiently large that the normal distribution in the CLT provides a good approximation of the distribution of estimates $\hat{p}$. In cases where $n$ is smaller, the $t$-distribution, as opposed to the normal distribution, provides a better approximation of the distribution of estimates $\hat{p}$. In that case, instead of using `pnorm` in the calculations above, we would use `pt` (for $t$-distribution) and the testing procedure above is referred to as a $t$-test (one-sided or two-sided as above). Now, as $n$ grows, the $t$-distribution approaches a normal distribution which is why analysts use the $t$-test regularly.  
 
 ### Summary
 
@@ -404,7 +404,7 @@ Notice that rejection occurs when the parameter value for the null hypothesis $p
 
 For _averages_ the LLN and CLT tells us how to compute probabilities from a single parameter estimate, that is, derived from one dataset of samples. With these probabilities we can construct confidence intervals for our estimate.
 
-**Testing**: Having a hypothesis about our parameter of interest, we can use probability _under this hypothesis_ to see how statistically consistent our data is with that hypothesis, and reject the hypothsis if data is not statistically consistent enough (again using probability from CLT when dealing with averages).
+**Testing**: Having a hypothesis about our parameter of interest, we can use probability _under this hypothesis_ to see how statistically consistent our data is with that hypothesis, and reject the hypothesis if data is not statistically consistent enough (again using probability from CLT when dealing with averages).
 
 ### Probability Distributions
 
