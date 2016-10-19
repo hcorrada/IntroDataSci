@@ -149,14 +149,17 @@ notes = "lecture-note/statlearn/"
 date = "10/17"
 
 [[day15.covers]]
-title = "Introduction to Statistical Learning (3): Joint and conditional probability"
-notes = "lecture-note/statlearn/"
+title = "Lecture canceled"
 
 [day16]
 date = "10/19"
 
 [[day16.covers]]
-title = "Linear models for regression (1)"
+title = "Introduction to Statistical Learning (3): Joint and conditional probability"
+notes = "lecture-note/statlearn/"
+
+[[day16.covers]]
+title = "Midterm review (see Piazza)"
 
 # gtwon seminar
 [day17]
@@ -169,7 +172,7 @@ title = "Midterm exam"
 date = "10/26"
 
 [[day18.covers]]
-title = "Linear models for regression (2)"
+title = "Linear models for regression"
 
 [day19]
 date = "10/31"
@@ -182,6 +185,10 @@ date = "11/2"
 
 [[day20.covers]]
 title = "Tree Methods"
+
+[[day20.workdue]]
+title = "Project 2: Data wrangling and EDA"
+link = "projects/Project2/"
 
 [day21]
 date = "11/7"

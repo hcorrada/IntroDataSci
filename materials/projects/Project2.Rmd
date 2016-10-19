@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Posted:** Oct 19, 2016  
 **Last Updated:** `r format(Sys.Date(), "%b %d, %Y")`  
-**Due:** Oct 31, 2016  
+**Due:** Nov 2, 2016  
 
 In this project you will apply your data wrangling and exploratory data analysis
 skills to baseball data. In particular, we want to know how well did Moneyball work
@@ -147,7 +147,7 @@ The data you need to answer these questions is in the `Salaries` and `Teams` tab
 
 **Problem 1** Using SQL compute a relation containing the total payroll and winning percentage (number of wins / number of games * 100) for each team (that is, for each `teamID` and `yearID` combination). You should include other columns that will help when performing EDA later on (e.g., franchise ids, number of wins, number of games).
 
-Include the SQL code you used to create this relation in your writeup. Describe how you dealt with any missing data in these two relations. Specifically, indicate if there is missing data in either table, and how the type of join you used determines how you dealt with this missing data.
+Include the SQL code you used to create this relation in your writeup. Describe how you dealt with any missing data in these two relations. Specifically, indicate if there is missing data in either table, and how the type of join you used determines how you dealt with this missing data. One note, for SQL you have to be mindful of integer vs. float division.
 
 # Exploratory data analysis
 
@@ -191,12 +191,12 @@ It's hard to see global trends across time periods using these multiple plots, b
 **Problem 7**. Make a single scatter plot of winning percentage (y-axis) vs. standardized payroll (x-axis). Add a regression line to highlight the relationship (again using `geom_smooth(method=lm)`).
 
 The regression line gives you expected winning percentage as a function of standardized payroll. Looking at the regression line, it looks like teams
-that spend roughly the average payroll in a given year will win 50% of their games (i.e. `win_pct` is .5 when `standardized_payroll` is 0), and teams increase 5% wins for every 2 standard units of payroll (i.e., `win_pct` is .55 when `standardized_payroll` is 2). We will see how this is done in general using linear regression later in the course.
+that spend roughly the average payroll in a given year will win 50% of their games (i.e. `win_pct` is 50 when `standardized_payroll` is 0), and teams increase 5% wins for every 2 standard units of payroll (i.e., `win_pct` is 55 when `standardized_payroll` is 2). We will see how this is done in general using linear regression later in the course.
 
 From these observations we can calculate the _expected win percentage_ for team $i$ in year $j$ as
 
 $$
-\mathrm{expected\_win\_pct}_{ij} = 0.5 + 0.025 \times \mathrm{standardized\_payroll}_{ij}
+\mathrm{expected\_win\_pct}_{ij} = 50 + 2.5 \times \mathrm{standardized\_payroll}_{ij}
 $$
 
 ## Spending efficiency
@@ -213,7 +213,7 @@ for team $i$ in year $j$, where `expected_win_pct` is given above.
 
 Make a line plot with year on the x-axis and efficiency on the y-axis. A good set of teams to plot are Oakland, the New York Yankees, Boston, Atlanta and Tampa Bay (teamIDs `OAK`, `BOS`, `NYA`, `ATL`, `TBA`). That plot can be hard to read since there is so much year to year variation for each team. One way to improve it is to use `geom_smooth` instead of `geom_line`.
 
-**Question 4**. What can you learn from this plot compared to the set of plots you looked at in Question 2 and 3?
+**Question 4**. What can you learn from this plot compared to the set of plots you looked at in Question 2 and 3? How good was Oakland's efficiency during the Moneyball period?
 
 ## What to turn in
 
