@@ -371,30 +371,32 @@ For our sample of $n=500$, we would say that our estimate of $p$ is $`r round(ta
 
 ### Hypothesis testing
 
-How else is this framework useful? Suppose that before I sampled tweets I thought (hypothesized) that 50%% of tweets are spam. Under this hypothesis, estimates $\hat{p}$ from $n$ samples would be distributed as $N(.5, \frac{\sqrt{.5(1-.5)}}{\sqrt{n}}). Once we do have our sample of $n$ tweets we can _test_ this hypothesis:
+How else is this framework useful? Suppose that before I sampled tweets I thought (hypothesized) that more than 50% of tweets are spam. One way very popular way of thinking about this problem is to reject the hypothesis that this is not the case. In this case we have a _null_ hypothesis that 50% or less of tweets are spam), against an _alternative_ hypothesis that more than 50% of tweets are spam. You will see this written in statistics textbooks as:
 
 $$
 \begin{align}
-H_0: \, & p=.5 & \textrm{(null)} \\
-H_1: \, & p\neq .5 & \textrm{(alternative)}
+H_0: \, & p <= .5 & \textrm{(null)} \\
+H_1: \, & p > .5 & \textrm{(alternative)}
 \end{align}
 $$
 
-If we see that $\hat{p}$ (sample mean from our sample of tweets) is _too far_ from $p=.5$ then we could reject our hypothesis, since the data we obtain is not statistically consistent with the hypothesis. Now, how do we say it's too far? The probability model given by the CLT. If $P(|Y| \geq \hat{p}) \geq .95$ under the null model (of $p=.5$), we say it is too far and we reject.
+Note: this is a one-sided test vs. a two sided test where the null hypothesis is that $p=.5$ and the alternative is $p \neq .5$. According to the CLT, estimates $\hat{p}$ of $p$ from $n$ samples would be distributed as $N(.5, \frac{\sqrt{.5(1-.5)}}{\sqrt{n}})$ (we use $p=.5$ as this is the worst case for the hypothesis we want to test).
+
+Once we do have our sample of $n$ tweets we can get an estimate $\hat{p}$ as we did before. If we see that $\hat{p}$ (sample mean from our sample of tweets) is _too far_ from $p=.5$ then we could reject the _null_ hypothesis since the estimate we derived from the data we have is not statistically consistent with the _null_ hypothesis. Now, how do we say our estimate $\hat{p}$ is too far? Here, we use the probability model given by the CLT. If $P(Y \geq \hat{p}) \geq .95$ under the null model (of $p=.5$), we say it is too far and we reject.
 
 ![](testing.png)
 
-This 95%% rejection threshold is conservative, but somewhat arbitrary. So we use on more metric, $P(|Y| \geq \hat{p})$ (the infamous p-value) to say: we could reject this hypothesis for all thresholds greater than this p-value.
+This 95% rejection threshold is conservative, but somewhat arbitrary. So we use on more metric, $P(|Y| \geq \hat{p})$ (the infamous p-value) to say: we could reject this hypothesis for all thresholds greater than this p-value.
 
-Let's see how testing the $p=.5$ would look like for our tweet example
+Let's see how testing the hypothesis $p > .5$ would look like for our tweet example
 
 ```{r}
 tab <- tab %>%
-  mutate(p_value = 1-pnorm(abs(phat), mean=.5, sd=se))
+  mutate(p_value = 1-pnorm(phat, mean=.5, sd=se))
 knitr::kable(tab)
 ```
 
-Notice that rejection occurs when the parameter value for the null hypothesis $p=.5$ is outside the 95%% confidence interval.
+Notice that rejection occurs when the parameter value for the null hypothesis $p=.5$ is outside the 95% confidence interval.
 
 ### Summary
 
