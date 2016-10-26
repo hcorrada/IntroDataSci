@@ -1,7 +1,7 @@
 ---
 title: "Multiple Linear Regression"
 author: "CMSC320"
-date: "March 29, 2016"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -113,7 +113,7 @@ auto_fit %>%
   knitr::kable()
 ```
 
-In comparison with the linear model only using `weight`, this multivariate model explains _more of the variance_ of `mpg`, but using more and more predictors. This is where the notion of _degrees of freedom_ comes in: we now have a model with expanded _representational_ ability. 
+In comparison with the linear model only using `weight`, this multivariate model explains _more of the variance_ of `mpg`, but using more predictors. This is where the notion of _degrees of freedom_ comes in: we now have a model with expanded _representational_ ability. 
 
 However, the bigger the model, we are conditioning more and more, and intuitively, given a fixed dataset, have fewer data points to estimate conditional expectation for each value of the predictors. That means, that are estimated conditional expectation is less _precise_.
 
@@ -125,7 +125,7 @@ auto_fit %>%
   knitr::kable()
 ```
 
-Columns `AIC` and `BIC` include this type of statistic that penalizes model fit with model size. The smaller this value, the better. Let's now compare a model only using `weight`, a model only using `weight` and `year` and the full multiple regression model we saw before.
+Columns `AIC` and `BIC` display statistics that penalize model fit with model size. The smaller this value, the better. Let's now compare a model only using `weight`, a model only using `weight` and `year` and the full multiple regression model we saw before.
 
 ```{r}
 lm(mpg~weight, data=Auto) %>%
@@ -171,7 +171,7 @@ x_2 = \left\{
 \right.
 $$
 
-Now let's build a to capture the relationship between `salary` and `major`: 
+Now let's build a model to capture the relationship between `salary` and `major`: 
 
 $$
 \mathtt{salary} = \beta_0 + \beta_1 x_1 + \beta_2 x_2
@@ -270,7 +270,7 @@ Auto %>%
 
 The intercept of the three lines seem to be different, but the slope of `origin == 3` looks different (decreases faster) than the slopes of `origin == 1` and `origin == 2` that look very similar to each other. 
 
-Let's fit the model and see if that observation how much statistical confidence we can give to those observations:
+Let's fit the model and see how much statistical confidence we can give to those observations:
 
 ```{r}
 auto_fit <- lm(mpg~weight*origin, data=Auto)
