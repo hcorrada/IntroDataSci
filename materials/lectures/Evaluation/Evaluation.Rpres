@@ -1,0 +1,339 @@
+Evaluation using resampling methods
+========================================================
+author: Hector Corrada Bravo
+date: CMSC498T Intro. Data Science, Spring 2015
+
+Evaluation
+===========
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+- So far we have discussed training set error
+- But in first lecture on modeling we said we wanted to build models that
+**generalize** and don't **overfit**
+- How do we measure that, when we we only have training data?
+
+Cross Validation
+=================
+
+- Most common tool to evaluate model performance.
+- Used in two essential modeling steps:
+  - _Model Selection_: for a given model, what should be included?
+  - _Model Assessment_: how well does our selected model perform?
+  
+Cross Validation
+=================
+
+_Model Selection_
+
+- Example: I will fit a linear regression model, what predictors should be included?, interactions?, transformations?
+- Example: I will use KNN, what should the value of K be?
+
+_Model Assessment_
+
+- Example: I've built a linear regression models, with specific predictors. How well will it perform on unseen data?
+- Example: I've built a KNN classifier. How well will it predict unseen observations?
+
+Cross Validation
+=================
+
+Resampling method to obtain estimates of **test error rate** (or any other performance measure on unseen data).
+
+- In some instances, you will have a large predefined test dataset **that you should never use when training**.
+_ In the absence of this, cross validation can be used
+
+Validation Set
+===============
+
+First option: **randomly** divide dataset into _training_ and _validation_ sets
+
+- Put the _validation_ set away, and do not use it until ready to compute **test error rate** (once, don't go back and check if you can improve it).
+
+![](validation.png)
+
+Validation Set
+===============
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(ISLR)
+
+data(Auto)
+ggplot(Auto, aes(x=horsepower, y=mpg)) + geom_point() + geom_smooth()
+```
+
+
+Validation Set
+===============
+
+Split into a single set, fit regression with different polynomial degrees.
+
+***
+
+```{r, echo=FALSE}
+set.seed(1234)
+
+in_validation <- sample(nrow(Auto), nrow(Auto)/2)
+validation_set <- Auto[in_validation,]
+training_set <- Auto[-in_validation,]
+
+degrees <- seq(1, 10)
+error_rates <- sapply(degrees, function(deg) {
+  fit <- lm(mpg~poly(horsepower, degree=deg), data=training_set)
+  predicted <- predict(fit, newdata=validation_set)
+  mean((validation_set$mpg - predicted)^2)
+})
+
+plot(degrees, error_rates, type="b", xlab="Polynomial Degree", ylab="Mean Squared Error", pch=19, lwd=1.4, cex=1.4)
+```
+
+Validation Set
+===============
+
+Now replicate the same thing 10 times (with different validation and training sets).
+
+- Only using 50% of data to train: this overestimates error
+- Highly variable!: error rate is a random quantity, depends on observations in training and validation sets.
+
+***
+
+```{r, echo=FALSE}
+set.seed(1234)
+library(RColorBrewer)
+
+palette(brewer.pal(10, "Dark2"))
+
+degrees <- seq(1, 10)
+
+error_rates <- replicate(10, {
+  in_validation <- sample(nrow(Auto), nrow(Auto)/2)
+  validation_set <- Auto[in_validation,]
+  training_set <- Auto[-in_validation,]
+
+  sapply(degrees, function(deg) {
+    fit <- lm(mpg~poly(horsepower, degree=deg), data=training_set)
+    predicted <- predict(fit, newdata=validation_set)
+    mean((validation_set$mpg - predicted)^2)
+  })
+})
+
+matplot(degrees, error_rates, type="b", pch=19, xlab="Polynomial Degree", ylab="Mean Squared Error", lwd=1.4, cex=1.4)
+```
+
+Leave-one-out Cross-Validation
+================================
+
+Procedure:  
+For each observation $i$ in data set:  
+  a. Train model on all but $i$-th observation  
+  b. Predict response for $i$-th observation  
+  c. Calculate prediction error  
+
+$$
+CV_{(n)} = \frac{1}{n} \sum_i (y_i - \hat{y}_i)^2
+$$
+
+***
+
+![](loocv.png)
+
+Leave-one-out Cross-Validation
+================================
+
+Advantages:
+
+1. Uses $n-1$ observations to train model
+2. There is no randomness, since error estimated on each sample
+
+Disadvantages:
+
+1. Very costly since have to train $n-1$ models.
+2. Error estimate is highly variable
+
+***
+
+![](loocv.png)
+
+Leave-one-out Cross-Validation
+===============================
+
+```{r, echo=FALSE}
+error_rates <- sapply(degrees, function(deg) {
+  mean(sapply(seq(len=nrow(Auto)), function(i) {
+    fit <- lm(mpg~poly(horsepower, degree=deg), data=Auto[-i,])
+    (Auto$mpg[i] - predict(fit, newdata=Auto[i,,drop=FALSE]))^2
+    }))
+})
+```
+
+```{r, echo=FALSE}
+plot(degrees, error_rates, pch=19, cex=1.4, lwd=1.4, xlab="Polynomial Degree", ylab="Cross Validation Error", type="b")
+```
+
+***
+
+For linear models (and some non-linear models) there is a nice trick that allows one to compute (exactly or approximately) LOOCV from the full data model fit.
+
+
+k-fold Cross-Validation
+===============================
+left: 50%
+
+Procedure:  
+Partition observations randomly into $k$ groups.  
+
+For each of the $k$ groups of observations:
+- Train model on observations in the other $k-1$ partitions  
+- Estimate test-set error (e.g., Mean Squared Error)  
+
+Compute average error across $k$ folds  
+
+*** 
+
+![](kfoldcv.png)
+
+k-fold Cross-Validation
+========================
+
+$$
+CV_{(k)} = \frac{1}{k} \sum_i MSE_i
+$$
+
+where $MSE_i$ is mean squared error estimated on the $i$-th fold
+
+***
+
+![](kfoldcv.png)
+
+
+k-fold Cross-Validation
+========================
+
+Advantages:
+ - fewer models to fit
+ - less variance in the computed $MSE_i$ 
+ 
+Disadvantages:
+ - Slight bias (over estimating usually) in error estimate
+ 
+***
+
+![](kfoldcv.png)
+
+k-fold Cross-Validation
+========================
+
+```{r, echo=FALSE}
+set.seed(1234)
+k <- 10
+n <- nrow(Auto)
+
+fold_size <- ceiling(n/k)
+permuted_indices <- rep(NA, k * fold_size)
+permuted_indices[1:n] <- sample(n)
+fold_indices <- matrix(permuted_indices, nc=k)
+
+cv10_error_rates <- sapply(seq(1,k), function(fold_index) {
+    test_indices <- na.omit(fold_indices[,fold_index])
+    train_set <- Auto[-test_indices,]
+    test_set <- Auto[test_indices,]
+    
+    res <- sapply(degrees, function(deg) {
+      fit <- lm(mpg~poly(horsepower, degree=deg), data=train_set)
+      mean((Auto$mpg[test_indices] - predict(fit, newdata=test_set))^2)
+    })
+    res
+  })
+```
+
+```{r, echo=FALSE}
+matplot(degrees, cv10_error_rates, pch=19, type="b", lwd=1.4, cex=1.4, xlab="Polynomial Degrees", ylab="10-fold CV Error Rate")
+```
+
+Cross-Validation in Classification
+===================================
+
+- Each of these procedures can be used for classification as well.
+- Substitute MSE with performance metric of choice. E.g., error rate, accuracy, TPR, FPR, AUROC
+- Not all of these work with LOOCV (e.g. AUROC)
+
+Comparing Models
+==================
+
+- Suppose you want to compare two classification models (logistic regression vs. knn) on the `Default` dataset.
+- We can use Cross-Validation to determine if one model is better than the other.
+- A t-test!
+
+Comparing Models
+=================
+
+```{r, echo=FALSE}
+library(ISLR)
+library(cvTools)
+library(class)
+
+data(Default)
+fold_indices <- cvFolds(n=nrow(Default), K=10)
+
+error_rates <- sapply(1:10, function(fold_index) {
+  test_indices <- which(fold_indices$which == fold_index)
+  test_set <- Default[test_indices,]
+  train_set <- Default[-test_indices,]
+  
+  logis_fit <- glm(default~., data=train_set, family="binomial")
+  logis_pred <- ifelse(predict(logis_fit, newdata=test_set, type="response") > 0.5, "Yes", "No")
+  logis_error <- mean(test_set$default != logis_pred)
+  
+  trainx <- as.matrix(train_set[,-c(1,2)])
+  trainx <- cbind(trainx, ifelse(train_set$student == "Yes", 1, -1))
+  testx <- as.matrix(test_set[,-c(1,2)])
+  testx <- cbind(testx, ifelse(test_set$student == "Yes", 1, -1))
+  
+  knn_pred <- knn(trainx, testx, train_set$default, k=10)
+  knn_error <- mean(test_set$default != knn_pred)
+  c(logis_error, knn_error)
+  })
+rownames(error_rates) <- c("logis", "knn")
+```
+
+```{r, echo=FALSE}
+boxplot(list(logis=error_rates["logis",], knn=error_rates["knn",]))
+```
+
+***
+
+```{r, echo=FALSE}
+t.test(error_rates["logis",], error_rates["knn",], alternative="less")
+```
+
+Summary
+========
+
+- Model selection and assessment are critical steps of data analysis
+- Resampling methods are general tools used for this purpose
+- Many data analysis frameworks have a lot of supporting libraries for this: `boot`, `cvTools`, many more.
+
+One Last Thing
+===============
+
+For non-linear regression and classification we've seen:
+  - KNN 
+  - polynomial regression (and logistic regression)
+  - QDA
+  
+There are a large number of other, more flexible, non-linear methods
+  - The classic example is `loess` in regression settings. Extremely useful in EDA
+  - A combination of polynomial regression and KNN
+  
+EDA with LOESS
+===============
+
+```{r, echo=FALSE}
+with(Auto, plot(horsepower, mpg))
+loess_fit <- loess(mpg~horsepower, data=Auto)
+newx <- with(Auto, seq(min(horsepower), max(horsepower), len=100))
+lines(newx, predict(loess_fit, newdata=data.frame(horsepower=newx)))
+```
+

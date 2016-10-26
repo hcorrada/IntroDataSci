@@ -1,0 +1,477 @@
+LargeScale
+========================================================
+author: Hector Corrada Bravo
+date: CMSC489T: Intro Data Science
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+Reminder (Regression)
+=======================================================
+
+- _Least squares regression: linear regression, polynomial regression_
+- K-nearest neighbors regression
+- _Loess_
+- Tree-based regression: Regression Trees, Random Forests
+- _SVM regression (not covered): linear and non-linear (kernels)_
+
+Reminder (Classification)
+======================================================
+
+- _Logistic regression: linear, polynomial_
+- LDA, QDA
+- K-nearest neighbors classification
+- Tree-based classification: Classification Trees, Random Forests
+- _SVM classification: linear and non-linear (kernels)_
+  
+For Today
+========================================================
+
+**Question**: How to fit the type of analysis methods we've seen so far for large datasets?
+
+**Insights**: 
+  1. All methods in _italics_ were presented as **optimization problems**.
+  2. We can devise optimization algorithms that process training data efficiently.
+
+We will use linear regression as a case study of how this insight would work.
+
+Case Study
+================================================
+
+Linear regression with one predictor, no intercept
+
+**Given**: Training set $\{(x_1, y_1), \ldots, (x_n, y_n)\}$, with continuous response $y_i$ and single predictor $x_i$ for the $i$-th observation.
+
+**Do**: Estimate parameter $\beta_1$ in model $y=\beta_1 x$ to solve
+
+$$
+\min_{\beta_1} L(\beta_1) = \frac{1}{2} \sum_{i=1}^n (y_i - \beta_1 x_i)^2
+$$
+
+Case Study
+==============================================
+
+```{r, echo=FALSE, fig.height=10, fig.width=15}
+set.seed(1234)
+true_beta <- 2
+x <- runif(100, -10, 10)
+y <- x * true_beta + rnorm(100, mean=0, sd=sqrt(5))
+plot(x,y,pch=19,cex=1.4,main="Simulated Data", cex.lab=1.5, cex.main=2)
+abline(a=0, b=true_beta, col="red", lwd= 2)
+```
+
+Case Study
+===============
+
+```{r, echo=FALSE, fig.height=10, fig.width=15}
+plot(x,y,pch=19,cex=1.4,main="Simulated Data", cex.lab=1.5, cex.main=2)
+abline(a=0, b=true_beta, col="red", lwd= 2)
+for (b in seq(-3,3, len=5)) {
+  abline(a=0,b=b,col="blue", lwd=2, lty=2)
+}
+legend("bottom", legend=paste("beta=", seq(-3,3,len=5)), lwd=2, lty=2, cex=1.5)
+```
+
+Case Study
+==============================================
+
+```{r, echo=FALSE, fig.height=10, fig.width=15}
+n <- length(y)
+compute_loss <- function(beta, x, y) {
+  0.5 * mean((y-x*beta)^2)
+}
+beta <- seq(-10, 10, len=100)
+plot(beta, sapply(beta, compute_loss, x=x, y=y), type="l", lwd=2, ylab=expression(L(beta[1])),cex.lab=1.5,xlab=expression(beta[1]))
+abline(v=true_beta, col="red", lwd=2)
+abline(v=seq(-3,3,len=5), col="blue", lwd=2, lty=2)
+```
+
+Case Study
+===============================================
+
+Insights:
+
+1) Loss is minimized when the derivative of the loss function is 0
+
+2) The derivative of the loss (with respect to $\beta_1$ ) at a given estimate $\beta_1$ suggests new values of $\beta_1$ with smaller loss!
+
+Case Study
+====================
+
+Let's take a look at the derivative:
+
+$$
+\frac{\partial}{\partial \beta_{1}} L(\beta_1) = \frac{\partial}{\partial \beta_{1}} \frac{1}{2} \sum_{i=1}^n (y_i - \beta_1 x_i)^2 \\
+{} = \sum_{i=1}^n (y_i - \beta_1 x_i) \frac{\partial}{\partial \beta_1} (y_i - \beta_1 x_i) \\
+{} = \sum_{i=1}^n (y_i - \beta_1 x_i) (-x_i)
+$$
+
+Case Study
+================================================
+
+```{r, echo=FALSE, fig.width=15, fig.height=10}
+loss_derivative <- function(beta, x, y) {
+  f <- beta * x
+  resid <- y - f
+  sum(resid * (-x))
+}
+
+plot(beta, sapply(beta, loss_derivative, x=x, y=y), type="l", lwd=1.5, xlab=expression(beta[1]), ylab=expression(partialdiff * L(beta[1]) / partialdiff * beta[1]),cex.lab=1.7)
+
+abline(v=true_beta, col="red", lwd=2)
+abline(v=seq(-3,3,len=5), col="blue", lwd=2, lty=2)
+```
+
+Gradient Descent
+=================================================
+
+This suggests an algorithm:
+
+1. Initialize $\beta_1=0$
+2. Repeat until convergence
+  - Set $\beta_1 = \beta_1 + \alpha \sum_{i=1}^n (y_i - f(x_i)) x_i$
+  
+($\alpha$ is a step size)
+
+Gradient Descent
+=================================================
+
+This suggests an algorithm:
+
+1. Initialize $\beta_1=0$
+2. Repeat until convergence
+  - Set $\beta_1 = \beta_1 + \alpha \sum_{i=1}^n (y_i - f(x_i)) x_i$
+  
+This algorithm is called **gradient descent** in the general case.
+
+_Idea_: Move current estimate in the direction that minimizes loss the *fastest*
+
+Another way of calling it: **Steepest Descent**
+
+Gradient Descent
+=================
+
+Check presentation RMarkdown for implementation
+
+```{r, echo=FALSE}
+# Implementation of gradient descent for least squares regression
+# for a single predictor (x)
+#
+# There is some code here that is only used to generate illustrative plots
+gradient_descent <- function(x, y, tol=1e-6, maxit=50, plot=FALSE) {
+  # initialize estimate
+  beta_1 <- 0; old_beta_1 <- Inf; i <- 0; beta_keep <- NA
+  
+  # compute loss at first estimate
+  loss <- compute_loss(beta_1, x, y); loss_keep <- NA
+  
+  # starting step size
+  alpha <- 1e-3
+  difference <- Inf
+  
+  # check for convergence
+  # (in practice, we do include a limit on the number of iterations)
+  while ((difference > tol) && (i < maxit)) {
+    cat("it: ", i, " beta: ", round(beta_1, 2), "loss: ", round(loss, 2), " alpha: ", round(alpha, 6), "\n")
+    
+    # this piece of code just adds steps to an existing plot
+    if (plot && !is.na(beta_keep) && !is.na(loss_keep)) {
+      suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
+    }
+    
+    # store the last estimate for plotting
+    beta_keep <- beta_1; loss_keep <- loss;
+    
+    # store the last estimate to check convergence
+    old_beta_1 <- beta_1
+    
+    # update estimate
+    f <- beta_1 * x
+    resid <- y - f    
+    beta_1 <- beta_1 + alpha * sum(resid * x)
+    
+    # compute difference after taking step
+    # to check convergence
+    difference <- (beta_1 - old_beta_1)^2 / (old_beta_1)^2
+  
+    # compute loss and derivative for updated estimate
+    loss <- compute_loss(beta_1, x, y)
+
+    i <- i+1
+    
+    # shorten the step size
+    if ((i %% 5) == 0) alpha <- alpha / 2
+  }
+  if (plot) {
+    suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
+  }
+  beta_1
+}
+```
+
+```{r, echo=FALSE, eval=FALSE}
+# Implementation of gradient descent for least squares regression
+# for a single predictor (x)
+#
+gradient_descent <- function(x, y, tol=1e-6, maxit=50) {
+  # initialize estimate
+  beta_1 <- 0; old_beta_1 <- Inf; 
+  
+  # compute loss at first estimate
+  loss <- compute_loss(beta_1, x, y); loss_keep <- NA
+  
+  # starting step size
+  alpha <- 1e-3
+  difference <- Inf
+  
+  # check for convergence
+  # (in practice, we do include a limit on the number of iterations)
+  while ((difference > tol) && (i < maxit)) {
+    cat("it: ", i, " beta: ", round(beta_1, 2), "loss: ", round(loss, 2), " alpha: ", round(alpha, 6), "\n")
+    
+    # store the last estimate to check convergence
+    old_beta_1 <- beta_1
+    
+    # update estimate
+    f <- beta_1 * x
+    resid <- y - f    
+    beta_1 <- beta_1 + alpha * sum(resid * x)
+    
+    # compute difference after taking step
+    # to check convergence
+    difference <- (beta_1 - old_beta_1)^2 / (old_beta_1)^2
+  
+    # compute loss and derivative for updated estimate
+    loss <- compute_loss(beta_1, x, y)
+
+    i <- i+1
+    
+    # shorten the step size
+    if ((i %% 5) == 0) alpha <- alpha / 2
+  }
+  beta_1
+}
+```
+
+Gradient Descent
+===============
+
+```{r, echo=FALSE, results="hide", fig.width=15, fig.height=10}
+plot(beta, sapply(beta, compute_loss, x=x, y=y), type="l", lwd=2, ylab=expression(L(beta[1])),cex.lab=1.5,xlab=expression(beta[1]), xlim=c(-10,10), main="Gradient Descent")
+estimate <- gradient_descent(x, y, plot=TRUE)
+```
+
+Gradient Descent
+=================
+
+```{r, echo=FALSE, results="hide", fig.width=15, fig.height=10}
+plot(beta, sapply(beta, compute_loss, x=x, y=y), type="l", lwd=2, ylab=expression(L(beta[1])),cex.lab=1.5,xlab=expression(beta[1]), xlim=c(-3,3), main="Gradient Descent")
+estimate <- gradient_descent(x, y, plot=TRUE)
+```
+
+Gradient Descent
+==================
+
+This is referred to as "Batch" gradient descent, since we take a step (update $\beta_1$) by calculating derivative with respect to all $n$ observations.
+
+Let's write out the update equation:
+
+$$
+\beta_1 = \beta_1 + \alpha \sum_{i=1}^n (y_i - f(x_i, \beta_1)) x_i
+$$
+
+where $f(x_i) = \beta_1 x_i$.
+
+Gradient Descent
+==================
+
+For multiple predictors (e.g., adding an intercept), this generalizes to the _gradient_ i.e., the vector of first derivatives of _loss_ with respect to parameters.
+
+The update equation is exactly the same for least squares regression
+
+$$
+\mathbf{\beta} = \mathbf{\beta} + \alpha \sum_{i=1}^n (y_i - f(\mathbf{x}_i, \beta)) \mathbf{x}_i
+$$
+
+where $f(\mathbf{x}_i, \mathbf{\beta}) = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip}$
+
+First-order methods
+============================
+
+Gradiest descent falls within a family of optimization methods called _first-order methods_.
+
+These methods have properties amenable to use with very large datasets:
+
+1. Inexpensive updates    
+2. "Stochastic" version can converge with few sweeps of the data  
+3. "Stochastic" version easily extended to streams  
+4. Easily parallelizable  
+
+Drawback: Can take many steps before converging
+
+Stochastic gradient descent
+============================
+
+**Key Idea**: Update parameters using update equation _one observation at a time_:
+
+1. Initialize $\beta=\mathbf{0}$, $i=1$
+2. Repeat until convergence
+  - For $i=1$ to $n$
+    - Set $\beta = \beta + \alpha (y_i - f(\mathbf{x}_i, \beta)) \mathbf{x}_i$
+
+Stochastic gradient descent
+=============================
+
+See presentation Rmarkdown for implementation
+
+```{r, echo=FALSE}
+# Implementation of stochastic gradient descent for least squares regression
+# for a single predictor (x)
+#
+# There is some code here that is only used to generate illustrative plots
+stochastic_gradient_descent <- function(x, y, tol=1e-6, maxit=50, plot=FALSE) {
+  n <- length(y)
+  
+  # initialize estimate
+  beta_1 <- 0; i <- 0; beta_keep <- NA
+  
+  # compute loss at first estimate
+  loss <- compute_loss(beta_1, x, y); loss_keep <- NA
+  
+  # initial step size
+  alpha <- 1e-3
+  difference <- Inf
+  
+  # check for convergence
+  # (in practice a max number of iterations is used)
+  while ((difference > tol) && (i < maxit)) {
+    cat("it: ", i, " beta: ", round(beta_1, 2), "loss: ", round(loss, 2), " alpha: ", round(alpha, 6), "\n")
+    
+    # store last estimate to check convergence
+    old_beta_1 <- beta_1
+    
+    # iterate over observations
+    for (j in seq(1,n)) {
+      
+      # add step to plot
+      if (plot && !is.na(beta_keep) && !is.na(loss_keep)) {
+        suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
+      }
+      
+      # store last estimate and loss for plotting
+      beta_keep <- beta_1; loss_keep <- loss;
+      
+      # update estimate with j-th observation
+      f <- beta_1 * x[j]
+      resid <- y[j] - f      
+      beta_1 <- beta_1 + alpha * resid * x[j]
+      
+      # compute loss with new estimate
+      loss <- compute_loss(beta_1, x, y)
+    }
+    
+    # check difference between current and old estimate
+    # to check convergence
+    difference <- (beta_1 - old_beta_1)^2 / old_beta_1^2
+    i <- i+1
+    
+    # update step size
+    if ((i %% 5) == 0) alpha <- alpha / 2
+  }
+  
+  if (plot) {
+    suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
+  }
+  
+  beta_1
+}
+```
+
+```{r, echo=FALSE, eval=FALSE}
+# Implementation of stochastic gradient descent for least squares regression
+# for a single predictor (x)
+#
+stochastic_gradient_descent <- function(x, y, tol=1e-6, maxit=50) {
+  n <- length(y)
+  
+  # initialize estimate
+  beta_1 <- 0; i <- 0; 
+  
+  # compute loss at first estimate
+  loss <- compute_loss(beta_1, x, y); loss_keep <- NA
+  
+  # initial step size
+  alpha <- 1e-3
+  difference <- Inf
+  
+  # check for convergence
+  # (in practice a max number of iterations is used)
+  while ((difference > tol) && (i < maxit)) {
+    cat("it: ", i, " beta: ", round(beta_1, 2), "loss: ", round(loss, 2), " alpha: ", round(alpha, 6), "\n")
+    
+    # store last estimate to check convergence
+    old_beta_1 <- beta_1
+    
+    # iterate over observations
+    for (j in seq(1,n)) {
+      # update estimate with j-th observation
+      f <- beta_1 * x[j]
+      resid <- y[j] - f      
+      beta_1 <- beta_1 + alpha * resid * x[j]
+      
+      # compute loss with new estimate
+      loss <- compute_loss(beta_1, x, y)
+    }
+    
+    # check difference between current and old estimate
+    # to check convergence
+    difference <- (beta_1 - old_beta_1)^2 / old_beta_1^2
+    i <- i+1
+    
+    # update step size
+    if ((i %% 5) == 0) alpha <- alpha / 2
+  }  
+  beta_1
+}
+```
+Stochastic Gradient Descent
+============================
+
+```{r, echo=FALSE, fig.width=15, fig.height=10}
+plot(beta, sapply(beta, compute_loss, x=x, y=y), type="l", lwd=2, ylab=expression(L(beta[1])),cex.lab=1.5,xlab=expression(beta[1]), xlim=c(-3,3), main="Stochastic Gradient Descent")
+estimate <- stochastic_gradient_descent(x, y, plot=FALSE)
+```
+
+Stochastic Gradient Descent
+=============================
+
+Easily adapt to _data streams_ where we receive observations one at a time and _assume_ they are not stored.
+
+**Idea**: Update parameter using same update rule
+
+_Note_: This falls in the general category of _online_ learning.
+
+Gradient Descent
+==================
+
+Easily parallelizable:
+
+- Split observations across computing units
+- For each step, compute partial sum for each partition (map), compute final update (reduce)
+
+$$
+\beta = \beta + \alpha * \sum_{\mathrm{partition}\; p} \sum_{i \in p} (y_i - f(\mathbf{x_i}, \beta)) \mathbf{x}_i
+$$
+
+Large-scale learning frameworks
+================================
+
+1. [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki)
+  - Implements general framework of (sparse) stochastic gradient descent for many optimization problems
+  - R interface: [http://cran.r-project.org/web/packages/RVowpalWabbit/index.html]
+  
+2. [Spark MLlib](https://spark.apache.org/docs/1.2.1/mllib-guide.html)
+  - Implements many learning algorithms using Spark framework we saw previously
+  - Very little access to the MLlib API via R, but built on primitives accessible through `SparkR` library we saw previously
+  

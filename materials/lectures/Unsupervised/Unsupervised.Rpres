@@ -1,0 +1,352 @@
+Unsupervised Methods
+========================================================
+author: Hector Corrada Bravo
+date: CMSC798: Intro. Data Sci
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+Introduction
+=============
+
+- So far we have seen "Supervised Methods" where interest is in analyzing a _response_ based
+on various _predictors_.
+
+- In many cases, especially for Exploratory Data Analysis, we want methods to extract patterns on
+variables without analyzing a specific _response_.
+
+- Methods for the latter case are called "Unsupervised Methods". Examples are _Principal Component Analysis_ and _Clustering_
+
+Warning
+=========
+
+- Interpretation of these methods is much more _subjective_ than in Supervised Learning
+- For example: 
+  - we want to know if a given _predictor_ is related to _response_: we can do inference using hypothesis testing
+  - we want to know which predictors are useful for prediction: use cross-validation to do model selection
+  - we want to see how well we predict? Use cross-validation to report on test error
+- In unsupervised methods, this is not clean at all
+- Nonetheless, they can be very useful methods to understand data at hand
+
+Motivating Example
+=============================
+
+_Genotypes across human populations_
+
+- Recent technological advances have allowed identification of locations in human genome (DNA) that vary a lot across human populations (Single Nucleotide Polymorphisms, or SNPs).
+
+- Also allows identifying changes in DNA that are associated with specific traits:
+  - e.g., susceptibility to disease, or protection from disease
+  
+Motivating Example
+======================
+
+We will look at a dataset of 4,929 SNPs for 1,093 individuals from populations across the globe. 
+
+```{r}
+load("geno_data.rda")
+print(dim(filtered_geno_data))
+table(filtered_geno_data$super_population)
+```
+
+_AFR: Africa, AMR: America, EAS: East Asia, EUR: Europe, OPT: A mystery_
+
+Motivating Example
+===================
+
+```{r, echo=FALSE}
+kable(select(filtered_geno_data, 1:6))
+```
+
+Motivating Example
+===================
+
+Each of the `rsXXXX` columns corresponds to a SNP (location in the human genome that varies across populations). These are fairly well annotated, e.g, [http://snpedia.com/index.php/rs1799971](http://snpedia.com/index.php/rs1799971)
+
+- The vast majority (about 80%) of people in the world inherited an `A` from both mother and father in this location of their genome. We say they have the `A/A` allele.
+- Other people have a different allele, `A/G` or `G/G`, meaning they inherited a mutation (`G` instead of `A`) from either mother or father (in the first case) or both (in the second case).
+- These two rare alleles have been associated with increased susceptibility to alcoholism.
+
+Motivating Example
+===================
+
+```{r}
+table(filtered_geno_data$rs1799971)
+```
+
+In this dataset:
+  - 733 individuals have the `A/A` allele (coded as `0`) 
+  - 305 have the `A/G` allele (coded as `1`)
+  - 55 have the `G/G` allele (coded as `2`)
+
+Motivating Example
+===================
+
+All SNPs are coded the same way:
+
+- `0`: they have the most frequent allele
+- `1`: they inherited one copy of the mutation
+- `2`: they inherited two copies of the mutation
+
+We want to visualize this data for 4k variables!
+
+Principal Component Analysis
+=============================
+
+A dimensionality reduction method: _embed data in high dimensional space to small number of dimensions we can visualize_
+
+Given: 
+ - Data set $\{\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n\}$, where $\mathbf{x}_i$ is the vector
+of $p$ predictor values for the $i$-th observation. 
+
+Return: 
+  - Matrix $\left[ \phi_1, \phi_2, \ldots, \phi_p \right]$ of linear transformations that retain maximal variance.
+
+Principal Component Analysis
+=============================
+
+The first transformation $\phi_1$ defines an embedding of the data into 1 dimension:
+
+$$
+Z_1 = \phi_{11}X_1 + \phi_{21} X_2 + \cdots + \phi_{p1} X_p
+$$
+
+where $\phi_1$ is selected so that the resulting dataset $\{ z_1, \ldots, z_n\}$ has _maximum variance_.
+
+Note: in order for this to make sense:
+ - data has to be centered, i.e., each $X_j$ has mean equal to zero
+ - $\phi_1$ has to be normalized, i.e., $\sum_{j=1}^p \phi_{j1}^2=1$.
+
+
+Principal Component Analysis
+==============================
+
+We can find $\phi_1$ by (surprise!) solving an optimization problem:
+
+$$
+\max_{\phi{11},\phi_{21},\ldots,\phi_{p1}}
+\left\{ \frac{1}{n} \sum_{i=1}^n \left( \sum_{j=1}^p \phi_{j1} x_{ij} \right)^2 \right\} \\
+
+\mathrm{s.t.} \sum_{j=1}^p \phi_{j1}^2 = 1
+$$
+
+_maximize variance_  
+_subject to normalization constraint_
+
+Principal Component Analysis
+=================================
+
+The second transformation $\phi_2$ is obtained next solving a similar problem with the added constraint that $\phi_2$ **is orthogonal** to $\phi_1$.
+
+Taken together $\left[ \phi_1, \phi_2 \right]$ define a linear transformation of the data into 2 dimensional space.
+
+$$
+Z_{n\times 2} = X_{n \times p} \left[ \phi_1, \phi_2 \right]_{p \times 2}
+$$
+
+Example
+========
+
+```{r, echo=FALSE}
+library(dplyr)
+
+load("geno_data.rda")
+
+# do principal components on
+# genotypes
+pr_out <- filtered_geno_data %>%
+  select(contains("rs")) %>%
+  prcomp(scale=TRUE)
+
+# get the embedded samples and add additional sample information
+embedded_samples <- pr_out$x[,1:3] %>%
+  as.data.frame() %>%
+  bind_cols(select(filtered_geno_data, sample_name, population, super_population))
+```
+
+```{r, echo=FALSE, results="asis"}
+kable(embedded_samples)
+```
+
+Some notes
+===========
+
+- Each of the columns of the $Z$ matrix are called _Principal Components_
+- The units of the PCs are _meaningless_
+- In this case we also scaled the variables $X_j$ to have unit variance. **I** would not have done that with this dataset, but we'll see why I did it shortly.
+- In general, if variables $X_j$ are measured in different units (e.g, miles vs. liters vs. dollars), variables should be scaled to have unit variance.
+- Conversely, if they are all measured in the same units (as in this example), you should not scale them.
+
+Example
+=========
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+embedded_samples %>%
+  ggplot(aes(x=PC1, y=PC2, color=super_population)) +
+    geom_point() +
+     scale_color_brewer(palette="Dark2")
+```
+
+***
+
+Interpretation:
+- First roughly corresponds to African population 
+- Second component rouhgly corresponds to Eastern Asian population
+- America not as well defined as the other populations
+
+Interpretation 
+===============
+
+We can also look at $\phi$'s (aka _loadings_) to see how much weight each variable is assigned to each PC. 
+
+For example, here are the 
+top 10 SNPs for PC1
+
+***
+
+```{r,echo=FALSE}
+o <- order(-abs(pr_out$rotation[,1]))
+snp_indices <- o[1:10]
+snp_ids <- rownames(pr_out$rotation)[snp_indices]
+
+snp_tab <- data.frame(SNP=sprintf("[%s](http://snpedia.com/index.php/%s)", snp_ids, snp_ids),
+                      PC1=round(pr_out$rotation[snp_indices,1],4),
+                      PC2=round(pr_out$rotation[snp_indices,2],4)) %>%
+  magrittr::set_rownames(NULL)
+kable(snp_tab)
+```
+
+Interpretation
+===============
+
+Book has an example of `biplot` which combines visualization of embedded data and loadings. **I don't like it!**
+
+```{r, echo=FALSE, fig.width=7, fig.height=7}
+library(png)
+library(grid)
+
+img <- readPNG("10_1.png")
+grid.raster(img)
+```
+
+Practicalities
+===============
+
+How many PCs to consider in post-hoc analysis?
+
+A result of PCA is a measure of the variance corresponding to each PC. From that we can calculate the _percentage of variance explained_ for the $m$-th PC:
+
+$$
+PVE_m=\frac{\sum_{i=1}^n z_{im}^2}{\sum_{j=1}^p \sum_{i=1}^n x_{ij}^2}
+$$
+
+Practicalities
+===============
+
+How many PCs to consider in post-hoc analysis?
+
+We can use this measure to choose number of PCs in an ad-hoc manner
+
+In this case, going further than PC3 does not add information
+
+***
+
+```{r, echo=FALSE}
+pr_vars <- pr_out$sdev^2
+pve <- pr_vars / sum(pr_vars)
+
+plot(pve[1:10]*100, type="b", xlab="PC", ylab="PVE", lwd=2)
+```
+
+Practicalities
+===============
+
+_Rule of thumb_: 
+  - If no apparent patterns in first couple of PCs, stop! 
+  - Otherwise, look at other PCs using PVE as guide.
+
+Still, this is very much ad-hoc, and no commonly agreed upon method for choosing number of PCs used in practice.
+
+A final caveat: PCA is **notoriously easy** to over-interpret...
+
+Motivating Example
+===================
+
+Let's reveal the source of our motivating data. This came from a [blog post](https://liorpachter.wordpress.com/2014/12/02/the-perfect-human-is-puerto-rican/) by [Lior Pachter](https://math.berkeley.edu/~lpachter/) a mathematician and computational biologist. 
+
+- He did use real genotype data from the [1000 genomes project](http://www.1000genomes.org/)
+- And created, _in silico_ a hypothetical human being where each SNP was set optimally
+  - i.e., if it's a protective mutation, then mutation was given, if it's a deleterious mutation, then mutation was not inherited
+
+Example
+=========
+
+This hypothetical human being is the `OPT` population
+
+***
+
+```{r, echo=FALSE}
+embedded_samples %>%
+  ggplot(aes(x=PC1, y=PC2, color=super_population)) +
+    geom_point() +
+    scale_color_brewer(palette="Dark2") +
+    annotate("text", x=embedded_samples[1,"PC1"]+15, y=embedded_samples[1,"PC2"], label="Perfect Human", size=7)
+```
+
+Example
+=================
+
+Which from PC3 you can see it is indeed hypothetical
+
+***
+
+```{r, echo=FALSE}
+embedded_samples %>%
+  ggplot(aes(x=PC1, y=PC3, color=super_population)) +
+  geom_point() +
+  scale_color_brewer(palette="Dark2") +
+  annotate("text", x=embedded_samples[1,"PC1"]+15, y=embedded_samples[1,"PC3"], label="Perfect Human", size=7)
+```
+
+Example
+========
+
+Now, things got interesting when he reported that the nearest individual in the _embedded_ dataset to this perfect human was a Puerto Rican woman:
+
+```{r, echo=FALSE, results="asis"}
+perfect_sample <- as.numeric(select(embedded_samples[1,], PC1, PC2))
+
+dist <- embedded_samples %>%
+  select(PC1, PC2) %>%
+  as.matrix() %>%
+  sweep(., MARGIN=2, STATS=perfect_sample, FUN="-") %>%
+  magrittr::raise_to_power(2) %>%
+  rowSums() %>%
+  sqrt()
+o <- order(dist)
+
+sample_name <- embedded_samples$sample_name[o[2]]
+sprintf("[%s](https://catalog.coriell.org/0/sections/Search/Sample_Detail.aspx?Ref=%s&PgId=166)", sample_name, sample_name)
+```
+
+[Medical Daily](http://www.medicaldaily.com/biologist-says-puerto-rican-women-possess-ideal-genotype-perfect-human-dna-ancestry-313956)  
+[HuffPost](http://www.huffingtonpost.com/julio-pabon/the-closet-perfect-human-_b_6304366.html)  
+[El Nuevo Dia (Puerto Rican Newspaper)](http://clasificados.endi.com/ciencia/ciencia/nota/serhumanoperfectoseriapuertorriqueno-1903858/) [Google Translate](https://translate.google.com/translate?hl=en&sl=auto&tl=en&u=http%3A%2F%2Fclasificados.endi.com%2Fciencia%2Fciencia%2Fnota%2Fserhumanoperfectoseriapuertorriqueno-1903858%2F)  
+[Latin Times](http://www.latintimes.com/new-study-reveals-perfect-human-genetically-speaking-caribbean-island-280363)  
+[The Backlash...](http://globalvoicesonline.org/2014/12/17/the-perfect-human-doesnt-live-in-puerto-rico-or-any-other-country/)
+
+[_and a lot more_](https://www.google.com/?gws_rd=ssl#q=perfect+human+pachter)
+
+Summary
+========
+
+Principal Component Analysis
+
+- Conceptually simple
+- Powerful EDA tool, very useful. 
+- Interpretation very ad-hoc
+- Part of large set of unsupervised methods based on _matrix decompositions_
+

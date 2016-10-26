@@ -1,0 +1,363 @@
+Support Vector Machine
+========================================================
+author: Héctor Corrada Bravo
+date: CMSC498T: Intro. Data Science
+
+State-of-the-art Classification Method
+========================================================
+
+Flexible, efficient method to learn classifiers
+
+- Build upon linear methods
+- Geometric interpretation (maximum margin)
+- Can be built over _similarities_ between observations (more on this later)
+
+Classification via Space Partitioning
+========================================================
+
+SVM also follows this framework
+
+```{r, echo=FALSE}
+library(MASS)
+
+library(RColorBrewer)
+mycols <- brewer.pal(8, "Dark2")[c(3,2)]
+
+s <- sqrt(1/5)
+set.seed(30)
+
+makeX <- function(M, n=100, sigma=diag(2)*s) {
+  z <- sample(1:nrow(M), n, replace=TRUE)
+  m <- M[z,]
+  return(t(apply(m,1,function(mu) mvrnorm(1,mu,sigma))))
+}
+
+M0 <- mvrnorm(10, c(1,0), diag(2)) # generate 10 means
+x0 <- makeX(M0) ## the final values for y0=blue
+
+M1 <- mvrnorm(10, c(0,1), diag(2))
+x1 <- makeX(M1)
+
+x <- rbind(x0, x1)
+y <- c(rep(0,100), rep(1,100))
+cols <- mycols[y+1]
+
+GS <- 75 # put data in a Gs x Gs grid
+XLIM <- range(x[,1])
+tmpx <- seq(XLIM[1], XLIM[2], len=GS)
+
+YLIM <- range(x[,2])
+tmpy <- seq(YLIM[1], YLIM[2], len=GS)
+
+newx <- expand.grid(tmpx, tmpy)
+colnames(newx) <- c("X1","X2")
+```
+
+```{r, echo=FALSE, fig.height=10, fig.width=10}
+layout(matrix(1:4, nr=2, byrow=TRUE))
+plot(x, col=cols, xlab="X1", ylab="X2", xlim=XLIM, ylim=YLIM, type="n", main="Training Set")
+points(x, col=cols)
+
+# linear SVM
+library(e1071)
+dat <- data.frame(X1=x[,1], X2=x[,2])
+fit <- svm(y~X1+X2, data=dat, cost=1, kernel="linear", type="C-classification")
+yhat <- attr(predict(fit, newdata=newx, decision.values=TRUE), "decision.values")[,1]
+yhat <- ifelse(yhat > 0, 2, 1)
+colshat <- mycols[yhat]
+
+plot(x, col=cols, xlab="X1", ylab="X2", xlim=XLIM, ylim=YLIM, type="n",main="linear svm")
+points(x, col=cols)
+points(newx, col=colshat, pch=".")
+
+contour(tmpx, tmpy, matrix(as.numeric(yhat),GS,GS), levels=c(1,2), add=TRUE, drawlabels=FALSE)
+
+fit <- svm(y~X1+X2, data=dat, cost=1, kernel="radial", type="C-classification", gamma=1)
+yhat <- attr(predict(fit, newdata=newx, decision.values=TRUE), "decision.values")[,1]
+yhat <- ifelse(yhat > 0, 2, 1)
+colshat <- mycols[yhat]
+
+plot(x, col=cols, xlab="X1", ylab="X2", xlim=XLIM, ylim=YLIM, type="n",main="non-linear svm RBF gamma=1")
+points(x, col=cols)
+points(newx, col=colshat, pch=".")
+
+contour(tmpx, tmpy, matrix(as.numeric(yhat),GS,GS), levels=c(1,2), add=TRUE, drawlabels=FALSE)
+
+fit <- svm(y~X1+X2, data=dat, cost=1, kernel="radial", type="C-classification", gamma=5)
+yhat <- attr(predict(fit, newdata=newx, decision.values=TRUE), "decision.values")[,1]
+yhat <- ifelse(yhat > 0, 2, 1)
+colshat <- mycols[yhat]
+
+plot(x, col=cols, xlab="X1", ylab="X2", xlim=XLIM, ylim=YLIM, type="n",main="non-linear svm RBF gamma=5")
+points(x, col=cols)
+points(newx, col=colshat, pch=".")
+
+contour(tmpx, tmpy, matrix(as.numeric(yhat),GS,GS), levels=c(1,2), add=TRUE, drawlabels=FALSE)
+```
+
+Linear Support Vector Machine
+========================================================
+
+**Two-class SVM**
+
+Given training data: $\{(\mathbf{x}_1,y_1), (\mathbf{x}_2,y_2),\ldots,(\mathbf{x}_n,y_n)\}$
+
+Where: 
+- $\mathbf{x}_i$ is a vector of $p$ predictor values for $i$th observation
+- $y_i$ is the class label (we're going to use +1 and -1)
+
+Linear Support Vector Machine
+===============================
+
+Like logistic regression we define a _discriminative_ function such that
+
+$$
+\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{ip} > 0 \, \mathrm{ if } y_i = 1
+$$
+
+and
+
+$$
+\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{ip} < 0 \, \mathrm{ if } y_i = -1
+$$
+
+Note that points where _discriminative_ function equals 0 form a _hyper-plane_ (i.e., a line in 2D)
+
+Linear Support Vector Machine
+==============================
+
+![](9_2.png)
+
+Linear Support Vector Machine
+===============================
+
+**The margin**: Distance between separating plane and nearest points.
+
+```{r, echo=FALSE}
+library(png)
+library(grid)
+
+img <- readPNG("9_3.png")
+grid.raster(img)
+```
+
+Linear Support Vector Machine
+==============================
+
+_Key insights_
+
+1. **Look for the maximum margin hyper-plane**
+2. Only depends on a subset of observations (support vectors)
+3. Only depends on pair-wise "similarity" functions of observations
+
+Linear Support Vector Machine
+==============================
+
+**Look for the maximum margin hyper-plane**
+
+Find the plane (think line in 2D) that separates training data with largest margin.
+
+This will maybe _generalize_ better since new observations have room to fall within margin and still be classified correctly.
+
+Linear Support Vector Machine
+==============================
+
+Also an _optimization_ problem (see _Numerical Methods_ or _Machine Learning_ class for details):
+
+$$
+\mathrm{max}_{\beta_0,\beta_1,\ldots,\beta_p} M \\
+\mathrm{s.t} \sum_{j=1}^p \beta_p^2 = 1 \\
+y_i(\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}) \geq M \, \forall i
+$$
+
+Linear Support Vector Machine
+==============================
+
+_What if there is no separating hyper-plane?_
+
+Penalize observations on the **wrong side of the margin**.
+
+Linear Support Vector Machine
+==============================
+
+![](9_6.png)
+
+Linear Support Vector Machine
+==============================
+
+$$
+\mathrm{max}_{\beta_0,\beta_1,\ldots,\beta_p} M \\
+\mathrm{s.t} \sum_{j=1}^p \beta_p^2 = 1 \\
+y_i(\beta_0 + \beta_1 x_{i1} + \ldots + \beta_p x_{ip}) \geq M(1-\epsilon_i) \, \forall i \\
+\epsilon_i \geq 0 \, \forall i \\
+\sum_{i=1}^n \epsilon_i \leq C
+$$
+
+$C$ is a parameter to be selected (model selection)
+
+Linear Support Vector Machine
+==============================
+
+```{r, echo=FALSE, fig.width=10, fig.height=10}
+img <- readPNG("9_7.png")
+grid.raster(img)
+```
+
+
+Linear Support Vector Machine
+==============================
+
+_Key insights_
+
+1. Look for the maximum margin hyper-plane
+2. **Only depends on subset of observations (support vectors)**
+3. Only depends on pairwise "similarity" functions of observations
+
+Linear Support Vector Machine
+===============================
+
+As a result of maximum-margin formulation, we only need observations that are on the "wrong" side of the margin to get $\beta$ values.
+
+These are called _support vectors_
+
+In general: Smaller $C \Rightarrow$ fewer SVs 
+
+Linear Support Vector Machine
+==============================
+
+_Key insights_
+
+1. Look for the maximum margin hyper-plane
+2. Only depends on subset of observations (support vectors)
+3. **Only depends on pairwise "similarity" functions of observations**
+
+Linear Support Vector Machine
+===============================
+
+We can solve optimization problem only using inner products between observations (as opposed to the observations themselves)
+
+_Inner product_: $\langle x_i, x_{i'} \rangle = \sum_{j=1}^p x_{ij}x_{i'j}$
+
+We can write _discriminant_ function in equivalent form
+
+$$
+f(x) = \beta_0 + \sum_{i=1}^n \alpha_i \langle x, x_i \rangle
+$$
+
+By definition, $\alpha_i > 0$ **only** for SVs
+
+Support Vector Machine
+========================
+
+How to do non-linear discriminative functions?
+
+![](9_8.png)
+
+Support Vector Machine
+==================================
+
+We can generalize inner product using "kernel" functions that provide something like an inner product:
+
+$$
+f(x) = \beta_0 + \sum_{i=1}^n \alpha_i k(x, x_i)
+$$
+
+What is $k$?
+
+Support Vector Machine
+=======================
+
+Two examples: 
+
+- _Polynomial kernel_: $k(x,x_i) = 1+\langle x, x_i \rangle^d$
+
+- _RBF (radial) kernel_: $k(x,x_i) = \exp\{-\gamma \sum_{j=1}^p (x_{j}-x_{ij})^2\}$
+
+
+Support Vector Machine
+=========================
+
+![](9_9.png)
+
+Support Vector Machine
+========================
+
+```{r, echo=FALSE}
+library(RColorBrewer)
+palette(brewer.pal(8, "Dark2"))
+
+k <- function(x, x0=0, gamma=1) {
+  exp(-gamma*(x-x0)^2)
+}
+x <- seq(-3, 3, len=100)
+plot(x, k(x), type="l", lwd=2, col=1, main="RBF kernel")
+lines(x, k(x,gamma=10), lwd=2, col=2)
+lines(x, k(x,gamma=.1), lwd=2, col=3)
+legend("topright", legend=paste("gamma=",c(1,10,.1)), lty=1, lwd=2, col=1:3)
+```
+
+Linear Support Vector Machine
+==============================
+
+```{r}
+library(e1071)
+library(ISLR)
+data(Default)
+
+n <- nrow(Default)
+train_indices <- sample(n, n/2)
+
+costs <- c(.01, 1, 100)
+svm_fits <- lapply(costs, function(cost) {
+  svm(default~., data=Default, cost=cost, kernel="linear",subset=train_indices)
+})
+```
+
+
+Linear Support Vector Machine
+==============================
+
+```{r, echo=FALSE}
+number_svs <- sapply(svm_fits, function(fit) fit$tot.nSV)
+error_rate <- sapply(svm_fits, function(fit) {
+  yhat <- predict(fit, newdata=Default[train_indices,])
+  train <- mean(yhat != Default$default[train_indices])
+  yhat <- predict(fit, newdata=Default[-train_indices,])
+  test <- mean(yhat != Default$default[-train_indices])
+  c(train=train, test=test)
+})
+
+tab <- data.frame(cost=costs, number_svs=number_svs, train_error=error_rate["train",]*100,test_error=error_rate["test",]*100)
+kable(tab)
+```
+
+Non-linear Support Vector Machine
+==============================
+
+```{r}
+costs <- c(.01, 1, 10)
+gamma <- c(.01, 1, 10)
+parameters <- expand.grid(costs, gamma)
+
+svm_fits <- lapply(seq(nrow(parameters)), function(i) {
+  svm(default~., data=Default, cost=parameters[i,1], kernel="radial", gamma=parameters[i,2], subset=train_indices)
+})
+```
+
+
+Non-linear Support Vector Machine
+==================================
+
+```{r, echo=FALSE}
+number_svs <- sapply(svm_fits, function(fit) fit$tot.nSV)
+error_rate <- sapply(svm_fits, function(fit) {
+  yhat <- predict(fit, newdata=Default[train_indices,])
+  train <- mean(yhat != Default$default[train_indices])
+  yhat <- predict(fit, newdata=Default[-train_indices,])
+  test <- mean(yhat != Default$default[-train_indices])
+  c(train=train, test=test)
+})
+
+tab <- data.frame(cost=parameters[,1], gamma=parameters[,2], number_svs=number_svs, train_error=error_rate["train",]*100,test_error=error_rate["test",]*100)
+kable(tab)
+```
