@@ -1,7 +1,7 @@
 ---
 title: "Linear Regression"
 author: "CMSC320"
-date: "March 29, 2016"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -9,11 +9,11 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Linear regression is a very elegant, simple, powerful and commonly used technique for data analysis. We use it extensively in exploratory data analysis (we used in project 1, for example) and in statistical analyses since it fits into the framework we saw in the last unit, and thus let's do things like construct confidence intervals and hypothesis testing for relationships between variables.
+Linear regression is a very elegant, simple, powerful and commonly used technique for data analysis. We use it extensively in exploratory data analysis (we used in project 2, for example) and in statistical analyses since it fits into the statistical framework we saw in the last unit, and thus let's do things like construct confidence intervals and hypothesis testing for relationships between variables.
 
 ## Simple Regression
 
-Let's start with the simplest linear model. The goal here is to analyze the relationship between a _continuous numerical_ variable $Y$ and another (_numerical_ or _categorical_) variable $X$. We assume that in our population of interest the relationship between the two are given by a linear function:
+Let's start with the simplest linear model. The goal here is to analyze the relationship between a _continuous numerical_ variable $Y$ and another (_numerical_ or _categorical_) variable $X$. We assume that in our population of interest the relationship between the two is given by a linear function:
 
 $$
 Y = \beta_0 + \beta_1 X
@@ -27,7 +27,7 @@ $$
 
 ![](regression_example.png)
 
-Given this data, we would say that we _regress_ `sales` on `TV`, when we perform this regression analysis. As before, given data we would like to estimate what this relationship is in the _population_ (what is the population in this case?). What do we need to estimate in this case? Values for $\beta_0$ and $\beta_1$. What is the criteria that we use to estimate them?
+Given this data, we would say that we _regress_ `sales` on `TV` when we perform this regression analysis. As before, given data we would like to estimate what this relationship is in the _population_ (what is the population in this case?). What do we need to estimate in this case? Values for $\beta_0$ and $\beta_1$. What is the criteria that we use to estimate them?
 
 Just like the previous unit we need to setup an _inverse problem_. What we are stating mathematically in the linear regression problem is that the _conditional expectation_ (or conditional mean, conditional average) of $Y$ given $X=x$ is defined by this linear relationship:
 
