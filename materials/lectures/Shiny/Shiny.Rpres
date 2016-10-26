@@ -1,13 +1,14 @@
 Interactive Web-based Data Visualization (1)
 ========================================================
-author: Hector Corrada Bravo
-date: CMSC498: Intro. Data Science, Spring 2015
+author: CMSC320
+date: Spring 2016
+
 
 ========================================================
 
 _Politics_: [http://www.nytimes.com/interactive/2012/11/02/us/politics/paths-to-the-white-house.html?_r=0](http://www.nytimes.com/interactive/2012/11/02/us/politics/paths-to-the-white-house.html?_r=0)  
 
-_Science_: [http://epiviz.cbcb.umd.edu/?ws=W3ieGz19icm](http://epiviz.cbcb.umd.edu/?ws=W3ieGz19icm)  
+_Science_: [http://epiviz.cbcb.umd.edu/?ws=YOsu0RmUc9l](http://epiviz.cbcb.umd.edu/?ws=YOsu0RmUc9l)  
 
 _Movies_: [http://www.nytimes.com/interactive/2013/02/20/movies/among-the-oscar-contenders-a-host-of-connections.html](http://www.nytimes.com/interactive/2013/02/20/movies/among-the-oscar-contenders-a-host-of-connections.html)
 
@@ -147,26 +148,6 @@ Selectors:
   color: white;
 }
 
-CSS
-===========================
-
-Selectors:
-
-ID selectors: match the single DOM element with given ID
-
-```
-#header /* Select element with ID "header" */
-#nav    /* Select element with id "nav"    */
-#export /* Select element with ID "export" */
-```
-
-CSS
-===========================
-
-Inheritance: children elements inherit parent element's style  
-Cascading: top-down, last applicable selector wins.  
-Specificity: more specific selectors win over general selectors.
-
 SVG
 ===========================
 
@@ -227,15 +208,6 @@ svg .pumpkin {
 <circle cx="25" cy="25" r="22" class="pumpkin">
 ```
 
-SVG
-======================
-
-Other considerations for data visualization:
-
-1. _Overlap_: There is no notion of depth in SVG. The order elements are declared determines how overlapping elements are rendered.
-
-2. _Transparency_: RGB colors can be given transparency (alpha) values to help with overlapping.
-
 Shiny and D3
 ===========================
 
@@ -269,9 +241,9 @@ Reactivity
 
 A standard paradigm for interactive (event-driven) application development
 
-[A nice review paper](http://dl.acm.org/citation.cfm?id=2501666)
+A nice review paper: [http://dl.acm.org/citation.cfm?id=2501666](http://dl.acm.org/citation.cfm?id=2501666)
 
-Next time
+Binding data to graphical elements
 ================
 
 So far, we have bound data objects to document elements.  

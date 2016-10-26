@@ -1,7 +1,7 @@
 Evaluation using resampling methods
 ========================================================
 author: Hector Corrada Bravo
-date: CMSC498T Intro. Data Science, Spring 2015
+date: CADi 2015
 
 Evaluation
 ===========
@@ -195,46 +195,13 @@ Comparing Models
 
 
 
-![plot of chunk unnamed-chunk-10](Evaluation-figure/unnamed-chunk-10-1.png) 
 
-***
+
+
+
+
 
 
 ```
-
-	Welch Two Sample t-test
-
-data:  error_rates["logis", ] and error_rates["knn", ]
-t = -1.6543, df = 17.885, p-value = 0.05776
-alternative hypothesis: true difference in means is less than 0
-95 percent confidence interval:
-         -Inf 0.0002430517
-sample estimates:
-mean of x mean of y 
-   0.0267    0.0317 
+Error in library(cvTools) : there is no package called 'cvTools'
 ```
-
-Summary
-========
-
-- Model selection and assessment are critical steps of data analysis
-- Resampling methods are general tools used for this purpose
-- Many data analysis frameworks have a lot of supporting libraries for this: `boot`, `cvTools`, many more.
-
-One Last Thing
-===============
-
-For non-linear regression and classification we've seen:
-  - KNN 
-  - polynomial regression (and logistic regression)
-  - QDA
-  
-There are a large number of other, more flexible, non-linear methods
-  - The classic example is `loess` in regression settings. Extremely useful in EDA
-  - A combination of polynomial regression and KNN
-  
-EDA with LOESS
-===============
-
-![plot of chunk unnamed-chunk-12](Evaluation-figure/unnamed-chunk-12-1.png) 
-

@@ -1,0 +1,261 @@
+---
+title: "Linear Regression"
+author: "CMSC320"
+date: "March 29, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Linear regression is a very elegant, simple, powerful and commonly used technique for data analysis. We use it extensively in exploratory data analysis (we used in project 1, for example) and in statistical analyses since it fits into the framework we saw in the last unit, and thus let's do things like construct confidence intervals and hypothesis testing for relationships between variables.
+
+## Simple Regression
+
+Let's start with the simplest linear model. The goal here is to analyze the relationship between a _continuous numerical_ variable $Y$ and another (_numerical_ or _categorical_) variable $X$. We assume that in our population of interest the relationship between the two are given by a linear function:
+
+$$
+Y = \beta_0 + \beta_1 X
+$$
+
+Here is (simulated) data from an advertising campaign measuring sales and the amount spent in advertising. We think that sales are related to the amount of money spent on TV advertising:
+
+$$
+\mathtt{sales} \approx \beta_0 + \beta_1 \times \mathtt{TV}
+$$
+
+![](regression_example.png)
+
+Given this data, we would say that we _regress_ `sales` on `TV`, when we perform this regression analysis. As before, given data we would like to estimate what this relationship is in the _population_ (what is the population in this case?). What do we need to estimate in this case? Values for $\beta_0$ and $\beta_1$. What is the criteria that we use to estimate them?
+
+Just like the previous unit we need to setup an _inverse problem_. What we are stating mathematically in the linear regression problem is that the _conditional expectation_ (or conditional mean, conditional average) of $Y$ given $X=x$ is defined by this linear relationship:
+
+$$
+\mathbb{E}[Y|X=x] = \beta_0 + \beta_1 x
+$$
+
+
+Given a dataset, the inverse problem is then to find the values of $\beta_0$ and $\beta_1$ that minimize deviation between data and expectation, and again use squared devation to do this.
+
+**The linear regression problem**
+
+Given data $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, find values $\beta_0$ and $\beta_1$ that minimize _objective_ or _loss_ function RSS (residual sum of squares):
+
+$$
+\arg \min_{\beta_0,\beta_1} RSS = \frac{1}{2} \sum_i (y_i - (\beta_0 + \beta_1 x_i))^2
+$$
+
+![](minimizing.png)
+
+Similar to what we did with the derivation of the mean as a measure of central tendency we can derive the values of minimizers$\hat{\beta}_0$ and $\hat{\beta}_1$. We use the same principle, compute derivatives (partial this time) of the objective function RSS, set to zero and solve to obtain:
+
+$$
+\begin{align}
+\hat{\beta}_1 & = \frac{\sum_{i=1}^n (y_i - \overline{y})(x_i - \overline{x})}{\sum_{i=1}^n (x_i - \overline{x})^2} \\
+{} & = \frac{\mathrm{cov}(y,x)}{\mathrm{var}(x)} \\
+\hat{\beta}_0 & = \overline{y} - \hat{\beta}_1 \overline{x} 
+\end{align}
+$$
+
+Let's take a look at some data. Here is data measuring characteristics of cars, including horsepower, weight, displacement, miles per gallon. Let's see how well a linear model captures the relationship between miles per gallon and weight
+
+```{r, warning=FALSE, message=FALSE}
+library(ISLR)
+library(dplyr)
+library(ggplot2)
+library(broom)
+
+data(Auto)
+
+Auto %>%
+  ggplot(aes(x=weight, y=mpg)) +
+    geom_point() + 
+    geom_smooth(method=lm) + 
+    theme_minimal()
+```
+
+In R, linear models are built using the `lm` function
+
+```{r}
+auto_fit <- lm(mpg~weight, data=Auto)
+auto_fit
+```
+
+This states that for this dataset $\hat{\beta}_0 = `r auto_fit$coef[1]`$ and $\hat{\beta}_1 = `r auto_fit$coef[2]`$. What's the interpretation? According to this model, a weightless car `weight=0` would run $\approx `r round(auto_fit$coef[1], 2)`$ _miles per gallon_ on average, and, on average, a car would run $\approx `r -round(auto_fit$coef[2],2)`$ _miles per gallon_ fewer for every extra _pound_ of weight. Note, that the units of the outcome $Y$ and the predictor $X$ matter for the interpretation of these values.
+
+## Inference
+
+As we saw in the last unit, now that we have an estimate, we want to know how good of an estimate this is. We will see that similar arguments based on the CLT hold again. The main point is to understand that like the sample mean, the regression line we learn from a specific dataset is an estimate. A different sample from the same population would give us a different estimate (regression line). But, the CLT tells us that, on average, we are close to population regression line (I.e., close to $\beta_0$ and $\beta_1$), that the spread around $\beta_0$ and $\beta_1$ is well approximated by a normal distribution and that the spread goes to zero as the sample size increases.
+
+![](population_line.png)
+
+### Confidence Interval
+
+Using the same framework as before, we can construct a confidence interval to say how precise we think our estimates of the population regression line is. In particular, we want to see how precise our estimate of $\beta_1$ is, since that captures the relationship between the two variables. We again, use a similar framework. First, we calculate a standard error estimate for $\beta_1$:
+
+$$
+\mathrm{se}(\hat{beta}_1)^2 = \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (x_i - \overline{x})^2}
+$$
+
+and construct a 95% confidence interval
+
+$$
+\beta_1 = \hat{\beta}_1 \pm 1.95 \times \mathrm{se}(\hat{beta}_1)
+$$
+
+Note, $\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i$. Going back to our example:
+
+```{r}
+auto_fit_stats <- auto_fit %>%
+  tidy() %>%
+  select(term, estimate, std.error)
+auto_fit_stats
+```
+
+This `tidy` function is defined by the `broom` package, which is very handy to manipulate the result of learning models in a consistent manner. The `select` call removes some extra information that we will discuss shortly.
+
+```{r}
+confidence_interval_offset <- 1.95 * auto_fit_stats$std.error[2]
+confidence_interval <- round(c(auto_fit_stats$estimate[2] - confidence_interval_offset,
+                               auto_fit_stats$estimate[2],
+                               auto_fit_stats$estimate[2] + confidence_interval_offset), 4)
+```
+
+Given the confidence interval, we would say, "on average, a car runs $_{`r confidence_interval[1]`} `r confidence_interval[2]`_{`r confidence_interval[3]`}$ _miles per gallon_ fewer per pound of weight.
+
+### The $t$-statistic and the $t$-distribution
+
+As in the previous unit, we can also test a null hypothesis about this relationship: "there is no relationship between weight and miles per gallon", which translates to $\beta_1=0$. Again, using the same argument based on the CLT, if this hypothesis is true then the distribution of $\hat{\beta}_1$ is well approximated by $N(0,\mathrm{se}(\hat{\beta}_1))$, and if we observe the learned $\hat{\beta}_1$ is _too far_ from 0 according to this distribution then we _reject_ the hypothesis.
+
+Now, there is a technicality here that we did not discuss in the previous unit that is worth paying attention to. We saw before that the CLT states that the normal approximation is good as sample size increases, but what about moderate sample sizes (say, less than 100)? The $t$ distribution provides a better approximation of the sampling distribution of these estimates for moderate sample sizes, and it tends to the normal distribution as sample size increases.
+
+The $t$ distribution is commonly used in this testing situation to obtain the probability of rejecting the null hypothesis. It is based on the $t$-statistic
+
+$$
+\frac{\hat{\beta}_1}{\mathrm{se}(\hat{\beta}_1)}
+$$
+
+You can think of this as a _signal-to-noise_ ratio, or a standardizing transformation on the estimated parameter. Under the null hypothesis, it was shown that the $t$-statistic is well approximated by a $t$-distribution with $n-2$ _degrees of freedom_ (we will get back to _degrees of freedom_ shortly). Like other distributions, you can compute with the $t$-distribution using the `p,d,q,r`-family of functions, e.g., `pt` is the cumulative probability distribution function.
+
+In our example, we get a $t$ statistic and P-value as follows:
+
+```{r}
+auto_fit_stats <- auto_fit %>%
+  tidy()
+auto_fit_stats
+```
+
+We would say: "We found a statistically significant relationship between weight and miles per gallon. On average, a car runs $_{`r confidence_interval[1]`} `r confidence_interval[2]`_{`r confidence_interval[3]`}$ _miles per gallon_ fewer per pound of weight ($t$=`r round(auto_fit_stats$statistic[2],2)`, $p$-value<`r auto_fit_stats$p.value[2]`$)."
+
+### Global Fit
+
+Now, notice that we can make _predictions_ based on our conditional expectation, and that prediction should be better than a prediction with a simple average. We can use this comparison as a measure of how good of a job we are doing using our model to fit this data: how much of the variance of $Y$ can we _explain_ with our model. To do this we can calculate _total sum of squares_: 
+
+$$
+TSS = \sum_i (y_i - \overline{y})^2
+$$
+
+(this is the squared error of a prediction using the sample mean of $Y$)
+
+and the _residual sum of squares_:
+
+$$
+RSS = \sum_i (y_i - \hat{y}_i)^2
+$$
+
+(which is the squared error of a prediction using the linear model we learned)
+
+The commonly used $R^2$ measure comparse these two quantities:
+
+$$
+R^2 = \frac{\mathrm{TSS}-\mathrm{RSS}}{\mathrm{TSS}} = 1 - \frac{\mathrm{RSS}}{\mathrm{TSS}}
+$$
+
+These types of global statistics for the linear model can be obtained using the `glance` function in the `broom` package. In our example
+
+```{r}
+auto_fit %>%
+  glance() %>%
+  select(r.squared, sigma, statistic, df, p.value)
+```
+
+We will explain the the columns `statistic`, `df` and `p.value` when we discuss regression using more than a single predictor $X$.
+
+## Some important technicalities
+
+We mentioned above that predictor $X$ could be _numeric_ or _categorical_. However, this is not precisely true. We can use a transformation to represent _categorical_ variables. Here is a simple example:
+
+Suppose we have a categorical variable `sex` with values `female` and `male`, and we want to show the relationship between, say `credit card balance` and `sex`. We can create a dummy variable $x$ as follows:
+
+$$
+x_i = \left\{
+\begin{align}
+1 & \textrm{ if female} \\
+0 & \textrm{o.w.}
+\end{align}
+\right.
+$$
+
+and fit a model $y = \beta_0 + \beta_1 x$. What is the conditional expectation given by this model? If the person is male, then $y=\beta_0$, if the person is female, then $y=\beta_0 + \beta_1$. So, what is the interpretation of $\beta_1$? The average difference in credit card balance between females and males.
+
+We could do a different encoding:
+
+$$
+x_i = \left\{
+\begin{align}
++1 & \textrm{ if female} \\
+-1 & \textrm{o.w.}
+\end{align}
+\right.
+$$
+
+Then what is the interpretation of $\beta_1$ in this case?
+
+Note, that when we call the `lm(y~x)` function and `x` is a factor with two levels, the first transformation is used by default. What if there are more than 2 levels? We need multiple regression, which we will see shortly.
+
+## Issues with linear regression
+
+There are some assumptions underlying the inferences and predictions we make using linear regression that we should verify are met when we use this framework. Let's start with four important ones that apply to simple regression
+
+### Non-linearity of outcome-predictor relationship
+
+What if the underlying relationship is not linear? We will see later that we can capture non-linear relationships between variables, but for now, let's concentrate on detecting if a linear relationship is a good approximation. We can use exploratory visual analysis to do this for now by plotting residuals $(y_i - \hat{y}_i)^2$ as a function of the fitted values $\hat{y}_i$. 
+
+The `broom` package uses the `augment` function to help with this task. It augments the input data used to learn the linear model with information of the fitted model for each observation
+
+```{r}
+augmented_auto <- auto_fit %>%
+  augment()
+augmented_auto %>% head()
+```
+
+With that we can make the plot we need to check for possible non-linearity
+
+```{r}
+augmented_auto %>%
+  ggplot(aes(x=.fitted,y=.resid)) +
+    geom_point() + 
+    geom_smooth() +
+    labs(x="fitted", y="residual")
+```
+
+### Correlated Error
+
+For our inferences to be valid, we need residuals to be independent and identically distributed. We can spot non independence if we observe a trend in residuals as a function of the predictor $X$. Here is a simulation to demonstrate this:
+
+![](correlated_error.png)
+
+In this case, our standard error estimates would be underestimated and our confidence intervals and hypothesis testing results would be biased.
+
+### Non-constant variance
+
+Another violation of the iid assumption would be observed if the spread of residuals is not independent of the fitted values. Here is an illustration, and a possible fix using a log transformation on the outcome $Y$.
+
+![](residual_variance.png)
+
+
+
+
+
+

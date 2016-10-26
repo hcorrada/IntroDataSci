@@ -1,0 +1,299 @@
+---
+title: "Multiple Linear Regression"
+author: "CMSC320"
+date: "March 29, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Now that we've seen regression using a single predictor we'll move on to regression using multiple predictors.
+In this case, we use models of conditional expectation represented as linear functions of multiple variables:
+
+$$
+\mathbb{E}[Y|X_1=x_1,X_2=x_2,\ldots,X_p=x_p] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots \beta_3 x_3
+$$
+
+In the case of our advertising example, this would be a model:
+
+$$
+\mathtt{sales} = \beta_0 + \beta_1 \times \mathtt{TV} + \beta_2 \times \mathtt{newspaper} + \beta_3 \times \mathtt{facebook}
+$$
+
+These models let us make statements of the type: "holding everything else constant, sales increased on average by 1000 per dollar spent on Facebook advertising" (this would be given by parameter $\beta_3$ in the example model).
+
+### Estimation in multivariate regression
+
+Generalizing simple regression, we estimate $\beta$'s by minimizing an objective function that represents the difference between observed data and our expectation based on the linear model:
+
+$$
+\begin{align}
+RSS & = \frac{1}{2} \sum_{i=1}^n (y_i - \hat{y}_i)^2 \\
+{} & = \frac{1}{2} \sum_{i=1}^n (y_i - (\beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p))^2
+\end{align}
+$$
+
+![](multiple_rss.png)
+
+The minimizer is found using numerical algorithms to solve this type of _least squares_ problems. These are covered in Linear Algebra courses, and include the QR decomposition, Gauss-Seidel method, and many others. Later in the course we will look at _stochastic gradient descent_, a simple algorithm that scales to very large datasets.
+
+### Example (cont'd)
+
+Continuing with our Auto example, we can build a model for miles per gallon using multiple predictors:
+
+```{r, echo=FALSE, message=FALSE}
+library(ISLR)
+data(Auto)
+
+library(dplyr)
+library(broom)
+library(ggplot2)
+```
+
+```{r}
+auto_fit <- lm(mpg~1+weight+cylinders+horsepower+displacement+year, data=Auto)
+auto_fit
+```
+
+From this model we can make the statement: "Holding everything else constant, cars run 0.76 miles per gallon more each year on average".
+
+### Statistical statements (cont'd)
+
+Like simple linear regression, we can construct confidence intervals, and test a null hypothesis of no relationship ($\beta_j=0$) for the parameter corresponding to each predictor. This is again nicely managed by the `broom` package:
+
+```{r}
+auto_fit_stats <- auto_fit %>%
+  tidy()
+auto_fit_stats %>% knitr::kable()
+```
+
+```{r, echo=FALSE}
+
+print_confint <- function(fit_df, term, digits=2) {
+  i <- match(term, fit_df$term)
+  confint_offset <- 1.95 * fit_df$std.error[i]
+  confint <- round(c(fit_df$estimate[i] - confint_offset,
+                     fit_df$estimate[i],
+                     fit_df$estimate[i] + confint_offset), digits)
+  paste0("{}_{", confint[1], "} ", confint[2], "_{", confint[3], "}")
+}
+
+print_pval <- function(fit_df, term) {
+  i <- match(term, fit_df$term)
+  pval <- fit_df$p.value[i]
+  out <- ifelse(pval<1e-16, "<1e-16", paste0("=", pval))
+  paste0("P-value", out)
+}
+```
+
+In this case we would reject the null hypothesis of no relationship only for predictors `weight` and `year`. We would write the statement for year as follows:
+
+"Holding everything else constant, cars run $`r auto_fit_stats %>% print_confint("year")`$ miles per gallon more each year on average (P-value=`r auto_fit_stats %>% print_pval("year")`)".
+
+### The F-test
+
+We can make additional statements for multivariate regression: "is there a relationship between _any_ of the predictors and the response?". Mathematically, we write this as $\beta_1 = \beta_2 = \cdots = \beta_p = 0$.
+
+Under the null, our model for $y$ would be estimated by the sample mean $\overline{y}$, and the error for that estimate is by total sum of squared error $TSS$. As before, we can compare this to the residual sum of squared error $RSS$ using the $F$ statistic:
+
+$$
+\frac{(\mathrm{TSS}-\mathrm{RSS})/p}{\mathrm{RSS}/(n-p-1)}
+$$
+
+If this statistic is greater (enough) than 1, then we reject hypothesis that there is no relationship between response and predictors. 
+
+Back to our example, we use the `glance` function to compute this type of summary:
+
+```{r}
+auto_fit %>% 
+  glance() %>%
+  select(r.squared, sigma, statistic, df, p.value) %>%
+  knitr::kable()
+```
+
+In comparison with the linear model only using `weight`, this multivariate model explains _more of the variance_ of `mpg`, but using more and more predictors. This is where the notion of _degrees of freedom_ comes in: we now have a model with expanded _representational_ ability. 
+
+However, the bigger the model, we are conditioning more and more, and intuitively, given a fixed dataset, have fewer data points to estimate conditional expectation for each value of the predictors. That means, that are estimated conditional expectation is less _precise_.
+
+To capture this phenomenon, we want statistics that tradeoff how well the model fits the data, and the "complexity" of the model. Now, we can look at the full output of the `glance` function:
+
+```{r}
+auto_fit %>%
+  glance() %>%
+  knitr::kable()
+```
+
+Columns `AIC` and `BIC` include this type of statistic that penalizes model fit with model size. The smaller this value, the better. Let's now compare a model only using `weight`, a model only using `weight` and `year` and the full multiple regression model we saw before.
+
+```{r}
+lm(mpg~weight, data=Auto) %>%
+  glance() %>%
+  knitr::kable()
+```
+
+```{r}
+lm(mpg~weight+year, data=Auto) %>%
+  glance() %>%
+  knitr::kable()
+```
+
+In this case, using more predictors beyond `weight` and `year` doesn't help.
+
+### Categorical predictors (cont'd)
+
+We saw transformations for categorical predictors with only two values, and deferred our discussion of categorical predictors with more than two values. In our example we have the `origin` predictor, corresponding to where the car was manufactured, which has multiple values 
+
+```{r}
+Auto <- Auto %>%
+  mutate(origin=factor(origin))
+levels(Auto$origin)
+```
+
+As before, we can only use numerical predictors in linear regression models. The most common way of doing this is to create new dummy predictors to _encode_ the value of the categorical predictor. Let's take a categorical variable `major` that can take values `CS`, `MATH`, `BUS`. We can encode these values using variables $x_1$ and $x_2$ 
+
+$$
+x_1 = \left\{
+\begin{align}
+1 & \textrm{ if MATH} \\
+0 & \textrm{ o.w.}
+\end{align}
+\right.
+$$
+
+$$
+x_2 = \left\{
+\begin{align}
+1 & \textrm{ if BUS} \\
+0 & \textrm{ o.w.}
+\end{align}
+\right.
+$$
+
+Now let's build a to capture the relationship between `salary` and `major`: 
+
+$$
+\mathtt{salary} = \beta_0 + \beta_1 x_1 + \beta_2 x_2
+$$
+
+What is the expected salary for a CS major? $\beta_0$.  
+For a MATH major? $\beta_0 + \beta_1$.
+For a BUS major? $\beta_0 + \beta_2$.
+
+So, $\beta_1$ is the average difference in salary between MATH and CS majors.
+How can we calculate the average difference in salary between MATH and BUS majors? 
+$\beta_1 - \beta_2$.
+
+The `lm` function in R does this transformation by default when a variable has class `factor`.
+We can see what the underlying numerical predictors look like by using the `model_matrix` function and passing it the model formula we build:
+
+```{r}
+extended_df <- model.matrix(~origin, data=Auto) %>% 
+  as.data.frame() %>%
+  mutate(origin = Auto$origin)
+
+extended_df %>%
+  filter(origin == "1") %>% head()
+```
+
+```{r}
+extended_df %>% 
+  filter(origin == "2") %>% head()
+```
+
+```{r}
+extended_df %>%
+  filter(origin == "3") %>% head()
+```
+
+## Interactions in linear models
+
+The linear models so far include _additive_ terms for a single predictor. That let us made statemnts of the type "holding everything else constant...". But what if we think that a pair of predictors _together_ have a relationship with the outcome. We can add these _interaction_ terms to our linear models as products:
+
+$$
+\mathbb{E} Y|X_1=x_1,X_2=x2 = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_{12} x_1 x_2
+$$
+
+Consider the advertising example:
+
+$$
+\mathtt{sales} = \beta_0 + \beta_1 \times \mathtt{TV} + \beta_2 \times \mathtt{facebook} + \beta_3 \times (\mathtt{TV} \times \mathtt{facebook})
+$$
+
+If $\beta_3$ is positive, then the effect of increasing TV advertising money is increased if facebook advertising is also increased.
+
+When using categorical variables, interactions have an elegant interpretation. Consider our car example, and suppose we build a model with an interaction between `weight` and `origin`. Let's look at what the numerical predictors look like:
+
+```{r}
+extended_df <- model.matrix(~weight+origin+weight:origin, data=Auto) %>%
+  as.data.frame() %>%
+  mutate(origin = Auto$origin)
+
+extended_df %>%
+  filter(origin == "1") %>% head()
+```
+
+```{r}
+extended_df %>%
+  filter(origin == "2") %>% head()
+```
+
+```{r}
+extended_df %>%
+  filter(origin == "3") %>% head()
+```
+
+So what is the expected miles per gallon for a car with `origin == 1` as a function of weight?
+
+$$
+\mathtt{mpg} = \beta_0 + \beta_1 \times \mathtt{weight}
+$$
+
+Now how about a car with `origin == 2`?
+
+$$
+\mathtt{mpg} = \beta_0 + \beta_1 \times \mathtt{weight} + \beta_2 + \beta_4 \times \mathtt{weight}
+$$
+
+Now think of the graphical representation of these lines. For `origin == 1` the intercept of the regression line is $\beta_0$ and its slope is $\beta_1$. For `origin == 2` the intercept
+of the regression line is $\beta_0 + \beta_2$ and its slope is $\beta_1+\beta_4$.
+
+`ggplot` does this when we map a factor variable to a aesthetic, say color, and use the `geom_smooth` method:
+
+```{r}
+Auto %>%
+  ggplot(aes(x=weight, y=mpg, color=origin)) +
+    geom_point() +
+    geom_smooth(method=lm)
+```
+
+The intercept of the three lines seem to be different, but the slope of `origin == 3` looks different (decreases faster) than the slopes of `origin == 1` and `origin == 2` that look very similar to each other. 
+
+Let's fit the model and see if that observation how much statistical confidence we can give to those observations:
+
+```{r}
+auto_fit <- lm(mpg~weight*origin, data=Auto)
+auto_fit_stats <- auto_fit %>%
+  tidy() 
+auto_fit_stats %>% knitr::kable()
+```
+
+So we can say that for `origin == 3` the relationship between `mpg` and `weight` is different but not for the other two values of `origin`. Now, there is still an issue here because this could be the result of a poor fit from a linear model, it seems none of these lines do a very good job of modeling the data we have. We can again check this for this model:
+
+```{r}
+auto_fit %>% 
+  augment() %>%
+  ggplot(aes(x=.fitted, y=.resid)) +
+    geom_point()
+```
+
+The fact that residuals are not centered around zero suggests that a linear fit does not work well in this case.
+
+### Additional issues with linear regression
+
+We saw previously some issues with linear regression that we should take into account when using this method for modeling. Multiple linear regression introduces an additional issue that is extremely important to consider when interpreting the results of these analyses: collinearity.
+
+![](collinearity.png)
+
+In this example, you have two predictors that are very closely related. In that case, the set of $\beta$'s that minimize RSS may not be unique, and therefore our interpretation is invalid. You can identify this potential problem by regressing predictors onto each other. The usual solution is to fit models only including one of the colinear variables.

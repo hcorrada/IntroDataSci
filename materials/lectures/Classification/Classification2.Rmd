@@ -1,0 +1,613 @@
+Classification2
+========================================================
+author: Hector Corrada Bravo
+date: CMSC498T Introduction to Data Science, Spring 2015
+
+Linear Discriminant Analysis
+=========================================
+
+- Another linear method, based on probability model.
+- Recall that we want to partition data based on **posterior class probability**:  _find the $\mathbf{X}$ for which_ $P(\mathrm{default=Yes}|X) > P(\mathrm{default=No}|X)$ 
+- In logistic regression **we made no assumption about $\mathbf{X}$**
+- In some cases, we **can** make assumptions about $\mathbf{X}$ that improve prediction performance (if assumptions hold, obviously)
+
+Linear Discriminant Analysis
+==============================
+
+```{r, echo=FALSE}
+library(ISLR)
+data(Default)
+```
+
+```{r, echo=FALSE, fig.width=10, fig.height=10}
+layout(matrix(1:4,nr=2))
+hist(Default$balance[Default$default=="Yes"], main="Balance distribution if defaulting")
+qqnorm(Default$balance[Default$default=="Yes"])
+
+
+hist(Default$balance[Default$default=="No"], main = "Balance distribution if not defaulting")
+qqnorm(Default$balance[Default$default=="No"])
+```
+
+Linear Discriminant Analysis
+=============================
+
+- This implies we can model `balance` for each of the classes with a normal distribution
+- WARNING, BIG ASSUMPTION: We will assume `balance` has the same *variance* for both classes (this is what makes LDA linear)
+- So, we estimate average `balance` for people who _do not_ default:
+
+$$
+\hat{\mu}_0 = \frac{1}{n_0} \sum_{i:\, y_i=0} x_i
+$$
+
+- And for people who do default:
+
+$$
+\hat{\mu}_1 = \frac{1}{n_1} \sum_{i:\, y_i=1} x_i
+$$
+
+```{r, echo=FALSE}
+library(dplyr)
+
+balance_means <- Default %>% 
+  group_by(default) %>% 
+  summarize(balance_mean=mean(balance))
+
+#print(balance_means)
+
+balance_sd <- Default %>% 
+  group_by(default) %>%
+  mutate(balance_mean = mean(balance)) %>%
+  mutate(squared_centered_balance = (balance - balance_mean)^2) %>%
+  summarize(rss=sum(squared_centered_balance),
+            n=n()) %>%
+  summarize(balance_sd=sqrt(sum(rss) / (sum(n)-2)))
+#print(balance_sd)
+```
+
+Linear Discriminant Analysis
+==============================
+
+```{r, echo=FALSE, fig.width=15, fig.height=10}
+library(ggplot2)
+q <- Default %>% ggplot(aes(x=balance))
+
+q <- q + geom_histogram(data=subset(Default, default=="No"), fill="red", alpha=.3) +
+      geom_histogram(data=subset(Default, default=="Yes"), fill="blue", alpha=.3) +
+      geom_vline(xintercept=balance_means$balance_mean, size=1.5, linetype=2) +
+      theme(axis.title=element_text(size=24),
+            axis.text=element_text(size=18))
+q
+```
+
+
+Linear Discriminant Analysis
+=============================
+
+- This implies we can model `balance` for each of the classes with a normal distribution
+- WARNING, BIG ASSUMPTION: We will assume `balance` has the same *variance* for both classes (this is what makes LDA linear)
+- And estimate variance for both classes as
+
+$$
+\hat{\sigma}^2 = \frac{1}{n-2} \sum_{k=1,2} \sum_{i:\, y_i=k} (x_i - \hat{\mu}_k)^2
+$$
+
+Linear Discriminant Analysis
+=============================
+
+```{r, echo=FALSE, fig.width=15, fig.height=10}
+q2 <- q + geom_segment(aes(x=balance_means$balance_mean-1.25*balance_sd$bal, 
+                 xend=balance_means$balance_mean+1.25*balance_sd$bal, 
+                 y=c(200,10), yend=c(200,10)), size=1.4, linetype=2)
+q2
+```
+
+Linear Discriminant Analysis
+==============================
+
+We can "score" values of `balance` based on these estimates:
+
+$$
+f_k(x) = \frac{1}{\sqrt{2\pi}\sigma} \exp \left(-\frac{1}{2\sigma^2} (x-\mu_k)^2 \right)
+$$
+
+Linear Discriminant Analysis
+==============================
+
+- Remember, what we want is **posterior class probability** $P(Y=k|X)$, for that we need to include the probability that we _observe_ class $k$.
+
+- This is called **prior class probability**, denoted $\pi_k$, means the proportion of times you expect people to default regardless of any other attribute. We can estimate from training data as the proportion of observations with label $k$.
+
+Linear Discriminant Analysis
+==============================
+
+- Bayes' Rule (or Theorem) gives us a way of computing $P(Y=k|X)$ using score $f_k(x)$ (from the class normal assumption) and prior $\pi_k$:
+
+$$
+P(Y=k|X) = \frac{f_k(x) \pi_k}{\sum_l f_l(x) \pi_l}
+$$
+
+- If data (conditioned by class) is distributed so that $f_k$ is the right probability function to use, then
+
+- Predicting the class that maximizes $P(Y=k|X)$ is the **optimal** thing to do.
+
+- This is referred to the _Bayes classifier_ (aka the Holy Grail of classification)
+
+Linear Discriminant Analysis
+==============================
+
+**How to train LDA**
+
+Compute class means and squared error based on class mean
+
+```{r}
+lda_stats <- Default %>% 
+  group_by(default) %>% 
+  mutate(class_mean=mean(balance),
+         squared_error=(balance-class_mean)^2) 
+```
+
+Linear Discriminant Analysis
+==============================
+
+**How to train LDA**
+
+Compute class sizes and sum of squared errors
+
+```{r}
+lda_stats <- lda_stats %>%
+  summarize(class_mean=first(class_mean),
+            class_size=n(),
+            sum_squares=sum(squared_error))
+```
+
+Linear Discriminant Analysis
+=============================
+
+**How to train LDA**
+
+Compute class prior and variance (note same variance for both classes)
+
+```{r, results="as.is"}
+lda_stats <- lda_stats %>%
+  mutate(class_prior=class_size/sum(class_size),
+         sigma2=sum(sum_squares) / (sum(class_size) - 2)) %>%
+  select(default, class_mean, class_prior, sigma2)
+
+kable(lda_stats)
+```
+
+Linear Discriminant Analysis (predict)
+=======================================
+
+How do we predict with LDA?
+
+- Predict `Yes` if $P(Y=1|X) > P(Y=0|X)$
+- Equivalently:
+
+$$
+\log{\frac{P(Y=1|X)}{P(Y=0|X)}} > 0 \Rightarrow \\
+\log f_1(x) + \log \pi_1 > \log f_0(x) + \log \pi_0
+$$
+
+- This turns out to be a linear function of $x$!
+
+
+Linear Discriminant Analysis (predict)
+====================================
+
+```{r}
+lda_log_ratio <- function(balance, lda_stats) {
+  n <- length(balance)
+  
+  # subtract class mean
+  centered_balance <- rep(balance, 2) - rep(lda_stats$class_mean, each=n)
+  
+  # scale by standard deviation
+  scaled_balance <- centered_balance / sqrt(lda_stats$sigma2[1])
+  
+  # compute log normal density and add log class prior
+  lprobs <- dnorm(scaled_balance, log=TRUE) + log(rep(lda_stats$class_prior, each=n))
+  
+  # compute log ratio of class probabilities
+  lprobs <- matrix(lprobs, nc=2)
+  colnames(lprobs) <- lda_stats$default
+  lprobs[,"Yes"] - lprobs[,"No"]
+}
+```
+
+Linear Discriminant Analysis (predict)
+================================
+
+
+```{r, fig.width=12}
+test_balance <- seq(0, 3000, len=100)
+plot(test_balance, lda_log_ratio(test_balance, lda_stats),
+     type="l", xlab="Balance", ylab="Log Probability Ratio", cex=1.4)
+```
+
+Quadratic Discriminant Analysis
+================================
+
+We can get a quadratic decision boundary by letting each class have it's own variance
+
+```{r, eval=FALSE}
+qda_stats <- qda_stats %>%
+  summarize(class_mean=first(class_mean),
+            class_size=n(),
+            class_sigma2=sum(squared_error) / (class_size - 1))
+```
+
+```{r, echo=FALSE, results="as.is"}
+qda_stats <- Default %>% 
+  group_by(default) %>% 
+  mutate(class_mean=mean(balance),
+         squared_error=(balance-class_mean)^2) %>%
+  summarize(class_mean=first(class_mean),
+            class_size=n(),
+            class_sigma2=sum(squared_error) / (class_size - 1)) %>%
+  mutate(class_prior=class_size / sum(class_size)) %>%
+  select(default, class_mean, class_prior, class_sigma2)
+kable(qda_stats)
+```
+
+Quadratic Discriminant Analysis
+================================
+
+```{r, echo=FALSE, fig.width=10, fig.height=8}
+q3 <- q + geom_segment(aes(x=qda_stats$class_mean-1.25*sqrt(qda_stats$class_sigma), 
+                 xend=qda_stats$class_mean+1.25*sqrt(qda_stats$class_sigma), 
+                 y=c(200,10), yend=c(200,10)), size=1.4, linetype=2)
+q3
+```
+
+Quadratic Discriminant Analysis
+================================
+
+```{r, echo=FALSE}
+qda_log_ratio <- function(balance, qda_stats) {
+  n <- length(balance)
+  
+  # subtract class mean
+  centered_balance <- rep(balance, 2) - rep(qda_stats$class_mean, each=n)
+  
+  # scale by standard deviation
+  scaled_balance <- centered_balance / rep(sqrt(qda_stats$class_sigma), each=n)
+  
+  # compute log normal density and add log class prior
+  lprobs <- dnorm(scaled_balance, log=TRUE) + log(rep(qda_stats$class_prior, each=n))
+  
+  # compute log ratio of class probabilities
+  lprobs <- matrix(lprobs, nc=2)
+  colnames(lprobs) <- qda_stats$default
+  lprobs[,"Yes"] - lprobs[,"No"]
+}
+```
+
+```{r, echo=FALSE}
+plot(test_balance, qda_log_ratio(test_balance, qda_stats),
+     type="l", xlab="Balance", ylab="Log Probability Ratio")
+```
+
+Evaluation
+============
+
+How well did LDA do?
+
+```{r}
+library(MASS)
+lda_fit <- lda(default ~ balance, data=Default)
+lda_pred <- predict(lda_fit, data=Default)
+print(table(predicted=lda_pred$class, observed=Default$default))
+
+# error rate
+mean(Default$default != lda_pred$class) * 100
+```
+
+Evaluation
+============
+
+How well did LDA do?
+
+Not very well, we can get similar error rate
+by always predicting "no default"
+
+- From table above, LDA errors are not symmetric, most common error is that _it misses true defaults_
+
+- Also, when can we say a classifier is better than another classifier? (next lecture)
+
+*** 
+```{r}
+# LDA error rate
+mean(Default$default != lda_pred$class) * 100
+```
+
+***
+
+```{r}
+# dummy error rate
+mean(Default$default != "No") * 100
+```
+
+Evaluation
+===========
+
+Need a more precise language to describe classification errors:
+
+|                   | True Class +        | True Class -        | Total |
+|------------------:|:--------------------|---------------------|-------|
+| Predicted Class + | True Positive (TP)  | False Positive (FP) | T*    |
+| Predicted Class - | False Negative (FN) | True Negative (TN)  | F*    |
+| Total             | T                   | F                   |       |
+
+```{r, echo=FALSE}
+library(MASS)
+lda_fit <- lda(default ~ balance, data=Default)
+lda_pred <- predict(lda_fit, data=Default)
+print(table(predicted=lda_pred$class, observed=Default$default))
+```
+
+Evaluation
+===========
+
+Need a more precise language to describe classification errors:
+
+|                   | True Class +        | True Class -        | Total |
+|------------------:|:--------------------|---------------------|-------|
+| Predicted Class + | True Positive (TP)  | False Positive (FP) | P*    |
+| Predicted Class - | False Negative (FN) | True Negative (TN)  | N*    |
+| Total             | P                   | N                   |       |
+
+| Name                            | Definition | Synonyms                                          |
+|--------------------------------:|:-----------|---------------------------------------------------|
+| False Positive Rate (FPR)       | FP / N     | Type-I error, 1-Specificity                       |
+| True Positive Rate (TPR)        | TP / P     | 1 - Type-II error, power, sensitivity, **recall** |
+| Positive Predictive Value (PPV) | TP / P*    | **precision**, 1-false discovery proportion       |
+| Negative Predicitve Value (NPV) | FN / N*    |                                                   |
+
+In the credit default case we may want to increase **TPR** (recall, make sure we catch all defaults) at the expense
+of **FPR** (1-Specificity, clients we lose because we think they will default)
+
+Evaluation
+===========
+
+How can we adjust TPR and FPR?
+
+Remember we are classifying `Yes` if 
+
+$$
+\log \frac{P(Y=\mathtt{Yes}|X)}{P(Y=\mathtt{No}|X)} > 0 \Rightarrow \\
+P(Y=\mathtt{Yes}|X) > 0.5
+$$
+
+What would happen if we use $P(Y=\mathtt{Yes}|X) > 0.2$?
+
+***
+
+```{r, echo=FALSE}
+test_balance <- seq(0, 3000, len=100)
+plot(test_balance, lda_log_ratio(test_balance, lda_stats),
+     type="l", xlab="Balance", ylab="Log Probability Ratio", cex=1.4)
+```
+
+Evaluation
+===========
+
+```{r, fig.width=12}
+library(ROCR)
+pred <- prediction(lda_pred$posterior[,"Yes"], Default$default)
+
+layout(cbind(1,2))
+plot(performance(pred, "tpr"))
+plot(performance(pred, "fpr"))
+```
+
+Evaluation
+============
+left: 30%
+
+- **ROC curve** (Receiver Operating Characteristic) 
+- **AUROC** (area under the ROC)
+
+***
+
+```{r, fig.width=12}
+auc <- unlist(performance(pred, "auc")@y.values)
+plot(performance(pred, "tpr", "fpr"), 
+     main=paste("LDA AUROC=", round(auc, 2)), 
+     lwd=1.4, cex.lab=1.7, cex.main=1.5)
+```
+
+Evaluation
+=============
+
+```{r}
+full_lda <- lda(default~., data=Default)
+full_lda_preds <- predict(full_lda, Default)
+
+pred_list <- list(
+  balance_lda = lda_pred$posterior[,"Yes"],
+  full_lda = full_lda_preds$posterior[,"Yes"],
+  dummy = rep(0, nrow(Default)))
+
+pred_objs <- lapply(pred_list,
+  prediction, Default$default)
+
+aucs <- sapply(pred_objs, 
+  function(x) unlist(
+    performance(x, "auc")@y.values))
+
+roc_objs <- lapply(pred_objs, 
+  performance, "tpr", "fpr")
+```
+
+Evaluation
+===========
+
+```{r, echo=FALSE}
+library(RColorBrewer)
+palette(brewer.pal(8,"Dark2"))
+```
+
+```{r, eval=FALSE}
+for (i in seq(along=roc_objs)) {
+  plot(roc_objs[[i]], add = i != 1, col=i, 
+       lwd=3, cex.lab=1.5)
+}
+legend("bottomright", 
+       legend=paste(gsub("_", " ", names(pred_list)), "AUROC=",round(aucs, 2)), 
+       col=1:3, lwd=3, cex=2)
+```
+
+Evaluation
+===========
+
+```{r, echo=FALSE}
+library(RColorBrewer)
+palette(brewer.pal(8,"Dark2"))
+```
+
+```{r, echo=FALSE, fig.width=10, fig.height=10}
+for (i in seq(along=roc_objs)) {
+  plot(roc_objs[[i]], add = i != 1, col=i, 
+       lwd=3, cex.lab=1.5)
+}
+legend("bottomright", 
+       legend=paste(gsub("_", " ", names(pred_list)), "AUROC=",round(aucs, 2)), 
+       col=1:3, lwd=3, cex=2)
+```
+
+Evaluation
+============
+
+Also consider the precision-recall curve:
+
+
+```{r, eval=FALSE, fig.width=10, fig.height=9}
+library(caTools)
+pr_objs <- lapply(pred_objs, 
+  performance, "prec", "rec")
+
+for (i in seq(along=pr_objs)) {
+  plot(pr_objs[[i]], add = i != 1, col=i, 
+       lwd=3, cex.lab=1.5)
+}
+legend("bottomleft", 
+       legend=paste(gsub("_", " ", names(pred_list))),
+      col=1:3, lwd=3, cex=2)
+```
+
+Evaluation
+============
+
+Also consider the precision-recall curve:
+
+```{r, echo=FALSE, fig.width=10, fig.height=9}
+library(caTools)
+pr_objs <- lapply(pred_objs, 
+  performance, "prec", "rec")
+
+for (i in seq(along=pr_objs)) {
+  plot(pr_objs[[i]], add = i != 1, col=i, 
+       lwd=3, cex.lab=1.5)
+}
+legend("bottomleft", 
+       legend=paste(gsub("_", " ", names(pred_list))),
+      col=1:3, lwd=3, cex=2)
+```
+
+K Nearest neighbor classifier
+==============================
+
+Use `knn` function in package `class`
+
+```{r,echo=FALSE}
+library(MASS)
+
+library(RColorBrewer)
+mycols <- brewer.pal(8, "Dark2")[c(3,2)]
+
+s <- sqrt(1/5)
+set.seed(30)
+
+makeX <- function(M, n=100, sigma=diag(2)*s) {
+  z <- sample(1:nrow(M), n, replace=TRUE)
+  m <- M[z,]
+  return(t(apply(m,1,function(mu) mvrnorm(1,mu,sigma))))
+}
+
+M0 <- mvrnorm(10, c(1,0), diag(2)) # generate 10 means
+x0 <- makeX(M0) ## the final values for y0=blue
+
+M1 <- mvrnorm(10, c(0,1), diag(2))
+x1 <- makeX(M1)
+
+x <- rbind(x0, x1)
+y <- c(rep(0,100), rep(1,100))
+cols <- mycols[y+1]
+
+GS <- 75 # put data in a Gs x Gs grid
+XLIM <- range(x[,1])
+tmpx <- seq(XLIM[1], XLIM[2], len=GS)
+
+YLIM <- range(x[,2])
+tmpy <- seq(YLIM[1], YLIM[2], len=GS)
+
+newx <- expand.grid(tmpx, tmpy)
+colnames(newx) <- c("X1","X2")
+```
+
+```{r, echo=FALSE, fig.height=9, fig.width=9}
+layout(matrix(1:4, nr=2, byrow=FALSE))
+plot(x, col=cols, xlab="X1", ylab="X2", xlim=XLIM, ylim=YLIM, type="n", main="Training Set")
+points(x, col=cols)
+
+# logistic regression
+dat <- data.frame(X1=x[,1], X2=x[,2])
+fit <- glm(y~X1+X2, data=dat,family=binomial)
+yhat <- predict(fit, newdata=newx)
+yhat <- ifelse(yhat > 0, 2, 1)
+colshat <- mycols[yhat]
+
+coefs <- coef(fit)
+a <- -coefs[1] / coefs[3]
+b <- -coefs[2] / coefs[3]
+
+plot(x, col=cols, xlab="X1", ylab="X2", xlim=XLIM, ylim=YLIM, type="n",main="logistic regression")
+points(x, col=cols)
+points(newx, col=colshat, pch=".")
+abline(a=a,b=b)
+
+# KNN(15)
+library(class)
+yhat <- knn(x, newx, y, k=15)
+colshat <- mycols[as.numeric(yhat)]
+plot(x, col=cols, xlab="X1", ylab="X2", xlim=XLIM, ylim=YLIM, type="n",main="KNN(15)")
+points(x, col=cols)
+points(newx, col=colshat, pch=".")
+contour(tmpx, tmpy, matrix(as.numeric(yhat),GS,GS), levels=c(1,2), add=TRUE, drawlabels=FALSE)
+
+# KNN(1)
+yhat <- knn(x, newx, y, k=1)
+colshat <- mycols[as.numeric(yhat)]
+plot(x, col=cols, xlab="X1", ylab="X2", xlim=XLIM, ylim=YLIM, type="n",main="KNN(1)")
+points(x, col=cols)
+points(newx, col=colshat, pch=".")
+contour(tmpx, tmpy, matrix(as.numeric(yhat),GS,GS), levels=c(1,2), add=TRUE, drawlabels=FALSE)
+```
+
+Summary
+========
+
+- Think of classification as a class probability estimation problem
+- Logistic regression and LDA partition predictor space with linear functions:
+  - logistic regression learns parameter using Maximum Likelihood (numerical optimization)
+  - LDA learns parameter using means and variances (and assuming normal distribution)
+- K nearest neighbor nonlinear, but easy to overfit
+
+Summary
+========
+
+- Error and accuracy not enough to understand classifier performance
+- Classifications can be done using probability cutoffs to trade, e.g., TPR-FPR (ROC curve), or precision-recall (PR curve)
+- Area under ROC or PR curve summarize classifier performance across different cutoffs

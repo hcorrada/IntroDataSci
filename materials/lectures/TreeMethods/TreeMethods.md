@@ -1,7 +1,7 @@
 TreeMethods
 ========================================================
 author: Hector Corrada Bravo
-date: CMSC498T Intro Data Science
+date: CADi 2015
 
 
 
@@ -85,7 +85,7 @@ Regression Trees
 Regression Trees
 =================
 
-In R, built with similar API as linear models
+In R, built with similar interface as linear models
 
 
 ```r
@@ -224,8 +224,6 @@ But wait, how do we get many decision trees from a single training set?
 Bootstrap
 =========
 
-Details in Ch. 5, but a very general resampling technique
-
 To create $T_j, \, j=1,\ldots,B$ from training set of size $n$:
 
 a) create a bootstrap training set by sampling $n$ observations from training set **with replacement**
@@ -248,39 +246,16 @@ When building each tree $T_j$, at each recursive partition only consider a rando
 Random Forests
 ================
 
-![plot of chunk unnamed-chunk-20](TreeMethods-figure/unnamed-chunk-20-1.png) 
-
-***
-
-![plot of chunk unnamed-chunk-21](TreeMethods-figure/unnamed-chunk-21-1.png) 
-
-Random Forests
-===============
-
-A disadvantage is that we lose interpretability...
-
-But there are methods to measure _variable importance_ from the random forest.
 
 
-|             | %IncMSE| IncNodePurity|
-|:------------|-------:|-------------:|
-|cylinders    |   14.38|       2251.77|
-|displacement |   19.91|       2779.83|
-|horsepower   |   20.54|       2483.77|
-|weight       |   21.29|       2349.77|
-|acceleration |    6.37|        361.65|
-|year         |   44.27|       1332.41|
 
-***
 
-![plot of chunk unnamed-chunk-23](TreeMethods-figure/unnamed-chunk-23-1.png) 
 
-Tree-Based Methods
-===================
 
-Summary
 
-- Interpretable _prediction_ models
-- Some inferential tasks possible (variable importance)
-- Very commonly used
-- Random Forests perform at state-of-the-art for many tasks
+
+
+```
+Error in library(randomForest) : 
+  there is no package called 'randomForest'
+```

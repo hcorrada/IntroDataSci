@@ -1,7 +1,7 @@
 Communicating Results of Data Analysis
 ========================================================
-author: Hector Corrada Bravo
-date: CMSC498T: Introduction Data Science, Spring 2015
+author: CMSC320
+date: Spring 2016
 
 For Today
 ========================================================
@@ -61,7 +61,7 @@ Results
 - Report estimates in the appropriate units
 - Report estimates with uncertainty
 
-We saw confidence intervals on our regression lecture
+We saw confidence intervals on our previous lectures with specific advise regarding their presentation.
 
 - Summarize importance of estimate (i.e., refer to the question you originally posed in introduction)
 
@@ -76,7 +76,7 @@ Graphics
 
 Karl Broman's presentation on bad graphics:
 
-[https://www.biostat.wisc.edu/~kbroman/presentations/IowaState2013/graphs_combined.pdf](https://www.biostat.wisc.edu/~kbroman/presentations/IowaState2013/graphs_combined.pdf)
+[https://www.biostat.wisc.edu/~kbroman/presentations/graphs_cmp2014.pdf](https://www.biostat.wisc.edu/~kbroman/presentations/graphs_cmp2014.pdf)
 
 Graphics
 ==========
@@ -107,4 +107,4 @@ Hadley's presentation on R packages
 
 [http://www.slideshare.net/hadley/r-packages](http://www.slideshare.net/hadley/r-packages)
 
-[The book](http://proquest.safaribooksonline.com.proxy-um.researchport.umd.edu/book/programming/r/9781491910580)
+[The book](http://r-pkgs.had.co.nz/)

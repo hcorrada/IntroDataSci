@@ -3,31 +3,13 @@ Classification
 author: Hector Corrada Bravo
 date: CMSC498T: Intro Data Science
 
-Some Classification Problems
-========================================================
 
 
 
-Predict the type of computer system a programmer prefers. The response would be Windows, Mac, or Linux. The predictors could be favorite programming languages, annual salary, whether the programmer comments his code, and his geographic proximity to Redmond, Washington. This is a prediction problem.
-
-
-<small>[from your submissions]</small>
-
-Some Classification Problems
-========================================================
-
-- Response: Success of a tech start up
-- Predictors: Market it's trying to get into. Funding it can raise. Personality of Founder. Participation in incubators. I have no idea.
-- Finite possibilities, so classification. People want to understand what makes a buisness successful, so inference.
-
-<small>[from your submissions]</small>
-
-Some Classification Problems
+Example Classification Problem
 ========================================================
 
 Mode choice of an individual to commute to work. Predictors: income, cost and time required for each of the alternatives: driving/carpooling,  biking, taking a bus, taking the train. Response: whether the individual makes their commute by car, bike, bus or train. Inference - shows how people value the price and time when considering their mode choice. 
-
-<small>[from your submissions]</small>
 
 Classification
 ===============
@@ -49,8 +31,6 @@ Classification
 
 Why not linear regression?
 ============================
-
-We discussed this in "Intro to Statistical Learning" lecture
 
 For multiple possible classes, if order and scale (units) don't make sense, then it's not a regression problem
 
@@ -116,8 +96,6 @@ $$
   
 Logistic regression
 =====================
-
-From quiz:
 
 1. Suppose an individual has a 16% chance of defaulting on her credit card payment. What are the odds that she will default?
 
@@ -254,30 +232,9 @@ Multiple logistic regression
 Multiple Logistic Regression
 ==============================
 
-From quiz:
-
 1. Suppose we collect data for a group of students in a statistics class with variables X1 = hours studied, X2 = undergrad GPA, and Y = receive an A. We fit a logistic regression and produce estimated coefficients, $\hat{\beta}_0=-6, \hat{\beta}_1=0.05,\hat{\beta}_2=1$.
 
   Estimate the probability that a student who studies for 40h and has an undergraduate GPA of 3.5 gets an A in the class.
 
 2. With estimated parameters from previous question, and GPA of 3.5 as before, how many hours would the student need to study to have a 50% chance of getting an A in the class?
 
-Linear Discriminant Analysis
-=========================================
-
-- Another linear method, based on probability model.
-- Recall that we want to partition data based on class probability: _find the $\mathbf{X}$ for which $P(\mathrm{default=Yes}|X) > P(\mathrm{default=No}|X)$ 
-- In logistic regression **we made no assumption about $\mathbf{X}$**
-- In some cases, we **can** make assumptions about $\mathbf{X}$ that help classification (if assumptions hold, obviously)
-
-Linear Discriminant Analysis
-==============================
-
-![plot of chunk unnamed-chunk-13](Classification-figure/unnamed-chunk-13-1.png) 
-
-Next time
-==========
-
-- Fitting LDA
-- Assessing classification accuracy
-- Comparing models via resampling (ISL Ch. 5)

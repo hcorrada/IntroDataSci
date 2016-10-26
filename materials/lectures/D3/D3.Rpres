@@ -1,7 +1,7 @@
 D3
 ========================================================
-author: Hector Corrada Bravo
-date: CMSC498: Intro Data Science
+author:CMSC320
+date: Spring 2016
 
 Why Interactivity?
 ========================================================
@@ -24,31 +24,31 @@ Take advantage of HTML document description and the [Document Object Model](http
 Taxonomy of Interactions
 =========================
 
-**Data and View Specification**: Visualize, Filter, Sort, Derive
-**View Manipulation**: Select, Navigate, Coordinate, Organize
-**Process and Provenance**: Record, Annotate, Share, Guide
+**Data and View Specification**: Visualize, Filter, Sort, Derive  
+**View Manipulation**: Select, Navigate, Coordinate, Organize  
+**Process and Provenance**: Record, Annotate, Share, Guide  
 
 [Heer](http://courses.cs.washington.edu/courses/cse512/15sp/lectures/CSE512-Interaction.pdf)
 
 General Data Viz Tool Taxonomy
 ===============================
 
-**Chart Typologies**: Excel, Google Charts
-**Visual Analysis Grammars**: ggplot2, VizQL
-**???**
-**Component Architectures**: Prefuse, Flare, VTK
-**Graphics APIs**: Processing, OpenGL, Java2D
+**Chart Typologies**: Excel, Google Charts  
+**Visual Analysis Grammars**: ggplot2, VizQL  
+**???**  
+**Component Architectures**: Prefuse, Flare, VTK  
+**Graphics APIs**: Processing, OpenGL, Java2D  
 
 [Heer](http://courses.cs.washington.edu/courses/cse512/15sp/lectures/CSE512-Tools.pdf)
 
 General Data Viz Tool Taxonomy
 ===============================
 
-**Chart Typologies**: Excel, Google Charts
-**Visual Analysis Grammars**: ggplot2, VizQL
-**Visualization Grammars**: D3.js, Protovis
-**Component Architectures**: Prefuse, Flare, VTK
-**Graphics APIs**: Processing, OpenGL, Java2D
+**Chart Typologies**: Excel, Google Charts  
+**Visual Analysis Grammars**: ggplot2, VizQL  
+**Visualization Grammars**: D3.js, Protovis  
+**Component Architectures**: Prefuse, Flare, VTK  
+**Graphics APIs**: Processing, OpenGL, Java2D  
 
 [Heer](http://courses.cs.washington.edu/courses/cse512/15sp/lectures/CSE512-Tools.pdf)
 

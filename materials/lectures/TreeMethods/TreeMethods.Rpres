@@ -1,7 +1,7 @@
 TreeMethods
 ========================================================
 author: Hector Corrada Bravo
-date: CMSC498T Intro Data Science
+date: CADi 2015
 
 ```{r, echo=FALSE}
 knitr::opts_chunk$set(cache=TRUE)
@@ -191,7 +191,7 @@ text(tree, pretty=0)
 Regression Trees
 =================
 
-In R, built with similar API as linear models
+In R, built with similar interface as linear models
 
 ```{r, eval=FALSE}
 library(tree)
@@ -366,8 +366,6 @@ But wait, how do we get many decision trees from a single training set?
 
 Bootstrap
 =========
-
-Details in Ch. 5, but a very general resampling technique
 
 To create $T_j, \, j=1,\ldots,B$ from training set of size $n$:
 

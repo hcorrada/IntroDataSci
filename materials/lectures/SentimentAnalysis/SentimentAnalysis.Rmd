@@ -1,0 +1,249 @@
+---
+title: "Sentiment Analysis"
+author: "Hector Corrada Bravo"
+date: "June 25, 2015"
+output: html_document
+---
+
+This document is based on [Cheng-Jun Wang's](http://chengjun.github.io/) [post on sentiment analysis in R](http://chengjun.github.io/en/2014/04/sentiment-analysis-with-machine-learning-in-R/).
+
+##Sentiment Analysis
+
+The goal of sentiment analysis is to classify text into sentiment categories (e.g., positive, negative) based on the word content. Initial work in this area used supervised machine learning algorithms. I.e., given a text corpus, each document tagged with a sentiment label, learn a classifier that categorizes new documents based on sentiment. In this document we will do this analysis for a small corpus of Tweets. Current research on far more complex learning models (e.g., Deep Learning) is showing much promise to learn more sophisticated and accurate sentiment models.
+
+##Tools
+
+R includes very useful packages for text mining and processing. For more information consult the [Natural Language Processing Task View](http://cran.r-project.org/web/packages/RTextTools/index.html). In particular, we will use the [tm package](http://cran.r-project.org/web/packages/tm/index.html) that includes many fundamental operations in text processing (e.g., stemming, stop word removal, document to word vector representation), and the [RTextTools package](http://cran.r-project.org/web/packages/RTextTools/index.html) that implements a number of Machine Learning algorithms that have proven to be particuarly useful in text classification tasks.
+
+##Datasets
+
+ and a small corpus of labeled tweets downloaded from [this Sentiment Analysis tutorial](https://github.com/victorneo/Twitter-Sentimental-Analysis).
+
+##Toy Example
+
+Let's start by loading the libraries we will use in this analysis and creating the toy dataset (based on [Cheng-Jun Wang's post](http://chengjun.github.io/en/2014/04/sentiment-analysis-with-machine-learning-in-R/)),
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(cache=FALSE)
+```
+
+```{r load, message=FALSE}
+library(tm)
+library(RTextTools)
+library(e1071)
+library(dplyr)
+
+# a toy dataset of labeled tweets
+
+# these are positive tweets, each 
+# tweet in this list is tagged as 'positive'
+pos_tweets <-  rbind(
+  c('I love this car', 'positive'),
+  c('This view is amazing', 'positive'),
+  c('I feel great this morning', 'positive'),
+  c('I am so excited about the concert', 'positive'),
+  c('He is my best friend', 'positive')
+)
+
+# negative tweets
+neg_tweets <- rbind(
+  c('I do not like this car', 'negative'),
+  c('This view is horrible', 'negative'),
+  c('I feel tired this morning', 'negative'),
+  c('I am not looking forward to the concert', 'negative'),
+  c('He is my enemy', 'negative')
+)
+
+# test tweets, we'll use this to test the accuracy of the
+# learned sentiment classifier
+test_tweets <- rbind(
+  c('feel happy this morning', 'positive'),
+  c('larry friend', 'positive'),
+  c('not like that man', 'negative'),
+  c('house not great', 'negative'),
+  c('your song annoying', 'negative')
+)
+
+# put all tweets together into a single matrix
+tweets <- rbind(pos_tweets, neg_tweets, test_tweets) %>% as.data.frame()
+colnames(tweets) <- c("tweet", "sentiment")
+```
+
+The resulting dataset looks as follows:
+
+```{r, echo=FALSE}
+tweets %>% sample_n(10) %>% knitr::kable()
+```
+
+The first step in the analysis will be to convert each tweet into a word occurence vector. This is representation (known as bag-of-words) is extremely simple, but usually serves as a very good starting point. The conversion is done in two steps, first all words in the corpus are collected, second each document is then represented by a list, of length equal to the total number of words in the corpus, with each entry in the list containing the number of times the corresponding word appears in the document. Alternatively, it may only contain 1 or 0 to indicate if the word appears in the document or not. 
+
+Let's construct the bag-of-words representation for this toy example.
+
+```{r}
+# the create matrix function is
+# defined in the RTextTools package
+dtm <- create_matrix(tweets[,1], language="english",
+                     removeStopwords=FALSE, removeNumbers=TRUE,
+                     stemWords=FALSE)
+```
+
+Let's see what the resulting document-term matrix looks like:
+
+```{r, echo=FALSE}
+inspect(dtm)
+```
+
+With this representation, we can use standard machine learning classification algorithms. A very simple algorithm is the "Naive Bayes Classifier" that learns a probability of (in this case) each sentiment, based on the frequency each term appears in either positive or negative tweets. Let's train the classifier using the training tweets:
+
+```{r}
+nb_classifier <- e1071::naiveBayes(as.matrix(dtm[1:10,]), 
+                                   factor(tweets[1:10,2]))
+```
+
+Let's plot the how the learned model treats each term when classifying a tweet as positive or negative
+
+```{r}
+weights <- sapply(nb_classifier$tables, function(x) x[,2])
+weights[1,] <- -weights[1,]
+
+library(tidyr)
+library(ggplot2)
+
+weight_dat <- weights %>% 
+  as.data.frame() %>%
+  mutate(sentiment=rownames(.)) %>%
+  gather(term, weight,-sentiment) %>%
+  spread(sentiment,weight)
+
+weight_dat %>%
+  ggplot(aes(x=term, y=positive)) +
+    geom_bar(stat="identity") +
+    geom_bar(stat="identity", aes(y=negative)) +
+    labs(title="Learned weights", y="Positive weight", x="Term") +
+    coord_flip()
+```
+
+### A closer look at NaiveBayes
+
+The Naive Bayes classifier is a very simple, but extremely useful approach to classification. It is very similar in flavor to LDA. Remember, what we want to estimate in classification is a **posterior class probability** $p(Y=k|X)$. In our case, $Y$ can be `positive` or `negative` and $X$ are the words observed in a given tweet. In the Naive Bayes classifier we use the _Bayes Rule_, which follows from the definition of conditional probability:
+
+$$
+P(Y=k|X) = \frac{P(X|Y=k)P(Y=k)}{P(X)}
+$$
+
+This says that we can estimate sentiment probability from three pieces: the a-priori probability of observing a positive or negative tweet ($P(Y=k)$), the probability of observing a specific set of words in a tweet ($P(X)$) and the _conditional_ probability of observing a specific set of words in a positive or negative tweet ($P(X|Y=k)$). Let's take these one at a time:
+
+1) We can estimate the probability of observing a negative or positive tweet $P(Y=k)$ from the proportion of negative or positive tweets in our training set. Let's denote that quantity $p_k$. Let's write a dplyr expression to compute that.
+
+```{r}
+apriori_stats <- tweets[1:10,] %>%
+  group_by(sentiment) %>%
+  summarize(num_tweets=n()) %>%
+  mutate(proportion_tweets=num_tweets/sum(num_tweets), log_prop=log(proportion_tweets))
+apriori_stats %>% knitr::kable(digits=4)
+```
+
+2) We will predict sentiment based on the posterior probability. If we find that $P(Y=k|X)$ is larger for `positive` than `negative`, then we predict `positive`. Because of that we don't need to estimate $P(X)$ since it is the same value for both classes.
+
+3) This is where things get interesting. $P(X|Y=k)$ is the probability of observing a specific tweet (set of words) in a positive or negative tweet. We will make a first simplification and assume that observing words in tweets are _independent_ events. So, the probability of observing a specific set of words is the product of the probabilities of observing each word in the set:
+
+$$
+P(X|Y=k) = \prod_{j=1}^l P(X_j|Y=k)
+$$
+
+where $X_j$ is the $j$-th word in our dictionary, and $P(X_j|Y=k)$ is the probability of observing word $X_j$ in a positive or negative tweet. This is what we showed in the plot above.
+
+Now, how should we model this probability: this sounds like a Bernoulli process: we either observe the word in a positive or negative tweet with some probability $p_{jk}$:
+
+$$
+P(X_j|Y=k) = p_{jk}^{I(j)}(1-p_{jk})^{(1-I(j))}
+$$
+
+with $I(j)=1$ if tweet contains word $j$ and 0 otherwise.
+
+Ok, now how do we estimate $p_{jk}$? We calculate the proportion of tweets of each class that contain the word:
+
+```{r}
+library(slam)
+library(tidyr)
+
+# first create a dataset with columns word/document/sentiment
+train_word_tweet_table <- dtm[1:10,] %>%
+  as.matrix() %>%
+  as.data.frame() %>%
+  mutate(doc=rownames(.), sentiment=tweets$sentiment[1:10]) %>%
+  gather(word,count,-doc,-sentiment) %>%
+  filter(count>0)
+
+# now count the number of tweets of each class containing each word
+train_word_count_table <- train_word_tweet_table %>%
+  group_by(sentiment, word) %>%
+  summarize(num_tweets_in_class=n())
+
+# finally, compute the proportion of tweets containing each word for each class
+train_word_stats <- train_word_count_table %>%
+  inner_join(apriori_stats) %>%
+  select(sentiment,word,num_tweets_in_class,num_tweets) %>%
+  mutate(class_proportion=num_tweets_in_class / num_tweets,
+         log_proportion=log(class_proportion),
+         log_1mproportion=log(1-class_proportion))
+
+# let's take a look at the table
+train_word_stats %>%
+  ungroup() %>%
+  arrange(word) %>%
+  knitr::kable(digits=4)
+```
+
+Let's take one last look at the Naive Bayes model. It's always a good idea to do these calculations in _log-probability_ space instead of _probability_ space for numerical reasons. It is also convenient to look at our conditional probability in log space as well:
+
+$$
+\begin{align}
+\log P(Y=k|X) & \propto & \log P(X|Y=k)P(Y=k) \\
+{} & = & \log \prod_j P(X_j|Y=k) + \log p_k \\
+{} & = & \sum_j \log P(X_j|Y=k) + \log p_k \\
+{} & = & \sum_j \log \left[ p_{jk}^{I(j)}(1-p_{jk})^{1-I(j)} \right] + \log p_k \\
+{} & = & \sum_j \left[ I(j)\log p_{jk} + (1-I(j))\log (1-p_{jk}) \right] + \log p_k \\
+\end{align}
+$$
+
+Which looks like a linear model! You can think of apriori log-probability $\log p_k$ as an _intercept_, the indicators of word occurence $I(j)$ as _predictors_ and log conditional occurence probabilities $\log p_{jk}$ and $\log (1-p_{jk})$ as _parameters_.
+
+The trained Naive Bayes model is completely defined by these two tables: the apriori table and the word/class count tables. To predict the sentiment of a new tweet, we compute the log conditional class probability for each class and predict the sentiment with highest probability:
+
+```{r}
+test_word_tweet_table <- dtm[-(1:10),] %>%
+  as.matrix() %>%
+  as.data.frame() %>%
+  mutate(doc=rownames(.)) %>%
+  gather(word,count,-doc) %>%
+  filter(count>0)
+
+# let's classify one tweet (tweet no. 11)
+test_word_tweet_table %>%
+  filter(doc==11) %>%
+  right_join(train_word_stats) %>%
+  mutate(count=ifelse(is.na(count),0,count)) %>%
+  mutate(weight=ifelse(count==1, log_proportion, log_1mproportion)) %>%
+  group_by(sentiment) %>%
+  summarize(log_word_prob=sum(weight)) %>%
+  inner_join(apriori_stats) %>%
+  mutate(conditional_prob=log_word_prob + log_prop) %>%
+  select(sentiment, conditional_prob)
+```
+
+### Looking forward
+
+So, we see now that we can write all the computations needed to learn a Naive Bayes model for sentiment analysis. Having worked through this toy example we can start thinking of how to setup this type of analysis in a map-reduce architecture like spark.
+
+The ingredients will be:
+
+1) read input tweets and tokenize
+  
+2) map (in the map-reduce sense) each word/tweet id/sentiment pair onto a computing node
+
+3) reduce (in the map-reduce sense) to count the number of tweets each word appears for each class
+
+4) store the final count tables to make predictions
+
+Next time we use `sparkR` to create this full pipeline.

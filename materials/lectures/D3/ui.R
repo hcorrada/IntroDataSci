@@ -1,5 +1,6 @@
 library(shiny)
 library(rCharts)
+library(gapminder)
 
 shinyUI(pageWithSidebar(
   headerPanel("rCharts"),

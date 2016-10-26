@@ -5,6 +5,8 @@ library(rCharts)
 library(gapminder)
 library(dplyr)
 
+data(gapminder)
+
 shinyServer(function(input, output) {
   output$myChart <- renderChart({
     facet <- if(input$continent) {
