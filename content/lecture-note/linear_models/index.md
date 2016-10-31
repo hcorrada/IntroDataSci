@@ -7,7 +7,7 @@ Basic models for regression and classification
 
 [Lecture Notes: Simple linear regression](linear_regression/)  
 [Lecture Notes: Multiple linear regression](multiple_linear_regression/)  
-[Lecture Notes: Linear models for classification (COMING SOON)]()
+[Lecture Notes: Linear models for classification](linear_classification/)
 
 ## Resources
 
