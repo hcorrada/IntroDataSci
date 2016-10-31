@@ -1,7 +1,7 @@
 ---
 title: "Linear models for classification"
 author: "CMSC320"
-date: April 3, 2016
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -139,11 +139,11 @@ $$
 \log \frac{p(x)}{1-p(x)} = \beta_0 + \beta_1 x
 $$
 
-Odds are equivalent to ratios of probabilities. For example, "two to one odds that Donald Trump wins presidency" means "the probability that Ted Cruz wins is double the probability he loses". So, if odds = 2, $p(x)=2/3$. If odds = 1/2, $p(x)=1/3$. In general odds = $\frac{p(x)}{1-p(x)}$.
+Odds are equivalent to ratios of probabilities. For example, "two to one odds that Serena Williams wins the French Open" means "the probability that Serena Williams wins the French Open is double the probability he loses". So, if odds = 2, $p(x)=2/3$. If odds = 1/2, $p(x)=1/3$. In general odds = $\frac{p(x)}{1-p(x)}$.
 
 ### Exercises
 
-1. Suppose an individual has a 16% chance of defaulting on her credit card payment. What are the odds that she will default?
+1. Suppose an individual has a 16% chance of defaulting on their credit card payment. What are the odds that she will default?
 
 2. On average, what fraction of people with an odds of 0.37 of defaulting on their credit card payment will in fact default?
 
