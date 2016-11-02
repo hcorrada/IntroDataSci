@@ -179,6 +179,12 @@ notes = "lecture-note/linear_models/"
 date = "10/31"
 
 [[day19.covers]]
+title = "Project and midterm discussion"
+
+[day20]
+date = "11/2"
+
+[[day20.covers]]
 title = "Linear models for regression (2)"
 notes = "lecture-note/linear_models/"
 
@@ -186,18 +192,15 @@ notes = "lecture-note/linear_models/"
 title = "Linear models for classification"
 notes = "lecture-note/linear_models"
 
-[day20]
-date = "11/2"
-
-[[day20.covers]]
-title = "Tree Methods"
-
 [[day20.workdue]]
 title = "Project 2: Data wrangling and EDA"
 link = "projects/Project2/"
 
 [day21]
 date = "11/7"
+
+[[day21.covers]]
+title = "Tree Methods"
 
 [[day21.covers]]
 title = "Beyond linear models for classification: SVMs and kNN"
