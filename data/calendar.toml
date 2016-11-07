@@ -188,7 +188,7 @@ date = "11/2"
 title = "Linear models for regression (2)"
 notes = "lecture-note/linear_models/"
 
-[[day19.covers]]
+[[day20.covers]]
 title = "Linear models for classification"
 notes = "lecture-note/linear_models"
 
@@ -200,13 +200,17 @@ link = "projects/Project2/"
 date = "11/7"
 
 [[day21.covers]]
-title = "Tree Methods"
+title = "Linear models for classification (2)"
+notes = "lecture-note/linear_models/"
 
 [[day21.covers]]
-title = "Beyond linear models for classification: SVMs and kNN"
+title = "Tree Methods"
 
 [day22]
 date = "11/9"
+
+[[day22.covers]]
+title = "Beyond linear models for classification: SVMs and kNN"
 
 [[day22.covers]]
 title = "Model evaluation using resampling"
