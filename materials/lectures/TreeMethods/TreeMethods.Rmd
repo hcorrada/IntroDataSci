@@ -1,7 +1,7 @@
 ---
 title: "TreeMethods"
 author: "CMSC320"
-date: "April 7, 2016"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -15,7 +15,7 @@ We saw in previous units the limitation of using linear methods for classificati
 
 Consider the dataset we saw in our linear regression unit. We found using linear regression that a linear model of weight vs. miles per gallon was not a good fit. 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, cache=FALSE}
 library(tree)
 library(ISLR)
 library(RColorBrewer)
@@ -24,7 +24,6 @@ data(Auto)
 
 
 with(Auto, plot(weight, mpg, pch=19, cex=1.4))
-legend("topright", pch=19, col=1:3, legend=1:3)
 ```
 
 Let's take a look at what a regression tree estimates in this case.
@@ -185,7 +184,7 @@ _When do we stop partitioning?_ We stop when adding a partition does not reduce 
 
 **Question:** why would a smaller tree tend to generalize better?
 
-Chapter 8 on the ISLR book, and your ML class will go into specifics of how to prune regression trees. Let's compare however, how do regression trees of different depths perform on both training and testing data.
+Chapter 8 on the ISLR book, goes into specifics of how to prune regression trees. Let's compare however, how do regression trees of different depths perform on both training and testing data.
 
 
 ```{r, echo=TRUE}
@@ -199,41 +198,13 @@ plot(auto_tree)
 text(auto_tree, pretty=0, cex=1.4)
 ```
 
-The `cv.tree` function is used to determine a reasonable tree depth for the given dataset. For this dataset it seems that a depth of 5 works well.
+The `cv.tree` function is used to determine a reasonable tree depth for the given dataset. For this dataset it seems that a depth of 6 works well since error for depth 6 is similar to error for the full size tree (depth 10), and shallower trees are preferred due to the reduced complexity of the prediction function.
 
 ```{r, echo=TRUE}
 cv_auto <- cv.tree(auto_tree)
 plot(cv_auto$size, cv_auto$dev, type="b", xlab="Tree Size", ylab="RSS")
 ```
 
-Here we see how deep trees can overfit this dataset and perform poorly on new, unseen data.
-
-```{r, echo=TRUE}
-plot(train_set$mpg, predict(auto_tree, newdata=train_set), xlab="Observed MPG", ylab="Predicted MPG", main="Full Tree Training Error")
-abline(0,1)
-
-rmse <- sqrt( mean( (train_set$mpg - predict(auto_tree, newdata=train_set))^2 ))
-legend("bottomright", legend=paste("RMSE=", round(rmse, digits=2)), cex=2)
-```
-
-Here is the tree we think will do a good job on prediction based on the plot above.
-
-```{r, echo=TRUE}
-pruned_auto <- prune.tree(auto_tree, best=5)
-plot(train_set$mpg, predict(pruned_auto, newdata=train_set), xlab="Observed MPG", ylab="Predicted MPG", main="Pruned Tree Training Error")
-abline(0,1)
-
-rmse <- sqrt( mean( (train_set$mpg - predict(pruned_auto, newdata=train_set))^2 ))
-legend("bottomright", legend=paste("RMSE=", round(rmse, digits=2)), cex=2)
-```
-
-```{r, echo=FALSE}
-plot(test_set$mpg, predict(pruned_auto, newdata=test_set), xlab="Observed MPG", ylab="Predicted MPG", main="Pruned Tree Testing Error")
-abline(0,1)
-
-rmse <- sqrt( mean( (test_set$mpg - predict(pruned_auto, newdata=test_set))^2 ))
-legend("bottomright", legend=paste("RMSE=", round(rmse, digits=2)), cex=2)
-```
 
 ### Classification (Decision) Trees
 
