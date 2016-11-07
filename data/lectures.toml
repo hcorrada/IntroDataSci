@@ -63,7 +63,7 @@ hide = false
 title = "Tree-based learning methods"
 excerpt = "Decision and regression trees and random forests."
 url = "tree_methods"
-hide = true
+hide = false
 
 [12-evaluation]
 title = "Evaluating model performance via resampling"
