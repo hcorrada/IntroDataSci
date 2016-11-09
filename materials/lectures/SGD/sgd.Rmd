@@ -1,0 +1,394 @@
+---
+title: "Stochastic Gradient Descent: Learning models for large-scale data"
+author: CMSC320
+date: "`r Sys.Date()`"
+---
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+In this unit we address the question: How to fit the type of analysis methods we've seen so far? How to do so for large datasets?
+
+We have seen two learning models, linear models for regression and logistic regression for classification. In this unit we derive a general algorithm, stochastic gradient descent (SGD), to learn the parameters of these models. This is not necessarily the best algorithm to fit these models, but it has many appealing features: it is conceptually simple, computationally efficient (remember this is not the same as learning, or estimation, efficiency), and it has a structure that makes it straightforward to apply to large datasets.
+
+We will use linear regression as a case study to develop SGD.
+
+### Case Study
+
+Let's use linear regression with one predictor, no intercept as a case study.
+
+**Given**: Training set $\{(x_1, y_1), \ldots, (x_n, y_n)\}$, with continuous response $y_i$ and single predictor $x_i$ for the $i$-th observation.
+
+**Do**: Estimate parameter $\beta_1$ in model $y=\beta_1 x$ to solve
+
+$$
+\min_{\beta_1} L(\beta_1) = \frac{1}{2} \sum_{i=1}^n (y_i - \beta_1 x_i)^2
+$$
+
+And suppose we want to fit this model to the following (simulated) data:
+
+```{r, fig.height=10, fig.width=15}
+set.seed(1234)
+true_beta <- 5
+x <- runif(100, -10, 10)
+y <- x * true_beta + rnorm(100, mean=0, sd=sqrt(10))
+plot(x,y,pch=19,cex=1.4,main="Simulated Data", cex.lab=1.5, cex.main=2)
+abline(a=0, b=true_beta, col="red", lwd= 2)
+```
+
+Our goal is then to find the value of $\beta_1$ that minimizes mean squared error. This corresponds to finding one of these many possible lines:
+
+```{r, echo=FALSE, fig.height=10, fig.width=15}
+plot(x,y,pch=19,cex=1.4,main="Simulated Data", cex.lab=1.5, cex.main=2)
+abline(a=0, b=true_beta, col="red", lwd= 2)
+for (b in seq(-6,6, len=5)) {
+  abline(a=0,b=b,col="blue", lwd=2, lty=2)
+}
+legend("bottom", legend=paste("beta=", seq(-6,6,len=5)), lwd=2, lty=2, cex=1.5)
+```
+
+Each of which has a specific error for this dataset:
+
+```{r, echo=FALSE, fig.height=10, fig.width=15}
+n <- length(y)
+compute_loss <- function(beta, x, y) {
+  0.5 * mean((y-x*beta)^2)
+}
+beta <- seq(-20, 20, len=100)
+plot(beta, sapply(beta, compute_loss, x=x, y=y), type="l", lwd=2, ylab=expression(L(beta[1])),cex.lab=1.5,xlab=expression(beta[1]))
+abline(v=true_beta, col="red", lwd=2)
+abline(v=seq(-6,6,len=5), col="blue", lwd=2, lty=2)
+```
+
+Insights:
+
+1) As we saw before in class, loss is minimized when the derivative of the loss function is 0
+
+2) and, (this is key for this algorithm), the derivative of the loss (with respect to $\beta_1$) at a given estimate $\beta_1$ suggests new values of $\beta_1$ with smaller loss!
+
+Let's take a look at the derivative:
+
+$$
+\frac{\partial}{\partial \beta_{1}} L(\beta_1) = \frac{\partial}{\partial \beta_{1}} \frac{1}{2} \sum_{i=1}^n (y_i - \beta_1 x_i)^2 \\
+{} = \sum_{i=1}^n (y_i - \beta_1 x_i) \frac{\partial}{\partial \beta_1} (y_i - \beta_1 x_i) \\
+{} = \sum_{i=1}^n (y_i - \beta_1 x_i) (-x_i)
+$$
+
+
+and plot it for our case study data:
+
+```{r, echo=FALSE, fig.width=15, fig.height=10, cache=FALSE}
+loss_derivative <- function(beta, x, y) {
+  f <- beta * x
+  resid <- y - f
+  sum(resid * (-x))
+}
+
+plot(beta, sapply(beta, loss_derivative, x=x, y=y), type="l", lwd=1.5, xlab=expression(beta[1]), ylab=expression(partialdiff * L(beta[1]) / partialdiff * beta[1]),cex.lab=1.7)
+
+abline(v=true_beta, col="red", lwd=2)
+abline(v=seq(-6,6,len=5), col="blue", lwd=2, lty=2)
+abline(h=0, col="black", lwd=2, lty=2)
+```
+
+We can see that the **negative gradient** indicates a direction in which the loss function is reduced. That is, where fit error is reduced. In this example, the derivative at $\beta_1=0$ indicates we should _increase_ $\beta_1$ to _decrease_ loss.
+
+Notice, however, that moving $\beta_1$ in the negative gradient direction arbitrarily is not always good since moving $\beta_1$ in the positive direction can increase error.
+
+### Gradient Descent
+
+This plot suggests an algorithm:
+
+1. Initialize $k=0$ and $\beta_1^k=0$
+2. Repeat until convergence
+  - Set $\beta_1^{k+1} = \beta_1^k + \alpha \sum_{i=1}^n (y_i - f(x_i; \beta_1^k)) x_i$
+  - Set $k=k+1$
+
+where $f(x_i;\beta_1)=\beta_1 x_i$. This algorithm is called **gradient descent** in the general case.
+
+The basic idea is to move the current estimate of $\beta_1$ in the direction that minimizes loss the *fastest*. Another way of calling this algorithm is **Steepest Descent**. However, we use a step-size $\alpha$ to prevent moving too far in the direction of steepest descent.
+
+This is a full implementation of this algorithm (for a single predictor) in R:
+
+```{r}
+# Implementation of gradient descent for least squares regression
+# for a single predictor (x)
+#
+# There is some code here that is only used to generate illustrative plots and would not be part of real solver
+gradient_descent <- function(x, y, tol=1e-6, maxit=50, plot=FALSE) {
+  # initialize estimate
+  beta_1 <- 0; old_beta_1 <- Inf; i <- 0; beta_keep <- NA
+  
+  # compute loss at first estimate
+  loss <- compute_loss(beta_1, x, y); loss_keep <- NA
+  
+  # starting step size
+  alpha <- 1e-3
+  difference <- Inf
+  
+  # check for convergence
+  # (in practice, we do include a limit on the number of iterations)
+  while ((difference > tol) && (i < maxit)) {
+    cat("it: ", i, " beta: ", round(beta_1, 2), "loss: ", round(loss, 2), " alpha: ", round(alpha, 6), "\n")
+    
+    # this piece of code just adds steps to an existing plot
+    if (plot && !is.na(beta_keep) && !is.na(loss_keep)) {
+      suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
+    }
+    
+    # store the last estimate for plotting
+    beta_keep <- beta_1; loss_keep <- loss;
+    
+    # store the last estimate to check convergence
+    old_beta_1 <- beta_1
+    
+    # update estimate
+    f <- beta_1 * x
+    resid <- y - f    
+    beta_1 <- beta_1 + alpha * sum(resid * x)
+    
+    # compute difference after taking step
+    # to check convergence
+    difference <- (beta_1 - old_beta_1)^2 / (old_beta_1)^2
+  
+    # compute loss and derivative for updated estimate
+    loss <- compute_loss(beta_1, x, y)
+
+    i <- i+1
+    
+    # shorten the step size
+    if ((i %% 3) == 0) alpha <- alpha / 2
+  }
+  if (plot) {
+    suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
+  }
+  beta_1
+}
+```
+
+
+Let's run this algorithm and track what it does:
+
+```{r, echo=FALSE, fig.width=15, fig.height=10, cache=FALSE}
+plot(beta, sapply(beta, compute_loss, x=x, y=y), type="l", lwd=2, ylab=expression(L(beta[1])),cex.lab=1.5,xlab=expression(beta[1]), xlim=c(-20,20), main="Gradient Descent")
+
+estimate <- gradient_descent(x, y, plot=TRUE)
+```
+
+This algorithm is referred to as "Batch" gradient descent, since we take a step (update $\beta_1$) by calculating its derivative with respect to _all_ $n$ observations in our dataset. For clarity, let's write out the update equation again:
+
+$$
+\beta_1^{k+1} = \beta_1^k + \alpha \sum_{i=1}^n (y_i - f(x_i; \beta_1^k)) x_i
+$$
+
+where $f(x_i; \beta_1^k) = \beta_1^k x_i$.
+
+## Multiple Regression
+
+For multiple predictors (e.g., adding an intercept), this generalizes to the _gradient_ i.e., the vector of first derivatives of _loss_ with respect to parameters. In this case, $f(\mathbf{x}_i; \mathbf{\beta}) = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip}$, where $\mathbf{\beta}$ indicates the _vector_ of parameters in the model, and
+$\mathbf{x_i}$ indicates the _vector_ of predictor values for example (entity) $i$.
+
+In this case, the loss function is
+
+$$
+L(\mathbf{\beta}) = \frac{1}{2} \sum_{i=1}^n (y_i-f(\mathbf{x_i}; \mathbf{\beta}))^2
+$$
+
+and the gradient of loss as a function of parameters $\mathbf{\beta}$ is then given by
+
+$$
+\nabla_{\mathbf{\beta}} L(\mathbf{\beta}) =
+\sum_{i=1}^n (y_i - f(\mathbf{x_i}; \mathbf{\beta}))(-\mathbf{x_i})
+$$
+
+The update equation in gradient descent has exactly the same form as the single predictor case: 
+
+$$
+\mathbf{\beta}^{k+1} = \mathbf{\beta}^k + \alpha \sum_{i=1}^n (y_i - f(\mathbf{x}_i; \mathbf{\beta}^k)) \mathbf{x}_i
+$$
+
+
+Gradiest descent falls within a family of optimization methods called _first-order methods_ (first-order means they use derivatives only). These methods have properties amenable to use with very large datasets:
+
+1. Inexpensive updates    
+2. "Stochastic" version can converge with few sweeps of the data  
+3. "Stochastic" version easily extended to streams  
+4. Easily parallelizable  
+
+Drawback: Can take many steps before converging
+
+### Stochastic gradient descent
+
+One of the appeals of the gradient descent algorithm is that it can be easily adapted for use in settings where training data is large (either large number of entities, or large number of predictors, or both). In the case of large numbers of observations, a key idea can be used to adapt the the algorithm to handle this case. As presented, the algorithm updates parameters based on all observations (note the sum over observations above). However, we can also update parameters using the update equation _one observation at a time_:
+
+1. Initialize $\beta=\mathbf{0}$, $i=1$
+2. Repeat until convergence
+  - For $i=1$ to $n$
+    - Set $\beta = \beta + \alpha (y_i - f(\mathbf{x}_i, \beta)) \mathbf{x}_i$
+
+This algorithm is called _stochastic_ gradient descent, because the order in which steps are taken depend on the order in which we process observations, which is assumed to be stochastic.
+
+This is a full implementation of stochastic gradient descent for our example dataset:
+
+```{r}
+# Implementation of stochastic gradient descent for least squares regression
+# for a single predictor (x)
+#
+# There is some code here that is only used to generate illustrative plots
+stochastic_gradient_descent <- function(x, y, tol=1e-6, maxit=50, plot=FALSE) {
+  n <- length(y)
+  
+  # initialize estimate
+  beta_1 <- 0; i <- 0; beta_keep <- NA
+  
+  # compute loss at first estimate
+  loss <- compute_loss(beta_1, x, y); loss_keep <- NA
+  
+  # initial step size
+  alpha <- 1e-3
+  difference <- Inf
+  
+  # check for convergence
+  # (in practice a max number of iterations is used)
+  while ((difference > tol) && (i < maxit)) {
+    cat("it: ", i, " beta: ", round(beta_1, 2), "loss: ", round(loss, 2), " alpha: ", round(alpha, 6), "\n")
+    
+    # store last estimate to check convergence
+    old_beta_1 <- beta_1
+    
+    # iterate over observations
+    for (j in seq(1,n)) {
+      
+      # add step to plot
+      if (plot && !is.na(beta_keep) && !is.na(loss_keep)) {
+        suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
+      }
+      
+      # store last estimate and loss for plotting
+      beta_keep <- beta_1; loss_keep <- loss;
+      
+      # update estimate with j-th observation
+      f <- beta_1 * x[j]
+      resid <- y[j] - f      
+      beta_1 <- beta_1 + alpha * resid * x[j]
+      
+      # compute loss with new estimate
+      loss <- compute_loss(beta_1, x, y)
+    }
+    
+    # check difference between current and old estimate
+    # to check convergence
+    difference <- (beta_1 - old_beta_1)^2 / old_beta_1^2
+    i <- i+1
+    
+    # update step size
+    if ((i %% 5) == 0) alpha <- alpha / 2
+  }
+  
+  if (plot) {
+    suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
+  }
+  
+  beta_1
+}
+```
+
+
+Let's run this and see what it does:
+
+```{r, echo=FALSE, fig.width=15, fig.height=10, cache=FALSE}
+plot(beta, sapply(beta, compute_loss, x=x, y=y), type="l", lwd=2, ylab=expression(L(beta[1])),cex.lab=1.5,xlab=expression(beta[1]), xlim=c(-20,20), main="Stochastic Gradient Descent")
+estimate <- stochastic_gradient_descent(x, y, plot=TRUE)
+```
+
+The stochastic gradient descent algorithm can easily adapt to _data streams_ where we receive observations one at a time and _assume_ they are not stored. This setting falls in the general category of _online_ learning.
+
+### Distributed systems for data analysis
+
+The vast majority of the analyses we have done in class are for in-memory data: datasets that can be loaded onto memory of a single computing node. Database systems can execute SQL queries, which can be used for summarization and (some) model learning efficiently (e.g., trees and LDA), over data on disk relatively efficiently, but operations are usually performed by a single computing node. In the 90s database systems that operate over multiple computing nodes became available and were the basis of the first generation of large data warehousing. In the last decade, systems that manipulate data over multiple nodes have become standard. 
+
+The basic observation is that for very large datasets, many of the operations we've seen for aggregation and summarization, which also form the basis of many learning methods, can be parallelized. For example:
+
+- partition observations and perform transformation on each partition as a parallel process
+- partition variables and perform transformation on each variable as a parallel process
+- for summarization (`group_by` and `summarize`), partition observations based on `group_by` expression, perform `summarize` on each partition.
+
+Efficiency of implementation of this type of parallelism depends on underlying architecture: Shared memory vs. Shared storage vs. Shared nothing. For massive datasets, last is usually preferred since fault tolerance is perhaps the most important consideration.
+
+### Map-reduce
+
+Map-Reduce is an implementation idea for a shared nothing architecture. 
+It is based on _distributed storage_, _data proximity_ (perform operaations on data that is physically close) and _fault tolerance_. Its basic computation paradigm is based on two operations:
+
+  - reduce: perform operation on subset of observations in parallel  
+  - map: decide which parallel process (node) should operate on each observation
+  
+The fundamental operations that we have learned very well in this class are nicely represented in this framework: `group_by` clause corresponds to `map`, and  `summarize` function corresponds to `reduce`.
+
+```{r, fig.width=8, fig.height=2.4, echo=FALSE}
+library(png)
+library(grid)
+
+img <- readPNG("mr1.png")
+grid.raster(img)
+```
+
+Map-reduce is most efficient when computations are organized in an acyclic graph.
+This way, data is moved from stable storage to computing process and the result moved to stable storage without much concern for operation ordering.
+
+This type of architecture provides runtime benefits due to flexible resource allocation
+and strong failure recovery. However, existing implementations of Map-reduce systems do not support interactive use, or workflows that are hard to represent as acyclic graphs.
+
+### Spark
+
+Spark is a relatively recent system, based on the general map-reduce framework, for ultra-fast data analysis. It provides efficient support for interactive analysis (the kind we do in R) and it is designed to support iterative workflows needed by many Machine Learning algorithms.
+  
+The basic data abstraction in Spark is the resilient distributed dataset (RDD). This permits applications to keep working sets of data in memory and support iterative algorithms and interactive workflows.
+
+They are: 
+
+(1) inmutable and *partitioned* collections of objects,  
+(2) created by parallel *transformations* on data in stable storage (e.g., map, filter, group_by, join, ...)  
+(3) *cached* for efficient reuse  
+(4) operated upon by actions defeind on RDDs (count, reduce, collect, save, ...)
+
+### The components of a SPARK workflow
+
+**Transformations**: Define new RDDs
+
+[https://spark.apache.org/docs/latest/programming-guide.html#transformations](https://spark.apache.org/docs/latest/programming-guide.html#transformations)
+
+**Actions**: Return results to driver program
+
+[https://spark.apache.org/docs/latest/programming-guide.html#actions](https://spark.apache.org/docs/latest/programming-guide.html#actions)
+
+Spark was designed first for Java with an interactive shell based on Scala. 
+It has strong support in Python and increasing support in R SparkR.
+
+- Spark programming guide: [https://spark.apache.org/docs/latest/programming-guide.html](https://spark.apache.org/docs/latest/programming-guide.html)
+- More info on SparkR: [http://amplab-extras.github.io/SparkR-pkg/](http://amplab-extras.github.io/SparkR-pkg/)
+- An R/Spark interface from RStudio based on dplyr: http://spark.rstudio.com/
+
+
+### Distributed stochastic gradient descent 
+
+Gradient descent algorithms are easily parallelizable:
+
+- Split observations across computing units  
+- For each step, compute partial sum for each partition (map), compute final update (reduce)  
+
+$$
+\beta^{k+1} = \beta^k + \alpha * \sum_{\mathrm{partition}\; p} \sum_{i \in p} (y_i - f(\mathbf{x_i}, \beta^k)) \mathbf{x}_i
+$$
+
+This observation has resulted in their implementation in systems for large-scale learning:
+
+1. [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki)
+  - Implements general framework of (sparse) stochastic gradient descent for many optimization problems
+  - R interface: [http://cran.r-project.org/web/packages/RVowpalWabbit/index.html]
+  
+2. [Spark MLlib](https://spark.apache.org/docs/1.2.1/mllib-guide.html)
+  - Implements many learning algorithms using Spark framework we saw previously
+  - Some access to the MLlib API via R, but built on primitives accessible through `SparkR` library we saw previously
+  

@@ -1,0 +1,120 @@
+---
+title: Data aggregation and summarization at scale
+author: CMSC320
+date: April 21, 2016
+---
+
+The vast majority of the analyses we have done in class are for in-memory data: datasets that can be loaded onto memory of a single computing node. Database systems can execute SQL queries, which we have seen can be used for summarization and (some) model learning efficiently (trees and LDA), over data on disk relatively efficiently, but operations are usually performed by a single computing node. In the 90s database systems that operate over multiple computing nodes became available and were the basis of the first generation of large data warehousing. In the last decade, systems that manipulate data over multiple nodes have become standard. 
+
+The basic observation is that for very large datasets, many of the operations we've seen for aggregation and summarization, which also form the basis of many learning methods, can be parallelized. For example:
+
+- partition observations and perform transformation on each partition as a parallel process
+- partition variables and perform transformation on each variable as a parallel process
+- for summarization (`group_by` and `summarize`), partition observations based on `group_by` expression, perform `summarize` on each partition.
+
+Efficiency of implementation of this type of parallelism depends on underlying architecture: Shared memory vs. Shared storage vs. Shared nothing. For massive datasets, last is usually preferred since fault tolerance is perhaps the most important consideration.
+
+### Map-reduce
+
+Map-Reduce is an implementation idea for a shared nothing architecture. 
+It is based on _distributed storage_, _data proximity_ (perform operaations on data that is physically close) and _fault tolerance_. Its basic computation paradigm is based on two operations:
+
+  - reduce: perform operation on subset of observations in parallel  
+  - map: decide which parallel process (node) should operate on each observation
+  
+The fundamental operations that we have learned very well in this class are nicely represented in this framework: `group_by` clause corresponds to `map`, and  `summarize` function corresponds to `reduce`.
+
+```{r, fig.width=8, fig.height=2.4, echo=FALSE}
+library(png)
+library(grid)
+
+img <- readPNG("mr1.png")
+grid.raster(img)
+```
+
+Map-reduce is most efficient when computations are organized in an acyclic graph.
+This way, data is moved from stable storage to computing process and the result moved to stable storage without much concern for operation ordering.
+
+This type of architecture provides runtime benefits due to flexible resource allocation
+and strong failure recovery. However, existing implementations of Map-reduce systems do not support interactive use, or workflows that are hard to represent as acyclic graphs.
+
+### Spark
+
+Spark is a relatively recent system, based on the general map-reduce framework, for ultra-fast data analysis. It provides efficient support for interactive analysis (the kind we do in R) and it is designed to support iterative workflows needed by many Machine Learning algorithms.
+  
+The basic data abstraction in Spark is the resilient distributed dataset (RDD). This permits applications to keep working sets of data in memory and support iterative algorithms and interactive workflows.
+
+They are: 
+
+(1) inmutable and *partitioned* collections of objects,  
+(2) created by parallel *transformations* on data in stable storage (e.g., map, filter, group_by, join, ...)  
+(3) *cached* for efficient reuse  
+(4) operated upon by actions defeind on RDDs (count, reduce, collect, save, ...)
+
+### Example
+
+Let's use `SparkR` to illustrate how a Spark workflow is organized.
+Let's imagine we want to count occurences of phrases in abstracts (based on regular expression searches) over a large scientific corpus.
+
+```{r, eval=FALSE}
+library(SparkR)
+library(stringr)
+
+# initialize spark framework
+sc <- sparkR.init("local")
+
+# base RDD
+lines = textFile(sc, "hdfs://...")
+
+# transformed RDD
+abstracts = filterRDD(lines, function(line) str_detect(unlist(line), "ABSTRACT"))
+
+# mapped RDD
+abstract_text = map(abstracts, function(line) str_split(unlist(line), " ")[[1]])
+
+# cached RDD
+cached_text = cache(abstract_text)
+
+library(magrittr)
+
+# RDD action
+cached_text %>% 
+  filterRDD(function(line) str_detect(unlist(line), "foo")) %>% 
+  count
+```
+
+```{r, fig.width=32, fig.height=10, echo=FALSE}
+library(png)
+library(grid)
+
+img <- readPNG("mr3.png")
+grid.raster(img)
+```
+
+
+#### Fault Tolerance
+
+RDDs maintain *lineage*, so partitions can be reconstructed upon failure.
+
+```{r, eval=FALSE}
+textFile(sc, "hdfs://...") %>%
+  filterRDD(function(line) str_detect(unlist(line), "ABSTRACT:")) %>%
+  map(function(line) str_split(unlist(line), " ")[[2]])
+```
+
+### The components of a SPARK workflow
+
+**Transformations**: Define new RDDs
+
+[https://spark.apache.org/docs/latest/programming-guide.html#transformations](https://spark.apache.org/docs/latest/programming-guide.html#transformations)
+
+**Actions**: Return results to driver program
+
+[https://spark.apache.org/docs/latest/programming-guide.html#actions](https://spark.apache.org/docs/latest/programming-guide.html#actions)
+
+Spark was designed first for Java with an interactive shell based on Scala. 
+It has strong support in Python and increasing support in R SparkR.
+
+- Spark programming guide: [https://spark.apache.org/docs/latest/programming-guide.html](https://spark.apache.org/docs/latest/programming-guide.html)
+- More info on SparkR: [http://amplab-extras.github.io/SparkR-pkg/](http://amplab-extras.github.io/SparkR-pkg/)
+
