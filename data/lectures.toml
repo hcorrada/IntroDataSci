@@ -59,34 +59,34 @@ excerpt = "Basic models for regression and classification"
 url = "linear_models"
 hide = false
 
-[11-tree_methods]
+[11-large_scale]
+title = "Analysis at scale"
+excerpt = "Systems and algorithms for learning on large datasets"
+url = "large_scale"
+hide = false
+
+[12-tree_methods]
 title = "Tree-based learning methods"
 excerpt = "Decision and regression trees and random forests."
 url = "tree_methods"
 hide = false
 
-[12-evaluation]
+[13-evaluation]
 title = "Evaluating model performance via resampling"
 excerpt = "How to use sampling methods to evaluate statistical models"
 url = "evaluation"
 hide = true
 
-[13-svms]
+[14-svms]
 title = "The support vector machine"
 excerpt = "Linear and non-linear regression and classification with support vector machines"
 url = "svms"
 hide = true
 
-[14-pca]
+[15-pca]
 title = "Unsupervised learning methods"
 excerpt = "Exploratory Data Analysis of high-dimensional data using dimensionality reduction"
 url = "pca"
-hide = true
-
-[15-large_scale]
-title = "Analysis at scale"
-excerpt = "Systems and algorithms for data summarization and learning on large datasets"
-url = "large_scale"
 hide = true
 
 [16-sentiment]
