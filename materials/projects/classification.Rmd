@@ -1,0 +1,72 @@
+---
+title:  "Project 3 (part 2): Classification"
+author: "CMSC320"
+output: html_document
+---
+
+**Posted: November 14, 2016**  
+**Due: November 30, 2016**  
+**Last Update: `r Sys.Date()`**
+
+## Gradient Descent
+
+**Problem 1** _Implement the gradient descent algorithm (either batch or stochastic versions) for multiple linear regression. I.e., extend the version of the algorithm in the lecture notes to multiple parameters._
+
+The gradient descent update equation for logistic regression is given by:
+
+$$
+\beta^{k+1} = \beta^k + \alpha \sum_{i=1}^{n} (y_i - p_i(\beta^k))\mathbf{x_i}
+$$
+
+where (from the definition of log-odds):
+
+$$
+p_i(\beta^k) = \frac{e^{f_i(\beta^k)}}{1+e^{f_i(\beta^k)}}
+$$
+
+and $f_i(\beta^k) = \beta_0^k + \beta_1^k x_{i1} + \beta_2^k x_{i2} + \cdots + \beta_p^k x_{ip}$.
+
+**Problem 2** _Derive the above update equation_. Write the derivation in your Rmarkdown. Consult the class webpage for multiple examples showing how to include mathematical notation in an Rmarkdown file.
+
+**Problem 3** _Implement the gradient descent algorithm (either batch or stochastic versions) for multiple logistic regression._ I.e., modify your code in problem 1 for the logistic regression update equation.
+
+Make sure you include in your submission writeup, which version of the algorithm you are solving (stochastic or batch), and make sure to comment your code to help us understand your implementation.
+
+**Problem 4** To test your programs, simulate data from the linear regression and logistic regression models and check that your implementations recover the simulation parameters properly. **WE WILL PROVIDE CODE TO DO THIS LATER**
+
+## Try it out
+
+(a) Find a dataset on which to try out different classification algorithms. You can use the dataset used in the "datatypes" assignment earlier this semester if appropriate. 
+
+(b) Choose **two** of the following algorithms 
+
+(1) Linear Discriminant Analysis (LDA)
+(2) classification trees, 
+(3) random forests (for classification) 
+(4) linear SVM, 
+(5) non-linear SVM
+(6) k-NN classification
+
+and compare their prediction performance on your chosen dataset to your logistic regression gradient descent implementation using 10-fold cross-validation and a paired $t$-test (one for each of the two algorithms vs. your logistic regression code). Note: for those algorithms that have hyper-parameters, i.e., all of the above except for LDA, you need to specify in your writeup which model selection procedure you used.
+
+## Handing in:
+
+1) For Problems 1 and 3 include your code in the Rmarkdown writeup. Make sure they are commented and that the code is readable in your final writeup (e.g., check line widths).
+
+2) For Problem 2, include the derivation of the gradient descent update in the writeup
+
+3) For Problem 4, make sure you run the provided code and include the output in the writeup.
+
+5) For the next section organize your writeup as follows:
+
+a) Describe the dataset you are using, including: what is the outcome you are predicting (remember this should be a classification task) and what are the predictors you will be using. 
+
+b) Include code to obtain and prepare your data as a dataframe to use with your three classification algorithms. In case your dataset includes non-numeric predictors, include the code you are using to transform these predictors into numeric predictors you can use with your logistic regression implementation.
+
+c) Specify the two additional algorithms you have chosen in part (b), and for algorithms that have hyper-parameters specify the method you are using for model selection.
+
+d) Include all code required to perform the 10-fold cross-validation procedure on your three algorithms.
+
+e) Writeup the result of your 10-fold cross-validation procedure. Make sure to report the 10-fold CV error estimate (with standard error) of each of the three algorithms. Also report on the result of the _two_ paired $t$-tests comparing your logistic regression algorithm with your chosen two algorithms. 
+
+Knit the Rmarkdown file and submit to ELMS (LINK FORTHCOMING).
