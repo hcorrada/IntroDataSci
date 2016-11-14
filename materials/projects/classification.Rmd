@@ -36,16 +36,16 @@ Make sure you include in your submission writeup, which version of the algorithm
 
 ## Try it out
 
-(a) Find a dataset on which to try out different classification algorithms. You can use the dataset used in the "datatypes" assignment earlier this semester if appropriate. 
+(a) Find a dataset on which to try out different classification algorithms. You can use the dataset used in the "datatypes" assignment earlier this semester if appropriate. Note: we have used the `Weekly` dataset in the `ISLR` package in previous projects, but it's not as interesting as some of the datasets you came up with earlier in the semester.
 
-(b) Choose **two** of the following algorithms 
+(b) Choose **two** of the following algorithms: 
 
-(1) Linear Discriminant Analysis (LDA)
-(2) classification trees, 
-(3) random forests (for classification) 
-(4) linear SVM, 
-(5) non-linear SVM
-(6) k-NN classification
+  (1) Linear Discriminant Analysis (LDA)
+  (2) classification trees, 
+  (3) random forests (for classification) 
+  (4) linear SVM, 
+  (5) non-linear SVM
+  (6) k-NN classification
 
 and compare their prediction performance on your chosen dataset to your logistic regression gradient descent implementation using 10-fold cross-validation and a paired $t$-test (one for each of the two algorithms vs. your logistic regression code). Note: for those algorithms that have hyper-parameters, i.e., all of the above except for LDA, you need to specify in your writeup which model selection procedure you used.
 
