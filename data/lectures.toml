@@ -71,17 +71,18 @@ excerpt = "Decision and regression trees and random forests."
 url = "tree_methods"
 hide = false
 
-[13-evaluation]
+[13-svms]
+title = "The support vector machine and KNN"
+excerpt = "Linear and non-linear regression and classification with support vector machines and KNN"
+url = "svms"
+hide = false
+
+[14-evaluation]
 title = "Evaluating model performance via resampling"
 excerpt = "How to use sampling methods to evaluate statistical models"
 url = "evaluation"
 hide = true
 
-[14-svms]
-title = "The support vector machine"
-excerpt = "Linear and non-linear regression and classification with support vector machines"
-url = "svms"
-hide = true
 
 [15-pca]
 title = "Unsupervised learning methods"

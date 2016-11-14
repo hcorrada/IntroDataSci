@@ -220,12 +220,13 @@ notes = "lecture-note/tree_methods/"
 
 [[day23.covers]]
 title = "Beyond linear models for classification: SVMs and kNN"
-
-[[day23.covers]]
-title = "Model evaluation using resampling"
+notes = "lecture-note/svms/"
 
 [day24]
 date = "11/16"
+
+[[day24.covers]]
+title = "Model evaluation using resampling"
 
 [[day24.covers]]
 title = "Dimensionality Reduction"
