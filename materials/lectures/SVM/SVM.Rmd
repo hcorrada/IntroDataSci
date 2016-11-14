@@ -1,7 +1,7 @@
 ---
 title: Support Vector Machine
 author: CMSC320
-date: "April 14, 2016"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -274,3 +274,15 @@ error_rate <- sapply(svm_fits, function(fit) {
 tab <- data.frame(cost=parameters[,1], gamma=parameters[,2], number_svs=number_svs, train_error=error_rate["train",]*100,test_error=error_rate["test",]*100)
 knitr::kable(tab)
 ```
+
+# K-nearest neighbors
+
+K-nn is a  related approach to obtain non-linear classification boundaries. It is a "memory" method as it requires the entire training data is used to make predictions on new data. Conceptually, the classifier is very simple: to make a prediction on entity $x$:
+
+- Find $k$ nearest observations in training set (note this requires a distance function, e.g., Euclidean distance)
+- Predict the majority class within the $k$ nearest neighbors
+
+The `class::knn` function can be used in R to use this classifier.
+
+Note that the number of neighbors $k$ is a hyper-parameter that must be selected before making predictions. Selecting $k$ falls under the _model selection_ problem we will discuss later.
+
