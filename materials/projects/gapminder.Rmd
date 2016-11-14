@@ -1,0 +1,97 @@
+---
+title: "Project 3 (part 1): Regression analysis of Gapminder data"
+author: "CMSC320"
+output: html_document
+---
+
+**Posted: November 14, 2016**  
+**Due: November 30, 2016**  
+**Last Update: `r Sys.Date()`**
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(cache=FALSE)
+```
+
+In this part of this project you will practice and experiment with linear regression using
+data from [gapminder.org](http://gapminder.org). I recommend spending a little time looking at material there, it is quite an informative site.
+
+We will use a subset of data provided by gapminder provided by [Jennifer Bryan](http://www.stat.ubc.ca/~jenny/) described in it's [github page](https://github.com/jennybc/gapminder).
+
+The following commands load the dataset
+
+```{r}
+library(gapminder)
+data(gapminder)
+
+head(gapminder)
+```
+
+For this exercise you will explore how life expectancy has changed over 50 years across the world, and how economic measures like gross domestic product (GDP) are related to it.
+
+
+**Exercise 1**: _Make a scatter plot of life expectancy across time._
+
+**Question 1**: _Is there a general trend (e.g., increasing or decreasing) for life expectancy across time? Is this trend linear? (answering this qualitatively from the plot, you will do a statistical analysis of this question shortly)_
+
+A slightly different way of making the same plot is looking at the distribution of life expectancy across countries as it changes over time:
+
+```{r, fig.width=12}
+library(dplyr)
+library(ggplot2)
+
+gapminder %>%
+  ggplot(aes(x=factor(year), y=lifeExp)) +
+    geom_violin() +
+    labs(title="Life expectancy over time",
+         x = "year",
+         y = "life expectancy")
+```
+
+This type of plot is called a _violin plot_, and it displays the distribution of the variable in the y-axis for each value of the variable in the x-axis.
+
+**Question 2**: _How would you describe the distribution of life expectancy across countries for individual years? Is it skewed, or not? Unimodal or not? Symmetric around it's center?_
+
+Based on this plot, consider the following questions.
+
+**Question 3**: _Suppose I fit a linear regression model of life expectancy vs. year (treating it as a continuous variable), and test for a relationship between year and life expectancy, will you reject the null hypothesis of no relationship? (do this without fitting the model yet. I am testing your intuition.)_
+
+**Question 4**: _What would a violin plot of residuals from the linear model in Question 3 vs. year look like? (Again, don't do the analysis yet, answer this intuitively)_
+
+**Question 5**: _According to the assumptions of the linear regression model, what **should** that violin plot look like?_
+
+**Exercise 2**: _Fit a linear regression model using the `lm` function for life expectancy vs. year (as a continuous variable). Use the `broom::tidy` to look at the resulting model._
+
+**Question 6**: _On average, by how much does life expectancy increase every year around the world?_
+
+**Question 7**: _Do you reject the null hypothesis of no relationship between year and life expectancy? Why?_
+
+**Exercise 3**: _Make a violin plot of residuals vs. year for the linear model from Exercise 2 (use the `broom::augment` function)._
+
+**Question 8**: _Does the plot of Excersize 3 match your expectations (as you answered Question 4)?_
+
+**Exercise 4**: _Make a boxplot (or violin plot) of model residuals vs. continent._
+
+
+**Question 9**: _Is there a dependence between model residual and continent? If so, what would that suggest when performing a regression analysis of life expectancy across time?_
+
+**Exercise 5**: _Use `geom_smooth(method=lm)` in ggplot as part of a scatter plot of life expectancy vs. year, grouped by continent (e.g., using the `color` aesthetic mapping)._
+
+
+**Question 10**: _Based on this plot, should your regression model include an interaction term for continent **and** year? Why?_
+
+**Exercise 6**: _Fit a linear regression model for life expectancy including a term for an interaction between continent and year. Use the `broom::tidy` function to show the resulting model._
+
+
+**Question 11**: _Are all parameters in the model significantly different from zero? If not, which are not significantly different from zero?_
+
+**Question 12**: _On average, by how much does life expectancy increase each year for each  continent? (Provide code to answer this question by extracting relevant estimates from model fit)_
+
+**Exercise 7**: _Use the `anova` function to perform an F-test that compares how well two models fit your data: (a) the linear regression models from Exercise 2 (only including year as a covariate) and (b) Exercise 6 (including interaction between year and continent)._
+
+**Question 13**: _Is the interaction model significantly better than the year-only model? Why?_
+
+**Exercise 8**: _Make a residuals vs. year violin plot for the interaction model. Comment on how well it matches assumptions of the linear regression model. Do the same for a residuals vs. fitted values model._ (You should use the `broom::augment` function).
+
+### Submission
+
+Prepare an Rmd file with code and answers. Knit the writeup to PDF and submit to ELMS (link forthcoming).
