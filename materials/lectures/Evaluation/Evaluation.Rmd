@@ -1,7 +1,7 @@
 ---
 title: "Evaluation using resampling methods"
 author: "CMSC320"
-date: "April 12, 2016"
+date: "`r Sys.Date()`"
 output: html_document
 ---
 
@@ -193,7 +193,7 @@ matplot(degrees, cv10_error_rates, pch=19, type="b", lwd=1.4, cex=1.4, xlab="Pol
 
 Each of these procedures can be used for classification as well. In this case we would substitute MSE with performance metric of choice. E.g., error rate, accuracy, TPR, FPR, AUROC. Note however that not all of these work with LOOCV (e.g. AUROC)
 
-### Comparing models using cross-validation
+### Model assessment using cross-validation
 
 Suppose you want to compare two classification models (logistic regression vs. a decision tree) on the `Default` dataset. We can use Cross-Validation to determine if one model is better than the other, using the hypothesis testing approach we studied previously.
 
@@ -242,6 +242,7 @@ lm(error~method, data=error_rates) %>%
 ```
 
 In this case, we do not observe any significant difference between these methods.
+
 ### Summary
 
 Model selection and assessment are critical steps of data analysis. Resampling methods are general tools used for this purpose. Many data analysis frameworks have a lot of supporting libraries for this: `boot`, `cvTools`, many more.

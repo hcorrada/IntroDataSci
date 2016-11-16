@@ -225,20 +225,26 @@ notes = "lecture-note/svms/"
 [day24]
 date = "11/16"
 
+
+[[day24.covers]]
+title = "Beyond linear models for classification: SVMs and kNN"
+notes = "lecture-note/svms/"
+
 [[day24.covers]]
 title = "Model evaluation using resampling"
-
-[[day24.covers]]
-title = "Dimensionality Reduction"
-
-[[day24.covers]]
-title = "Clustering"
+notes = "lecture-note/evaluation/"
 
 [day25]
 date = "11/21"
 
 [[day25.covers]]
-title = "Text and sentiment analysis"
+title = "Dimensionality Reduction"
+
+[[day25.covers]]
+title = "Clustering"
+
+#[[day25.covers]]
+#title = "Text and sentiment analysis"
 # title = "Time series analysis and forecasting"
 
 # thanksgiving
