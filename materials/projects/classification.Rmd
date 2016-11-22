@@ -32,7 +32,96 @@ and $f_i(\beta^k) = \beta_0^k + \beta_1^k x_{i1} + \beta_2^k x_{i2} + \cdots + \
 
 Make sure you include in your submission writeup, which version of the algorithm you are solving (stochastic or batch), and make sure to comment your code to help us understand your implementation.
 
-**Problem 4** To test your programs, simulate data from the linear regression and logistic regression models and check that your implementations recover the simulation parameters properly. **WE WILL PROVIDE CODE TO DO THIS LATER**
+**Problem 4** To test your programs, simulate data from the linear regression and logistic regression models and check that your implementations recover the simulation parameters properly. 
+
+Use the following functions to simulate data for your testing:
+
+```{r}
+# simulate data for linear regression
+#
+# parameters:
+#   - npredictors: number of numeric predictors (variables)
+#   - nobservations: number of observations (examples)
+#   - sd: standard deviation used in random generation of outcome variable
+#
+# result: list with following components
+#   - y: outcome variable (vector of length nobservations)
+#   - x: data matrix (matrix of nobservations rows and npredictors columns)
+#   - beta: linear model parameters used to generate data (vector of length npredictors + 1)
+simulate_regression <- function(npredictors=20, 
+                                nobservations = 100,
+                                sd=1.5) {
+  # generate beta parameters
+  beta <- rnorm(npredictors+1, mean=0, sd=10/npredictors)
+  
+  # generate data matrix
+  x <- matrix(rnorm(nobservations * npredictors), 
+        nr=nobservations, 
+        nc=npredictors)
+  
+  # generate outcome 
+  x1 <- cbind(1, x)
+  y <- x1 %*% beta + rnorm(nobservations, mean=0, sd=sd)
+  
+  # return simulated data
+  list(y=y,
+       x=x,
+       beta=beta)
+}
+
+# simulate data for logistic regression
+#
+# parameters:
+#   - npredictors: number of numeric predictors (variables)
+#   - nobservations: number of observations (examples)
+#
+# result: list with following components
+#   - g: outcome variable (vector of length nobservations, values are 0 or 1)
+#   - x: data matrix (matrix of nobservations rows and npredictors columns)
+#   - beta: linear model parameters used to generate data (vector of length npredictors + 1)
+simulate_logistic_regression <- function(npredictors = 20,
+                                         nobservations = 100) {
+  # generate parameters
+  beta <- rnorm(npredictors+1, mean=0, sd=10/npredictors)
+
+  x <- matrix(rnorm(nobservations * npredictors), 
+              nr=nobservations, 
+              nc=npredictors)
+  
+  x1 <- cbind(1, x)
+  
+  # generate outcome, i.e., do coin flips
+  p <- plogis(x1 %*% beta)
+  g <- rbinom(nobservations, size=1, prob=p)
+  
+  # return simulated data
+  list(g=g,
+       x=x,
+       beta=beta)
+}
+```
+
+You can use this function as follows in your submission:
+
+```{r}
+# a really bad estimator
+# returns random vector as estimated parameters
+dummy_gd <- function(x, y) {
+  npredictors <- ncol(x)
+  rnorm(npredictors)
+}
+
+# simulate data
+set.seed(1234) # seed random generator to get same simulation (useful when debugging)
+reg_data <- simulate_regression()
+x <- cbind(1, reg_data$x) # add column of ones as described in class
+dummy_beta <- dummy_gd(x, reg_data$y)
+
+# make a simple plot to compare estimates
+plot(reg_data$beta, dummy_beta, xlab="simulation parameters", ylab="estimated parameters", pch=19, cex=1.3)
+```
+
+Include a similar plot in your writeup and comment on how your gradient descent implementation is working.
 
 ## Try it out
 
