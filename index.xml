@@ -6,8 +6,41 @@
     <description>Recent content on CMSC320 Introduction to Data Science</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 16 Nov 2016 08:09:08 -0500</lastBuildDate>
+    <lastBuildDate>Tue, 22 Nov 2016 13:04:21 -0500</lastBuildDate>
     <atom:link href="http://www.hcbravo.org/IntroDataSci/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Project 3: Classification and Regression</title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project3/</link>
+      <pubDate>Tue, 22 Nov 2016 13:04:21 -0500</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project3/</guid>
+      <description>
+
+&lt;p&gt;This project has two parts:&lt;/p&gt;
+
+&lt;p&gt;a. &lt;a href=&#34;gapminder/&#34;&gt;Regression&lt;/a&gt;&lt;br /&gt;
+  b. &lt;a href=&#34;classification/&#34;&gt;Classification&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Follow instructions on each of these two to complete your project.&lt;/p&gt;
+
+&lt;h2 id=&#34;submission&#34;&gt;Submission&lt;/h2&gt;
+
+&lt;p&gt;Prepare and knit a single Rmarkdown file that includes submission information described in each of the two project parts above.&lt;/p&gt;
+
+&lt;p&gt;All axes in plots should be labeled in an informative manner. Your answers to any question that refers to a plot should include both (a) a text description of your plot, and (b) a sentence or two of interpretation as it relates to the question asked.&lt;/p&gt;
+
+&lt;p&gt;Submit to ELMS at &lt;a href=&#34;https://myelms.umd.edu/courses/1199381/assignments/4270814&#34;&gt;https://myelms.umd.edu/courses/1199381/assignments/4270814&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;group-work&#34;&gt;Group work&lt;/h3&gt;
+
+&lt;p&gt;Working in groups in this project is encouraged but not required. If working on a group: (1) groups can be of 2 or 3 people, (2) a single group member will submit the group&amp;rsquo;s writeup, (3) in all cases, names of peers who worked in the group should be included in the writeup.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;IMPORTANT INFORMATION&lt;/strong&gt;: Please fill this form: &lt;a href=&#34;https://goo.gl/forms/wYDC5KnUUmdVeMif2&#34;&gt;https://goo.gl/forms/wYDC5KnUUmdVeMif2&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;As with all group work, and reflective of academic ethics code, there is an expectation that all group members will contribute equally in design, implementation and reporting of this work. If any student feels this expectation was not met when working on this project, they should contact the instructor team who will handle the situation as expediently and fairly as possible.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Evaluation</title>
@@ -434,22 +467,6 @@ resources/#r&#34;&gt;Course resource page&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://radar.oreilly.com/2010/06/what-is-data-science.html&#34;&gt;Loukides, What is data science?&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://fivethirtyeight.com/features/what-the-fox-knows/&#34;&gt;Silver, What the fox knows&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>CMSC320 Projects</title>
-      <link>http://www.hcbravo.org/IntroDataSci/projects/</link>
-      <pubDate>Mon, 29 Aug 2016 08:54:44 -0400</pubDate>
-      
-      <guid>http://www.hcbravo.org/IntroDataSci/projects/</guid>
-      <description>&lt;ol&gt;
-&lt;li&gt;&lt;a href=&#34;Project1/&#34;&gt;Data scraping and cleaning&lt;/a&gt; Due Oct. 10, 2016&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;Project2/&#34;&gt;Data wrangling and EDA&lt;/a&gt; Due Nov. 2, 2016&lt;/li&gt;
-&lt;li&gt;Regression and classification Due Nov. 30, 2016&lt;br /&gt;
-a. &lt;a href=&#34;gapminder/&#34;&gt;Regression&lt;/a&gt;&lt;br /&gt;
-b. &lt;a href=&#34;classification/&#34;&gt;Classification&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
-&lt;/ol&gt;
 </description>
     </item>
     
