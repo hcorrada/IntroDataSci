@@ -6,7 +6,7 @@ output: html_document
 
 **Posted: November 14, 2016**  
 **Due: November 30, 2016**  
-**Last Update: `r Sys.Date()`**
+**Last Update: `r format(Sys.Date(), "%B %d, %Y")`**
 
 ## Gradient Descent
 
@@ -69,4 +69,4 @@ d) Include all code required to perform the 10-fold cross-validation procedure o
 
 e) Writeup the result of your 10-fold cross-validation procedure. Make sure to report the 10-fold CV error estimate (with standard error) of each of the three algorithms. Also report on the result of the _two_ paired $t$-tests comparing your logistic regression algorithm with your chosen two algorithms. 
 
-Knit the Rmarkdown file and submit to ELMS (LINK FORTHCOMING).
+Knit the Rmarkdown file and submit to ELMS (link and submission instructions at http://www.hcbravo.org/IntroDataSci/projects/project3/).
