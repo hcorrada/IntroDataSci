@@ -51,4 +51,5 @@ dataset portal maintained by CMU.
 * [NYC Taxi ride data](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml)
 * [Resources for data journalism with R](http://rddj.info)  
 * [Algorithms and datasets for computational social science and digital humanities](http://ropengov.github.io/)  
+* [Open population datasets](https://code.facebook.com/posts/596471193873876/open-population-datasets-and-open-challenges/)
 
