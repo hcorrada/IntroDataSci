@@ -6,8 +6,20 @@
     <description>Recent content on CMSC320 Introduction to Data Science</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 22 Nov 2016 13:04:21 -0500</lastBuildDate>
+    <lastBuildDate>Mon, 28 Nov 2016 06:12:58 -0500</lastBuildDate>
     <atom:link href="http://www.hcbravo.org/IntroDataSci/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Dimensionality Reduction</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/pca/</link>
+      <pubDate>Mon, 28 Nov 2016 06:12:58 -0500</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/pca/</guid>
+      <description>&lt;p&gt;Exploratory Data Analysis of high-dimensional data using dimensionality reduction.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;pca/&#34;&gt;Lecture Notes&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Project 3: Classification and Regression</title>
@@ -445,29 +457,6 @@ resources/#r&#34;&gt;Course resource page&lt;/a&gt;&lt;/li&gt;
       
       <guid>http://www.hcbravo.org/IntroDataSci/calendar/</guid>
       <description></description>
-    </item>
-    
-    <item>
-      <title>Lecture Notes: Introduction</title>
-      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/introduction/</link>
-      <pubDate>Mon, 29 Aug 2016 08:59:01 -0400</pubDate>
-      
-      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/introduction/</guid>
-      <description>
-
-&lt;p&gt;What is Data Science?&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;Intro.pdf&#34;&gt;Slides&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;readings&#34;&gt;Readings&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://myelms.umd.edu/courses/1199381
-/files/44629545&#34;&gt;Zumel &amp;amp; Mount: pp. xix-17&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://radar.oreilly.com/2010/06/what-is-data-science.html&#34;&gt;Loukides, What is data science?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://fivethirtyeight.com/features/what-the-fox-knows/&#34;&gt;Silver, What the fox knows&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
     </item>
     
   </channel>
