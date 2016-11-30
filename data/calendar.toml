@@ -235,9 +235,6 @@ date = "11/21"
 title = "Beyond linear models for classification: SVMs and kNN"
 notes = "lecture-note/svms/"
 
-[[day25.covers]]
-title = "Model evaluation using resampling"
-notes = "lecture-note/evaluation/"
 
 
 #[[day25.covers]]
@@ -255,8 +252,8 @@ title = "No lecture: Thanksgiving"
 date = "11/28"
 
 [[day27.covers]]
-title = "Dimensionality Reduction"
-notes = "lecture-note/pca/"
+title = "Model evaluation using resampling"
+notes = "lecture-note/evaluation/"
 
 ##[[day27.covers]]
 ##title = "Clustering"
@@ -265,12 +262,16 @@ notes = "lecture-note/pca/"
 date = "11/30"
 
 [[day28.covers]]
-title = "Effective communication of data analyses"
+title = "Dimensionality Reduction"
+notes = "lecture-note/pca/"
 
-[[day28.covers]]
-title = "Effective data visualization for presentation"
+[day29]
+date = "12/2"
 
-[[day28.workdue]]
+[[day29.covers]]
+title = "THIS IS NOT A LECTURE DAY"
+
+[[day29.workdue]]
 title = "Project 3: Regression and Classification"
 link = "projects/"
 
@@ -278,14 +279,17 @@ link = "projects/"
 date = "12/5"
 
 [[day30.covers]]
-title = "Interactive visualization (1)"
+title = "Effective communication of data analyses"
+
+[[day30.covers]]
+title = "Effective data visualization for presentation"
 
 #mlove visits
 [day31]
 date = "12/7"
 
 [[day31.covers]]
-title = "Interactive visualization (2)"
+title = "Interactive visualization"
 
 [day32]
 date = "12/12"
