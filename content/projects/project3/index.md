@@ -10,6 +10,8 @@ This project has two parts:
 
 Follow instructions on each of these two to complete your project.
 
+DUE Dec 2, 2016
+
 ## Submission
 
 Prepare and knit a single Rmarkdown file that includes submission information described in each of the two project parts above.

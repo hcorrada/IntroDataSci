@@ -5,7 +5,7 @@ output: html_document
 ---
 
 **Posted: November 14, 2016**  
-**Due: November 30, 2016**  
+**Due: December 2, 2016**  
 **Last Update: `r format(Sys.Date(), "%B %d, %Y")`**
 
 ## Gradient Descent
@@ -125,16 +125,16 @@ Include a similar plot in your writeup and comment on how your gradient descent 
 
 ## Try it out
 
-(a) Find a dataset on which to try out different classification algorithms. You can use the dataset used in the "datatypes" assignment earlier this semester if appropriate. Note: we have used the `Weekly` dataset in the `ISLR` package in previous projects, but it's not as interesting as some of the datasets you came up with earlier in the semester.
+(a) Find a dataset on which to try out different classification (or regression) algorithms. You can use the dataset used in the "datatypes" assignment earlier this semester if appropriate. Note: we have used the `Weekly` dataset in the `ISLR` package in previous projects, but it's not as interesting as some of the datasets you came up with earlier in the semester.
 
 (b) Choose **two** of the following algorithms: 
 
-  (1) Linear Discriminant Analysis (LDA)
-  (2) classification trees, 
-  (3) random forests (for classification) 
+  (1) Linear Discriminant Analysis (LDA) (only classification)
+  (2) classification (or regression) trees, 
+  (3) random forests  
   (4) linear SVM, 
   (5) non-linear SVM
-  (6) k-NN classification
+  (6) k-NN classification (or regression)
 
 and compare their prediction performance on your chosen dataset to your logistic regression gradient descent implementation using 10-fold cross-validation and a paired $t$-test (one for each of the two algorithms vs. your logistic regression code). Note: for those algorithms that have hyper-parameters, i.e., all of the above except for LDA, you need to specify in your writeup which model selection procedure you used.
 
