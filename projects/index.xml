@@ -24,6 +24,8 @@
 
 &lt;p&gt;Follow instructions on each of these two to complete your project.&lt;/p&gt;
 
+&lt;p&gt;DUE Dec 2, 2016&lt;/p&gt;
+
 &lt;h2 id=&#34;submission&#34;&gt;Submission&lt;/h2&gt;
 
 &lt;p&gt;Prepare and knit a single Rmarkdown file that includes submission information described in each of the two project parts above.&lt;/p&gt;
@@ -51,7 +53,7 @@
       <description>&lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;Project1/&#34;&gt;Data scraping and cleaning&lt;/a&gt; Due Oct. 10, 2016&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;Project2/&#34;&gt;Data wrangling and EDA&lt;/a&gt; Due Nov. 2, 2016&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;project3/&#34;&gt;Regression and classification&lt;/a&gt; Due Nov. 30, 2016&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;project3/&#34;&gt;Regression and classification&lt;/a&gt; Due Dec. 2, 2016&lt;br /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
@@ -939,8 +941,8 @@ $(document).ready(function () {
 
 
 &lt;p&gt;&lt;strong&gt;Posted: November 14, 2016&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;Due: November 30, 2016&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;Last Update: November 22, 2016&lt;/strong&gt;&lt;/p&gt;
+&lt;strong&gt;Due: December 2, 2016&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;Last Update: November 30, 2016&lt;/strong&gt;&lt;/p&gt;
 &lt;div id=&#34;gradient-descent&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Gradient Descent&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Problem 1&lt;/strong&gt; &lt;em&gt;Implement the gradient descent algorithm (either batch or stochastic versions) for multiple linear regression. I.e., extend the version of the algorithm in the lecture notes to multiple parameters.&lt;/em&gt;&lt;/p&gt;
@@ -1042,16 +1044,17 @@ plot(reg_data$beta, dummy_beta, xlab=&amp;quot;simulation parameters&amp;quot;, 
 &lt;div id=&#34;try-it-out&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Try it out&lt;/h2&gt;
 &lt;ol style=&#34;list-style-type: lower-alpha&#34;&gt;
-&lt;li&gt;&lt;p&gt;Find a dataset on which to try out different classification algorithms. You can use the dataset used in the “datatypes” assignment earlier this semester if appropriate. Note: we have used the &lt;code&gt;Weekly&lt;/code&gt; dataset in the &lt;code&gt;ISLR&lt;/code&gt; package in previous projects, but it’s not as interesting as some of the datasets you came up with earlier in the semester.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Find a dataset on which to try out different classification (or regression) algorithms. You can use the dataset used in the “datatypes” assignment earlier this semester if appropriate. Note: we have used the &lt;code&gt;Weekly&lt;/code&gt; dataset in the &lt;code&gt;ISLR&lt;/code&gt; package in previous projects, but it’s not as interesting as some of the datasets you came up with earlier in the semester.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Choose &lt;strong&gt;two&lt;/strong&gt; of the following algorithms:&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Linear Discriminant Analysis (LDA)&lt;/li&gt;
-&lt;li&gt;classification trees,&lt;/li&gt;
-&lt;li&gt;random forests (for classification)&lt;/li&gt;
+&lt;li&gt;Linear Discriminant Analysis (LDA) (only classification)&lt;/li&gt;
+&lt;li&gt;classification (or regression) trees,&lt;/li&gt;
+&lt;li&gt;random forests&lt;br /&gt;
+&lt;/li&gt;
 &lt;li&gt;linear SVM,&lt;/li&gt;
 &lt;li&gt;non-linear SVM&lt;/li&gt;
-&lt;li&gt;k-NN classification&lt;/li&gt;
+&lt;li&gt;k-NN classification (or regression)&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;and compare their prediction performance on your chosen dataset to your logistic regression gradient descent implementation using 10-fold cross-validation and a paired &lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt;-test (one for each of the two algorithms vs. your logistic regression code). Note: for those algorithms that have hyper-parameters, i.e., all of the above except for LDA, you need to specify in your writeup which model selection procedure you used.&lt;/p&gt;
 &lt;/div&gt;
@@ -1234,8 +1237,8 @@ $(document).ready(function () {
 
 
 &lt;p&gt;&lt;strong&gt;Posted: November 14, 2016&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;Due: November 30, 2016&lt;/strong&gt;&lt;br /&gt;
-&lt;strong&gt;Last Update: November 22, 2016&lt;/strong&gt;&lt;/p&gt;
+&lt;strong&gt;Due: December 2, 2016&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;Last Update: November 30, 2016&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;In this part of this project you will practice and experiment with linear regression using data from &lt;a href=&#34;http://gapminder.org&#34;&gt;gapminder.org&lt;/a&gt;. I recommend spending a little time looking at material there, it is quite an informative site.&lt;/p&gt;
 &lt;p&gt;We will use a subset of data provided by gapminder provided by &lt;a href=&#34;http://www.stat.ubc.ca/~jenny/&#34;&gt;Jennifer Bryan&lt;/a&gt; described in it’s &lt;a href=&#34;https://github.com/jennybc/gapminder&#34;&gt;github page&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The following commands load the dataset&lt;/p&gt;

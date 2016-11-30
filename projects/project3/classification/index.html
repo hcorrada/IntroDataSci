@@ -123,8 +123,8 @@ $(document).ready(function () {
 
 
 <p><strong>Posted: November 14, 2016</strong><br />
-<strong>Due: November 30, 2016</strong><br />
-<strong>Last Update: November 22, 2016</strong></p>
+<strong>Due: December 2, 2016</strong><br />
+<strong>Last Update: November 30, 2016</strong></p>
 <div id="gradient-descent" class="section level2">
 <h2>Gradient Descent</h2>
 <p><strong>Problem 1</strong> <em>Implement the gradient descent algorithm (either batch or stochastic versions) for multiple linear regression. I.e., extend the version of the algorithm in the lecture notes to multiple parameters.</em></p>
@@ -226,16 +226,17 @@ plot(reg_data$beta, dummy_beta, xlab=&quot;simulation parameters&quot;, ylab=&qu
 <div id="try-it-out" class="section level2">
 <h2>Try it out</h2>
 <ol style="list-style-type: lower-alpha">
-<li><p>Find a dataset on which to try out different classification algorithms. You can use the dataset used in the “datatypes” assignment earlier this semester if appropriate. Note: we have used the <code>Weekly</code> dataset in the <code>ISLR</code> package in previous projects, but it’s not as interesting as some of the datasets you came up with earlier in the semester.</p></li>
+<li><p>Find a dataset on which to try out different classification (or regression) algorithms. You can use the dataset used in the “datatypes” assignment earlier this semester if appropriate. Note: we have used the <code>Weekly</code> dataset in the <code>ISLR</code> package in previous projects, but it’s not as interesting as some of the datasets you came up with earlier in the semester.</p></li>
 <li><p>Choose <strong>two</strong> of the following algorithms:</p></li>
 </ol>
 <ol style="list-style-type: decimal">
-<li>Linear Discriminant Analysis (LDA)</li>
-<li>classification trees,</li>
-<li>random forests (for classification)</li>
+<li>Linear Discriminant Analysis (LDA) (only classification)</li>
+<li>classification (or regression) trees,</li>
+<li>random forests<br />
+</li>
 <li>linear SVM,</li>
 <li>non-linear SVM</li>
-<li>k-NN classification</li>
+<li>k-NN classification (or regression)</li>
 </ol>
 <p>and compare their prediction performance on your chosen dataset to your logistic regression gradient descent implementation using 10-fold cross-validation and a paired <span class="math inline">\(t\)</span>-test (one for each of the two algorithms vs. your logistic regression code). Note: for those algorithms that have hyper-parameters, i.e., all of the above except for LDA, you need to specify in your writeup which model selection procedure you used.</p>
 </div>
