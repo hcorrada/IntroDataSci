@@ -17,7 +17,7 @@ to make an interactive data map of Baltimore Crime.
 
 1. Use this piece of code to download and prepare data for use in project
 
-```{r get_and_prepare_data}
+```{r get_and_prepare_data, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(stringr)
 
@@ -56,7 +56,7 @@ colors indicating race. Or anything else that strikes your fancy.
 
 Prepare and knit an Rmarkdown file that includes: (a) code to carry out eacf of the steps above, (b) output showing the result of your code (in this case the interactive), and (c) a short prose description of your interactive map (i.e., what are you showing with this data and map). Remember, the writeup you are preparing is intended to communicate your data analysis effectively. Thoughtlessly showing large amounts of output in your writeup defeats that purpose.  
 
-Submit to ELMS at (COMING SOON) 
+Submit to ELMS at https://myelms.umd.edu/courses/1199381/assignments/4270815
 
 ### Group work
 
