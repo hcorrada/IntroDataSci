@@ -128,44 +128,17 @@ $(document).ready(function () {
 
 
 <p><strong>Posted:</strong> December 7, 2016<br />
-<strong>Last Updated:</strong> Dec 07, 2016<br />
+<strong>Last Updated:</strong> Dec 09, 2016<br />
 <strong>Due:</strong> December 12, 2016</p>
 <p>Use the <code>leaflet</code> package and our previously used Baltimore crime dataset to make an interactive data map of Baltimore Crime.</p>
 <ol style="list-style-type: decimal">
 <li>Use this piece of code to download and prepare data for use in project</li>
 </ol>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## Loading tidyverse: ggplot2
-## Loading tidyverse: tibble
-## Loading tidyverse: tidyr
-## Loading tidyverse: readr
-## Loading tidyverse: purrr
-## Loading tidyverse: dplyr</code></pre>
-<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
-<pre><code>## filter(): dplyr, stats
-## lag():    dplyr, stats</code></pre>
-<pre class="r"><code>library(stringr)
+<pre class="r"><code>library(tidyverse)
+library(stringr)
 
-arrest_tab &lt;- read_csv(&quot;http://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv&quot;)</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   arrest = col_integer(),
-##   age = col_integer(),
-##   sex = col_character(),
-##   race = col_character(),
-##   arrestDate = col_character(),
-##   arrestTime = col_time(format = &quot;&quot;),
-##   arrestLocation = col_character(),
-##   incidentOffense = col_character(),
-##   incidentLocation = col_character(),
-##   charge = col_character(),
-##   chargeDescription = col_character(),
-##   district = col_character(),
-##   post = col_integer(),
-##   neighborhood = col_character(),
-##   `Location 1` = col_character()
-## )</code></pre>
-<pre class="r"><code>dat &lt;- arrest_tab %&gt;% 
+arrest_tab &lt;- read_csv(&quot;http://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv&quot;)
+dat &lt;- arrest_tab %&gt;% 
   mutate(race_new=sex, sex_new=race) %&gt;%
   mutate(race=race_new, sex=sex_new) %&gt;%
   select(-race_new, -sex_new) %&gt;%
@@ -183,8 +156,8 @@ balto_map &lt;- leaflet(dat) %&gt;%
   addTiles() %&gt;%
   setView(lat=39.29, lng=-76.61, zoom=11)
 balto_map</code></pre>
-<div id="htmlwidget-013715739ca4db0df80d" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-013715739ca4db0df80d">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}],"setView":[[39.29,-76.61],11,[]]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-52eaa3bc51c13a6b6508" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-52eaa3bc51c13a6b6508">{"x":{"calls":[{"method":"addTiles","args":["http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap\u003c/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA\u003c/a>"}]}],"setView":[[39.29,-76.61],11,[]]},"evals":[],"jsHooks":[]}</script>
 <p>You can find more information about leaflet here: <a href="https://rstudio.github.io/leaflet/" class="uri">https://rstudio.github.io/leaflet/</a></p>
 <ol start="3" style="list-style-type: decimal">
 <li><p>Add graphical elements to display the data. For instance, add circles, with colors indicating sex. Or circles with colors indicating race. Or anything else that strikes your fancy.</p></li>
@@ -193,7 +166,7 @@ balto_map</code></pre>
 <div id="submission" class="section level2">
 <h2>Submission</h2>
 <p>Prepare and knit an Rmarkdown file that includes: (a) code to carry out eacf of the steps above, (b) output showing the result of your code (in this case the interactive), and (c) a short prose description of your interactive map (i.e., what are you showing with this data and map). Remember, the writeup you are preparing is intended to communicate your data analysis effectively. Thoughtlessly showing large amounts of output in your writeup defeats that purpose.</p>
-<p>Submit to ELMS at (COMING SOON)</p>
+<p>Submit to ELMS at <a href="https://myelms.umd.edu/courses/1199381/assignments/4270815" class="uri">https://myelms.umd.edu/courses/1199381/assignments/4270815</a></p>
 <div id="group-work" class="section level3">
 <h3>Group work</h3>
 <p>Working in groups in this project is encouraged but not required. If working on a group: (1) groups can be of 2 or 3 people, (2) <strong>THIS IS DIFFERENT IN THIS PROJECT</strong> a single group member will submit the group’s writeup, (3) in all cases, names of peers who worked in the group should be included in the writeup.</p>
