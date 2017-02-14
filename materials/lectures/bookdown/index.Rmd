@@ -1,0 +1,12 @@
+---
+title: "Data Science Book"
+author: "Hector Corrada Bravo"
+date: "`r Sys.Date()`"
+site: "bookdown::bookdown_site"
+output: 
+  bookdown::gitbook: default
+---
+
+# Preamble
+
+I am trying to move notes to `bookdown`.

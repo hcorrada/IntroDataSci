@@ -1,0 +1,220 @@
+# Advanced R
+
+## Getting started
+
+Let's load the same data we used in the previous lab (look there for instructions on how to download).
+
+```{r}
+arrest_tab <- read.csv("BPD_Arrests.csv", stringsAsFactors=FALSE)
+
+# remember there's a naming issue in this dataset we need to fix
+colnames(arrest_tab)[3:4] <- c("race", "sex")
+```
+
+## A note on data types
+
+This dataset contains data of types commonly found in data analyses
+
+- Numeric (continuous): A numeric measurement (e.g., height)  
+- Numeric (discrete): Usually obtained from counting, think only integers (e.g., `age` which is measured in years)  
+- Categorical: One of a possible set of values (e.g., `sex`)  
+- Datetime: Date and time of some event or observation (e.g., `arrestDate`, `arrestTime`)  
+- geolocation: Latitude and Longitude of some event or observation (e.g., `Location.`)  
+
+The distinction between continuous and discrete is a bit tricky since measurements that have finite precision must be discrete. So, the difference really comes up when we build statistical models of datasets for analysis. For now, think of discrete data as the result of counting, and continuous data the result of some physical measurement.
+
+We said that R is designed for data analysis. My favorite example of how that manifests itself is the `factor` datatype. If you look at your dataset now, `arrest_tab$sex` is a vector of strings:
+
+```{r}
+class(arrest_tab$sex)
+summary(arrest_tab$sex)
+```
+
+However, as a measurement, or attribute, it should only take one of two values (or three depending on how you record missing, unknown or unspecified). So, in R, that categorical data type is called a _factor_. Notice what the `summary` function does after turning the `sex` attribute into a _factor_:
+
+```{r}
+arrest_tab$sex <- factor(arrest_tab$sex)
+summary(arrest_tab$sex)
+```
+
+This distinction shows up in many other places where functions have very different behavior when called on a vector of strings and when called on a factor (e.g., functions that make plots, or functions that learn statistical models).
+
+One last note, the possible values a _factor_ can take are called _levels_:
+
+```{r}
+levels(arrest_tab$sex)
+```
+
+Exercise: you should transform the `race` attribute into a factor as well. How many levels does it have?
+
+## Thinking in vectors
+
+In data analysis the _vector_ is probably the most fundamental data type (other than basic numbers, strings, etc.). Why? Consider getting data about one attribute, say height, for a group of people. What do you get, an array of numbers, all in the same unit (say feet, inches or centimeters). How about their name? Then you get an array of strings. Abstractly, we think of vectors as arrays of values, all of the same _class_ or datatype. 
+
+In our dataset, each column, corresponding to an attribute, is a vector:
+
+```{r}
+# the 'str' function gives a bit more low-level information about objects
+str(arrest_tab$Location)
+```
+
+R (and other data analysis languages) are designed to operate on vectors easily. For example, frequently we want to do some kind of transformation to a data attribute, say record age in months rather than years. Then we would perform the **same operation** for every value in the corresponding vector:
+
+```{r}
+age_in_months <- arrest_tab$age * 12
+```
+
+In a language that doesn't support this type of vectorized operation, you would use a loop, or similar construct, to perform this operation.
+
+Another type of transformation frequently done is to combine attributes into a single attribute. Suppose we wanted to combine the `arrestLocation` and `neighborhood` attributes into an `address` attribute:
+
+```{r}
+# remember you can always find out what a function does by using ?paste
+head(paste(arrest_tab$arrestLocation, arrest_tab$neighborhood, sep=", "))
+```
+
+Here the `paste` function concatenates strings element-wise: the first string in `arrestLocation` is concatenated with the first string in `neighborhood`, etc.
+
+Arithmetic operations have the same element-wise operation:
+
+```{r}
+# add first 10 odd numbers to first 10 even numbers
+seq(1, 20, by=2) + seq(2, 20, by=2)
+```
+
+## Functions as values and vectorized operations
+
+Now here is where we see the value of using a _functional language_ for data analysis. In data analysis, when you want to perform some operation on a vector of values, a very common coding pattern that arises is to (a) define a function that takes one value, and returns one value, and then (b) _apply_ this function to every entry in the vector. 
+
+Here's one example: suppose we want to create a new attribute that specifies if the person arrested is under-age (younger that 18). We can (a) define a function that takes an age, and the uses a conditional (if statement) to return "youth" or "adult" depending on the age.
+
+```{r}
+make_age_categorical <- function(age) {
+  if (age < 18) {
+    "youth"
+  } else {
+    "adult"
+  }
+}
+```
+
+A couple of notes about functions in R based on this example. This function has a single _expression_, the `if` statement. The _result_ of evaluating this expression is either `"youth"` or `"adult"`. So the _value_ of the `if` statement is going to be a string. Notice also, that there is no `return` statement in this function. The result of calling a function is the _value_ of the last _expression_ in the function definition. 
+
+Now that we have a function in place, we can _apply_ this function to the `age` attribute in our dataset to get our new categorical age attribute:
+
+```{r}
+categorical_age <- sapply(arrest_tab$age, make_age_categorical)
+str(categorical_age)
+table(categorical_age)
+```
+
+Every functional language has a function like `sapply`: it takes a vector (or list) and a function and applies the function to each entry in the vector. 
+
+Now, as you may imagine, the type of transformation we did here is a pattern that is used very frequently in data analysis. R has operations (the `ifelse` function) to make this easier:
+
+```{r}
+# ifelse takes a vector of logical values and returns one of two options based on the result
+
+categorical_age <- ifelse(arrest_tab$age < 18, "youth", "adult")
+str(categorical_age)
+table(categorical_age)
+```
+
+This is again a vectorized operation. As we progress through the semester we will see value of thinking with vectors, vectorized operations and applying functions as we do data analysis.
+
+## Side-effects and functional languages
+
+Another fundamental design decision in R, as a functional language, is that functions _should_ have no _side-effects_. Let's look at a simple example
+
+```{r}
+x <- 2
+f <- function(x) { 
+  x <- 6
+  x
+}
+f(x)
+x
+```
+
+In this case, the assignment `x <- 6` inside function `f` has no effect on the value of variable `x` outside function `f`. In that case, assignment `x <- 6` has no side-effects. 
+
+This is a desirable property for data analysis because it is much easier to reason about programs when functions have no _side-effects_. On the other hand, this can have a detrimental result in performance. We will explore this issue in more detail later in the course. 
+
+One last thing, the `<<-` assignment operator lets you break this rule. **DON'T USE IT** (unless you really need to, and in that case, you should really think again about your function design to make sure you actually need to).
+
+```{r}
+x <- 2
+g <- function(x) {
+  x <<- 6
+  x
+}
+g(x)
+x
+```
+
+### Lists vs. vectors
+
+We saw that vectors are arrays of values, all of the same _class_. R also allows arrays of values that have different _class_ or datatype. These are called _lists_. Here is a list containing a string, and a couple of numbers:
+
+```{r}
+my_list <- list("Hector", 40, 71)
+my_list
+```
+
+Indexing in lists uses different syntax from the indexing we saw before. To index an element in a list we would use a double-bracket `[[`. 
+
+```{r}
+my_list[[1]]
+```
+
+In contrast, the single bracket `[` indexes a _part_ of the list, and thus returns another list.
+
+```{r}
+my_list[1]
+```
+
+That way we can use slice notation and other operations we saw when indexing vectors as before, but we get lists as results.
+
+```{r}
+my_list[1:2]
+```
+
+List elements can have names as well:
+
+```{r}
+named_list <- list(person="Hector", age=40, height=71)
+named_list
+```
+
+Which we can use to index elements as well (both with `[[` and `$`)
+
+```{r}
+named_list[["person"]]
+named_list$person
+```
+
+Lists can hold arbitrary objects as elements. For example you can have a vector of strings as an element in a list
+
+```{r}
+my_list <- list(person=c("Hector", "Ringo", "Paul", "John"), 40, 71)
+my_list
+```
+
+Now, we come to a momentous occassion in understanding R. `data.frame`s are special instances of _lists_! But, in this case, every element in the list is a vector, and all vectors have exactly the same length. So `arrest_tab$age` indexes the named element `age` in the list `arrest_tab`!
+
+The pattern of _applying_ functions to entries in vectors also holds for elements in lists. So, if we want to calculate smallest value for every attribute in our dataset, we could do something like this:
+
+```{r}
+sapply(arrest_tab, function(v) sort(v)[1])
+```
+
+## Matrices
+
+The last important data structure I'll talk about in this introduction are matrices. One way of thinking about them is as _rectangular_ data structures - they have two dimensions, rows and columns, like data tables - but only holds values of a single _class_ or data type.
+
+```{r}
+my_mat <- matrix(1:20, nrow=4, ncol=5)
+my_mat
+```
+
+These are important data structures in Machine Learning and statistics since most of the learning and analysis algorithms we will learn about assume that you can represent data as a matrix. Also, storage for these data structures is much more compact than data tables and lists. Since all elements are of the same _class_ or type, language designers can be much smarter about how to lay out this data in memory.
