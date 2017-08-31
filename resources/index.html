@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
     <title>CMSC320 Resources - CMSC320 Introduction to Data Science</title>
-    <meta name="generator" content="Hugo 0.16" />
+    <meta name="generator" content="Hugo 0.24" />
 
     
     <meta name="description" content="Data Science course at the University of Maryland Department of Computer Science">
@@ -33,14 +33,14 @@
     <style>
       @font-face {
         font-family: 'Icon';
-        src: url('http://www.hcbravo.org/IntroDataSci/fonts/icon.eot?52m981');
-        src: url('http://www.hcbravo.org/IntroDataSci/fonts/icon.eot?#iefix52m981')
+        src: url('http://www.hcbravo.org/IntroDataSci/fonts/icon.eot');
+        src: url('http://www.hcbravo.org/IntroDataSci/fonts/icon.eot')
                format('embedded-opentype'),
-             url('http://www.hcbravo.org/IntroDataSci/fonts/icon.woff?52m981')
+             url('http://www.hcbravo.org/IntroDataSci/fonts/icon.woff')
                format('woff'),
-             url('http://www.hcbravo.org/IntroDataSci/fonts/icon.ttf?52m981')
+             url('http://www.hcbravo.org/IntroDataSci/fonts/icon.ttf')
                format('truetype'),
-             url('http://www.hcbravo.org/IntroDataSci/fonts/icon.svg?52m981#icon')
+             url('http://www.hcbravo.org/IntroDataSci/fonts/icon.svg')
                format('svg');
         font-weight: normal;
         font-style: normal;
@@ -178,6 +178,7 @@
 </a>
 
 
+
   
 </li>
 
@@ -195,6 +196,7 @@
 </a>
 
 
+
   
 </li>
 
@@ -210,6 +212,7 @@
 	
 	Lecture Notes
 </a>
+
 
 
   
@@ -232,6 +235,7 @@
 <ul id="scrollspy">
 </ul>
 
+
   
 </li>
 
@@ -247,6 +251,7 @@
 	
 	Projects
 </a>
+
 
 
   
@@ -329,6 +334,7 @@ We will list additional ones here as we go along.</p>
 <li><a href="http://www.kaggle.com/">Kaggle</a>: is a site hosting data competitions. It&rsquo;s a great source of
 datasets, questions and tutorials.</li>
 <li><a href="https://www.kaggle.com/datasets">Kaggle Datasets</a> a new repository in Kaggle specifically for datasets, including code and scripts by users to get analyses on these datasets started.<br /></li>
+<li><a href="https://data.world/">data.world</a> another new repository of public datasets.</li>
 <li><a href="http://www.data.gov/">data.gov</a>: The U.S. goverment&rsquo;s open data portal</li>
 <li><a href="http://www.gapminder.org/data/">Gapminder</a></li>
 <li><a href="http://www.who.int/gho/database/en/">Global Health Observatory</a>: World Health Organization&rsquo;s data repository.</li>
@@ -445,14 +451,14 @@ dataset portal maintained by CMU.</li>
             a.setAttribute("href", "#" + headers[i].id);
             a.setAttribute("title", headers[i].innerHTML);
             a.innerHTML = headers[i].innerHTML;
-            
+
             li.appendChild(a)
             scrollspy.appendChild(li);
           }
         } else {
           scrollspy.parentElement.removeChild(scrollspy)
         }
-        
+
 
         /* Add permanent link next to the headers */
         var headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
@@ -470,7 +476,8 @@ dataset portal maintained by CMU.</li>
 
     
 
-    <script src="//gohugo.io/js/highlight.pack.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
   </body>
 </html>
+
