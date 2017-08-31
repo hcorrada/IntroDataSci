@@ -37,6 +37,7 @@ We will list additional ones here as we go along.
 * [Kaggle](http://www.kaggle.com/): is a site hosting data competitions. It's a great source of
 datasets, questions and tutorials.
 * [Kaggle Datasets](https://www.kaggle.com/datasets) a new repository in Kaggle specifically for datasets, including code and scripts by users to get analyses on these datasets started.  
+* [data.world](https://data.world/) another new repository of public datasets. 
 * [data.gov](http://www.data.gov/): The U.S. goverment's open data portal
 * [Gapminder](http://www.gapminder.org/data/)
 * [Global Health Observatory](http://www.who.int/gho/database/en/): World Health Organization's data repository.
