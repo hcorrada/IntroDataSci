@@ -7,7 +7,7 @@ type: index
 ## Course Information
 
 **CMSC320: Introduction to Data Science**  
-**Fall 2016**
+**Spring 2018**
 
 *	Instructor:  
     [H&eacute;ctor Corrada Bravo](http://www.cbcb.umd.edu/~hcorrada)  
@@ -17,7 +17,7 @@ type: index
     Office: [3114F Biomolecular Sciences Building](https://www.cbcb.umd.edu/about-us/directions)  
 
 *	Lecture Meeting Times    
-    Monday and Wendesday, 2:00pm-3:15pm, CSI 3117  
+    Tuesday and Thursday HJ Patterson 0226
 
 ## Links
 
