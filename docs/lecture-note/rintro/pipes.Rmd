@@ -1,0 +1,79 @@
+---
+title: "A short note about pipes"
+author: "CMSC320"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Getting started
+
+Let's load the same data we used in the previous lab (look there for instructions on how to download).
+
+```{r}
+arrest_tab <- read.csv("BPD_Arrests.csv", stringsAsFactors=FALSE)
+
+# remember there's a naming issue in this dataset we need to fix
+colnames(arrest_tab)[3:4] <- c("race", "sex")
+
+arrest_tab$race <- factor(arrest_tab$race)
+arrest_tab$sex <- factor(arrest_tab$sex)
+arrest_tab$incidentOffense <- factor(arrest_tab$incidentOffense)
+```
+
+## Making the process explicit with pipes
+
+We've discussed the idea of thinking about data analysis work in terms of "pipelines", where
+we start from data of a certain shape (e.g., a `data.frame`) and apply transformations (functions) to obtain data that contains the computation we want. Consider the following example seen in class:
+
+_What is the mean age of males arrested in the SOUTHERN district?_
+
+We can frame the answer to this question as a series of data transformations to get the answer we are looking for:
+
+```{r}
+# filter data to observations we need
+index_vector <- arrest_tab$sex == "M" & arrest_tab$district == "SOUTHERN"
+tmp <- arrest_tab[index_vector,]
+
+# select the attribute/column we need
+tmp <-tmp[,"age"]
+
+# compute statistic required
+mean(tmp)
+```
+
+Let's rewrite this using functions to illustrate the point
+
+```{r}
+filter_data <- function(data) {
+  index_vector <- data$sex == "M" & data$district == "SOUTHERN"
+  data[index_vector,]
+}
+
+select_column <- function(data, column) {
+  data[, column]
+}
+
+tmp <- filter_data(arrest_tab)
+tmp <- select_column(tmp, "age")
+mean(tmp)
+```
+
+So, this pattern of _data --transform--> data_ becomes clearer when written that way.
+
+The `magrittr` package introduces _syntactic sugar_ to make this explicit. We can write the above snippet using the "pipe" operator `%>%`:
+
+```{r}
+library(magrittr)
+
+arrest_tab %>%
+  filter_data() %>%
+  select_column("age") %>%
+  mean()
+```
+
+The `%>%` binary operator takes the value to its **left** and inserts it as the first argument of the function call to its **right**. So the expression `LHS %>% f(another_argument)` is **equivalent** to the expression `f(LHS, another_argument)`. We will see this pattern extensively in class because it explicitly presents the way we want to organize many of our data analysis tasks.
+

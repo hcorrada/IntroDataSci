@@ -1,0 +1,101 @@
+---
+title: "R Exercise"
+author: "Héctor Corrada Bravo"
+date: '`r Sys.Date()`'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In this exercise you will create your first submission using R Markdown. We will see more information about R Markdown in class, but you can also take a look below for some preliminary information.
+
+Fill in your answers to the five questions below in the format requested (see example). Knit the file into a PDF and submit on ELMS.
+
+## Loading data
+
+You can use the following snippet, which we also used in the lecture notes used in class:
+
+```{r download, echo=FALSE}
+if (!file.exists("BPD_Arrests.csv")) {
+  download.file("http://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv", destfile="BPD_Arrests.csv")
+}
+
+arrest_tab <- read.csv("BPD_Arrests.csv", stringsAsFactors=FALSE)
+
+colnames(arrest_tab)[c(3,4)] <- c("race","sex")
+
+arrest_tab$race <- factor(arrest_tab$race)
+arrest_tab$sex <- factor(arrest_tab$sex)
+arrest_tab$incidentOffense <- factor(arrest_tab$incidentOffense)
+```
+## Example
+
+Use this format for each of the questions below: 
+- question: The question, which we provide
+- code: The code you used to answer it in an R code chunk
+- statement: A succint prose statement (use complete sentences please) of the answer to the question.
+
+**Question 0**: What is the minimum arrest age in the dataset?
+
+```{r q0}
+min(arrest_tab$age)
+```
+
+The minimum arrest age is 0.
+
+## The questions
+
+**Question 1**: What is the age of the oldest person arrested in the dataset?
+
+```{r q1}
+res <- max(arrest_tab$age)
+res
+```
+
+The age of the oldest person is `r res`.
+
+**Question 2**: What is the neighborhood with the least number of arrests?
+
+```{r q2}
+tmp <- table(arrest_tab$neighborhood)
+tmp <- sort(tmp)
+res <- tmp[1]
+res
+```
+
+The neighborhood with the least number of arrests is `r res`.
+
+**Question 3**: What is the median arrest age?
+
+```{r q3}
+res <- median(arrest_tab$age)
+res
+```
+
+The median arrest age is `r res`
+
+**Question 4**: What is the median arrest age in the SOUTHERN district?
+
+```{r q4}
+index_vector <- arrest_tab$district == "SOUTHERN"
+arrest_subset <- arrest_tab[index_vector,]
+res <- median(arrest_subset$age)
+res
+```
+
+The median arrest age in the SOUTHERN district is `r res`.
+
+**Question 5**: What is the mean age of females arrested in the “Federal Hill” neighborhood?
+
+```{r q5}
+index_vector <- arrest_tab$neighborhood == "Federal Hill" & 
+                arrest_tab$sex == "F"
+arrest_subset <- arrest_tab[index_vector,]
+res <- mean(arrest_subset$age)
+res
+```
+
+The mean age of females arrested in the Federal Hill neighborhood is `r res`.
+

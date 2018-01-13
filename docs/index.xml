@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CMSC320 Introduction to Data Science</title>
+    <link>http://www.hcbravo.org/IntroDataSci/</link>
+    <description>Recent content on CMSC320 Introduction to Data Science</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Released under the MIT license</copyright>
+    <lastBuildDate>Mon, 28 Nov 2016 06:12:58 -0500</lastBuildDate>
+    
+	<atom:link href="http://www.hcbravo.org/IntroDataSci/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Dimensionality Reduction</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/pca/</link>
+      <pubDate>Mon, 28 Nov 2016 06:12:58 -0500</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/pca/</guid>
+      <description>Exploratory Data Analysis of high-dimensional data using dimensionality reduction.
+Lecture Notes</description>
+    </item>
+    
+    <item>
+      <title>Project 3: Classification and Regression</title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project3/</link>
+      <pubDate>Tue, 22 Nov 2016 13:04:21 -0500</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project3/</guid>
+      <description>This project has two parts:
+a. Regression
+b. Classification
+Follow instructions on each of these two to complete your project.
+DUE Dec 2, 2016
+Submission Prepare and knit a single Rmarkdown file that includes submission information described in each of the two project parts above.
+All axes in plots should be labeled in an informative manner. Your answers to any question that refers to a plot should include both (a) a text description of your plot, and (b) a sentence or two of interpretation as it relates to the question asked.</description>
+    </item>
+    
+    <item>
+      <title>Evaluation</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/evaluation/</link>
+      <pubDate>Wed, 16 Nov 2016 08:09:08 -0500</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/evaluation/</guid>
+      <description>How to use sampling methods to evaluate statistical models
+Lecture notes</description>
+    </item>
+    
+    <item>
+      <title>Learning at scale</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/large_scale/</link>
+      <pubDate>Wed, 09 Nov 2016 09:34:07 -0500</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/large_scale/</guid>
+      <description>Systems and algorithms for data summarization and learning on large datasets
+Lecture notes on Stochastic Gradient Descent</description>
+    </item>
+    
+    <item>
+      <title>Tree-based methods</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/tree_methods/</link>
+      <pubDate>Mon, 07 Nov 2016 03:34:33 -0500</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/tree_methods/</guid>
+      <description>Regression and Decision Trees. Random Forests.
+Lecture Notes
+Resources ISLR Ch. 8</description>
+    </item>
+    
+    <item>
+      <title>Linear models for regression and classification</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/linear_models/</link>
+      <pubDate>Wed, 26 Oct 2016 06:12:26 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/linear_models/</guid>
+      <description> Basic models for regression and classification
+Lecture Notes: Simple linear regression
+Lecture Notes: Multiple linear regression
+Lecture Notes: Linear models for classification
+Resources  ISLR, Ch. 3 and 4
+ Zumel &amp;amp; Mount Ch. 7
+  </description>
+    </item>
+    
+    <item>
+      <title>Introduction to Statistical Learning</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/statlearn/</link>
+      <pubDate>Mon, 10 Oct 2016 09:42:48 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/statlearn/</guid>
+      <description> Introduction to randomness, distributions, inference and testing
+Lecture Notes: Distributions, Inference and Testing
+Resources  Intro Stat with Randomization and Simulation
+ OpenIntro Statistics - Cartoon guide to Statistics  </description>
+    </item>
+    
+    <item>
+      <title>Exploratory Data Analysis (EDA)</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/eda/</link>
+      <pubDate>Tue, 27 Sep 2016 18:46:11 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/eda/</guid>
+      <description> Visualization and summarization methods for effective data exploration.
+Lecture Notes: Data visualization for EDA
+Lecture Notes: Data summarization for EDA
+Lecture Notes: Data transformations
+Lecture Notes: Handling missing data
+Additional Resources  Derivative review
+ Zumen &amp;amp; Mount Ch. 3 R for Data Science Ch. 7
+ ggplot2 cheatsheet
+ ggplot2 textbook
+  </description>
+    </item>
+    
+    <item>
+      <title>Modeling and tidying data</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/datamodels/</link>
+      <pubDate>Mon, 26 Sep 2016 11:42:11 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/datamodels/</guid>
+      <description> How to get data into shape before analysis
+ Lecture notes: Data models Lecture notes: Tidy data
+  Readings and resources  H. Wickham (2014). Tidy data. Journal of Statistical Software H. Wickham (2016). R for Data Science  </description>
+    </item>
+    
+    <item>
+      <title>Data Wrangling</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/wrangling/</link>
+      <pubDate>Sun, 18 Sep 2016 15:00:57 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/wrangling/</guid>
+      <description> Data management and manipulation
+Data wrangling with dplyr
+Data wrangling with SQL
+Additional Resources  Introduction to dplyr: http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html
+ dplyr Cheatsheet: http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
+  </description>
+    </item>
+    
+    <item>
+      <title>Best Practices</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/best_practices/</link>
+      <pubDate>Wed, 14 Sep 2016 13:17:30 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/best_practices/</guid>
+      <description>Tips for organizing and managing data science projects
+Slides</description>
+    </item>
+    
+    <item>
+      <title>Measurement and data types</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/datatypes/</link>
+      <pubDate>Fri, 09 Sep 2016 11:57:48 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/datatypes/</guid>
+      <description>Examples of data sets, data types and measurements
+Lecture Notes</description>
+    </item>
+    
+    <item>
+      <title>Setting up R</title>
+      <link>http://www.hcbravo.org/IntroDataSci/homeworks/rocker/</link>
+      <pubDate>Wed, 31 Aug 2016 00:05:51 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/homeworks/rocker/</guid>
+      <description>For class we will be using R, Rstudio and git. You can download and install each using the links below. However, you can instead use Rocker, a project built on top of Docker to manage your software installation. We&amp;rsquo;ve setup a container that will provide you with a working installation of R, and the Rstudio IDE, along with a lot of packages providing analysis tools and datasets we will use throughout the semester.</description>
+    </item>
+    
+    <item>
+      <title>R for Data Science Primer</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/</link>
+      <pubDate>Tue, 30 Aug 2016 22:23:52 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/</guid>
+      <description> An introduction to the R programming language and data analysis environment
+Part I: (html) (Rmarkdown)
+Part II: (html) (Rmarkdown)
+Part III: A short note about pipes (html) (Rmarkdown)
+Additional Resources  Course resource page Zumen &amp;amp; Mount, Appendix A Wickham, H. Advanced R Rmarkdown  </description>
+    </item>
+    
+    <item>
+      <title>CMSC320 Calendar</title>
+      <link>http://www.hcbravo.org/IntroDataSci/calendar/</link>
+      <pubDate>Tue, 30 Aug 2016 10:13:51 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/calendar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lecture Notes: Introduction</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/introduction/</link>
+      <pubDate>Mon, 29 Aug 2016 08:59:01 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/introduction/</guid>
+      <description> What is Data Science?
+Slides
+Readings  Zumel &amp;amp; Mount: pp. xix-17 Loukides, What is data science? Silver, What the fox knows  </description>
+    </item>
+    
+    <item>
+      <title>CMSC320 Projects</title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/</link>
+      <pubDate>Mon, 29 Aug 2016 08:54:44 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/</guid>
+      <description> Data scraping and cleaning Due Oct. 10, 2016 Data wrangling and EDA Due Nov. 2, 2016 Regression and classification Due Dec. 2, 2016
+ Interactive data visualization and mapping Due Dec. 12, 2016  </description>
+    </item>
+    
+    <item>
+      <title>CMSC320 Resources</title>
+      <link>http://www.hcbravo.org/IntroDataSci/resources/</link>
+      <pubDate>Mon, 29 Aug 2016 08:54:37 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/resources/</guid>
+      <description>R  R is an open-source environment for data analysis.
+ The RStudio IDE is highly recommended. The Revolution IDE is also very good, only Linux and Windows.
+ swirl is an interactive R (and general data analysis) tutorial
+ Data Camp has a nice short online course introducing R
+ R Task Views: The Machine Learning and Optimization Task Views list useful packages in R we may use.</description>
+    </item>
+    
+    <item>
+      <title>Logistics</title>
+      <link>http://www.hcbravo.org/IntroDataSci/logistics/</link>
+      <pubDate>Mon, 29 Aug 2016 05:41:03 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/logistics/</guid>
+      <description>This page constiutes the official syllabus for this class.
+Course Information Introduction to Data Science
+CMSC320 Fall 2016
+ Lecture Meeting Times
+Monday and Wednesday, 2:00pm-3:15pm, CSI 3117
+ Instructor:
+H&amp;eacute;ctor Corrada Bravo
+Center for Bioinformatics and Computational Biology
+Department of Computer Science
+hcorrada@umiacs.umd.edu
+Office: 3114F Biomolecular Sciences Building
+Phone Number: 301-405-2481
+Office Hours: Friday 1:00pm-2:00pm AVW 3223 and by appointment
+ Communication:
+ For course related questions, use Piazza as indicated below.</description>
+    </item>
+    
+    <item>
+      <title>CMSC320: Introduction to Data Science</title>
+      <link>http://www.hcbravo.org/IntroDataSci/</link>
+      <pubDate>Sun, 28 Aug 2016 17:13:09 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/</guid>
+      <description>Course Information CMSC320: Introduction to Data Science
+Fall 2016
+ Instructor:
+H&amp;eacute;ctor Corrada Bravo
+Center for Bioinformatics and Computational Biology
+Department of Computer Science
+hcorrada@umiacs.umd.edu
+Office: 3114F Biomolecular Sciences Building
+ Lecture Meeting Times
+Monday and Wendesday, 2:00pm-3:15pm, CSI 3117
+  Links Check the calendar page for up-to-date course calendar.
+Check the logistics page for more information, including the official syllabus.
+Grades and assignments posted in ELMS.
+Discussion and questions in Piazza.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/datamodels/datamodels/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/datamodels/datamodels/</guid>
+      <description>Data Models     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/datamodels/tidy_data/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/datamodels/tidy_data/</guid>
+      <description>Tidy Data     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/datatypes/datatypes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/datatypes/datatypes/</guid>
+      <description>Measurements and data types     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/eda/eda_summary_stats/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/eda/eda_summary_stats/</guid>
+      <description>EDA: summary statistics     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/eda/missing_data/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/eda/missing_data/</guid>
+      <description>Handling missing data     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/eda/transformations/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/eda/transformations/</guid>
+      <description>Data transformations     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/eda/visualization_eda/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/eda/visualization_eda/</guid>
+      <description>Data visualization for Exploratory Data Analysis     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/evaluation/evaluation/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/evaluation/evaluation/</guid>
+      <description>Evaluation using resampling methods     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/large_scale/sgd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/large_scale/sgd/</guid>
+      <description>Stochastic Gradient Descent: Learning models for large-scale data     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/linear_models/linear_classification/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/linear_models/linear_classification/</guid>
+      <description>Linear models for classification     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/linear_models/linear_regression/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/linear_models/linear_regression/</guid>
+      <description>Linear Regression     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/linear_models/multiple_linear_regression/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/linear_models/multiple_linear_regression/</guid>
+      <description>Multiple Linear Regression     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/pca/pca/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/pca/pca/</guid>
+      <description>Unsupervised Methods     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/rintro_lab/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/rintro_lab/</guid>
+      <description>Introduction to R     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/rintro_lab2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/rintro_lab2/</guid>
+      <description>Introduction to R (part 2)     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/pipes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/rintro/pipes/</guid>
+      <description>A short note about pipes     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/statlearn/introstatlearn/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/statlearn/introstatlearn/</guid>
+      <description>Introduction to Statistical Learning     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/svms/svm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/svms/svm/</guid>
+      <description>Support Vector Machine     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/tree_methods/treemethods/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/tree_methods/treemethods/</guid>
+      <description>TreeMethods     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/wrangling/wrangling_dplyr/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/wrangling/wrangling_dplyr/</guid>
+      <description>Data Wrangling with dplyr     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/wrangling/wrangling_sql/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/wrangling/wrangling_sql/</guid>
+      <description>Data Wrangling: SQL     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project1/</guid>
+      <description>Project 1     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project2/</guid>
+      <description>Project 2: Wrangling and EDA     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project4/</guid>
+      <description>Project 4: Interactive Data Maps        code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project3/classification/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project3/classification/</guid>
+      <description>Project 3 (part 2): Classification     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project3/gapminder/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project3/gapminder/</guid>
+      <description>Project 3 (part 1): Regression analysis of Gapminder data     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
+    </item>
+    
+    <item>
+      <title>Support Vector Machines and KNN</title>
+      <link>http://www.hcbravo.org/IntroDataSci/lecture-note/svms/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/lecture-note/svms/</guid>
+      <description>Linear and non-linear regression and classification with support vector machines and KNN
+Lecture notes
+Resources ISLR Ch. 9</description>
+    </item>
+    
+  </channel>
+</rss>
