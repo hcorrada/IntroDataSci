@@ -1,0 +1,66 @@
+# Ingesting data
+
+Now that we have a better understanding of the R data analysis language, we turn to the first significant challenge in data analysis, getting data into R in a shape that we can use to start our analysis. We will look at two types of data ingestion: _structured ingestion_, where we read data that is already structured, like a comma separated value (CSV) file, and _scraping_ where we obtain data from text, usually in websites.
+
+## Structured ingestion
+
+### CSV files (and similar)
+
+We saw in a previous chapter how we can use the `read_csv` file to read data from a CSV file into a data frame. Comma separated value (CSV) files are structured in a somewhat regular way, so reading into a data frame is straightforward. Each line in the CSV file corresponds to an observation (a row in a data frame). Each line contains values separated by a comma (`,`), corresponding to the variables of each observation. 
+
+This ideal principle of how a CSV file is constructed is frequently violated by data contained in CSV files. To get a sense of how to deal with these cases look at the documentation of the `read_csv` function. For instance:
+
+- the first line of the file may or may not contain the names of variables for the data frame (`col_names` argument). 
+
+- strings are quoted using `'` instead of `"` (`quote` argument)
+
+- missing data is encoded with a non-standard code, e.g., `-` (`na` argument)
+
+- values are separated by a character other than `,` (`read_delim` function)
+
+- file may contain header information before the actual data so we have to skip some lines when loading the data (`skip` argument)
+
+You should read the documentation of the `read_csv` function to appreciate the complexities it can maneuver when reading data from structured text files.
+
+```{r, eval=FALSE}
+?read_csv
+```
+
+### Excel spreadsheets
+
+Often you will need to ingest data that is stored in an Excel spreadsheet. The `readxl` package is used to do this. The main function for this package is the `read_excel` function. It contains similar arguments to the `read_csv` function we saw above. 
+
+**On your own:** Use the `read_excel` function to parse migration data from the 2009 INEGI national survey contained in file `data/Migracion_interna_eua.xls`.
+
+## Scraping
+
+Often, data we want to use is hosted as part of HTML files in webpages. The markup structure of HTML allows to parse data into tables we can use for analysis. Let's use the Rotten Tomatoes ratings webpage for Diego Luna as an example:
+
+![](img/rt_diegoluna.png)
+
+We can scrape ratings for his movies from this page. To do this we need to figure out how the HTML page's markup can help us write R expressions to find this data in the page. Most web browsers have facilities to show page markup. In Google Chrome, you can use `View>Developer>Developer Tools`, and inspect the page markdown to find where the data is contained. In this example, we see that the data we want is in a `<table>` element in the page, with id `filmographyTbl`.
+
+![](img/rt_devtools.png)
+
+Now that we have that information, we can use the `rvest` package to scrape this data:
+
+```{r ingest_dl, cache=TRUE}
+library(rvest)
+
+url <- "https://www.rottentomatoes.com/celebrity/diego_luna"
+
+dl_tab <- url %>%
+  read_html() %>%
+  html_node("#filmographyTbl") %>%
+  html_table()
+
+head(dl_tab)
+```
+
+The main two functions we used here are `html_node` and `html_table`. `html_node` finds elements in the HTML page according to some selection criteria. Since we want the element with `id=filmographyTbl` we use the `#` selection operation since that corresponds to selection by id. Once the desired element in the page is selected, we can use the `html_table` function to parse the element's text into a data frame.
+
+**On your own:** If you wanted to extract the TV filmography from the page, how would you change this call?
+
+**On your own:** We can get movie budget and gross information from this page: http://www.the-numbers.com/movie/budgets/all. Write R code to scrape the budget data from that page.
+
+

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -x
+
+cd ../site
+git rm -rf notes/*
+mkdir notes
+cp -r ../notes/_book/* notes/
+git add --all notes
+git commit -m "Update notes"
+git push -q origin gh-pages

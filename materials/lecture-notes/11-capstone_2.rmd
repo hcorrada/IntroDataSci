@@ -1,0 +1,12 @@
+# Capstone 2 Project
+
+- Use the `kmeans` function to cluster movies by rating and domestic gross revenue. Use the `broom` package
+to tidy the result of using `kmeans` and incorprate this
+into your analysis script
+
+- Use ggplot2 to make the domestic gross vs. rating scatter plot. Use color to encode the result of the kmeans algorithm.
+
+- Annotate the plot with movie titles
+
+- Add a regression analysis of revenue vs. rating to address the question "do movies with high ratings tend to have bigger revenues"?
+

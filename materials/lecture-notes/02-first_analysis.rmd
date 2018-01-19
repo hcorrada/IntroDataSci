@@ -1,0 +1,435 @@
+# An Illustrative Analysis
+
+http://fivethirtyeight.com has a clever series of articles on the types of movies different actors make in their careers: https://fivethirtyeight.com/tag/hollywood-taxonomy/
+
+I'd like to do a similar analysis. Let's do this in order:
+
+1) Let's do this analysis for Diego Luna 
+2) Let's use a clustering algorithm to determine the different types of movies they make
+3) Then, let's write an application that performs this analysis for any actor and test it with Gael García Bernal
+4) Let's make the application interactive so that a user can change the actor and the number of movie clusters the method learns.
+
+For now, we will go step by step through this
+analysis without showing how we perform this analysis using R. As the course progresses, we will learn how to carry out these steps.
+
+## Gathering data
+
+### Movie ratings
+
+For this analysis we need to get the movies Diego Luna was in, along with their Rotten Tomatoes ratings. For that we scrape this webpage: https://www.rottentomatoes.com/celebrity/diego_luna.
+
+```{r, echo=FALSE, message=FALSE}
+library(tidyverse)
+library(rvest)
+library(stringr)
+```
+
+```{r read_dl, echo=FALSE, cache=TRUE, message=FALSE}
+# URL base for search
+base_url <- "https://www.rottentomatoes.com/celebrity/"
+
+# let's see how this works for Diego Luna
+
+# scrape the table from the website
+dl_url <- paste0(base_url, "diego_luna")
+dl_html <- read_html(dl_url) 
+dl_tab <-  dl_html %>%
+  html_node("#filmographyTbl") %>%
+  html_table() %>%
+  as_tibble()
+
+# clean it up
+clean_dl_tab <- dl_tab %>% 
+  # make sure the movie is rated
+  filter(RATING != "No Score Yet") %>% 
+  
+  # make the rating look numeric
+  mutate(RATING = str_replace(RATING, "%", "")) %>%
+  
+  # remove producer and director credits
+  filter(!str_detect(CREDIT, "Prod") &
+         !str_detect(CREDIT, "Dir")) %>%
+  
+  # convert to proper types
+  readr::type_convert()
+```
+
+Once we scrape the data from the Rotten Tomatoes website and clean it up, this is part of what we have so far:
+
+```{r, echo=FALSE}
+clean_dl_tab %>% head(7) %>% knitr::kable()
+```
+
+This data includes, for each of the movies Diego Luna has acted in, the rotten tomatoes rating, the movie title, Diego Luna's role in the movie, the U.S. domestic gross and the year of release.
+
+### Movie budgets and revenue
+
+For the movie budgets and revenue data we scrape this
+webpage: http://www.the-numbers.com/movie/budgets/all
+
+```{r read_budget, echo=FALSE, cache=TRUE}
+# scrape the webpage
+budget_url <- "http://www.the-numbers.com/movie/budgets/all"
+budget_html <- read_html(budget_url)
+budget_tab <- budget_html %>%
+  html_node("table") %>%
+  html_table(fill=TRUE) %>%
+  select(-1) %>%
+  as_tibble()
+```
+
+```{r, echo=FALSE}
+# clean up the result
+clean_budget_tab <- budget_tab %>%
+  # remove all those NA rows
+  filter(!is.na(`Release Date`)) %>%
+
+  # make the budget columns look numeric 
+  mutate_at(vars(-1,-2), funs(str_replace(., "\\$", ""))) %>%
+  mutate_at(vars(-1,-2), funs(str_replace_all(., ",", ""))) %>%
+  
+  # rename columns
+  rename(release_date=`Release Date`,
+         movie=Movie,
+         production_budget=`Production Budget`,
+         domestic_gross=`Domestic Gross`,
+         worldwide_gross=`Worldwide Gross`) %>%
+  
+  # convert columns to proper types
+  type_convert(cols(release_date=col_date(format="%m/%d/%Y"))) %>%
+  
+  # represent budget and gross in millions
+  mutate_at(vars(-1,-2), funs(. / 1e6))
+```
+
+This is part of what we have for that table after scraping and cleaning up:
+
+```{r, echo=FALSE}
+clean_budget_tab %>% head(10) %>% knitr::kable()
+```
+
+This data is for `r nrow(clean_budget_tab)` movies, including its release date, title, production budget,
+US domestic and worlwide gross earnings. The latter three are in millions of U.S. dollars.
+
+One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. To do this, we can make a plot of domestic gross, which we are using for the subsequent analyses.
+
+```{r, echo=FALSE}
+library(lubridate)
+
+clean_budget_tab %>%
+  mutate(year=factor(year(release_date))) %>%
+  ggplot() +
+  aes(x=year, y=domestic_gross) +
+  geom_boxplot() +
+  theme_bw()
+```
+
+Although we don't know for sure, since the source of our data does not state this specifically, it looks like the domestic gross measurement is inflation adjusted since average gross is stable across years.
+
+## Manipulating the data
+
+Next, we combine the datasets we obtained to get closer to the data we need to make the plot we want.
+
+```{r, echo=FALSE}
+joined_tab <- clean_dl_tab %>%
+  # join the two tables together
+  inner_join(clean_budget_tab, by=c(TITLE="movie")) 
+```
+
+We combine the two datasets using the movie title, so
+that the end result has the information in both tables for each movie.
+
+```{r, echo=FALSE}
+joined_tab %>% knitr::kable()
+```
+
+## Visualizing the data
+
+Now that we have the data we need, we can make a plot:
+
+```{r, echo=FALSE, fig.cap="Ratings and U.S. Domestic Gross of Diego Luna's movies."}
+joined_tab %>%
+  ggplot() +
+    theme_bw() +
+    aes(x=RATING, y=domestic_gross) +
+    geom_point() +
+    labs(title="Diego Luna's movies",
+         x="Rotten Tomato Rating",
+         y="Domestic gross (Millions)")
+```
+
+We see that there is one clear outlier in Diego Luna's movies, which probably is the one Star Wars movie he acted in. The remaining movies could potentially be grouped into two types of movies, those with higher rating and those with lower ratings.
+
+## Modeling data
+
+We can use a clustering algorithm to partition Diego Luna's movies. We can use the data we obtained so far and see if the k-means clustering algorithm partitions these movies into three sensible groups using the movie's rating and domestic gross.
+
+```{r, echo=FALSE}
+library(class)
+library(broom)
+
+kmeans_result <- joined_tab %>%
+  select(RATING, domestic_gross) %>%
+  kmeans(centers=3) 
+
+clustered_tab <- kmeans_result %>%
+  augment(data=joined_tab) %>%
+  rename(cluster=.cluster) %>%
+  as_tibble()
+
+kmeans_centers <- kmeans_result %>%
+  tidy() %>%
+  as_tibble()
+```
+
+Let's see how the movies are grouped:
+
+```{r, echo=FALSE}
+clustered_tab %>%
+  select(TITLE, RATING, domestic_gross, cluster) %>%
+  arrange(cluster) %>%
+  knitr::kable()
+```
+
+## Visualizing model result
+
+Let's remake the same plot as before, but use color to
+indicate each movie's cluster assignment given by the k-means algorithm.
+
+```{r, echo=FALSE}
+final_plot <- clustered_tab %>%
+  ggplot() +
+    aes(x=RATING, y=domestic_gross, color=cluster) +
+    geom_point(size=2.3) +
+    theme_bw() +
+    labs(title="Diego Luna's movies",
+         x="Rotten Tomatoes rating",
+         y="Domestic Gross (Millions)")
+final_plot
+```
+
+The algorithm did make the Star Wars movie it's own group since it's so different that the other movies. The grouping of the remaining movies is not as clean.
+
+To make the plot and clustering more interpretable, let's annotate the graph with some movie titles. In the k-means algorithm, each group of movies is represented by an average rating and an average domestic gross. What we can do is find the movie in each group that is closest to the average and use that movie title to annotate each group in the plot.
+
+```{r, echo=FALSE, message=FALSE}
+# join the extended movie table with the centers table
+annot_tab <- clustered_tab %>%
+  select(title=TITLE, rating=RATING, domestic_gross, cluster) %>%
+  left_join(select(kmeans_centers, x1, x2, cluster)) %>%
+  
+  # calculate the distance of each movie to its center
+  mutate(center_dist=sqrt((rating-x1)^2+(domestic_gross-x2)^2)) %>%
+  
+  # find the movie closest to each center
+  group_by(cluster) %>%
+  arrange(center_dist) %>%
+  slice(1)
+```
+
+```{r, echo=FALSE}
+final_plot +
+  annotate("text", 
+           x=annot_tab$x1,
+           y=annot_tab$x2,
+           label=annot_tab$title)
+```
+
+Roughly, movies are clustered into Star Wars and low vs. high rated movies. The latter seem to have some difference in domestic gross. For example, movies like ["The Terminal"](https://www.rottentomatoes.com/m/1133499_1133499_terminal) have lower rating but make slightly more money than movies like ["Frida"](https://www.rottentomatoes.com/m/frida). We could use statistical modeling to see if that's the case, but will skip that for now. Do note also, that the clustering algorithm we used seems to be assigning one of the movies incorrectly, which warrants further investigation.
+
+## Abstracting the analysis
+
+While not a tremendous success, we decide we want to carry on with this analysis. We would like to do this for other actors' movies. One of the big advantages of using R is that we can write a piece of code that takes an actor's name as input, and reproduces the steps of this analysis for that actor. We call these functions, we'll see them and use them a lot in this course. 
+
+For our analysis, this function must do the following:
+
+1. Scrape movie ratings from Rotten Tomatoes 
+2. Clean up the scraped data
+3. Join with the budget data we downloaded previously
+4. Perform the clustering algorithm
+5. Make the final plot
+
+With this in mind, we can write functions for each of these steps, and then make one final function that puts all of these together.
+
+For instance, let's write the scraping function. It will take an actor's name and output the scraped data.
+
+```{r, echo=FALSE}
+scrape_rt <- function(actor, base_url="https://www.rottentomatoes.com/celebrity/") {
+  url <- paste0(base_url, actor)
+  html <- read_html(url) 
+    
+  html %>%
+    html_nodes("#filmographyTbl") %>%
+    html_table() %>%
+    magrittr::extract2(1) %>%
+    as_tibble()
+}
+```
+
+Let's test it with Gael García Bernal:
+
+```{r scrape_ggb, cache=FALSE, echo=FALSE}
+ggb_tab <- scrape_rt("gael_garcia_bernal")
+```
+
+```{r, echo=FALSE}
+ggb_tab %>%
+  head(3) %>%
+  knitr::kable()
+```
+
+Good start. We can then write functions for each of the steps we did with Diego Luna before.
+
+```{r, echo=FALSE}
+cleanup_rt_tab <- function(data) {
+ data  %>% 
+  # make sure the movie is rated
+  filter(RATING != "No Score Yet") %>% 
+  
+  # make the rating look numeric
+  mutate(RATING = str_replace(RATING, "%", "")) %>%
+  
+  # remove producer and director credits
+  filter(!str_detect(CREDIT, "Prod") &
+         !str_detect(CREDIT, "Dir")) %>%
+  
+  # convert to proper types
+  readr::type_convert()
+}
+```
+
+```{r, echo=FALSE}
+join_budget <- function(data) {
+  data %>%
+  # join the two tables together
+  inner_join(clean_budget_tab, by=c(TITLE="movie")) 
+}
+```
+
+```{r, echo=FALSE, eval=FALSE}
+ggb_tab %>%
+  cleanup_rt_tab() %>%
+  join_budget() %>%
+  head() %>%
+  knitr::kable()
+```
+
+```{r, echo=FALSE}
+cluster_movies <- function(data, k=3) {
+  data <- data %>%
+    select(rating=RATING, title=TITLE, domestic_gross)
+  
+  kmeans_result <-  data %>%
+    select(rating, domestic_gross) %>%
+    kmeans(centers=k) 
+
+  clustered_tab <- kmeans_result %>%
+    augment(data=data) %>%
+    rename(cluster=.cluster) %>%
+    as_tibble()
+
+  kmeans_centers <- kmeans_result %>%
+    tidy() %>%
+    as_tibble()
+
+   clustered_tab %>%
+    left_join(select(kmeans_centers, x1, x2, cluster)) %>%
+  
+    # calculate the distance of each movie to its center
+    mutate(center_dist=sqrt((rating-x1)^2+(domestic_gross-x2)^2))
+}
+```
+
+```{r, echo=FALSE, eval=FALSE}
+ggb_tab %>%
+  cleanup_rt_tab() %>%
+  join_budget() %>%
+  cluster_movies() %>%
+  knitr::kable()
+```
+
+```{r, echo=FALSE}
+plot_movies <- function(data, actor) {
+  plt <- data %>% ggplot() +
+    aes(x=rating, y=domestic_gross, color=cluster) +
+    geom_point(size=2.3) +
+    theme_bw() +
+    labs(title=paste0(actor, "'s movies"),
+         x="Rotten Tomatoes rating",
+         y="Domestic Gross (Millions)")
+  
+  annot_dat <- data %>%
+    group_by(cluster) %>%
+    arrange(center_dist) %>%
+    slice(1)
+  
+  plt <- plt +
+     annotate("text", 
+           x=annot_dat$x1,
+           y=annot_dat$x2,
+           label=annot_dat$title)
+  plt
+}
+```
+
+```{r, echo=FALSE, eval=FALSE}
+ggb_tab %>%
+  cleanup_rt_tab() %>%
+  join_budget() %>%
+  cluster_movies() %>%
+  plot_movies("Gael García Bernal")
+```
+
+Then put all of these steps into one function that calls our new functions to put all of our analysis together:
+
+```{r, echo=FALSE}
+analyze_actor <- function(actor, k=3, base_url="https://www.rottentomatoes.com/celebrity/") {
+  # first let's make the name work with RT
+  rt_name <- actor %>%
+    str_to_lower() %>%
+    str_replace_all(" ", "_")
+  
+  message("Scraping Rotten Tomatoes with name ", rt_name)
+  dirty_dat <- scrape_rt(rt_name, base_url=base_url) 
+  
+  message("Preparing data for analysis")
+  clean_dat <- dirty_dat %>%
+    cleanup_rt_tab() %>%
+    join_budget() 
+    
+  message("Performing clustering and plotting")
+    clean_dat %>% cluster_movies(k=k) %>%
+    plot_movies(actor)
+}
+```
+
+We can test this with Gael García Bernal
+
+```{r test_bbg, cache=TRUE, message=FALSE}
+analyze_actor("Gael Garcia Bernal")
+```
+
+## Making analyses accessible
+
+Now that we have written a function to analyze an
+actor's movies, we can make these analyses easier to produce by creating an interactive application that wraps our new function. The `shiny` R package makes creating this type of application easy. 
+
+```{r movie_app, echo=FALSE, cache=TRUE,screenshot.opts=list(delay=20,zoom=2),dev='png', fig.align='center'}
+knitr::include_app("https://hcorrada.shinyapps.io/movie_app/", height='600px')
+```
+
+## Summary
+
+In this analysis we saw examples of the common steps and operations in a data analysis:
+
+1) Data ingestion: we scraped and cleaned data from publicly accessible sites 
+
+2) Data manipulation: we integrated data from multiple sources to prepare our analysis
+
+3) Data visualization: we made plots to explore patterns in our data
+
+4) Data modeling: we made a model to capture the grouping patterns in data automatically, using visualization to explore the results of this modeling
+
+5) Publishing: we abstracted our analysis into an application that allows us and others to perform this analysis over more datasets and explore the result of modeling using a variety of parameters
+
+

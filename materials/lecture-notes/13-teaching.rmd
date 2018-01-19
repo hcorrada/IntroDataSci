@@ -1,0 +1,57 @@
+# Teaching with R
+
+The publishing and sharing capabilities provided by R
+and Rstudio are outstanding resources for teaching with
+and about R.
+
+## Course materials
+
+Using Rmarkdown as the main authoring tool for course
+materials has several advantages:
+
+- Text discussing analyses, including plots and results,
+exists in the same document containing code to perform analysis.
+
+- Analyses are reproducible since documents are executable
+
+- Students can interact with teaching materials by downloading
+and re-executing or modifying analysis code
+
+- Can create lecture notes and slides, reusing code and text
+
+- Can use bookdown https://bookdown.org/ to create lecture note
+collection publishable in different formats 
+
+- Placing materials in github https://github.com makes it possible
+for students to download and modify materials. Can also incorporate
+feedback and modifications from others.
+
+## Assignments
+
+- Students can submit Rmarkdown (or rendered Rmarkdown) for
+assignments to include both code used in analysis and text
+discussing analyses.
+
+- Assignments can be handed out in Rmarkdown asking both conceptual and analysis questions. Students can write text 
+(with mathematical notation if necessary) for the former, 
+and R code for the latter.
+
+## Free and open source
+
+- R and Rstudio are free and open source and remain so after students are done with courses. 
+
+- Many commercial products are free to use for student use, but must be purchased after students are done. 
+
+- This can be limiting for many students, especially those working in subject areas where purchasing expensive software is not a priority
+
+## Wide range of activities
+
+- Besides allowing students to interact with code, using shiny as a teaching
+tool can be very powerful.
+
+- Students often find creating interactive applications rewarding
+
+- Wide range of analysis tools, covering many subject areas, or covering
+many technologies, allow students to carry out activities they find
+specifically motivating and interesting.
+

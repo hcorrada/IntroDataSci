@@ -1,0 +1,447 @@
+# Tidying data
+
+This section is concerned with common problems in data preparation, namely use cases commonly found in raw datasets that need to be addressed to turn messy data into tidy data. These would be operations that you would perform on data obtained as a csv file from a collaborator or data repository, or as the result of scraping data from webpages or other sources. We derive many of our ideas from the paper [Tidy Data](http://www.jstatsoft.org/v59/i10/paper) by Hadley Wickham. Associated with that paper we will use two very powerful R libraries `tidyr` and `dplyr` which are extremely useful in writing scripts for data cleaning, preparation and summarization. A basic design principle behind these libraries is trying to effectively and efficiently capture very common use cases and operations performed in data cleaning. The paper frames these use cases and operations which are them implemented in software.
+
+## Tidy Data
+
+Here we assume we are working with a data model based on rectangular data structures where
+
+1. Each attribute (or variable) forms a column  
+2. Each entity (or observation) forms a row  
+3. Each type of entity (observational unit) forms a table  
+
+Here is an example of a tidy dataset: 
+
+```{r}
+library(nycflights13)
+head(flights)
+```
+
+it has one observation per row, a single variable per column. Notice only information about flights are included here (e.g., no airport information other than the name) in these observations.
+
+## Common problems in messy data
+
+The set of common operations we will study are based on these common problems found in datasets. We will see each one in detail:
+
+- Column headers are values, not variable names (gather)  
+- Multiple variables stored in one column (split)  
+- Variables stored in both rows and column (rotate)  
+- Multiple types of observational units are stored in the same table (normalize)  
+- Single observational unit stored in multiple tables (join)  
+
+We are using data from Hadley's paper found in [github](https://github.com/hadley/tidyr). It's included directory `data`:
+
+```{r, eval=TRUE, echo=TRUE}
+data_dir <- "data"
+```
+
+
+### Headers as values
+
+The first problem we'll see is the case where a table header contains values. At this point we will introduce the `dplyr` package, which we'll use extensively in this course. It is an extremely powerful and efficient way of manipulating tidy data. It will serve as the core of our data manipulation knowledge after this course.
+
+`dplyr` defines a slightly different way of using data.frames. The `tbl_df` function converts a standard R data.frame into a `tbl_df` defined by `dplyr`. One nice thing it does, for example, is print tables in a much friendlier way.
+
+```{r}
+library(tidyr)
+library(dplyr)
+library(readr)
+
+pew <- read_csv(file.path(data_dir, "pew.csv"))
+pew
+```
+
+This table has the number of survey respondents of a specific religion that report their income within some range. A tidy version of this table would consider the *variables* of each observation to be `religion, income, frequency` where `frequency` has the number of respondents for each religion and income range. The function to use in the `tidyr` package is `gather`:
+
+```{r}
+tidy_pew <- gather(pew, income, frequency, -religion)
+tidy_pew
+```
+
+This says: gather all the columns from the `pew` (except `religion`) into key-value columns `income` and `frequency`. This table is much easier to use in other analyses.
+
+Another example: this table has a row for each song appearing in the billboard top 100. It contains track information, and the date it entered the top 100. It then shows the rank in each of the next 76 weeks.
+
+```{r}
+billboard <- read_csv(file.path(data_dir, "billboard.csv"))
+billboard
+```
+
+Challenge:
+This dataset has values as column names. Which column names are values? How do we tidy this dataset?
+
+### Multiple variables in one column
+
+The next problem we'll see is the case when we see multiple variables in a single column. Consider the following dataset of tuberculosis cases:
+
+```{r}
+tb <- read_csv(file.path(data_dir, "tb.csv"))
+tb
+```
+
+This table has a row for each year and strain of tuberculosis (given by the first two columns). The remaining columns state the number of cases for a given demographic. For example, `m1524` corresponds to males between 15 and 24 years old, and `f1524` are females age 15-24. As you can see each of these columns has two variables: `sex` and `age`.
+
+Challenge: what else is untidy about this dataset?
+
+So, we have to do two operations to tidy this table, first we need to use `gather` the tabulation columns into a `demo` and `n` columns (for demographic and number of cases):
+
+```{r}
+tidy_tb <- gather(tb, demo, n, -iso2, -year)
+tidy_tb
+```
+
+Next, we need to `separate` the values in the `demo` column into two variables `sex` and `age`
+
+```{r}
+tidy_tb <- separate(tidy_tb, demo, c("sex", "age"), sep=1)
+tidy_tb
+```
+
+This calls the `separate` function on table `tidy_db`, separating the `demo` variable into variables `sex` and `age` by separating each value after the first character (that's the `sep` argument).
+
+We can put these two commands together in a pipeline:
+
+```{r}
+tidy_tb <- tb %>% 
+  gather(demo, n, -iso2, -year)  %>%
+  separate(demo, c("sex", "age"), sep=1)
+tidy_tb
+```
+
+### Variables stored in both rows and columns
+
+This is the messiest, commonly found type of data. Let's take a look at an example, this is daily weather data from for one weather station in Mexico in 2010.
+
+```{r}
+weather <- read_csv(file.path(data_dir, "weather.csv"))
+weather
+```
+
+So, we have two rows for each month, one with maximum daily temperature, one with minimum daily temperature, the columns starting with `d` correspond to the day in the where the measurements were made.
+
+Challenge: How would a tidy version of this data look like?
+
+```{r}
+weather %>%
+  gather(day, value, d1:d31, na.rm=TRUE) %>%
+  spread(element, value)
+```
+
+The new function we've used here is `spread`. It does the inverse of `gather` it spreads columns `element` and `value` into separate columns.
+
+### Multiple types in one table
+
+Remember that an important aspect of tidy data is that it contains exactly one kind of observation in a single table. Let's see the billboard example again after the `gather` operation we did before:
+
+```{r}
+tidy_billboard <- billboard %>%
+  gather(week, rank, wk1:wk76, na.rm=TRUE)
+tidy_billboard
+```
+
+Let's sort this table by track to see a problem with this table:
+
+```{r}
+tidy_billboard <- tidy_billboard %>%
+  arrange(track)
+tidy_billboard
+```
+
+We have a lot of repeated information in many of these rows (the artist, track name, year, title and date entered). The problem is that this table contains information about both tracks and rank in billboard. That's two different kinds of observations that should belong in two different tables in a tidy dataset.
+
+Let's make a song table that only includes information about songs:
+
+```{r}
+song <- tidy_billboard %>%
+  select(artist, track, year, time, date.entered) %>%
+  unique()
+song
+```
+
+The `unique` function removes any duplicate rows in a table. That's how we have a single row for each song. 
+
+Next, we would like to remove all the song information from the rank table. But we need to do it in a way that still remembers which song each ranking observation corresponds to. To do that, let's first give each song an identifier that we can use to link songs and rankings. So, we can produce the final version of our song table like this:
+
+```{r}
+song <- tidy_billboard %>%
+  select(artist, track, year, time, date.entered) %>% 
+  unique() %>%
+  mutate(song_id = row_number())
+song
+```
+
+The `mutate` function adds a new column to the table, in this case with column name `song_id` and value the row number the song appears in the table (from the `row_number` column).
+
+Now we can make a rank table, we combine the tidy billboard table with our new song table using a `join` (we'll learn all about joins later). It checks the values on each row of the billboard table and looks for rows in the song table that have the exact same values, and makes a new row that combines the information from both tables. 
+
+```{r}
+tidy_billboard %>%
+  left_join(song, c("artist", "year", "track", "time", "date.entered"))
+```
+
+That adds the `song_id` variable to the `tidy_billboard` table. So now we can remove the song information and only keep ranking information and the `song_id`.
+
+```{r}
+rank <- tidy_billboard %>%
+  left_join(song, c("artist", "year", "track", "time", "date.entered")) %>%
+  select(song_id, week, rank)
+rank
+```
+
+Challenge:
+Let's do a little better job at tidying the billboard dataset:
+
+1. When using `gather` to make the `week` and `rank` columns, remove any weeks where the song does not appear in the top 100. This is coded as missing (`NA`). See the `na.rm` argument to `gather`.  
+2. Make `week` a numeric variable (i.e., remove `wk`). See what the `extract_numeric` function does.  
+3. Instead of `date.entered` add a `date` column that states the actual date of each ranking. See how R deals with dates `?Date` and how you can turn a string into a `Date` using `as.Date`.  
+4. Sort the resulting table by date and rank.
+5. Make new `song` and `rank` tables. `song` will now not have the `date.entered` column, and `rank` will have the new `date` column you have just created.
+
+## Data wrangling with `dplyr`
+
+In previous lectures we discussed the `data.frame` to introduced the structure we usually see in a dataset before we start analysis: 
+
+1. Each attribute/variable forms a column
+2. Each entity/(observational unit) forms a row
+3. Each type of entity/(observation unit) forms a table
+
+Although we did not explicitly mentioned number 3, in more complex datasets we want to make sure we divide different entity types into their respective table. We will discuss this in more detail when we see data models (in the database sense) later on. We will refer to data organized in this fashion as _tidy data_.
+
+In this section we introduce operations and manipulations that commonly arise in analyses. We center our discussion around the idea that we are operating over tidy data, and we want to ensure that the operations we apply also generate tidy data as a result. 
+
+### `dplyr`
+
+We will use the `dplyr` package to introduce these oprations. I think it is one of the most beautiful tools created for data analysis. It clearly defines and efficiently implements most common data manipulation operations (verbs) one comes across in data analysis. It is built around tidy data principles. It also presents uniform treatment of multiple kinds of data sources (in memory files, partially loaded files, databases). It works best when used in conjuction with the non-standard _pipe_ operator (`%>%`) first introduced by the `magrittr` package. 
+
+A complete introduction to `dplyr` is found here: [http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
+
+We will use a dataset of inbound and outbound flights to New York City as an example:
+
+```{r}
+library(nycflights13)
+data(flights)
+```
+
+## Single-table manipulation
+
+We will first look at operations that work over a single table at a time. 
+
+Single table verbs:
+
+- `filter()` and `slice()`: subset observations (entities)    
+- `arrange()`: sort observations (entities)    
+- `select()` and `rename()`: subset variables (attributes)  
+- `distinct()`: make entities unique  
+- `mutate()` and `transmutate()`: add a new variable (attribute)  
+- `summarize()`: compute a summary statistics for one or more variables  
+- `sample_n()` and `sample_frac()`: sample observations from a data table   
+
+### Subsetting Observations
+
+The first fundamental operation we learned about early in this course is subsetting, or filtering, observations (entities, rows) in a dataset. Recall that we could subset by a set of indices (say, all even rows, this is used when splitting datasets to train and test statistical models). Much more useful is the ability to filter observations based on attribute values. 
+
+![](img/subset.png)
+
+```{r, eval=FALSE}
+# include only flights on United Airlines
+flights %>% filter(carrier == "UA")
+
+# select even samples, note function `n` defined by dplyr
+flights %>% slice(seq(1, n(), by=2))
+```
+
+### Subsetting Variables
+
+Frequently, we may want to restrict a data analysis to a subset of variables (attributes, columns) to improve efficiency or interpretability. 
+
+![](img/select.png)
+
+```{r, eval=FALSE}
+# select only month carrier and origin variables
+flights %>% select(month, carrier, origin)
+```
+
+On large, complex, datasets the ability to perform this selection based on properties of column/attribute names is very powerful. For instance, in the `billboard` dataset we saw in a previous unit, we can select columns using partial string matching:
+
+```{r, eval=FALSE}
+billboard %>%
+  select(starts_with("wk"))
+```
+
+### Creating New Variables
+
+One of the most common operations in data analysis is to create new variables (attributes), based on other existing attributes. 
+
+![](img/mutate.png)
+
+
+These manipulations are used for transformations of existing single variables, for example, squaring a given varaible (`x -> x^2`), to make visualization or other downstream analysis more effective. In other cases, we may want to compute functions of existing variables to improve analysis or interpretation of a dataset.
+
+Here is an example creating a new variable as a function of two existing variables
+
+```{r, eval=FALSE}
+# add new variable with total delay
+flights %>% mutate(delay=dep_delay + arr_delay)
+```
+
+### Summarizing Data
+
+Much of statistical analysis, modeling and visualization is based on computing summaries (refered to as summary statistics) for variables (attributes), or other data features, of datasets. The `summarize` operation summarizes one variable (columns) over multiple observations (rowss) into a single value.
+
+![](img/summarize.png)
+
+```{r, eval=FALSE}
+# compute mean total delay across all flights
+flights %>% 
+  mutate(delay = dep_delay + arr_delay) %>%
+  summarize(mean_delay = mean(delay, na.rm=TRUE),
+            min_delay = min(delay, na.rm=TRUE),
+            max_delay = max(delay, na.rm=TRUE))
+```
+
+### Grouping Data
+
+Aggregation and summarization also go hand in hand with data grouping, where aggregates, or even variable transformations are performed _conditioned_ on other variables. The notion of _conditioning_ is fundamental and we will see it very frequently through the course. It is the basis of statistical analysis and Machine Learning models for regression and prediction, and it is essential in understanding the design of effective visualizations.
+
+![](img/groupby.png)
+
+So the goal is to group observations (rows) with the same value of one or
+more variables (columns). In the `dplyr` implementation, the `group_by` function in essence annotates the rows of a data table as belonging to a specific group. When `summarize` is the applied onto this annotated data table, summaries are computed for each group, rather than the whole table.
+
+```{r, eval=FALSE}
+# compute mean total delay per carrier
+flights %>%
+  mutate(delay = dep_delay + arr_delay) %>%
+  group_by(carrier) %>%
+  summarize(delay=mean(delay, na.rm=TRUE))
+```
+
+## Two-table manipulation
+
+We saw above manipulations defined over single tables. In this section we look at efficient methods to combine data from multiple tables. The fundamental operation here is the `join`, which is a workhorse of database system design and impementation. The `join` operation combines rows from two tables to create a new single table, based on matching criteria specified over attributes of each of the two tables. 
+
+Consider the example of joining the `flights` and `airlines` table:
+
+```{r}
+head(flights)
+head(airlines)
+```
+
+Here, we want to add airline information to each flight. We can do so by joining the attributes of the respective airline from the `airlines` table with the `flights` table based on the values of attributes `flights$carrier` and `airlines$carrier`. Specifically, every row of `flights` with a specific value for `flights$carrier`, is joined with the the corresponding row in `airlines` with the same value for `airlines$carrier`. We will see four different ways of performing this operation that differ on how non-matching observations are handled.
+
+### Left Join 
+
+In this case, all observations on left operand (LHS) are retained:
+
+![](img/join_lhs.png)
+![](img/left_join.png)
+
+```{r, eval=FALSE}
+flights %>%
+  left_join(airlines, by="carrier")
+```
+
+RHS variables for LHS observations with no matching RHS observations are coded as `NA`.
+
+####  Right Join
+
+All observations on right operand (RHS) are retained:
+
+![](img/join_lhs.png)
+![](img/right_join.png)
+
+```{r, eval=FALSE}
+flights %>%
+  right_join(airlines, by="carrier")
+```
+
+LHS variables for RHS observations with no matching LHS observations are coded as `NA`.
+
+#### Inner Join
+
+Only observations matching on both tables are retained
+
+![](img/join_lhs.png)
+![](img/inner_join.png)
+
+
+```{r, eval=FALSE}
+flights %>%
+  inner_join(airlines, by="carrier")
+```
+
+
+
+#### Full Join 
+
+All observations are retained, regardless of matching condition
+
+![](img/join_lhs.png)
+![](img/full_join.png)
+
+```{r, eval=FALSE}
+flights %>%
+  full_join(airlines, by="carrier")
+```
+
+All values coded as `NA` for non-matching observations as appropriate.
+
+### Join conditions
+
+All join operations are based on a matching condition:
+
+```{r, eval=FALSE}
+flights %>%
+  left_join(airlines, by="carrier")
+```
+
+specifies to join observations where `flights$carrier` equals `airlines$carrier`.
+
+
+In this case, where no conditions are specified using the `by` argument:
+
+```{r, eval=FALSE}
+flights %>%
+  left_join(airlines)
+```
+
+a *natural join* is perfomed. In this case all variables with the same name in both tables are used in join condition.
+
+You can also specify join conditions on arbitrary attributes using the `by` argument.
+
+```{r, eval=FALSE}
+flights %>%
+  left_join(airlines, by=c("carrier" = "name"))
+```
+
+
+### Filtering Joins
+
+We've just seen *mutating joins* that create new tables. *Filtering joins* use join conditions to filter a specific table.
+
+```{r}
+flights %>% anti_join(airlines, by="carrier")
+```
+
+Filters the `flights` table to only include flights from airlines that
+*are not* included in the `airlines` table.
+
+## Final note on `dplyr`
+
+- Very efficient implementation of these operations. 
+- More info: [http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
+- Cheatsheet: [http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf](http://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+## Exercise
+
+1. Clean up the Diego Luna ratings data scraped in the previous unit. 
+  - Only keep movies that have a rating and that Diego Luna acts in
+  - Convert the rating to a numeric variable (use the `str_replace` and `type_convert` functions)
+  
+2. Clean up the movie budget data scraped in the previous unit.
+  - Remove rows with missing values
+  - Make the budget and revenue columns numeric and expressed in millions
+
+3. Join the Diego Luna ratings and movie budget data using the movie title as the join variable
+
+4. Think and implement ways of making the integration of these two datasets more robust.

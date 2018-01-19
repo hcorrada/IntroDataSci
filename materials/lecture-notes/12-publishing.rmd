@@ -1,0 +1,26 @@
+# Publishing Analyses with R
+
+Rstudio has created an impressive eco-system for publishing
+with R. It has concentrated around two systems: Rmarkdown for 
+creating documents that include both text and data analysis code, publishable in multiple formats, and shiny, a framework for creating interactive html applications that allow users to explore
+data analyses.
+
+## RMarkdown
+
+Rstudio has provided substantial tutorials and documentation
+for Rmarkdown: http://rmarkdown.rstudio.com/
+
+We will go over parts of the tutorial included there: http://rmarkdown.rstudio.com/lesson-1.html
+
+and create an HTML report of the movie analysis we have been
+working on.
+
+## Shiny
+
+Like RMarkdown, Rstudio provides great tutorials and documentation
+for shiny: https://shiny.rstudio.com/
+
+We will go over parts of the shiny tutorial: https://shiny.rstudio.com/tutorial/lesson1/
+
+We will create an application for our movie analysis as an example.
+
