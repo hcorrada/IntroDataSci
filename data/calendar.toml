@@ -1,126 +1,152 @@
 [day01]
-date = "8/29"
-status = "draft"
+date = "1/25"
 
 [[day01.covers]]
 title = "What is Data Science, Course Introduction and Logistics"
 notes = "lecture-note/introduction/"
 
 [day02]
-date = "8/31"
-status = "draft"
+date = "1/30"
 
 [[day02.covers]]
-title = "R for Data Science Primer (1)"
-notes = "lecture-note/rintro/"
+title = "Preliminaries 1: Setting up"
+#notes = "lecture-note/rintro/"
+
+[[day02.covers]]
+title = "Preliminaries 1: Measurement and data types"
+# notes = "lecture-note/datatypes/"
+
+[[day02.covers]]
+title = "Preliminaries 2: Basic data operations"
 
 [[day02.prep]]
 title = "Setting up R"
-link = "homeworks/rocker/"
+# link = "homeworks/rocker/"
 
 [day03]
-date = "9/5"
-status = "draft"
+date = "2/1"
 
 [[day03.covers]]
-title = "LABOR DAY: no lecture"
+title = "Preliminaries 2: More data operations"
+# notes = "lecture-note/rintro/"
+# notes = "lecture-note/wrangling/"
+
+[[day03.covers]]
+title = "Basic data plotting"
+
+[[day03.covers]]
+title = "Introduction to literate programming: Rmarkdown"
+
+# [day04a]
+# date = "9/9"
+
+# [[day04a.covers]]
+# title = "NOT A LECTURE DAY"
+
+# [[day04a.workdue]]
+# title = "R first exercise"
+# link = "https://myelms.umd.edu/courses/1199381/assignments/4270809"
+
+# [[day04a.workdue]]
+# title = "(answers)"
+# link = "misc/first_exercise_answers.Rmd"
 
 [day04]
-date = "9/7"
+date = "2/6"
 
 [[day04.covers]]
-title = "R for Data Science Primer (2)"
-notes = "lecture-note/rintro/"
+title = "Best Practices for Data Science Projects"
+# notes = "lecture-note/best_practices/"
 
-[day04a]
-date = "9/9"
+# [day06a]
+# date = "9/16"
 
-[[day04a.covers]]
-title = "NOT A LECTURE DAY"
+# [[day06a.covers]]
+# title = "NOT A LECTURE DAY"
 
-[[day04a.workdue]]
-title = "R first exercise"
-link = "https://myelms.umd.edu/courses/1199381/assignments/4270809"
-
-[[day04a.workdue]]
-title = "(answers)"
-link = "misc/first_exercise_answers.Rmd"
+# [[day06a.workdue]]
+# title = "Datatypes and import"
+# link = "https://myelms.umd.edu/courses/1199381/assignments/4270806"
 
 [day05]
-date = "9/12"
+date = "2/8"
 
 [[day05.covers]]
-title = "R Primer: a short note on pipes"
-notes = "lecture-note/rintro/"
+title = "Data representation models: The ER model"
+# notes = "lecture-note/datamodels/"
 
 [[day05.covers]]
-title = "Data Preliminaries: measurement and data types"
-notes = "lecture-note/datatypes/"
+title = "Common opertations for data tidying"
+
+# [day08a]
+# date = "9/23"
+
+# [[day08a.covers]]
+# title = "NOT A LECTURE DAY"
+
+# [[day08a.workdue]]
+# title = "Data wrangling"
+# link = "https://myelms.umd.edu/courses/1199381/assignments/4270819"
 
 [day06]
-date = "9/14"
+date = "2/13"
 
 [[day06.covers]]
-title = "Best Practices for Data Science Projects"
-notes = "lecture-note/best_practices/"
+title = "Relational data operations: Joins"
 
-[day06a]
-date = "9/16"
-
-[[day06a.covers]]
-title = "NOT A LECTURE DAY"
-
-[[day06a.workdue]]
-title = "Datatypes and import"
-link = "https://myelms.umd.edu/courses/1199381/assignments/4270806"
+[[day06.covers]]
+title = "SQL"
+# notes = "lecture-note/wrangling/"
 
 [day07]
-date = "9/19"
+date = "2/15"
 
 [[day07.covers]]
-title = "Data Wrangling 1: dplyr"
-notes = "lecture-note/wrangling/"
+title = "Database systems overview"
+
+[[day07.covers]]
+title = "More SQL: data specification and consistency"
+
+[[day07.covers]]
+title = "Alternative data models: the JSON data model"
 
 [day08]
-date = "9/21"
+date = "2/20"
 
 [[day08.covers]]
-title = "Data Wrangling 2: SQL"
-notes = "lecture-note/wrangling/"
+title = "Data aquisition: loading and scraping"
 
-[day08a]
-date = "9/23"
+[[day08.covers]]
+title = "Data cleaning: handling text and dates"
 
-[[day08a.covers]]
-title = "NOT A LECTURE DAY"
-
-[[day08a.workdue]]
-title = "Data wrangling"
-link = "https://myelms.umd.edu/courses/1199381/assignments/4270819"
+[[day08.covers]]
+title = "Entity Resolution and Record Linkage"
 
 [day09]
-date = "9/26"
+date = "2/22"
 
 [[day09.covers]]
-title = "Modeling and tyding data"
-notes = "lecture-note/datamodels/"
+title = "Midterm I catch-up and review"
 
 [day10]
-date = "9/28"
+date = "2/27"
 
 [[day10.covers]]
-title = "Exploratory Data Analysis (1): Visualization"
-notes = "lecture-note/eda/"
+title = "Midterm I"
 
 [day11]
-date = "10/3"
+date = "3/1"
 
 [[day11.covers]]
-title = "Exploratory Data Analysis (2): Summary statistics"
-notes = "lecture-note/eda/"
+title = "Exploratory Data Analysis (1): Visualization"
+# notes = "lecture-note/eda/"
 
 [day12]
 date = "10/5"
+
+[[day12.covers]]
+title = "Exploratory Data Analysis (2): Summary statistics"
+notes = "lecture-note/eda/"
 
 [[day12.covers]]
 title = "Exploratory Data Analysis (3): Transformations and missing data"
