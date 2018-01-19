@@ -7,6 +7,8 @@ canonifyurls = true
 # Enable Google Analytics by entering your tracking id
 googleAnalytics = ""
 
+ignorefiles = [ "lecture-note/.*" ]
+
 [params]
 	# General information
 	author = "Héctor Corrada Bravo"
@@ -55,10 +57,10 @@ googleAnalytics = ""
 	url    = "logistics/"
 	weight = 10
 
-[[menu.main]]
-	name   = "Lecture Notes"
-	url    = "lecture-note/"
-	weight = 20
+# [[menu.main]]
+# 	name   = "Lecture Notes"
+# 	url    = "lecture-note/"
+# 	weight = 20
 
 [[menu.main]]
 	name   = "Resources"
