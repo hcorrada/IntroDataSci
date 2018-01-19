@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -x
+
+HUGO_HOME="${PWD}/../.."
+STATIC_DIR="bookdown-notes"
+BOOKDOWN_DIR="materials/lecture-notes"
+TIMESTAMP=$(date +"%T")
+
+cd ${HUGO_HOME}/static
+git rm -rf ${STATIC_DIR}/*
+mkdir ${STATIC_DIR}
+cp -r ${HUGO_HOME}/${BOOKDOWN_DIR}/_book/* ${STATIC_DIR}/
+git add --all ${STATIC_DIR}/
+git commit -m "Update notes: ${TIMESTAMP}"
