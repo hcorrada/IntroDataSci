@@ -1,312 +1,306 @@
 [day01]
-date = "8/29"
-status = "draft"
+date = "1/25"
 
 [[day01.covers]]
 title = "What is Data Science, Course Introduction and Logistics"
-notes = "lecture-note/introduction/"
+# notes = "lecture-note/introduction/"
 
 [day02]
-date = "8/31"
-status = "draft"
+date = "1/30"
 
 [[day02.covers]]
-title = "R for Data Science Primer (1)"
-notes = "lecture-note/rintro/"
+title = "Preliminaries 1: Setting up"
+#notes = "lecture-note/rintro/"
+
+[[day02.covers]]
+title = "Preliminaries 1: Measurement and data types"
+# notes = "lecture-note/datatypes/"
+
+[[day02.covers]]
+title = "Preliminaries 2: Basic data operations"
 
 [[day02.prep]]
 title = "Setting up R"
-link = "homeworks/rocker/"
+# link = "homeworks/rocker/"
 
 [day03]
-date = "9/5"
-status = "draft"
+date = "2/1"
 
 [[day03.covers]]
-title = "LABOR DAY: no lecture"
+title = "Preliminaries 2: More data operations"
+# notes = "lecture-note/rintro/"
+# notes = "lecture-note/wrangling/"
+
+[[day03.covers]]
+title = "Basic data plotting"
+
+[[day03.covers]]
+title = "Introduction to literate programming: Rmarkdown"
+
+# [day04a]
+# date = "9/9"
+
+# [[day04a.covers]]
+# title = "NOT A LECTURE DAY"
+
+# [[day04a.workdue]]
+# title = "R first exercise"
+# link = "https://myelms.umd.edu/courses/1199381/assignments/4270809"
+
+# [[day04a.workdue]]
+# title = "(answers)"
+# link = "misc/first_exercise_answers.Rmd"
 
 [day04]
-date = "9/7"
+date = "2/6"
 
 [[day04.covers]]
-title = "R for Data Science Primer (2)"
-notes = "lecture-note/rintro/"
+title = "Best Practices for Data Science Projects"
+# notes = "lecture-note/best_practices/"
 
-[day04a]
-date = "9/9"
+# [day06a]
+# date = "9/16"
 
-[[day04a.covers]]
-title = "NOT A LECTURE DAY"
+# [[day06a.covers]]
+# title = "NOT A LECTURE DAY"
 
-[[day04a.workdue]]
-title = "R first exercise"
-link = "https://myelms.umd.edu/courses/1199381/assignments/4270809"
-
-[[day04a.workdue]]
-title = "(answers)"
-link = "misc/first_exercise_answers.Rmd"
+# [[day06a.workdue]]
+# title = "Datatypes and import"
+# link = "https://myelms.umd.edu/courses/1199381/assignments/4270806"
 
 [day05]
-date = "9/12"
+date = "2/8"
 
 [[day05.covers]]
-title = "R Primer: a short note on pipes"
-notes = "lecture-note/rintro/"
+title = "Data representation models: The ER model"
+# notes = "lecture-note/datamodels/"
 
 [[day05.covers]]
-title = "Data Preliminaries: measurement and data types"
-notes = "lecture-note/datatypes/"
+title = "Common opertations for data tidying"
+
+# [day08a]
+# date = "9/23"
+
+# [[day08a.covers]]
+# title = "NOT A LECTURE DAY"
+
+# [[day08a.workdue]]
+# title = "Data wrangling"
+# link = "https://myelms.umd.edu/courses/1199381/assignments/4270819"
 
 [day06]
-date = "9/14"
+date = "2/13"
 
 [[day06.covers]]
-title = "Best Practices for Data Science Projects"
-notes = "lecture-note/best_practices/"
+title = "Relational data operations: Joins"
 
-[day06a]
-date = "9/16"
-
-[[day06a.covers]]
-title = "NOT A LECTURE DAY"
-
-[[day06a.workdue]]
-title = "Datatypes and import"
-link = "https://myelms.umd.edu/courses/1199381/assignments/4270806"
+[[day06.covers]]
+title = "SQL"
+# notes = "lecture-note/wrangling/"
 
 [day07]
-date = "9/19"
+date = "2/15"
 
 [[day07.covers]]
-title = "Data Wrangling 1: dplyr"
-notes = "lecture-note/wrangling/"
+title = "Database systems overview"
+
+[[day07.covers]]
+title = "More SQL: data specification and consistency"
+
+[[day07.covers]]
+title = "Alternative data models: the JSON data model"
 
 [day08]
-date = "9/21"
+date = "2/20"
 
 [[day08.covers]]
-title = "Data Wrangling 2: SQL"
-notes = "lecture-note/wrangling/"
+title = "Data aquisition: loading and scraping"
 
-[day08a]
-date = "9/23"
+[[day08.covers]]
+title = "Data cleaning: handling text and dates"
 
-[[day08a.covers]]
-title = "NOT A LECTURE DAY"
-
-[[day08a.workdue]]
-title = "Data wrangling"
-link = "https://myelms.umd.edu/courses/1199381/assignments/4270819"
+[[day08.covers]]
+title = "Entity Resolution and Record Linkage"
 
 [day09]
-date = "9/26"
+date = "2/22"
 
 [[day09.covers]]
-title = "Modeling and tyding data"
-notes = "lecture-note/datamodels/"
+title = "Midterm I catch-up and review"
 
 [day10]
-date = "9/28"
+date = "2/27"
 
 [[day10.covers]]
-title = "Exploratory Data Analysis (1): Visualization"
-notes = "lecture-note/eda/"
+title = "Midterm I"
 
 [day11]
-date = "10/3"
+date = "3/1"
 
 [[day11.covers]]
-title = "Exploratory Data Analysis (2): Summary statistics"
-notes = "lecture-note/eda/"
+title = "Exploratory Data Analysis 1: Visualization"
+# notes = "lecture-note/eda/"
 
 [day12]
-date = "10/5"
+date = "3/6"
 
 [[day12.covers]]
-title = "Exploratory Data Analysis (3): Transformations and missing data"
-notes = "lecture-note/eda/"
-
+title = "Exploratory Data Analysis 2: Summary statistics"
+# notes = "lecture-note/eda/"
 
 [day13]
-date = "10/10"
+date = "3/8"
 
 [[day13.covers]]
-title = "Introduction to Statistical Learning (1): Distributions and Statistics"
-notes = "lecture-note/statlearn/"
+title = "Handling missing data"
 
-[[day13.workdue]]
-title = "Project 1: Data scraping and cleaning"
-link = "projects/Project1/"
+[[day13.covers]]
+title="Data transformations"
+# notes = "lecture-note/eda/"
 
 [day14]
-date = "10/12"
+date = "3/13"
 
 [[day14.covers]]
-title = "Introduction to Statistical Learning (2): Inference and testing"
-notes = "lecture-note/statlearn/"
+title = "Univariate distributions and statistics"
+# notes = "lecture-note/statlearn/"
+
+# [[day13.workdue]]
+# title = "Project 1: Data scraping and cleaning"
+# link = "projects/Project1/"
 
 [day15]
-date = "10/17"
+date = "3/15"
 
 [[day15.covers]]
-title = "Lecture canceled"
+title = "Experiment design and hypothesis testing"
+# notes = "lecture-note/statlearn/"
 
 [day16]
-date = "10/19"
+date = "3/27"
 
 [[day16.covers]]
-title = "Introduction to Statistical Learning (3): Joint and conditional probability"
-notes = "lecture-note/statlearn/"
+title = "Multivariate probability and statistics"
+# notes = "lecture-note/statlearn/"
 
-[[day16.covers]]
-title = "Midterm review (see Piazza)"
-
-# gtwon seminar
 [day17]
-date = "10/24"
+date = "3/29"
 
 [[day17.covers]]
-title = "Midterm exam"
+title = "Data Analysis with Geometry"
 
 [day18]
-date = "10/26"
+date = "4/3"
 
 [[day18.covers]]
-title = "Linear models for regression"
-notes = "lecture-note/linear_models/"
+title = "Midterm II catch-up and review"
 
 [day19]
-date = "10/31"
+date = "4/5"
 
 [[day19.covers]]
-title = "Project and midterm discussion"
+title = "Midterm II"
 
 [day20]
-date = "11/2"
+date = "4/10"
 
 [[day20.covers]]
-title = "Linear models for regression (2)"
-notes = "lecture-note/linear_models/"
-
-[[day20.covers]]
-title = "Linear models for classification"
-notes = "lecture-note/linear_models"
-
-[[day20.workdue]]
-title = "Project 2: Data wrangling and EDA"
-link = "projects/Project2/"
+title = "Linear models for regression"
+# notes = "lecture-note/linear_models/"
 
 [day21]
-date = "11/7"
+date = "4/12"
 
 [[day21.covers]]
-title = "Linear models for classification (2)"
-notes = "lecture-note/linear_models/"
+title = "Linear models for classification"
+# notes = "lecture-note/linear_models"
+
+[[day12.covers]]
+title = "Gradient descent"
+# notes = "lecture-note/large_scale/"
+
+# [[day20.workdue]]
+# title = "Project 2: Data wrangling and EDA"
+# link = "projects/Project2/"
 
 [day22]
-date = "11/9"
+date = "4/17"
 
 [[day22.covers]]
-title = "Analysis at scale: stochastic gradient descent"
-notes = "lecture-note/large_scale/"
+title = "Non-linear models for regression and classification: Trees"
+# notes = "lecture-note/tree_methods/"
 
+[[day22.covers]]
+title = "Non-linear models for regression and classification: K-Nearest Neighbors"
+# notes = "lecture-note/svms/"
+
+# [[day27.covers]]
+# title = "Model evaluation using resampling"
+# notes = "lecture-note/evaluation/"
 
 [day23]
-date = "11/14"
+date = "4/19"
 
 [[day23.covers]]
-title = "Tree Methods"
-notes = "lecture-note/tree_methods/"
-
-[[day23.covers]]
-title = "Beyond linear models for classification: SVMs and kNN"
-notes = "lecture-note/svms/"
+title = "Unsupervised Learning: Clustering"
 
 [day24]
-date = "11/16"
+date = "4/24"
 
 [[day24.covers]]
-title = "Project 3 Discussion: matrix representation of learning problems, maximum likelihood and logistic regression"
+title = "Unsupervised Learning: Dimensionality Reduction"
+# notes = "lecture-note/pca/"
 
 [day25]
-date = "11/21"
+date = "4/26"
 
 [[day25.covers]]
-title = "Beyond linear models for classification: SVMs and kNN"
-notes = "lecture-note/svms/"
+title = "Design principles for data visualization"
 
+# [[day24.covers]]
+# title = "Project 3 Discussion: matrix representation of learning problems, maximum likelihood and logistic regression"
 
-
-#[[day25.covers]]
-#title = "Text and sentiment analysis"
-# title = "Time series analysis and forecasting"
-
-# thanksgiving
 [day26]
-date = "11/23"
+date = "5/1"
 
 [[day26.covers]]
-title = "No lecture: Thanksgiving"
+title = "Introduction to interactive data visualization"
 
 [day27]
-date = "11/28"
+date = "5/3"
 
 [[day27.covers]]
-title = "Model evaluation using resampling"
-notes = "lecture-note/evaluation/"
-
-##[[day27.covers]]
-##title = "Clustering"
+title = "Writing about data, analysis and inferences"
 
 [day28]
-date = "11/30"
+date = "5/8"
 
 [[day28.covers]]
-title = "Model evaluation using resampling"
-notes = "lecture-note/evaluation/"
+title = "Open topic: COMING SOON"
 
 [day29]
-date = "12/2"
+date = "5/30"
 
 [[day29.covers]]
-title = "THIS IS NOT A LECTURE DAY"
-
-[[day29.workdue]]
-title = "Project 3: Regression and Classification"
-link = "projects/"
-
-[day30]
-date = "12/5"
-
-[[day30.covers]]
-title = "Dimensionality Reduction"
-notes = "lecture-note/pca/"
-#[[day30.covers]]
-#title = "Effective communication of data analyses"
-
-#[[day30.covers]]
-#title = "Effective data visualization for presentation"
-
-#mlove visits
-[day31]
-date = "12/7"
-
-[[day31.covers]]
-title = "Introduction to interactive visualization"
-
-[day32]
-date = "12/12"
-
-[[day32.covers]]
 title = "Course wrapup and perspective"
 
-[[day32.workdue]]
-title = "Project 4: Interactive Data Visualization"
-link = "projects/"
+# [day29]
+# date = "12/2"
 
-[day33]
-date = "12/17"
+# [[day29.covers]]
+# title = "THIS IS NOT A LECTURE DAY"
 
-[[day33.covers]]
-title = "Final exam (1:30p-3:30p)" 
+# [[day29.workdue]]
+# title = "Project 3: Regression and Classification"
+# link = "projects/"
+
+# [[day32.workdue]]
+# title = "Project 4: Interactive Data Visualization"
+# link = "projects/"
+
+# [day33]
+# date = "12/17"
+
+# [[day33.covers]]
+# title = "Final exam (1:30p-3:30p)" 
 

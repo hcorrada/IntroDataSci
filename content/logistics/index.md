@@ -8,11 +8,11 @@ This page constiutes the official syllabus for this class.
 ## Course Information
 
 **Introduction to Data Science**  
-**CMSC320 Fall 2016**  
+**CMSC320 Spring 2018**
 
 
 *	Lecture Meeting Times    
-    Monday and Wednesday, 2:00pm-3:15pm, CSI 3117  
+    Tuesday and Thursday, 3:30pm-4:45pm, HJ Patterson 0226 
 
 *	Instructor:  
     [H&eacute;ctor Corrada Bravo](http://www.cbcb.umd.edu/~hcorrada)  
@@ -21,20 +21,35 @@ This page constiutes the official syllabus for this class.
     <hcorrada@umiacs.umd.edu>  
     Office: 3114F Biomolecular Sciences Building  
     Phone Number: 301-405-2481  
-    **Office Hours:** Friday 1:00pm-2:00pm AVW 3223 and by appointment
+    **Office Hours:** Friday 1:00pm-2:00pm AVW 3223 (but check Piazza) and by appointment
 * Communication:  
     - For course related questions, use [Piazza]({{< piazzaurl >}}) as indicated below.  
-    - For any other communication (e.g., absences accomodations etc.) email me including `[CMSC320]` in the message subject.  
+    - For any other communication (e.g., absences accomodations etc.) email <hcorrada@umiacs.umd.edu> including `[CMSC320]` in the message subject.  
 *	TAs:
-    - Virinchi Srinivas (Graduate)  
-      <virinchimnm@gmail.com>  
-      Office Hours: Wednesday 10-12   
-    - Nolan Crane (Undergraduate)  
-      <ncrane@umd.edu>  
-      Office Hours: Thursdays 2-3  
-    - Anant Dalela (Undergraduate)  
-      <adalela@umd.edu>  
-      Office Hours: Thursdays 3-4  
+    - Weijia Xu (Graduate)  
+      <weijia.xu.ixia@gmail.com>  
+      Office Hours: TBA, Location TBA 
+    - Yi Mao (Graduate)  
+      <maoyi16@gmail.com>  
+      Office Hours: TBA, Location TBA
+    - Suraj Nair (Graduate)   
+      <srnair@cs.umd.edu>  
+      Office Hours: TBA, Location TBA
+    - Yang Jiao (Graduate)   
+      <jiaoyang.tju@gmail.com>  
+      Office Hours: TBA, Location TBA 
+    - Ashley Chang (Undergraduate)   
+      <ashleyyc@gmail.com>  
+      Office Hours: TBA, Location TBA
+    - Brad Chessin (Undergraduate)  
+      <bchessin@terpmail.umd.edu>  
+      Office Hours: TBA, Location TBA
+    - Joseph Nyangwechi (Undergraduate)  
+      <josephocharo7@gmail.com>  
+      Office Hours: TBA, Location TBA
+    - Brian Gottfried  
+      <bkgott@terpmail.umd.edu>  
+      Office Hourse: TBA, Location TBA
 
 We will use the class Piazza site [{{< piazzaurl >}}]({{< piazzaurl >}}) for questions, dicussion and announcements. Assignments and grades for the class will be posted to the class ELMS site: [{{< elmurl >}}]({{< elmurl >}}).
 In case of an extended emergency closure, announcements on policy and procedures will be posted to Piazza.
@@ -43,14 +58,13 @@ In case of an extended emergency closure, announcements on policy and procedures
 
 There is no required textbook, the [lecture notes]({{< baseurl >}}/lecture-notes/) will serve as the primary material. However, we will be drawing heavily from these sources:
 
-*  [N. Zumel and J. Mount. Practical Data Science with R. Manning Publications Co. 2014](http://www.manning.com/zumel/).   
+*  [G. Grolemund and H. Wickham. R for Data Science](http://r4ds.had.co.nz/).  
 *  [G. James, D. Witten, T. Hastie and R. Tibshirani. Introduction to Statistical Learning with Applications in R. Springer 2013.](http://www-bcf.usc.edu/~gareth/ISL/). A free PDF of this book can be downloaded at their site.  
-*  [EMC Education Services. Data Science & Big Analytics: Discovering, Analyzing, Visualizing and Presenting Data. Wiley, 2015](http://www.wiley.com/WileyCDA/WileyTitle/productCd-111887613X.html)
+*  [N. Zumel and J. Mount. Practical Data Science with R. Manning Publications Co. 2014](http://www.manning.com/zumel/).   
 
 Additional readings will be posted in ELMS [{{< elmurl >}}]({{< elmurl >}}).
 
 Additional class resources are listed [here]({{< baseurl >}}/resources/)
-
 
 ## Course Description, Goals and Expectations
 
@@ -64,6 +78,8 @@ This course focuses on (i) data management systems, (i) exploratory and statisti
 (ii) data and information visualization, and (iv) the presentation
 and communication of analysis results.
 It will be centered around case studies and projects drawing extensively from applications.
+
+Consult the [class home page]({{< baseurl >}}) for an up-to-date course topic schedule.
 
 ### Expected outcomes
 
@@ -98,31 +114,11 @@ libraries, data resources and publishing mechanisms.
 ### Grading Procedures 
 
 * Projects (35%)
-* In-class work (15%)
+* In-class work (10%)
 * Written homework (20%)
-* Midterm exam (10%)
-* Final exam (15%)
+* Midterm exams (20%)
+* Final Project (10%)
 * Class participation (5%)
-
-
-### Tentative Course Schedule
-
-- Preliminaries:
-  What is Data Science? Who is a Data Scientist? The scope of Data Science: the open data movement, science, business, government, education, sport, and more. Introduction to the R data analysis environment. Formulating data-centric answers to scientific, business and social questions. Best practices: organizing projects, managing collaborations and expectations.
-
-- Data Management Principles:
-  Data scraping, tidying, cleaning and summarization. Basics of database systems and SQL. Exploratory Data Analysis. Exploration at scale: introduction to map reduce.
-
-- Computational and Statistical Data Analysis:
-  From exploration to inference: statistical and probabilistic models. Linear modeling: regression and prediction. Introduction to Machine Learning: unsupervised methods, SVMs, tree-based methods
-
-- Data Mining:
-  Regression and prediction at scale. Mining time series and data streams.
-
-- Communicating with data:
-  Writing with and about data: communicating the result of a data analysis. Information visualization, visualizing for an audience. Putting it together: interactive data dissemination on the web (d3.js and related technologies).
-
-Consult the [class home page]({{< baseurl >}}) for an up-to-date course schedule.
 
 ## University Policies and Resources
 
@@ -131,7 +127,7 @@ Policies relevant to Undergraduate Courses are found here: http://ugst.umd.edu/c
 
 ## Course evaluations
 
-Course evaluations are important and that the department and faculty
+Course evaluations are important and the department and faculty
 take student feedback seriously.  Students can go to [http://www.courseevalum.umd.edu](http://www.courseevalum.umd.edu) to complete their evaluations.
 
 

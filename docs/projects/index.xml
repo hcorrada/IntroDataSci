@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on CMSC320 Introduction to Data Science</title>
+    <link>http://www.hcbravo.org/IntroDataSci/projects/</link>
+    <description>Recent content in Projects on CMSC320 Introduction to Data Science</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Released under the MIT license</copyright>
+    <lastBuildDate>Tue, 22 Nov 2016 13:04:21 -0500</lastBuildDate>
+    
+	<atom:link href="http://www.hcbravo.org/IntroDataSci/projects/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Project 3: Classification and Regression</title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project3/</link>
+      <pubDate>Tue, 22 Nov 2016 13:04:21 -0500</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project3/</guid>
+      <description>This project has two parts:
+a. Regression
+b. Classification
+Follow instructions on each of these two to complete your project.
+DUE Dec 2, 2016
+Submission Prepare and knit a single Rmarkdown file that includes submission information described in each of the two project parts above.
+All axes in plots should be labeled in an informative manner. Your answers to any question that refers to a plot should include both (a) a text description of your plot, and (b) a sentence or two of interpretation as it relates to the question asked.</description>
+    </item>
+    
+    <item>
+      <title>CMSC320 Projects</title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/</link>
+      <pubDate>Mon, 29 Aug 2016 08:54:44 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/</guid>
+      <description>COMING SOON</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project1/</guid>
+      <description>Project 1     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .table th:not([align]) { text-align: left; }    .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project2/</guid>
+      <description>Project 2: Wrangling and EDA     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project4/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project4/</guid>
+      <description>Project 4: Interactive Data Maps        code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project3/classification/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project3/classification/</guid>
+      <description>Project 3 (part 2): Classification     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/project3/gapminder/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/project3/gapminder/</guid>
+      <description>Project 3 (part 1): Regression analysis of Gapminder data     code{white-space: pre;}  pre:not([class]) { background-color: white; }  if (window.hljs &amp;&amp; document.readyState &amp;&amp; document.readyState === &#34;complete&#34;) { window.setTimeout(function() { hljs.initHighlighting(); }, 0); }  h1 { font-size: 34px; } h1.title { font-size: 38px; } h2 { font-size: 30px; } h3 { font-size: 24px; } h4 { font-size: 18px; } h5 { font-size: 16px; } h6 { font-size: 12px; } .</description>
+    </item>
+    
+  </channel>
+</rss>

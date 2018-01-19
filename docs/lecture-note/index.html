@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Lecture-notes - CMSC320 Introduction to Data Science</title>
+    <meta name="generator" content="Hugo 0.24" />
+
+    
+    <meta name="description" content="Data Science course at the University of Maryland Department of Computer Science">
+    
+    <link rel="canonical" href="http://www.hcbravo.org/IntroDataSci/lecture-note/">
+    
+    <meta name="author" content="Héctor Corrada Bravo">
+    
+
+    <meta property="og:url" content="http://www.hcbravo.org/IntroDataSci/lecture-note/">
+    <meta property="og:title" content="CMSC320 Introduction to Data Science">
+    <meta property="og:image" content="http://www.hcbravo.org/IntroDataSci/images/logo.png">
+    <meta name="apple-mobile-web-app-title" content="CMSC320 Introduction to Data Science">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://www.hcbravo.org/IntroDataSci/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="http://www.hcbravo.org/IntroDataSci/images/favicon.ico">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://www.hcbravo.org/IntroDataSci/fonts/icon.eot');
+        src: url('http://www.hcbravo.org/IntroDataSci/fonts/icon.eot')
+               format('embedded-opentype'),
+             url('http://www.hcbravo.org/IntroDataSci/fonts/icon.woff')
+               format('woff'),
+             url('http://www.hcbravo.org/IntroDataSci/fonts/icon.ttf')
+               format('truetype'),
+             url('http://www.hcbravo.org/IntroDataSci/fonts/icon.svg')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://www.hcbravo.org/IntroDataSci/stylesheets/application.css">
+    <link rel="stylesheet" href="http://www.hcbravo.org/IntroDataSci/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://www.hcbravo.org/IntroDataSci/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://www.hcbravo.org/IntroDataSci/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,700|Roboto&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Roboto', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Roboto Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://www.hcbravo.org/IntroDataSci/javascripts/modernizr.js"></script>
+
+    
+    <link href="http://www.hcbravo.org/IntroDataSci/lecture-note/index.xml" rel="alternate" type="application/rss+xml" title="CMSC320 Introduction to Data Science" />
+    <link href="http://www.hcbravo.org/IntroDataSci/lecture-note/index.xml" rel="feed" type="application/rss+xml" title="CMSC320 Introduction to Data Science" />
+    
+
+  </head>
+  <body class="palette-primary-deep-orange palette-accent-blue">
+
+
+<div class="backdrop">
+	<div class="backdrop-paper"></div>
+</div>
+
+<input class="toggle" type="checkbox" id="toggle-drawer">
+<input class="toggle" type="checkbox" id="toggle-search">
+<label class="toggle-button overlay" for="toggle-drawer"></label>
+
+<header class="header">
+	<nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        Lecture-notes
+      </div>
+    </div>
+
+    
+    <div class="button button-twitter" role="button" aria-label="Twitter">
+       <a href="https://twitter.com/hcorrada" title="@hcorrada on Twitter" target="_blank" class="toggle-button icon icon-twitter"></a>
+    </div>
+    
+
+    
+    <div class="button button-github" role="button" aria-label="GitHub">
+      <a href="https://github.com/hcorrada" title="@hcorrada on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+    </div>
+    
+    
+        
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+
+</header>
+
+<main class="main">
+	<div class="drawer">
+		<nav aria-label="Navigation">
+  <a href="http://www.hcbravo.org/IntroDataSci/" class="project">
+    <div class="banner">
+      
+        <div class="logo">
+          <img src="http://www.hcbravo.org/IntroDataSci/images/logo.png">
+        </div>
+      
+      <div class="name">
+        <strong>CMSC320 Introduction to Data Science </strong>
+        
+      </div>
+    </div>
+  </a>
+
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <hr>
+      
+
+      <div class="toc">
+        
+        <ul>
+          
+
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Calendar" href="http://www.hcbravo.org/IntroDataSci/calendar/">
+	
+	Calendar
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Logistics" href="http://www.hcbravo.org/IntroDataSci/logistics/">
+	
+	Logistics
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a class="current" title="Lecture Notes" href="http://www.hcbravo.org/IntroDataSci/lecture-note/">
+	
+	Lecture Notes
+</a>
+
+
+<ul id="scrollspy">
+</ul>
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Resources" href="http://www.hcbravo.org/IntroDataSci/resources/">
+	
+	Resources
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Projects" href="http://www.hcbravo.org/IntroDataSci/projects/">
+	
+	Projects
+</a>
+
+
+
+  
+</li>
+
+
+        </ul>
+        
+
+        
+        <hr>
+        <span class="section">The author</span>
+        
+        <ul>
+          
+          <li>
+            <a href="https://twitter.com/hcorrada" target="_blank" title="@hcorrada on Twitter">
+              @hcorrada on Twitter
+            </a>
+          </li>
+          
+
+          
+          <li>
+            <a href="https://github.com/hcorrada" target="_blank" title="@hcorrada on GitHub">
+              @hcorrada on GitHub
+            </a>
+          </li>
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+
+	</div>
+
+	<article class="article">
+		<div class="wrapper">
+			<h1>Lecture Notes</h1>
+
+			
+      
+      <a href="introduction" title="">
+				<h2>Introduction</h2>
+			</a>
+
+			<br>
+			What is Data Science
+
+			<hr>
+      
+			
+      
+      <a href="rintro" title="">
+				<h2>R for Data Science primer</h2>
+			</a>
+
+			<br>
+			An introduction to the R programming language and data analysis environment
+
+			<hr>
+      
+			
+      
+      <a href="datatypes" title="">
+				<h2>Measurement and data types</h2>
+			</a>
+
+			<br>
+			Examples of data sets, data types and measurements
+
+			<hr>
+      
+			
+      
+      <a href="best_practices" title="">
+				<h2>Best practices for Data Science projects</h2>
+			</a>
+
+			<br>
+			Tips for organizing and managing data science projects
+
+			<hr>
+      
+			
+      
+      <a href="wrangling" title="">
+				<h2>Data Wrangling</h2>
+			</a>
+
+			<br>
+			Data management and manipulation
+
+			<hr>
+      
+			
+      
+      <a href="datamodels" title="">
+				<h2>Tidy data and data models</h2>
+			</a>
+
+			<br>
+			How to get data into shape before analysis
+
+			<hr>
+      
+			
+      
+      <a href="eda" title="">
+				<h2>Exploratory Data Analysis</h2>
+			</a>
+
+			<br>
+			Data visualization and summarization
+
+			<hr>
+      
+			
+      
+			
+      
+      <a href="statlearn" title="">
+				<h2>Introduction to Statistical Learning</h2>
+			</a>
+
+			<br>
+			Introduction to randomness, distributions, inference and testing
+
+			<hr>
+      
+			
+      
+      <a href="linear_models" title="">
+				<h2>Linear models for regression and classification</h2>
+			</a>
+
+			<br>
+			Basic models for regression and classification
+
+			<hr>
+      
+			
+      
+      <a href="large_scale" title="">
+				<h2>Analysis at scale</h2>
+			</a>
+
+			<br>
+			Systems and algorithms for learning on large datasets
+
+			<hr>
+      
+			
+      
+      <a href="tree_methods" title="">
+				<h2>Tree-based learning methods</h2>
+			</a>
+
+			<br>
+			Decision and regression trees and random forests.
+
+			<hr>
+      
+			
+      
+      <a href="svms" title="">
+				<h2>The support vector machine and KNN</h2>
+			</a>
+
+			<br>
+			Linear and non-linear regression and classification with support vector machines and KNN
+
+			<hr>
+      
+			
+      
+      <a href="evaluation" title="">
+				<h2>Evaluating model performance via resampling</h2>
+			</a>
+
+			<br>
+			How to use sampling methods to evaluate statistical models
+
+			<hr>
+      
+			
+      
+      <a href="pca" title="">
+				<h2>Unsupervised learning methods</h2>
+			</a>
+
+			<br>
+			Exploratory Data Analysis of high-dimensional data using dimensionality reduction
+
+			<hr>
+      
+			
+      
+			
+      
+			
+      
+			
+
+			<aside class="copyright" role="note">
+				
+				&copy; 2018 Released under the MIT license &ndash;
+				
+				Documentation built with
+				<a href="https://www.gohugo.io" target="_blank">Hugo</a>
+				using the
+				<a href="http://github.com/digitalcraftsman/hugo-material-docs" target="_blank">Material</a> theme.
+			</aside>
+		</div>
+	</article>
+
+	<div class="results" role="status" aria-live="polite">
+		<div class="scrollable">
+			<div class="wrapper">
+				<div class="meta"></div>
+				<div class="list"></div>
+			</div>
+		</div>
+	</div>
+</main>
+
+    <script>
+    
+      var base_url = '';
+      var repo_id  = '';
+    
+    </script>
+
+    <script src="http://www.hcbravo.org/IntroDataSci/javascripts/application.js"></script>
+    
+
+    <script>
+      /* Add headers to scrollspy */
+      var headers   = document.getElementsByTagName("h2");
+      var scrollspy = document.getElementById('scrollspy');
+
+      if(scrollspy) {
+        if(headers.length > 0) {
+          for(var i = 0; i < headers.length; i++) {
+            var li = document.createElement("li");
+            li.setAttribute("class", "anchor");
+
+            var a  = document.createElement("a");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", headers[i].innerHTML);
+            a.innerHTML = headers[i].innerHTML;
+
+            li.appendChild(a)
+            scrollspy.appendChild(li);
+          }
+        } else {
+          scrollspy.parentElement.removeChild(scrollspy)
+        }
+
+
+        /* Add permanent link next to the headers */
+        var headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+        for(var i = 0; i < headers.length; i++) {
+            var a = document.createElement("a");
+            a.setAttribute("class", "headerlink");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", "Permanent link")
+            a.innerHTML = "#";
+            headers[i].appendChild(a);
+        }
+      }
+    </script>
+
+    
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
