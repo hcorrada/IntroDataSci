@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Lecture Notes: Data Science using R for Humanities and Social Science</title>
-  <meta name="description" content="Lecture Notes: Data Science using R for Humanities and Social Science">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <title>Lecture Notes: Introduction to Data Science</title>
+  <meta name="description" content="Lecture Notes: Introduction to Data Science">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Lecture Notes: Data Science using R for Humanities and Social Science" />
+  <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Lecture Notes: Data Science using R for Humanities and Social Science" />
+  <meta name="twitter:title" content="Lecture Notes: Introduction to Data Science" />
   
   
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2017-06-07">
+<meta name="date" content="2018-01-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -258,7 +258,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lecture Notes: Data Science using R for Humanities and Social Science</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lecture Notes: Introduction to Data Science</a>
           </h1>
         </div>
 
@@ -297,7 +297,7 @@ Auto <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_minimal</span>()</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-104-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-104-1.svg" width="672" /></p>
 <p>In R, linear models are built using the <code>lm</code> function</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span>weight, <span class="dt">data=</span>Auto)
 auto_fit</code></pre></div>
@@ -430,7 +430,7 @@ augmented_auto <span class="op">%&gt;%</span><span class="st"> </span><span clas
 <span class="st">    </span><span class="kw">geom_smooth</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;fitted&quot;</span>, <span class="dt">y=</span><span class="st">&quot;residual&quot;</span>)</code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-111-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-111-1.svg" width="672" /></p>
 </div>
 <div id="correlated-error" class="section level3">
 <h3><span class="header-section-number">10.4.2</span> Correlated Error</h3>
@@ -802,7 +802,7 @@ extended_df <span class="op">%&gt;%</span>
 <span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>weight, <span class="dt">y=</span>mpg, <span class="dt">color=</span>origin)) <span class="op">+</span>
 <span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-128-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-128-1.svg" width="672" /></p>
 <p>The intercept of the three lines seem to be different, but the slope of <code>origin == 3</code> looks different (decreases faster) than the slopes of <code>origin == 1</code> and <code>origin == 2</code> that look very similar to each other.</p>
 <p>Let’s fit the model and see how much statistical confidence we can give to those observations:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span>weight<span class="op">*</span>origin, <span class="dt">data=</span>Auto)
@@ -869,7 +869,7 @@ auto_fit_stats <span class="op">%&gt;%</span><span class="st"> </span>knitr<span
 <span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>.fitted, <span class="dt">y=</span>.resid)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-130-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-130-1.svg" width="672" /></p>
 <p>The fact that residuals are not centered around zero suggests that a linear fit does not work well in this case.</p>
 </div>
 <div id="additional-issues-with-linear-regression" class="section level2">
@@ -901,7 +901,7 @@ gapminder <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Life expectancy over time&quot;</span>,
          <span class="dt">x =</span> <span class="st">&quot;year&quot;</span>,
          <span class="dt">y =</span> <span class="st">&quot;life expectancy&quot;</span>)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-132-1.svg" width="1152" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-132-1.svg" width="1152" /></p>
 <p>This type of plot is called a <em>violin plot</em>, and it displays the distribution of the variable in the y-axis for each value of the variable in the x-axis.</p>
 <p><strong>Question 2</strong>: <em>How would you describe the distribution of life expectancy across countries for individual years? Is it skewed, or not? Unimodal or not? Symmetric around it’s center?</em></p>
 <p>Based on this plot, consider the following questions.</p>
@@ -943,7 +943,7 @@ gapminder <span class="op">%&gt;%</span>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-require(["gitbook"], function(gitbook) {
+gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
@@ -964,7 +964,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["mtec_cadi_2017.pdf"],
+"download": ["lecture-notes_csmc320.pdf"],
 "toc": {
 "collapse": "none"
 }

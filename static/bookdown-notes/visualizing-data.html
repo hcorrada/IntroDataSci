@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Lecture Notes: Data Science using R for Humanities and Social Science</title>
-  <meta name="description" content="Lecture Notes: Data Science using R for Humanities and Social Science">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <title>Lecture Notes: Introduction to Data Science</title>
+  <meta name="description" content="Lecture Notes: Introduction to Data Science">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Lecture Notes: Data Science using R for Humanities and Social Science" />
+  <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Lecture Notes: Data Science using R for Humanities and Social Science" />
+  <meta name="twitter:title" content="Lecture Notes: Introduction to Data Science" />
   
   
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2017-06-07">
+<meta name="date" content="2018-01-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -258,7 +258,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lecture Notes: Data Science using R for Humanities and Social Science</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lecture Notes: Introduction to Data Science</a>
           </h1>
         </div>
 
@@ -290,26 +290,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">library</span>(nycflights13)
 
 <span class="kw">plot</span>(flights<span class="op">$</span>dep_delay)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/plot_delay-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/plot_delay-1.svg" width="672" /></p>
 <p>That’s not particularly informative since there is no structure to this plot. Let’s change the order of the points to depend on departure delay and change the graphical representation to make easier to see.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">sort</span>(flights<span class="op">$</span>dep_delay), <span class="dt">type=</span><span class="st">&quot;h&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Departure Delay&quot;</span>)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/plot_sorted_delay-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/plot_sorted_delay-1.svg" width="672" /></p>
 <p>What can we make of that plot now? Start thinking of <em>central tendency</em>, <em>spread</em> and <em>skew</em> as you look at that plot.</p>
 <p>Let’s now create a graphical summary of that variable to incorporate observations made from this initial plot. Let’s start with a <em>histogram</em>: it divides the <em>range</em> of the <code>dep_delay</code> variable into <strong>equal-sized</strong> bins, then plots the number of observations within each bin. What additional information does this new visualization gives us about this variable?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(flights<span class="op">$</span>dep_delay, <span class="dt">xlab=</span><span class="st">&quot;Departure Delay&quot;</span>)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/hist_delay-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/hist_delay-1.svg" width="672" /></p>
 <p>The <code>nclass</code> parameter controls the number of bins into which the <code>dep_delay</code> range is divided. Try changing that parameter and see what happens.</p>
 <p>Now, we can (conceptually) make the bins as small as possible and get a smooth curve that describes the <em>distribution</em> of values of the <code>dep_delay</code> variable. We call this a <em>density</em> plot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">density</span>(flights<span class="op">$</span>dep_delay, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">xlab=</span><span class="st">&quot;Departure Delay&quot;</span>)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/density_delay-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/density_delay-1.svg" width="672" /></p>
 <p>Now, one more very useful way of succintly graphically summarizing the distribution of a variable is using a <code>boxplot</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(flights<span class="op">$</span>dep_delay, <span class="dt">ylab=</span><span class="st">&quot;Departure Delay&quot;</span>)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/boxplot_delay-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/boxplot_delay-1.svg" width="672" /></p>
 <p>That’s not very clear to see, so let’s do a transformation of this data to see this better:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="kw">log</span>(flights<span class="op">$</span>dep_delay <span class="op">-</span><span class="st"> </span>
 <span class="st">            </span><span class="kw">min</span>(flights<span class="op">$</span>dep_delay,<span class="dt">na.rm=</span><span class="ot">TRUE</span>)
             <span class="op">+</span><span class="dv">1</span>), <span class="dt">ylab=</span><span class="st">&quot;Departure Delay&quot;</span>)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/boxplot_transformed_delay-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/boxplot_transformed_delay-1.svg" width="672" /></p>
 <p>So what does this represent: (a) central tendency (using the median) is represented by the black line within the box, (b) spread (using inter-quartile range) is represented by the box and whiskers. (c) outliers (data that is <em>unusually</em> outside the spread of the data)</p>
 <p>We will see more formal descriptions of these summary statistics in the next section, but you can see what we are trying to capture with them graphically.</p>
 <div id="visualization-of-pairs-of-variables" class="section level3">
@@ -317,10 +317,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Now we can start looking at the relationship between pairs of variables. Suppose we want to see the relationship between <code>dep_delay</code>, a <em>numeric</em> variable, and <code>origin</code>, a <em>categorical</em> variable. The neat thing here is that we can start thinking about conditioning as we saw before. Here is how we can see a plot of the distribution of departure delays <em>conditioned</em> on origin airport.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="kw">log</span>(flights<span class="op">$</span>dep_delay <span class="op">-</span><span class="st"> </span><span class="kw">min</span>(flights<span class="op">$</span>dep_delay, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="op">~</span><span class="st"> </span>flights<span class="op">$</span>origin,
         <span class="dt">ylab=</span><span class="st">&quot;Departure Delay&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Airport of origin&quot;</span>)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/delay_by_origin-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/delay_by_origin-1.svg" width="672" /></p>
 <p>For pairs of continuous variables, the most useful visualization is the scatter plot. This gives an idea of how one variable varies conditioned on another variable.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(flights<span class="op">$</span>dep_delay, flights<span class="op">$</span>arr_delay, <span class="dt">xlab=</span><span class="st">&quot;Departure Delay&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Arrival Delay&quot;</span>)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/delay_scatter-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/delay_scatter-1.svg" width="672" /></p>
 </div>
 </div>
 <div id="eda-with-the-grammar-of-graphics" class="section level2">
@@ -343,7 +343,7 @@ batting <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-95-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-95-1.svg" width="672" /></p>
 <p><strong>Data</strong>: Batting table filtering for year<br />
 <strong>Aesthetic attributes</strong>: - x-axis mapped to variables <code>AB</code> - y-axis mapped to variable <code>R</code></p>
 <p><strong>Geometric Representation</strong>: points!</p>
@@ -354,22 +354,21 @@ batting <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R, <span class="dt">label=</span>teamID)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_text</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-96-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-96-1.svg" width="672" /></p>
 <p>E.g., change the data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># scatter plot of at bats vs. runs for 1995</span>
 batting <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;1995&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_point</span>()</code></pre></div>
-<pre><code>## Warning: Removed 279 rows containing missing values (geom_point).</code></pre>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-97-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-97-1.svg" width="672" /></p>
 <p>E.g., change the aesthetic.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># scatter plot of at bats vs. hits for 2010</span>
 batting <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>H)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-98-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-98-1.svg" width="672" /></p>
 <p>Let’s make a line plot</p>
 <p>What do we change? (data, aesthetic or geometry?)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">batting <span class="op">%&gt;%</span>
@@ -377,7 +376,7 @@ batting <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">100</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>H)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>()</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-99-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-99-1.svg" width="672" /></p>
 <p>Let’s add a regression line</p>
 <p>What do we add? (data, aesthetic or geometry?)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">batting <span class="op">%&gt;%</span>
@@ -385,7 +384,7 @@ batting <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>H)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-100-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-100-1.svg" width="672" /></p>
 <div id="other-aesthetics" class="section level3">
 <h3><span class="header-section-number">8.2.1</span> Other aesthetics</h3>
 <p>Using other aesthetics we can incorporate information from other variables.</p>
@@ -395,14 +394,14 @@ batting <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>H, <span class="dt">color=</span>lgID)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-101-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-101-1.svg" width="672" /></p>
 <p>Size: size by (discrete) numeric variable</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">batting <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R, <span class="dt">size=</span>HR)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-102-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-102-1.svg" width="672" /></p>
 </div>
 <div id="faceting" class="section level3">
 <h3><span class="header-section-number">8.2.2</span> Faceting</h3>
@@ -413,9 +412,7 @@ batting <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">facet_grid</span>(lgID<span class="op">~</span>yearID) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</code></pre></div>
-<pre><code>## Warning: Removed 279 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>## Warning: Removed 279 rows containing missing values (geom_point).</code></pre>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-103-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-103-1.svg" width="672" /></p>
 </div>
 </div>
 <div id="exercise-1" class="section level2">
@@ -441,7 +438,7 @@ batting <span class="op">%&gt;%</span><span class="st"> </span>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-require(["gitbook"], function(gitbook) {
+gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
@@ -462,7 +459,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["mtec_cadi_2017.pdf"],
+"download": ["lecture-notes_csmc320.pdf"],
 "toc": {
 "collapse": "none"
 }

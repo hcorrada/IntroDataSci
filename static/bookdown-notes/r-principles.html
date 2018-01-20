@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Lecture Notes: Data Science using R for Humanities and Social Science</title>
-  <meta name="description" content="Lecture Notes: Data Science using R for Humanities and Social Science">
-  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+  <title>Lecture Notes: Introduction to Data Science</title>
+  <meta name="description" content="Lecture Notes: Introduction to Data Science">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Lecture Notes: Data Science using R for Humanities and Social Science" />
+  <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Lecture Notes: Data Science using R for Humanities and Social Science" />
+  <meta name="twitter:title" content="Lecture Notes: Introduction to Data Science" />
   
   
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2017-06-07">
+<meta name="date" content="2018-01-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -258,7 +258,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lecture Notes: Data Science using R for Humanities and Social Science</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lecture Notes: Introduction to Data Science</a>
           </h1>
         </div>
 
@@ -350,7 +350,7 @@ arrest_tab &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span 
 arrest_tab[<span class="dv">1</span>,<span class="dv">5</span>]</code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   arrestDate
-##        &lt;chr&gt;
+##   &lt;chr&gt;     
 ## 1 01/01/2011</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># note that indexing in R is 1-based, not 0-based, so the first row is indexed by 1</span>
 
@@ -358,7 +358,7 @@ arrest_tab[<span class="dv">1</span>,<span class="dv">5</span>]</code></pre></di
 arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">5</span>]</code></pre></div>
 <pre><code>## # A tibble: 10 x 1
 ##    arrestDate
-##         &lt;chr&gt;
+##    &lt;chr&gt;     
 ##  1 01/01/2011
 ##  2 01/01/2011
 ##  3 01/01/2011
@@ -372,9 +372,9 @@ arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># similarly, to obtain the value in the first five columns of the first row</span>
 arrest_tab[<span class="dv">1</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
 <pre><code>## # A tibble: 1 x 5
-##     arrest   age    sex   race arrestDate
-##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;
-## 1 11126858    23      B      M 01/01/2011</code></pre>
+##     arrest   age sex   race  arrestDate
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;     
+## 1 11126858    23 B     M     01/01/2011</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># what is the class of the value when we subset a single column?</span>
 <span class="kw">class</span>(arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">5</span>])</code></pre></div>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
@@ -384,89 +384,89 @@ arrest_tab[<span class="dv">1</span>,<span class="dv">1</span><span class="op">:
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># what do we get with this indexing?</span>
 arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
 <pre><code>## # A tibble: 10 x 5
-##      arrest   age    sex   race arrestDate
-##       &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;
-##  1 11126858    23      B      M 01/01/2011
-##  2 11127013    37      B      M 01/01/2011
-##  3 11126887    46      B      M 01/01/2011
-##  4 11126873    50      B      M 01/01/2011
-##  5 11126968    33      B      M 01/01/2011
-##  6 11127041    41      B      M 01/01/2011
-##  7 11126932    29      B      M 01/01/2011
-##  8 11126940    20      W      M 01/01/2011
-##  9 11127051    24      B      M 01/01/2011
-## 10 11127018    53      B      M 01/01/2011</code></pre>
+##      arrest   age sex   race  arrestDate
+##       &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;     
+##  1 11126858    23 B     M     01/01/2011
+##  2 11127013    37 B     M     01/01/2011
+##  3 11126887    46 B     M     01/01/2011
+##  4 11126873    50 B     M     01/01/2011
+##  5 11126968    33 B     M     01/01/2011
+##  6 11127041    41 B     M     01/01/2011
+##  7 11126932    29 B     M     01/01/2011
+##  8 11126940    20 W     M     01/01/2011
+##  9 11127051    24 B     M     01/01/2011
+## 10 11127018    53 B     M     01/01/2011</code></pre>
 <p>We can index any set of rows or columns by constructing <em>vectors</em> of integers. In fact, the slice notation <code>:</code> is essentially doing that for a sequence of consecutive indices. You should think of vectors as lists of values with the same class.</p>
 <p>If we want non-consecutive indices we have other options (e.g., the <code>c</code> function, for “concatenate”)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># non-consecutive indices using c</span>
 arrest_tab[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">10</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
 <pre><code>## # A tibble: 4 x 5
-##     arrest   age    sex   race arrestDate
-##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;
-## 1 11127013    37      B      M 01/01/2011
-## 2 11126873    50      B      M 01/01/2011
-## 3 11126932    29      B      M 01/01/2011
-## 4 11127018    53      B      M 01/01/2011</code></pre>
+##     arrest   age sex   race  arrestDate
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;     
+## 1 11127013    37 B     M     01/01/2011
+## 2 11126873    50 B     M     01/01/2011
+## 3 11126932    29 B     M     01/01/2011
+## 4 11127018    53 B     M     01/01/2011</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># here&#39;s a fun one, when we call columns for a subset of rows</span>
 arrest_tab[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">10</span>), ]</code></pre></div>
 <pre><code>## # A tibble: 4 x 15
-##     arrest   age    sex   race arrestDate arrestTime    arrestLocation
-##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;             &lt;chr&gt;
-## 1 11127013    37      B      M 01/01/2011   00:01:00  2000 Wilkens Ave
-## 2 11126873    50      B      M 01/01/2011   00:04:00 2100 Ashburton St
-## 3 11126932    29      B      M 01/01/2011   00:05:00   800 N Monroe St
-## 4 11127018    53      B      M 01/01/2011   00:15:00 3300 Woodland Ave
-## # ... with 8 more variables: incidentOffense &lt;fctr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+##     arrest   age sex   race  arrestDate arrestTime arrestLocation   
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
+## 1 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave 
+## 2 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St
+## 3 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St  
+## 4 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave
+## # ... with 8 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># there is also the `seq` function, to create sequences</span>
 arrest_tab[<span class="kw">seq</span>(<span class="dt">from=</span><span class="dv">1</span>,<span class="dt">to=</span><span class="dv">10</span>), <span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">10</span>)]</code></pre></div>
 <pre><code>## # A tibble: 10 x 10
-##      arrest   age    sex   race arrestDate arrestTime       arrestLocation
-##       &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;                &lt;chr&gt;
-##  1 11126858    23      B      M 01/01/2011   00:00:00                 &lt;NA&gt;
-##  2 11127013    37      B      M 01/01/2011   00:01:00     2000 Wilkens Ave
-##  3 11126887    46      B      M 01/01/2011   00:01:00    2800 Mayfield Ave
-##  4 11126873    50      B      M 01/01/2011   00:04:00    2100 Ashburton St
-##  5 11126968    33      B      M 01/01/2011   00:05:00      4000 Wilsby Ave
-##  6 11127041    41      B      M 01/01/2011   00:05:00     2900 Spellman Rd
-##  7 11126932    29      B      M 01/01/2011   00:05:00      800 N Monroe St
-##  8 11126940    20      W      M 01/01/2011   00:05:00      5200 Moravia Rd
-##  9 11127051    24      B      M 01/01/2011   00:07:00 2400 Gainsdbourgh Ct
-## 10 11127018    53      B      M 01/01/2011   00:15:00    3300 Woodland Ave
-## # ... with 3 more variables: incidentOffense &lt;fctr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;</code></pre>
+##      arrest   age sex   race  arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;                
+##  2 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave    
+##  3 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave   
+##  4 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St   
+##  5 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave     
+##  6 11127041    41 B     M     01/01/2011 05&#39;00&quot;     2900 Spellman Rd    
+##  7 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St     
+##  8 11126940    20 W     M     01/01/2011 05&#39;00&quot;     5200 Moravia Rd     
+##  9 11127051    24 B     M     01/01/2011 07&#39;00&quot;     2400 Gainsdbourgh Ct
+## 10 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave   
+## # ... with 3 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># that is equivalent to </span>
 arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
 <pre><code>## # A tibble: 10 x 10
-##      arrest   age    sex   race arrestDate arrestTime       arrestLocation
-##       &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;                &lt;chr&gt;
-##  1 11126858    23      B      M 01/01/2011   00:00:00                 &lt;NA&gt;
-##  2 11127013    37      B      M 01/01/2011   00:01:00     2000 Wilkens Ave
-##  3 11126887    46      B      M 01/01/2011   00:01:00    2800 Mayfield Ave
-##  4 11126873    50      B      M 01/01/2011   00:04:00    2100 Ashburton St
-##  5 11126968    33      B      M 01/01/2011   00:05:00      4000 Wilsby Ave
-##  6 11127041    41      B      M 01/01/2011   00:05:00     2900 Spellman Rd
-##  7 11126932    29      B      M 01/01/2011   00:05:00      800 N Monroe St
-##  8 11126940    20      W      M 01/01/2011   00:05:00      5200 Moravia Rd
-##  9 11127051    24      B      M 01/01/2011   00:07:00 2400 Gainsdbourgh Ct
-## 10 11127018    53      B      M 01/01/2011   00:15:00    3300 Woodland Ave
-## # ... with 3 more variables: incidentOffense &lt;fctr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;</code></pre>
+##      arrest   age sex   race  arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;                
+##  2 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave    
+##  3 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave   
+##  4 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St   
+##  5 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave     
+##  6 11127041    41 B     M     01/01/2011 05&#39;00&quot;     2900 Spellman Rd    
+##  7 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St     
+##  8 11126940    20 W     M     01/01/2011 05&#39;00&quot;     5200 Moravia Rd     
+##  9 11127051    24 B     M     01/01/2011 07&#39;00&quot;     2400 Gainsdbourgh Ct
+## 10 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave   
+## # ... with 3 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># with the `seq` function you can do more sophisticated things like select only entries in odd rows (1,3,5,7...)</span>
 <span class="kw">head</span>(arrest_tab[<span class="kw">seq</span>(<span class="dt">from=</span><span class="dv">1</span>,<span class="dt">to=</span><span class="kw">nrow</span>(arrest_tab),<span class="dt">by=</span><span class="dv">2</span>), ])</code></pre></div>
 <pre><code>## # A tibble: 6 x 15
-##     arrest   age    sex   race arrestDate arrestTime       arrestLocation
-##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;                &lt;chr&gt;
-## 1 11126858    23      B      M 01/01/2011   00:00:00                 &lt;NA&gt;
-## 2 11126887    46      B      M 01/01/2011   00:01:00    2800 Mayfield Ave
-## 3 11126968    33      B      M 01/01/2011   00:05:00      4000 Wilsby Ave
-## 4 11126932    29      B      M 01/01/2011   00:05:00      800 N Monroe St
-## 5 11127051    24      B      M 01/01/2011   00:07:00 2400 Gainsdbourgh Ct
-## 6 11127057    28      B      M 01/01/2011   00:15:00    3300 Woodland Ave
-## # ... with 8 more variables: incidentOffense &lt;fctr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+##     arrest   age sex   race  arrestDate arrestTime arrestLocation      
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+## 1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;                
+## 2 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave   
+## 3 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave     
+## 4 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St     
+## 5 11127051    24 B     M     01/01/2011 07&#39;00&quot;     2400 Gainsdbourgh Ct
+## 6 11127057    28 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave   
+## # ... with 8 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>Now, since columns have names, we can also use strings (and vectors of strings) to index data frames.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># single column</span>
 arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="st">&quot;age&quot;</span>]</code></pre></div>
@@ -486,18 +486,18 @@ arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># multiple columns</span>
 arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="kw">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;sex&quot;</span>, <span class="st">&quot;race&quot;</span>)]</code></pre></div>
 <pre><code>## # A tibble: 10 x 3
-##      age    sex   race
-##    &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;
-##  1    23      B      M
-##  2    37      B      M
-##  3    46      B      M
-##  4    50      B      M
-##  5    33      B      M
-##  6    41      B      M
-##  7    29      B      M
-##  8    20      W      M
-##  9    24      B      M
-## 10    53      B      M</code></pre>
+##      age sex   race 
+##    &lt;int&gt; &lt;fct&gt; &lt;fct&gt;
+##  1    23 B     M    
+##  2    37 B     M    
+##  3    46 B     M    
+##  4    50 B     M    
+##  5    33 B     M    
+##  6    41 B     M    
+##  7    29 B     M    
+##  8    20 W     M    
+##  9    24 B     M    
+## 10    53 B     M</code></pre>
 <p>If we wanted a single named column from a data frame there’s a special operator <code>$</code> to index:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first ten values of the age column</span>
 arrest_tab<span class="op">$</span>age[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
@@ -508,62 +508,63 @@ arrest_tab<span class="op">$</span>age[<span class="dv">1</span><span class="op"
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># rows 2,4,7 and 10 using logical indices</span>
 arrest_tab[<span class="kw">c</span>(<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="kw">rep</span>(<span class="ot">FALSE</span>,<span class="kw">nrow</span>(arrest_tab)<span class="op">-</span><span class="dv">10</span>)),]</code></pre></div>
 <pre><code>## # A tibble: 4 x 15
-##     arrest   age    sex   race arrestDate arrestTime    arrestLocation
-##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;             &lt;chr&gt;
-## 1 11127013    37      B      M 01/01/2011   00:01:00  2000 Wilkens Ave
-## 2 11126873    50      B      M 01/01/2011   00:04:00 2100 Ashburton St
-## 3 11126932    29      B      M 01/01/2011   00:05:00   800 N Monroe St
-## 4 11127018    53      B      M 01/01/2011   00:15:00 3300 Woodland Ave
-## # ... with 8 more variables: incidentOffense &lt;fctr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+##     arrest   age sex   race  arrestDate arrestTime arrestLocation   
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
+## 1 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave 
+## 2 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St
+## 3 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St  
+## 4 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave
+## # ... with 8 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># now here&#39;s a fun one, if we only wanted odd rows</span>
 <span class="kw">head</span>(arrest_tab[<span class="kw">c</span>(<span class="ot">TRUE</span>,<span class="ot">FALSE</span>),])</code></pre></div>
+<pre><code>## Warning: Length of logical index must be 1 or 104528, not 2</code></pre>
 <pre><code>## # A tibble: 6 x 15
-##     arrest   age    sex   race arrestDate arrestTime       arrestLocation
-##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;                &lt;chr&gt;
-## 1 11126858    23      B      M 01/01/2011   00:00:00                 &lt;NA&gt;
-## 2 11126887    46      B      M 01/01/2011   00:01:00    2800 Mayfield Ave
-## 3 11126968    33      B      M 01/01/2011   00:05:00      4000 Wilsby Ave
-## 4 11126932    29      B      M 01/01/2011   00:05:00      800 N Monroe St
-## 5 11127051    24      B      M 01/01/2011   00:07:00 2400 Gainsdbourgh Ct
-## 6 11127057    28      B      M 01/01/2011   00:15:00    3300 Woodland Ave
-## # ... with 8 more variables: incidentOffense &lt;fctr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+##     arrest   age sex   race  arrestDate arrestTime arrestLocation      
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+## 1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;                
+## 2 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave   
+## 3 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave     
+## 4 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St     
+## 5 11127051    24 B     M     01/01/2011 07&#39;00&quot;     2400 Gainsdbourgh Ct
+## 6 11127057    28 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave   
+## # ... with 8 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>The last example shows one of the most common gotchas in R. Indices are recycled. For instance if selecting rows, if you pass a logical vector that’s shorter than the number of rows in the data frame, the vector will be recycled as many times as necessary to match the number of rows in the dataset. Now, why is this useful, because a pithy index vector can let you select easily. Why is this bad, because errors in code can go easily unnoticed. So in this case, the price of ease of use is paid by the programmer by having to think a lot more carefully about their code (this is a theme in R programming…)</p>
 <p>The utility of logical indexing is that now we can select rows based on a property of its values for a given column</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select rows for entities younger than 21 years old</span>
 <span class="kw">head</span>(arrest_tab[arrest_tab<span class="op">$</span>age <span class="op">&lt;</span><span class="st"> </span><span class="dv">21</span>, ])</code></pre></div>
 <pre><code>## # A tibble: 6 x 15
-##     arrest   age    sex   race arrestDate arrestTime     arrestLocation
-##      &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;              &lt;chr&gt;
-## 1 11126940    20      W      M 01/01/2011   00:05:00    5200 Moravia Rd
-## 2 11126942    20      B      M 01/01/2011   01:22:00 1900 Ashburton Ave
-## 3 11126941    20      W      M 01/01/2011   02:00:00  300 S Bentalou St
-## 4 11126955    20      B      M 01/01/2011   02:20:00     900 Myrtle Ave
-## 5 11127139    19      W      M 01/01/2011   02:22:00    4500 Erdman Ave
-## 6 11127003    20      B      F 01/01/2011   02:49:00  2400 Brentwood St
-## # ... with 8 more variables: incidentOffense &lt;fctr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+##     arrest   age sex   race  arrestDate arrestTime arrestLocation    
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;             
+## 1 11126940    20 W     M     01/01/2011 00:05      5200 Moravia Rd   
+## 2 11126942    20 B     M     01/01/2011 01:22      1900 Ashburton Ave
+## 3 11126941    20 W     M     01/01/2011 02:00      300 S Bentalou St 
+## 4 11126955    20 B     M     01/01/2011 02:20      900 Myrtle Ave    
+## 5 11127139    19 W     M     01/01/2011 02:22      4500 Erdman Ave   
+## 6 11127003    20 B     F     01/01/2011 02:49      2400 Brentwood St 
+## # ... with 8 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># notice that the value of expression `arrest_tab$age &lt; 21` # is a logical vector</span>
 
 <span class="co"># select entities (arrests) occuring in Mount Washington,</span>
 <span class="co"># a specific neighborhood in Baltimore</span>
 <span class="kw">head</span>(arrest_tab[arrest_tab<span class="op">$</span>neighborhood <span class="op">==</span><span class="st"> &quot;Mount Washington&quot;</span>,])</code></pre></div>
 <pre><code>## # A tibble: 6 x 15
-##   arrest   age    sex   race arrestDate arrestTime arrestLocation
-##    &lt;int&gt; &lt;int&gt; &lt;fctr&gt; &lt;fctr&gt;      &lt;chr&gt;     &lt;time&gt;          &lt;chr&gt;
-## 1     NA    NA     NA     NA       &lt;NA&gt;         NA           &lt;NA&gt;
-## 2     NA    NA     NA     NA       &lt;NA&gt;         NA           &lt;NA&gt;
-## 3     NA    NA     NA     NA       &lt;NA&gt;         NA           &lt;NA&gt;
-## 4     NA    NA     NA     NA       &lt;NA&gt;         NA           &lt;NA&gt;
-## 5     NA    NA     NA     NA       &lt;NA&gt;         NA           &lt;NA&gt;
-## 6     NA    NA     NA     NA       &lt;NA&gt;         NA           &lt;NA&gt;
-## # ... with 8 more variables: incidentOffense &lt;fctr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+##   arrest   age sex   race  arrestDate arrestTime arrestLocation
+##    &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;         
+## 1     NA    NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          NA      &lt;NA&gt;          
+## 2     NA    NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          NA      &lt;NA&gt;          
+## 3     NA    NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          NA      &lt;NA&gt;          
+## 4     NA    NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          NA      &lt;NA&gt;          
+## 5     NA    NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          NA      &lt;NA&gt;          
+## 6     NA    NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          NA      &lt;NA&gt;          
+## # ... with 8 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># how about arrests where subjects are under 21 in Mount  Washington? </span>
 <span class="co"># use a logical `and` operator</span>
 indices &lt;-<span class="st"> </span>arrest_tab<span class="op">$</span>age <span class="op">&lt;</span><span class="st"> </span><span class="dv">21</span> <span class="op">&amp;</span><span class="st"> </span>arrest_tab<span class="op">$</span>neighborhood <span class="op">==</span><span class="st"> &quot;Mount Washington&quot;</span></code></pre></div>
@@ -712,22 +713,22 @@ mount_washington_index &lt;-<span class="st"> </span>arrest_tab<span class="op">
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># how about a graphical summary of arrest ages in Mount Washington?</span>
 <span class="co"># we&#39;ll use a boxplot</span>
 <span class="kw">boxplot</span>(arrest_tab<span class="op">$</span>age[mount_washington_index])</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-38-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-38-1.svg" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># can we do the same stratified by sex?</span>
 <span class="kw">boxplot</span>(arrest_tab<span class="op">$</span>age[mount_washington_index]<span class="op">~</span>arrest_tab<span class="op">$</span>sex[mount_washington_index])</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-38-2.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-38-2.svg" width="672" /></p>
 <p>This used a very useful notation in R: the tilde, <code>~</code> which we will encounter in a few different places. One way of thinking about that abstractly is, do something with this attribute, as a function (or depending on, stratified by, conditioned on) this other attribute. For instance, “plot <code>age</code> as a function of sex” in our example.</p>
 <p>Let’s write code that’s a little cleaner for that last plot, and let’s also make the plot a bit more useful by adding a title and axis labels:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mount_washington_tab &lt;-<span class="st"> </span>arrest_tab[mount_washington_index,]
 <span class="kw">boxplot</span>(mount_washington_tab<span class="op">$</span>age<span class="op">~</span>mount_washington_tab<span class="op">$</span>sex,
         <span class="dt">main=</span><span class="st">&quot;Mt. Washington&quot;</span>, 
         <span class="dt">xlab=</span><span class="st">&quot;Sex&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Arrest Age&quot;</span>)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-39-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-39-1.svg" width="672" /></p>
 <p>Here’s one more useful plot:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(mount_washington_tab<span class="op">$</span>race), 
         <span class="dt">xlab=</span><span class="st">&quot;Number of Arrests&quot;</span>,
         <span class="dt">ylab=</span><span class="st">&quot;Race&quot;</span>)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-40-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-40-1.svg" width="672" /></p>
 </div>
 <div id="functions" class="section level2">
 <h2><span class="header-section-number">5.9</span> Functions</h2>
@@ -746,9 +747,9 @@ mount_washington_index &lt;-<span class="st"> </span>arrest_tab<span class="op">
 }</code></pre></div>
 <p>Now we can use that function to make our plots for specific neighborhoods</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">analyze_neighborhood</span>(<span class="st">&quot;Mount Washington&quot;</span>)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-42-1.svg" width="672" /><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-42-2.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-42-1.svg" width="672" /><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-42-2.svg" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">analyze_neighborhood</span>(<span class="st">&quot;Hampden&quot;</span>)</code></pre></div>
-<p><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-42-3.svg" width="672" /><img src="mtec_cadi_2017_files/figure-html/unnamed-chunk-42-4.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-42-3.svg" width="672" /><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-42-4.svg" width="672" /></p>
 </div>
 <div id="a-note-on-data-types" class="section level2">
 <h2><span class="header-section-number">5.10</span> A note on data types</h2>
@@ -953,7 +954,7 @@ tmp &lt;-<span class="st"> </span><span class="kw">select_column</span>(tmp, <sp
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-require(["gitbook"], function(gitbook) {
+gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
@@ -974,7 +975,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["mtec_cadi_2017.pdf"],
+"download": ["lecture-notes_csmc320.pdf"],
 "toc": {
 "collapse": "none"
 }
