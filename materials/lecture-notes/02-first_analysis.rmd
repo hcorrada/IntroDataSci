@@ -64,52 +64,29 @@ This data includes, for each of the movies Diego Luna has acted in, the rotten t
 
 ### Movie budgets and revenue
 
-For the movie budgets and revenue data we scrape this
-webpage: http://www.the-numbers.com/movie/budgets/all
+For the movie budgets and revenue data we downloaded a comma-separated-value (csv) file
+from this Kaggle competition: https://www.kaggle.com/tmdb/tmdb-movie-metadata/data
 
 ```{r read_budget, echo=FALSE, cache=TRUE}
-# scrape the webpage
-budget_url <- "http://www.the-numbers.com/movie/budgets/all"
-budget_html <- read_html(budget_url)
-budget_tab <- budget_html %>%
-  html_node("table") %>%
-  html_table(fill=TRUE) %>%
-  select(-1) %>%
-  as_tibble()
+budget_filename <- "data/tmdb_5000_movies.csv.zip"
+
+budget_tab <- read_csv(budget_filename, col_types="n-----c-n--Dn---cc--")
 ```
 
 ```{r, echo=FALSE}
 # clean up the result
 clean_budget_tab <- budget_tab %>%
-  # remove all those NA rows
-  filter(!is.na(`Release Date`)) %>%
-
-  # make the budget columns look numeric 
-  mutate_at(vars(-1,-2), funs(str_replace(., "\\$", ""))) %>%
-  mutate_at(vars(-1,-2), funs(str_replace_all(., ",", ""))) %>%
-  
-  # rename columns
-  rename(release_date=`Release Date`,
-         movie=Movie,
-         production_budget=`Production Budget`,
-         domestic_gross=`Domestic Gross`,
-         worldwide_gross=`Worldwide Gross`) %>%
-  
-  # convert columns to proper types
-  type_convert(cols(release_date=col_date(format="%m/%d/%Y"))) %>%
-  
   # represent budget and gross in millions
-  mutate_at(vars(-1,-2), funs(. / 1e6))
+  mutate_at(vars("budget", "revenue"), funs(. / 1e6))
 ```
 
-This is part of what we have for that table after scraping and cleaning up:
+This is part of what we have for that table after loading and cleaning up:
 
 ```{r, echo=FALSE}
 clean_budget_tab %>% head(10) %>% knitr::kable()
 ```
 
-This data is for `r nrow(clean_budget_tab)` movies, including its release date, title, production budget,
-US domestic and worlwide gross earnings. The latter three are in millions of U.S. dollars.
+This data is for `r nrow(clean_budget_tab)` movies, including its release date, title, production budget and total gross revenue. The latter two are in millions of U.S. dollars.
 
 One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. To do this, we can make a plot of domestic gross, which we are using for the subsequent analyses.
 
@@ -119,12 +96,12 @@ library(lubridate)
 clean_budget_tab %>%
   mutate(year=factor(year(release_date))) %>%
   ggplot() +
-  aes(x=year, y=domestic_gross) +
+  aes(x=year, y=revenue) +
   geom_boxplot() +
   theme_bw()
 ```
 
-Although we don't know for sure, since the source of our data does not state this specifically, it looks like the domestic gross measurement is inflation adjusted since average gross is stable across years.
+Although we don't know for sure, since the source of our data does not state this specifically, it looks like the domestic gross measurement is not inflation adjusted since revenue increases over time.
 
 ## Manipulating the data
 
@@ -133,7 +110,7 @@ Next, we combine the datasets we obtained to get closer to the data we need to m
 ```{r, echo=FALSE}
 joined_tab <- clean_dl_tab %>%
   # join the two tables together
-  inner_join(clean_budget_tab, by=c(TITLE="movie")) 
+  inner_join(clean_budget_tab, by=c(TITLE="title")) 
 ```
 
 We combine the two datasets using the movie title, so
@@ -151,7 +128,7 @@ Now that we have the data we need, we can make a plot:
 joined_tab %>%
   ggplot() +
     theme_bw() +
-    aes(x=RATING, y=domestic_gross) +
+    aes(x=RATING, y=revenue) +
     geom_point() +
     labs(title="Diego Luna's movies",
          x="Rotten Tomato Rating",
@@ -169,7 +146,7 @@ library(class)
 library(broom)
 
 kmeans_result <- joined_tab %>%
-  select(RATING, domestic_gross) %>%
+  select(RATING, revenue) %>%
   kmeans(centers=3) 
 
 clustered_tab <- kmeans_result %>%
@@ -186,7 +163,7 @@ Let's see how the movies are grouped:
 
 ```{r, echo=FALSE}
 clustered_tab %>%
-  select(TITLE, RATING, domestic_gross, cluster) %>%
+  select(TITLE, RATING, revenue, cluster) %>%
   arrange(cluster) %>%
   knitr::kable()
 ```
@@ -199,7 +176,7 @@ indicate each movie's cluster assignment given by the k-means algorithm.
 ```{r, echo=FALSE}
 final_plot <- clustered_tab %>%
   ggplot() +
-    aes(x=RATING, y=domestic_gross, color=cluster) +
+    aes(x=RATING, y=revenue, color=cluster) +
     geom_point(size=2.3) +
     theme_bw() +
     labs(title="Diego Luna's movies",
@@ -215,11 +192,11 @@ To make the plot and clustering more interpretable, let's annotate the graph wit
 ```{r, echo=FALSE, message=FALSE}
 # join the extended movie table with the centers table
 annot_tab <- clustered_tab %>%
-  select(title=TITLE, rating=RATING, domestic_gross, cluster) %>%
-  left_join(select(kmeans_centers, x1, x2, cluster)) %>%
+  select(title=TITLE, rating=RATING, revenue, cluster) %>%
+  left_join(select(kmeans_centers, x1, x2, cluster), by="cluster") %>%
   
   # calculate the distance of each movie to its center
-  mutate(center_dist=sqrt((rating-x1)^2+(domestic_gross-x2)^2)) %>%
+  mutate(center_dist=sqrt((rating-x1)^2+(revenue-x2)^2)) %>%
   
   # find the movie closest to each center
   group_by(cluster) %>%
@@ -302,7 +279,7 @@ cleanup_rt_tab <- function(data) {
 join_budget <- function(data) {
   data %>%
   # join the two tables together
-  inner_join(clean_budget_tab, by=c(TITLE="movie")) 
+  inner_join(clean_budget_tab, by=c(TITLE="title")) 
 }
 ```
 
@@ -317,10 +294,10 @@ ggb_tab %>%
 ```{r, echo=FALSE}
 cluster_movies <- function(data, k=3) {
   data <- data %>%
-    select(rating=RATING, title=TITLE, domestic_gross)
+    select(rating=RATING, title=TITLE, revenue)
   
   kmeans_result <-  data %>%
-    select(rating, domestic_gross) %>%
+    select(rating, revenue) %>%
     kmeans(centers=k) 
 
   clustered_tab <- kmeans_result %>%
@@ -336,7 +313,7 @@ cluster_movies <- function(data, k=3) {
     left_join(select(kmeans_centers, x1, x2, cluster)) %>%
   
     # calculate the distance of each movie to its center
-    mutate(center_dist=sqrt((rating-x1)^2+(domestic_gross-x2)^2))
+    mutate(center_dist=sqrt((rating-x1)^2+(revenue-x2)^2))
 }
 ```
 
@@ -351,7 +328,7 @@ ggb_tab %>%
 ```{r, echo=FALSE}
 plot_movies <- function(data, actor) {
   plt <- data %>% ggplot() +
-    aes(x=rating, y=domestic_gross, color=cluster) +
+    aes(x=rating, y=revenue, color=cluster) +
     geom_point(size=2.3) +
     theme_bw() +
     labs(title=paste0(actor, "'s movies"),

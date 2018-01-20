@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Lecture Notes: Introduction to Data Science</title>
+  <meta name="description" content="Lecture Notes: Introduction to Data Science">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lecture Notes: Introduction to Data Science" />
+  
+  
+  
+
+<meta name="author" content="Héctor Corrada Bravo">
+
+
+<meta name="date" content="2018-01-20">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="setting-up-r.html">
+<link rel="next" href="ingesting-data.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html"><i class="fa fa-check"></i><b>2</b> Introduction and Overview</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#what-is-data-science"><i class="fa fa-check"></i><b>2.1</b> What is Data Science?</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data"><i class="fa fa-check"></i><b>2.1.1</b> Data</a></li>
+<li class="chapter" data-level="2.1.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#specific-questions"><i class="fa fa-check"></i><b>2.1.2</b> Specific Questions</a></li>
+<li class="chapter" data-level="2.1.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#interdisciplinary-activities"><i class="fa fa-check"></i><b>2.1.3</b> Interdisciplinary Activities</a></li>
+<li class="chapter" data-level="2.1.4" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data-centric-artifacts-and-applications"><i class="fa fa-check"></i><b>2.1.4</b> Data-centric artifacts and applications</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#why-data-science"><i class="fa fa-check"></i><b>2.2</b> Why Data Science?</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data-science-in-humanities-and-social-sciences"><i class="fa fa-check"></i><b>2.3</b> Data Science in Humanities and Social Sciences</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#course-organization"><i class="fa fa-check"></i><b>2.4</b> Course organization</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#day-1-introduction-and-preparation"><i class="fa fa-check"></i><b>2.4.1</b> Day 1: Introduction and preparation</a></li>
+<li class="chapter" data-level="2.4.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#day-2-use-cases"><i class="fa fa-check"></i><b>2.4.2</b> Day 2: Use cases</a></li>
+<li class="chapter" data-level="2.4.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#day-3-presentation-and-teaching"><i class="fa fa-check"></i><b>2.4.3</b> Day 3: Presentation and teaching</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#general-workflow"><i class="fa fa-check"></i><b>2.5</b> General Workflow</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#defining-the-goal"><i class="fa fa-check"></i><b>2.5.1</b> Defining the goal</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data-collection-and-management"><i class="fa fa-check"></i><b>2.5.2</b> Data collection and Management</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#modeling"><i class="fa fa-check"></i><b>2.5.3</b> Modeling</a></li>
+<li class="chapter" data-level="2.5.4" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#model-evaluation"><i class="fa fa-check"></i><b>2.5.4</b> Model evaluation</a></li>
+<li class="chapter" data-level="2.5.5" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#presentation"><i class="fa fa-check"></i><b>2.5.5</b> Presentation</a></li>
+<li class="chapter" data-level="2.5.6" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#deployment"><i class="fa fa-check"></i><b>2.5.6</b> Deployment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html"><i class="fa fa-check"></i><b>3</b> An Illustrative Analysis</a><ul>
+<li class="chapter" data-level="3.1" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#gathering-data"><i class="fa fa-check"></i><b>3.1</b> Gathering data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#movie-ratings"><i class="fa fa-check"></i><b>3.1.1</b> Movie ratings</a></li>
+<li class="chapter" data-level="3.1.2" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#movie-budgets-and-revenue"><i class="fa fa-check"></i><b>3.1.2</b> Movie budgets and revenue</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#manipulating-the-data"><i class="fa fa-check"></i><b>3.2</b> Manipulating the data</a></li>
+<li class="chapter" data-level="3.3" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-the-data"><i class="fa fa-check"></i><b>3.3</b> Visualizing the data</a></li>
+<li class="chapter" data-level="3.4" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#modeling-data"><i class="fa fa-check"></i><b>3.4</b> Modeling data</a></li>
+<li class="chapter" data-level="3.5" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-model-result"><i class="fa fa-check"></i><b>3.5</b> Visualizing model result</a></li>
+<li class="chapter" data-level="3.6" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#abstracting-the-analysis"><i class="fa fa-check"></i><b>3.6</b> Abstracting the analysis</a></li>
+<li class="chapter" data-level="3.7" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#making-analyses-accessible"><i class="fa fa-check"></i><b>3.7</b> Making analyses accessible</a></li>
+<li class="chapter" data-level="3.8" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#summary"><i class="fa fa-check"></i><b>3.8</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="setting-up-r.html"><a href="setting-up-r.html"><i class="fa fa-check"></i><b>4</b> Setting up R</a><ul>
+<li class="chapter" data-level="4.1" data-path="setting-up-r.html"><a href="setting-up-r.html#setting-up-r-1"><i class="fa fa-check"></i><b>4.1</b> Setting up R</a></li>
+<li class="chapter" data-level="4.2" data-path="setting-up-r.html"><a href="setting-up-r.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.2</b> Setting up Rstudio</a></li>
+<li class="chapter" data-level="4.3" data-path="setting-up-r.html"><a href="setting-up-r.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.3</b> A first look at Rstudio</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="setting-up-r.html"><a href="setting-up-r.html#interactive-console"><i class="fa fa-check"></i><b>4.3.1</b> Interactive Console</a></li>
+<li class="chapter" data-level="4.3.2" data-path="setting-up-r.html"><a href="setting-up-r.html#data-viewer"><i class="fa fa-check"></i><b>4.3.2</b> Data Viewer</a></li>
+<li class="chapter" data-level="4.3.3" data-path="setting-up-r.html"><a href="setting-up-r.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.3.3</b> Names, values and functions</a></li>
+<li class="chapter" data-level="4.3.4" data-path="setting-up-r.html"><a href="setting-up-r.html#plotting"><i class="fa fa-check"></i><b>4.3.4</b> Plotting</a></li>
+<li class="chapter" data-level="4.3.5" data-path="setting-up-r.html"><a href="setting-up-r.html#editor"><i class="fa fa-check"></i><b>4.3.5</b> Editor</a></li>
+<li class="chapter" data-level="4.3.6" data-path="setting-up-r.html"><a href="setting-up-r.html#files-viewer"><i class="fa fa-check"></i><b>4.3.6</b> Files viewer</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="setting-up-r.html"><a href="setting-up-r.html#r-packages"><i class="fa fa-check"></i><b>4.4</b> R packages</a></li>
+<li class="chapter" data-level="4.5" data-path="setting-up-r.html"><a href="setting-up-r.html#finishing-your-setup"><i class="fa fa-check"></i><b>4.5</b> Finishing your setup</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="r-principles.html"><a href="r-principles.html"><i class="fa fa-check"></i><b>5</b> R Principles</a><ul>
+<li class="chapter" data-level="5.1" data-path="r-principles.html"><a href="r-principles.html#some-history"><i class="fa fa-check"></i><b>5.1</b> Some history</a></li>
+<li class="chapter" data-level="5.2" data-path="r-principles.html"><a href="r-principles.html#additional-r-resources"><i class="fa fa-check"></i><b>5.2</b> Additional R resources</a></li>
+<li class="chapter" data-level="5.3" data-path="r-principles.html"><a href="r-principles.html#literate-programming"><i class="fa fa-check"></i><b>5.3</b> Literate Programming</a></li>
+<li class="chapter" data-level="5.4" data-path="r-principles.html"><a href="r-principles.html#a-data-analysis-to-get-us-going"><i class="fa fa-check"></i><b>5.4</b> A data analysis to get us going</a></li>
+<li class="chapter" data-level="5.5" data-path="r-principles.html"><a href="r-principles.html#getting-data"><i class="fa fa-check"></i><b>5.5</b> Getting data</a></li>
+<li class="chapter" data-level="5.6" data-path="r-principles.html"><a href="r-principles.html#variables-and-value"><i class="fa fa-check"></i><b>5.6</b> Variables and Value</a></li>
+<li class="chapter" data-level="5.7" data-path="r-principles.html"><a href="r-principles.html#indexing"><i class="fa fa-check"></i><b>5.7</b> Indexing</a></li>
+<li class="chapter" data-level="5.8" data-path="r-principles.html"><a href="r-principles.html#exploration"><i class="fa fa-check"></i><b>5.8</b> Exploration</a></li>
+<li class="chapter" data-level="5.9" data-path="r-principles.html"><a href="r-principles.html#functions"><i class="fa fa-check"></i><b>5.9</b> Functions</a></li>
+<li class="chapter" data-level="5.10" data-path="r-principles.html"><a href="r-principles.html#a-note-on-data-types"><i class="fa fa-check"></i><b>5.10</b> A note on data types</a></li>
+<li class="chapter" data-level="5.11" data-path="r-principles.html"><a href="r-principles.html#thinking-in-vectors"><i class="fa fa-check"></i><b>5.11</b> Thinking in vectors</a></li>
+<li class="chapter" data-level="5.12" data-path="r-principles.html"><a href="r-principles.html#lists-vs.vectors"><i class="fa fa-check"></i><b>5.12</b> Lists vs. vectors</a></li>
+<li class="chapter" data-level="5.13" data-path="r-principles.html"><a href="r-principles.html#making-the-process-explicit-with-pipes"><i class="fa fa-check"></i><b>5.13</b> Making the process explicit with pipes</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ingesting-data.html"><a href="ingesting-data.html"><i class="fa fa-check"></i><b>6</b> Ingesting data</a><ul>
+<li class="chapter" data-level="6.1" data-path="ingesting-data.html"><a href="ingesting-data.html#structured-ingestion"><i class="fa fa-check"></i><b>6.1</b> Structured ingestion</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="ingesting-data.html"><a href="ingesting-data.html#csv-files-and-similar"><i class="fa fa-check"></i><b>6.1.1</b> CSV files (and similar)</a></li>
+<li class="chapter" data-level="6.1.2" data-path="ingesting-data.html"><a href="ingesting-data.html#excel-spreadsheets"><i class="fa fa-check"></i><b>6.1.2</b> Excel spreadsheets</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping"><i class="fa fa-check"></i><b>6.2</b> Scraping</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="tidying-data.html"><a href="tidying-data.html"><i class="fa fa-check"></i><b>7</b> Tidying data</a><ul>
+<li class="chapter" data-level="7.1" data-path="tidying-data.html"><a href="tidying-data.html#tidy-data"><i class="fa fa-check"></i><b>7.1</b> Tidy Data</a></li>
+<li class="chapter" data-level="7.2" data-path="tidying-data.html"><a href="tidying-data.html#common-problems-in-messy-data"><i class="fa fa-check"></i><b>7.2</b> Common problems in messy data</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="tidying-data.html"><a href="tidying-data.html#headers-as-values"><i class="fa fa-check"></i><b>7.2.1</b> Headers as values</a></li>
+<li class="chapter" data-level="7.2.2" data-path="tidying-data.html"><a href="tidying-data.html#multiple-variables-in-one-column"><i class="fa fa-check"></i><b>7.2.2</b> Multiple variables in one column</a></li>
+<li class="chapter" data-level="7.2.3" data-path="tidying-data.html"><a href="tidying-data.html#variables-stored-in-both-rows-and-columns"><i class="fa fa-check"></i><b>7.2.3</b> Variables stored in both rows and columns</a></li>
+<li class="chapter" data-level="7.2.4" data-path="tidying-data.html"><a href="tidying-data.html#multiple-types-in-one-table"><i class="fa fa-check"></i><b>7.2.4</b> Multiple types in one table</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="tidying-data.html"><a href="tidying-data.html#data-wrangling-with-dplyr"><i class="fa fa-check"></i><b>7.3</b> Data wrangling with <code>dplyr</code></a><ul>
+<li class="chapter" data-level="7.3.1" data-path="tidying-data.html"><a href="tidying-data.html#dplyr"><i class="fa fa-check"></i><b>7.3.1</b> <code>dplyr</code></a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="tidying-data.html"><a href="tidying-data.html#single-table-manipulation"><i class="fa fa-check"></i><b>7.4</b> Single-table manipulation</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="tidying-data.html"><a href="tidying-data.html#subsetting-observations"><i class="fa fa-check"></i><b>7.4.1</b> Subsetting Observations</a></li>
+<li class="chapter" data-level="7.4.2" data-path="tidying-data.html"><a href="tidying-data.html#subsetting-variables"><i class="fa fa-check"></i><b>7.4.2</b> Subsetting Variables</a></li>
+<li class="chapter" data-level="7.4.3" data-path="tidying-data.html"><a href="tidying-data.html#creating-new-variables"><i class="fa fa-check"></i><b>7.4.3</b> Creating New Variables</a></li>
+<li class="chapter" data-level="7.4.4" data-path="tidying-data.html"><a href="tidying-data.html#summarizing-data"><i class="fa fa-check"></i><b>7.4.4</b> Summarizing Data</a></li>
+<li class="chapter" data-level="7.4.5" data-path="tidying-data.html"><a href="tidying-data.html#grouping-data"><i class="fa fa-check"></i><b>7.4.5</b> Grouping Data</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="tidying-data.html"><a href="tidying-data.html#two-table-manipulation"><i class="fa fa-check"></i><b>7.5</b> Two-table manipulation</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="tidying-data.html"><a href="tidying-data.html#left-join"><i class="fa fa-check"></i><b>7.5.1</b> Left Join</a></li>
+<li class="chapter" data-level="7.5.2" data-path="tidying-data.html"><a href="tidying-data.html#join-conditions"><i class="fa fa-check"></i><b>7.5.2</b> Join conditions</a></li>
+<li class="chapter" data-level="7.5.3" data-path="tidying-data.html"><a href="tidying-data.html#filtering-joins"><i class="fa fa-check"></i><b>7.5.3</b> Filtering Joins</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="tidying-data.html"><a href="tidying-data.html#final-note-on-dplyr"><i class="fa fa-check"></i><b>7.6</b> Final note on <code>dplyr</code></a></li>
+<li class="chapter" data-level="7.7" data-path="tidying-data.html"><a href="tidying-data.html#exercise"><i class="fa fa-check"></i><b>7.7</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="visualizing-data.html"><a href="visualizing-data.html"><i class="fa fa-check"></i><b>8</b> Visualizing data</a><ul>
+<li class="chapter" data-level="8.0.1" data-path="visualizing-data.html"><a href="visualizing-data.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>8.0.1</b> EDA (Exploratory Data Analysis)</a></li>
+<li class="chapter" data-level="8.1" data-path="visualizing-data.html"><a href="visualizing-data.html#visualization-of-single-variables"><i class="fa fa-check"></i><b>8.1</b> Visualization of single variables</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="visualizing-data.html"><a href="visualizing-data.html#visualization-of-pairs-of-variables"><i class="fa fa-check"></i><b>8.1.1</b> Visualization of pairs of variables</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="visualizing-data.html"><a href="visualizing-data.html#eda-with-the-grammar-of-graphics"><i class="fa fa-check"></i><b>8.2</b> EDA with the grammar of graphics</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="visualizing-data.html"><a href="visualizing-data.html#other-aesthetics"><i class="fa fa-check"></i><b>8.2.1</b> Other aesthetics</a></li>
+<li class="chapter" data-level="8.2.2" data-path="visualizing-data.html"><a href="visualizing-data.html#faceting"><i class="fa fa-check"></i><b>8.2.2</b> Faceting</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="visualizing-data.html"><a href="visualizing-data.html#exercise-1"><i class="fa fa-check"></i><b>8.3</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="capstone-project-1.html"><a href="capstone-project-1.html"><i class="fa fa-check"></i><b>9</b> Capstone Project 1</a><ul>
+<li class="chapter" data-level="9.1" data-path="capstone-project-1.html"><a href="capstone-project-1.html#project-1"><i class="fa fa-check"></i><b>9.1</b> Project 1</a></li>
+<li class="chapter" data-level="9.2" data-path="capstone-project-1.html"><a href="capstone-project-1.html#project-2"><i class="fa fa-check"></i><b>9.2</b> Project 2</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html"><i class="fa fa-check"></i><b>10</b> Introduction to tidy regression analysis</a><ul>
+<li class="chapter" data-level="10.1" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#simple-regression"><i class="fa fa-check"></i><b>10.1</b> Simple Regression</a></li>
+<li class="chapter" data-level="10.2" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#inference"><i class="fa fa-check"></i><b>10.2</b> Inference</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#confidence-interval"><i class="fa fa-check"></i><b>10.2.1</b> Confidence Interval</a></li>
+<li class="chapter" data-level="10.2.2" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#the-t-statistic-and-the-t-distribution"><i class="fa fa-check"></i><b>10.2.2</b> The <span class="math inline">\(t\)</span>-statistic and the <span class="math inline">\(t\)</span>-distribution</a></li>
+<li class="chapter" data-level="10.2.3" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#global-fit"><i class="fa fa-check"></i><b>10.2.3</b> Global Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#some-important-technicalities"><i class="fa fa-check"></i><b>10.3</b> Some important technicalities</a></li>
+<li class="chapter" data-level="10.4" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#issues-with-linear-regression"><i class="fa fa-check"></i><b>10.4</b> Issues with linear regression</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#non-linearity-of-outcome-predictor-relationship"><i class="fa fa-check"></i><b>10.4.1</b> Non-linearity of outcome-predictor relationship</a></li>
+<li class="chapter" data-level="10.4.2" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#correlated-error"><i class="fa fa-check"></i><b>10.4.2</b> Correlated Error</a></li>
+<li class="chapter" data-level="10.4.3" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#non-constant-variance"><i class="fa fa-check"></i><b>10.4.3</b> Non-constant variance</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#multivariate-regression"><i class="fa fa-check"></i><b>10.5</b> Multivariate Regression</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#estimation-in-multivariate-regression"><i class="fa fa-check"></i><b>10.5.1</b> Estimation in multivariate regression</a></li>
+<li class="chapter" data-level="10.5.2" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#statistical-statements-contd"><i class="fa fa-check"></i><b>10.5.2</b> Statistical statements (cont’d)</a></li>
+<li class="chapter" data-level="10.5.3" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#the-f-test"><i class="fa fa-check"></i><b>10.5.3</b> The F-test</a></li>
+<li class="chapter" data-level="10.5.4" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#categorical-predictors-contd"><i class="fa fa-check"></i><b>10.5.4</b> Categorical predictors (cont’d)</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#interactions-in-linear-models"><i class="fa fa-check"></i><b>10.6</b> Interactions in linear models</a></li>
+<li class="chapter" data-level="10.7" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#additional-issues-with-linear-regression"><i class="fa fa-check"></i><b>10.7</b> Additional issues with linear regression</a></li>
+<li class="chapter" data-level="10.8" data-path="introduction-to-tidy-regression-analysis.html"><a href="introduction-to-tidy-regression-analysis.html#exercise-2"><i class="fa fa-check"></i><b>10.8</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="text-analysis.html"><a href="text-analysis.html"><i class="fa fa-check"></i><b>11</b> Text analysis</a></li>
+<li class="chapter" data-level="12" data-path="capstone-2-project.html"><a href="capstone-2-project.html"><i class="fa fa-check"></i><b>12</b> Capstone 2 Project</a></li>
+<li class="chapter" data-level="13" data-path="publishing-analyses-with-r.html"><a href="publishing-analyses-with-r.html"><i class="fa fa-check"></i><b>13</b> Publishing Analyses with R</a><ul>
+<li class="chapter" data-level="13.1" data-path="publishing-analyses-with-r.html"><a href="publishing-analyses-with-r.html#rmarkdown"><i class="fa fa-check"></i><b>13.1</b> RMarkdown</a></li>
+<li class="chapter" data-level="13.2" data-path="publishing-analyses-with-r.html"><a href="publishing-analyses-with-r.html#shiny"><i class="fa fa-check"></i><b>13.2</b> Shiny</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="teaching-with-r.html"><a href="teaching-with-r.html"><i class="fa fa-check"></i><b>14</b> Teaching with R</a><ul>
+<li class="chapter" data-level="14.1" data-path="teaching-with-r.html"><a href="teaching-with-r.html#course-materials"><i class="fa fa-check"></i><b>14.1</b> Course materials</a></li>
+<li class="chapter" data-level="14.2" data-path="teaching-with-r.html"><a href="teaching-with-r.html#assignments"><i class="fa fa-check"></i><b>14.2</b> Assignments</a></li>
+<li class="chapter" data-level="14.3" data-path="teaching-with-r.html"><a href="teaching-with-r.html#free-and-open-source"><i class="fa fa-check"></i><b>14.3</b> Free and open source</a></li>
+<li class="chapter" data-level="14.4" data-path="teaching-with-r.html"><a href="teaching-with-r.html#wide-range-of-activities"><i class="fa fa-check"></i><b>14.4</b> Wide range of activities</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="day-3-capstone-project.html"><a href="day-3-capstone-project.html"><i class="fa fa-check"></i><b>15</b> Day 3 Capstone Project</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lecture Notes: Introduction to Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-principles" class="section level1">
+<h1><span class="header-section-number">5</span> R Principles</h1>
+<p>Now that we have our tools ready, let’s start doing some analysis. First, let’s go over some principles of R as a data analysis environment. R is a computational environment for data analysis. It is designed around a <em>functional</em> language, as opposed to <em>procedural</em> languages like Java or C, that has desirable properties for the type of operations and workflows that are frequently performed in the course of analyzing datasets. In this exercise we will start learning some of those desirable properties while performing an analysis of a real dataset.</p>
+<div id="some-history" class="section level2">
+<h2><span class="header-section-number">5.1</span> Some history</h2>
+<p>R is an offspring of S, a language created in AT&amp;T Labs by John Chambers (now at Stanford) and others in 1976 with the goal of creating an environment for statistical computing and data analysis. The standard for the language in current use was settled in 1998. That same year, “S” won the ACM Software System award, awarded to software systems “that have a lasting influence, reflected in contributions to concepts, in commercial acceptance, or both”.</p>
+<p>In 1991, Robert Gentleman and Ross Ihaka created R to provide an open source implementation of the S language and environment. They also redesigned the language to enforce lexical scoping rules. It has been maintained by the R core group since 1997, and in 2015 an R consortium, including Microsoft, Google, and others, was created.</p>
+<p>Along with Python it is one of the most popular environments for data analysis (e.g., figure below from <a href="http://www.kdnuggets.com/2016/06/r-python-top-analytics-data-mining-data-science-software.html">KDNuggets 2016 software survey</a>)</p>
+<div class="figure">
+<img src="img/kdnuggets-2016.jpg" />
+
+</div>
+<p>We use it for this class because we find that besides it being a state-of-the-art data analysis environment, it provides a clean end-to-end platform for teaching material across the data management-modeling-communication spectrum that we study in class.</p>
+</div>
+<div id="additional-r-resources" class="section level2">
+<h2><span class="header-section-number">5.2</span> Additional R resources</h2>
+<p>Resources for learning and reading about R are listed in our <a href="http://www.hcbravo.org/IntroDataScience/resources/">here</a>. Of note are the <a href="http://swirlstats.com/">swirl project</a> and DataCamp’s [introduction to R] course.</p>
+<p>One of the biggest strengths of the R ecosystem is the variety and quality of packages for data analysis available. R uses a package system (like Python and Ruby for instance). Packages are divided into two classes: <strong>base</strong> which are packages installed when R is installed, includes packages for basic statistics, computing with probability distributions, plotting and graphics, matrix manipulations and other), all other packages are available in <a href="http://cran.r-project.org">CRAN</a>. We will be using a fair number of these packages through the course of the semester.</p>
+</div>
+<div id="literate-programming" class="section level2">
+<h2><span class="header-section-number">5.3</span> Literate Programming</h2>
+<p>One last note before we get started. R has great support for <a href="http://en.wikipedia.org/wiki/Literate_programming">literate programming</a>, where source code that contains both code, the result of evaluating that code, and text explaining that code co-exist in a single document. This is extremely valuable in data analysis, as many choices made by data analysts are worth explaning in text, and interpretation of the results of analyses can co-exist with the computations used in that analysis. This document you are reading contains both text and code. In class, we will use <a href="http://rmarkdown.rstudio.com/">Rmarkdown</a> for this purpose.</p>
+</div>
+<div id="a-data-analysis-to-get-us-going" class="section level2">
+<h2><span class="header-section-number">5.4</span> A data analysis to get us going</h2>
+<p>I’m going to do a very simple analysis of Baltimore crime to show off R. We’ll use data downloaded from Baltimore City’s awesome open data site (this was downloaded a couple of years ago so if you download now, you will get different results).</p>
+<p>The repository for this particular data is here. <a href="https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt" class="uri">https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt</a></p>
+</div>
+<div id="getting-data" class="section level2">
+<h2><span class="header-section-number">5.5</span> Getting data</h2>
+<p>We’ve prepared the data previously into a comma-separated value file (<code>.csv</code> file). In this format, each line contains <em>attribute</em> values (separated by commas) for one <em>entity</em> in our dataset. Which we can download and load into our R environment.</p>
+<p>The <code>read_csv</code> command is part of the <code>readr</code> R package and allows you to read a dataset stored in a csv file. This function is extremely versatile, and you can read more about it by using the standard help system in R: <code>?read_csv</code>. Now, the result of running calling this function is the data itself, so, by running the function in the console, the result of the function is printed.</p>
+</div>
+<div id="variables-and-value" class="section level2">
+<h2><span class="header-section-number">5.6</span> Variables and Value</h2>
+<p>To make use of this dataset we want to assign the result of calling <code>read.csv</code> (i.e., the dataset) to a variable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+arrest_tab &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/BPD_Arrests.csv&quot;</span>)</code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   arrest = col_integer(),
+##   age = col_integer(),
+##   sex = col_character(),
+##   race = col_character(),
+##   arrestDate = col_character(),
+##   arrestTime = col_time(format = &quot;&quot;),
+##   arrestLocation = col_character(),
+##   incidentOffense = col_character(),
+##   incidentLocation = col_character(),
+##   charge = col_character(),
+##   chargeDescription = col_character(),
+##   district = col_character(),
+##   post = col_integer(),
+##   neighborhood = col_character(),
+##   `Location 1` = col_character()
+## )</code></pre>
+<p>Now we can ask what <em>type</em> of value is stored in the <code>arrest_tab</code> variable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(arrest_tab)</code></pre></div>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<p>The <code>data.frame</code> is a workhorse data structure in R. It encapsulates the idea of <em>entities</em> (in rows) and <em>attribute values</em> (in columns). We can ask other features of this dataset:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This is a comment in R, by the way</span>
+
+<span class="co"># How many rows (entities) does this dataset contain?</span>
+<span class="kw">nrow</span>(arrest_tab)</code></pre></div>
+<pre><code>## [1] 104528</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># How many columns (attributes)?</span>
+<span class="kw">ncol</span>(arrest_tab)</code></pre></div>
+<pre><code>## [1] 15</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># What are the names of those columns?</span>
+<span class="kw">colnames</span>(arrest_tab)</code></pre></div>
+<pre><code>##  [1] &quot;arrest&quot;            &quot;age&quot;               &quot;sex&quot;              
+##  [4] &quot;race&quot;              &quot;arrestDate&quot;        &quot;arrestTime&quot;       
+##  [7] &quot;arrestLocation&quot;    &quot;incidentOffense&quot;   &quot;incidentLocation&quot; 
+## [10] &quot;charge&quot;            &quot;chargeDescription&quot; &quot;district&quot;         
+## [13] &quot;post&quot;              &quot;neighborhood&quot;      &quot;Location 1&quot;</code></pre>
+<p>Now, in Rstudio you can view the data frame using <code>View(arrest_tab)</code>.</p>
+</div>
+<div id="indexing" class="section level2">
+<h2><span class="header-section-number">5.7</span> Indexing</h2>
+<p>A basic operation in data analysis is selecting subsets of a dataset. For that we can use a few alternative options for <em>indexing</em> into datasets.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># to obtain the value in the first row, fifth column:</span>
+arrest_tab[<span class="dv">1</span>,<span class="dv">5</span>]</code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##   arrestDate
+##   &lt;chr&gt;     
+## 1 01/01/2011</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># note that indexing in R is 1-based, not 0-based, so the first row is indexed by 1</span>
+
+<span class="co"># now we want to do a bit more, so let&#39;s say we want the value in the fifth column of our dataset for the first 10 rows. For that we can use slice notation:</span>
+arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">5</span>]</code></pre></div>
+<pre><code>## # A tibble: 10 x 1
+##    arrestDate
+##    &lt;chr&gt;     
+##  1 01/01/2011
+##  2 01/01/2011
+##  3 01/01/2011
+##  4 01/01/2011
+##  5 01/01/2011
+##  6 01/01/2011
+##  7 01/01/2011
+##  8 01/01/2011
+##  9 01/01/2011
+## 10 01/01/2011</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># similarly, to obtain the value in the first five columns of the first row</span>
+arrest_tab[<span class="dv">1</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>## # A tibble: 1 x 5
+##     arrest   age sex   race  arrestDate
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;     
+## 1 11126858    23 B     M     01/01/2011</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># what is the class of the value when we subset a single column?</span>
+<span class="kw">class</span>(arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">5</span>])</code></pre></div>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># what is the class of the value when we subset a single row?</span>
+<span class="kw">class</span>(arrest_tab[<span class="dv">1</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</code></pre></div>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># what do we get with this indexing?</span>
+arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>## # A tibble: 10 x 5
+##      arrest   age sex   race  arrestDate
+##       &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;     
+##  1 11126858    23 B     M     01/01/2011
+##  2 11127013    37 B     M     01/01/2011
+##  3 11126887    46 B     M     01/01/2011
+##  4 11126873    50 B     M     01/01/2011
+##  5 11126968    33 B     M     01/01/2011
+##  6 11127041    41 B     M     01/01/2011
+##  7 11126932    29 B     M     01/01/2011
+##  8 11126940    20 W     M     01/01/2011
+##  9 11127051    24 B     M     01/01/2011
+## 10 11127018    53 B     M     01/01/2011</code></pre>
+<p>We can index any set of rows or columns by constructing <em>vectors</em> of integers. In fact, the slice notation <code>:</code> is essentially doing that for a sequence of consecutive indices. You should think of vectors as lists of values with the same class.</p>
+<p>If we want non-consecutive indices we have other options (e.g., the <code>c</code> function, for “concatenate”)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># non-consecutive indices using c</span>
+arrest_tab[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">10</span>), <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>## # A tibble: 4 x 5
+##     arrest   age sex   race  arrestDate
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;     
+## 1 11127013    37 B     M     01/01/2011
+## 2 11126873    50 B     M     01/01/2011
+## 3 11126932    29 B     M     01/01/2011
+## 4 11127018    53 B     M     01/01/2011</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># here&#39;s a fun one, when we call columns for a subset of rows</span>
+arrest_tab[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">10</span>), ]</code></pre></div>
+<pre><code>## # A tibble: 4 x 15
+##     arrest   age sex   race  arrestDate arrestTime arrestLocation   
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
+## 1 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave 
+## 2 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St
+## 3 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St  
+## 4 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave
+## # ... with 8 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># there is also the `seq` function, to create sequences</span>
+arrest_tab[<span class="kw">seq</span>(<span class="dt">from=</span><span class="dv">1</span>,<span class="dt">to=</span><span class="dv">10</span>), <span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">10</span>)]</code></pre></div>
+<pre><code>## # A tibble: 10 x 10
+##      arrest   age sex   race  arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;                
+##  2 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave    
+##  3 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave   
+##  4 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St   
+##  5 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave     
+##  6 11127041    41 B     M     01/01/2011 05&#39;00&quot;     2900 Spellman Rd    
+##  7 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St     
+##  8 11126940    20 W     M     01/01/2011 05&#39;00&quot;     5200 Moravia Rd     
+##  9 11127051    24 B     M     01/01/2011 07&#39;00&quot;     2400 Gainsdbourgh Ct
+## 10 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave   
+## # ... with 3 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># that is equivalent to </span>
+arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
+<pre><code>## # A tibble: 10 x 10
+##      arrest   age sex   race  arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;                
+##  2 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave    
+##  3 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave   
+##  4 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St   
+##  5 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave     
+##  6 11127041    41 B     M     01/01/2011 05&#39;00&quot;     2900 Spellman Rd    
+##  7 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St     
+##  8 11126940    20 W     M     01/01/2011 05&#39;00&quot;     5200 Moravia Rd     
+##  9 11127051    24 B     M     01/01/2011 07&#39;00&quot;     2400 Gainsdbourgh Ct
+## 10 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave   
+## # ... with 3 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># with the `seq` function you can do more sophisticated things like select only entries in odd rows (1,3,5,7...)</span>
+<span class="kw">head</span>(arrest_tab[<span class="kw">seq</span>(<span class="dt">from=</span><span class="dv">1</span>,<span class="dt">to=</span><span class="kw">nrow</span>(arrest_tab),<span class="dt">by=</span><span class="dv">2</span>), ])</code></pre></div>
+<pre><code>## # A tibble: 6 x 15
+##     arrest   age sex   race  arrestDate arrestTime arrestLocation      
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+## 1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;                
+## 2 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave   
+## 3 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave     
+## 4 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St     
+## 5 11127051    24 B     M     01/01/2011 07&#39;00&quot;     2400 Gainsdbourgh Ct
+## 6 11127057    28 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave   
+## # ... with 8 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>Now, since columns have names, we can also use strings (and vectors of strings) to index data frames.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># single column</span>
+arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="st">&quot;age&quot;</span>]</code></pre></div>
+<pre><code>## # A tibble: 10 x 1
+##      age
+##    &lt;int&gt;
+##  1    23
+##  2    37
+##  3    46
+##  4    50
+##  5    33
+##  6    41
+##  7    29
+##  8    20
+##  9    24
+## 10    53</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># multiple columns</span>
+arrest_tab[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="kw">c</span>(<span class="st">&quot;age&quot;</span>, <span class="st">&quot;sex&quot;</span>, <span class="st">&quot;race&quot;</span>)]</code></pre></div>
+<pre><code>## # A tibble: 10 x 3
+##      age sex   race 
+##    &lt;int&gt; &lt;fct&gt; &lt;fct&gt;
+##  1    23 B     M    
+##  2    37 B     M    
+##  3    46 B     M    
+##  4    50 B     M    
+##  5    33 B     M    
+##  6    41 B     M    
+##  7    29 B     M    
+##  8    20 W     M    
+##  9    24 B     M    
+## 10    53 B     M</code></pre>
+<p>If we wanted a single named column from a data frame there’s a special operator <code>$</code> to index:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first ten values of the age column</span>
+arrest_tab<span class="op">$</span>age[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
+<pre><code>##  [1] 23 37 46 50 33 41 29 20 24 53</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># EXERCISE</span>
+<span class="co"># try using three different ways of selecting rows 20 to 30 # of the &quot;sex&quot; column</span></code></pre></div>
+<p>In addition to integer indices or names, we can use vectors of logical values for indexing.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># rows 2,4,7 and 10 using logical indices</span>
+arrest_tab[<span class="kw">c</span>(<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="kw">rep</span>(<span class="ot">FALSE</span>,<span class="kw">nrow</span>(arrest_tab)<span class="op">-</span><span class="dv">10</span>)),]</code></pre></div>
+<pre><code>## # A tibble: 4 x 15
+##     arrest   age sex   race  arrestDate arrestTime arrestLocation   
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
+## 1 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave 
+## 2 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St
+## 3 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St  
+## 4 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave
+## # ... with 8 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># now here&#39;s a fun one, if we only wanted odd rows</span>
+<span class="kw">head</span>(arrest_tab[<span class="kw">c</span>(<span class="ot">TRUE</span>,<span class="ot">FALSE</span>),])</code></pre></div>
+<pre><code>## Warning: Length of logical index must be 1 or 104528, not 2</code></pre>
+<pre><code>## # A tibble: 6 x 15
+##     arrest   age sex   race  arrestDate arrestTime arrestLocation      
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+## 1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;                
+## 2 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave   
+## 3 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave     
+## 4 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St     
+## 5 11127051    24 B     M     01/01/2011 07&#39;00&quot;     2400 Gainsdbourgh Ct
+## 6 11127057    28 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave   
+## # ... with 8 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>The last example shows one of the most common gotchas in R. Indices are recycled. For instance if selecting rows, if you pass a logical vector that’s shorter than the number of rows in the data frame, the vector will be recycled as many times as necessary to match the number of rows in the dataset. Now, why is this useful, because a pithy index vector can let you select easily. Why is this bad, because errors in code can go easily unnoticed. So in this case, the price of ease of use is paid by the programmer by having to think a lot more carefully about their code (this is a theme in R programming…)</p>
+<p>The utility of logical indexing is that now we can select rows based on a property of its values for a given column</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select rows for entities younger than 21 years old</span>
+<span class="kw">head</span>(arrest_tab[arrest_tab<span class="op">$</span>age <span class="op">&lt;</span><span class="st"> </span><span class="dv">21</span>, ])</code></pre></div>
+<pre><code>## # A tibble: 6 x 15
+##     arrest   age sex   race  arrestDate arrestTime arrestLocation    
+##      &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;             
+## 1 11126940    20 W     M     01/01/2011 00:05      5200 Moravia Rd   
+## 2 11126942    20 B     M     01/01/2011 01:22      1900 Ashburton Ave
+## 3 11126941    20 W     M     01/01/2011 02:00      300 S Bentalou St 
+## 4 11126955    20 B     M     01/01/2011 02:20      900 Myrtle Ave    
+## 5 11127139    19 W     M     01/01/2011 02:22      4500 Erdman Ave   
+## 6 11127003    20 B     F     01/01/2011 02:49      2400 Brentwood St 
+## # ... with 8 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># notice that the value of expression `arrest_tab$age &lt; 21` # is a logical vector</span>
+
+<span class="co"># select entities (arrests) occuring in Mount Washington,</span>
+<span class="co"># a specific neighborhood in Baltimore</span>
+<span class="kw">head</span>(arrest_tab[arrest_tab<span class="op">$</span>neighborhood <span class="op">==</span><span class="st"> &quot;Mount Washington&quot;</span>,])</code></pre></div>
+<pre><code>## # A tibble: 6 x 15
+##   arrest   age sex   race  arrestDate arrestTime arrestLocation
+##    &lt;int&gt; &lt;int&gt; &lt;fct&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;         
+## 1     NA    NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          NA      &lt;NA&gt;          
+## 2     NA    NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          NA      &lt;NA&gt;          
+## 3     NA    NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          NA      &lt;NA&gt;          
+## 4     NA    NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          NA      &lt;NA&gt;          
+## 5     NA    NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          NA      &lt;NA&gt;          
+## 6     NA    NA &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;          NA      &lt;NA&gt;          
+## # ... with 8 more variables: incidentOffense &lt;fct&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># how about arrests where subjects are under 21 in Mount  Washington? </span>
+<span class="co"># use a logical `and` operator</span>
+indices &lt;-<span class="st"> </span>arrest_tab<span class="op">$</span>age <span class="op">&lt;</span><span class="st"> </span><span class="dv">21</span> <span class="op">&amp;</span><span class="st"> </span>arrest_tab<span class="op">$</span>neighborhood <span class="op">==</span><span class="st"> &quot;Mount Washington&quot;</span></code></pre></div>
+</div>
+<div id="exploration" class="section level2">
+<h2><span class="header-section-number">5.8</span> Exploration</h2>
+<p>R has built-in functions that help easily obtain summary information about datasets. For instance:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(arrest_tab<span class="op">$</span>sex)</code></pre></div>
+<pre><code>##     A     B     H     I     U     W  NA&#39;s 
+##   242 87268     1   218  1749 15048     2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(arrest_tab<span class="op">$</span>race)</code></pre></div>
+<pre><code>##     F     M  NA&#39;s 
+## 19431 85095     2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># well that seems problematic</span>
+<span class="co"># let&#39;s rename columns to correct that</span>
+<span class="kw">colnames</span>(arrest_tab)[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;race&quot;</span>, <span class="st">&quot;sex&quot;</span>)</code></pre></div>
+<p>We can also ask other useful type of summaries</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># What is the average age in arrests?</span>
+<span class="kw">mean</span>(arrest_tab<span class="op">$</span>age)</code></pre></div>
+<pre><code>## [1] 33.19639</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Median age?</span>
+<span class="kw">median</span>(arrest_tab<span class="op">$</span>age)</code></pre></div>
+<pre><code>## [1] 30</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># what types of offenses are there</span>
+<span class="kw">summary</span>(arrest_tab<span class="op">$</span>incidentOffense)</code></pre></div>
+<pre><code>##                   Unknown Offense                      87-Narcotics 
+##                             38649                             24744 
+##                 4E-Common Assault           87O-Narcotics (Outside) 
+##                              6739                              6515 
+##               97-Search &amp; Seizure                          79-Other 
+##                              3670                              3461 
+##                  24-Towed Vehicle           6C-Larceny- Shoplifting 
+##                              2994                              1849 
+##              4C-Agg. Asslt.- Oth.                  55A-Prostitution 
+##                              1556                              1398 
+##               4B-Agg. Asslt.- Cut              55-Disorderly Person 
+##                              1195                               923 
+##                   115-Trespassing             5A-Burg. Res. (Force) 
+##                               871                               847 
+##          75-Destruct. Of Property              4D-Agg. Asslt.- Hand 
+##                               686                               618 
+##           61-Person Wanted On War              3B-Robb Highway (Ua) 
+##                               482                               410 
+##                   54-Armed Person                    7A-Stolen Auto 
+##                               394                               392 
+##               4A-Agg. Asslt.- Gun             6D-Larceny- From Auto 
+##                               356                               336 
+##                 6J-Larceny- Other              3AF-Robb Hwy-Firearm 
+##                               312                               277 
+##             49-Family Disturbance              26-Recovered Vehicle 
+##                               253                               249 
+##            6G-Larceny- From Bldg.                      20A-Followup 
+##                               248                               246 
+##                       78-Gambling             5D-Burg. Oth. (Force) 
+##                               219                               196 
+##                 3K-Robb Res. (Ua)              111-Protective Order 
+##                               176                               152 
+##              4F-Assault By Threat                     109-Loitering 
+##                               152                               131 
+##                           117-Fto           5C-Burg. Res. (Noforce) 
+##                               130                               122 
+##                3AK-Robb Hwy-Knife              5B-Burg. Res. (Att.) 
+##                               102                               102 
+##             81-Recovered Property     108-Liquor Law/Open Container 
+##                                94                                92 
+##                3D-Robb Comm. (Ua)                   2A-Rape (Force) 
+##                                92                                89 
+##              6E-Larceny- Auto Acc      112-Traffic Related Incident 
+##                                85                                81 
+##               23-Unauthorized Use                 88-Unfounded Call 
+##                                81                                80 
+##            3AO-Robb Hwy-Other Wpn              7C-Stolen Veh./Other 
+##                                79                                78 
+##                  2H-Indecent Exp.                         1A-Murder 
+##                                72                                64 
+##          71-Sex Offender Registry          48-Involuntary Detention 
+##                                64                                57 
+##                     114-Hindering         3AJF-Robb Carjack-Firearm 
+##                                56                                56 
+##                  2F-Placing Hands                 73-False Pretense 
+##                                54                                54 
+##          6B-Larceny- Purse Snatch                        95-Exparte 
+##                                51                                51 
+##             3CF-Robb Comm-Firearm        3JF-Robb Residence-Firearm 
+##                                43                                43 
+##                 56-Missing Person                  98-Child Neglect 
+##                                41                                41 
+##                3P-Robb Misc. (Ua)                 58-Injured Person 
+##                                35                                35 
+##                    85-Mental Case              3BJ-Robb Carjack(Ua) 
+##                                34                                33 
+##           5F-Burg. Oth. (Noforce)               6F-Larceny- Bicycle 
+##                                31                                31 
+##               2G-Sodomy/Perverson          3JK-Robb Residence-Knife 
+##                                30                                30 
+##               3CK-Robb Comm-Knife                  80-Lost Property 
+##                                25                                25 
+##                 2B-Rape (Attempt)           29-Driving While Intox. 
+##                                21                                20 
+##             3NF-Robb Misc-Firearm              5E-Burg. Oth. (Att.) 
+##                                20                                18 
+##                 2D-Statutory Rape      3JO-Robb Residence-Other Wpn 
+##                                17                                17 
+##           67-Child Abuse-Physical               103-Dead On Arrival 
+##                                17                                15 
+##           3CO-Robb Comm-Other Wpn               3NK-Robb Misc-Knife 
+##                                15                                15 
+##                     113-Littering                           39-Fire 
+##                                14                                14 
+##             76-Child Abuse-Sexual         8AO-Arson Sin Res Str-Occ 
+##                                14                                14 
+##                   96-Stop &amp; Frisk 116-Public Urination / Defecation 
+##                                14                                13 
+##                110-Summons Served               20H-Traffic Control 
+##                                12                                11 
+##           3AJK-Robb Carjack-Knife       3GF-Robb Conv Store-Firearm 
+##                                11                                11 
+##               106-Custody Dispute                52A-Animal Cruelty 
+##                                10                                10 
+##                  70A-Ill. Dumping            83-Discharging Firearm 
+##                                10                                10 
+##           3H-Robb Conv. Stor.(Ua)           3NO-Robb Misc-Other Wpn 
+##                                 9                                 8 
+##              93-Abduction - Other                           (Other) 
+##                                 8                               101</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># what does summary looks like for continuous attributes?</span>
+<span class="kw">summary</span>(arrest_tab<span class="op">$</span>age)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0    23.0    30.0    33.2    43.0    87.0</code></pre>
+<p>Combining this type of summary with our indexing strategies we learned previously we can ask more specific questions</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># What is the average age for arrests in Mount Washington?</span>
+mount_washington_index &lt;-<span class="st"> </span>arrest_tab<span class="op">$</span>neighborhood <span class="op">==</span><span class="st"> &quot;Mount Washington&quot;</span>
+
+<span class="kw">mean</span>(arrest_tab<span class="op">$</span>age[mount_washington_index], <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 31.10345</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># How about the number of arrests in Mount Washington _stratified_ by race and sex?</span>
+<span class="kw">table</span>(arrest_tab<span class="op">$</span>race[mount_washington_index], arrest_tab<span class="op">$</span>sex[mount_washington_index])</code></pre></div>
+<pre><code>##    
+##      F  M
+##   A  0  0
+##   B  4 14
+##   H  0  0
+##   I  0  0
+##   U  0  0
+##   W  2  9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># how about a graphical summary of arrest ages in Mount Washington?</span>
+<span class="co"># we&#39;ll use a boxplot</span>
+<span class="kw">boxplot</span>(arrest_tab<span class="op">$</span>age[mount_washington_index])</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-38-1.svg" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># can we do the same stratified by sex?</span>
+<span class="kw">boxplot</span>(arrest_tab<span class="op">$</span>age[mount_washington_index]<span class="op">~</span>arrest_tab<span class="op">$</span>sex[mount_washington_index])</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-38-2.svg" width="672" /></p>
+<p>This used a very useful notation in R: the tilde, <code>~</code> which we will encounter in a few different places. One way of thinking about that abstractly is, do something with this attribute, as a function (or depending on, stratified by, conditioned on) this other attribute. For instance, “plot <code>age</code> as a function of sex” in our example.</p>
+<p>Let’s write code that’s a little cleaner for that last plot, and let’s also make the plot a bit more useful by adding a title and axis labels:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mount_washington_tab &lt;-<span class="st"> </span>arrest_tab[mount_washington_index,]
+<span class="kw">boxplot</span>(mount_washington_tab<span class="op">$</span>age<span class="op">~</span>mount_washington_tab<span class="op">$</span>sex,
+        <span class="dt">main=</span><span class="st">&quot;Mt. Washington&quot;</span>, 
+        <span class="dt">xlab=</span><span class="st">&quot;Sex&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Arrest Age&quot;</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-39-1.svg" width="672" /></p>
+<p>Here’s one more useful plot:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(mount_washington_tab<span class="op">$</span>race), 
+        <span class="dt">xlab=</span><span class="st">&quot;Number of Arrests&quot;</span>,
+        <span class="dt">ylab=</span><span class="st">&quot;Race&quot;</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-40-1.svg" width="672" /></p>
+</div>
+<div id="functions" class="section level2">
+<h2><span class="header-section-number">5.9</span> Functions</h2>
+<p>Now suppose we wanted to do a similar analysis for other neighborhoods. In that case we should encapsulate the summaries and plots we want to do in a function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">analyze_neighborhood &lt;-<span class="st"> </span><span class="cf">function</span>(neighborhood) {
+  neighborhood_index &lt;-<span class="st"> </span>arrest_tab<span class="op">$</span>neighborhood <span class="op">==</span><span class="st"> </span>neighborhood
+  neighborhood_tab &lt;-<span class="st"> </span>arrest_tab[neighborhood_index,]
+  
+    <span class="kw">boxplot</span>(neighborhood_tab<span class="op">$</span>age<span class="op">~</span>neighborhood_tab<span class="op">$</span>sex,
+            <span class="dt">main =</span> neighborhood,
+            <span class="dt">xlab =</span> <span class="st">&quot;Sex&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Arrest Age&quot;</span>)
+    
+    <span class="kw">barplot</span>(<span class="kw">table</span>(neighborhood_tab<span class="op">$</span>race),
+            <span class="dt">main =</span> neighborhood,
+            <span class="dt">xlab =</span> <span class="st">&quot;Race&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Number of Arrests&quot;</span>)
+}</code></pre></div>
+<p>Now we can use that function to make our plots for specific neighborhoods</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">analyze_neighborhood</span>(<span class="st">&quot;Mount Washington&quot;</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-42-1.svg" width="672" /><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-42-2.svg" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">analyze_neighborhood</span>(<span class="st">&quot;Hampden&quot;</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-42-3.svg" width="672" /><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-42-4.svg" width="672" /></p>
+</div>
+<div id="a-note-on-data-types" class="section level2">
+<h2><span class="header-section-number">5.10</span> A note on data types</h2>
+<p>This dataset contains data of types commonly found in data analyses</p>
+<ul>
+<li>Numeric (continuous): A numeric measurement (e.g., height)<br />
+</li>
+<li>Numeric (discrete): Usually obtained from counting, think only integers (e.g., <code>age</code> which is measured in years)<br />
+</li>
+<li>Categorical: One of a possible set of values (e.g., <code>sex</code>)<br />
+</li>
+<li>Datetime: Date and time of some event or observation (e.g., <code>arrestDate</code>, <code>arrestTime</code>)<br />
+</li>
+<li>geolocation: Latitude and Longitude of some event or observation (e.g., <code>Location.</code>)</li>
+</ul>
+<p>The distinction between continuous and discrete is a bit tricky since measurements that have finite precision must be discrete. So, the difference really comes up when we build statistical models of datasets for analysis. For now, think of discrete data as the result of counting, and continuous data the result of some physical measurement.</p>
+<p>We said that R is designed for data analysis. My favorite example of how that manifests itself is the <code>factor</code> datatype. If you look at your dataset now, <code>arrest_tab$sex</code> is a vector of strings:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(arrest_tab<span class="op">$</span>sex)</code></pre></div>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(arrest_tab<span class="op">$</span>sex)</code></pre></div>
+<pre><code>##     F     M  NA&#39;s 
+## 19431 85095     2</code></pre>
+<p>However, as a measurement, or attribute, it should only take one of two values (or three depending on how you record missing, unknown or unspecified). So, in R, that categorical data type is called a <em>factor</em>. Notice what the <code>summary</code> function does after turning the <code>sex</code> attribute into a <em>factor</em>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">factor</span>(arrest_tab<span class="op">$</span>sex)
+<span class="kw">summary</span>(arrest_tab<span class="op">$</span>sex)</code></pre></div>
+<pre><code>##     F     M  NA&#39;s 
+## 19431 85095     2</code></pre>
+<p>This distinction shows up in many other places where functions have very different behavior when called on a vector of strings and when called on a factor (e.g., functions that make plots, or functions that learn statistical models).</p>
+<p>One last note, the possible values a <em>factor</em> can take are called <em>levels</em>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(arrest_tab<span class="op">$</span>sex)</code></pre></div>
+<pre><code>## [1] &quot;F&quot; &quot;M&quot;</code></pre>
+<p>Exercise: you should transform the <code>race</code> attribute into a factor as well. How many levels does it have?</p>
+</div>
+<div id="thinking-in-vectors" class="section level2">
+<h2><span class="header-section-number">5.11</span> Thinking in vectors</h2>
+<p>In data analysis the <em>vector</em> is probably the most fundamental data type (other than basic numbers, strings, etc.). Why? Consider getting data about one attribute, say height, for a group of people. What do you get, an array of numbers, all in the same unit (say feet, inches or centimeters). How about their name? Then you get an array of strings. Abstractly, we think of vectors as arrays of values, all of the same <em>class</em> or datatype.</p>
+<p>In our dataset, each column, corresponding to an attribute, is a vector:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the &#39;str&#39; function gives a bit more low-level information about objects</span>
+<span class="kw">str</span>(arrest_tab<span class="op">$</span>Location)</code></pre></div>
+<pre><code>## Warning: Unknown or uninitialised column: &#39;Location&#39;.</code></pre>
+<pre><code>##  NULL</code></pre>
+<p>R (and other data analysis languages) are designed to operate on vectors easily. For example, frequently we want to do some kind of transformation to a data attribute, say record age in months rather than years. Then we would perform the <strong>same operation</strong> for every value in the corresponding vector:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">age_in_months &lt;-<span class="st"> </span>arrest_tab<span class="op">$</span>age <span class="op">*</span><span class="st"> </span><span class="dv">12</span></code></pre></div>
+<p>In a language that doesn’t support this type of vectorized operation, you would use a loop, or similar construct, to perform this operation.</p>
+<p>Another type of transformation frequently done is to combine attributes into a single attribute. Suppose we wanted to combine the <code>arrestLocation</code> and <code>neighborhood</code> attributes into an <code>address</code> attribute:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remember you can always find out what a function does by using ?paste</span>
+<span class="kw">head</span>(<span class="kw">paste</span>(arrest_tab<span class="op">$</span>arrestLocation, arrest_tab<span class="op">$</span>neighborhood, <span class="dt">sep=</span><span class="st">&quot;, &quot;</span>))</code></pre></div>
+<pre><code>## [1] &quot;NA, NA&quot;                                   
+## [2] &quot;2000 Wilkens Ave, Carrollton Ridge&quot;       
+## [3] &quot;2800 Mayfield Ave, Belair-Edison&quot;         
+## [4] &quot;2100 Ashburton St, Panway/Braddish Avenue&quot;
+## [5] &quot;4000 Wilsby Ave, Pen Lucy&quot;                
+## [6] &quot;2900 Spellman Rd, Cherry Hill&quot;</code></pre>
+<p>Here the <code>paste</code> function concatenates strings element-wise: the first string in <code>arrestLocation</code> is concatenated with the first string in <code>neighborhood</code>, etc.</p>
+<p>Arithmetic operations have the same element-wise operation:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add first 10 odd numbers to first 10 even numbers</span>
+<span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dt">by=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dt">by=</span><span class="dv">2</span>)</code></pre></div>
+<pre><code>##  [1]  3  7 11 15 19 23 27 31 35 39</code></pre>
+</div>
+<div id="lists-vs.vectors" class="section level2">
+<h2><span class="header-section-number">5.12</span> Lists vs. vectors</h2>
+<p>We saw that vectors are arrays of values, all of the same <em>class</em>. R also allows arrays of values that have different <em>class</em> or datatype. These are called <em>lists</em>. Here is a list containing a string, and a couple of numbers:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="st">&quot;Hector&quot;</span>, <span class="dv">40</span>, <span class="dv">71</span>)
+my_list</code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;Hector&quot;
+## 
+## [[2]]
+## [1] 40
+## 
+## [[3]]
+## [1] 71</code></pre>
+<p>Indexing in lists uses different syntax from the indexing we saw before. To index an element in a list we would use a double-bracket <code>[[</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_list[[<span class="dv">1</span>]]</code></pre></div>
+<pre><code>## [1] &quot;Hector&quot;</code></pre>
+<p>In contrast, the single bracket <code>[</code> indexes a <em>part</em> of the list, and thus returns another list.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_list[<span class="dv">1</span>]</code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;Hector&quot;</code></pre>
+<p>That way we can use slice notation and other operations we saw when indexing vectors as before, but we get lists as results.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_list[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;Hector&quot;
+## 
+## [[2]]
+## [1] 40</code></pre>
+<p>List elements can have names as well:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">named_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">person=</span><span class="st">&quot;Hector&quot;</span>, <span class="dt">age=</span><span class="dv">40</span>, <span class="dt">height=</span><span class="dv">71</span>)
+named_list</code></pre></div>
+<pre><code>## $person
+## [1] &quot;Hector&quot;
+## 
+## $age
+## [1] 40
+## 
+## $height
+## [1] 71</code></pre>
+<p>Which we can use to index elements as well (both with <code>[[</code> and <code>$</code>)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">named_list[[<span class="st">&quot;person&quot;</span>]]</code></pre></div>
+<pre><code>## [1] &quot;Hector&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">named_list<span class="op">$</span>person</code></pre></div>
+<pre><code>## [1] &quot;Hector&quot;</code></pre>
+<p>Lists can hold arbitrary objects as elements. For example you can have a vector of strings as an element in a list</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">person=</span><span class="kw">c</span>(<span class="st">&quot;Hector&quot;</span>, <span class="st">&quot;Ringo&quot;</span>, <span class="st">&quot;Paul&quot;</span>, <span class="st">&quot;John&quot;</span>), <span class="dv">40</span>, <span class="dv">71</span>)
+my_list</code></pre></div>
+<pre><code>## $person
+## [1] &quot;Hector&quot; &quot;Ringo&quot;  &quot;Paul&quot;   &quot;John&quot;  
+## 
+## [[2]]
+## [1] 40
+## 
+## [[3]]
+## [1] 71</code></pre>
+<p>Now, we come to a momentous occassion in understanding R. <code>data.frame</code>s are special instances of <em>lists</em>! But, in this case, every element in the list is a vector, and all vectors have exactly the same length. So <code>arrest_tab$age</code> indexes the named element <code>age</code> in the list <code>arrest_tab</code>!</p>
+<p>The pattern of <em>applying</em> functions to entries in vectors also holds for elements in lists. So, if we want to calculate smallest value for every attribute in our dataset, we could do something like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(arrest_tab, <span class="cf">function</span>(v) <span class="kw">sort</span>(v)[<span class="dv">1</span>])</code></pre></div>
+<pre><code>##                                           arrest 
+##                                       &quot;11126858&quot; 
+##                                              age 
+##                                              &quot;0&quot; 
+##                                             race 
+##                                              &quot;1&quot; 
+##                                              sex 
+##                                              &quot;1&quot; 
+##                                       arrestDate 
+##                                     &quot;01/01/2011&quot; 
+##                                       arrestTime 
+##                                              &quot;0&quot; 
+##                                   arrestLocation 
+##                                      &quot;0 20Th St&quot; 
+##                                  incidentOffense 
+##                                              &quot;1&quot; 
+##                                 incidentLocation 
+##                        &quot;*** District Detail ***&quot; 
+##                                           charge 
+##                                         &quot;1 0002&quot; 
+##                                chargeDescription 
+## &quot;Abduct Child Under 12 || Abduct Child Under 12&quot; 
+##                                         district 
+##                                        &quot;CENTRAL&quot; 
+##                                             post 
+##                                            &quot;111&quot; 
+##                                     neighborhood 
+##                                          &quot;Abell&quot; 
+##                                       Location 1 
+##                &quot;(39.2000327685, -76.5555163146)&quot;</code></pre>
+</div>
+<div id="making-the-process-explicit-with-pipes" class="section level2">
+<h2><span class="header-section-number">5.13</span> Making the process explicit with pipes</h2>
+<p>We’ve discussed the idea of thinking about data analysis work in terms of “pipelines”, where we start from data of a certain shape (e.g., a <code>data.frame</code>) and apply transformations (functions) to obtain data that contains the computation we want. Consider the following example seen in class:</p>
+<p><em>What is the mean age of males arrested in the SOUTHERN district?</em></p>
+<p>We can frame the answer to this question as a series of data transformations to get the answer we are looking for:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># filter data to observations we need</span>
+index_vector &lt;-<span class="st"> </span>arrest_tab<span class="op">$</span>sex <span class="op">==</span><span class="st"> &quot;M&quot;</span> <span class="op">&amp;</span><span class="st"> </span>arrest_tab<span class="op">$</span>district <span class="op">==</span><span class="st"> &quot;SOUTHERN&quot;</span>
+tmp &lt;-<span class="st"> </span>arrest_tab[index_vector,]
+
+<span class="co"># select the attribute/column we need</span>
+tmp &lt;-<span class="st"> </span>tmp[[<span class="st">&quot;age&quot;</span>]]
+
+<span class="co"># compute statistic required</span>
+<span class="kw">mean</span>(tmp, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 32.28481</code></pre>
+<p>Let’s rewrite this using functions to illustrate the point</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">filter_data &lt;-<span class="st"> </span><span class="cf">function</span>(data) {
+  index_vector &lt;-<span class="st"> </span>data<span class="op">$</span>sex <span class="op">==</span><span class="st"> &quot;M&quot;</span> <span class="op">&amp;</span><span class="st"> </span>data<span class="op">$</span>district <span class="op">==</span><span class="st"> &quot;SOUTHERN&quot;</span>
+  data[index_vector,]
+}
+
+select_column &lt;-<span class="st"> </span><span class="cf">function</span>(data, column) {
+  data[[column]]
+}
+
+tmp &lt;-<span class="st"> </span><span class="kw">filter_data</span>(arrest_tab)
+tmp &lt;-<span class="st"> </span><span class="kw">select_column</span>(tmp, <span class="st">&quot;age&quot;</span>)
+<span class="kw">mean</span>(tmp, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 32.28481</code></pre>
+<p>So, this pattern of <em>data–&gt;transform–&gt;data</em> becomes clearer when written that way.</p>
+<p>The <code>dplyr</code> package introduces <em>syntactic sugar</em> to make this explicit. We can write the above snippet using the “pipe” operator <code>%&gt;%</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter_data</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select_column</span>(<span class="st">&quot;age&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mean</span>(<span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 32.28481</code></pre>
+<p>The <code>%&gt;%</code> binary operator takes the value to its <strong>left</strong> and inserts it as the first argument of the function call to its <strong>right</strong>. So the expression <code>LHS %&gt;% f(another_argument)</code> is <strong>equivalent</strong> to the expression <code>f(LHS, another_argument)</code>. We will see this pattern extensively in class because it explicitly presents the way we want to organize many of our data analysis tasks.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="setting-up-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ingesting-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["lecture-notes_csmc320.pdf"],
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
