@@ -57,10 +57,10 @@ ignorefiles = [ "lecture-note/.*" ]
 	url    = "logistics/"
 	weight = 10
 
-# [[menu.main]]
-# 	name   = "Lecture Notes"
-# 	url    = "lecture-note/"
-# 	weight = 20
+[[menu.main]]
+	name   = "Lecture Notes"
+	url    = "bookdown-notes"
+	weight = 20
 
 [[menu.main]]
 	name   = "Resources"
