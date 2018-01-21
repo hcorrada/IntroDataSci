@@ -7,7 +7,7 @@ bookdown::gitbook:
       before: |
         <li><a href="http://bit.ly/hcb-ids">CMSC320 Intro. Data Science</a></li>
         <li><a href="http://www.hcbravo.org">Hector Corrada Bravo</a></li>
-    download: ["pdf"]
+#    download: ["pdf"]
     sharing:
       twitter: no
       facebook: no
