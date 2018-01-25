@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Course Introduction and Overview</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Hector Corrada Bravo" />
+    <link href="libs/remark-css/example.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Course Introduction and Overview
+### Hector Corrada Bravo
+### 2017/5/31
+
+---
+
+
+
+
+## What is Data Science?
+
+Data science encapsulates the interdisciplinary activities required to create data-centric artifacts and applications that address specific scientific, socio-political, business, or other questions.
+
+---
+
+### Data
+
+Measureable units of information gathered or captured from activity of people, places and things.
+
+### Specific Questions
+
+Seeking to understand a phenomenon, natural, social or other, can we formulate specific questions for which an answer posed in terms of patterns observed, tested and or modeled in data is appropriate.
+
+### Interdisciplinary Activities
+
+- Formulating a question, assessing the appropriateness of the data and findings used to find an answer require understanding of the specific subject area. 
+- Deciding on the appropriateness of models and inferences made from models based on the data at hand requires understanding of statistical and computational methods.
+
+---
+
+### Data-centric artifacts and applications
+
+- Answers to questions derived from data are usually shared and published in meaningful, succint but sufficient, reproducible artifacts (papers, books, movies, comics). 
+
+- Going a step further, interactive applications that let others explore data, models and inferences are great.
+
+---
+
+## Why Data Science?
+
+The granularity, size and accessibility data, comprising both physical, social, commercial and political spheres has exploded in the last decade or more. 
+
+&gt; I keep saying that the sexy job in the next 10 years will be statisticians”
+
+&gt; Hal Varian, Chief Economist at Google (http://www.nytimes.com/2009/08/06/technology/06stats.html?_r=0)
+
+---
+
+## Why Data Science?
+
+&gt; “The ability to take data—to be able to understand it, to process it, to extract value from it, to visualize it, to communicate it—that’s going to be a hugely important skill in the next decades, not only at the professional level but even at the educational level for elementary school kids, for high school kids, for college kids.”
+
+&gt; “Because now we really do have essentially free and ubiquitous data. So the complimentary scarce factor is the ability to understand that data and extract value from it.”
+
+&gt; Hal Varian
+(http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers)
+
+---
+
+## Data Science in Humanities and Social Sciences
+
+Because of the large amount of data produced across many
+spheres of human social and creative activity, many questions in the humanities and social sciences may be addressed by characterizing patterns in data. 
+
+---
+
+## Data Science in Humanities and Social Sciences
+
+In the humanities, this can range from unproblematic questions:
+
+- how to dissect a large creative corpora, say music, literature, based on raw characteristics of those works, text, sound and image. 
+
+To more problematic questions
+
+- analysis of intent, understanding, appreciation and valuation of these creative corpora.
+
+---
+
+## Data Science in Humanities and Social Sciences
+
+In the social sciences, issues of fairness and transparency in the current era of big data are especially problematic. 
+
+- Is data collected representative of population for which inferences are drawn? 
+
+- Are methods employed learning latent unfair factors from ostensibly fair data? 
+
+- These are issues that the research community is now starting to address.
+
+---
+
+## Data Science in Humanities and Social Sciences
+
+In all settings, issues of ethical collection of data, application of models, and deployment of data-centric artifacts are essential to grapple with. 
+
+Issues of privacy are equally important.
+
+---
+
+## Course organization
+
+This course will cover basics of how to use the R data analysis environment for data science activities in humanities and social science. 
+
+---
+
+### Day 1: Introduction and preparation
+
+- Get ourselved settled with R
+- Formulating a question that can be addressed with data
+- How to get data to address a specific question
+- How to manipulate this data to get to what we need for our question of interest
+- How to visualize this data 
+
+---
+
+### Day 2: Use cases
+
+- Social media analysis: text and network structures
+- Fitting and evaluating regression models in R
+- Text analysis
+- Machine Learning modeling in R
+- Survey analysis 
+- Nested models in R
+
+---
+
+### Day 3: Presentation and teaching
+
+- How to present and publish analysis using R
+- Using R in teaching
+
+---
+class: center, middle
+
+## General Workflow
+
+
+![](img/zumel_mount_cycle.png)
+
+---
+
+### Defining the goal
+
+- What is the question/problem?
+- Who wants to answer/solve it?
+- What do they know/do now?
+- How well can we expect to answer/solve it?
+- How well do they want us to answer/solve it?
+
+---
+
+### Data collection and Management
+
+- What data is available?
+- Is it good enough?
+- Is it enough?
+- What are sensible measurements to derive from this data?
+  Units, transformations, rates, ratios, etc.
+
+---
+
+### Modeling
+
+- What kind of problem is it?
+  E.g., classification, clustering, regression, etc.
+- What kind of model should I use?
+- Do I have enough data for it?
+- Does it really answer the question?
+
+---
+
+### Model evaluation
+
+- Did it work? How well?
+- Can I interpret the model?
+- What have I learned?
+
+---
+
+### Presentation
+
+- Again, what are the measurements that tell the real story?
+- How can I describe and visualize them effectively?
+
+---
+
+### Deployment
+
+- Where will it be hosted? 
+- Who will use it?
+- Who will maintain it?
+
+---
+
+# An Illustrative Analysis
+
+http://fivethirtyeight.com has a clever series of articles on the types of movies different actors make in their careers: https://fivethirtyeight.com/tag/hollywood-taxonomy/
+
+I'd like to do a similar analysis. Let's do this in order:
+
+1) Let's do this analysis for Diego Luna 
+
+2) Let's use a clustering algorithm to determine the different types of movies they make
+
+3) Then, let's write an application that performs this analysis for any actor and test it with Gael García Bernal
+
+4) Let's make the application interactive so that a user can change the actor and the number of movie clusters the method learns.
+
+---
+
+## Gathering data
+
+### Movie ratings
+
+For this analysis we need to get the movies Diego Luna was in, along with their Rotten Tomatoes ratings. For that we scrape this webpage: https://www.rottentomatoes.com/celebrity/diego_luna.
+
+
+
+
+
+
+ RATING  TITLE                                CREDIT                  BOX OFFICE    YEAR
+-------  -----------------------------------  ----------------------  -----------  -----
+     85  Rogue One: A Star Wars Story         Captain Cassian Andor   $532.2M       2016
+     89  Blood Father                         Jonah                   —             2016
+     82  The Book of Life                     Manolo                  —             2014
+    100  I Stay with You (Me quedo contigo)   Actor                   —             2014
+     67  Elysium                              Julio                   $90.8M        2013
+     41  Casa de mi padre                     Raul                    $5.9M         2012
+     51  Contraband                           Gonzalo                 $66.5M        2012
+
+This data includes, for each of the movies Diego Luna has acted in, the rotten tomatoes rating, the movie title, Diego Luna's role in the movie, the U.S. domestic gross and the year of release.
+
+---
+
+### Movie budgets and revenue
+
+For the movie budgets and revenue data we scrape this
+webpage: http://www.the-numbers.com/movie/budgets/all
+
+
+
+
+
+This is part of what we have for that table after scraping and cleaning up:
+
+
+release_date   movie                                       production_budget   domestic_gross   worldwide_gross
+-------------  -----------------------------------------  ------------------  ---------------  ----------------
+2009-12-18     Avatar                                                    425        760.50762         2783.9190
+2015-12-18     Star Wars Ep. VII: The Force Awakens                      306        936.66223         2058.6622
+2007-05-24     Pirates of the Caribbean: At World’s End                  300        309.42043          963.4204
+2015-11-06     Spectre                                                   300        200.07417          879.6209
+2012-07-20     The Dark Knight Rises                                     275        448.13910         1084.4391
+2013-07-02     The Lone Ranger                                           275         89.30212          260.0021
+2012-03-09     John Carter                                               275         73.05868          282.7781
+2010-11-24     Tangled                                                   260        200.82194          586.5819
+2017-06-21     Transformers: The Last Knight                             260          0.00000            0.0000
+2007-05-04     Spider-Man 3                                              258        336.53030          890.8753
+
+---
+
+### Movie budgets and revenue
+
+Now we have data for 5363 movies, including its release date, title, production budget,
+US domestic and worlwide gross earnings. The latter three are in millions of U.S. dollars.
+
+---
+
+### Movie budgets and revenue
+
+One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. To do this, we can make a plot of domestic gross, which we are using for the subsequent analyses.
+
+![](intro_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+
+---
+
+## Manipulating the data
+
+Next, we combine the datasets we obtained to get closer to the data we need to make the plot we want.
+
+
+
+We combine the two datasets using the movie title, so
+that the end result has the information in both tables for each movie.
+
+
+ RATING  TITLE                          CREDIT                  BOX OFFICE    YEAR  release_date    production_budget   domestic_gross   worldwide_gross
+-------  -----------------------------  ----------------------  -----------  -----  -------------  ------------------  ---------------  ----------------
+     85  Rogue One: A Star Wars Story   Captain Cassian Andor   $532.2M       2016  2016-12-16                  200.0        532.17732        1050.98849
+     82  The Book of Life               Manolo                  —             2014  2014-10-17                   50.0         50.15154          97.65154
+     67  Elysium                        Julio                   $90.8M        2013  2013-08-09                  120.0         93.05012         286.19209
+     51  Contraband                     Gonzalo                 $66.5M        2012  2012-01-13                   25.0         66.52800          98.40685
+     94  Milk                           Jack Lira               $31.8M        2008  2008-11-26                   20.0         31.84130          57.29337
+     69  Criminal                       Rodrigo                 $0.8M         2004  2016-04-15                   31.5         14.70870          38.77126
+     61  The Terminal                   Enrique Cruz            $77.1M        2004  2004-06-18                   75.0         77.07396         218.67396
+     79  Open Range                     Button                  $58.3M        2003  2003-08-15                   26.0         58.33125          68.61399
+     76  Frida                          Alejandro Gomez         $25.7M        2002  2002-10-25                   12.0         25.88500          56.13124
+
+---
+
+## Visualizing the data
+
+![Ratings and U.S. Domestic Gross of Diego Luna's movies.](intro_files/figure-html/unnamed-chunk-8-1.png)
+
+---
+
+## Modeling data
+
+We can use a clustering algorithm to partition Diego Luna's movies. We can use the data we obtained so far and see if the k-means clustering algorithm partitions these movies into three sensible groups using the movie's rating and domestic gross.
+
+
+
+
+
+TITLE                           RATING   domestic_gross  cluster 
+-----------------------------  -------  ---------------  --------
+Rogue One: A Star Wars Story        85        532.17732  1       
+The Book of Life                    82         50.15154  2       
+Milk                                94         31.84130  2       
+Criminal                            69         14.70870  2       
+Frida                               76         25.88500  2       
+Elysium                             67         93.05012  3       
+Contraband                          51         66.52800  3       
+The Terminal                        61         77.07396  3       
+Open Range                          79         58.33125  3       
+
+---
+
+## Visualizing model result
+
+![](intro_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+
+---
+
+## Visualizing model result
+
+To make the plot and clustering more interpretable, let's annotate the graph with some movie titles. 
+
+- In the k-means algorithm, each group of movies is represented by an average rating and an average domestic gross. 
+
+- What we can do is find the movie in each group that is closest to the average and use that movie title to annotate each group in the plot.
+
+
+
+---
+
+### Visualizing model result
+
+![](intro_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+---
+
+## Abstracting the analysis
+
+While not a tremendous success, we decide we want to carry on with this analysis. We would like to do this for other actors' movies. 
+
+One of the big advantages of using R is that we can write a piece of code that takes an actor's name as input, and reproduces the steps of this analysis for that actor.
+
+We call these _functions_, we'll see them and use them a lot in this course. 
+
+---
+
+## Abstracting the analysis
+
+For our analysis, this function must do the following:
+
+1. Scrape movie ratings from Rotten Tomatoes 
+2. Clean up the scraped data
+3. Join with the budget data we downloaded previously
+4. Perform the clustering algorithm
+5. Make the final plot
+
+With this in mind, we can write functions for each of these steps, and then make one final function that puts all of these together.
+
+---
+
+## Abstracting the analysis
+
+For instance, let's write the scraping function. It will take an actor's name and output the scraped data.
+
+
+
+Let's test it with Gael García Bernal:
+
+
+
+
+RATING   TITLE                                                CREDIT               BOX OFFICE    YEAR
+-------  ---------------------------------------------------  -------------------  -----------  -----
+30%      Salt and Fire                                        Dr. Fabio Cavani     —             2017
+75%      You're Killing Me Susana (Me estás matando Susana)   Eligio               —             2017
+94%      Neruda                                               Oscar Peluchonneau   $1M           2016
+
+---
+
+## Abstracting the analysis
+
+We can then write functions for each of the steps we did with Diego Luna before.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```r
+analyze_actor("Gael Garcia Bernal")
+```
+
+![](intro_files/figure-html/test_bbg-1.png)&lt;!-- --&gt;
+
+---
+
+## Making analyses accessible
+
+Now that we have written a function to analyze an
+actor's movies, we can make these analyses easier to produce by creating an interactive application that wraps our new function. The `shiny` R package makes creating this type of application easy. 
+
+https://hcorrada.shinyapps.io/movie_app/
+
+---
+
+## Summary
+
+In this analysis we saw examples of the common steps and operations in a data analysis:
+
+1) Data ingestion: we scraped and cleaned data from publicly accessible sites 
+
+2) Data manipulation: we integrated data from multiple sources to prepare our analysis
+
+3) Data visualization: we made plots to explore patterns in our data
+
+4) Data modeling: we made a model to capture the grouping patterns in data automatically, using visualization to explore the results of this modeling
+
+5) Publishing: we abstracted our analysis into an application that allows us and others to perform this analysis over more datasets and explore the result of modeling using a variety of parameters
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
