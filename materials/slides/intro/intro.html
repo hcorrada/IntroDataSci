@@ -3,19 +3,32 @@
   <head>
     <title>Course Introduction and Overview</title>
     <meta charset="utf-8">
-    <meta name="author" content="Hector Corrada Bravo" />
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2018-01-25" />
     <link href="libs/remark-css/example.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
 
-# Course Introduction and Overview
-### Hector Corrada Bravo
-### 2017/5/31
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[CMSC320 Introduction to Data Science: Course Introduction and Overview]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+CMSC320: 2018-01-25
+]
+
+.logo[![](img/logo.png)]
 
 ---
-
 
 
 
@@ -29,13 +42,24 @@ Data science encapsulates the interdisciplinary activities required to create da
 
 Measureable units of information gathered or captured from activity of people, places and things.
 
+--
+
 ### Specific Questions
 
-Seeking to understand a phenomenon, natural, social or other, can we formulate specific questions for which an answer posed in terms of patterns observed, tested and or modeled in data is appropriate.
+Seeking to understand a phenomenon, natural, social or other
+
+--
+
+Can we formulate specific questions for which an answer posed in terms of patterns observed, tested and or modeled in data is appropriate.
+
+---
 
 ### Interdisciplinary Activities
 
 - Formulating a question, assessing the appropriateness of the data and findings used to find an answer require understanding of the specific subject area. 
+
+--
+
 - Deciding on the appropriateness of models and inferences made from models based on the data at hand requires understanding of statistical and computational methods.
 
 ---
@@ -44,7 +68,16 @@ Seeking to understand a phenomenon, natural, social or other, can we formulate s
 
 - Answers to questions derived from data are usually shared and published in meaningful, succint but sufficient, reproducible artifacts (papers, books, movies, comics). 
 
+--
+
 - Going a step further, interactive applications that let others explore data, models and inferences are great.
+
+---
+class: middle, center
+
+## Data Science
+
+.image-50[![](img/conway.png)]
 
 ---
 
@@ -62,6 +95,13 @@ The granularity, size and accessibility data, comprising both physical, social, 
 
 &gt; “The ability to take data—to be able to understand it, to process it, to extract value from it, to visualize it, to communicate it—that’s going to be a hugely important skill in the next decades, not only at the professional level but even at the educational level for elementary school kids, for high school kids, for college kids.”
 
+&gt; Hal Varian
+(http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers)
+
+---
+
+## Why Data Science?
+
 &gt; “Because now we really do have essentially free and ubiquitous data. So the complimentary scarce factor is the ability to understand that data and extract value from it.”
 
 &gt; Hal Varian
@@ -69,18 +109,24 @@ The granularity, size and accessibility data, comprising both physical, social, 
 
 ---
 
-## Data Science in Humanities and Social Sciences
+## Data Science in Society
 
-Because of the large amount of data produced across many
-spheres of human social and creative activity, many questions in the humanities and social sciences may be addressed by characterizing patterns in data. 
+Large amounts of data produced across many
+spheres of human activity, 
+
+--
+
+Many societal questions may be addressed by characterizing patterns in data. 
 
 ---
 
-## Data Science in Humanities and Social Sciences
+## Data Science in Society
 
-In the humanities, this can range from unproblematic questions:
+This can range from unproblematic questions:
 
 - how to dissect a large creative corpora, say music, literature, based on raw characteristics of those works, text, sound and image. 
+
+--
 
 To more problematic questions
 
@@ -88,19 +134,23 @@ To more problematic questions
 
 ---
 
-## Data Science in Humanities and Social Sciences
+## Data Science in Society
 
-In the social sciences, issues of fairness and transparency in the current era of big data are especially problematic. 
+Issues of fairness and transparency in the current era of big data are especially problematic. 
 
 - Is data collected representative of population for which inferences are drawn? 
 
+--
+
 - Are methods employed learning latent unfair factors from ostensibly fair data? 
+
+--
 
 - These are issues that the research community is now starting to address.
 
 ---
 
-## Data Science in Humanities and Social Sciences
+## Data Science in Society
 
 In all settings, issues of ethical collection of data, application of models, and deployment of data-centric artifacts are essential to grapple with. 
 
@@ -110,96 +160,133 @@ Issues of privacy are equally important.
 
 ## Course organization
 
-This course will cover basics of how to use the R data analysis environment for data science activities in humanities and social science. 
+This course will cover basics of how to represent, model and communicate about data and data analyses using the R environment for Data Science
+
+--
+- Area 0: tools and skills  
+
+--
+- Area 1: Data types and operations
+
+--
+- Area 2: Data wrangling
+
+--
+- Area 3: Modeling
+
+--
+- Area 4: Applications
+
+--
+- Area 5: Communication
 
 ---
-
-### Day 1: Introduction and preparation
-
-- Get ourselved settled with R
-- Formulating a question that can be addressed with data
-- How to get data to address a specific question
-- How to manipulate this data to get to what we need for our question of interest
-- How to visualize this data 
-
----
-
-### Day 2: Use cases
-
-- Social media analysis: text and network structures
-- Fitting and evaluating regression models in R
-- Text analysis
-- Machine Learning modeling in R
-- Survey analysis 
-- Nested models in R
-
----
-
-### Day 3: Presentation and teaching
-
-- How to present and publish analysis using R
-- Using R in teaching
-
----
-class: center, middle
+class: split-70
 
 ## General Workflow
 
+.column[
+.left[.image-70[![](img/zumel_mount_cycle.png)]]
+]
 
-![](img/zumel_mount_cycle.png)
+.column[
+.source[Zumel and Mount]
+]
 
 ---
+class: split-50
 
 ### Defining the goal
 
+.column[
 - What is the question/problem?
 - Who wants to answer/solve it?
 - What do they know/do now?
 - How well can we expect to answer/solve it?
 - How well do they want us to answer/solve it?
+]
+
+.column[
+.image-50[![](img/zumel_mount_cycle.png)]
+]
 
 ---
+class: split-50
 
 ### Data collection and Management
 
+.column[
 - What data is available?
 - Is it good enough?
 - Is it enough?
 - What are sensible measurements to derive from this data?
   Units, transformations, rates, ratios, etc.
+]
+
+.column[
+.image-50[![](img/zumel_mount_cycle.png)]
+]
 
 ---
+class: split-50
 
 ### Modeling
 
+.column[
 - What kind of problem is it?
   E.g., classification, clustering, regression, etc.
 - What kind of model should I use?
 - Do I have enough data for it?
 - Does it really answer the question?
+]
+
+.column[
+.image-50[![](img/zumel_mount_cycle.png)]
+]
 
 ---
+class: split-50
 
 ### Model evaluation
 
+.column[
 - Did it work? How well?
 - Can I interpret the model?
 - What have I learned?
+]
+
+.column[
+.image-50[![](img/zumel_mount_cycle.png)]
+]
 
 ---
+class: split-50
 
 ### Presentation
 
+.column[
 - Again, what are the measurements that tell the real story?
 - How can I describe and visualize them effectively?
+]
+
+.column[
+.image-50[![](img/zumel_mount_cycle.png)]
+]
 
 ---
+class: split-50
 
 ### Deployment
 
+.column[
 - Where will it be hosted? 
 - Who will use it?
 - Who will maintain it?
+]
+
+.column[
+.image-50[![](img/zumel_mount_cycle.png)]
+]
 
 ---
 
@@ -255,19 +342,89 @@ webpage: http://www.the-numbers.com/movie/budgets/all
 
 This is part of what we have for that table after scraping and cleaning up:
 
-
-release_date   movie                                       production_budget   domestic_gross   worldwide_gross
--------------  -----------------------------------------  ------------------  ---------------  ----------------
-2009-12-18     Avatar                                                    425        760.50762         2783.9190
-2015-12-18     Star Wars Ep. VII: The Force Awakens                      306        936.66223         2058.6622
-2007-05-24     Pirates of the Caribbean: At World’s End                  300        309.42043          963.4204
-2015-11-06     Spectre                                                   300        200.07417          879.6209
-2012-07-20     The Dark Knight Rises                                     275        448.13910         1084.4391
-2013-07-02     The Lone Ranger                                           275         89.30212          260.0021
-2012-03-09     John Carter                                               275         73.05868          282.7781
-2010-11-24     Tangled                                                   260        200.82194          586.5819
-2017-06-21     Transformers: The Last Knight                             260          0.00000            0.0000
-2007-05-04     Spider-Man 3                                              258        336.53030          890.8753
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; release_date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; movie &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; production_budget &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; domestic_gross &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; worldwide_gross &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2009-12-18 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Avatar &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 425 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 760.50762 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2783.9190 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2015-12-18 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Star Wars Ep. VII: The Force Awakens &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 306 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 936.66223 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2058.6622 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2007-05-24 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pirates of the Caribbean: At World’s End &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 300 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 309.42043 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 963.4204 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2015-11-06 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Spectre &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 300 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 200.07417 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 879.6209 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2012-07-20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; The Dark Knight Rises &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 275 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 448.13910 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1084.4391 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2013-07-02 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; The Lone Ranger &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 275 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 89.30212 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 260.0021 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2012-03-09 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; John Carter &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 275 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 73.05868 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 282.7781 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2010-11-24 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Tangled &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 260 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 200.82194 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 586.5819 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2017-06-21 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Transformers: The Last Knight &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 260 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2007-05-04 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Spider-Man 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 258 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 336.53030 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 890.8753 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 ---
 
@@ -277,12 +434,17 @@ Now we have data for 5363 movies, including its release date, title, production 
 US domestic and worlwide gross earnings. The latter three are in millions of U.S. dollars.
 
 ---
+class: split-40
 
 ### Movie budgets and revenue
 
-One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. To do this, we can make a plot of domestic gross, which we are using for the subsequent analyses.
+.column[
+One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. 
+]
 
+.column[
 ![](intro_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+]
 
 ---
 
@@ -295,52 +457,213 @@ Next, we combine the datasets we obtained to get closer to the data we need to m
 We combine the two datasets using the movie title, so
 that the end result has the information in both tables for each movie.
 
-
- RATING  TITLE                          CREDIT                  BOX OFFICE    YEAR  release_date    production_budget   domestic_gross   worldwide_gross
--------  -----------------------------  ----------------------  -----------  -----  -------------  ------------------  ---------------  ----------------
-     85  Rogue One: A Star Wars Story   Captain Cassian Andor   $532.2M       2016  2016-12-16                  200.0        532.17732        1050.98849
-     82  The Book of Life               Manolo                  —             2014  2014-10-17                   50.0         50.15154          97.65154
-     67  Elysium                        Julio                   $90.8M        2013  2013-08-09                  120.0         93.05012         286.19209
-     51  Contraband                     Gonzalo                 $66.5M        2012  2012-01-13                   25.0         66.52800          98.40685
-     94  Milk                           Jack Lira               $31.8M        2008  2008-11-26                   20.0         31.84130          57.29337
-     69  Criminal                       Rodrigo                 $0.8M         2004  2016-04-15                   31.5         14.70870          38.77126
-     61  The Terminal                   Enrique Cruz            $77.1M        2004  2004-06-18                   75.0         77.07396         218.67396
-     79  Open Range                     Button                  $58.3M        2003  2003-08-15                   26.0         58.33125          68.61399
-     76  Frida                          Alejandro Gomez         $25.7M        2002  2002-10-25                   12.0         25.88500          56.13124
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; RATING &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; TITLE &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; CREDIT &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; BOX OFFICE &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; YEAR &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; release_date &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; production_budget &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; domestic_gross &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; worldwide_gross &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 85 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Rogue One: A Star Wars Story &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Captain Cassian Andor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $532.2M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2016 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2016-12-16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 200.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 532.17732 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1050.98849 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 82 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; The Book of Life &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Manolo &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2014 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2014-10-17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.15154 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 97.65154 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Elysium &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Julio &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $90.8M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2013 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2013-08-09 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 120.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 93.05012 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 286.19209 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 51 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Contraband &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Gonzalo &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $66.5M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2012 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2012-01-13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 66.52800 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 98.40685 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 94 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Milk &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Jack Lira &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $31.8M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2008 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2008-11-26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31.84130 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 57.29337 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 69 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Criminal &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Rodrigo &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $0.8M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2004 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2016-04-15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.70870 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 38.77126 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 61 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; The Terminal &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Enrique Cruz &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $77.1M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2004 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2004-06-18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 75.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 77.07396 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 218.67396 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 79 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Open Range &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Button &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $58.3M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2003 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2003-08-15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 58.33125 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 68.61399 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 76 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Frida &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Alejandro Gomez &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $25.7M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2002 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2002-10-25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.88500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 56.13124 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 ---
 
 ## Visualizing the data
 
-![Ratings and U.S. Domestic Gross of Diego Luna's movies.](intro_files/figure-html/unnamed-chunk-8-1.png)
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="intro_files/figure-html/unnamed-chunk-8-1.png" alt="Ratings and U.S. Domestic Gross of Diego Luna's movies."  /&gt;
+&lt;p class="caption"&gt;Ratings and U.S. Domestic Gross of Diego Luna's movies.&lt;/p&gt;
+&lt;/div&gt;
 
 ---
 
 ## Modeling data
 
-We can use a clustering algorithm to partition Diego Luna's movies. We can use the data we obtained so far and see if the k-means clustering algorithm partitions these movies into three sensible groups using the movie's rating and domestic gross.
+Use a clustering algorithm to partition Diego Luna's movies based on rating and domestic gross.
 
 
 
 
-
-TITLE                           RATING   domestic_gross  cluster 
------------------------------  -------  ---------------  --------
-Rogue One: A Star Wars Story        85        532.17732  1       
-The Book of Life                    82         50.15154  2       
-Milk                                94         31.84130  2       
-Criminal                            69         14.70870  2       
-Frida                               76         25.88500  2       
-Elysium                             67         93.05012  3       
-Contraband                          51         66.52800  3       
-The Terminal                        61         77.07396  3       
-Open Range                          79         58.33125  3       
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; TITLE &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; RATING &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; domestic_gross &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; cluster &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Rogue One: A Star Wars Story &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 85 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 532.17732 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; The Book of Life &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 82 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.15154 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Milk &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31.84130 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Criminal &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.70870 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Frida &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 76 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.88500 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Elysium &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 93.05012 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Contraband &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 51 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 66.52800 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; The Terminal &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 77.07396 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Open Range &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 79 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 58.33125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 ---
 
 ## Visualizing model result
 
-![](intro_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+&lt;img src="intro_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -350,7 +673,9 @@ To make the plot and clustering more interpretable, let's annotate the graph wit
 
 - In the k-means algorithm, each group of movies is represented by an average rating and an average domestic gross. 
 
-- What we can do is find the movie in each group that is closest to the average and use that movie title to annotate each group in the plot.
+--
+
+- Find the movie in each group that is closest to the average and use that movie title to annotate each group in the plot.
 
 
 
@@ -358,7 +683,7 @@ To make the plot and clustering more interpretable, let's annotate the graph wit
 
 ### Visualizing model result
 
-![](intro_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+&lt;img src="intro_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -396,17 +721,46 @@ Let's test it with Gael García Bernal:
 
 
 
-
-RATING   TITLE                                                CREDIT               BOX OFFICE    YEAR
--------  ---------------------------------------------------  -------------------  -----------  -----
-30%      Salt and Fire                                        Dr. Fabio Cavani     —             2017
-75%      You're Killing Me Susana (Me estás matando Susana)   Eligio               —             2017
-94%      Neruda                                               Oscar Peluchonneau   $1M           2016
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; RATING &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; TITLE &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; CREDIT &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; BOX OFFICE &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; YEAR &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No Score Yet &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Viva - A vida é uma festa &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Hector &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2017 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 97% &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Coco &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Hector &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $192M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2017 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 31% &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Salt and Fire &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Dr. Fabio Cavani &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2017 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 ---
-
+class: split-40
 ## Abstracting the analysis
 
+.column[
 We can then write functions for each of the steps we did with Diego Luna before.
 
 
@@ -429,8 +783,11 @@ We can then write functions for each of the steps we did with Diego Luna before.
 ```r
 analyze_actor("Gael Garcia Bernal")
 ```
+]
 
+.column[
 ![](intro_files/figure-html/test_bbg-1.png)&lt;!-- --&gt;
+]
 
 ---
 
@@ -451,6 +808,10 @@ In this analysis we saw examples of the common steps and operations in a data an
 
 2) Data manipulation: we integrated data from multiple sources to prepare our analysis
 
+---
+
+## Summary
+
 3) Data visualization: we made plots to explore patterns in our data
 
 4) Data modeling: we made a model to capture the grouping patterns in data automatically, using visualization to explore the results of this modeling
@@ -461,9 +822,17 @@ In this analysis we saw examples of the common steps and operations in a data an
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
-"countIncrementalSlides": false
+"countIncrementalSlides": false,
+"ratio": "16:9"
 });
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});</script>
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
+(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
