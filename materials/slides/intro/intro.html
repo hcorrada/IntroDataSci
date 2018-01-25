@@ -32,6 +32,12 @@ CMSC320: 2018-01-25
 
 
 
+## Business First
+
+Course Webpage: http://bit.ly/hcb-ids
+
+---
+
 ## What is Data Science?
 
 Data science encapsulates the interdisciplinary activities required to create data-centric artifacts and applications that address specific scientific, socio-political, business, or other questions.
@@ -150,6 +156,7 @@ Issues of fairness and transparency in the current era of big data are especiall
 
 ---
 
+
 ## Data Science in Society
 
 In all settings, issues of ethical collection of data, application of models, and deployment of data-centric artifacts are essential to grapple with. 
@@ -157,6 +164,142 @@ In all settings, issues of ethical collection of data, application of models, an
 Issues of privacy are equally important.
 
 ---
+class: split-50
+
+## Data Science in Society
+
+.column[
+.center[.image-70[![](img/moneyball1.png)]]
+]
+
+--
+
+.column[
+.center[.image-50[![](img/moneyball2.png)]]
+]
+
+---
+class: split-50
+
+## Data Science in Society
+
+.column[
+In the early 2000's the Oakland A's were winning as much as teams with much bigger payrolls by evaluating players using data differently than other teams.
+]
+
+.column[
+.image-50[![](img/moneyball3.png)]
+]
+
+---
+## Data Science in Society
+
+### Data Journalism
+
+[http:://fivethirtyeight.com](http:://fivethirtyeight.com)
+
+&lt;iframe src="http://fivethirtyeight.com/" width="100%" height="400px"&gt;&lt;/iframe&gt;
+
+---
+
+## Data Science in Society
+
+### Data Journalism
+
+[http://www.nytimes.com/section/upshot](http://www.nytimes.com/section/upshot)
+
+&lt;iframe src="http://www.nytimes.com/section/upshot" width="100%" height="400px"&gt;&lt;/iframe&gt;
+
+---
+layout: true
+## Data Science in Society
+
+---
+
+### The story of the Netflix Prize
+
+In October 2006 Netflix announced a prize around their movie recommendation engine. 
+
+--
+
+Supervised Machine Learning (ML) task: 
+
+- Dataset of users and their ratings, (1,2,3,4 or 5 stars), of movies they have rated. 
+- Build an ML model that given predicts a specific user's rating to a movie they have not rated. 
+
+--
+
+They can recommend movies to users if they predict high rating.
+
+---
+
+Netflix would award $1M for the first ML system that provided a 10% improvement to their existing system
+
+---
+class: split-30
+
+.column[
+Existing system had a 0.9514 mean squared error
+]
+
+.column[
+.image-60[![Netflix Challenge 3 week leaderboard](img/netflix1.png)
+]]
+
+---
+class: split-30
+
+.column[
+Within three weeks, at least 40 teams had improved upon the existing Netflix system. 
+
+The top teams were showing improvement over 5%. 
+]
+
+.column[
+.image-60[![Netflix Challenge 3 week leaderboard](img/netflix1.png)
+]]
+
+---
+class: split-50
+
+## Machine Learning
+
+.column[
+Self driving cars make use of ML models for sensor processing. 
+]
+
+.column[
+.image-50[.center[![](img/tesla.jpeg)]]
+]
+
+---
+class: split-50
+
+## Machine Learning
+
+.column[
+Image recognition software uses ML to identify individuals in photos. 
+]
+
+.column[
+.image-50[![](img/face_recognition.jpeg)]
+]
+
+---
+class: split-50
+
+## Machine Learning
+
+.column[
+ML models have been applied to medical imaging to yield expert-level prognosis. 
+]
+
+.column[
+.image-50[![](img/pathology.png)]
+]
+
+---
+layout: false
 
 ## Course organization
 
@@ -316,16 +459,68 @@ For this analysis we need to get the movies Diego Luna was in, along with their 
 
 
 
-
- RATING  TITLE                                CREDIT                  BOX OFFICE    YEAR
--------  -----------------------------------  ----------------------  -----------  -----
-     85  Rogue One: A Star Wars Story         Captain Cassian Andor   $532.2M       2016
-     89  Blood Father                         Jonah                   —             2016
-     82  The Book of Life                     Manolo                  —             2014
-    100  I Stay with You (Me quedo contigo)   Actor                   —             2014
-     67  Elysium                              Julio                   $90.8M        2013
-     41  Casa de mi padre                     Raul                    $5.9M         2012
-     51  Contraband                           Gonzalo                 $66.5M        2012
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; RATING &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; TITLE &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; CREDIT &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; BOX OFFICE &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; YEAR &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 85 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Rogue One: A Star Wars Story &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Captain Cassian Andor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $532.2M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2016 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 89 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Blood Father &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Jonah &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2016 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 82 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; The Book of Life &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Manolo &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2014 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; I Stay with You (Me quedo contigo) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Actor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2014 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Elysium &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Julio &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $90.8M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2013 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 41 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Casa de mi padre &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Raul &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $5.9M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2012 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 51 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Contraband &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Gonzalo &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $66.5M &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2012 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 This data includes, for each of the movies Diego Luna has acted in, the rotten tomatoes rating, the movie title, Diego Luna's role in the movie, the U.S. domestic gross and the year of release.
 

@@ -40,6 +40,12 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(cache=TRUE)
 ```
 
+## Business First
+
+Course Webpage: http://bit.ly/hcb-ids
+
+---
+
 ## What is Data Science?
 
 Data science encapsulates the interdisciplinary activities required to create data-centric artifacts and applications that address specific scientific, socio-political, business, or other questions.
@@ -158,6 +164,7 @@ Issues of fairness and transparency in the current era of big data are especiall
 
 ---
 
+
 ## Data Science in Society
 
 In all settings, issues of ethical collection of data, application of models, and deployment of data-centric artifacts are essential to grapple with. 
@@ -165,6 +172,147 @@ In all settings, issues of ethical collection of data, application of models, an
 Issues of privacy are equally important.
 
 ---
+class: split-50
+
+## Data Science in Society
+
+.column[
+.center[.image-70[![](img/moneyball1.png)]]
+]
+
+--
+
+.column[
+.center[.image-50[![](img/moneyball2.png)]]
+]
+
+---
+class: split-50
+
+## Data Science in Society
+
+.column[
+In the early 2000's the Oakland A's were winning as much as teams with much bigger payrolls by evaluating players using data differently than other teams.
+]
+
+.column[
+.image-50[![](img/moneyball3.png)]
+]
+
+---
+## Data Science in Society
+
+### Data Journalism
+
+[http:://fivethirtyeight.com](http:://fivethirtyeight.com)
+
+```{r five38, echo=FALSE}
+knitr::include_url("http://fivethirtyeight.com/")
+```
+
+---
+
+## Data Science in Society
+
+### Data Journalism
+
+[http://www.nytimes.com/section/upshot](http://www.nytimes.com/section/upshot)
+
+```{r upshot, echo=FALSE}
+knitr::include_url("http://www.nytimes.com/section/upshot"
+)
+```
+
+---
+layout: true
+## Data Science in Society
+
+---
+
+### The story of the Netflix Prize
+
+In October 2006 Netflix announced a prize around their movie recommendation engine. 
+
+--
+
+Supervised Machine Learning (ML) task: 
+
+- Dataset of users and their ratings, (1,2,3,4 or 5 stars), of movies they have rated. 
+- Build an ML model that given predicts a specific user's rating to a movie they have not rated. 
+
+--
+
+They can recommend movies to users if they predict high rating.
+
+---
+
+Netflix would award $1M for the first ML system that provided a 10% improvement to their existing system
+
+---
+class: split-30
+
+.column[
+Existing system had a 0.9514 mean squared error
+]
+
+.column[
+.image-60[![Netflix Challenge 3 week leaderboard](img/netflix1.png)
+]]
+
+---
+class: split-30
+
+.column[
+Within three weeks, at least 40 teams had improved upon the existing Netflix system. 
+
+The top teams were showing improvement over 5%. 
+]
+
+.column[
+.image-60[![Netflix Challenge 3 week leaderboard](img/netflix1.png)
+]]
+
+---
+class: split-50
+
+## Machine Learning
+
+.column[
+Self driving cars make use of ML models for sensor processing. 
+]
+
+.column[
+.image-50[.center[![](img/tesla.jpeg)]]
+]
+
+---
+class: split-50
+
+## Machine Learning
+
+.column[
+Image recognition software uses ML to identify individuals in photos. 
+]
+
+.column[
+.image-50[![](img/face_recognition.jpeg)]
+]
+
+---
+class: split-50
+
+## Machine Learning
+
+.column[
+ML models have been applied to medical imaging to yield expert-level prognosis. 
+]
+
+.column[
+.image-50[![](img/pathology.png)]
+]
+
+---
+layout: false
 
 ## Course organization
 
@@ -357,7 +505,7 @@ clean_dl_tab <- dl_tab %>%
 ```
 
 ```{r, echo=FALSE}
-clean_dl_tab %>% head(7) %>% knitr::kable()
+clean_dl_tab %>% head(7) %>% knitr::kable("html")
 ```
 
 This data includes, for each of the movies Diego Luna has acted in, the rotten tomatoes rating, the movie title, Diego Luna's role in the movie, the U.S. domestic gross and the year of release.
