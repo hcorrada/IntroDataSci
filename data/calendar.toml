@@ -3,7 +3,7 @@ date = "1/25"
 
 [[day01.covers]]
 title = "What is Data Science, Course Introduction and Logistics"
-# notes = "lecture-note/introduction/"
+notes = "bookdown-notes/introduction-and-overview.html"
 
 [day02]
 date = "1/30"
@@ -19,9 +19,9 @@ title = "Preliminaries 1: Measurement and data types"
 [[day02.covers]]
 title = "Preliminaries 2: Basic data operations"
 
-[[day02.prep]]
-title = "Setting up R"
-# link = "homeworks/rocker/"
+# [[day02.prep]]
+# title = "Setting up R"
+# # link = "homeworks/rocker/"
 
 [day03]
 date = "2/1"
