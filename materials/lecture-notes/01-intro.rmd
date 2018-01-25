@@ -37,10 +37,10 @@ The granularity, size and accessibility data, comprising both physical, social, 
 > Hal Varian
 (http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers)
 
-## Data Science in Humanities and Social Sciences
+## Data Science in Society
 
 Because of the large amount of data produced across many
-spheres of human social and creative activity, many questions in the humanities and social sciences may be addressed by establishing patterns in data. In the humanities, this can range from unproblematic quesitions of how to dissect a large creative corpora, say music, literature, based on raw characteristics of those works, text, sound and image. To more problematic questions, of analysis of intent, understanding, appreciation and valuation of these creative corpora.
+spheres of human social and creative activity, many societal questions may be addressed by establishing patterns in data. In the humanities, this can range from unproblematic quesitions of how to dissect a large creative corpora, say music, literature, based on raw characteristics of those works, text, sound and image. To more problematic questions, of analysis of intent, understanding, appreciation and valuation of these creative corpora.
 
 In the social sciences, issues of fairness and transparency in the current era of big data are especially problematic. Is data collected representative of population for which inferences are drawn? Are methods employed learning latent unfair factors from ostensibly fair data? These are issues that the research community is now starting to address.
 
@@ -48,29 +48,51 @@ In all settings, issues of ethical collection of data, application of models, an
 
 ## Course organization
 
-This course will cover basics of how to use the R data analysis environment for data science activities in humanities and social science. The general organization of the course will be the following:
+This course will cover basics of how to represent, model and communicate about data and data analyses using the R data analysis environment for Data Science. 
 
-### Day 1: Introduction and preparation
+The course is roughly divided into five areas:
 
-- Get ourselved settled with R
-- Formulating a question that can be addressed with data
-- How to get data to address a specific question
-- How to manipulate this data to get to what we need for our question of interest
-- How to visualize this data 
-
-### Day 2: Use cases
-
-- Social media analysis: text and network structures
-- Fitting and evaluating regression models in R
-- Text analysis
-- Machine Learning modeling in R
-- Survey analysis 
-- Nested models in R
-
-### Day 3: Presentation and teaching
-
-- How to present and publish analysis using R
-- Using R in teaching
+- Area 0: tools and skills  
+  ○ Toolset (Rstudio/tidyverse/rmarkdown)  
+  ○ Best practices  
+  ○ Debugging data science  
+- Area I: types and operations  
+  ○ Data tables and data types  
+  ○ Operations on tables  
+  ○ Basic plotting  
+  ○ Tidy data / the ER model  
+  ○ Relational Operations  
+  ○ SQL  
+  ○ Advanced: other data models, db consistency and concurrency  
+- Area II: wrangling  
+  ○ Data acquisition (load and scrape)  
+  ○ EDA Vis / grammar of graphics  
+  ○ Data cleaning (text, dates)  
+  ○ EDA: Summary statistics  
+  ○ Data analysis with optimization (derivatives)  
+  ○ Data transformations  
+  ○ Missing data  
+- Area III: modeling  
+  ○ Univariate probability and statistics  
+  ○ Hypothesis testing  
+  ○ Multivariate probablity and statistics (joint and conditional probability, Bayes thm)  
+  ○ Data Analysis with geometry (vectors, inner products,  gradients and matrices)  
+  ○ Linear regression  
+  ○ Logistic regression  
+  ○ Gradient descent (batch and stochastic)  
+  ○ Trees and random forests  
+  ○ K-NN  
+  ○ Naïve Bayes  
+  ○ Clustering  
+  ○ PCA  
+- Area IV: essential applications  
+  ○ Text mining  
+  ○ Graphs  
+  ○ Forecasting  
+- Area V: communication  
+  ○ Designing data visualizations for communication not exploration  
+  ○ Interactive visualization  
+  ○ Writing about data, analysis, and inferences  
 
 ## General Workflow
 
@@ -118,4 +140,5 @@ The data science activities we will cover are roughly organized into a general w
 - Where will it be hosted? 
 - Who will use it?
 - Who will maintain it?
+
 
