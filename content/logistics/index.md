@@ -59,7 +59,8 @@ In case of an extended emergency closure, announcements on policy and procedures
 There is no required textbook, the [lecture notes]({{< baseurl >}}/lecture-notes/) will serve as the primary material. However, we will be drawing heavily from these sources:
 
 *  [G. Grolemund and H. Wickham. R for Data Science](http://r4ds.had.co.nz/).  
-*  [G. James, D. Witten, T. Hastie and R. Tibshirani. Introduction to Statistical Learning with Applications in R. Springer 2013.](http://www-bcf.usc.edu/~gareth/ISL/). A free PDF of this book can be downloaded at their site.  
+*  [G. James, D. Witten, T. Hastie and R. Tibshirani. Introduction to Statistical Learning with Applications in R. Springer 2013.](http://www-bcf.usc.edu/~gareth/ISL/). A free PDF of this book can be downloaded at their site. 
+*  [P. Bruce and A. Bruce. Practical Statistics for Data Scientists](http://shop.oreilly.com/product/0636920048992.do)  
 *  [N. Zumel and J. Mount. Practical Data Science with R. Manning Publications Co. 2014](http://www.manning.com/zumel/).   
 
 Additional readings will be posted in ELMS [{{< elmurl >}}]({{< elmurl >}}).
@@ -124,6 +125,9 @@ libraries, data resources and publishing mechanisms.
 
 Policies relevant to Undergraduate Courses are found here: http://ugst.umd.edu/courserelatedpolicies.html. Topics that are addressed in these various policies include academic integrity, student and instructor conduct, accessibility and accommodations, attendance and excused absences, grades and appeals, copyright and intellectual property.
 
+## Academic Integrity
+
+Academic integrity is an essential part of your educational program. Please find more information about academic integrity policies in the Computer Science Department here: [http://www.cs.umd.edu/class/resources/academicIntegrity.html](http://www.cs.umd.edu/class/resources/academicIntegrity.html)
 
 ## Course evaluations
 
