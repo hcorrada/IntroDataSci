@@ -1,12 +1,10 @@
 # Principles: Basic Operations
 
-## Data Frame Operations (1)
-
 Now that we have a data frame describing our data, let's learn a few fundamental operations we perform on data frames on almost any analysis. We divide these first set of operations into two groups: operations on _attributes_ and operations on _entitites_. These operations are defined in the `dplyr` package, part of the `tidyverse`, and are described in more detail in the "R for Data Science" textbook available in the course logistics page: http://r4ds.had.co.nz/transform.html.
 
-### Operations that select attributes
+## Operations that select attributes
 
-#### `select`
+### `select`
 
 In our data set we have a large number of attributes describing each arrest. Now, suppose we only want to study patterns in these arrests based on a smaller number of attributes for purposes of efficiency, since we would operate over less data, or interpretability. In that case we would like to create a data frame that contains only those attributes of interest. We use the `select` function for this.
 
@@ -65,6 +63,112 @@ select(arrest_tab, age, sex, arrest_date=arrestDate)
 ```
 
 Also like `select`, the result of calling `rename` is a data frame. In fact, this will be the case for almost all operations in the `tidyverse` they operate on data frames (specified as the first argument in the function call) and return data frames.
+
+## Operations that select entities
+
+Next, we look at operations that select entities from a data frame. We will see a few operations to do this: selecting specific entities (rows) by position, selecting them based on attribute properties, and random sampling.
+
+![](img/subset.png)
+
+### `slice`
+
+We can choose specific entities by their row position. For instance, to choose entities in rows 1,3 and 10, we would use the following:
+
+```{r slice}
+slice(arrest_tab, c(1, 3, 10))
+```
+
+As before, the first argument is the data frame to operate on. The second argument is a _vector_ of indices. We used the `c` function (for concatenate) to create a vector of indices.
+
+We can also use the range operator here:
+
+```{r slice_range}
+slice(arrest_tab, 1:5)
+```
+
+To create general sequences of indices we would use the `seq` function. For example, to select entities in even positions we would use the following:
+
+```{r slice_even}
+slice(arrest_tab, seq(2, nrow(arrest_tab), by=2))
+```
+
+### `filter`
+
+We can also select entities based on attribute properties. For example, to select arrests where age is less than 18 years old, we would use the following:
+
+```{r filter}
+filter(arrest_tab, age < 18)
+```
+
+You know by now what the first argument is...
+
+The second argument is an expression that evaluates to a logical value (`TRUE` or `FALSE`), if the expression evaluates to TRUE for a given entity (row) then that entity (row) is part of the resulting data frame. Operators used frequently include:
+
+`==`, `!=`: tests equality and inequality respectively (categorical, numerical, datetimes, etc.)  
+`<`, `>`, `<=`, `>=`: tests order relationships for ordered data types (not categorical)  
+`!`, `&`, `|`: not, and, or, logical operators
+
+To select arrests with ages between 18 and 25 we can use
+
+```{r filter_and}
+filter(arrest_tab, age >= 18 & age <= 25)
+```
+
+The filter function can take multiple logical expressions. In this case they are combined with `&`. So the above is equivalent to
+
+```{r filter_and2}
+filter(arrest_tab, age >= 18, age <= 25)
+```
+
+### `sample_n` and `sample_frac`
+
+Frequently we will want to choose entities from a data frame at random. The `sample_n` function selects a specific number of entities at random:
+
+```{r sample_n}
+sample_n(arrest_tab, 10)
+```
+
+The `sample_frac` function selects a fraction of entitites at random:
+
+```{r sample_frac}
+sample_frac(arrest_tab, .1)
+```
+
+## Pipelines of operations
+
+All of the functions implementing our first set of operations have the same arguemnt/value structure. They take a data frame as a first argument and return a data frame. We refer to this as the _data-->transform-->data_ pattern. This is the core a lot of what we will do in class as part of data analyses. Specifically, we will combine operations into _pipelines_ that manipulate data frames.
+
+The `dplyr` package introduces _syntactic sugar_ to make this pattern explicit. For instance, we can rewrite the `sample_frac` example using the "pipe" operator `%>%`:
+
+```{r sample_frac_pipe}
+arrest_tab %>%
+  sample_frac(.1)
+```
+
+The `%>%` binary operator takes the value to its **left** and inserts it as the first argument of the function call to its **right**. So the expression `LHS %>% f(another_argument)` is **equivalent** to the expression `f(LHS, another_argument)`. 
+
+Using the `%>%` operator and the _data-->transform-->data_ pattern of the functions we've seen so far, we can create pipelines. For example, let's create a pipeline that:
+
+1) filters our dataset to arrests between the ages of 18 and 25
+2) selects attributes `sex`, `district` and `arrestDate` (renamed as `arrest_date`)
+3) samples 50% of those arrests at random
+
+We will assign the result to variable `analysis_tab`
+
+```{r pipeline}
+analysis_tab <- arrest_tab %>%
+  filter(age >= 18, age <= 25) %>%
+  select(sex, district, arrest_date=arrestDate) %>%
+  sample_frac(.5)
+analysis_tab
+```
+
+
+
+
+
+
+
 
 
 

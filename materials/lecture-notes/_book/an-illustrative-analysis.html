@@ -169,9 +169,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.9" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#units"><i class="fa fa-check"></i><b>5.9</b> Units</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html"><i class="fa fa-check"></i><b>6</b> Principles: Basic Operations</a><ul>
-<li class="chapter" data-level="6.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#data-frame-operations-1"><i class="fa fa-check"></i><b>6.1</b> Data Frame Operations (1)</a><ul>
-<li class="chapter" data-level="6.1.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-attributes"><i class="fa fa-check"></i><b>6.1.1</b> Operations that select attributes</a></li>
+<li class="chapter" data-level="6.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-attributes"><i class="fa fa-check"></i><b>6.1</b> Operations that select attributes</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#select"><i class="fa fa-check"></i><b>6.1.1</b> <code>select</code></a></li>
 <li class="chapter" data-level="6.1.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#rename"><i class="fa fa-check"></i><b>6.1.2</b> <code>rename</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-entities"><i class="fa fa-check"></i><b>6.2</b> Operations that select entities</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#slice"><i class="fa fa-check"></i><b>6.2.1</b> <code>slice</code></a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -370,12 +373,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </table>
 <p>This data is for 5358 movies, including its release date, title, production budget and total gross revenue. The latter two are in millions of U.S. dollars.</p>
 <p>One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. To do this, we can make a plot of domestic gross, which we are using for the subsequent analyses.</p>
-<pre><code>## Loading required package: methods</code></pre>
-<pre><code>## 
-## Attaching package: &#39;lubridate&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:base&#39;:
-## 
-##     date</code></pre>
 <p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-4-1.svg" width="672" /></p>
 <p>Although we don’t know for sure, since the source of our data does not state this specifically, it looks like the domestic gross measurement is not inflation adjusted since gross increases over time.</p>
 </div>
