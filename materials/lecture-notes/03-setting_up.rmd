@@ -3,6 +3,17 @@
 Here we setup R, RStudio and anything else
 we will use in the course.
 
+## Some history
+
+R is an offspring of S, a language created in AT&T Labs by John Chambers (now at Stanford) and others in 1976 with the goal of creating an environment for statistical computing and data analysis. The standard for the language in current use was settled in 1998. That same year, "S" won the ACM Software System award, awarded to software systems "that have a lasting influence, reflected in contributions to concepts, in commercial acceptance, or both".
+
+In 1991, Robert Gentleman and Ross Ihaka created R to provide an open source implementation of the S language and environment. They also redesigned the language to enforce lexical scoping rules. It has been maintained by the R core group since 1997, and in 2015 an R consortium, including Microsoft, Google, and others, was created.
+
+Along with Python it is one of the most popular environments for data analysis (e.g., figure below from [KDNuggets 2017 software survey](https://www.kdnuggets.com/2017/05/poll-analytics-data-science-machine-learning-software-leaders.html)
+
+![](img/kdnuggets-2017.jpg)
+
+We use R for this class because we find that besides it being a state-of-the-art data analysis environment, it provides a clean end-to-end platform for teaching material across the data management-modeling-communication spectrum that we study in class. However, be aware that as you move on in the Data Science field you most likely will need to add Python to your toolbelt.
 
 ## Setting up R
 
@@ -142,6 +153,14 @@ In Rstudio, you can use the _Packages_ tab:
 ![](img/rstudio_install_packages.png)
 
 **On your own:** Install the following additional packages which we will use later on: `rvest`, `stringr`, `nycflights13` and `broom`.
+
+## Additional R resources
+
+Resources for learning and reading about R are listed in our [here](http://www.hcbravo.org/IntroDataScience/resources/). Of note are the [swirl project](http://swirlstats.com/) and DataCamp's [introduction to R] course.
+
+## Literate Programming
+
+One last note before we get started. R has great support for [literate programming](http://en.wikipedia.org/wiki/Literate_programming), where source code that contains both code, the result of evaluating that code, and text explaining that code co-exist in a single document. This is extremely valuable in data analysis, as many choices made by data analysts are worth explaning in text, and interpretation of the results of analyses can co-exist with the computations used in that analysis. This document you are reading contains both text and code. In class, we will use [Rmarkdown](http://rmarkdown.rstudio.com/) for this purpose.
 
 ## Finishing your setup
 

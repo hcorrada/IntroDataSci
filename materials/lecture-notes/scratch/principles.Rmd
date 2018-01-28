@@ -1,0 +1,380 @@
+On large, complex, datasets the ability to perform this selection based on properties of column/attribute names is very powerful. For instance, in the `billboard` dataset we saw in a previous unit, we can select columns using partial string matching:
+  
+  ```{r, eval=FALSE}
+billboard %>%
+  select(starts_with("wk"))
+```
+
+
+### Operations that select entitites
+
+
+## Indexing
+
+A basic operation in data analysis is selecting subsets of a dataset. For that we can use a few alternative options for _indexing_ into datasets.
+
+```{r}
+# to obtain the value in the first row, fifth column:
+arrest_tab[1,5]
+
+# note that indexing in R is 1-based, not 0-based, so the first row is indexed by 1
+
+# now we want to do a bit more, so let's say we want the value in the fifth column of our dataset for the first 10 rows. For that we can use slice notation:
+arrest_tab[1:10,5]
+
+# similarly, to obtain the value in the first five columns of the first row
+arrest_tab[1,1:5]
+
+# what is the class of the value when we subset a single column?
+class(arrest_tab[1:10,5])
+
+# what is the class of the value when we subset a single row?
+class(arrest_tab[1,1:5])
+
+# what do we get with this indexing?
+arrest_tab[1:10,1:5]
+```
+
+We can index any set of rows or columns by constructing _vectors_ of integers. In fact, the slice notation `:` is essentially doing that for a sequence of consecutive indices. You should think of vectors as lists of values with the same class.
+
+If we want non-consecutive indices we have other options (e.g., the `c` function, for "concatenate")
+
+```{r}
+# non-consecutive indices using c
+arrest_tab[c(2,4,7,10), 1:5]
+
+# here's a fun one, when we call columns for a subset of rows
+arrest_tab[c(2,4,7,10), ]
+
+# there is also the `seq` function, to create sequences
+arrest_tab[seq(from=1,to=10), seq(1,10)]
+
+# that is equivalent to 
+arrest_tab[1:10,1:10]
+
+# with the `seq` function you can do more sophisticated things like select only entries in odd rows (1,3,5,7...)
+head(arrest_tab[seq(from=1,to=nrow(arrest_tab),by=2), ])
+```
+
+Now, since columns have names, we can also use strings (and vectors of strings) to index data frames.
+
+```{r}
+# single column
+arrest_tab[1:10, "age"]
+
+# multiple columns
+arrest_tab[1:10, c("age", "sex", "race")]
+```
+
+If we wanted a single named column from a data frame there's a special operator `$` to index:
+
+```{r}
+# first ten values of the age column
+arrest_tab$age[1:10]
+
+# EXERCISE
+# try using three different ways of selecting rows 20 to 30 # of the "sex" column
+```
+
+In addition to integer indices or names, we can use vectors of logical values for indexing. 
+
+```{r}
+# rows 2,4,7 and 10 using logical indices
+arrest_tab[c(FALSE,TRUE,FALSE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,TRUE,rep(FALSE,nrow(arrest_tab)-10)),]
+
+# now here's a fun one, if we only wanted odd rows
+head(arrest_tab[c(TRUE,FALSE),])
+```
+
+The last example shows one of the most common gotchas in R. Indices are recycled. For instance if selecting rows, if you pass a logical vector that's shorter than the number of rows  in the data frame, the vector will be recycled as many times as necessary to match the number of rows in the dataset. Now, why is this useful, because a pithy index vector can let you select easily. Why is this bad, because errors in code can go easily unnoticed. So in this case, the price of ease of use is paid by the programmer by having to think a lot more carefully about their code (this is a theme in R programming...)
+
+The utility of logical indexing is that now we can select rows based on a property of its values for a given column
+
+```{r}
+# select rows for entities younger than 21 years old
+head(arrest_tab[arrest_tab$age < 21, ])
+
+# notice that the value of expression `arrest_tab$age < 21` # is a logical vector
+
+# select entities (arrests) occuring in Mount Washington,
+# a specific neighborhood in Baltimore
+head(arrest_tab[arrest_tab$neighborhood == "Mount Washington",])
+
+# how about arrests where subjects are under 21 in Mount  Washington? 
+# use a logical `and` operator
+indices <- arrest_tab$age < 21 & arrest_tab$neighborhood == "Mount Washington"
+```
+
+
+
+## Exploration
+
+R has built-in functions that help easily obtain summary information about datasets. For instance:
+  
+  ```{r}
+summary(arrest_tab$sex)
+summary(arrest_tab$race)
+
+# well that seems problematic
+# let's rename columns to correct that
+colnames(arrest_tab)[3:4] <- c("race", "sex")
+```
+
+We can also ask other useful type of summaries
+
+```{r}
+# What is the average age in arrests?
+mean(arrest_tab$age)
+
+# Median age?
+median(arrest_tab$age)
+
+# what types of offenses are there
+summary(arrest_tab$incidentOffense)
+
+# what does summary looks like for continuous attributes?
+summary(arrest_tab$age)
+```
+
+Combining this type of summary with our indexing strategies we learned previously we can ask more specific questions
+
+```{r}
+# What is the average age for arrests in Mount Washington?
+mount_washington_index <- arrest_tab$neighborhood == "Mount Washington"
+
+mean(arrest_tab$age[mount_washington_index], na.rm=TRUE)
+
+# How about the number of arrests in Mount Washington _stratified_ by race and sex?
+table(arrest_tab$race[mount_washington_index], arrest_tab$sex[mount_washington_index])
+
+# how about a graphical summary of arrest ages in Mount Washington?
+# we'll use a boxplot
+boxplot(arrest_tab$age[mount_washington_index])
+
+# can we do the same stratified by sex?
+boxplot(arrest_tab$age[mount_washington_index]~arrest_tab$sex[mount_washington_index])
+```
+
+This used a very useful notation in R: the tilde, `~` which we will encounter in a few different places. One way of thinking about that abstractly is, do something with this attribute, as a function (or depending on, stratified by, conditioned on) this other attribute. For instance, "plot `age` as a function of sex" in our example.
+
+Let's write code that's a little cleaner for that last plot,
+and let's also make the plot a bit more useful by adding a title and axis labels:
+
+```{r}
+mount_washington_tab <- arrest_tab[mount_washington_index,]
+boxplot(mount_washington_tab$age~mount_washington_tab$sex,
+main="Mt. Washington", 
+xlab="Sex", ylab="Arrest Age")
+```
+
+Here's one more useful plot:
+  
+  ```{r}
+barplot(table(mount_washington_tab$race), 
+        xlab="Number of Arrests",
+        ylab="Race")
+```
+
+## Functions
+
+Now suppose we wanted to do a similar analysis for other neighborhoods. In that case we should encapsulate the summaries and plots we want to do in a function:
+  
+  ```{r}
+analyze_neighborhood <- function(neighborhood) {
+  neighborhood_index <- arrest_tab$neighborhood == neighborhood
+  neighborhood_tab <- arrest_tab[neighborhood_index,]
+  
+  boxplot(neighborhood_tab$age~neighborhood_tab$sex,
+          main = neighborhood,
+          xlab = "Sex", ylab="Arrest Age")
+  
+  barplot(table(neighborhood_tab$race),
+          main = neighborhood,
+          xlab = "Race", ylab="Number of Arrests")
+}
+```
+
+Now we can use that function to make our plots for specific neighborhoods
+
+```{r}
+analyze_neighborhood("Mount Washington")
+analyze_neighborhood("Hampden")
+```
+
+## A note on data types
+
+This dataset contains data of types commonly found in data analyses
+
+- Numeric (continuous): A numeric measurement (e.g., height)  
+- Numeric (discrete): Usually obtained from counting, think only integers (e.g., `age` which is measured in years)  
+- Categorical: One of a possible set of values (e.g., `sex`)  
+- Datetime: Date and time of some event or observation (e.g., `arrestDate`, `arrestTime`)  
+- geolocation: Latitude and Longitude of some event or observation (e.g., `Location.`)  
+
+The distinction between continuous and discrete is a bit tricky since measurements that have finite precision must be discrete. So, the difference really comes up when we build statistical models of datasets for analysis. For now, think of discrete data as the result of counting, and continuous data the result of some physical measurement.
+
+We said that R is designed for data analysis. My favorite example of how that manifests itself is the `factor` datatype. If you look at your dataset now, `arrest_tab$sex` is a vector of strings:
+  
+  ```{r}
+class(arrest_tab$sex)
+summary(arrest_tab$sex)
+```
+
+However, as a measurement, or attribute, it should only take one of two values (or three depending on how you record missing, unknown or unspecified). So, in R, that categorical data type is called a _factor_. Notice what the `summary` function does after turning the `sex` attribute into a _factor_:
+  
+  ```{r}
+arrest_tab$sex <- factor(arrest_tab$sex)
+summary(arrest_tab$sex)
+```
+
+This distinction shows up in many other places where functions have very different behavior when called on a vector of strings and when called on a factor (e.g., functions that make plots, or functions that learn statistical models).
+
+One last note, the possible values a _factor_ can take are called _levels_:
+  
+  ```{r}
+levels(arrest_tab$sex)
+```
+
+Exercise: you should transform the `race` attribute into a factor as well. How many levels does it have?
+  
+  ## Thinking in vectors
+  
+  In data analysis the _vector_ is probably the most fundamental data type (other than basic numbers, strings, etc.). Why? Consider getting data about one attribute, say height, for a group of people. What do you get, an array of numbers, all in the same unit (say feet, inches or centimeters). How about their name? Then you get an array of strings. Abstractly, we think of vectors as arrays of values, all of the same _class_ or datatype. 
+
+In our dataset, each column, corresponding to an attribute, is a vector:
+  
+  ```{r}
+# the 'str' function gives a bit more low-level information about objects
+str(arrest_tab$Location)
+```
+
+R (and other data analysis languages) are designed to operate on vectors easily. For example, frequently we want to do some kind of transformation to a data attribute, say record age in months rather than years. Then we would perform the **same operation** for every value in the corresponding vector:
+  
+  ```{r}
+age_in_months <- arrest_tab$age * 12
+```
+
+In a language that doesn't support this type of vectorized operation, you would use a loop, or similar construct, to perform this operation.
+
+Another type of transformation frequently done is to combine attributes into a single attribute. Suppose we wanted to combine the `arrestLocation` and `neighborhood` attributes into an `address` attribute:
+
+```{r}
+# remember you can always find out what a function does by using ?paste
+head(paste(arrest_tab$arrestLocation, arrest_tab$neighborhood, sep=", "))
+```
+
+Here the `paste` function concatenates strings element-wise: the first string in `arrestLocation` is concatenated with the first string in `neighborhood`, etc.
+
+Arithmetic operations have the same element-wise operation:
+
+```{r}
+# add first 10 odd numbers to first 10 even numbers
+seq(1, 20, by=2) + seq(2, 20, by=2)
+```
+
+## Lists vs. vectors
+
+We saw that vectors are arrays of values, all of the same _class_. R also allows arrays of values that have different _class_ or datatype. These are called _lists_. Here is a list containing a string, and a couple of numbers:
+
+```{r}
+my_list <- list("Hector", 40, 71)
+my_list
+```
+
+Indexing in lists uses different syntax from the indexing we saw before. To index an element in a list we would use a double-bracket `[[`. 
+
+```{r}
+my_list[[1]]
+```
+
+In contrast, the single bracket `[` indexes a _part_ of the list, and thus returns another list.
+
+```{r}
+my_list[1]
+```
+
+That way we can use slice notation and other operations we saw when indexing vectors as before, but we get lists as results.
+
+```{r}
+my_list[1:2]
+```
+
+List elements can have names as well:
+
+```{r}
+named_list <- list(person="Hector", age=40, height=71)
+named_list
+```
+
+Which we can use to index elements as well (both with `[[` and `$`)
+
+```{r}
+named_list[["person"]]
+named_list$person
+```
+
+Lists can hold arbitrary objects as elements. For example you can have a vector of strings as an element in a list
+
+```{r}
+my_list <- list(person=c("Hector", "Ringo", "Paul", "John"), 40, 71)
+my_list
+```
+
+Now, we come to a momentous occassion in understanding R. `data.frame`s are special instances of _lists_! But, in this case, every element in the list is a vector, and all vectors have exactly the same length. So `arrest_tab$age` indexes the named element `age` in the list `arrest_tab`!
+
+The pattern of _applying_ functions to entries in vectors also holds for elements in lists. So, if we want to calculate smallest value for every attribute in our dataset, we could do something like this:
+
+```{r}
+sapply(arrest_tab, function(v) sort(v)[1])
+```
+
+## Making the process explicit with pipes
+
+We've discussed the idea of thinking about data analysis work in terms of "pipelines", where
+we start from data of a certain shape (e.g., a `data.frame`) and apply transformations (functions) to obtain data that contains the computation we want. Consider the following example seen in class:
+  
+  _What is the mean age of males arrested in the SOUTHERN district?_
+
+We can frame the answer to this question as a series of data transformations to get the answer we are looking for:
+  
+  ```{r}
+# filter data to observations we need
+index_vector <- arrest_tab$sex == "M" & arrest_tab$district == "SOUTHERN"
+tmp <- arrest_tab[index_vector,]
+
+# select the attribute/column we need
+tmp <- tmp[["age"]]
+
+# compute statistic required
+mean(tmp, na.rm=TRUE)
+```
+
+Let's rewrite this using functions to illustrate the point
+
+```{r}
+filter_data <- function(data) {
+index_vector <- data$sex == "M" & data$district == "SOUTHERN"
+data[index_vector,]
+}
+
+select_column <- function(data, column) {
+data[[column]]
+}
+
+tmp <- filter_data(arrest_tab)
+tmp <- select_column(tmp, "age")
+mean(tmp, na.rm=TRUE)
+```
+
+So, this pattern of _data-->transform-->data_ becomes clearer when written that way.
+
+The `dplyr` package introduces _syntactic sugar_ to make this explicit. We can write the above snippet using the "pipe" operator `%>%`:
+
+```{r}
+arrest_tab %>%
+filter_data() %>%
+select_column("age") %>%
+mean(na.rm=TRUE)
+```
+
+The `%>%` binary operator takes the value to its **left** and inserts it as the first argument of the function call to its **right**. So the expression `LHS %>% f(another_argument)` is **equivalent** to the expression `f(LHS, another_argument)`. We will see this pattern extensively in class because it explicitly presents the way we want to organize many of our data analysis tasks.
