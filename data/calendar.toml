@@ -5,6 +5,10 @@ date = "1/25"
 title = "What is Data Science, Course Introduction and Logistics"
 notes = "bookdown-notes/introduction-and-overview.html"
 
+[[day01.covers]]
+title = "The Movie Taxonomy Analysis"
+notes = "bookdown-notes/an-illustrative-analysis.html"
+
 [day02]
 date = "1/30"
 
