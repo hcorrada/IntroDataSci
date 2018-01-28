@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Lecture Notes: Introduction to Data Science</title>
+  <meta name="description" content="Lecture Notes: Introduction to Data Science">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lecture Notes: Introduction to Data Science" />
+  
+  
+  
+
+<meta name="author" content="Héctor Corrada Bravo">
+
+
+<meta name="date" content="2018-01-28">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="measurements-and-data-types.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="http://bit.ly/hcb-ids">CMSC320 Intro. Data Science</a></li>
+<li><a href="http://www.hcbravo.org">Hector Corrada Bravo</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html"><i class="fa fa-check"></i><b>2</b> Introduction and Overview</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#what-is-data-science"><i class="fa fa-check"></i><b>2.1</b> What is Data Science?</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data"><i class="fa fa-check"></i><b>2.1.1</b> Data</a></li>
+<li class="chapter" data-level="2.1.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#specific-questions"><i class="fa fa-check"></i><b>2.1.2</b> Specific Questions</a></li>
+<li class="chapter" data-level="2.1.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#interdisciplinary-activities"><i class="fa fa-check"></i><b>2.1.3</b> Interdisciplinary Activities</a></li>
+<li class="chapter" data-level="2.1.4" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data-centric-artifacts-and-applications"><i class="fa fa-check"></i><b>2.1.4</b> Data-Centric Artifacts and Applications</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#why-data-science"><i class="fa fa-check"></i><b>2.2</b> Why Data Science?</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data-science-in-society"><i class="fa fa-check"></i><b>2.3</b> Data Science in Society</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#course-organization"><i class="fa fa-check"></i><b>2.4</b> Course Organization</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#general-workflow"><i class="fa fa-check"></i><b>2.5</b> General Workflow</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#defining-the-goal"><i class="fa fa-check"></i><b>2.5.1</b> Defining the Goal</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data-collection-and-management"><i class="fa fa-check"></i><b>2.5.2</b> Data Collection and Management</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#modeling"><i class="fa fa-check"></i><b>2.5.3</b> Modeling</a></li>
+<li class="chapter" data-level="2.5.4" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#model-evaluation"><i class="fa fa-check"></i><b>2.5.4</b> Model Evaluation</a></li>
+<li class="chapter" data-level="2.5.5" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#presentation"><i class="fa fa-check"></i><b>2.5.5</b> Presentation</a></li>
+<li class="chapter" data-level="2.5.6" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#deployment"><i class="fa fa-check"></i><b>2.5.6</b> Deployment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html"><i class="fa fa-check"></i><b>3</b> An Illustrative Analysis</a><ul>
+<li class="chapter" data-level="3.1" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#gathering-data"><i class="fa fa-check"></i><b>3.1</b> Gathering data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#movie-ratings"><i class="fa fa-check"></i><b>3.1.1</b> Movie ratings</a></li>
+<li class="chapter" data-level="3.1.2" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#movie-budgets-and-revenue"><i class="fa fa-check"></i><b>3.1.2</b> Movie budgets and revenue</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#manipulating-the-data"><i class="fa fa-check"></i><b>3.2</b> Manipulating the data</a></li>
+<li class="chapter" data-level="3.3" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-the-data"><i class="fa fa-check"></i><b>3.3</b> Visualizing the data</a></li>
+<li class="chapter" data-level="3.4" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#modeling-data"><i class="fa fa-check"></i><b>3.4</b> Modeling data</a></li>
+<li class="chapter" data-level="3.5" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-model-result"><i class="fa fa-check"></i><b>3.5</b> Visualizing model result</a></li>
+<li class="chapter" data-level="3.6" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#abstracting-the-analysis"><i class="fa fa-check"></i><b>3.6</b> Abstracting the analysis</a></li>
+<li class="chapter" data-level="3.7" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#making-analyses-accessible"><i class="fa fa-check"></i><b>3.7</b> Making analyses accessible</a></li>
+<li class="chapter" data-level="3.8" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#summary"><i class="fa fa-check"></i><b>3.8</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the R Data Science Toolbox</a><ul>
+<li class="chapter" data-level="4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1</b> Some history</a></li>
+<li class="chapter" data-level="4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.2</b> Setting up R</a></li>
+<li class="chapter" data-level="4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.3</b> Setting up Rstudio</a></li>
+<li class="chapter" data-level="4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.4</b> A first look at Rstudio</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.4.1</b> Interactive Console</a></li>
+<li class="chapter" data-level="4.4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.4.2</b> Data Viewer</a></li>
+<li class="chapter" data-level="4.4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.4.3</b> Names, values and functions</a></li>
+<li class="chapter" data-level="4.4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.4.4</b> Plotting</a></li>
+<li class="chapter" data-level="4.4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.4.5</b> Editor</a></li>
+<li class="chapter" data-level="4.4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.4.6</b> Files viewer</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.5</b> R packages</a></li>
+<li class="chapter" data-level="4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.6</b> Additional R resources</a></li>
+<li class="chapter" data-level="4.7" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.7</b> Literate Programming</a></li>
+<li class="chapter" data-level="4.8" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#finishing-your-setup"><i class="fa fa-check"></i><b>4.8</b> Finishing your setup</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html"><i class="fa fa-check"></i><b>5</b> Measurements and Data Types</a><ul>
+<li class="chapter" data-level="5.1" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#a-data-analysis-to-get-us-going"><i class="fa fa-check"></i><b>5.1</b> A data analysis to get us going</a></li>
+<li class="chapter" data-level="5.2" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#getting-data"><i class="fa fa-check"></i><b>5.2</b> Getting data</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#names-values-and-functions-1"><i class="fa fa-check"></i><b>5.2.1</b> Names, values and functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#entities-and-attributes"><i class="fa fa-check"></i><b>5.3</b> Entities and attributes</a></li>
+<li class="chapter" data-level="5.4" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#categorical-attributes"><i class="fa fa-check"></i><b>5.4</b> Categorical attributes</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#factors-in-r"><i class="fa fa-check"></i><b>5.4.1</b> Factors in R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#discrete-numeric-attributes"><i class="fa fa-check"></i><b>5.5</b> Discrete numeric attributes</a></li>
+<li class="chapter" data-level="5.6" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#continuous-numeric-data"><i class="fa fa-check"></i><b>5.6</b> Continuous numeric data</a></li>
+<li class="chapter" data-level="5.7" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#other-examples"><i class="fa fa-check"></i><b>5.7</b> Other examples</a></li>
+<li class="chapter" data-level="5.8" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#other-important-datatypes"><i class="fa fa-check"></i><b>5.8</b> Other important datatypes</a></li>
+<li class="chapter" data-level="5.9" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#units"><i class="fa fa-check"></i><b>5.9</b> Units</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html"><i class="fa fa-check"></i><b>6</b> Principles: Basic Operations</a><ul>
+<li class="chapter" data-level="6.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-attributes"><i class="fa fa-check"></i><b>6.1</b> Operations that select attributes</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#select"><i class="fa fa-check"></i><b>6.1.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="6.1.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#rename"><i class="fa fa-check"></i><b>6.1.2</b> <code>rename</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-entities"><i class="fa fa-check"></i><b>6.2</b> Operations that select entities</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#slice"><i class="fa fa-check"></i><b>6.2.1</b> <code>slice</code></a></li>
+<li class="chapter" data-level="6.2.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#filter"><i class="fa fa-check"></i><b>6.2.2</b> <code>filter</code></a></li>
+<li class="chapter" data-level="6.2.3" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#sample_n-and-sample_frac"><i class="fa fa-check"></i><b>6.2.3</b> <code>sample_n</code> and <code>sample_frac</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#pipelines-of-operations"><i class="fa fa-check"></i><b>6.3</b> Pipelines of operations</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lecture Notes: Introduction to Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="principles-basic-operations" class="section level1">
+<h1><span class="header-section-number">6</span> Principles: Basic Operations</h1>
+<p>Now that we have a data frame describing our data, let’s learn a few fundamental operations we perform on data frames on almost any analysis. We divide these first set of operations into two groups: operations on <em>attributes</em> and operations on <em>entitites</em>. These operations are defined in the <code>dplyr</code> package, part of the <code>tidyverse</code>, and are described in more detail in the “R for Data Science” textbook available in the course logistics page: <a href="http://r4ds.had.co.nz/transform.html" class="uri">http://r4ds.had.co.nz/transform.html</a>.</p>
+<div id="operations-that-select-attributes" class="section level2">
+<h2><span class="header-section-number">6.1</span> Operations that select attributes</h2>
+<div id="select" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> <code>select</code></h3>
+<p>In our data set we have a large number of attributes describing each arrest. Now, suppose we only want to study patterns in these arrests based on a smaller number of attributes for purposes of efficiency, since we would operate over less data, or interpretability. In that case we would like to create a data frame that contains only those attributes of interest. We use the <code>select</code> function for this.</p>
+<div class="figure">
+<img src="img/select.png" />
+
+</div>
+<p>Let’s create a data frame containing only the <code>age</code>, <code>sex</code> and <code>district</code> attributes</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(arrest_tab, age, sex, district)</code></pre></div>
+<pre><code>## # A tibble: 104,528 x 3
+##      age sex   district    
+##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;       
+##  1    23 M     &lt;NA&gt;        
+##  2    37 M     SOUTHERN    
+##  3    46 M     NORTHEASTERN
+##  4    50 M     WESTERN     
+##  5    33 M     NORTHERN    
+##  6    41 M     SOUTHERN    
+##  7    29 M     WESTERN     
+##  8    20 M     NORTHEASTERN
+##  9    24 M     &lt;NA&gt;        
+## 10    53 M     NORTHWESTERN
+## # ... with 104,518 more rows</code></pre>
+<p>The first argument to the <code>select</code> function is the data frame we want to operate on, the remaining arguments describe the attributes we want to include in the resulting data frame.</p>
+<p>Note a few other things:</p>
+<ol style="list-style-type: decimal">
+<li><p>The first argument to <code>select</code> is a data frame, and the value returned by <code>select</code> is also a data frame</p></li>
+<li><p>As always you can learn more about the function using <code>?select</code></p></li>
+</ol>
+<p>Attribute descriptor arguments can be fairly sophisticated. For example, we can use positive integers to indicate attribute (column) indices:</p>
+<p><code>r   select(arrest_tab, 1, 3, 4)</code></p>
+<p><code>## # A tibble: 104,528 x 3   ##      arrest race  sex     ##       &lt;int&gt; &lt;chr&gt; &lt;fct&gt;   ##  1 11126858 B     M       ##  2 11127013 B     M       ##  3 11126887 B     M       ##  4 11126873 B     M       ##  5 11126968 B     M       ##  6 11127041 B     M       ##  7 11126932 B     M       ##  8 11126940 W     M       ##  9 11127051 B     M       ## 10 11127018 B     M       ## # ... with 104,518 more rows</code></p>
+<p>R includes a useful operator to describe ranges. E.g., <code>1:5</code> would be attributes 1 through 5:</p>
+<p><code>r   select(arrest_tab, 1:5)</code></p>
+<p><code>## # A tibble: 104,528 x 5   ##      arrest   age race  sex   arrestDate   ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;        ##  1 11126858    23 B     M     01/01/2011   ##  2 11127013    37 B     M     01/01/2011   ##  3 11126887    46 B     M     01/01/2011   ##  4 11126873    50 B     M     01/01/2011   ##  5 11126968    33 B     M     01/01/2011   ##  6 11127041    41 B     M     01/01/2011   ##  7 11126932    29 B     M     01/01/2011   ##  8 11126940    20 W     M     01/01/2011   ##  9 11127051    24 B     M     01/01/2011   ## 10 11127018    53 B     M     01/01/2011   ## # ... with 104,518 more rows</code></p>
+<p>We can also use other helper functions to create attribute descriptors. For example, to choose all attributes that begin with the letter <code>a</code> we can the <code>starts_with</code> function which uses partial string matching:</p>
+<p><code>r   select(arrest_tab, starts_with(&quot;a&quot;))</code></p>
+<p><code>## # A tibble: 104,528 x 5   ##      arrest   age arrestDate arrestTime arrestLocation         ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                  ##  1 11126858    23 01/01/2011 00'00&quot;     &lt;NA&gt;                   ##  2 11127013    37 01/01/2011 01'00&quot;     2000 Wilkens Ave       ##  3 11126887    46 01/01/2011 01'00&quot;     2800 Mayfield Ave      ##  4 11126873    50 01/01/2011 04'00&quot;     2100 Ashburton St      ##  5 11126968    33 01/01/2011 05'00&quot;     4000 Wilsby Ave        ##  6 11127041    41 01/01/2011 05'00&quot;     2900 Spellman Rd       ##  7 11126932    29 01/01/2011 05'00&quot;     800 N Monroe St        ##  8 11126940    20 01/01/2011 05'00&quot;     5200 Moravia Rd        ##  9 11127051    24 01/01/2011 07'00&quot;     2400 Gainsdbourgh Ct   ## 10 11127018    53 01/01/2011 15'00&quot;     3300 Woodland Ave      ## # ... with 104,518 more rows</code></p>
+<p>We can also use the attribute descriptor arguments to <em>drop</em> attributes. For instance using descriptor <code>-age</code> returns the arrest data frame with all but the <code>age</code> attribute included:</p>
+<p><code>r   select(arrest_tab, -age)</code></p>
+<p><code>## # A tibble: 104,528 x 14   ##    arrest race  sex   arrestDate arrestTime arrestLocation incidentOffense   ##     &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;          &lt;chr&gt;             ##  1 1.11e⁷ B     M     01/01/2011 00'00&quot;     &lt;NA&gt;           Unknown Offense   ##  2 1.11e⁷ B     M     01/01/2011 01'00&quot;     2000 Wilkens … 79-Other          ##  3 1.11e⁷ B     M     01/01/2011 01'00&quot;     2800 Mayfield… Unknown Offense   ##  4 1.11e⁷ B     M     01/01/2011 04'00&quot;     2100 Ashburto… 79-Other          ##  5 1.11e⁷ B     M     01/01/2011 05'00&quot;     4000 Wilsby A… Unknown Offense   ##  6 1.11e⁷ B     M     01/01/2011 05'00&quot;     2900 Spellman… 81-Recovered P…   ##  7 1.11e⁷ B     M     01/01/2011 05'00&quot;     800 N Monroe … 79-Other          ##  8 1.11e⁷ W     M     01/01/2011 05'00&quot;     5200 Moravia … Unknown Offense   ##  9 1.11e⁷ B     M     01/01/2011 07'00&quot;     2400 Gainsdbo… 54-Armed Person   ## 10 1.11e⁷ B     M     01/01/2011 15'00&quot;     3300 Woodland… 54-Armed Person   ## # ... with 104,518 more rows, and 7 more variables: incidentLocation   ## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post   ## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></p>
+</div>
+<div id="rename" class="section level3">
+<h3><span class="header-section-number">6.1.2</span> <code>rename</code></h3>
+<p>To improve interpretability during an analysis we may want to rename attributes. We use the <code>rename</code> function for this:</p>
+<p><code>r   rename(arrest_tab, arrest_date=arrestDate)</code></p>
+<p><code>## # A tibble: 104,528 x 15   ##      arrest   age race  sex   arrest_date arrestTime arrestLocation         ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;       &lt;time&gt;     &lt;chr&gt;                  ##  1 11126858    23 B     M     01/01/2011  00'00&quot;     &lt;NA&gt;                   ##  2 11127013    37 B     M     01/01/2011  01'00&quot;     2000 Wilkens Ave       ##  3 11126887    46 B     M     01/01/2011  01'00&quot;     2800 Mayfield Ave      ##  4 11126873    50 B     M     01/01/2011  04'00&quot;     2100 Ashburton St      ##  5 11126968    33 B     M     01/01/2011  05'00&quot;     4000 Wilsby Ave        ##  6 11127041    41 B     M     01/01/2011  05'00&quot;     2900 Spellman Rd       ##  7 11126932    29 B     M     01/01/2011  05'00&quot;     800 N Monroe St        ##  8 11126940    20 W     M     01/01/2011  05'00&quot;     5200 Moravia Rd        ##  9 11127051    24 B     M     01/01/2011  07'00&quot;     2400 Gainsdbourgh Ct   ## 10 11127018    53 B     M     01/01/2011  15'00&quot;     3300 Woodland Ave      ## # ... with 104,518 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,   ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,   ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></p>
+<p>Like <code>select</code>, the first argument to the function is the data frame we are operating on. The remaining arguemnts specify attributes to rename and the name they will have in the resulting data frame. Note that arguments in this case are <em>named</em> (have the form <code>lhs=rhs</code>). We can have selection <em>and</em> renaming by using named arguments in <code>select</code>:</p>
+<p><code>r   select(arrest_tab, age, sex, arrest_date=arrestDate)</code></p>
+<p><code>## # A tibble: 104,528 x 3   ##      age sex   arrest_date   ##    &lt;int&gt; &lt;fct&gt; &lt;chr&gt;         ##  1    23 M     01/01/2011    ##  2    37 M     01/01/2011    ##  3    46 M     01/01/2011    ##  4    50 M     01/01/2011    ##  5    33 M     01/01/2011    ##  6    41 M     01/01/2011    ##  7    29 M     01/01/2011    ##  8    20 M     01/01/2011    ##  9    24 M     01/01/2011    ## 10    53 M     01/01/2011    ## # ... with 104,518 more rows</code></p>
+<p>Also like <code>select</code>, the result of calling <code>rename</code> is a data frame. In fact, this will be the case for almost all operations in the <code>tidyverse</code> they operate on data frames (specified as the first argument in the function call) and return data frames.</p>
+</div>
+</div>
+<div id="operations-that-select-entities" class="section level2">
+<h2><span class="header-section-number">6.2</span> Operations that select entities</h2>
+<p>Next, we look at operations that select entities from a data frame. We will see a few operations to do this: selecting specific entities (rows) by position, selecting them based on attribute properties, and random sampling.</p>
+<div class="figure">
+<img src="img/subset.png" />
+
+</div>
+<div id="slice" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> <code>slice</code></h3>
+<p>We can choose specific entities by their row position. For instance, to choose entities in rows 1,3 and 10, we would use the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">slice</span>(arrest_tab, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">10</span>))</code></pre></div>
+<pre><code>## # A tibble: 3 x 15
+##     arrest   age race  sex   arrestDate arrestTime arrestLocation   
+##      &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
+## 1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;             
+## 2 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave
+## 3 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>As before, the first argument is the data frame to operate on. The second argument is a <em>vector</em> of indices. We used the <code>c</code> function (for concatenate) to create a vector of indices.</p>
+<p>We can also use the range operator here:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">slice</span>(arrest_tab, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</code></pre></div>
+<pre><code>## # A tibble: 5 x 15
+##     arrest   age race  sex   arrestDate arrestTime arrestLocation   
+##      &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
+## 1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;             
+## 2 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave 
+## 3 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave
+## 4 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St
+## 5 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave  
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>To create general sequences of indices we would use the <code>seq</code> function. For example, to select entities in even positions we would use the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">slice</span>(arrest_tab, <span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">nrow</span>(arrest_tab), <span class="dt">by=</span><span class="dv">2</span>))</code></pre></div>
+<pre><code>## # A tibble: 52,264 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation     
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;              
+##  1 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave   
+##  2 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St  
+##  3 11127041    41 B     M     01/01/2011 05&#39;00&quot;     2900 Spellman Rd   
+##  4 11126940    20 W     M     01/01/2011 05&#39;00&quot;     5200 Moravia Rd    
+##  5 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave  
+##  6 11126892    25 B     M     01/01/2011 20&#39;00&quot;     2800 Violet Ave    
+##  7 11126970    50 B     M     01/01/2011 40&#39;00&quot;     2600 Oswego Ave    
+##  8 11126929    40 B     M     01/01/2011 40&#39;00&quot;     3900 Greenmount Ave
+##  9 11126930    30 B     M     01/01/2011 40&#39;00&quot;     900 N Calhoun St   
+## 10 11126960    53 B     M     01/01/2011 40&#39;00&quot;     900 N Calhoun St   
+## # ... with 52,254 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+</div>
+<div id="filter" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> <code>filter</code></h3>
+<p>We can also select entities based on attribute properties. For example, to select arrests where age is less than 18 years old, we would use the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(arrest_tab, age <span class="op">&lt;</span><span class="st"> </span><span class="dv">18</span>)</code></pre></div>
+<pre><code>## # A tibble: 463 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation   
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
+##  1 11127698    17 B     M     01/03/2011 15:00      &lt;NA&gt;             
+##  2 11130540    17 B     M     01/07/2011 18:40      500 N Athol St   
+##  3 11131601    17 A     M     01/10/2011 22:00      &lt;NA&gt;             
+##  4 11133119    17 B     M     01/13/2011 01:00      &lt;NA&gt;             
+##  5 11133667    17 B     F     01/13/2011 13:40      1400 N Wilmer Ct 
+##  6 11133622    17 B     M     01/13/2011 18:40      1400 Wilmer St   
+##  7 11135112    14 B     M     01/17/2011 21:57      &lt;NA&gt;             
+##  8 11135776    17 B     M     01/18/2011 15:00      &lt;NA&gt;             
+##  9 11135897    17 B     M     01/18/2011 15:26      900 Seagull Ave  
+## 10 11135844    16 B     M     01/18/2011 16:00      2300 N Charles St
+## # ... with 453 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>You know by now what the first argument is…</p>
+<p>The second argument is an expression that evaluates to a logical value (<code>TRUE</code> or <code>FALSE</code>), if the expression evaluates to TRUE for a given entity (row) then that entity (row) is part of the resulting data frame. Operators used frequently include:</p>
+<p><code>==</code>, <code>!=</code>: tests equality and inequality respectively (categorical, numerical, datetimes, etc.)<br />
+<code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>: tests order relationships for ordered data types (not categorical)<br />
+<code>!</code>, <code>&amp;</code>, <code>|</code>: not, and, or, logical operators</p>
+<p>To select arrests with ages between 18 and 25 we can use</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(arrest_tab, age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>)</code></pre></div>
+<pre><code>## # A tibble: 35,770 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11126858    23 B     M     01/01/2011 00:00      &lt;NA&gt;                
+##  2 11126940    20 W     M     01/01/2011 00:05      5200 Moravia Rd     
+##  3 11127051    24 B     M     01/01/2011 00:07      2400 Gainsdbourgh Ct
+##  4 11126892    25 B     M     01/01/2011 00:20      2800 Violet Ave     
+##  5 11126963    24 B     M     01/01/2011 00:40      3900 Greenmount Ave 
+##  6 11126942    20 B     M     01/01/2011 01:22      1900 Ashburton Ave  
+##  7 11127087    23 B     M     01/01/2011 01:30      2600 Aisquith St    
+##  8 11127065    22 A     M     01/01/2011 01:40      &lt;NA&gt;                
+##  9 11126941    20 W     M     01/01/2011 02:00      300 S Bentalou St   
+## 10 11126955    20 B     M     01/01/2011 02:20      900 Myrtle Ave      
+## # ... with 35,760 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>The filter function can take multiple logical expressions. In this case they are combined with <code>&amp;</code>. So the above is equivalent to</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(arrest_tab, age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span>, age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>)</code></pre></div>
+<pre><code>## # A tibble: 35,770 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11126858    23 B     M     01/01/2011 00:00      &lt;NA&gt;                
+##  2 11126940    20 W     M     01/01/2011 00:05      5200 Moravia Rd     
+##  3 11127051    24 B     M     01/01/2011 00:07      2400 Gainsdbourgh Ct
+##  4 11126892    25 B     M     01/01/2011 00:20      2800 Violet Ave     
+##  5 11126963    24 B     M     01/01/2011 00:40      3900 Greenmount Ave 
+##  6 11126942    20 B     M     01/01/2011 01:22      1900 Ashburton Ave  
+##  7 11127087    23 B     M     01/01/2011 01:30      2600 Aisquith St    
+##  8 11127065    22 A     M     01/01/2011 01:40      &lt;NA&gt;                
+##  9 11126941    20 W     M     01/01/2011 02:00      300 S Bentalou St   
+## 10 11126955    20 B     M     01/01/2011 02:20      900 Myrtle Ave      
+## # ... with 35,760 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+</div>
+<div id="sample_n-and-sample_frac" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> <code>sample_n</code> and <code>sample_frac</code></h3>
+<p>Frequently we will want to choose entities from a data frame at random. The <code>sample_n</code> function selects a specific number of entities at random:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_n</span>(arrest_tab, <span class="dv">10</span>)</code></pre></div>
+<pre><code>## # A tibble: 10 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation       
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                
+##  1 11265307    18 B     M     07/10/2011 20:40      900 N Mount St       
+##  2 11152748    35 B     F     02/15/2011 15:30      2500 Harford Rd      
+##  3 12482094    20 B     M     05/21/2012 10:00      3200 Ravenwood Rd    
+##  4 12490296    20 B     M     06/04/2012 13:30      2600 E Hoffman St    
+##  5 12468146    26 B     M     04/28/2012 02:10      300 E Baltimore St   
+##  6 12403326    27 W     M     01/13/2012 14:40      2100 St. Paul St     
+##  7 12511026    52 A     M     07/11/2012 01:12      400 N Highland Ave   
+##  8 11269471    47 B     M     07/14/2011 12:00      400 N Eutaw St       
+##  9 11234336    19 B     M     06/05/2011 20:00      4000 W.Franklin St St
+## 10 11285740    54 B     M     08/02/2011 11:00      2500 Kirk Ave        
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>The <code>sample_frac</code> function selects a fraction of entitites at random:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_frac</span>(arrest_tab, .<span class="dv">1</span>)</code></pre></div>
+<pre><code>## # A tibble: 10,453 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11327003    20 B     M     09/20/2011 20:20      3500 Juneway St     
+##  2 11350514    27 W     M     10/20/2011 02:40      3800 W Northern Pkwy
+##  3 11227700    51 W     M     05/26/2011 16:00      &lt;NA&gt;                
+##  4 11260408    40 B     M     07/05/2011 10:30      2700 Coldspring St  
+##  5 11236655    53 B     M     06/07/2011 19:40      2000 E North Ave    
+##  6 12398650    49 B     M     01/06/2012 07:30      1300 N Woodyear St  
+##  7 11387835    20 U     M     12/15/2011 11:45      900 Alricks St      
+##  8 11126920    32 W     M     01/01/2011 01:23      1100 S Charles St   
+##  9 11128680    55 B     M     01/05/2011 01:25      1100 Edmondson Ave  
+## 10 11274737    43 B     M     07/19/2011 16:00      &lt;NA&gt;                
+## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="pipelines-of-operations" class="section level2">
+<h2><span class="header-section-number">6.3</span> Pipelines of operations</h2>
+<p>All of the functions implementing our first set of operations have the same arguemnt/value structure. They take a data frame as a first argument and return a data frame. We refer to this as the <em>data–&gt;transform–&gt;data</em> pattern. This is the core a lot of what we will do in class as part of data analyses. Specifically, we will combine operations into <em>pipelines</em> that manipulate data frames.</p>
+<p>The <code>dplyr</code> package introduces <em>syntactic sugar</em> to make this pattern explicit. For instance, we can rewrite the <code>sample_frac</code> example using the “pipe” operator <code>%&gt;%</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>)</code></pre></div>
+<pre><code>## # A tibble: 10,453 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation        
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                 
+##  1 11338836    26 B     M     10/04/2011 13:50      1000 Gay St           
+##  2 12579434    44 B     F     10/29/2012 10:58      3000 Lyttleton Rd     
+##  3 11292149    26 B     M     08/09/2011 18:20      800 Bentlou St        
+##  4 11355133    23 B     M     10/26/2011 16:10      4600 Milbrook Rd      
+##  5 12502352    45 B     M     06/24/2012 19:20      2700 Port Covington St
+##  6 11129253    36 B     M     01/05/2011 15:15      3300 E Baltimore St   
+##  7 11326295    51 B     M     09/20/2011 08:00      &lt;NA&gt;                  
+##  8 11244065    28 B     M     06/15/2011 20:00      &lt;NA&gt;                  
+##  9 11136396    24 B     M     01/19/2011 11:30      3500 Park Heights St  
+## 10 12484264    52 B     M     05/24/2012 07:00      0 S Calverton St      
+## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>The <code>%&gt;%</code> binary operator takes the value to its <strong>left</strong> and inserts it as the first argument of the function call to its <strong>right</strong>. So the expression <code>LHS %&gt;% f(another_argument)</code> is <strong>equivalent</strong> to the expression <code>f(LHS, another_argument)</code>.</p>
+<p>Using the <code>%&gt;%</code> operator and the <em>data–&gt;transform–&gt;data</em> pattern of the functions we’ve seen so far, we can create pipelines. For example, let’s create a pipeline that:</p>
+<ol style="list-style-type: decimal">
+<li>filters our dataset to arrests between the ages of 18 and 25</li>
+<li>selects attributes <code>sex</code>, <code>district</code> and <code>arrestDate</code> (renamed as <code>arrest_date</code>)</li>
+<li>samples 50% of those arrests at random</li>
+</ol>
+<p>We will assign the result to variable <code>analysis_tab</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">analysis_tab &lt;-<span class="st"> </span>arrest_tab <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span>, age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(sex, district, <span class="dt">arrest_date=</span>arrestDate) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">5</span>)
+analysis_tab</code></pre></div>
+<pre><code>## # A tibble: 17,885 x 3
+##    sex   district     arrest_date
+##    &lt;fct&gt; &lt;chr&gt;        &lt;chr&gt;      
+##  1 M     WESTERN      04/27/2012 
+##  2 F     NORTHEASTERN 08/03/2011 
+##  3 M     EASTERN      03/12/2012 
+##  4 M     &lt;NA&gt;         09/15/2011 
+##  5 M     &lt;NA&gt;         09/04/2011 
+##  6 M     &lt;NA&gt;         07/09/2012 
+##  7 M     SOUTHWESTERN 07/20/2011 
+##  8 M     &lt;NA&gt;         12/17/2012 
+##  9 M     SOUTHERN     03/09/2012 
+## 10 M     &lt;NA&gt;         07/20/2011 
+## # ... with 17,875 more rows</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="measurements-and-data-types.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+</body>
+
+</html>
