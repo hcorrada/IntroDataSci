@@ -1,0 +1,143 @@
+# R Principles
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+Now that we have our tools ready, let's start doing some analysis. First, let's go over some principles of R as a data analysis environment. R is a computational environment for data analysis. It is designed around a _functional_ language, as opposed to _procedural_ languages like Java or C, that has desirable properties for the type of operations and workflows that are frequently performed in the course of analyzing datasets. In this exercise we will start learning some of those desirable properties while performing an analysis of a real dataset.
+
+## A data analysis to get us going
+
+I'm going to do an analysis of Baltimore crime to guide our discussion of R. We'll use data downloaded from Baltimore City's awesome open data site (this was downloaded a couple of years ago so if you download now, you will get different results). 
+
+The repository for this particular data is here. [https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt](https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt) 
+
+## Getting data
+
+We've prepared the data previously into a comma-separated value file (`.csv` file): each line contains attribute values (separated by commas) describing arrests in the City of Baltimore. The `read_csv` command is part of the `readr` R package and allows you to read a dataset stored in a csv file. This function is extremely versatile, and you can read more about it by using the standard help system in R: `?read_csv`. The result of running calling this function is the data itself, so, by running the function in the console, the result of the function is printed. 
+
+To make use of this dataset we want to assign the result of calling `read_csv` (i.e., the dataset) to a variable:
+
+```{r vars1, message=FALSE}
+library(tidyverse)
+arrest_tab <- read_csv("data/BPD_Arrests.csv")
+arrest_tab
+```
+
+```{r echo=FALSE, eval=FALSE}
+arrest_tab$race <- factor(arrest_tab$race)
+arrest_tab$sex <- factor(arrest_tab$sex)
+arrest_tab$incidentOffense <- factor(arrest_tab$incidentOffense)
+```
+
+Now we can ask what _type_ of value is stored in the `arrest_tab` variable:
+
+```{r type}
+class(arrest_tab)
+```
+
+The `data.frame` is a workhorse data structure in R. It encapsulates the idea of _entities_ (in rows) and _attribute values_ (in columns). The other types `tbl_df` and `tbl` are added by `tidyverse` for improved functionality.
+
+We can ask other features of this dataset:
+
+```{r questions}
+# This is a comment in R, by the way
+
+# How many rows (entities) does this dataset contain?
+nrow(arrest_tab)
+
+# How many columns (attributes)?
+ncol(arrest_tab)
+
+# What are the names of those columns?
+colnames(arrest_tab)
+```
+
+Now, in Rstudio you can view the data frame using `View(arrest_tab)`.
+
+### Names, values and functions
+
+Let's review the concepts of names values and functions again. In the console, we've now written a few instructions, e.g. `View(arrest_tab)`. Let's take a closer look at how these instructions are put together.
+
+**_expressions_**: first of all, we call these instructions _expressions_, which are just text that R can evaluate into a value. `View(arrest_tab)` is an expression.
+
+**_values_**: so, what's a value? They are numbers, strings, data frames, etc. This is the data we will be working with. The number `2` is a value. So is the string `"Hector"`. 
+
+So, what value is produced when R evaluates the expression `View(arrest_tab)`? Nothing, which we also treat as a value. That wasn't very interesting, but it does have a side effect: it shows the `arrest_tab` dataset in the Data viewer. 
+
+How about a simpler expression: `arrest_tab`, what value is produced when R evaluates the expression `arrest_tab`? The data.frame containing that data. Try it out in the console.
+
+**_names_**: so if `arrest_tab` isn't a value, what is it? It is a _name_. We use these to refer to values. So, when we write the expression `arrest_tab`, we tell R we want the _value_ referenced by the name `arrest_tab`, that is, the data itself!
+
+![](img/names_values.png)
+
+**_functions_**: Besides numbers, strings, data frames, etc. another important type of value is the _function_. Functions are a series of instructions that take some input value and produce a different value. The name `View` refers to the function that takes a data frame as input, and displays it in the Data viewer. Functions are called using the parentheses we saw before: `View(arrest_tab)`, the parentheses say that you are passing input `arrest_tab` to the function `View`. We'll see later how we can write our own functions.
+
+## Data Frame Operations (1)
+
+Now that we have a data frame describing our data, let's learn a few fundamental operations we perform on data frames on almost any analysis. We divide these first set of operations into two groups: operations on _attributes_ and operations on _entitites_. These operations are defined in the `dplyr` package, part of the `tidyverse`, and are described in more detail in the "R for Data Science" textbook available in the course logistics page: http://r4ds.had.co.nz/transform.html.
+
+### Operations that select attributes
+
+#### `select`
+
+In our data set we have a large number of attributes describing each arrest. Now, suppose we only want to study patterns in these arrests based on a smaller number of attributes for purposes of efficiency, since we would operate over less data, or interpretability. In that case we would like to create a data frame that contains only those attributes of interest. We use the `select` function for this.
+
+![](img/select.png)
+
+Let's create a data frame containing only the `age`, `sex` and `district` attributes
+
+```{r select_example}
+select(arrest_tab, age, sex, district)
+```
+
+The first argument to the `select` function is the data frame we want to operate on, the remaining arguments describe the attributes we want to include in the resulting data frame. 
+
+Note a few other things:
+
+1) The first argument to `select` is a data frame, and the value returned by `select` is also a data frame
+
+2) As always you can learn more about the function using `?select`
+
+Attribute descriptor arguments can be fairly sophisticated. For example, we can use positive integers to indicate attribute (column) indices:
+
+```{r select_index}
+select(arrest_tab, 1, 3, 4)
+```
+
+R includes a useful operator to describe ranges. E.g., `1:5` would be attributes 1 through 5:
+
+```{r select_range}
+select(arrest_tab, 1:5)
+```
+
+We can also use other helper functions to create attribute descriptors. For example, to choose all attributes that begin with the letter `a` we can the `starts_with` function which uses partial string matching:
+
+```{r select_starts_with}
+select(arrest_tab, starts_with("a"))
+```
+
+We can also use the attribute descriptor arguments to _drop_ attributes. For instance using descriptor `-age` returns the arrest data frame with all but the `age` attribute included:
+
+```{r drop_age}
+select(arrest_tab, -age)
+```
+
+### `rename`
+
+To improve interpretability during an analysis we may want to rename attributes. We use the `rename` function for this:
+
+```{r rename}
+rename(arrest_tab, arrest_date=arrestDate)
+```
+
+Like `select`, the first argument to the function is the data frame we are operating on. The remaining arguemnts specify attributes to rename and the name they will have in the resulting data frame. Note that arguments in this case are _named_ (have the form `lhs=rhs`). We can have selection _and_ renaming by using named arguments in `select`:
+
+```{r rename_select}
+select(arrest_tab, age, sex, arrest_date=arrestDate)
+```
+
+Also like `select`, the result of calling `rename` is a data frame. In fact, this will be the case for almost all operations in the `tidyverse` they operate on data frames (specified as the first argument in the function call) and return data frames.
+
+
+
