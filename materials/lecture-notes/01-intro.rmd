@@ -18,15 +18,15 @@ Seeking to understand a phenomenon, natural, social or other, can we formulate s
 
 Formulating a question, assessing the appropriateness of the data and findings used to find an answer require understanding of the specific subject area. Deciding on the appropriateness of models and inferences made from models based on the data at hand requires understanding of statistical and computational methods.
 
-### Data-centric artifacts and applications
+### Data-Centric Artifacts and Applications
 
-Answers to questions derived from data are usually shared and published in meaningful, succint but sufficient, reproducible artifacts (papers, books, movies, comics). Going a step further, interactive applications that let others explore data, models and inferences are great.
+Answers to questions derived from data are usually shared and published in meaningful, succinct but sufficient, reproducible artifacts (papers, books, movies, comics). Going a step further, interactive applications that let others explore data, models and inferences are great.
 
 ## Why Data Science?
 
 The granularity, size and accessibility data, comprising both physical, social, commercial and political spheres has exploded in the last decade or more. 
 
-> I keep saying that the sexy job in the next 10 years will be statisticians”
+> "I keep saying that the sexy job in the next 10 years will be statisticians”
 
 > Hal Varian, Chief Economist at Google (http://www.nytimes.com/2009/08/06/technology/06stats.html?_r=0)
 
@@ -46,7 +46,7 @@ In the social sciences, issues of fairness and transparency in the current era o
 
 In all settings, issues of ethical collection of data, application of models, and deployment of data-centric artifacts are essential to grapple with. Issues of privacy are equally important.
 
-## Course organization
+## Course Organization
 
 This course will cover basics of how to represent, model and communicate about data and data analyses using the R data analysis environment for Data Science. 
 
@@ -100,7 +100,7 @@ The data science activities we will cover are roughly organized into a general w
 
 ![](img/zumel_mount_cycle.png)
 
-### Defining the goal
+### Defining the Goal
 
 - What is the question/problem?
 - Who wants to answer/solve it?
@@ -108,7 +108,7 @@ The data science activities we will cover are roughly organized into a general w
 - How well can we expect to answer/solve it?
 - How well do they want us to answer/solve it?
 
-### Data collection and Management
+### Data Collection and Management
 
 - What data is available?
 - Is it good enough?
@@ -124,7 +124,7 @@ The data science activities we will cover are roughly organized into a general w
 - Do I have enough data for it?
 - Does it really answer the question?
 
-### Model evaluation
+### Model Evaluation
 
 - Did it work? How well?
 - Can I interpret the model?
