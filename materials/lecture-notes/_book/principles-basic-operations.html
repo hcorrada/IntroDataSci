@@ -169,10 +169,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.9" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#units"><i class="fa fa-check"></i><b>5.9</b> Units</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html"><i class="fa fa-check"></i><b>6</b> Principles: Basic Operations</a><ul>
-<li class="chapter" data-level="6.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#data-frame-operations-1"><i class="fa fa-check"></i><b>6.1</b> Data Frame Operations (1)</a><ul>
-<li class="chapter" data-level="6.1.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-attributes"><i class="fa fa-check"></i><b>6.1.1</b> Operations that select attributes</a></li>
+<li class="chapter" data-level="6.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-attributes"><i class="fa fa-check"></i><b>6.1</b> Operations that select attributes</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#select"><i class="fa fa-check"></i><b>6.1.1</b> <code>select</code></a></li>
 <li class="chapter" data-level="6.1.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#rename"><i class="fa fa-check"></i><b>6.1.2</b> <code>rename</code></a></li>
 </ul></li>
+<li class="chapter" data-level="6.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-entities"><i class="fa fa-check"></i><b>6.2</b> Operations that select entities</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#slice"><i class="fa fa-check"></i><b>6.2.1</b> <code>slice</code></a></li>
+<li class="chapter" data-level="6.2.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#filter"><i class="fa fa-check"></i><b>6.2.2</b> <code>filter</code></a></li>
+<li class="chapter" data-level="6.2.3" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#sample_n-and-sample_frac"><i class="fa fa-check"></i><b>6.2.3</b> <code>sample_n</code> and <code>sample_frac</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#pipelines-of-operations"><i class="fa fa-check"></i><b>6.3</b> Pipelines of operations</a></li>
 </ul></li>
 </ul>
 
@@ -193,13 +199,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="principles-basic-operations" class="section level1">
 <h1><span class="header-section-number">6</span> Principles: Basic Operations</h1>
-<div id="data-frame-operations-1" class="section level2">
-<h2><span class="header-section-number">6.1</span> Data Frame Operations (1)</h2>
 <p>Now that we have a data frame describing our data, let’s learn a few fundamental operations we perform on data frames on almost any analysis. We divide these first set of operations into two groups: operations on <em>attributes</em> and operations on <em>entitites</em>. These operations are defined in the <code>dplyr</code> package, part of the <code>tidyverse</code>, and are described in more detail in the “R for Data Science” textbook available in the course logistics page: <a href="http://r4ds.had.co.nz/transform.html" class="uri">http://r4ds.had.co.nz/transform.html</a>.</p>
-<div id="operations-that-select-attributes" class="section level3">
-<h3><span class="header-section-number">6.1.1</span> Operations that select attributes</h3>
-<div id="select" class="section level4">
-<h4><span class="header-section-number">6.1.1.1</span> <code>select</code></h4>
+<div id="operations-that-select-attributes" class="section level2">
+<h2><span class="header-section-number">6.1</span> Operations that select attributes</h2>
+<div id="select" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> <code>select</code></h3>
 <p>In our data set we have a large number of attributes describing each arrest. Now, suppose we only want to study patterns in these arrests based on a smaller number of attributes for purposes of efficiency, since we would operate over less data, or interpretability. In that case we would like to create a data frame that contains only those attributes of interest. We use the <code>select</code> function for this.</p>
 <div class="figure">
 <img src="img/select.png" />
@@ -209,7 +213,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(arrest_tab, age, sex, district)</code></pre></div>
 <pre><code>## # A tibble: 104,528 x 3
 ##      age sex   district    
-##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;       
+##    &lt;int&gt; &lt;fct&gt; &lt;chr&gt;       
 ##  1    23 M     &lt;NA&gt;        
 ##  2    37 M     SOUTHERN    
 ##  3    46 M     NORTHEASTERN
@@ -240,7 +244,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><code>r   select(arrest_tab, -age)</code></p>
 <p><code>## # A tibble: 104,528 x 14   ##    arrest race  sex   arrestDate arrestTime arrestLocation incidentOffense   ##     &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;          &lt;chr&gt;             ##  1 1.11e⁷ B     M     01/01/2011 00'00&quot;     &lt;NA&gt;           Unknown Offense   ##  2 1.11e⁷ B     M     01/01/2011 01'00&quot;     2000 Wilkens … 79-Other          ##  3 1.11e⁷ B     M     01/01/2011 01'00&quot;     2800 Mayfield… Unknown Offense   ##  4 1.11e⁷ B     M     01/01/2011 04'00&quot;     2100 Ashburto… 79-Other          ##  5 1.11e⁷ B     M     01/01/2011 05'00&quot;     4000 Wilsby A… Unknown Offense   ##  6 1.11e⁷ B     M     01/01/2011 05'00&quot;     2900 Spellman… 81-Recovered P…   ##  7 1.11e⁷ B     M     01/01/2011 05'00&quot;     800 N Monroe … 79-Other          ##  8 1.11e⁷ W     M     01/01/2011 05'00&quot;     5200 Moravia … Unknown Offense   ##  9 1.11e⁷ B     M     01/01/2011 07'00&quot;     2400 Gainsdbo… 54-Armed Person   ## 10 1.11e⁷ B     M     01/01/2011 15'00&quot;     3300 Woodland… 54-Armed Person   ## # ... with 104,518 more rows, and 7 more variables: incidentLocation   ## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post   ## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></p>
 </div>
-</div>
 <div id="rename" class="section level3">
 <h3><span class="header-section-number">6.1.2</span> <code>rename</code></h3>
 <p>To improve interpretability during an analysis we may want to rename attributes. We use the <code>rename</code> function for this:</p>
@@ -250,8 +253,213 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><code>r   select(arrest_tab, age, sex, arrest_date=arrestDate)</code></p>
 <p><code>## # A tibble: 104,528 x 3   ##      age sex   arrest_date   ##    &lt;int&gt; &lt;fct&gt; &lt;chr&gt;         ##  1    23 M     01/01/2011    ##  2    37 M     01/01/2011    ##  3    46 M     01/01/2011    ##  4    50 M     01/01/2011    ##  5    33 M     01/01/2011    ##  6    41 M     01/01/2011    ##  7    29 M     01/01/2011    ##  8    20 M     01/01/2011    ##  9    24 M     01/01/2011    ## 10    53 M     01/01/2011    ## # ... with 104,518 more rows</code></p>
 <p>Also like <code>select</code>, the result of calling <code>rename</code> is a data frame. In fact, this will be the case for almost all operations in the <code>tidyverse</code> they operate on data frames (specified as the first argument in the function call) and return data frames.</p>
+</div>
+</div>
+<div id="operations-that-select-entities" class="section level2">
+<h2><span class="header-section-number">6.2</span> Operations that select entities</h2>
+<p>Next, we look at operations that select entities from a data frame. We will see a few operations to do this: selecting specific entities (rows) by position, selecting them based on attribute properties, and random sampling.</p>
+<div class="figure">
+<img src="img/subset.png" />
 
 </div>
+<div id="slice" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> <code>slice</code></h3>
+<p>We can choose specific entities by their row position. For instance, to choose entities in rows 1,3 and 10, we would use the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">slice</span>(arrest_tab, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">10</span>))</code></pre></div>
+<pre><code>## # A tibble: 3 x 15
+##     arrest   age race  sex   arrestDate arrestTime arrestLocation   
+##      &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
+## 1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;             
+## 2 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave
+## 3 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>As before, the first argument is the data frame to operate on. The second argument is a <em>vector</em> of indices. We used the <code>c</code> function (for concatenate) to create a vector of indices.</p>
+<p>We can also use the range operator here:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">slice</span>(arrest_tab, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</code></pre></div>
+<pre><code>## # A tibble: 5 x 15
+##     arrest   age race  sex   arrestDate arrestTime arrestLocation   
+##      &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
+## 1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;             
+## 2 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave 
+## 3 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave
+## 4 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St
+## 5 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave  
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>To create general sequences of indices we would use the <code>seq</code> function. For example, to select entities in even positions we would use the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">slice</span>(arrest_tab, <span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">nrow</span>(arrest_tab), <span class="dt">by=</span><span class="dv">2</span>))</code></pre></div>
+<pre><code>## # A tibble: 52,264 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation     
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;              
+##  1 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave   
+##  2 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St  
+##  3 11127041    41 B     M     01/01/2011 05&#39;00&quot;     2900 Spellman Rd   
+##  4 11126940    20 W     M     01/01/2011 05&#39;00&quot;     5200 Moravia Rd    
+##  5 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave  
+##  6 11126892    25 B     M     01/01/2011 20&#39;00&quot;     2800 Violet Ave    
+##  7 11126970    50 B     M     01/01/2011 40&#39;00&quot;     2600 Oswego Ave    
+##  8 11126929    40 B     M     01/01/2011 40&#39;00&quot;     3900 Greenmount Ave
+##  9 11126930    30 B     M     01/01/2011 40&#39;00&quot;     900 N Calhoun St   
+## 10 11126960    53 B     M     01/01/2011 40&#39;00&quot;     900 N Calhoun St   
+## # ... with 52,254 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+</div>
+<div id="filter" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> <code>filter</code></h3>
+<p>We can also select entities based on attribute properties. For example, to select arrests where age is less than 18 years old, we would use the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(arrest_tab, age <span class="op">&lt;</span><span class="st"> </span><span class="dv">18</span>)</code></pre></div>
+<pre><code>## # A tibble: 463 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation   
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
+##  1 11127698    17 B     M     01/03/2011 15:00      &lt;NA&gt;             
+##  2 11130540    17 B     M     01/07/2011 18:40      500 N Athol St   
+##  3 11131601    17 A     M     01/10/2011 22:00      &lt;NA&gt;             
+##  4 11133119    17 B     M     01/13/2011 01:00      &lt;NA&gt;             
+##  5 11133667    17 B     F     01/13/2011 13:40      1400 N Wilmer Ct 
+##  6 11133622    17 B     M     01/13/2011 18:40      1400 Wilmer St   
+##  7 11135112    14 B     M     01/17/2011 21:57      &lt;NA&gt;             
+##  8 11135776    17 B     M     01/18/2011 15:00      &lt;NA&gt;             
+##  9 11135897    17 B     M     01/18/2011 15:26      900 Seagull Ave  
+## 10 11135844    16 B     M     01/18/2011 16:00      2300 N Charles St
+## # ... with 453 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>You know by now what the first argument is…</p>
+<p>The second argument is an expression that evaluates to a logical value (<code>TRUE</code> or <code>FALSE</code>), if the expression evaluates to TRUE for a given entity (row) then that entity (row) is part of the resulting data frame. Operators used frequently include:</p>
+<p><code>==</code>, <code>!=</code>: tests equality and inequality respectively (categorical, numerical, datetimes, etc.)<br />
+<code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>: tests order relationships for ordered data types (not categorical)<br />
+<code>!</code>, <code>&amp;</code>, <code>|</code>: not, and, or, logical operators</p>
+<p>To select arrests with ages between 18 and 25 we can use</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(arrest_tab, age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>)</code></pre></div>
+<pre><code>## # A tibble: 35,770 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11126858    23 B     M     01/01/2011 00:00      &lt;NA&gt;                
+##  2 11126940    20 W     M     01/01/2011 00:05      5200 Moravia Rd     
+##  3 11127051    24 B     M     01/01/2011 00:07      2400 Gainsdbourgh Ct
+##  4 11126892    25 B     M     01/01/2011 00:20      2800 Violet Ave     
+##  5 11126963    24 B     M     01/01/2011 00:40      3900 Greenmount Ave 
+##  6 11126942    20 B     M     01/01/2011 01:22      1900 Ashburton Ave  
+##  7 11127087    23 B     M     01/01/2011 01:30      2600 Aisquith St    
+##  8 11127065    22 A     M     01/01/2011 01:40      &lt;NA&gt;                
+##  9 11126941    20 W     M     01/01/2011 02:00      300 S Bentalou St   
+## 10 11126955    20 B     M     01/01/2011 02:20      900 Myrtle Ave      
+## # ... with 35,760 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>The filter function can take multiple logical expressions. In this case they are combined with <code>&amp;</code>. So the above is equivalent to</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(arrest_tab, age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span>, age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>)</code></pre></div>
+<pre><code>## # A tibble: 35,770 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11126858    23 B     M     01/01/2011 00:00      &lt;NA&gt;                
+##  2 11126940    20 W     M     01/01/2011 00:05      5200 Moravia Rd     
+##  3 11127051    24 B     M     01/01/2011 00:07      2400 Gainsdbourgh Ct
+##  4 11126892    25 B     M     01/01/2011 00:20      2800 Violet Ave     
+##  5 11126963    24 B     M     01/01/2011 00:40      3900 Greenmount Ave 
+##  6 11126942    20 B     M     01/01/2011 01:22      1900 Ashburton Ave  
+##  7 11127087    23 B     M     01/01/2011 01:30      2600 Aisquith St    
+##  8 11127065    22 A     M     01/01/2011 01:40      &lt;NA&gt;                
+##  9 11126941    20 W     M     01/01/2011 02:00      300 S Bentalou St   
+## 10 11126955    20 B     M     01/01/2011 02:20      900 Myrtle Ave      
+## # ... with 35,760 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+</div>
+<div id="sample_n-and-sample_frac" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> <code>sample_n</code> and <code>sample_frac</code></h3>
+<p>Frequently we will want to choose entities from a data frame at random. The <code>sample_n</code> function selects a specific number of entities at random:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_n</span>(arrest_tab, <span class="dv">10</span>)</code></pre></div>
+<pre><code>## # A tibble: 10 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11361805    20 B     M     11/04/2011 00:30      4100 Audrey Ave     
+##  2 11373226    26 B     M     11/21/2011 13:46      800 Reservoir St    
+##  3 12496777    46 B     M     06/14/2012 19:40      1700 Mchenry St     
+##  4       NA    32 B     M     02/01/2012 10:00      &lt;NA&gt;                
+##  5 11151275    20 B     F     02/13/2011 01:45      1300 W Baltimore St 
+##  6 11149230    28 B     M     02/10/2011 05:05      1900 E Belvedere Ave
+##  7 11287018    20 B     M     08/03/2011 16:30      &lt;NA&gt;                
+##  8 12432847    43 B     M     03/02/2012 01:20      &lt;NA&gt;                
+##  9 12404334    25 B     M     01/16/2012 17:45      &lt;NA&gt;                
+## 10 11210347    21 B     M     05/04/2011 16:00      2700 Tivoly Ave     
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>The <code>sample_frac</code> function selects a fraction of entitites at random:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_frac</span>(arrest_tab, .<span class="dv">1</span>)</code></pre></div>
+<pre><code>## # A tibble: 10,453 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation     
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;              
+##  1 12429708    61 B     M     02/25/2012 10:45      1100 Laurens St    
+##  2 11217024    22 B     M     05/12/2011 19:40      700 E 22Nd St      
+##  3 12586031    21 B     M     11/12/2012 00:25      3200 Edmondson Ave 
+##  4 12524266    45 B     M     08/01/2012 11:50      3300 E Baltimore St
+##  5 12432054    61 W     M     02/29/2012 22:25      400 E 29Th St      
+##  6 12521306    24 B     M     07/27/2012 02:00      400 E Baltimore St 
+##  7 12593461    18 W     M     11/27/2012 15:00      1400 Edison Hwy    
+##  8 11249294    19 B     M     06/21/2011 19:05      1000 Bethune Rd    
+##  9 11393733    37 B     M     12/27/2011 22:30      200 St Matthews St 
+## 10 12559546    24 U     M     09/26/2012 10:00      1800 Mosher St     
+## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="pipelines-of-operations" class="section level2">
+<h2><span class="header-section-number">6.3</span> Pipelines of operations</h2>
+<p>All of the functions implementing our first set of operations have the same arguemnt/value structure. They take a data frame as a first argument and return a data frame. We refer to this as the <em>data–&gt;transform–&gt;data</em> pattern. This is the core a lot of what we will do in class as part of data analyses. Specifically, we will combine operations into <em>pipelines</em> that manipulate data frames.</p>
+<p>The <code>dplyr</code> package introduces <em>syntactic sugar</em> to make this pattern explicit. For instance, we can rewrite the <code>sample_frac</code> example using the “pipe” operator <code>%&gt;%</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>)</code></pre></div>
+<pre><code>## # A tibble: 10,453 x 15
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation        
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                 
+##  1 12559346    27 B     M     09/25/2012 23:10      2400 Frederick Ave Ave
+##  2       NA    28 B     M     11/12/2011 20:30      &lt;NA&gt;                  
+##  3       NA    18 B     M     03/15/2011 10:24      &lt;NA&gt;                  
+##  4 12518419    27 B     M     07/23/2012 17:15      1300 Aisquith St      
+##  5 11360229    26 B     M     11/02/2011 11:15      800 Stoll St          
+##  6 12453154    27 B     M     04/04/2012 13:00      &lt;NA&gt;                  
+##  7 11382781    21 B     M     12/07/2011 21:38      &lt;NA&gt;                  
+##  8 12598984    52 B     F     12/06/2012 10:55      2500 W Franklin St    
+##  9 12509460    53 B     M     07/07/2012 21:00      &lt;NA&gt;                  
+## 10 11374617    28 B     F     11/23/2011 21:45      2000 Linden Ave       
+## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+<p>The <code>%&gt;%</code> binary operator takes the value to its <strong>left</strong> and inserts it as the first argument of the function call to its <strong>right</strong>. So the expression <code>LHS %&gt;% f(another_argument)</code> is <strong>equivalent</strong> to the expression <code>f(LHS, another_argument)</code>.</p>
+<p>Using the <code>%&gt;%</code> operator and the <em>data–&gt;transform–&gt;data</em> pattern of the functions we’ve seen so far, we can create pipelines. For example, let’s create a pipeline that:</p>
+<ol style="list-style-type: decimal">
+<li>filters our dataset to arrests between the ages of 18 and 25</li>
+<li>selects attributes <code>sex</code>, <code>district</code> and <code>arrestDate</code> (renamed as <code>arrest_date</code>)</li>
+<li>samples 50% of those arrests at random</li>
+</ol>
+<p>We will assign the result to variable <code>analysis_tab</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">analysis_tab &lt;-<span class="st"> </span>arrest_tab <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span>, age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(sex, district, <span class="dt">arrest_date=</span>arrestDate) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">5</span>)
+analysis_tab</code></pre></div>
+<pre><code>## # A tibble: 17,885 x 3
+##    sex   district     arrest_date
+##    &lt;fct&gt; &lt;chr&gt;        &lt;chr&gt;      
+##  1 M     NORTHWESTERN 12/08/2011 
+##  2 M     CENTRAL      07/06/2011 
+##  3 M     &lt;NA&gt;         11/17/2011 
+##  4 M     &lt;NA&gt;         01/23/2012 
+##  5 M     NORTHWESTERN 03/07/2011 
+##  6 M     CENTRAL      05/27/2011 
+##  7 M     &lt;NA&gt;         09/29/2012 
+##  8 M     EASTERN      07/21/2011 
+##  9 M     WESTERN      10/08/2011 
+## 10 M     NORTHWESTERN 11/14/2011 
+## # ... with 17,875 more rows</code></pre>
+
 </div>
 </div>
             </section>
