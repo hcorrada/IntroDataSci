@@ -1,0 +1,70 @@
+# Principles: Basic Operations
+
+## Data Frame Operations (1)
+
+Now that we have a data frame describing our data, let's learn a few fundamental operations we perform on data frames on almost any analysis. We divide these first set of operations into two groups: operations on _attributes_ and operations on _entitites_. These operations are defined in the `dplyr` package, part of the `tidyverse`, and are described in more detail in the "R for Data Science" textbook available in the course logistics page: http://r4ds.had.co.nz/transform.html.
+
+### Operations that select attributes
+
+#### `select`
+
+In our data set we have a large number of attributes describing each arrest. Now, suppose we only want to study patterns in these arrests based on a smaller number of attributes for purposes of efficiency, since we would operate over less data, or interpretability. In that case we would like to create a data frame that contains only those attributes of interest. We use the `select` function for this.
+
+![](img/select.png)
+
+Let's create a data frame containing only the `age`, `sex` and `district` attributes
+
+```{r select_example}
+select(arrest_tab, age, sex, district)
+```
+
+The first argument to the `select` function is the data frame we want to operate on, the remaining arguments describe the attributes we want to include in the resulting data frame. 
+
+Note a few other things:
+  
+  1) The first argument to `select` is a data frame, and the value returned by `select` is also a data frame
+
+2) As always you can learn more about the function using `?select`
+
+Attribute descriptor arguments can be fairly sophisticated. For example, we can use positive integers to indicate attribute (column) indices:
+  
+  ```{r select_index}
+select(arrest_tab, 1, 3, 4)
+```
+
+R includes a useful operator to describe ranges. E.g., `1:5` would be attributes 1 through 5:
+  
+  ```{r select_range}
+select(arrest_tab, 1:5)
+```
+
+We can also use other helper functions to create attribute descriptors. For example, to choose all attributes that begin with the letter `a` we can the `starts_with` function which uses partial string matching:
+  
+  ```{r select_starts_with}
+select(arrest_tab, starts_with("a"))
+```
+
+We can also use the attribute descriptor arguments to _drop_ attributes. For instance using descriptor `-age` returns the arrest data frame with all but the `age` attribute included:
+  
+  ```{r drop_age}
+select(arrest_tab, -age)
+```
+
+### `rename`
+
+To improve interpretability during an analysis we may want to rename attributes. We use the `rename` function for this:
+  
+  ```{r rename}
+rename(arrest_tab, arrest_date=arrestDate)
+```
+
+Like `select`, the first argument to the function is the data frame we are operating on. The remaining arguemnts specify attributes to rename and the name they will have in the resulting data frame. Note that arguments in this case are _named_ (have the form `lhs=rhs`). We can have selection _and_ renaming by using named arguments in `select`:
+  
+  ```{r rename_select}
+select(arrest_tab, age, sex, arrest_date=arrestDate)
+```
+
+Also like `select`, the result of calling `rename` is a data frame. In fact, this will be the case for almost all operations in the `tidyverse` they operate on data frames (specified as the first argument in the function call) and return data frames.
+
+
+
