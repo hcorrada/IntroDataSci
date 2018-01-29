@@ -232,27 +232,110 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><p>As always you can learn more about the function using <code>?select</code></p></li>
 </ol>
 <p>Attribute descriptor arguments can be fairly sophisticated. For example, we can use positive integers to indicate attribute (column) indices:</p>
-<p><code>r   select(arrest_tab, 1, 3, 4)</code></p>
-<p><code>## # A tibble: 104,528 x 3   ##      arrest race  sex     ##       &lt;int&gt; &lt;chr&gt; &lt;fct&gt;   ##  1 11126858 B     M       ##  2 11127013 B     M       ##  3 11126887 B     M       ##  4 11126873 B     M       ##  5 11126968 B     M       ##  6 11127041 B     M       ##  7 11126932 B     M       ##  8 11126940 W     M       ##  9 11127051 B     M       ## 10 11127018 B     M       ## # ... with 104,518 more rows</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(arrest_tab, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>)</code></pre></div>
+<pre><code>## # A tibble: 104,528 x 3
+##      arrest race  sex  
+##       &lt;int&gt; &lt;chr&gt; &lt;fct&gt;
+##  1 11126858 B     M    
+##  2 11127013 B     M    
+##  3 11126887 B     M    
+##  4 11126873 B     M    
+##  5 11126968 B     M    
+##  6 11127041 B     M    
+##  7 11126932 B     M    
+##  8 11126940 W     M    
+##  9 11127051 B     M    
+## 10 11127018 B     M    
+## # ... with 104,518 more rows</code></pre>
 <p>R includes a useful operator to describe ranges. E.g., <code>1:5</code> would be attributes 1 through 5:</p>
-<p><code>r   select(arrest_tab, 1:5)</code></p>
-<p><code>## # A tibble: 104,528 x 5   ##      arrest   age race  sex   arrestDate   ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;        ##  1 11126858    23 B     M     01/01/2011   ##  2 11127013    37 B     M     01/01/2011   ##  3 11126887    46 B     M     01/01/2011   ##  4 11126873    50 B     M     01/01/2011   ##  5 11126968    33 B     M     01/01/2011   ##  6 11127041    41 B     M     01/01/2011   ##  7 11126932    29 B     M     01/01/2011   ##  8 11126940    20 W     M     01/01/2011   ##  9 11127051    24 B     M     01/01/2011   ## 10 11127018    53 B     M     01/01/2011   ## # ... with 104,518 more rows</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(arrest_tab, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</code></pre></div>
+<pre><code>## # A tibble: 104,528 x 5
+##      arrest   age race  sex   arrestDate
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;     
+##  1 11126858    23 B     M     01/01/2011
+##  2 11127013    37 B     M     01/01/2011
+##  3 11126887    46 B     M     01/01/2011
+##  4 11126873    50 B     M     01/01/2011
+##  5 11126968    33 B     M     01/01/2011
+##  6 11127041    41 B     M     01/01/2011
+##  7 11126932    29 B     M     01/01/2011
+##  8 11126940    20 W     M     01/01/2011
+##  9 11127051    24 B     M     01/01/2011
+## 10 11127018    53 B     M     01/01/2011
+## # ... with 104,518 more rows</code></pre>
 <p>We can also use other helper functions to create attribute descriptors. For example, to choose all attributes that begin with the letter <code>a</code> we can the <code>starts_with</code> function which uses partial string matching:</p>
-<p><code>r   select(arrest_tab, starts_with(&quot;a&quot;))</code></p>
-<p><code>## # A tibble: 104,528 x 5   ##      arrest   age arrestDate arrestTime arrestLocation         ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                  ##  1 11126858    23 01/01/2011 00'00&quot;     &lt;NA&gt;                   ##  2 11127013    37 01/01/2011 01'00&quot;     2000 Wilkens Ave       ##  3 11126887    46 01/01/2011 01'00&quot;     2800 Mayfield Ave      ##  4 11126873    50 01/01/2011 04'00&quot;     2100 Ashburton St      ##  5 11126968    33 01/01/2011 05'00&quot;     4000 Wilsby Ave        ##  6 11127041    41 01/01/2011 05'00&quot;     2900 Spellman Rd       ##  7 11126932    29 01/01/2011 05'00&quot;     800 N Monroe St        ##  8 11126940    20 01/01/2011 05'00&quot;     5200 Moravia Rd        ##  9 11127051    24 01/01/2011 07'00&quot;     2400 Gainsdbourgh Ct   ## 10 11127018    53 01/01/2011 15'00&quot;     3300 Woodland Ave      ## # ... with 104,518 more rows</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(arrest_tab, <span class="kw">starts_with</span>(<span class="st">&quot;a&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 104,528 x 5
+##      arrest   age arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11126858    23 01/01/2011 00&#39;00&quot;     &lt;NA&gt;                
+##  2 11127013    37 01/01/2011 01&#39;00&quot;     2000 Wilkens Ave    
+##  3 11126887    46 01/01/2011 01&#39;00&quot;     2800 Mayfield Ave   
+##  4 11126873    50 01/01/2011 04&#39;00&quot;     2100 Ashburton St   
+##  5 11126968    33 01/01/2011 05&#39;00&quot;     4000 Wilsby Ave     
+##  6 11127041    41 01/01/2011 05&#39;00&quot;     2900 Spellman Rd    
+##  7 11126932    29 01/01/2011 05&#39;00&quot;     800 N Monroe St     
+##  8 11126940    20 01/01/2011 05&#39;00&quot;     5200 Moravia Rd     
+##  9 11127051    24 01/01/2011 07&#39;00&quot;     2400 Gainsdbourgh Ct
+## 10 11127018    53 01/01/2011 15&#39;00&quot;     3300 Woodland Ave   
+## # ... with 104,518 more rows</code></pre>
 <p>We can also use the attribute descriptor arguments to <em>drop</em> attributes. For instance using descriptor <code>-age</code> returns the arrest data frame with all but the <code>age</code> attribute included:</p>
-<p><code>r   select(arrest_tab, -age)</code></p>
-<p><code>## # A tibble: 104,528 x 14   ##    arrest race  sex   arrestDate arrestTime arrestLocation incidentOffense   ##     &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;          &lt;chr&gt;             ##  1 1.11e⁷ B     M     01/01/2011 00'00&quot;     &lt;NA&gt;           Unknown Offense   ##  2 1.11e⁷ B     M     01/01/2011 01'00&quot;     2000 Wilkens … 79-Other          ##  3 1.11e⁷ B     M     01/01/2011 01'00&quot;     2800 Mayfield… Unknown Offense   ##  4 1.11e⁷ B     M     01/01/2011 04'00&quot;     2100 Ashburto… 79-Other          ##  5 1.11e⁷ B     M     01/01/2011 05'00&quot;     4000 Wilsby A… Unknown Offense   ##  6 1.11e⁷ B     M     01/01/2011 05'00&quot;     2900 Spellman… 81-Recovered P…   ##  7 1.11e⁷ B     M     01/01/2011 05'00&quot;     800 N Monroe … 79-Other          ##  8 1.11e⁷ W     M     01/01/2011 05'00&quot;     5200 Moravia … Unknown Offense   ##  9 1.11e⁷ B     M     01/01/2011 07'00&quot;     2400 Gainsdbo… 54-Armed Person   ## 10 1.11e⁷ B     M     01/01/2011 15'00&quot;     3300 Woodland… 54-Armed Person   ## # ... with 104,518 more rows, and 7 more variables: incidentLocation   ## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post   ## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(arrest_tab, <span class="op">-</span>age)</code></pre></div>
+<pre><code>## # A tibble: 104,528 x 14
+##    arrest race  sex   arrestDate arrestTime arrestLocation incidentOffense
+##     &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;          &lt;chr&gt;          
+##  1 1.11e⁷ B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;           Unknown Offense
+##  2 1.11e⁷ B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens … 79-Other       
+##  3 1.11e⁷ B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield… Unknown Offense
+##  4 1.11e⁷ B     M     01/01/2011 04&#39;00&quot;     2100 Ashburto… 79-Other       
+##  5 1.11e⁷ B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby A… Unknown Offense
+##  6 1.11e⁷ B     M     01/01/2011 05&#39;00&quot;     2900 Spellman… 81-Recovered P…
+##  7 1.11e⁷ B     M     01/01/2011 05&#39;00&quot;     800 N Monroe … 79-Other       
+##  8 1.11e⁷ W     M     01/01/2011 05&#39;00&quot;     5200 Moravia … Unknown Offense
+##  9 1.11e⁷ B     M     01/01/2011 07&#39;00&quot;     2400 Gainsdbo… 54-Armed Person
+## 10 1.11e⁷ B     M     01/01/2011 15&#39;00&quot;     3300 Woodland… 54-Armed Person
+## # ... with 104,518 more rows, and 7 more variables: incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 </div>
 <div id="rename" class="section level3">
 <h3><span class="header-section-number">6.1.2</span> <code>rename</code></h3>
 <p>To improve interpretability during an analysis we may want to rename attributes. We use the <code>rename</code> function for this:</p>
-<p><code>r   rename(arrest_tab, arrest_date=arrestDate)</code></p>
-<p><code>## # A tibble: 104,528 x 15   ##      arrest   age race  sex   arrest_date arrestTime arrestLocation         ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;       &lt;time&gt;     &lt;chr&gt;                  ##  1 11126858    23 B     M     01/01/2011  00'00&quot;     &lt;NA&gt;                   ##  2 11127013    37 B     M     01/01/2011  01'00&quot;     2000 Wilkens Ave       ##  3 11126887    46 B     M     01/01/2011  01'00&quot;     2800 Mayfield Ave      ##  4 11126873    50 B     M     01/01/2011  04'00&quot;     2100 Ashburton St      ##  5 11126968    33 B     M     01/01/2011  05'00&quot;     4000 Wilsby Ave        ##  6 11127041    41 B     M     01/01/2011  05'00&quot;     2900 Spellman Rd       ##  7 11126932    29 B     M     01/01/2011  05'00&quot;     800 N Monroe St        ##  8 11126940    20 W     M     01/01/2011  05'00&quot;     5200 Moravia Rd        ##  9 11127051    24 B     M     01/01/2011  07'00&quot;     2400 Gainsdbourgh Ct   ## 10 11127018    53 B     M     01/01/2011  15'00&quot;     3300 Woodland Ave      ## # ... with 104,518 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,   ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,   ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rename</span>(arrest_tab, <span class="dt">arrest_date=</span>arrestDate)</code></pre></div>
+<pre><code>## # A tibble: 104,528 x 15
+##      arrest   age race  sex   arrest_date arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;       &lt;time&gt;     &lt;chr&gt;               
+##  1 11126858    23 B     M     01/01/2011  00&#39;00&quot;     &lt;NA&gt;                
+##  2 11127013    37 B     M     01/01/2011  01&#39;00&quot;     2000 Wilkens Ave    
+##  3 11126887    46 B     M     01/01/2011  01&#39;00&quot;     2800 Mayfield Ave   
+##  4 11126873    50 B     M     01/01/2011  04&#39;00&quot;     2100 Ashburton St   
+##  5 11126968    33 B     M     01/01/2011  05&#39;00&quot;     4000 Wilsby Ave     
+##  6 11127041    41 B     M     01/01/2011  05&#39;00&quot;     2900 Spellman Rd    
+##  7 11126932    29 B     M     01/01/2011  05&#39;00&quot;     800 N Monroe St     
+##  8 11126940    20 W     M     01/01/2011  05&#39;00&quot;     5200 Moravia Rd     
+##  9 11127051    24 B     M     01/01/2011  07&#39;00&quot;     2400 Gainsdbourgh Ct
+## 10 11127018    53 B     M     01/01/2011  15&#39;00&quot;     3300 Woodland Ave   
+## # ... with 104,518 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>Like <code>select</code>, the first argument to the function is the data frame we are operating on. The remaining arguemnts specify attributes to rename and the name they will have in the resulting data frame. Note that arguments in this case are <em>named</em> (have the form <code>lhs=rhs</code>). We can have selection <em>and</em> renaming by using named arguments in <code>select</code>:</p>
-<p><code>r   select(arrest_tab, age, sex, arrest_date=arrestDate)</code></p>
-<p><code>## # A tibble: 104,528 x 3   ##      age sex   arrest_date   ##    &lt;int&gt; &lt;fct&gt; &lt;chr&gt;         ##  1    23 M     01/01/2011    ##  2    37 M     01/01/2011    ##  3    46 M     01/01/2011    ##  4    50 M     01/01/2011    ##  5    33 M     01/01/2011    ##  6    41 M     01/01/2011    ##  7    29 M     01/01/2011    ##  8    20 M     01/01/2011    ##  9    24 M     01/01/2011    ## 10    53 M     01/01/2011    ## # ... with 104,518 more rows</code></p>
-<p>Also like <code>select</code>, the result of calling <code>rename</code> is a data frame. In fact, this will be the case for almost all operations in the <code>tidyverse</code> they operate on data frames (specified as the first argument in the function call) and return data frames.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(arrest_tab, age, sex, <span class="dt">arrest_date=</span>arrestDate)</code></pre></div>
+<pre><code>## # A tibble: 104,528 x 3
+##      age sex   arrest_date
+##    &lt;int&gt; &lt;fct&gt; &lt;chr&gt;      
+##  1    23 M     01/01/2011 
+##  2    37 M     01/01/2011 
+##  3    46 M     01/01/2011 
+##  4    50 M     01/01/2011 
+##  5    33 M     01/01/2011 
+##  6    41 M     01/01/2011 
+##  7    29 M     01/01/2011 
+##  8    20 M     01/01/2011 
+##  9    24 M     01/01/2011 
+## 10    53 M     01/01/2011 
+## # ... with 104,518 more rows</code></pre>
+<p>Also like <code>select</code>, the result of calling <code>rename</code> is a data frame. In fact, this will be the case for almost all operations in the <code>tidyverse</code> they operate on data frames (specified as the first</p>
+<p>ment in the function call) and return data frames.</p>
 </div>
 </div>
 <div id="operations-that-select-entities" class="section level2">
@@ -412,7 +495,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="pipelines-of-operations" class="section level2">
 <h2><span class="header-section-number">6.3</span> Pipelines of operations</h2>
-<p>All of the functions implementing our first set of operations have the same arguemnt/value structure. They take a data frame as a first argument and return a data frame. We refer to this as the <em>data–&gt;transform–&gt;data</em> pattern. This is the core a lot of what we will do in class as part of data analyses. Specifically, we will combine operations into <em>pipelines</em> that manipulate data frames.</p>
+<p>All of the functions implementing our first set of operations have the same argument/value structure. They take a data frame as a first argument and return a data frame. We refer to this as the <em>data–&gt;transform–&gt;data</em> pattern. This is the core a lot of what we will do in class as part of data analyses. Specifically, we will combine operations into <em>pipelines</em> that manipulate data frames.</p>
 <p>The <code>dplyr</code> package introduces <em>syntactic sugar</em> to make this pattern explicit. For instance, we can rewrite the <code>sample_frac</code> example using the “pipe” operator <code>%&gt;%</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>)</code></pre></div>
