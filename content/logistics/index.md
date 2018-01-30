@@ -24,32 +24,32 @@ This page constiutes the official syllabus for this class.
     **Office Hours:** Friday 1:00pm-2:00pm AVW 3223 (but check Piazza) and by appointment
 * Communication:  
     - For course related questions, use [Piazza]({{< piazzaurl >}}) as indicated below.  
-    - For any other communication (e.g., absences accomodations etc.) email <hcorrada@umiacs.umd.edu> including `[CMSC320]` in the message subject.  
+    - For any other communication (e.g., absences accomodations etc.) send message through ELMS.
 *	TAs:
     - Weijia Xu (Graduate)  
       <weijia.xu.ixia@gmail.com>  
-      Office Hours: TBA, Location TBA 
+      Office Hours: Tues and Thur 1p-3p AVW 3126  
     - Yi Mao (Graduate)  
       <maoyi16@gmail.com>  
       Office Hours: TBA, Location TBA
     - Suraj Nair (Graduate)   
       <srnair@cs.umd.edu>  
-      Office Hours: TBA, Location TBA
+      Office Hours: Tues and Thur 11a-1p AVW 3126  
     - Yang Jiao (Graduate)   
       <jiaoyang.tju@gmail.com>  
-      Office Hours: TBA, Location TBA 
+      Office Hours: Tues and Thur 11a-1p AVW 3368
     - Ashley Chang (Undergraduate)   
       <ashleyyc@gmail.com>  
-      Office Hours: TBA, Location TBA
+      Office Hours: Tues and Thur 11a-1p AVW 1120  
     - Brad Chessin (Undergraduate)  
       <bchessin@terpmail.umd.edu>  
-      Office Hours: TBA, Location TBA
+      Office Hours: Wed 11:45a-1:45p, Thur 9a-11a AVW 1120  
     - Joseph Nyangwechi (Undergraduate)  
       <josephocharo7@gmail.com>  
-      Office Hours: TBA, Location TBA
+      Office Hours: Mon and Wed 11a-1p AVW 1120  
     - Brian Gottfried  
       <bkgott@terpmail.umd.edu>  
-      Office Hourse: TBA, Location TBA
+      Office Hours: Mon and Wed 9a-11a AVW 1120  
 
 We will use the class Piazza site [{{< piazzaurl >}}]({{< piazzaurl >}}) for questions, dicussion and announcements. Assignments and grades for the class will be posted to the class ELMS site: [{{< elmurl >}}]({{< elmurl >}}).
 In case of an extended emergency closure, announcements on policy and procedures will be posted to Piazza.
