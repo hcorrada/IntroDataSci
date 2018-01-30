@@ -107,9 +107,9 @@ libraries, data resources and publishing mechanisms.
   academic integrity policy.  
 * Cell phone usage is **prohibited** during lecture, laptop use will be allowed to the extent that students **demonstrably** use it to follow along an in-class analysis or demonstration.  
 * You can earn full credit for class participation in three ways:   
-    (1) lecture participation, asking questions and answering your peers questions,   
+    (1) lecture participation, asking questions and answering your peers questions, (this will be impossible to keep track of, so please the two below :-) )   
     (2) piazza participation, asking and answering questions on piazza,   
-    (3) regular attendance to office hours.   
+    (3) regular attendance to office hours (there will be sign-in sheets during office hours).   
     To earn full credit you should aim to ask or answer a question at least once every two weeks on lecture or on piazza; or attend office hours at least once a month (this can include just going to my office hours to chat about computer science, data, science, software engineering, etc.).
 
 ### Grading Procedures 
