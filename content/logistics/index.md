@@ -31,13 +31,13 @@ This page constiutes the official syllabus for this class.
       Office Hours: Tues and Thur 1p-3p AVW 3126  
     - Yi Mao (Graduate)  
       <maoyi16@gmail.com>  
-      Office Hours: TBA, Location TBA
+      Office Hours: Mon and Wed 2p-4p AVW 1120  
     - Suraj Nair (Graduate)   
       <srnair@cs.umd.edu>  
       Office Hours: Tues and Thur 11a-1p AVW 3126  
     - Yang Jiao (Graduate)   
       <jiaoyang.tju@gmail.com>  
-      Office Hours: Tues and Thur 11a-1p AVW 3368
+      Office Hours: Tues and Thur 9a-11a AVW 3368
     - Ashley Chang (Undergraduate)   
       <ashleyyc@gmail.com>  
       Office Hours: Tues and Thur 11a-1p AVW 1120  
