@@ -8,6 +8,11 @@
         {{ range .covers }}
             <li>{{ with .notes }}<a href="{{ absURL . }}" target="_blank">{{ end }}{{ .title }}{{ with .notes }}</a> {{ end }}</li>
         {{ end }}
+            {{ if .class_notes }}
+            <li>
+                {{with .class_notes}}<a href="{{absURL .link }}" target="_blank">{{ end }}Class Notes</a>
+            </li>
+            {{ end }}
         </ul>
     </td>
 
