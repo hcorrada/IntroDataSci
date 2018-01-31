@@ -1,6 +1,6 @@
 # Principles: More Operations
 
-```{r setup, echo=FALSE, message=FALSE}
+```{r sec06_setup, echo=FALSE, message=FALSE}
 knitr::opts_chunk$set(cache=TRUE)
 
 library(tidyverse)
