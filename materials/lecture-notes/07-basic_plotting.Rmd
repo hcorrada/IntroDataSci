@@ -78,7 +78,7 @@ This cheat sheet is very handy: https://www.rstudio.com/wp-content/uploads/2015/
 
 ## Frequently Used Plots
 
-We will a few, but will list a few common plots we use in data analysis and how they are created using `ggplot`. Let's switch data frame to the `mpg` dataset for our examples:
+We will look comprehensively at data visualization in more detail later in the course, but for now will list a few common plots we use in data analysis and how they are created using `ggplot`. Let's switch data frame to the `mpg` dataset for our examples:
 
 ```{r load_mpg}
 mpg
