@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="setting-up-the-r-data-science-toolbox.html">
-<link rel="next" href="principles-basic-operations.html">
+<link rel="prev" href="basic-plotting-with-ggplot.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -219,183 +219,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="measurements-and-data-types" class="section level1">
-<h1><span class="header-section-number">5</span> Measurements and Data Types</h1>
-<p>Now that we have our tools ready, let’s start doing some analysis. First, let’s go over some principles of R as a data analysis environment. R is a computational environment for data analysis. It is designed around a <em>functional</em> language, as opposed to <em>procedural</em> languages like Java or C, that has desirable properties for the type of operations and workflows that are frequently performed in the course of analyzing datasets. In this exercise we will start learning some of those desirable properties while performing an analysis of a real dataset.</p>
-<div id="a-data-analysis-to-get-us-going" class="section level2">
-<h2><span class="header-section-number">5.1</span> A data analysis to get us going</h2>
-<p>I’m going to do an analysis of Baltimore crime to guide our discussion of R. We’ll use data downloaded from Baltimore City’s awesome open data site (this was downloaded a couple of years ago so if you download now, you will get different results).</p>
-<p>The repository for this particular data is here. <a href="https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt" class="uri">https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt</a></p>
-</div>
-<div id="getting-data" class="section level2">
-<h2><span class="header-section-number">5.2</span> Getting data</h2>
-<p>We’ve prepared the data previously into a comma-separated value file (<code>.csv</code> file): each line contains attribute values (separated by commas) describing arrests in the City of Baltimore. The <code>read_csv</code> command is part of the <code>readr</code> R package and allows you to read a dataset stored in a csv file. This function is extremely versatile, and you can read more about it by using the standard help system in R: <code>?read_csv</code>. The result of running calling this function is the data itself, so, by running the function in the console, the result of the function is printed.</p>
-<p>To make use of this dataset we want to assign the result of calling <code>read_csv</code> (i.e., the dataset) to a variable:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-arrest_tab &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/BPD_Arrests.csv&quot;</span>)
-arrest_tab</code></pre></div>
-<pre><code>## # A tibble: 104,528 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
-##  1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;                
-##  2 11127013    37 B     M     01/01/2011 01&#39;00&quot;     2000 Wilkens Ave    
-##  3 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave   
-##  4 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St   
-##  5 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave     
-##  6 11127041    41 B     M     01/01/2011 05&#39;00&quot;     2900 Spellman Rd    
-##  7 11126932    29 B     M     01/01/2011 05&#39;00&quot;     800 N Monroe St     
-##  8 11126940    20 W     M     01/01/2011 05&#39;00&quot;     5200 Moravia Rd     
-##  9 11127051    24 B     M     01/01/2011 07&#39;00&quot;     2400 Gainsdbourgh Ct
-## 10 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave   
-## # ... with 104,518 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
-<p>Now we can ask what <em>type</em> of value is stored in the <code>arrest_tab</code> variable:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(arrest_tab)</code></pre></div>
-<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
-<p>The <code>data.frame</code> is a workhorse data structure in R. It encapsulates the idea of <em>entities</em> (in rows) and <em>attribute values</em> (in columns). We call these <em>rectangular datasets</em>. The other types <code>tbl_df</code> and <code>tbl</code> are added by <code>tidyverse</code> for improved functionality.</p>
-<p>We can ask other features of this dataset:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This is a comment in R, by the way</span>
+<div id="brief-introduction-to-rmarkdown" class="section level1">
+<h1><span class="header-section-number">9</span> Brief Introduction to Rmarkdown</h1>
+<p>Rstudio has created an impressive eco-system for publishing with R. It has concentrated around two systems: <code>Rmarkdown</code> for creating documents that include both text and data analysis code, publishable in multiple formats, and <code>shiny</code>, a framework for creating interactive html applications that allow users to explore data analyses.</p>
+<p>Rstudio has provided substantial tutorials and documentation for Rmarkdown: <a href="http://rmarkdown.rstudio.com/" class="uri">http://rmarkdown.rstudio.com/</a></p>
+<p>The tutorial included in that website is quite good: <a href="http://rmarkdown.rstudio.com/lesson-1.html" class="uri">http://rmarkdown.rstudio.com/lesson-1.html</a>. In class we will go over some of the key points using the same Rmarkdown file as an example:</p>
+<p><a href="http://rmarkdown.rstudio.com/demos/1-example.Rmd" class="uri">http://rmarkdown.rstudio.com/demos/1-example.Rmd</a></p>
 
-<span class="co"># How many rows (entities) does this dataset contain?</span>
-<span class="kw">nrow</span>(arrest_tab)</code></pre></div>
-<pre><code>## [1] 104528</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># How many columns (attributes)?</span>
-<span class="kw">ncol</span>(arrest_tab)</code></pre></div>
-<pre><code>## [1] 15</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># What are the names of those columns?</span>
-<span class="kw">colnames</span>(arrest_tab)</code></pre></div>
-<pre><code>##  [1] &quot;arrest&quot;            &quot;age&quot;               &quot;race&quot;             
-##  [4] &quot;sex&quot;               &quot;arrestDate&quot;        &quot;arrestTime&quot;       
-##  [7] &quot;arrestLocation&quot;    &quot;incidentOffense&quot;   &quot;incidentLocation&quot; 
-## [10] &quot;charge&quot;            &quot;chargeDescription&quot; &quot;district&quot;         
-## [13] &quot;post&quot;              &quot;neighborhood&quot;      &quot;Location 1&quot;</code></pre>
-<p>Now, in Rstudio you can view the data frame using <code>View(arrest_tab)</code>.</p>
-<div id="names-values-and-functions-1" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Names, values and functions</h3>
-<p>Let’s review the concepts of names values and functions again. In the console, we’ve now written a few instructions, e.g. <code>View(arrest_tab)</code>. Let’s take a closer look at how these instructions are put together.</p>
-<p><strong><em>expressions</em></strong>: first of all, we call these instructions <em>expressions</em>, which are just text that R can evaluate into a value. <code>View(arrest_tab)</code> is an expression.</p>
-<p><strong><em>values</em></strong>: so, what’s a value? They are numbers, strings, data frames, etc. This is the data we will be working with. The number <code>2</code> is a value. So is the string <code>&quot;Hector&quot;</code>.</p>
-<p>So, what value is produced when R evaluates the expression <code>View(arrest_tab)</code>? Nothing, which we also treat as a value. That wasn’t very interesting, but it does have a side effect: it shows the <code>arrest_tab</code> dataset in the Data viewer.</p>
-<p>How about a simpler expression: <code>arrest_tab</code>, what value is produced when R evaluates the expression <code>arrest_tab</code>? The data.frame containing that data. Try it out in the console.</p>
-<p><strong><em>names</em></strong>: so if <code>arrest_tab</code> isn’t a value, what is it? It is a <em>name</em>. We use these to refer to values. So, when we write the expression <code>arrest_tab</code>, we tell R we want the <em>value</em> referenced by the name <code>arrest_tab</code>, that is, the data itself!</p>
-<div class="figure">
-<img src="img/names_values.png" />
-
-</div>
-<p><strong><em>functions</em></strong>: Besides numbers, strings, data frames, etc. another important type of value is the <em>function</em>. Functions are a series of instructions that take some input value and produce a different value. The name <code>View</code> refers to the function that takes a data frame as input, and displays it in the Data viewer. Functions are called using the parentheses we saw before: <code>View(arrest_tab)</code>, the parentheses say that you are passing input <code>arrest_tab</code> to the function <code>View</code>. We’ll see later how we can write our own functions.</p>
-</div>
-</div>
-<div id="entities-and-attributes" class="section level2">
-<h2><span class="header-section-number">5.3</span> Entities and attributes</h2>
-<p>As a reminder, we are using the term <em>entities</em> to refer to the objects to which data in a dataset refers to. For instance, in our example dataset, each arrest is an <em>entity</em>. In a rectangular dataset (a data frame) this corresponds to rows in a table. We then say that a dataset contains <em>attributes</em> for each entity. For instance, attributes of each arrest would be the person’s <em>age</em>, the type of offense, the location, etc. In a rectangular dataset, this corresponds to the columns in a table.</p>
-<p>This language of <em>entities</em> and <em>attributes</em> is commonly used in the database literature. In statistics you may see <em>experimental units</em> or <em>samples</em> for <em>entities</em> and <em>covariates</em> for <em>attributes</em>. In other instances <em>observations</em> for <em>entities</em> and <em>variables</em> for <em>attributes</em>. In Machine Learning you may see <em>example</em> for <em>entities</em> and <em>features</em> for <em>attributes</em>. For the most part, all of these are exchangable. This table summarizes the terminology:</p>
-<table>
-<thead>
-<tr class="header">
-<th>Field</th>
-<th>Entities</th>
-<th>Attributes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Databases</td>
-<td>Entities</td>
-<td>Attributes</td>
-</tr>
-<tr class="even">
-<td>Machine Learning</td>
-<td>Examples</td>
-<td>Features</td>
-</tr>
-<tr class="odd">
-<td>Statistics</td>
-<td>Observations/Samples</td>
-<td>Variables/Covariates</td>
-</tr>
-</tbody>
-</table>
-<p>This chapter is concerned with the types of data we may encounter as <em>attributes</em> in data analyses.</p>
-</div>
-<div id="categorical-attributes" class="section level2">
-<h2><span class="header-section-number">5.4</span> Categorical attributes</h2>
-<p>A categorical attribute for a given entity can take only one of a finite set of examples. For example, the <code>sex</code> variable can only have value <code>M</code>, <code>F</code>, or `` (we’ll talk about missing data later in the semester).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(arrest_tab<span class="op">$</span>sex)</code></pre></div>
-<pre><code>## 
-##     F     M 
-## 19431 85095</code></pre>
-<p>The result of a coin flip is categorical: <code>heads</code> or <code>tails</code>. The outcome of rolling an 8-sided die is categorical: <code>one</code>, <code>two</code>, …, <code>eight</code>. Can you think of other examples?</p>
-<div id="factors-in-r" class="section level3">
-<h3><span class="header-section-number">5.4.1</span> Factors in R</h3>
-<p>We said that R is designed for data analysis. My favorite example of how that manifests itself is the <code>factor</code> datatype. If you look at your dataset now, <code>arrest_tab$sex</code> is a vector of strings:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(arrest_tab<span class="op">$</span>sex)</code></pre></div>
-<pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(arrest_tab<span class="op">$</span>sex)</code></pre></div>
-<pre><code>##    Length     Class      Mode 
-##    104528 character character</code></pre>
-<p>However, as a measurement, or attribute, it should only take one of two values (or three depending on how you record missing, unknown or unspecified). So, in R, that categorical data type is called a <em>factor</em>. Notice what the <code>summary</code> function does after turning the <code>sex</code> attribute into a <em>factor</em>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">factor</span>(arrest_tab<span class="op">$</span>sex)
-<span class="kw">summary</span>(arrest_tab<span class="op">$</span>sex)</code></pre></div>
-<pre><code>##     F     M  NA&#39;s 
-## 19431 85095     2</code></pre>
-<p>This distinction shows up in many other places where functions have different behavior when called on different types of values. The possible values a <em>factor</em> can take are called <em>levels</em>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(arrest_tab<span class="op">$</span>sex)</code></pre></div>
-<pre><code>## [1] &quot;F&quot; &quot;M&quot;</code></pre>
-<p>Exercise: you should transform the <code>race</code> attribute into a factor as well. How many levels does it have?</p>
-</div>
-</div>
-<div id="discrete-numeric-attributes" class="section level2">
-<h2><span class="header-section-number">5.5</span> Discrete numeric attributes</h2>
-<p>These are attributes that can take specific values from elements of ordered, discrete (possibly infinite) sets. The most common set in this case would be the non-negative positive integers. This data is commonly the result of counting processes. In our example dataset, age, measured in years, is a discrete attribute.</p>
-<p>Frequently, we obtain datasets as the result of summarizing, or aggregating other underlying data. In our case, we could construct a new dataset containing the number of arrests per neighborhood (we will see how to do this later)</p>
-<pre><code>## # A tibble: 6 x 2
-##   neighborhood      number_of_arrests
-##   &lt;chr&gt;                         &lt;int&gt;
-## 1 Abell                            62
-## 2 Allendale                       297
-## 3 Arcadia                          78
-## 4 Arlington                       694
-## 5 Armistead Gardens               153
-## 6 Ashburton                        78</code></pre>
-<p>In this new dataset, the <em>entities</em> are each neighborhood, the <code>number_of_arrests</code> attribute is a <em>discrete numeric</em> attribute.</p>
-<p>Other examples: the number of students in a class is discrete, the number of friends for a specific Facebook user. Can you think of other examples?</p>
-<p>Distinctions between categorical and discrete numerical data is that categorical data is not ordered and finite, discrete numeric data is (possibly) infinite and ordered.</p>
-</div>
-<div id="continuous-numeric-data" class="section level2">
-<h2><span class="header-section-number">5.6</span> Continuous numeric data</h2>
-<p>These are attributes that can take any value in a continuous set. For example, a person’s height, in say inches, can take any number (within the range of human heights). Here is another dataset we can use to look at this datatype. In this case, entities are cars and we look at continuous numeric attributes <code>speed</code> and <code>stopping distance</code>:</p>
-<p><img src="lecture-notes_csmc320_files/figure-html/f04_cars_plot-1.svg" width="672" /></p>
-<p>The distinction between continuous and discrete is a bit tricky since measurements that have finite precision are, in a sense, discrete. Remember, however, that continuity is not a property of the specific dataset you have in hand, but rather of the process you are measuring. The number of arrests in a neighborhood cannot, in principle, be fractional, regardless of the precision at which we measure this. If we had the appropriate tool, we could measure a person’s height with infinite precision. This distinction is very important when we build statistical models of datasets for analysis. For now, think of discrete data as the result of counting, and continuous data the result of some physical measurement.</p>
-</div>
-<div id="other-examples" class="section level2">
-<h2><span class="header-section-number">5.7</span> Other examples</h2>
-<p>Consider a dataset of images like the super-famous <a href="https://www.kaggle.com/c/digit-recognizer">MNIST dataset of handwritten digits</a>. This dataset contains images of handwritten digits. So each image is an <em>entity</em>. Each image has a <em>label</em> attribute which states which of the digits 0,1,…9 is represented by the image. What type of data is this (categorical, continuous numeric, or discrete numeric)?</p>
-<p>Now, each image is represented by grayscale values in a 28x28 grid. That’s 784 attributes, one for each square in the grid, containing a grayscale value. Now what type of data are these other 784 attributes?</p>
-</div>
-<div id="other-important-datatypes" class="section level2">
-<h2><span class="header-section-number">5.8</span> Other important datatypes</h2>
-<p>The three datatypes we saw above encompass a fairly large swath of data you will come across. Our arrest dataset contains other important datatypes that we will run across frequently:</p>
-<ul>
-<li>Datetime: Date and time of some event or observation (e.g., <code>arrestDate</code>, <code>arrestTime</code>)<br />
-</li>
-<li>Geolocation: Latitude and Longitude of some event or observation (e.g., <code>Location.</code>)</li>
-</ul>
-</div>
-<div id="units" class="section level2">
-<h2><span class="header-section-number">5.9</span> Units</h2>
-<p>Something that we tend to forget but is <strong>extremely</strong> important for the modeling and interpretation of data is that attributes are for the most part <em>measurements</em> and that they have <em>units</em>. For example, age of a person can be measured in different units: <em>years</em>, <em>months</em>, etc. These can be converted to one another, but nonetheless in a given dataset, that <em>attribute</em> or measurement will be recorded in some specific units. Similar arguments go for distances and times, for example. In other cases, we may have unitless measurements (we will see later an example of this when we do <em>dimensionality reduction</em>). In these cases, it is worth thinking about <em>why</em> your measurements are unit-less.</p>
-<p>When performing analyses that try to summarize the effect of some measurement or attribute on another, units matter a lot! We will see the importance of this in our <em>regression</em> section. For now, make sure you make a mental note of units for each measurement you come across. This will force you to think about where and how your data was obtained, which will become very important when modeling and interpreting the results of these models.</p>
-
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="setting-up-the-r-data-science-toolbox.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="principles-basic-operations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="basic-plotting-with-ggplot.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
