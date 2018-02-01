@@ -45,6 +45,8 @@ In general, the `ggplot` call will have the following structure:
     geom_<representation>()
 ```
 
+## Plot Construction Details
+
 ### Mappings
 
 Some of the graphical characteristics we will commonly map attributes to include:
@@ -74,7 +76,7 @@ We can include multiple geometric representations in a single plot, for example 
 
 This cheat sheet is very handy: https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
 
-### Frequently Used Plots
+## Frequently Used Plots
 
 We will a few, but will list a few common plots we use in data analysis and how they are created using `ggplot`. Let's switch data frame to the `mpg` dataset for our examples:
 
