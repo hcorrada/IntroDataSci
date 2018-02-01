@@ -1,0 +1,16 @@
+# Brief Introduction to Rmarkdown
+
+Rstudio has created an impressive eco-system for publishing
+with R. It has concentrated around two systems: `Rmarkdown` for 
+creating documents that include both text and data analysis code, publishable in multiple formats, and `shiny`, a framework for creating interactive html applications that allow users to explore
+data analyses.
+
+Rstudio has provided substantial tutorials and documentation
+for Rmarkdown: http://rmarkdown.rstudio.com/
+  
+The tutorial included in that website is quite good: http://rmarkdown.rstudio.com/lesson-1.html. In class we will go over some of the key points using the same Rmarkdown file as an example:
+
+http://rmarkdown.rstudio.com/demos/1-example.Rmd
+
+
+
