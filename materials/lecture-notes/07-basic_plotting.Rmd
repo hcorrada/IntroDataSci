@@ -1,0 +1,129 @@
+# Basic plotting with `ggplot`
+
+```{r setup_cache_07, echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+```{r setup_07, echo=FALSE, message=FALSE}
+library(tidyverse)
+
+arrest_tab <- read_csv("data/BPD_Arrests.csv")
+```
+
+We will spend a good amount of time in the course discussing data visualization. It serves many important roles in data analysis. We use it to gain understanding of dataset characteristics throughout analyses and it is a key element of communicating insights we have derived from data analyses with our target audience. In this section, we will introduce basic functionality of the `ggplot` package to start our discussion of visualization throughout the course.
+
+The `ggplot` package is designed to work well with the `tidyverse` set of packages. As such, it is designed around the Entity-Attribute data model. 
+Also, it can be included as part of data frame operation pipelines. Let's start with a simple example. Let's create a _dot plot_ of the number of arrests per district in our dataset:
+
+```{r district_dotplot}
+arrest_tab %>%
+  group_by(district) %>%
+  summarize(num_arrests=n()) %>%
+  ggplot(mapping=aes(y=district, x=num_arrests)) +
+    geom_point()
+```
+
+The `ggplot` design is very elegant, takes some thinking to get used to, but is extremely powerful. The central premise is to characterize the building pieces behind `ggplot` plots as follows:
+
+1. The **data** that goes into a plot, a data frame of entities and attributes  
+2. The **mapping** between data attributes and graphical (aesthetic) characteristics  
+3. The *geometric* representation of these graphical characteristics
+
+So in our example we can fill in these three parts as follows:
+
+1) **Data**: We pass a data frame to the `ggplot` function with the `%>%` operator at the end of the group_by-summarize pipeline.
+
+2) **Mapping**: Here we map the `num_arrests` attribute to the `x` position in the plot and the `district` attribute to the `y` position in the plot. Every `ggplot` will contain one or more `aes` calls. 
+
+3) **Geometry**: Here we choose points as the _geometric_ representations of our chosen graphical characteristics using the `geom_point` function. 
+
+In general, the `ggplot` call will have the following structure:
+
+```{r ggplot_schema, eval=FALSE}
+<data_frame> %>%
+  ggplot(mapping=aes(<graphical_characteristic>=<attribute>)) +
+    geom_<representation>()
+```
+
+### Mappings
+
+Some of the graphical characteristics we will commonly map attributes to include:
+
+| Argument | Definition |
+|----------|------------|
+| `x` | position along x axis |
+| `y` | position along y axis |
+| `color` | color |
+| `shape` | shape (applicable to e.g., points)
+| `size` | size |
+| `label` | string used as label (applicable to text)
+
+### Representations
+
+Representations we will use frequently are
+
+| Function | Representation |
+|----------|----------------|
+| `geom_point` | points |
+| `geom_bar` | rectangles |
+| `geom_text` | strings |
+| `geom_smooth` | smoothed line (advanced) |
+| `geom_hex` | hexagonal binning |
+
+We can include multiple geometric representations in a single plot, for example points and text, by adding (`+`) multiple `geom_<representation>` functions. Also, we can include mappings inside a `geom_` call to map characteristics to attributes strictly for that specific representation. For example `geom_point(mapping=aes(color=<attribute>))` maps color to some attribute only for the point representation specified by that call. Mappings given in the `ggplot` call apply to _all_ representations added to the plot.
+
+This cheat sheet is very handy: https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf
+
+### Frequently Used Plots
+
+We will a few, but will list a few common plots we use in data analysis and how they are created using `ggplot`. Let's switch data frame to the `mpg` dataset for our examples:
+
+```{r load_mpg}
+mpg
+```
+
+### Scatter plot
+
+Used to visualize the relationship between two attributes. 
+
+```{r scatter_example}
+mpg %>%
+  ggplot(mapping=aes(x=displ, y=hwy)) +
+    geom_point(mapping=aes(color=cyl))
+```
+
+### Bar graph
+
+Used to visualize the relationship between a continuous variable to a categorical (or discrete) attribute
+
+```{r bargraph_mpg}
+mpg %>%
+  group_by(cyl) %>%
+  summarize(mean_mpg=mean(hwy)) %>%
+  ggplot(mapping=aes(x=cyl, y=mean_mpg)) +
+    geom_bar(stat="identity")
+```
+
+### Histogram
+
+Used to visualize the distribution of the values of a numeric attribute 
+
+```{r hist_mpg, message=FALSE}
+mpg %>%
+  ggplot(mapping=aes(x=hwy)) +
+    geom_histogram()
+```
+
+### Boxplot
+
+Used to visualize the distribution of a numeric attribute based on a categorical attribute
+
+```{r hist_dot}
+mpg %>%
+  ggplot(mapping=aes(x=class, y=hwy)) +
+    geom_boxplot()
+```
+
+
+
+
