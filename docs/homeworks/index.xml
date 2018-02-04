@@ -21,5 +21,17 @@
       <description>For class we will be using R, Rstudio and git. You can download and install each using the links below. However, you can instead use Rocker, a project built on top of Docker to manage your software installation. We&amp;rsquo;ve setup a container that will provide you with a working installation of R, and the Rstudio IDE, along with a lot of packages providing analysis tools and datasets we will use throughout the semester.</description>
     </item>
     
+    <item>
+      <title>Homework: Datatypes and Wrangling</title>
+      <link>http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/</guid>
+      <description>In this assignment, you will explore and exercise your knowledge of data types, data operations and data plotting.
+Data types Choose a dataset from those linked on the class resources page or found anywhere online. The only requirement is that this dataset is downloadable as a CSV (comma separated value) file. Answer the following questions:
+1) Provide a URL to the dataset.
+2) Explain why you chose this dataset.</description>
+    </item>
+    
   </channel>
 </rss>
