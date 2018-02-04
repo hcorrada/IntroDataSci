@@ -1,0 +1,57 @@
+---
+title: 'HW: Datatypes and Wrangling'
+author: "<Your Name Here"
+date: "`r Sys.Date()`"
+output:
+  html_notebook: default
+  pdf_document: default
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r knitr_setup, echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+## Data types
+
+_1) Provide a URL to the dataset._
+
+
+_2) Explain why you chose this dataset._ 
+
+
+_3) What are the entities in this dataset? How many are there?_
+
+
+_4) How many attributes are there in this dataset?_
+
+
+_5) What is the datatype of each attribute (categorical -ordered or unordered-, numeric -discrete or continuous-, datetime, geolocation, other)? Write a short sentence stating how you determined the type of each attribute. Do this for at least 5 attributes, if your dataset contains more than 10 attributes, choose 10 of them to describe._
+
+| Num | Name | Type | Description |
+|-----|------|------|-------------|
+| 1 | <name> | <type> | <descr> |
+
+_6) Write R code that loads the dataset using function `read_csv`. Were you able to load the data successfully? If no, why not?_
+
+```{r load_data, message=FALSE}
+library(tidyverse)
+# loading code goes here
+```
+
+## Wrangling
+
+1) My pipeline... 
+
+```{r pipeline}
+# pipeline goes here
+```
+
+## Plotting
+
+1) This plot... 
+
+```{r plot}
+# plot goes here
+```

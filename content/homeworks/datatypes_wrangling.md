@@ -40,8 +40,8 @@ Make one plot using `ggplot` of the result of the pipeline you created above. Re
 
 ## Submitting
 
-Download the Rmarkdown file here: [HW1 Rmarkdown shell](misc/hw1_datatypes_wrangling.Rmd) and fill in with your answers. Knit as PDF (or HTML and then print to PDF) and submit to ELMS.
-You can see an example submission here: [HW1 Rmarkdown submission example](misc/hw1_datatypes_wrangling_sample.Rmd) [HW1 PDF submission example](misc/hw1_datatypes_wrangling_sample.pdf)
+Download the Rmarkdown file here: [HW1 Rmarkdown shell](/misc/hw1_datatypes_wrangling.Rmd) and fill in with your answers. Knit as PDF (or HTML and then print to PDF) and submit to ELMS.
+You can see an example submission here: [HW1 Rmarkdown submission example](/misc/hw1_datatypes_wrangling_sample.Rmd) [HW1 PDF submission example](/misc/hw1_datatypes_wrangling_sample.pdf)
 
 
 
