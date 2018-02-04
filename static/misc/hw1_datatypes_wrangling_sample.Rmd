@@ -1,0 +1,82 @@
+---
+title: 'HW: Datatypes and Wrangling'
+author: "Hector Corrada Bravo"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_notebook: default
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r knitr_setup, echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+## Data types
+
+_1) Provide a URL to the dataset._
+
+I downloaded my dataset from http://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv
+
+_2) Explain why you chose this dataset._ 
+
+I am interested in studying how rates of arrests in different parts of Baltimore are related to demographic statistics.
+
+_3) What are the entities in this dataset? How many are there?_
+
+Entities are specific arrests. There are 104528.
+
+_4) How many attributes are there in this dataset?_
+
+There are 15 attributes.
+
+_5) What is the datatype of each attribute (categorical -ordered or unordered-, numeric -discrete or continuous-, datetime, geolocation, other)? Write a short sentence stating how you determined the type of each attribute. Do this for at least 5 attributes, if your dataset contains more than 10 attributes, choose 10 of them to describe._
+
+| Num | Name | Type | Description |
+|-----|------|------|-------------|
+| 1 | `arrest` | categorical | Identifier of each arrest, takes values from finite set |
+| 2 | `age` | numeric continuous | Ages are numeric values measured in time units |
+| 3 | `race` | categorical unordered | Can take value from finite set of possible races |
+| 4 | `sex` | categorical unordered | Can take value from finite set of possible sexes |
+| 5 | `arrestDate` | datetime | Specifies date of arrest |
+| 6 | `arrestTime` | datetime | Specifies time of arrest |
+| 7 | `arrestLocation` | other - address | Street address of arrest |
+| 8 | `incidentOffense` | categorical unordered | Can take value from finite set of possible offenses |
+| 9 | `incidentLocation` | other - address | Stree address if incident |
+| 10 | `charge` | categorical unordered | Can take value from finite set of possible charges |
+
+_6) Write R code that loads the dataset using function `read_csv`. Were you able to load the data successfully? If no, why not?_
+
+```{r load_data, message=FALSE}
+library(tidyverse)
+
+url <- "http://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv"
+arrest_tab <- read_csv(url)
+arrest_tab %>% slice(1:10)
+```
+
+## Wrangling
+
+1) My pipeline computes average arrest age (ignoring ages <= 0), for each district and writes them in increasing order
+
+```{r pipeline}
+mean_ages <- arrest_tab %>%
+  filter(age > 0) %>%
+  select(district, age) %>%
+  group_by(district) %>%
+  summarize(mean_age=mean(age)) %>%
+  arrange(mean_age)
+mean_ages
+```
+
+## Plotting
+
+1) This barplot shows the average arrest age per district (ignoring ages <= 0)
+
+```{r plot}
+mean_ages %>%
+  ggplot(aes(x=district, y=mean_age)) +
+    geom_bar(stat="identity") +
+    coord_flip()
+```
