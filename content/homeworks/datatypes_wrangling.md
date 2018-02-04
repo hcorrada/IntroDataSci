@@ -5,6 +5,10 @@ title: "Homework: Datatypes and Wrangling"
 
 In this assignment, you will explore and exercise your knowledge of data types, data operations and data plotting.
 
+**DUE**: Thursday Feb. 8, 11:59pm
+
+<!--more-->
+
 ## Data types
 
 Choose a dataset from those linked on the [class resources page](/resources/) or found anywhere online. 
