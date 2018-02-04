@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <title>Homework: Datatypes and Wrangling - CMSC320 Introduction to Data Science</title>
+    <meta name="generator" content="Hugo 0.24" />
+
+    
+    <meta name="description" content="Data Science course at the University of Maryland Department of Computer Science">
+    
+    <link rel="canonical" href="http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/">
+    
+    <meta name="author" content="Héctor Corrada Bravo">
+    
+
+    <meta property="og:url" content="http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/">
+    <meta property="og:title" content="CMSC320 Introduction to Data Science">
+    <meta property="og:image" content="http://www.hcbravo.org/IntroDataSci/images/logo.png">
+    <meta name="apple-mobile-web-app-title" content="CMSC320 Introduction to Data Science">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://www.hcbravo.org/IntroDataSci/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="http://www.hcbravo.org/IntroDataSci/images/favicon.ico">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://www.hcbravo.org/IntroDataSci/fonts/icon.eot');
+        src: url('http://www.hcbravo.org/IntroDataSci/fonts/icon.eot')
+               format('embedded-opentype'),
+             url('http://www.hcbravo.org/IntroDataSci/fonts/icon.woff')
+               format('woff'),
+             url('http://www.hcbravo.org/IntroDataSci/fonts/icon.ttf')
+               format('truetype'),
+             url('http://www.hcbravo.org/IntroDataSci/fonts/icon.svg')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://www.hcbravo.org/IntroDataSci/stylesheets/application.css">
+    <link rel="stylesheet" href="http://www.hcbravo.org/IntroDataSci/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://www.hcbravo.org/IntroDataSci/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://www.hcbravo.org/IntroDataSci/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,700|Roboto&#43;Mono">
+    <style>
+      body, input {
+        font-family: 'Roboto', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Roboto Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://www.hcbravo.org/IntroDataSci/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class="palette-primary-deep-orange palette-accent-blue">
+
+
+
+	
+	
+
+
+<div class="backdrop">
+	<div class="backdrop-paper"></div>
+</div>
+
+<input class="toggle" type="checkbox" id="toggle-drawer">
+<input class="toggle" type="checkbox" id="toggle-search">
+<label class="toggle-button overlay" for="toggle-drawer"></label>
+
+<header class="header">
+	<nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        Homework: Datatypes and Wrangling
+      </div>
+    </div>
+
+    
+    <div class="button button-twitter" role="button" aria-label="Twitter">
+       <a href="https://twitter.com/hcorrada" title="@hcorrada on Twitter" target="_blank" class="toggle-button icon icon-twitter"></a>
+    </div>
+    
+
+    
+    <div class="button button-github" role="button" aria-label="GitHub">
+      <a href="https://github.com/hcorrada" title="@hcorrada on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+    </div>
+    
+    
+        
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+
+</header>
+
+<main class="main">
+	<div class="drawer">
+		<nav aria-label="Navigation">
+  <a href="http://www.hcbravo.org/IntroDataSci/" class="project">
+    <div class="banner">
+      
+        <div class="logo">
+          <img src="http://www.hcbravo.org/IntroDataSci/images/logo.png">
+        </div>
+      
+      <div class="name">
+        <strong>CMSC320 Introduction to Data Science </strong>
+        
+          <br>
+          hcorrada/IntroDataSci.git
+        
+      </div>
+    </div>
+  </a>
+
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <hr>
+      
+
+      <div class="toc">
+        
+        <ul>
+          
+
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Calendar" href="http://www.hcbravo.org/IntroDataSci/calendar/">
+	
+	Calendar
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Logistics" href="http://www.hcbravo.org/IntroDataSci/logistics/">
+	
+	Logistics
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Lecture Notes" href="http://www.hcbravo.org/IntroDataSci/bookdown-notes">
+	
+	Lecture Notes
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Resources" href="http://www.hcbravo.org/IntroDataSci/resources/">
+	
+	Resources
+</a>
+
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Projects" href="http://www.hcbravo.org/IntroDataSci/projects/">
+	
+	Projects
+</a>
+
+
+
+  
+</li>
+
+
+        </ul>
+        
+
+        
+        <hr>
+        <span class="section">The author</span>
+        
+        <ul>
+          
+          <li>
+            <a href="https://twitter.com/hcorrada" target="_blank" title="@hcorrada on Twitter">
+              @hcorrada on Twitter
+            </a>
+          </li>
+          
+
+          
+          <li>
+            <a href="https://github.com/hcorrada" target="_blank" title="@hcorrada on GitHub">
+              @hcorrada on GitHub
+            </a>
+          </li>
+          
+        </ul>
+        
+
+        <hr>
+        <a href="https://www.umd.edu/web-accessibility" target="_blank" title="UMD Web Accessibility">Web Accessibility</a>
+
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+	</div>
+
+	<article class="article">
+		<div class="wrapper">
+			<h1>Homework: Datatypes and Wrangling </h1>
+
+			
+
+<p>In this assignment, you will explore and exercise your knowledge of data types, data operations and data plotting.</p>
+
+<h2 id="data-types">Data types</h2>
+
+<p>Choose a dataset from those linked on the <a href="http://www.hcbravo.org/IntroDataSci/resources/">class resources page</a> or found anywhere online.
+The only requirement is that this dataset is downloadable as a CSV (comma separated value) file.
+Answer the following questions:</p>
+
+<p>1) Provide a URL to the dataset.<br />
+2) Explain why you chose this dataset.<br />
+3) What are the entities in this dataset? How many are there in this dataset?<br />
+4) How many attributes are there in this dataset?<br />
+5) What is the datatype of each attribute (categorical (ordered or unordered), numeric (discrete or continuous), datetime, geolocation, other)?
+Write a short sentence stating how you determined the type of each attribute.
+Do this for at least 5 attributes, if your dataset contains more than 10 attributes choose 10 of them to describe.<br />
+6) Write R code that loads the dataset using function <code>read_csv</code>. Were you able to load the data successfully? If no, why not?<br />
+If yes, show the first 10 rows of the dataset.</p>
+
+<h2 id="wrangling">Wrangling</h2>
+
+<p>Write an operation pipeline including at minimum three of the operations we have learned in class: <a href="http://www.hcbravo.org/IntroDataSci/bookdown-notes/principles-basic-operations.html">Notes Section 6</a> and <a href="http://www.hcbravo.org/IntroDataSci/bookdown-notes/principles-more-operations.html">Notes Section 7</a>.
+If you were able to successfully load your dataset above, you can write the operation pipeline to analyze your dataset. Otherwise, write a pipeline using the <code>flights</code> dataset included in package `nycflights13**.</p>
+
+<p>1) Write text to describe the pipeline you are writing and why is it useful as an analysis of the dataset.<br />
+2) Provide R code executing the pipeline and displaying at most the first 10 rows of the result.</p>
+
+<p><strong>Hint</strong>: In the <code>flights</code> dataset you could create a pipeline to make a data frame that lists, in increasing order, the average total delay for each carrier on flights departing from JFK, where total delay is the sum of departure and arrival delays.</p>
+
+<h2 id="plotting">Plotting</h2>
+
+<p>Make one plot using <code>ggplot</code> of the result of the pipeline you created above. Refer to <a href="http://www.hcbravo.org/IntroDataSci/boodown-notes/basic-plotting-with-ggplot.html">Notes Section 8</a> to see some examples.</p>
+
+<p>1) Write text describing what you are plotting<br />
+2) Provide R code to create the plot and show the resulting plot</p>
+
+<h2 id="submitting">Submitting</h2>
+
+<p>Download the Rmarkdown file here: <a href="http://www.hcbravo.org/IntroDataSci/misc/hw1_datatypes_wrangling.Rmd">HW1 Rmarkdown shell</a> and fill in with your answers. Knit as PDF (or HTML and then print to PDF) and submit to ELMS.
+You can see an example submission here: <a href="http://www.hcbravo.org/IntroDataSci/misc/hw1_datatypes_wrangling_sample.Rmd">HW1 Rmarkdown submission example</a> <a href="http://www.hcbravo.org/IntroDataSci/misc/hw1_datatypes_wrangling_sample.pdf">HW1 PDF submission example</a></p>
+
+
+			<aside class="copyright" role="note">
+				
+				&copy; 2018 Released under the MIT license &ndash;
+				
+				Documentation built with
+				<a href="https://www.gohugo.io" target="_blank">Hugo</a>
+				using the
+				<a href="http://github.com/digitalcraftsman/hugo-material-docs" target="_blank">Material</a> theme.
+			</aside>
+
+			<footer class="footer">
+				
+
+<nav class="pagination" aria-label="Footer">
+  <div class="previous">
+  
+      <a href="http://www.hcbravo.org/IntroDataSci/projects/project3/gapminder/" title="">
+        <span class="direction">
+          Previous
+        </span>
+        <div class="page">
+          <div class="button button-previous" role="button" aria-label="Previous">
+            <i class="icon icon-back"></i>
+          </div>
+          <div class="stretch">
+            <div class="title">
+              
+            </div>
+          </div>
+        </div>
+      </a>
+  
+  </div>
+
+  <div class="next">
+  
+  </div>
+</nav>
+
+
+
+
+
+			</footer>
+		</div>
+	</article>
+
+	<div class="results" role="status" aria-live="polite">
+		<div class="scrollable">
+			<div class="wrapper">
+				<div class="meta"></div>
+				<div class="list"></div>
+			</div>
+		</div>
+	</div>
+</main>
+
+    <script>
+    
+      var base_url = 'http:\/\/www.hcbravo.org\/IntroDataSci\/';
+      var repo_id  = 'hcorrada\/IntroDataSci.git';
+    
+    </script>
+
+    <script src="http://www.hcbravo.org/IntroDataSci/javascripts/application.js"></script>
+    
+
+    <script>
+      /* Add headers to scrollspy */
+      var headers   = document.getElementsByTagName("h2");
+      var scrollspy = document.getElementById('scrollspy');
+
+      if(scrollspy) {
+        if(headers.length > 0) {
+          for(var i = 0; i < headers.length; i++) {
+            var li = document.createElement("li");
+            li.setAttribute("class", "anchor");
+
+            var a  = document.createElement("a");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", headers[i].innerHTML);
+            a.innerHTML = headers[i].innerHTML;
+
+            li.appendChild(a)
+            scrollspy.appendChild(li);
+          }
+        } else {
+          scrollspy.parentElement.removeChild(scrollspy)
+        }
+
+
+        /* Add permanent link next to the headers */
+        var headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+        for(var i = 0; i < headers.length; i++) {
+            var a = document.createElement("a");
+            a.setAttribute("class", "headerlink");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", "Permanent link")
+            a.innerHTML = "#";
+            headers[i].appendChild(a);
+        }
+      }
+    </script>
+
+    
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
