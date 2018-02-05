@@ -1,5 +1,14 @@
 {{ partial "head" . }}
 
+<style>
+    .calendar_anchor {
+    display: block;
+    position: relative;
+    top: 1000px;
+    visibility: hidden;
+    }
+</style>
+
 {{ if (eq (trim .Site.Params.provider " " | lower) "github") | and (isset .Site.Params "repo_url") }}
 	{{ $repo_id := replace .Site.Params.repo_url "https://github.com/" ""}}
 	{{ .Scratch.Set "repo_id" $repo_id }}
