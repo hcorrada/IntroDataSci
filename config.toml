@@ -68,8 +68,8 @@ ignorefiles = [ "lecture-note/.*" ]
 	weight = 30
 
 [[menu.main]]
-  name = "Homeworks"
-  url = "homeworks/"
+  name   = "Homeworks"
+  url    = "homeworks/"
   weight = 35
 
 [[menu.main]]
