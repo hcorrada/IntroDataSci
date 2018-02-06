@@ -37,7 +37,7 @@ If you were able to successfully load your dataset above, you can write the oper
 
 ## Plotting
 
-Make one plot using `ggplot` of the result of the pipeline you created above. Refer to [Notes Section 8](/boodown-notes/basic-plotting-with-ggplot.html) to see some examples.
+Make one plot using `ggplot` of the result of the pipeline you created above. Refer to [Notes Section 8](/bookdown-notes/basic-plotting-with-ggplot.html) to see some examples.
 
 1) Write text describing what you are plotting  
 2) Provide R code to create the plot and show the resulting plot
