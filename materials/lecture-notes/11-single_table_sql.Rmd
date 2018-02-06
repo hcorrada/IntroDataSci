@@ -1,0 +1,117 @@
+# SQL I: Single Table Queries
+
+### SQL Constructs: Single Table Queries
+
+Here we will see the same operations we saw with `dplyr`, but there is a fundamental difference.
+SQL is a declarative language, we don't write how to get the answer we want, we declare the answer we want.
+The actual execution is determined and optimized by the database engine. However, there are clear mappings between 
+parts of SQL queries and the operations we used in `dplyr`. The basic construct in SQL is the so-called `SFW` construct: _select-from-where_ which specifies:
+
+- _select_: which attributes you want the answer to have
+- _from_: which relation (table) you want the answer to be computed from
+- _where_: what conditions you want to be satisfied by the rows (tuples) of the answer 
+
+E.g.: movies produced by disney in 1990: note the *rename*
+
+```sql        
+select m.title, m.year
+from movie m
+where m.studioname = 'disney' and m.year = 1990
+```
+
+The **select** clause can contain expressions
+
+- `select title || ' (' || to_char(year) || ')' as titleyear`
+- `select 2014 - year`
+
+
+The **where** clause support a large number of different predicates and combinations thereof
+
+- `year between 1990 and 1995`
+- `title like 'star wars%'`
+` title like 'star wars _'`
+
+
+We can include ordering, e.g., find distinct movies sorted by title
+
+```sql
+select distinct title
+from movie
+where studioname = 'disney' and year = 1990
+order by title;
+```
+
+### Group-by and summarize
+
+As expected, SQL has an idiom for grouping and summarizing (_conditioning_ as we called it before). Remember this is a very important concept that shows up in many data processing platforms
+
+- What it does: Partition the tuples by the group attributes (*year* in this case), and do something (*compute avg* in this case) for each group
+- Number of resulting tuples == Number of groups
+
+E.g., compute the average movie length by year
+
+```sql
+select name, avg(length) 
+from movie
+group by year
+```
+
+
+### Subqueries
+
+You can nest queries as an expression in an SFW query. We refer to these "subqueries" as "nested subquery":
+
+E.g., find movie with the maximum length
+
+```sql
+select title, year
+from movie
+where movie.length = (select max(length) from movie);
+```
+
+E.g., find movies with at least 5 stars: an example of a correlated subquery
+
+```sql
+select * 
+from movies m
+where 5 >= (select count(*)
+from starsIn si
+where si.title = m.title and si.year = m.year);
+```
+
+The nested subquery counts the number of actors for that movie.
+
+E.g., rank movies by their length. 
+
+```sql
+select title, year, (select count(*) 
+from movies m2
+where m1.length <= m2.length) as rank
+from movies m1;
+```
+
+Key insight: A movie is ranked 5th if there are exactly 4 movies with longer length. Most database systems support some sort of a *rank* keyword for doing this. Notice that the above query doesn't work in presence of ties etc.
+
+### Exercise
+
+The `dplyr` package has a nice interface to database systems as well. As you may imagine, mapping the `dplyr` single and two-table verbs to SQL can be pretty straight forward. However, it also allows you to run SQL queries on these databases directly. See more information [in this introduction](https://cran.r-project.org/web/packages/dplyr/vignettes/databases.html).
+
+As an exercise you should try to answer our `dplyr` exercise questions using SQL queries and compare the results. As a reminder, here are the six questions:
+  
+  *Question 1*: Filter flights to include only flights with an arrival delay greater than 2 hours (delays are recorded in minutes).
+
+*Question 2*: Select columns in the flights table that contain delay times (note that the function `matches` can be used to select columns with names that partially match a given string. See `?dplyr::select`)
+
+*Question 3*: Find the minimum arrival delay (this can be a negative number) in the flights table. Use `summarize`.
+
+*Question 4*: Find minimum arrival delay (again, can be a negative number) in the flights table for each _destination_ airport. Use `group_by` and `summarize`.
+
+*Question 5*: List the name of **all** airlines and the number of flights for each airline in flights table. The `airlines` table contains airline names, so you will have to perform a join operation.
+
+*Question 6*: 
+  
+  (a) Create a new column (use `mutate`) with total delay time for each flight. 
+
+(b) Replace any missing _total delay times_ with the average (`mean`) total delay. 
+
+(c) Same as (b) but now replace any missing _total delay times_ with the average (`mean`) total delay for the flight's route (i.e., origin/destination combination)
