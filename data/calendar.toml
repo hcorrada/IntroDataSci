@@ -92,7 +92,8 @@ title = "Data representation models: The ER model"
 # notes = "lecture-note/datamodels/"
 
 [[day05.covers]]
-title = "Common opertations for data tidying"
+title = "SQL I: Single-table Queries"
+# notes = "lecture-note/wrangling/"
 
 [[day05.workdue]]
 title = "Datatypes and wrangling"
@@ -115,8 +116,7 @@ date = "2/13"
 title = "Relational data operations: Joins"
 
 [[day06.covers]]
-title = "SQL"
-# notes = "lecture-note/wrangling/"
+title = "Common operations for data tidying"
 
 [day07]
 date = "2/15"
