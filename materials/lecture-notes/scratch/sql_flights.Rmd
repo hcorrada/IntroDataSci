@@ -1,0 +1,23 @@
+### Exercise
+
+The `dplyr` package has a nice interface to database systems as well. As you may imagine, mapping the `dplyr` single and two-table verbs to SQL can be pretty straight forward. However, it also allows you to run SQL queries on these databases directly. See more information [in this introduction](https://cran.r-project.org/web/packages/dplyr/vignettes/databases.html).
+
+As an exercise you should try to answer our `dplyr` exercise questions using SQL queries and compare the results. As a reminder, here are the six questions:
+  
+  *Question 1*: Filter flights to include only flights with an arrival delay greater than 2 hours (delays are recorded in minutes).
+
+*Question 2*: Select columns in the flights table that contain delay times (note that the function `matches` can be used to select columns with names that partially match a given string. See `?dplyr::select`)
+
+*Question 3*: Find the minimum arrival delay (this can be a negative number) in the flights table. Use `summarize`.
+
+*Question 4*: Find minimum arrival delay (again, can be a negative number) in the flights table for each _destination_ airport. Use `group_by` and `summarize`.
+
+*Question 5*: List the name of **all** airlines and the number of flights for each airline in flights table. The `airlines` table contains airline names, so you will have to perform a join operation.
+
+*Question 6*: 
+  
+  (a) Create a new column (use `mutate`) with total delay time for each flight. 
+
+(b) Replace any missing _total delay times_ with the average (`mean`) total delay. 
+
+(c) Same as (b) but now replace any missing _total delay times_ with the average (`mean`) total delay for the flight's route (i.e., origin/destination combination)
