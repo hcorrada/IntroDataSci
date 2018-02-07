@@ -28,7 +28,7 @@ If yes, show the first 10 rows of the dataset.
 ## Wrangling
 
 Write an operation pipeline including at minimum three of the operations we have learned in class: [Notes Section 6](/bookdown-notes/principles-basic-operations.html) and [Notes Section 7](/bookdown-notes/principles-more-operations.html).
-If you were able to successfully load your dataset above, you can write the operation pipeline to analyze your dataset. Otherwise, write a pipeline using the `flights` dataset included in package `nycflights13**.
+If you were able to successfully load your dataset above, you can write the operation pipeline to analyze your dataset. Otherwise, write a pipeline using the `flights` dataset included in package `nycflights13`.
 
 1) Write text to describe the pipeline you are writing and why is it useful as an analysis of the dataset.  
 2) Provide R code executing the pipeline and displaying at most the first 10 rows of the result.
