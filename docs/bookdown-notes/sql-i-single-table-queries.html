@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="an-illustrative-analysis.html">
+<link rel="prev" href="tidy-data-i-the-er-model.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -231,166 +231,68 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction-and-overview" class="section level1">
-<h1><span class="header-section-number">2</span> Introduction and Overview</h1>
-<div id="what-is-data-science" class="section level2">
-<h2><span class="header-section-number">2.1</span> What is Data Science?</h2>
-<p>Data science encapsulates the interdisciplinary activities required to create data-centric artifacts and applications that address specific scientific, socio-political, business, or other questions.</p>
-<p>Let’s look at the constiuent parts of this statement:</p>
-<div id="data" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> Data</h3>
-<p>Measureable units of information gathered or captured from activity of people, places and things.</p>
-</div>
-<div id="specific-questions" class="section level3">
-<h3><span class="header-section-number">2.1.2</span> Specific Questions</h3>
-<p>Seeking to understand a phenomenon, natural, social or other, can we formulate specific questions for which an answer posed in terms of patterns observed, tested and or modeled in data is appropriate.</p>
-</div>
-<div id="interdisciplinary-activities" class="section level3">
-<h3><span class="header-section-number">2.1.3</span> Interdisciplinary Activities</h3>
-<p>Formulating a question, assessing the appropriateness of the data and findings used to find an answer require understanding of the specific subject area. Deciding on the appropriateness of models and inferences made from models based on the data at hand requires understanding of statistical and computational methods.</p>
-</div>
-<div id="data-centric-artifacts-and-applications" class="section level3">
-<h3><span class="header-section-number">2.1.4</span> Data-Centric Artifacts and Applications</h3>
-<p>Answers to questions derived from data are usually shared and published in meaningful, succinct but sufficient, reproducible artifacts (papers, books, movies, comics). Going a step further, interactive applications that let others explore data, models and inferences are great.</p>
-</div>
-</div>
-<div id="why-data-science" class="section level2">
-<h2><span class="header-section-number">2.2</span> Why Data Science?</h2>
-<p>The granularity, size and accessibility data, comprising both physical, social, commercial and political spheres has exploded in the last decade or more.</p>
-<blockquote>
-<p>“I keep saying that the sexy job in the next 10 years will be statisticians”</p>
-</blockquote>
-<blockquote>
-<p>Hal Varian, Chief Economist at Google (<a href="http://www.nytimes.com/2009/08/06/technology/06stats.html?_r=0" class="uri">http://www.nytimes.com/2009/08/06/technology/06stats.html?_r=0</a>)</p>
-</blockquote>
-<blockquote>
-<p>“The ability to take data—to be able to understand it, to process it, to extract value from it, to visualize it, to communicate it—that’s going to be a hugely important skill in the next decades, not only at the professional level but even at the educational level for elementary school kids, for high school kids, for college kids.”</p>
-</blockquote>
-<blockquote>
-<p>“Because now we really do have essentially free and ubiquitous data. So the complimentary scarce factor is the ability to understand that data and extract value from it.”</p>
-</blockquote>
-<blockquote>
-<p>Hal Varian (<a href="http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers" class="uri">http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers</a>)</p>
-</blockquote>
-</div>
-<div id="data-science-in-society" class="section level2">
-<h2><span class="header-section-number">2.3</span> Data Science in Society</h2>
-<p>Because of the large amount of data produced across many spheres of human social and creative activity, many societal questions may be addressed by establishing patterns in data. In the humanities, this can range from unproblematic quesitions of how to dissect a large creative corpora, say music, literature, based on raw characteristics of those works, text, sound and image. To more problematic questions, of analysis of intent, understanding, appreciation and valuation of these creative corpora.</p>
-<p>In the social sciences, issues of fairness and transparency in the current era of big data are especially problematic. Is data collected representative of population for which inferences are drawn? Are methods employed learning latent unfair factors from ostensibly fair data? These are issues that the research community is now starting to address.</p>
-<p>In all settings, issues of ethical collection of data, application of models, and deployment of data-centric artifacts are essential to grapple with. Issues of privacy are equally important.</p>
-</div>
-<div id="course-organization" class="section level2">
-<h2><span class="header-section-number">2.4</span> Course Organization</h2>
-<p>This course will cover basics of how to represent, model and communicate about data and data analyses using the R data analysis environment for Data Science.</p>
-<p>The course is roughly divided into five areas:</p>
+<div id="sql-i-single-table-queries" class="section level1">
+<h1><span class="header-section-number">12</span> SQL I: Single Table Queries</h1>
+<p>The Structured-Query-Language (SQL) is the predominant language used in database systems. It is tailored to the Relational data representation model.</p>
+<p>SQL is a declarative language, we don’t write a <em>procedure</em> to compute a relation, we <em>declare</em> what the relation we want to compute looks like. The actual execution is determined and optimized by the database engine. However, there are clear mappings between parts of SQL queries and the operations we have defined so far as implemented in the <code>tidyverse</code>.</p>
+<p>The basic construct in SQL is the so-called <code>SFW</code> construct: <em>select-from-where</em> which specifies:</p>
 <ul>
-<li>Area 0: tools and skills<br />
-○ Toolset (Rstudio/tidyverse/rmarkdown)<br />
-○ Best practices<br />
-○ Debugging data science<br />
-</li>
-<li>Area I: types and operations<br />
-○ Data tables and data types<br />
-○ Operations on tables<br />
-○ Basic plotting<br />
-○ Tidy data / the ER model<br />
-○ Relational Operations<br />
-○ SQL<br />
-○ Advanced: other data models, db consistency and concurrency<br />
-</li>
-<li>Area II: wrangling<br />
-○ Data acquisition (load and scrape)<br />
-○ EDA Vis / grammar of graphics<br />
-○ Data cleaning (text, dates)<br />
-○ EDA: Summary statistics<br />
-○ Data analysis with optimization (derivatives)<br />
-○ Data transformations<br />
-○ Missing data<br />
-</li>
-<li>Area III: modeling<br />
-○ Univariate probability and statistics<br />
-○ Hypothesis testing<br />
-○ Multivariate probablity and statistics (joint and conditional probability, Bayes thm)<br />
-○ Data Analysis with geometry (vectors, inner products, gradients and matrices)<br />
-○ Linear regression<br />
-○ Logistic regression<br />
-○ Gradient descent (batch and stochastic)<br />
-○ Trees and random forests<br />
-○ K-NN<br />
-○ Naïve Bayes<br />
-○ Clustering<br />
-○ PCA<br />
-</li>
-<li>Area IV: essential applications<br />
-○ Text mining<br />
-○ Graphs<br />
-○ Forecasting<br />
-</li>
-<li>Area V: communication<br />
-○ Designing data visualizations for communication not exploration<br />
-○ Interactive visualization<br />
-○ Writing about data, analysis, and inferences</li>
+<li><em>select</em>: which attributes you want the answer to have</li>
+<li><em>from</em>: which relation (table) you want the answer to be computed from</li>
+<li><em>where</em>: what conditions you want to be satisfied by the rows (tuples) of the answer</li>
 </ul>
+<p>E.g.: movies produced by disney in 1990: note the <em>rename</em></p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> m.title, m.year
+<span class="kw">from</span> movie m
+<span class="kw">where</span> m.studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> m.year = <span class="dv">1990</span></code></pre></div>
+<p>The <strong>select</strong> clause can contain expressions (this is paralleled by the <code>mutate</code> operation we saw previously)</p>
+<ul>
+<li><code>select title || ' (' || to_char(year) || ')' as titleyear</code></li>
+<li><code>select 2014 - year</code></li>
+</ul>
+<p>The <strong>where</strong> clause support a large number of different predicates and combinations thereof (this is parallel to the <code>filter</code> operation)</p>
+<ul>
+<li><code>year between 1990 and 1995</code></li>
+<li><code>title like 'star wars%'</code> <code>title like 'star wars _'</code></li>
+</ul>
+<p>We can include ordering, e.g., find distinct movies sorted by title</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="kw">distinct</span> title
+<span class="kw">from</span> movie
+<span class="kw">where</span> studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> <span class="dt">year</span> = <span class="dv">1990</span>
+<span class="kw">order</span> <span class="kw">by</span> title;</code></pre></div>
+<div id="group-by-and-summarize" class="section level2">
+<h2><span class="header-section-number">12.1</span> Group-by and summarize</h2>
+<p>SQL has an idiom for grouping and summarizing (<em>conditioning</em> as we called it before). Remember this is a very important concept that shows up in many data processing platforms</p>
+<ul>
+<li>What it does: Partition the tuples by the group attributes (<em>year</em> in this case), and do something (<em>compute avg</em> in this case) for each group</li>
+<li>Number of resulting tuples == Number of groups</li>
+</ul>
+<p>E.g., compute the average movie length by year</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> name, <span class="fu">avg</span>(<span class="fu">length</span>) 
+<span class="kw">from</span> movie
+<span class="kw">group</span> <span class="kw">by</span> <span class="dt">year</span></code></pre></div>
 </div>
-<div id="general-workflow" class="section level2">
-<h2><span class="header-section-number">2.5</span> General Workflow</h2>
-<p>The data science activities we will cover are roughly organized into a general workflow that will help us navigate this material.</p>
-<div class="figure">
-<img src="img/zumel_mount_cycle.png" />
+<div id="subqueries" class="section level2">
+<h2><span class="header-section-number">12.2</span> Subqueries</h2>
+<p>You can nest queries as an expression in an SFW query. We refer to these “subqueries” as “nested subquery”:</p>
+<p>E.g., find movie with the maximum length</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>
+<span class="kw">from</span> movie
+<span class="kw">where</span> movie.length = (<span class="kw">select</span> <span class="fu">max</span>(<span class="fu">length</span>) <span class="kw">from</span> movie);</code></pre></div>
+<p>E.g., find movies with at least 5 stars: an example of a correlated subquery</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> * 
+<span class="kw">from</span> movies m
+<span class="kw">where</span> <span class="dv">5</span> &gt;= (<span class="kw">select</span> <span class="fu">count</span>(*)
+<span class="kw">from</span> starsIn si
+<span class="kw">where</span> si.title = m.title <span class="kw">and</span> si.year = m.year);</code></pre></div>
+<p>The nested subquery counts the number of actors for that movie.</p>
+<p>E.g., rank movies by their length.</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>, (<span class="kw">select</span> <span class="fu">count</span>(*) 
+<span class="kw">from</span> movies m2
+<span class="kw">where</span> m1.length &lt;= m2.length) <span class="kw">as</span> <span class="fu">rank</span>
+<span class="kw">from</span> movies m1;</code></pre></div>
+<p>Key insight: A movie is ranked 5th if there are exactly 4 movies with longer length. Most database systems support some sort of a <em>rank</em> keyword for doing this. Notice that the above query doesn’t work in presence of ties etc.</p>
 
-</div>
-<div id="defining-the-goal" class="section level3">
-<h3><span class="header-section-number">2.5.1</span> Defining the Goal</h3>
-<ul>
-<li>What is the question/problem?</li>
-<li>Who wants to answer/solve it?</li>
-<li>What do they know/do now?</li>
-<li>How well can we expect to answer/solve it?</li>
-<li>How well do they want us to answer/solve it?</li>
-</ul>
-</div>
-<div id="data-collection-and-management" class="section level3">
-<h3><span class="header-section-number">2.5.2</span> Data Collection and Management</h3>
-<ul>
-<li>What data is available?</li>
-<li>Is it good enough?</li>
-<li>Is it enough?</li>
-<li>What are sensible measurements to derive from this data? Units, transformations, rates, ratios, etc.</li>
-</ul>
-</div>
-<div id="modeling" class="section level3">
-<h3><span class="header-section-number">2.5.3</span> Modeling</h3>
-<ul>
-<li>What kind of problem is it? E.g., classification, clustering, regression, etc.</li>
-<li>What kind of model should I use?</li>
-<li>Do I have enough data for it?</li>
-<li>Does it really answer the question?</li>
-</ul>
-</div>
-<div id="model-evaluation" class="section level3">
-<h3><span class="header-section-number">2.5.4</span> Model Evaluation</h3>
-<ul>
-<li>Did it work? How well?</li>
-<li>Can I interpret the model?</li>
-<li>What have I learned?</li>
-</ul>
-</div>
-<div id="presentation" class="section level3">
-<h3><span class="header-section-number">2.5.5</span> Presentation</h3>
-<ul>
-<li>Again, what are the measurements that tell the real story?</li>
-<li>How can I describe and visualize them effectively?</li>
-</ul>
-</div>
-<div id="deployment" class="section level3">
-<h3><span class="header-section-number">2.5.6</span> Deployment</h3>
-<ul>
-<li>Where will it be hosted?</li>
-<li>Who will use it?</li>
-<li>Who will maintain it?</li>
-</ul>
-
-</div>
 </div>
 </div>
             </section>
@@ -398,8 +300,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="an-illustrative-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tidy-data-i-the-er-model.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
