@@ -205,16 +205,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10" data-path="best-practices-for-data-science-projects.html"><a href="best-practices-for-data-science-projects.html"><i class="fa fa-check"></i><b>10</b> Best Practices for Data Science Projects</a></li>
 <li class="chapter" data-level="11" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html"><i class="fa fa-check"></i><b>11</b> Tidy Data I: The ER Model</a><ul>
 <li class="chapter" data-level="11.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#overview"><i class="fa fa-check"></i><b>11.1</b> Overview</a></li>
-<li class="chapter" data-level="11.2" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#the-entity-relationship-and-relational-models"><i class="fa fa-check"></i><b>11.2</b> The Entity-Relationship and Relational Models</a></li>
-<li class="chapter" data-level="11.3" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#tidy-data"><i class="fa fa-check"></i><b>11.3</b> Tidy Data</a><ul>
-<li class="chapter" data-level="11.3.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#formal-introduction-to-keys"><i class="fa fa-check"></i><b>11.3.1</b> Formal introduction to keys</a></li>
+<li class="chapter" data-level="11.2" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#the-entity-relationship-and-relational-models"><i class="fa fa-check"></i><b>11.2</b> The Entity-Relationship and Relational Models</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#formal-introduction-to-keys"><i class="fa fa-check"></i><b>11.2.1</b> Formal introduction to keys</a></li>
 </ul></li>
+<li class="chapter" data-level="11.3" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#tidy-data"><i class="fa fa-check"></i><b>11.3</b> Tidy Data</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html"><i class="fa fa-check"></i><b>12</b> SQL I: Single Table Queries</a><ul>
-<li class="chapter" data-level="12.0.1" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#sql-constructs-single-table-queries"><i class="fa fa-check"></i><b>12.0.1</b> SQL Constructs: Single Table Queries</a></li>
-<li class="chapter" data-level="12.0.2" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#group-by-and-summarize"><i class="fa fa-check"></i><b>12.0.2</b> Group-by and summarize</a></li>
-<li class="chapter" data-level="12.0.3" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#subqueries"><i class="fa fa-check"></i><b>12.0.3</b> Subqueries</a></li>
-<li class="chapter" data-level="12.0.4" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#exercise"><i class="fa fa-check"></i><b>12.0.4</b> Exercise</a></li>
+<li class="chapter" data-level="12.1" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#group-by-and-summarize"><i class="fa fa-check"></i><b>12.1</b> Group-by and summarize</a></li>
+<li class="chapter" data-level="12.2" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#subqueries"><i class="fa fa-check"></i><b>12.2</b> Subqueries</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="relational-operations.html"><a href="relational-operations.html"><i class="fa fa-check"></i><b>13</b> Relational Operations</a></li>
 </ul>
@@ -236,9 +234,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="sql-i-single-table-queries" class="section level1">
 <h1><span class="header-section-number">12</span> SQL I: Single Table Queries</h1>
-<div id="sql-constructs-single-table-queries" class="section level3">
-<h3><span class="header-section-number">12.0.1</span> SQL Constructs: Single Table Queries</h3>
-<p>Here we will see the same operations we saw with <code>dplyr</code>, but there is a fundamental difference. SQL is a declarative language, we don’t write how to get the answer we want, we declare the answer we want. The actual execution is determined and optimized by the database engine. However, there are clear mappings between parts of SQL queries and the operations we used in <code>dplyr</code>. The basic construct in SQL is the so-called <code>SFW</code> construct: <em>select-from-where</em> which specifies:</p>
+<p>The Structured-Query-Language (SQL) is the predominant language used in database systems. It is tailored to the Relational data representation model.</p>
+<p>SQL is a declarative language, we don’t write a <em>procedure</em> to compute a relation, we <em>declare</em> what the relation we want to compute looks like. The actual execution is determined and optimized by the database engine. However, there are clear mappings between parts of SQL queries and the operations we have defined so far as implemented in the <code>tidyverse</code>.</p>
+<p>The basic construct in SQL is the so-called <code>SFW</code> construct: <em>select-from-where</em> which specifies:</p>
 <ul>
 <li><em>select</em>: which attributes you want the answer to have</li>
 <li><em>from</em>: which relation (table) you want the answer to be computed from</li>
@@ -248,12 +246,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> m.title, m.year
 <span class="kw">from</span> movie m
 <span class="kw">where</span> m.studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> m.year = <span class="dv">1990</span></code></pre></div>
-<p>The <strong>select</strong> clause can contain expressions</p>
+<p>The <strong>select</strong> clause can contain expressions (this is paralleled by the <code>mutate</code> operation we saw previously)</p>
 <ul>
 <li><code>select title || ' (' || to_char(year) || ')' as titleyear</code></li>
 <li><code>select 2014 - year</code></li>
 </ul>
-<p>The <strong>where</strong> clause support a large number of different predicates and combinations thereof</p>
+<p>The <strong>where</strong> clause support a large number of different predicates and combinations thereof (this is parallel to the <code>filter</code> operation)</p>
 <ul>
 <li><code>year between 1990 and 1995</code></li>
 <li><code>title like 'star wars%'</code> <code>title like 'star wars _'</code></li>
@@ -263,10 +261,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">from</span> movie
 <span class="kw">where</span> studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> <span class="dt">year</span> = <span class="dv">1990</span>
 <span class="kw">order</span> <span class="kw">by</span> title;</code></pre></div>
-</div>
-<div id="group-by-and-summarize" class="section level3">
-<h3><span class="header-section-number">12.0.2</span> Group-by and summarize</h3>
-<p>As expected, SQL has an idiom for grouping and summarizing (<em>conditioning</em> as we called it before). Remember this is a very important concept that shows up in many data processing platforms</p>
+<div id="group-by-and-summarize" class="section level2">
+<h2><span class="header-section-number">12.1</span> Group-by and summarize</h2>
+<p>SQL has an idiom for grouping and summarizing (<em>conditioning</em> as we called it before). Remember this is a very important concept that shows up in many data processing platforms</p>
 <ul>
 <li>What it does: Partition the tuples by the group attributes (<em>year</em> in this case), and do something (<em>compute avg</em> in this case) for each group</li>
 <li>Number of resulting tuples == Number of groups</li>
@@ -276,8 +273,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">from</span> movie
 <span class="kw">group</span> <span class="kw">by</span> <span class="dt">year</span></code></pre></div>
 </div>
-<div id="subqueries" class="section level3">
-<h3><span class="header-section-number">12.0.3</span> Subqueries</h3>
+<div id="subqueries" class="section level2">
+<h2><span class="header-section-number">12.2</span> Subqueries</h2>
 <p>You can nest queries as an expression in an SFW query. We refer to these “subqueries” as “nested subquery”:</p>
 <p>E.g., find movie with the maximum length</p>
 <div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>
@@ -296,22 +293,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">where</span> m1.length &lt;= m2.length) <span class="kw">as</span> <span class="fu">rank</span>
 <span class="kw">from</span> movies m1;</code></pre></div>
 <p>Key insight: A movie is ranked 5th if there are exactly 4 movies with longer length. Most database systems support some sort of a <em>rank</em> keyword for doing this. Notice that the above query doesn’t work in presence of ties etc.</p>
-</div>
-<div id="exercise" class="section level3">
-<h3><span class="header-section-number">12.0.4</span> Exercise</h3>
-<p>The <code>dplyr</code> package has a nice interface to database systems as well. As you may imagine, mapping the <code>dplyr</code> single and two-table verbs to SQL can be pretty straight forward. However, it also allows you to run SQL queries on these databases directly. See more information <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/databases.html">in this introduction</a>.</p>
-<p>As an exercise you should try to answer our <code>dplyr</code> exercise questions using SQL queries and compare the results. As a reminder, here are the six questions:</p>
-<p><em>Question 1</em>: Filter flights to include only flights with an arrival delay greater than 2 hours (delays are recorded in minutes).</p>
-<p><em>Question 2</em>: Select columns in the flights table that contain delay times (note that the function <code>matches</code> can be used to select columns with names that partially match a given string. See <code>?dplyr::select</code>)</p>
-<p><em>Question 3</em>: Find the minimum arrival delay (this can be a negative number) in the flights table. Use <code>summarize</code>.</p>
-<p><em>Question 4</em>: Find minimum arrival delay (again, can be a negative number) in the flights table for each <em>destination</em> airport. Use <code>group_by</code> and <code>summarize</code>.</p>
-<p><em>Question 5</em>: List the name of <strong>all</strong> airlines and the number of flights for each airline in flights table. The <code>airlines</code> table contains airline names, so you will have to perform a join operation.</p>
-<p><em>Question 6</em>:</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>Create a new column (use <code>mutate</code>) with total delay time for each flight.</p></li>
-<li><p>Replace any missing <em>total delay times</em> with the average (<code>mean</code>) total delay.</p></li>
-<li><p>Same as (b) but now replace any missing <em>total delay times</em> with the average (<code>mean</code>) total delay for the flight’s route (i.e., origin/destination combination)</p></li>
-</ol>
 
 </div>
 </div>
@@ -362,17 +343,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
