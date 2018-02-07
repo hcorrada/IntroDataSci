@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="an-illustrative-analysis.html">
+<link rel="prev" href="best-practices-for-data-science-projects.html">
+<link rel="next" href="sql-i-single-table-queries.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -231,166 +231,161 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction-and-overview" class="section level1">
-<h1><span class="header-section-number">2</span> Introduction and Overview</h1>
-<div id="what-is-data-science" class="section level2">
-<h2><span class="header-section-number">2.1</span> What is Data Science?</h2>
-<p>Data science encapsulates the interdisciplinary activities required to create data-centric artifacts and applications that address specific scientific, socio-political, business, or other questions.</p>
-<p>Let’s look at the constiuent parts of this statement:</p>
-<div id="data" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> Data</h3>
-<p>Measureable units of information gathered or captured from activity of people, places and things.</p>
-</div>
-<div id="specific-questions" class="section level3">
-<h3><span class="header-section-number">2.1.2</span> Specific Questions</h3>
-<p>Seeking to understand a phenomenon, natural, social or other, can we formulate specific questions for which an answer posed in terms of patterns observed, tested and or modeled in data is appropriate.</p>
-</div>
-<div id="interdisciplinary-activities" class="section level3">
-<h3><span class="header-section-number">2.1.3</span> Interdisciplinary Activities</h3>
-<p>Formulating a question, assessing the appropriateness of the data and findings used to find an answer require understanding of the specific subject area. Deciding on the appropriateness of models and inferences made from models based on the data at hand requires understanding of statistical and computational methods.</p>
-</div>
-<div id="data-centric-artifacts-and-applications" class="section level3">
-<h3><span class="header-section-number">2.1.4</span> Data-Centric Artifacts and Applications</h3>
-<p>Answers to questions derived from data are usually shared and published in meaningful, succinct but sufficient, reproducible artifacts (papers, books, movies, comics). Going a step further, interactive applications that let others explore data, models and inferences are great.</p>
-</div>
-</div>
-<div id="why-data-science" class="section level2">
-<h2><span class="header-section-number">2.2</span> Why Data Science?</h2>
-<p>The granularity, size and accessibility data, comprising both physical, social, commercial and political spheres has exploded in the last decade or more.</p>
-<blockquote>
-<p>“I keep saying that the sexy job in the next 10 years will be statisticians”</p>
-</blockquote>
-<blockquote>
-<p>Hal Varian, Chief Economist at Google (<a href="http://www.nytimes.com/2009/08/06/technology/06stats.html?_r=0" class="uri">http://www.nytimes.com/2009/08/06/technology/06stats.html?_r=0</a>)</p>
-</blockquote>
-<blockquote>
-<p>“The ability to take data—to be able to understand it, to process it, to extract value from it, to visualize it, to communicate it—that’s going to be a hugely important skill in the next decades, not only at the professional level but even at the educational level for elementary school kids, for high school kids, for college kids.”</p>
-</blockquote>
-<blockquote>
-<p>“Because now we really do have essentially free and ubiquitous data. So the complimentary scarce factor is the ability to understand that data and extract value from it.”</p>
-</blockquote>
-<blockquote>
-<p>Hal Varian (<a href="http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers" class="uri">http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers</a>)</p>
-</blockquote>
-</div>
-<div id="data-science-in-society" class="section level2">
-<h2><span class="header-section-number">2.3</span> Data Science in Society</h2>
-<p>Because of the large amount of data produced across many spheres of human social and creative activity, many societal questions may be addressed by establishing patterns in data. In the humanities, this can range from unproblematic quesitions of how to dissect a large creative corpora, say music, literature, based on raw characteristics of those works, text, sound and image. To more problematic questions, of analysis of intent, understanding, appreciation and valuation of these creative corpora.</p>
-<p>In the social sciences, issues of fairness and transparency in the current era of big data are especially problematic. Is data collected representative of population for which inferences are drawn? Are methods employed learning latent unfair factors from ostensibly fair data? These are issues that the research community is now starting to address.</p>
-<p>In all settings, issues of ethical collection of data, application of models, and deployment of data-centric artifacts are essential to grapple with. Issues of privacy are equally important.</p>
-</div>
-<div id="course-organization" class="section level2">
-<h2><span class="header-section-number">2.4</span> Course Organization</h2>
-<p>This course will cover basics of how to represent, model and communicate about data and data analyses using the R data analysis environment for Data Science.</p>
-<p>The course is roughly divided into five areas:</p>
+<div id="tidy-data-i-the-er-model" class="section level1">
+<h1><span class="header-section-number">11</span> Tidy Data I: The ER Model</h1>
+<p>Some of this material is based on Amol Deshpande’s material: <a href="https://github.com/umddb/datascience-fall14/blob/master/lecture-notes/models.md" class="uri">https://github.com/umddb/datascience-fall14/blob/master/lecture-notes/models.md</a></p>
+<div id="overview" class="section level2">
+<h2><span class="header-section-number">11.1</span> Overview</h2>
+<p>In this section we will principles of preparing and organizing data in a way that is amenable for analysis, both in modeling and visualization. We think of a <em>data model</em> as a collection of concepts that describes how data is represented and accessed. Thinking abstractly of data structure, beyond a specific implementation, makes it easier to share data across programs and systems, and integrate data from different sources.</p>
+<p>Once we have thought about structure, we can then think about <em>semantics</em>: what does data represent?</p>
 <ul>
-<li>Area 0: tools and skills<br />
-○ Toolset (Rstudio/tidyverse/rmarkdown)<br />
-○ Best practices<br />
-○ Debugging data science<br />
+<li><strong>Structure</strong>: We have assumed that data is organized in rectangular data structures (tables with rows and columns)</li>
+<li><strong>Semantics</strong>: We have discussed the notion of <em>values</em>, <em>attributes</em>, and <em>entities</em>.</li>
+</ul>
+<p>So far, we have used the following <em>data semantics</em>: a dataset is a collection of <em>values</em>, numeric or categorical, organized into <em>entities</em> (<em>observations</em>) and <em>attributes</em> (<em>variables</em>). Each <em>attribute</em> contains values of a specific measurement across <em>entities</em>, and <em>entities</em> collect all measurements across <em>attributes</em>.</p>
+<p>In the database literature, we call this exercise of defining structure and semantics as <em>data modeling</em>. In this course we use teh term <em>data representational modeling</em>, to distinguish from <em>data statistical modeling</em>. The context should be sufficient to distinguish the two uses of the term <em>data modeling</em>.</p>
+<p>Data representational modeling is the process of representing/capturing structure in data based on defining:</p>
+<ul>
+<li><strong>Data model</strong>: A collection of concepts that describes how data is represented and accessed<br />
 </li>
-<li>Area I: types and operations<br />
-○ Data tables and data types<br />
-○ Operations on tables<br />
-○ Basic plotting<br />
-○ Tidy data / the ER model<br />
-○ Relational Operations<br />
-○ SQL<br />
-○ Advanced: other data models, db consistency and concurrency<br />
+<li><strong>Schema</strong>: A description of a specific collection of data, using a given data model</li>
+</ul>
+<p>The purpose of defining abstract data representation models is that it allows us to know the structure of the data/information (to some extent) and thus be able to write general purpose code. Lack of a data model makes it difficult to share data across programs, organizations, systems that need to be able to integrate information from multiple sources. We can also design algorithms and code that can significantly increase efficiency if we can assume general data structure. For instance, we can preprocess data to make access efficient (e.g., building a B-Tree on a field).</p>
+<p>A data model typically consists of:</p>
+<ul>
+<li>Modeling Constructs: A collection of concepts used to represent the structure in the data. Typically we need to represent types of <em>entities</em>, their <em>attributes</em>, types of <em>relationships</em> between <em>entities</em>, and <em>relationship attributes</em><br />
 </li>
-<li>Area II: wrangling<br />
-○ Data acquisition (load and scrape)<br />
-○ EDA Vis / grammar of graphics<br />
-○ Data cleaning (text, dates)<br />
-○ EDA: Summary statistics<br />
-○ Data analysis with optimization (derivatives)<br />
-○ Data transformations<br />
-○ Missing data<br />
+<li>Integrity Constraints: Constraints to ensure data integrity (i.e., avoid errors)<br />
 </li>
-<li>Area III: modeling<br />
-○ Univariate probability and statistics<br />
-○ Hypothesis testing<br />
-○ Multivariate probablity and statistics (joint and conditional probability, Bayes thm)<br />
-○ Data Analysis with geometry (vectors, inner products, gradients and matrices)<br />
-○ Linear regression<br />
-○ Logistic regression<br />
-○ Gradient descent (batch and stochastic)<br />
-○ Trees and random forests<br />
-○ K-NN<br />
-○ Naïve Bayes<br />
-○ Clustering<br />
-○ PCA<br />
+<li>Manipulation Languages: Constructs for manipulating the data</li>
+</ul>
+<p>We desire that models are sufficiently <em>expressive</em> so they can capture real-world data well, <em>easy to use</em>, and lend themselves to defining computational methods that have good performance.</p>
+<p>Some examples of data models are</p>
+<ul>
+<li>Relational, Entity-relationship model, XML…</li>
+<li>Object-oriented, Object-relational, RDF…</li>
+<li>Current favorites in the industry: JSON, Protocol Buffers, <a href="http://avro.apache.org/docs/current/">Avro</a>, Thrift, Property Graph</li>
+</ul>
+<p>Why have so many models been defined? There is an inherent tension between descriptive power and ease of use/efficiency. More powerful, expressive, models can be applied to represent more datasets but also tend to be harder to use and query efficiently.</p>
+<p>Typically there are multiple levels of modeling. <em>Physical modeling</em> concerns itself with how the data is physically stored. <em>Logical or Conceptual modeling</em> concerns itself with type of information stored, the different entities, their attributes, and the relationships among those. There may be several layers of logical/conceptual models to restrict the information flow (for security and/or ease-of-use):</p>
+<ul>
+<li><strong>Data independence:</strong> The idea that you can change the representation of data w/o changing programs that operate on it.<br />
 </li>
-<li>Area IV: essential applications<br />
-○ Text mining<br />
-○ Graphs<br />
-○ Forecasting<br />
-</li>
-<li>Area V: communication<br />
-○ Designing data visualizations for communication not exploration<br />
-○ Interactive visualization<br />
-○ Writing about data, analysis, and inferences</li>
+<li><strong>Physical data independence:</strong> I can change the layout of data on disk and my programs won’t change
+<ul>
+<li>index the data</li>
+<li>partition/distribute/replicate the data</li>
+<li>compress the data</li>
+<li>sort the data</li>
+</ul></li>
 </ul>
 </div>
-<div id="general-workflow" class="section level2">
-<h2><span class="header-section-number">2.5</span> General Workflow</h2>
-<p>The data science activities we will cover are roughly organized into a general workflow that will help us navigate this material.</p>
+<div id="the-entity-relationship-and-relational-models" class="section level2">
+<h2><span class="header-section-number">11.2</span> The Entity-Relationship and Relational Models</h2>
+<p>The fundamental objects in this formalism are <em>entities</em> and their <em>attributes</em>, as we have seen before, and <em>relationships</em> and <em>relationship attributes</em> which we saw briefly in a previous example, where ‘rankings’ and ‘songs’ are distinct types of entities and we define <em>relationships</em> between them.</p>
 <div class="figure">
-<img src="img/zumel_mount_cycle.png" />
+<img src="img/er.png" />
 
 </div>
-<div id="defining-the-goal" class="section level3">
-<h3><span class="header-section-number">2.5.1</span> Defining the Goal</h3>
-<ul>
-<li>What is the question/problem?</li>
-<li>Who wants to answer/solve it?</li>
-<li>What do they know/do now?</li>
-<li>How well can we expect to answer/solve it?</li>
-<li>How well do they want us to answer/solve it?</li>
-</ul>
-</div>
-<div id="data-collection-and-management" class="section level3">
-<h3><span class="header-section-number">2.5.2</span> Data Collection and Management</h3>
-<ul>
-<li>What data is available?</li>
-<li>Is it good enough?</li>
-<li>Is it enough?</li>
-<li>What are sensible measurements to derive from this data? Units, transformations, rates, ratios, etc.</li>
-</ul>
-</div>
-<div id="modeling" class="section level3">
-<h3><span class="header-section-number">2.5.3</span> Modeling</h3>
-<ul>
-<li>What kind of problem is it? E.g., classification, clustering, regression, etc.</li>
-<li>What kind of model should I use?</li>
-<li>Do I have enough data for it?</li>
-<li>Does it really answer the question?</li>
-</ul>
-</div>
-<div id="model-evaluation" class="section level3">
-<h3><span class="header-section-number">2.5.4</span> Model Evaluation</h3>
-<ul>
-<li>Did it work? How well?</li>
-<li>Can I interpret the model?</li>
-<li>What have I learned?</li>
-</ul>
-</div>
-<div id="presentation" class="section level3">
-<h3><span class="header-section-number">2.5.5</span> Presentation</h3>
-<ul>
-<li>Again, what are the measurements that tell the real story?</li>
-<li>How can I describe and visualize them effectively?</li>
-</ul>
-</div>
-<div id="deployment" class="section level3">
-<h3><span class="header-section-number">2.5.6</span> Deployment</h3>
-<ul>
-<li>Where will it be hosted?</li>
-<li>Who will use it?</li>
-<li>Who will maintain it?</li>
-</ul>
+<p>Here, rectangles are <em>entitites</em>, diamonds and edges indicate <em>relationships</em>. Circles describe either entity or relationship <em>attributes</em>. Arrows are used indicate multiplicity of relationships (one-to-one, many-to-one, one-to-many, many-to-many):</p>
+<div class="figure">
+<img src="img/relationships.png" />
 
 </div>
+<p>Think about what relationships are shown in this diagram?</p>
+<div class="figure">
+<img src="img/er2.png" />
+
+</div>
+<p>In databases and general datasets we work on, both Entities and Relationships are represented as <em>Relations</em> (tables) such that a unique entity/relationship is represented by a single row. This leads to the natural question of how are unique entities determined or defined. Here is where the concept of a <em>key</em> comes in. This is an essential aspect of the Entity-Relationship and Relational models.</p>
+<div id="formal-introduction-to-keys" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> Formal introduction to keys</h3>
+<div class="figure">
+<img src="img/schema.png" />
+
+</div>
+<ul>
+<li>Attribute set <span class="math inline">\(K\)</span> is a <strong>superkey</strong> of relation <span class="math inline">\(R\)</span> if values for <span class="math inline">\(K\)</span> are sufficient to identify a unique tuple of each possible relation <span class="math inline">\(r(R)\)</span>
+<ul>
+<li>Example: <code>{ID}</code> and <code>{ID,name}</code> are both superkeys of <em>instructor</em></li>
+</ul></li>
+<li>Superkey <span class="math inline">\(K\)</span> is a <strong>candidate key</strong> if <span class="math inline">\(K\)</span> is minimal
+<ul>
+<li>Example: <code>{ID}</code> is a candidate key for Instructor</li>
+</ul></li>
+<li>One of the candidate keys is selected to be the <strong>primary key</strong>
+<ul>
+<li>Typically one that is small and immutable (doesn’t change often)</li>
+<li>Primary key typically highlighted</li>
+</ul></li>
+<li><strong>Foreign key</strong>: Primary key of a relation that appears in another relation
+<ul>
+<li><code>{ID}</code> from <em>student</em> appears in <em>takes, advisor</em></li>
+<li><em>student</em> called referenced relation</li>
+<li><em>takes</em> is the referencing relation</li>
+<li>Typically shown by an arrow from referencing to referenced</li>
+</ul></li>
+<li><strong>Foreign key constraint</strong>: the tuple corresponding to that primary key must exist
+<ul>
+<li>Imagine:
+<ul>
+<li>Tuple: <code>('student101', 'CMSC302')</code>in <em>takes</em></li>
+<li>But no tuple corresponding to ‘student101’ in <em>student</em></li>
+</ul></li>
+<li>Also called referential integrity constraint</li>
+</ul></li>
+</ul>
+<div id="keys-examples" class="section level4">
+<h4><span class="header-section-number">11.2.1.1</span> Keys: Examples</h4>
+<ul>
+<li>Married(person1-ssn, person2-ssn, date-married, date-divorced)</li>
+<li>Account(cust-ssn, account-number, cust-name, balance, cust-address)</li>
+<li>RA(student-id, project-id, superviser-id, appt-time, appt-start-date, appt-end-date)</li>
+<li>Person(Name, DOB, Born, Education, Religion, …)
+<ul>
+<li>Information typically found on Wikipedia Pages</li>
+</ul></li>
+<li>President(name, start-date, end-date, vice-president, preceded-by, succeeded-by)
+<ul>
+<li>Info listed on Wikipedia page summary</li>
+</ul></li>
+<li>Rider(Name, Born, Team-name, Coach, Sponsor, Year)
+<ul>
+<li>Tour de France: Historical Rider Participation Information</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="tidy-data" class="section level2">
+<h2><span class="header-section-number">11.3</span> Tidy Data</h2>
+<p>Later in the course we will use the term Tidy Data to refer to datasets that are represented in a form that is amenable for manipulation and statistical modeling. It is very closely related to the concept of <em>normal forms</em> in the ER model and the process of <em>normalization</em> in the database literature.</p>
+<p>Here we assume we are working in the ER data model represented as <em>relations</em>: rectangular data structures where</p>
+<ol style="list-style-type: decimal">
+<li>Each attribute (or variable) forms a column<br />
+</li>
+<li>Each entity (or observation) forms a row<br />
+</li>
+<li>Each type of entity (observational unit) forms a table</li>
+</ol>
+<p>Here is an example of a tidy dataset:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nycflights13)
+<span class="kw">head</span>(flights)</code></pre></div>
+<pre><code>## # A tibble: 6 x 19
+##    year month   day dep_time sched_dep_time dep_delay arr_time
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+## 1  2013     1     1      517            515      2.00      830
+## 2  2013     1     1      533            529      4.00      850
+## 3  2013     1     1      542            540      2.00      923
+## 4  2013     1     1      544            545     -1.00     1004
+## 5  2013     1     1      554            600     -6.00      812
+## 6  2013     1     1      554            558     -4.00      740
+## # ... with 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour
+## #   &lt;dttm&gt;</code></pre>
+<p>it has one entity per row, a single attribute per column. Notice only information about flights are included here (e.g., no airport or airline information other than the name) in these observations.</p>
+
 </div>
 </div>
             </section>
@@ -398,8 +393,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="an-illustrative-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="best-practices-for-data-science-projects.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sql-i-single-table-queries.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

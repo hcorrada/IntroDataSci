@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="an-illustrative-analysis.html">
+<link rel="prev" href="sql-i-single-table-queries.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -205,15 +205,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10" data-path="best-practices-for-data-science-projects.html"><a href="best-practices-for-data-science-projects.html"><i class="fa fa-check"></i><b>10</b> Best Practices for Data Science Projects</a></li>
 <li class="chapter" data-level="11" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html"><i class="fa fa-check"></i><b>11</b> Tidy Data I: The ER Model</a><ul>
 <li class="chapter" data-level="11.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#overview"><i class="fa fa-check"></i><b>11.1</b> Overview</a></li>
-<li class="chapter" data-level="11.2" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#the-entity-relationship-and-relational-models"><i class="fa fa-check"></i><b>11.2</b> The Entity-Relationship and Relational Models</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#formal-introduction-to-keys"><i class="fa fa-check"></i><b>11.2.1</b> Formal introduction to keys</a></li>
+<li class="chapter" data-level="11.2" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#the-entity-relationship-and-relational-models"><i class="fa fa-check"></i><b>11.2</b> The Entity-Relationship and Relational Models</a></li>
+<li class="chapter" data-level="11.3" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#tidy-data"><i class="fa fa-check"></i><b>11.3</b> Tidy Data</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#formal-introduction-to-keys"><i class="fa fa-check"></i><b>11.3.1</b> Formal introduction to keys</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#tidy-data"><i class="fa fa-check"></i><b>11.3</b> Tidy Data</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html"><i class="fa fa-check"></i><b>12</b> SQL I: Single Table Queries</a><ul>
-<li class="chapter" data-level="12.1" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#group-by-and-summarize"><i class="fa fa-check"></i><b>12.1</b> Group-by and summarize</a></li>
-<li class="chapter" data-level="12.2" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#subqueries"><i class="fa fa-check"></i><b>12.2</b> Subqueries</a></li>
+<li class="chapter" data-level="12.0.1" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#sql-constructs-single-table-queries"><i class="fa fa-check"></i><b>12.0.1</b> SQL Constructs: Single Table Queries</a></li>
+<li class="chapter" data-level="12.0.2" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#group-by-and-summarize"><i class="fa fa-check"></i><b>12.0.2</b> Group-by and summarize</a></li>
+<li class="chapter" data-level="12.0.3" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#subqueries"><i class="fa fa-check"></i><b>12.0.3</b> Subqueries</a></li>
+<li class="chapter" data-level="12.0.4" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#exercise"><i class="fa fa-check"></i><b>12.0.4</b> Exercise</a></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="relational-operations.html"><a href="relational-operations.html"><i class="fa fa-check"></i><b>13</b> Relational Operations</a></li>
 </ul>
 
       </nav>
@@ -231,175 +234,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction-and-overview" class="section level1">
-<h1><span class="header-section-number">2</span> Introduction and Overview</h1>
-<div id="what-is-data-science" class="section level2">
-<h2><span class="header-section-number">2.1</span> What is Data Science?</h2>
-<p>Data science encapsulates the interdisciplinary activities required to create data-centric artifacts and applications that address specific scientific, socio-political, business, or other questions.</p>
-<p>Let’s look at the constiuent parts of this statement:</p>
-<div id="data" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> Data</h3>
-<p>Measureable units of information gathered or captured from activity of people, places and things.</p>
-</div>
-<div id="specific-questions" class="section level3">
-<h3><span class="header-section-number">2.1.2</span> Specific Questions</h3>
-<p>Seeking to understand a phenomenon, natural, social or other, can we formulate specific questions for which an answer posed in terms of patterns observed, tested and or modeled in data is appropriate.</p>
-</div>
-<div id="interdisciplinary-activities" class="section level3">
-<h3><span class="header-section-number">2.1.3</span> Interdisciplinary Activities</h3>
-<p>Formulating a question, assessing the appropriateness of the data and findings used to find an answer require understanding of the specific subject area. Deciding on the appropriateness of models and inferences made from models based on the data at hand requires understanding of statistical and computational methods.</p>
-</div>
-<div id="data-centric-artifacts-and-applications" class="section level3">
-<h3><span class="header-section-number">2.1.4</span> Data-Centric Artifacts and Applications</h3>
-<p>Answers to questions derived from data are usually shared and published in meaningful, succinct but sufficient, reproducible artifacts (papers, books, movies, comics). Going a step further, interactive applications that let others explore data, models and inferences are great.</p>
-</div>
-</div>
-<div id="why-data-science" class="section level2">
-<h2><span class="header-section-number">2.2</span> Why Data Science?</h2>
-<p>The granularity, size and accessibility data, comprising both physical, social, commercial and political spheres has exploded in the last decade or more.</p>
-<blockquote>
-<p>“I keep saying that the sexy job in the next 10 years will be statisticians”</p>
-</blockquote>
-<blockquote>
-<p>Hal Varian, Chief Economist at Google (<a href="http://www.nytimes.com/2009/08/06/technology/06stats.html?_r=0" class="uri">http://www.nytimes.com/2009/08/06/technology/06stats.html?_r=0</a>)</p>
-</blockquote>
-<blockquote>
-<p>“The ability to take data—to be able to understand it, to process it, to extract value from it, to visualize it, to communicate it—that’s going to be a hugely important skill in the next decades, not only at the professional level but even at the educational level for elementary school kids, for high school kids, for college kids.”</p>
-</blockquote>
-<blockquote>
-<p>“Because now we really do have essentially free and ubiquitous data. So the complimentary scarce factor is the ability to understand that data and extract value from it.”</p>
-</blockquote>
-<blockquote>
-<p>Hal Varian (<a href="http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers" class="uri">http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers</a>)</p>
-</blockquote>
-</div>
-<div id="data-science-in-society" class="section level2">
-<h2><span class="header-section-number">2.3</span> Data Science in Society</h2>
-<p>Because of the large amount of data produced across many spheres of human social and creative activity, many societal questions may be addressed by establishing patterns in data. In the humanities, this can range from unproblematic quesitions of how to dissect a large creative corpora, say music, literature, based on raw characteristics of those works, text, sound and image. To more problematic questions, of analysis of intent, understanding, appreciation and valuation of these creative corpora.</p>
-<p>In the social sciences, issues of fairness and transparency in the current era of big data are especially problematic. Is data collected representative of population for which inferences are drawn? Are methods employed learning latent unfair factors from ostensibly fair data? These are issues that the research community is now starting to address.</p>
-<p>In all settings, issues of ethical collection of data, application of models, and deployment of data-centric artifacts are essential to grapple with. Issues of privacy are equally important.</p>
-</div>
-<div id="course-organization" class="section level2">
-<h2><span class="header-section-number">2.4</span> Course Organization</h2>
-<p>This course will cover basics of how to represent, model and communicate about data and data analyses using the R data analysis environment for Data Science.</p>
-<p>The course is roughly divided into five areas:</p>
-<ul>
-<li>Area 0: tools and skills<br />
-○ Toolset (Rstudio/tidyverse/rmarkdown)<br />
-○ Best practices<br />
-○ Debugging data science<br />
-</li>
-<li>Area I: types and operations<br />
-○ Data tables and data types<br />
-○ Operations on tables<br />
-○ Basic plotting<br />
-○ Tidy data / the ER model<br />
-○ Relational Operations<br />
-○ SQL<br />
-○ Advanced: other data models, db consistency and concurrency<br />
-</li>
-<li>Area II: wrangling<br />
-○ Data acquisition (load and scrape)<br />
-○ EDA Vis / grammar of graphics<br />
-○ Data cleaning (text, dates)<br />
-○ EDA: Summary statistics<br />
-○ Data analysis with optimization (derivatives)<br />
-○ Data transformations<br />
-○ Missing data<br />
-</li>
-<li>Area III: modeling<br />
-○ Univariate probability and statistics<br />
-○ Hypothesis testing<br />
-○ Multivariate probablity and statistics (joint and conditional probability, Bayes thm)<br />
-○ Data Analysis with geometry (vectors, inner products, gradients and matrices)<br />
-○ Linear regression<br />
-○ Logistic regression<br />
-○ Gradient descent (batch and stochastic)<br />
-○ Trees and random forests<br />
-○ K-NN<br />
-○ Naïve Bayes<br />
-○ Clustering<br />
-○ PCA<br />
-</li>
-<li>Area IV: essential applications<br />
-○ Text mining<br />
-○ Graphs<br />
-○ Forecasting<br />
-</li>
-<li>Area V: communication<br />
-○ Designing data visualizations for communication not exploration<br />
-○ Interactive visualization<br />
-○ Writing about data, analysis, and inferences</li>
-</ul>
-</div>
-<div id="general-workflow" class="section level2">
-<h2><span class="header-section-number">2.5</span> General Workflow</h2>
-<p>The data science activities we will cover are roughly organized into a general workflow that will help us navigate this material.</p>
-<div class="figure">
-<img src="img/zumel_mount_cycle.png" />
+<div id="relational-operations" class="section level1">
+<h1><span class="header-section-number">13</span> Relational Operations</h1>
 
-</div>
-<div id="defining-the-goal" class="section level3">
-<h3><span class="header-section-number">2.5.1</span> Defining the Goal</h3>
-<ul>
-<li>What is the question/problem?</li>
-<li>Who wants to answer/solve it?</li>
-<li>What do they know/do now?</li>
-<li>How well can we expect to answer/solve it?</li>
-<li>How well do they want us to answer/solve it?</li>
-</ul>
-</div>
-<div id="data-collection-and-management" class="section level3">
-<h3><span class="header-section-number">2.5.2</span> Data Collection and Management</h3>
-<ul>
-<li>What data is available?</li>
-<li>Is it good enough?</li>
-<li>Is it enough?</li>
-<li>What are sensible measurements to derive from this data? Units, transformations, rates, ratios, etc.</li>
-</ul>
-</div>
-<div id="modeling" class="section level3">
-<h3><span class="header-section-number">2.5.3</span> Modeling</h3>
-<ul>
-<li>What kind of problem is it? E.g., classification, clustering, regression, etc.</li>
-<li>What kind of model should I use?</li>
-<li>Do I have enough data for it?</li>
-<li>Does it really answer the question?</li>
-</ul>
-</div>
-<div id="model-evaluation" class="section level3">
-<h3><span class="header-section-number">2.5.4</span> Model Evaluation</h3>
-<ul>
-<li>Did it work? How well?</li>
-<li>Can I interpret the model?</li>
-<li>What have I learned?</li>
-</ul>
-</div>
-<div id="presentation" class="section level3">
-<h3><span class="header-section-number">2.5.5</span> Presentation</h3>
-<ul>
-<li>Again, what are the measurements that tell the real story?</li>
-<li>How can I describe and visualize them effectively?</li>
-</ul>
-</div>
-<div id="deployment" class="section level3">
-<h3><span class="header-section-number">2.5.6</span> Deployment</h3>
-<ul>
-<li>Where will it be hosted?</li>
-<li>Who will use it?</li>
-<li>Who will maintain it?</li>
-</ul>
-
-</div>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="an-illustrative-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="sql-i-single-table-queries.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
