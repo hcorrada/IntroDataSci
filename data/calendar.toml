@@ -53,20 +53,6 @@ notes = "bookdown-notes/brief-introduction-to-rmarkdown.html"
 [day03.class_notes]
 link = "classroom-notes/cmsc320_class-notes_20180201.pdf"
 
-# [day04a]
-# date = "9/9"
-
-# [[day04a.covers]]
-# title = "NOT A LECTURE DAY"
-
-# [[day04a.workdue]]
-# title = "R first exercise"
-# link = "https://myelms.umd.edu/courses/1199381/assignments/4270809"
-
-# [[day04a.workdue]]
-# title = "(answers)"
-# link = "misc/first_exercise_answers.Rmd"
-
 [day04]
 date = "2/6"
 
@@ -74,26 +60,16 @@ date = "2/6"
 title = "Best Practices for Data Science Projects"
 notes = "slides/cmsc320_best-practices.pdf"
 
-# [day06a]
-# date = "9/16"
-
-# [[day06a.covers]]
-# title = "NOT A LECTURE DAY"
-
-# [[day06a.workdue]]
-# title = "Datatypes and import"
-# link = "https://myelms.umd.edu/courses/1199381/assignments/4270806"
-
 [day05]
 date = "2/8"
 
 [[day05.covers]]
 title = "Data representation models: The ER model"
-# notes = "lecture-note/datamodels/"
+notes = "bookdown-notes/tidy-data-i-the-er-model.html"
 
 [[day05.covers]]
 title = "SQL I: Single-table Queries"
-# notes = "lecture-note/wrangling/"
+notes = "bookdown-notes/sql-i-single-table-queries.html"
 
 [[day05.workdue]]
 title = "Datatypes and wrangling"
