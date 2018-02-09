@@ -9,7 +9,7 @@ Some of this material is based on Amol Deshpande's material: [https://github.com
 
 ## Overview
 
-In this section we will principles of preparing and organizing data in a way that is amenable for analysis, both in modeling and visualization. We think of a _data model_ as a collection of concepts that describes how data is represented and accessed. Thinking abstractly of data structure, beyond a specific implementation, makes it easier to share data across programs and systems, and integrate data from different sources.
+In this section we will discuss principles of preparing and organizing data in a way that is amenable for analysis, both in modeling and visualization. We think of a _data model_ as a collection of concepts that describes how data is represented and accessed. Thinking abstractly of data structure, beyond a specific implementation, makes it easier to share data across programs and systems, and integrate data from different sources.
 
 Once we have thought about structure, we can then think about _semantics_: what does data represent? 
 
@@ -18,7 +18,7 @@ Once we have thought about structure, we can then think about _semantics_: what 
 
 So far, we have used the following _data semantics_: a dataset is a collection of _values_, numeric or categorical, organized into _entities_ (_observations_) and _attributes_ (_variables_). Each _attribute_ contains values of a specific measurement across _entities_, and _entities_ collect all measurements across _attributes_. 
 
-In the database literature, we call this exercise of defining structure and semantics as _data modeling_. In this course we use teh term _data representational modeling_, to distinguish from _data statistical modeling_. The context should be sufficient to distinguish the two uses of the term _data modeling_.
+In the database literature, we call this exercise of defining structure and semantics as _data modeling_. In this course we use the term _data representational modeling_, to distinguish from _data statistical modeling_. The context should be sufficient to distinguish the two uses of the term _data modeling_.
 
 Data representational modeling is the process of representing/capturing structure in data based on defining:
 
