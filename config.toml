@@ -63,6 +63,11 @@ ignorefiles = [ "lecture-note/.*" ]
 	weight = 20
 
 [[menu.main]]
+  name = "Data Science Corner"
+  url = "datasci_corner/"
+  weight = 25
+
+[[menu.main]]
 	name   = "Resources"
 	url    = "resources/"
 	weight = 30
