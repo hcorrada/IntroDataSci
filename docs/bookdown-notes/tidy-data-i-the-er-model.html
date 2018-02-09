@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="Lecture Notes: Introduction to Data Science">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
 
   <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-07">
+<meta name="date" content="2018-02-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -236,14 +236,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Some of this material is based on Amol Deshpande’s material: <a href="https://github.com/umddb/datascience-fall14/blob/master/lecture-notes/models.md" class="uri">https://github.com/umddb/datascience-fall14/blob/master/lecture-notes/models.md</a></p>
 <div id="overview" class="section level2">
 <h2><span class="header-section-number">11.1</span> Overview</h2>
-<p>In this section we will principles of preparing and organizing data in a way that is amenable for analysis, both in modeling and visualization. We think of a <em>data model</em> as a collection of concepts that describes how data is represented and accessed. Thinking abstractly of data structure, beyond a specific implementation, makes it easier to share data across programs and systems, and integrate data from different sources.</p>
+<p>In this section we will discuss principles of preparing and organizing data in a way that is amenable for analysis, both in modeling and visualization. We think of a <em>data model</em> as a collection of concepts that describes how data is represented and accessed. Thinking abstractly of data structure, beyond a specific implementation, makes it easier to share data across programs and systems, and integrate data from different sources.</p>
 <p>Once we have thought about structure, we can then think about <em>semantics</em>: what does data represent?</p>
 <ul>
 <li><strong>Structure</strong>: We have assumed that data is organized in rectangular data structures (tables with rows and columns)</li>
 <li><strong>Semantics</strong>: We have discussed the notion of <em>values</em>, <em>attributes</em>, and <em>entities</em>.</li>
 </ul>
 <p>So far, we have used the following <em>data semantics</em>: a dataset is a collection of <em>values</em>, numeric or categorical, organized into <em>entities</em> (<em>observations</em>) and <em>attributes</em> (<em>variables</em>). Each <em>attribute</em> contains values of a specific measurement across <em>entities</em>, and <em>entities</em> collect all measurements across <em>attributes</em>.</p>
-<p>In the database literature, we call this exercise of defining structure and semantics as <em>data modeling</em>. In this course we use teh term <em>data representational modeling</em>, to distinguish from <em>data statistical modeling</em>. The context should be sufficient to distinguish the two uses of the term <em>data modeling</em>.</p>
+<p>In the database literature, we call this exercise of defining structure and semantics as <em>data modeling</em>. In this course we use the term <em>data representational modeling</em>, to distinguish from <em>data statistical modeling</em>. The context should be sufficient to distinguish the two uses of the term <em>data modeling</em>.</p>
 <p>Data representational modeling is the process of representing/capturing structure in data based on defining:</p>
 <ul>
 <li><strong>Data model</strong>: A collection of concepts that describes how data is represented and accessed<br />
@@ -440,9 +440,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
