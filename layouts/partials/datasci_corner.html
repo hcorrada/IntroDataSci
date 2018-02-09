@@ -1,0 +1,11 @@
+<table>
+    <colgroup>
+        <thead>
+            <tr><th>Date</th><th>Description</th><th>Link</th></tr>
+        </thead>
+        <tbody>
+            {{ range .entries }}
+            {{ partial "datasci_corner_entry" . }}
+            {{ end }}
+        </tbody>
+</table>
