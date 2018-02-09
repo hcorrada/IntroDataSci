@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="Lecture Notes: Introduction to Data Science">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
 
   <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-07">
+<meta name="date" content="2018-02-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -235,7 +235,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1 class="title">Lecture Notes: Introduction to Data Science</h1>
 <h3 class="subtitle"><em>CMSC320, University of Maryland, College Park</em></h3>
 <h4 class="author"><em>Héctor Corrada Bravo</em></h4>
-<h4 class="date"><em>2018-02-07</em></h4>
+<h4 class="date"><em>2018-02-09</em></h4>
 </div>
 <div id="preamble" class="section level1">
 <h1><span class="header-section-number">1</span> Preamble</h1>
@@ -295,9 +295,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
