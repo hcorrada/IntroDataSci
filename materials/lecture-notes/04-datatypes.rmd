@@ -98,6 +98,8 @@ table(arrest_tab$sex)
 
 The result of a coin flip is categorical: `heads` or `tails`. The outcome of rolling an 8-sided die is categorical: `one`, `two`, ..., `eight`. Can you think of other examples?
 
+Categorical data may be _unordered_ or _ordered_. In our example dataset all categorical data is _unordered_, e.g., `sex`, `race`, etc. Examples of _ordered categorical data_ are grades in a class, Likert scale categories, e.g., `strongly agree`, `agree`, `neutral`, `disagree`, `strongly disagree`, etc. 
+
 ### Factors in R
 
 We said that R is designed for data analysis. My favorite example of how that manifests itself is the `factor` datatype. If you look at your dataset now, `arrest_tab$sex` is a vector of strings:
@@ -141,7 +143,8 @@ In this new dataset, the _entities_ are each neighborhood, the `number_of_arrest
 
 Other examples: the number of students in a class is discrete, the number of friends for a specific Facebook user. Can you think of other examples?
 
-Distinctions between categorical and discrete numerical data is that categorical data is not ordered and finite, discrete numeric data is (possibly) infinite and ordered.
+Distinctions between ordered categorical and discrete numerical data is that ordered categorical data do not have magnitude. For instance, is an 'A' in a class twice as good as a 'C'? Is a 'C' twice as good as a 'D'? Not necessarily. Grades don't have an inherent magnitude. However, if we _encode_ grades as 'F=0,D=1,C=2,B=3,A=4', etc. they do have magnitude. In that case, an 'A' _is_ twice as good as a 'C', and a 'C' _is_ twice as good as a 'D'. So in summary, if ordered data has magnitude, then _discrete numeric_ if not, _ordered categorical_.
+
 
 ## Continuous numeric data
 
