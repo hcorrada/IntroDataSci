@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-09">
+<meta name="date" content="2018-02-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -247,7 +247,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(arrest_tab, age, sex, district)</code></pre></div>
 <pre><code>## # A tibble: 104,528 x 3
 ##      age sex   district    
-##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;       
+##    &lt;int&gt; &lt;fct&gt; &lt;chr&gt;       
 ##  1    23 M     &lt;NA&gt;        
 ##  2    37 M     SOUTHERN    
 ##  3    46 M     NORTHEASTERN
@@ -328,9 +328,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  8 1.11e⁷ W     M     01/01/2011 05&#39;00&quot;     5200 Moravia … Unknown Offense
 ##  9 1.11e⁷ B     M     01/01/2011 07&#39;00&quot;     2400 Gainsdbo… 54-Armed Person
 ## 10 1.11e⁷ B     M     01/01/2011 15&#39;00&quot;     3300 Woodland… 54-Armed Person
-## # ... with 104,518 more rows, and 7 more variables: incidentLocation
-## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
-## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+## # ... with 104,518 more rows, and 7 more variables:
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 </div>
 <div id="rename" class="section level3">
 <h3><span class="header-section-number">6.1.2</span> <code>rename</code></h3>
@@ -389,9 +389,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;             
 ## 2 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave
 ## 3 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave
-## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
-## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
-## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>As before, the first argument is the data frame to operate on. The second argument is a <em>vector</em> of indices. We used the <code>c</code> function (for concatenate) to create a vector of indices.</p>
 <p>We can also use the range operator here:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">slice</span>(arrest_tab, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</code></pre></div>
@@ -403,9 +403,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 3 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave
 ## 4 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St
 ## 5 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave  
-## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
-## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
-## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>To create general sequences of indices we would use the <code>seq</code> function. For example, to select entities in even positions we would use the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">slice</span>(arrest_tab, <span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">nrow</span>(arrest_tab), <span class="dt">by=</span><span class="dv">2</span>))</code></pre></div>
 <pre><code>## # A tibble: 52,264 x 15
@@ -492,36 +492,36 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Frequently we will want to choose entities from a data frame at random. The <code>sample_n</code> function selects a specific number of entities at random:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_n</span>(arrest_tab, <span class="dv">10</span>)</code></pre></div>
 <pre><code>## # A tibble: 10 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation       
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                
-##  1 11265307    18 B     M     07/10/2011 20:40      900 N Mount St       
-##  2 11152748    35 B     F     02/15/2011 15:30      2500 Harford Rd      
-##  3 12482094    20 B     M     05/21/2012 10:00      3200 Ravenwood Rd    
-##  4 12490296    20 B     M     06/04/2012 13:30      2600 E Hoffman St    
-##  5 12468146    26 B     M     04/28/2012 02:10      300 E Baltimore St   
-##  6 12403326    27 W     M     01/13/2012 14:40      2100 St. Paul St     
-##  7 12511026    52 A     M     07/11/2012 01:12      400 N Highland Ave   
-##  8 11269471    47 B     M     07/14/2011 12:00      400 N Eutaw St       
-##  9 11234336    19 B     M     06/05/2011 20:00      4000 W.Franklin St St
-## 10 11285740    54 B     M     08/02/2011 11:00      2500 Kirk Ave        
-## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
-## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
-## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation   
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
+##  1 12434815    34 B     M     03/05/2012 23:30      &lt;NA&gt;             
+##  2 12480494    33 B     M     05/17/2012 18:32      500 Halfmile Ct  
+##  3 12597665    28 W     M     12/04/2012 15:45      &lt;NA&gt;             
+##  4 11131097    54 B     F     01/10/2011 09:50      &lt;NA&gt;             
+##  5 12475232    47 B     M     05/09/2012 10:20      2500 E Biddle St 
+##  6 12491181    26 B     F     06/05/2012 16:13      &lt;NA&gt;             
+##  7 12573875    20 B     M     10/18/2012 22:05      300 Mulberry St  
+##  8 12565701    30 W     F     10/05/2012 16:05      0 S Conkling St  
+##  9 11311966    57 B     M     09/01/2011 22:30      700 Whitelock Ave
+## 10 11271489    42 B     F     07/15/2011 18:45      1300 N Calhoun St
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>The <code>sample_frac</code> function selects a fraction of entitites at random:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_frac</span>(arrest_tab, .<span class="dv">1</span>)</code></pre></div>
 <pre><code>## # A tibble: 10,453 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
-##  1 11327003    20 B     M     09/20/2011 20:20      3500 Juneway St     
-##  2 11350514    27 W     M     10/20/2011 02:40      3800 W Northern Pkwy
-##  3 11227700    51 W     M     05/26/2011 16:00      &lt;NA&gt;                
-##  4 11260408    40 B     M     07/05/2011 10:30      2700 Coldspring St  
-##  5 11236655    53 B     M     06/07/2011 19:40      2000 E North Ave    
-##  6 12398650    49 B     M     01/06/2012 07:30      1300 N Woodyear St  
-##  7 11387835    20 U     M     12/15/2011 11:45      900 Alricks St      
-##  8 11126920    32 W     M     01/01/2011 01:23      1100 S Charles St   
-##  9 11128680    55 B     M     01/05/2011 01:25      1100 Edmondson Ave  
-## 10 11274737    43 B     M     07/19/2011 16:00      &lt;NA&gt;                
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation    
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;             
+##  1 12526390    22 B     F     08/04/2012 17:50      500 Northbend Rd  
+##  2 11154464    22 B     M     02/17/2011 12:20      2100 Vine St      
+##  3       NA    21 B     F     01/25/2012 17:57      &lt;NA&gt;              
+##  4 11174955    20 B     M     03/19/2011 16:30      1400 N Fulton Ave 
+##  5 12450894    27 W     M     03/31/2012 00:20      100 S Highland St 
+##  6 12474884    45 B     M     05/08/2012 21:30      &lt;NA&gt;              
+##  7 12559066    29 W     F     09/25/2012 13:25      300 N Conkling St 
+##  8 12572734    23 B     M     10/17/2012 13:25      &lt;NA&gt;              
+##  9 11173466    47 B     M     03/17/2011 13:00      2600 Polk St      
+## 10 11309024    22 B     M     08/30/2011 08:00      3400 Edmondson Ave
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -536,16 +536,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## # A tibble: 10,453 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation        
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                 
-##  1 11338836    26 B     M     10/04/2011 13:50      1000 Gay St           
-##  2 12579434    44 B     F     10/29/2012 10:58      3000 Lyttleton Rd     
-##  3 11292149    26 B     M     08/09/2011 18:20      800 Bentlou St        
-##  4 11355133    23 B     M     10/26/2011 16:10      4600 Milbrook Rd      
-##  5 12502352    45 B     M     06/24/2012 19:20      2700 Port Covington St
-##  6 11129253    36 B     M     01/05/2011 15:15      3300 E Baltimore St   
-##  7 11326295    51 B     M     09/20/2011 08:00      &lt;NA&gt;                  
-##  8 11244065    28 B     M     06/15/2011 20:00      &lt;NA&gt;                  
-##  9 11136396    24 B     M     01/19/2011 11:30      3500 Park Heights St  
-## 10 12484264    52 B     M     05/24/2012 07:00      0 S Calverton St      
+##  1 12417236    28 W     M     02/04/2012 17:00      2300 Cedely St        
+##  2 11339815    48 B     F     10/05/2011 13:00      2000 Gwynnfalls Parkw…
+##  3 12501226    29 B     M     06/22/2012 03:12      200 N Highland Ave    
+##  4 11344224    42 B     M     10/11/2011 16:50      3500 Spaulding Ave    
+##  5 11372477    46 W     F     11/19/2011 19:15      2300 Orleans St       
+##  6 12595702    34 B     F     11/30/2012 19:30      2600 E Chase St       
+##  7 12412084    45 B     M     01/27/2012 18:45      2800 Edmondson Ave    
+##  8 12459194    29 B     M     04/14/2012 12:00      400 S Sticker St      
+##  9 12426112    38 U     M     02/19/2012 05:35      500 S Linwood Ave     
+## 10 12415826    52 B     M     02/02/2012 10:00      &lt;NA&gt;                  
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -565,16 +565,16 @@ analysis_tab</code></pre></div>
 <pre><code>## # A tibble: 17,885 x 3
 ##    sex   district     arrest_date
 ##    &lt;fct&gt; &lt;chr&gt;        &lt;chr&gt;      
-##  1 M     WESTERN      04/27/2012 
-##  2 F     NORTHEASTERN 08/03/2011 
-##  3 M     EASTERN      03/12/2012 
-##  4 M     &lt;NA&gt;         09/15/2011 
-##  5 M     &lt;NA&gt;         09/04/2011 
-##  6 M     &lt;NA&gt;         07/09/2012 
-##  7 M     SOUTHWESTERN 07/20/2011 
-##  8 M     &lt;NA&gt;         12/17/2012 
-##  9 M     SOUTHERN     03/09/2012 
-## 10 M     &lt;NA&gt;         07/20/2011 
+##  1 M     NORTHEASTERN 10/08/2012 
+##  2 M     SOUTHWESTERN 11/19/2012 
+##  3 F     NORTHWESTERN 07/14/2012 
+##  4 M     EASTERN      07/16/2011 
+##  5 M     &lt;NA&gt;         05/24/2011 
+##  6 F     WESTERN      10/12/2011 
+##  7 F     CENTRAL      11/08/2012 
+##  8 M     &lt;NA&gt;         10/09/2012 
+##  9 M     &lt;NA&gt;         11/08/2011 
+## 10 M     EASTERN      07/31/2012 
 ## # ... with 17,875 more rows</code></pre>
 
 </div>

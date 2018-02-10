@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-09">
+<meta name="date" content="2018-02-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -253,9 +253,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  8 11313422     0 B     M     09/04/2011 10:30      &lt;NA&gt;                
 ##  9 11334234     0 B     M     09/28/2011 21:16      500 E Lexington St  
 ## 10 11379943     0 &lt;NA&gt;  &lt;NA&gt;  12/02/2011 19:20      4600 Park Heights St
-## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
-## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
-## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>The <code>arrange</code> operation sorts entities by increasing value of the attributes passed as arguments.</p>
 <p>The <code>desc</code> helper function is used to indicate sorting by decreasing value. For example, to find the arrests with the 10 <em>oldest</em> subjects we would use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
@@ -274,9 +274,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  8 12584062    84 B     M     11/08/2012 06:40      &lt;NA&gt;               
 ##  9 11220464    82 B     M     05/17/2011 19:50      1300 Mchenry St    
 ## 10 11331698    80 B     M     09/26/2011 10:15      3000 Harlem Ave    
-## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
-## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
-## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 </div>
 <div id="operations-that-create-new-attributes" class="section level2">
 <h2><span class="header-section-number">7.2</span> Operations that create new attributes</h2>
@@ -370,7 +370,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The goal is to group entities with the same value of one or more attributes. The <code>group_by</code> function in essence annotates the rows of a data frame as belonging to a specific group based on the value of some chosen attributes. This call returns a data frame that is grouped by the value of the <code>district</code> attribute.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(arrest_tab, district)</code></pre></div>
 <pre><code>## # A tibble: 104,528 x 15
-## # Groups: district [10]
+## # Groups:   district [10]
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
 ##  1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;                
@@ -411,7 +411,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <span class="st">  </span><span class="kw">group_by</span>(district, sex) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_age=</span><span class="kw">mean</span>(age))</code></pre></div>
 <pre><code>## # A tibble: 20 x 3
-## # Groups: district [?]
+## # Groups:   district [?]
 ##    district     sex   mean_age
 ##    &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt;
 ##  1 CENTRAL      F         35.7
