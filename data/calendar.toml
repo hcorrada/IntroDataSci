@@ -71,6 +71,14 @@ notes = "bookdown-notes/tidy-data-i-the-er-model.html"
 title = "SQL I: Single-table Queries"
 notes = "bookdown-notes/sql-i-single-table-queries.html"
 
+[[day05.covers]]
+title = "SQL examples with baseball (Rmarkdown file)"
+notes = "classroom-notes/sql_baseball.Rmd"
+
+[[day05.covers]]
+title = "SQL examples with baseball (rendered HTML file)"
+notes = "classroom-notes/sql_baseball.html"
+
 [day05.class_notes]
 link = "classroom-notes/cmsc320_class-notes_20180208.pdf"
 
