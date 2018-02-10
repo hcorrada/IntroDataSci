@@ -172,6 +172,7 @@ Now, each image is represented by grayscale values in a 28x28 grid. That's 784 a
 
 The three datatypes we saw above encompass a fairly large swath of data you will come across. Our arrest dataset contains other important datatypes that we will run across frequently:
 
+- Text: Arbitrary strings that do not encode a categorical attribute.
 - Datetime: Date and time of some event or observation (e.g., `arrestDate`, `arrestTime`)  
 - Geolocation: Latitude and Longitude of some event or observation (e.g., `Location.`)  
 
