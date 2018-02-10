@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-09">
+<meta name="date" content="2018-02-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -282,7 +282,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="the-entity-relationship-and-relational-models" class="section level2">
 <h2><span class="header-section-number">11.2</span> The Entity-Relationship and Relational Models</h2>
-<p>The fundamental objects in this formalism are <em>entities</em> and their <em>attributes</em>, as we have seen before, and <em>relationships</em> and <em>relationship attributes</em> which we saw briefly in a previous example, where ‘rankings’ and ‘songs’ are distinct types of entities and we define <em>relationships</em> between them.</p>
+<p>The fundamental objects in this formalism are <em>entities</em> and their <em>attributes</em>, as we have seen before, and <em>relationships</em> and <em>relationship attributes</em>. Entities are objects represented in a dataset: people, places, things, etc. Relationships model just that, relationships between entities.</p>
 <div class="figure">
 <img src="img/er.png" />
 
@@ -292,18 +292,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <img src="img/relationships.png" />
 
 </div>
+<p>Relationships are defined over <em>pairs</em> of entities. As such, relationship <span class="math inline">\(R\)</span> over sets of entities <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> is defined over the crossproduct set <span class="math inline">\(E_1 \times E_2\)</span>. For example, if <span class="math inline">\(e_1 \in E_1\)</span> and <span class="math inline">\(e_2 \in E_2\)</span>, then <span class="math inline">\((e_1, e_2) \in R\)</span>.</p>
+<p>Arrows specify how entities participate in relationships. In particular, an arrow pointing from an entity set <span class="math inline">\(E_1\)</span> (square) into a relationship over <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> (diamond) specifies that entities in <span class="math inline">\(E_1\)</span> appear in <em>only one</em> relationship pair. That is, there is a single entity <span class="math inline">\(e_2 \in E_2\)</span> such that <span class="math inline">\((e_1,e_2) \in R\)</span>.</p>
 <p>Think about what relationships are shown in this diagram?</p>
 <div class="figure">
 <img src="img/er2.png" />
 
 </div>
-<p>In databases and general datasets we work on, both Entities and Relationships are represented as <em>Relations</em> (tables) such that a unique entity/relationship is represented by a single row. This leads to the natural question of how are unique entities determined or defined. Here is where the concept of a <em>key</em> comes in. This is an essential aspect of the Entity-Relationship and Relational models.</p>
+<p>In databases and general datasets we work on, both Entities and Relationships are represented as <em>Relations</em> (tables) such that a unique entity/relationship is represented by a single tuple (the list of attribute values that represent an entity or relationship).</p>
+<p>This leads to the natural question of how are unique entities determined or defined. Here is where the concept of a <em>key</em> comes in. This is an essential aspect of the Entity-Relationship and Relational models.</p>
 <div id="formal-introduction-to-keys" class="section level3">
 <h3><span class="header-section-number">11.2.1</span> Formal introduction to keys</h3>
-<div class="figure">
-<img src="img/schema.png" />
-
-</div>
 <ul>
 <li>Attribute set <span class="math inline">\(K\)</span> is a <strong>superkey</strong> of relation <span class="math inline">\(R\)</span> if values for <span class="math inline">\(K\)</span> are sufficient to identify a unique tuple of each possible relation <span class="math inline">\(r(R)\)</span>
 <ul>
@@ -382,8 +381,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 6  2013     1     1      554            558     -4.00      740
 ## # ... with 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
 ## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
-## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour
-## #   &lt;dttm&gt;</code></pre>
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;</code></pre>
 <p>it has one entity per row, a single attribute per column. Notice only information about flights are included here (e.g., no airport or airline information other than the name) in these observations.</p>
 
 </div>

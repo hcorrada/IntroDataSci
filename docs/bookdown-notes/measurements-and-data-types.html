@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-09">
+<meta name="date" content="2018-02-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -338,6 +338,7 @@ arrest_tab</code></pre></div>
 ##     F     M 
 ## 19431 85095</code></pre>
 <p>The result of a coin flip is categorical: <code>heads</code> or <code>tails</code>. The outcome of rolling an 8-sided die is categorical: <code>one</code>, <code>two</code>, …, <code>eight</code>. Can you think of other examples?</p>
+<p>Categorical data may be <em>unordered</em> or <em>ordered</em>. In our example dataset all categorical data is <em>unordered</em>, e.g., <code>sex</code>, <code>race</code>, etc. Examples of <em>ordered categorical data</em> are grades in a class, Likert scale categories, e.g., <code>strongly agree</code>, <code>agree</code>, <code>neutral</code>, <code>disagree</code>, <code>strongly disagree</code>, etc.</p>
 <div id="factors-in-r" class="section level3">
 <h3><span class="header-section-number">5.4.1</span> Factors in R</h3>
 <p>We said that R is designed for data analysis. My favorite example of how that manifests itself is the <code>factor</code> datatype. If you look at your dataset now, <code>arrest_tab$sex</code> is a vector of strings:</p>
@@ -372,7 +373,7 @@ arrest_tab</code></pre></div>
 ## 6 Ashburton                        78</code></pre>
 <p>In this new dataset, the <em>entities</em> are each neighborhood, the <code>number_of_arrests</code> attribute is a <em>discrete numeric</em> attribute.</p>
 <p>Other examples: the number of students in a class is discrete, the number of friends for a specific Facebook user. Can you think of other examples?</p>
-<p>Distinctions between categorical and discrete numerical data is that categorical data is not ordered and finite, discrete numeric data is (possibly) infinite and ordered.</p>
+<p>Distinctions between ordered categorical and discrete numerical data is that ordered categorical data do not have magnitude. For instance, is an ‘A’ in a class twice as good as a ‘C’? Is a ‘C’ twice as good as a ‘D’? Not necessarily. Grades don’t have an inherent magnitude. However, if we <em>encode</em> grades as ‘F=0,D=1,C=2,B=3,A=4’, etc. they do have magnitude. In that case, an ‘A’ <em>is</em> twice as good as a ‘C’, and a ‘C’ <em>is</em> twice as good as a ‘D’. So in summary, if ordered data has magnitude, then <em>discrete numeric</em> if not, <em>ordered categorical</em>.</p>
 </div>
 <div id="continuous-numeric-data" class="section level2">
 <h2><span class="header-section-number">5.6</span> Continuous numeric data</h2>
@@ -389,6 +390,7 @@ arrest_tab</code></pre></div>
 <h2><span class="header-section-number">5.8</span> Other important datatypes</h2>
 <p>The three datatypes we saw above encompass a fairly large swath of data you will come across. Our arrest dataset contains other important datatypes that we will run across frequently:</p>
 <ul>
+<li>Text: Arbitrary strings that do not encode a categorical attribute.</li>
 <li>Datetime: Date and time of some event or observation (e.g., <code>arrestDate</code>, <code>arrestTime</code>)<br />
 </li>
 <li>Geolocation: Latitude and Longitude of some event or observation (e.g., <code>Location.</code>)</li>
