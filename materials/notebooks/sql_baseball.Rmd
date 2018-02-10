@@ -1,19 +1,26 @@
 ---
 title: "SQL Examples with Baseball"
-output: html_notebook
-editor_options: 
+output:
+  html_document:
+    df_print: paged
+  html_notebook:
+    df_print: paged
+editor_options:
   chunk_output_type: inline
 ---
 
+Here we show SQL constructs using the Lahman baseball dataset (downloaded from https://github.com/jknecht/baseball-archive-sqlite). We also show how to use a SQL database inside Rmarkdown.
+
+First, we create a connection to the database. In this case, we are using a `SQLite` database. A good system to prototype database designs. To make the most of a database system, one would use some of the more powerful products: Oracle, Microsoft SQLServer, MySQL (MariaDB), PostgreSQL or other. In all cases, the way to create a connection to the server from Rmarkdown is the same.
+
 ```{r setup_db}
 library(DBI)
-db <- dbConnect(RSQLite::SQLite(), dbname="data/lahman2016.sqlite")
-knitr::opts_chunk$set(connection="db")
+db <- dbConnect(RSQLite::SQLite(), dbname="../lecture-notes/data/lahman2016.sqlite")
 ```
 
-## Select-From-Where
+### Select-From-Where
 
-Batting statistics for Washington Nationals in 2010: note the *rename*
+First, we write a query to get batting statistics for Washington Nationals in 2010: note the *rename*. Note that the chunk in the markdown file is declared as <code>{sql, connection=db}</code> in the Rmarkdown file:
 
 ```{sql, connection=db}
 SELECT b.playerId, b.yearId, b.H, b.AB
@@ -21,8 +28,7 @@ FROM BATTING AS b
 WHERE teamID = 'WAS' AND yearID = 2010
 ```
 
-
-## Expressions
+### Expressions
 
 The **select** clause can contain expressions (this is paralleled by the `mutate` operation we saw previously)
 
@@ -32,7 +38,7 @@ FROM BATTING AS b
 ```
 
 
-## WHERE predicates
+### WHERE predicates
 
 The **where** clause support a large number of different predicates and combinations thereof (this is parallel to the `filter` operation)
 
@@ -45,7 +51,7 @@ WHERE b.AB > 0 AND
   b.teamID LIKE 'NY%'
 ```
 
-## ORDERING
+### ORDERING
 
 We can include ordering (parallel to `arrange`)
 
@@ -59,7 +65,7 @@ WHERE b.AB > 0 AND
 ORDER BY b.AB DESC, BP DESC;
 ```
 
-## Group_by and Summarize
+### Group_by and Summarize
 
 - What it does: Partition the tuples by the group attributes (*teamId* and *yearId* in this case), and do something (*compute avg* in this case) for each group
 - Number of resulting tuples == Number of groups
@@ -74,7 +80,7 @@ GROUP BY b.teamId, b.yearId
 ORDER BY AVE_BP DESC
 ```
 
-## Subqueries
+### Subqueries
 
 Sometimes it's easier to nest queries like the one above into query and subquery
 
@@ -89,6 +95,8 @@ GROUP BY teamID, yearID
 ORDER BY AVG_BP DESC;
 ```
 
+
+Finally, we close the connection to the database:
 
 ```{r}
 dbDisconnect(db)
