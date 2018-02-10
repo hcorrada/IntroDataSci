@@ -83,7 +83,7 @@ This is part of what we have for that table after loading and cleaning up:
 clean_budget_tab %>% head(10) %>% knitr::kable()
 ```
 
-This data is for `r nrow(clean_budget_tab)` movies, including its release date, title, production budget and total gross revenue. The latter two are in millions of U.S. dollars.
+This data is for `r nrow(clean_budget_tab)` movies, including its release date, title, production budget and total gross. The latter two are in millions of U.S. dollars.
 
 One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. To do this, we can make a plot of domestic gross, which we are using for the subsequent analyses.
 
@@ -294,7 +294,7 @@ cluster_movies <- function(data, k=3) {
     select(rating=RATING, title=TITLE, domestic_gross)
   
   kmeans_result <-  data %>%
-    select(rating, revenue) %>%
+    select(rating, domestic_gross) %>%
     kmeans(centers=k) 
 
   clustered_tab <- kmeans_result %>%
