@@ -55,7 +55,7 @@ Typically there are multiple levels of modeling. _Physical modeling_ concerns it
 
 ## The Entity-Relationship and Relational Models
 
-The fundamental objects in this formalism are _entities_ and their _attributes_, as we have seen before, and _relationships_ and _relationship attributes_ which we saw briefly in a previous example, where 'rankings' and 'songs' are distinct types of entities and we define _relationships_ between them.
+The fundamental objects in this formalism are _entities_ and their _attributes_, as we have seen before, and _relationships_ and _relationship attributes_. Entities are objects represented in a dataset: people, places, things, etc. Relationships model just that, relationships between entities.
 
 ![](img/er.png)
 
@@ -63,15 +63,19 @@ Here, rectangles are _entitites_, diamonds and edges indicate _relationships_. C
 
 ![](img/relationships.png)
 
+Relationships are defined over _pairs_ of entities. As such, relationship $R$ over sets of entities $E_1$ and $E_2$ is defined over the crossproduct set $E_1 \times E_2$. For example, if $e_1 \in E_1$ and $e_2 \in E_2$, then  $(e_1, e_2) \in R$.
+
+Arrows specify how entities participate in relationships. In particular, an arrow pointing from an entity set $E_1$ (square) into a relationship over $E_1$ and $E_2$ (diamond) specifies that entities in $E_1$ appear in _only one_ relationship pair. That is, there is a single entity $e_2 \in E_2$ such that $(e_1,e_2) \in R$.
+
 Think about what relationships are shown in this diagram?
 
 ![](img/er2.png)
 
-In databases and general datasets we work on, both Entities and Relationships are represented as _Relations_ (tables) such that a unique entity/relationship is represented by a single row. This leads to the natural question of how are unique entities determined or defined. Here is where the concept of a _key_ comes in. This is an essential aspect of the Entity-Relationship and Relational models. 
+In databases and general datasets we work on, both Entities and Relationships are represented as _Relations_ (tables) such that a unique entity/relationship is represented by a single tuple (the list of attribute values that represent an entity or relationship). 
+
+This leads to the natural question of how are unique entities determined or defined. Here is where the concept of a _key_ comes in. This is an essential aspect of the Entity-Relationship and Relational models. 
 
 ### Formal introduction to keys
-
-![](img/schema.png)
 
 - Attribute set $K$ is a **superkey** of relation $R$ if values for $K$ are sufficient to identify a unique tuple of each possible relation $r(R)$ 
     - Example:  `{ID}` and `{ID,name}` are both superkeys of *instructor*

@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-09">
+<meta name="date" content="2018-02-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -247,7 +247,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">select</span>(arrest_tab, age, sex, district)</code></pre></div>
 <pre><code>## # A tibble: 104,528 x 3
 ##      age sex   district    
-##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;       
+##    &lt;int&gt; &lt;fct&gt; &lt;chr&gt;       
 ##  1    23 M     &lt;NA&gt;        
 ##  2    37 M     SOUTHERN    
 ##  3    46 M     NORTHEASTERN
@@ -492,18 +492,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Frequently we will want to choose entities from a data frame at random. The <code>sample_n</code> function selects a specific number of entities at random:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_n</span>(arrest_tab, <span class="dv">10</span>)</code></pre></div>
 <pre><code>## # A tibble: 10 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation       
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                
-##  1 11265307    18 B     M     07/10/2011 20:40      900 N Mount St       
-##  2 11152748    35 B     F     02/15/2011 15:30      2500 Harford Rd      
-##  3 12482094    20 B     M     05/21/2012 10:00      3200 Ravenwood Rd    
-##  4 12490296    20 B     M     06/04/2012 13:30      2600 E Hoffman St    
-##  5 12468146    26 B     M     04/28/2012 02:10      300 E Baltimore St   
-##  6 12403326    27 W     M     01/13/2012 14:40      2100 St. Paul St     
-##  7 12511026    52 A     M     07/11/2012 01:12      400 N Highland Ave   
-##  8 11269471    47 B     M     07/14/2011 12:00      400 N Eutaw St       
-##  9 11234336    19 B     M     06/05/2011 20:00      4000 W.Franklin St St
-## 10 11285740    54 B     M     08/02/2011 11:00      2500 Kirk Ave        
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11245631    22 B     M     06/17/2011 09:00      &lt;NA&gt;                
+##  2 11324163    74 B     M     09/17/2011 18:20      600 Smithson St     
+##  3       NA    29 B     M     06/16/2011 01:30      &lt;NA&gt;                
+##  4 12453116    64 B     M     04/04/2012 12:00      3400 Reisterstown Rd
+##  5 11270560    48 B     M     07/15/2011 07:30      &lt;NA&gt;                
+##  6 12528868    23 B     M     08/08/2012 19:00      100 Grant St        
+##  7 11383864    43 B     M     12/09/2011 01:00      500 E Patapsco Ave  
+##  8 11387404    39 B     M     12/14/2011 22:00      2200 N Aiken St     
+##  9       NA    40 B     M     01/22/2011 02:27      5400 Perring Pkwy   
+## 10 12437628    33 W     M     03/09/2012 12:30      &lt;NA&gt;                
 ## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
 ## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
 ## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -512,16 +512,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## # A tibble: 10,453 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
-##  1 11327003    20 B     M     09/20/2011 20:20      3500 Juneway St     
-##  2 11350514    27 W     M     10/20/2011 02:40      3800 W Northern Pkwy
-##  3 11227700    51 W     M     05/26/2011 16:00      &lt;NA&gt;                
-##  4 11260408    40 B     M     07/05/2011 10:30      2700 Coldspring St  
-##  5 11236655    53 B     M     06/07/2011 19:40      2000 E North Ave    
-##  6 12398650    49 B     M     01/06/2012 07:30      1300 N Woodyear St  
-##  7 11387835    20 U     M     12/15/2011 11:45      900 Alricks St      
-##  8 11126920    32 W     M     01/01/2011 01:23      1100 S Charles St   
-##  9 11128680    55 B     M     01/05/2011 01:25      1100 Edmondson Ave  
-## 10 11274737    43 B     M     07/19/2011 16:00      &lt;NA&gt;                
+##  1 12545970    44 B     M     09/04/2012 23:00      &lt;NA&gt;                
+##  2 11189471    31 B     M     04/07/2011 18:30      3700 9Th St         
+##  3       NA    42 B     M     01/18/2012 09:45      &lt;NA&gt;                
+##  4 11135151    37 B     M     01/18/2011 00:30      &lt;NA&gt;                
+##  5 12470649    31 B     M     05/02/2012 09:28      &lt;NA&gt;                
+##  6 12551799    33 B     M     09/13/2012 18:24      &lt;NA&gt;                
+##  7 12402608    42 W     M     01/12/2012 19:15      &lt;NA&gt;                
+##  8 12467703    21 B     M     04/27/2012 11:20      2600 St. Benedict St
+##  9 12570928    32 B     M     10/15/2012 11:30      1100 Steelton Ave   
+## 10 12599374    20 B     F     12/07/2012 02:00      2700 Parkwood Ave   
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -536,16 +536,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## # A tibble: 10,453 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation        
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                 
-##  1 11338836    26 B     M     10/04/2011 13:50      1000 Gay St           
-##  2 12579434    44 B     F     10/29/2012 10:58      3000 Lyttleton Rd     
-##  3 11292149    26 B     M     08/09/2011 18:20      800 Bentlou St        
-##  4 11355133    23 B     M     10/26/2011 16:10      4600 Milbrook Rd      
-##  5 12502352    45 B     M     06/24/2012 19:20      2700 Port Covington St
-##  6 11129253    36 B     M     01/05/2011 15:15      3300 E Baltimore St   
-##  7 11326295    51 B     M     09/20/2011 08:00      &lt;NA&gt;                  
-##  8 11244065    28 B     M     06/15/2011 20:00      &lt;NA&gt;                  
-##  9 11136396    24 B     M     01/19/2011 11:30      3500 Park Heights St  
-## 10 12484264    52 B     M     05/24/2012 07:00      0 S Calverton St      
+##  1 12497651    44 B     M     06/16/2012 14:30      3700 S. Hanover St    
+##  2 11163049    42 B     M     03/03/2011 15:00      &lt;NA&gt;                  
+##  3 11180591    55 B     M     03/27/2011 18:20      600 S Exeter St       
+##  4 11275794    53 B     M     07/20/2011 18:00      &lt;NA&gt;                  
+##  5 12580046    19 B     M     10/31/2012 12:00      2600 Loyola Pkwy      
+##  6       NA    24 B     M     04/05/2011 14:00      &lt;NA&gt;                  
+##  7 11244022    37 B     M     06/15/2011 18:40      3700 Liberty Heights …
+##  8 11301821    20 B     F     08/20/2011 12:29      300 Carroltton Ave    
+##  9       NA    28 W     M     02/14/2011 17:32      &lt;NA&gt;                  
+## 10 12408765    20 B     M     01/23/2012 19:00      2700 Alameda Ave      
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -565,16 +565,16 @@ analysis_tab</code></pre></div>
 <pre><code>## # A tibble: 17,885 x 3
 ##    sex   district     arrest_date
 ##    &lt;fct&gt; &lt;chr&gt;        &lt;chr&gt;      
-##  1 M     WESTERN      04/27/2012 
-##  2 F     NORTHEASTERN 08/03/2011 
-##  3 M     EASTERN      03/12/2012 
-##  4 M     &lt;NA&gt;         09/15/2011 
-##  5 M     &lt;NA&gt;         09/04/2011 
-##  6 M     &lt;NA&gt;         07/09/2012 
-##  7 M     SOUTHWESTERN 07/20/2011 
-##  8 M     &lt;NA&gt;         12/17/2012 
-##  9 M     SOUTHERN     03/09/2012 
-## 10 M     &lt;NA&gt;         07/20/2011 
+##  1 M     SOUTHERN     05/10/2011 
+##  2 M     WESTERN      03/19/2011 
+##  3 M     WESTERN      04/12/2012 
+##  4 M     WESTERN      05/23/2011 
+##  5 M     EASTERN      06/08/2011 
+##  6 M     SOUTHEASTERN 11/02/2011 
+##  7 M     &lt;NA&gt;         06/18/2011 
+##  8 M     SOUTHWESTERN 08/24/2012 
+##  9 M     &lt;NA&gt;         08/31/2011 
+## 10 F     &lt;NA&gt;         01/24/2011 
 ## # ... with 17,875 more rows</code></pre>
 
 </div>
