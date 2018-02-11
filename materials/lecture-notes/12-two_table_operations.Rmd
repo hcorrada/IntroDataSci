@@ -1,0 +1,175 @@
+# Two-table operations
+
+```{r setup12, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+So far we have looked at data operations defined over single tables and data frames. In this section we look at efficient methods to combine data from multiple tables. The fundamental operation here is the `join`, which is a workhorse of database system design and impementation. The `join` operation combines rows from two tables to create a new single table, based on matching criteria specified over attributes of each of the two tables. 
+
+Consider the example of joining the `flights` and `airlines` table:
+
+```{r}
+library(nycflights13)
+data(flights)
+data(airlines)
+```
+
+Let's take a look at the `flights` table again:
+
+```{r}
+flights
+```
+
+And add the `airlines` table:
+
+```{r}
+airlines
+```
+
+Here, we want to add airline information to each flight. We can do so by joining the attributes of the respective airline from the `airlines` table with the `flights` table based on the values of attributes `flights$carrier` and `airlines$carrier`. 
+Specifically, every row of `flights` with a specific value for `flights$carrier`, is joined with the the corresponding row in `airlines` with the same value for `airlines$carrier`. We will see four different ways of performing this operation that differ on how non-matching observations are handled.
+
+### Left Join 
+
+In a `left join`, all observations on left operand (LHS) are retained:
+
+![](img/join_lhs.png)
+
+![](img/left_join.png)
+
+```{r}
+flights %>%
+  left_join(airlines, by="carrier")
+```
+
+RHS variables for LHS observations with no matching RHS observations are coded as `NA`.
+
+####  Right Join
+
+All observations on right operand (RHS) are retained:
+
+![](img/join_lhs.png)
+
+![](img/right_join.png)
+
+```{r}
+flights %>%
+  right_join(airlines, by="carrier")
+```
+
+LHS variables for RHS observations with no matching LHS observations are coded as `NA`.
+
+#### Inner Join
+
+Only observations matching on both tables are retained
+
+![](img/join_lhs.png)
+![](img/inner_join.png)
+
+```{r}
+flights %>%
+  inner_join(airlines, by="carrier")
+```
+
+
+
+#### Full Join 
+
+All observations are retained, regardless of matching condition
+
+![](img/join_lhs.png)
+![](img/full_join.png)
+
+```{r}
+flights %>%
+  full_join(airlines, by="carrier")
+```
+
+All values coded as `NA` for non-matching observations as appropriate.
+
+### Join conditions
+
+All join operations are based on a matching condition:
+
+```{r, eval=FALSE}
+flights %>%
+  left_join(airlines, by="carrier")
+```
+
+specifies to join observations where `flights$carrier` equals `airlines$carrier`.
+
+
+In this case, where no conditions are specified using the `by` argument:
+
+```{r, eval=FALSE}
+flights %>%
+  left_join(airlines)
+```
+
+a *natural join* is perfomed. In this case all variables with the same name in both tables are used in join condition.
+
+You can also specify join conditions on arbitrary attributes using the `by` argument.
+
+```{r, eval=FALSE}
+flights %>%
+  left_join(airlines, by=c("carrier" = "name"))
+```
+
+
+### Filtering Joins
+
+We've just seen *mutating joins* that create new tables. *Filtering joins* use join conditions to filter a specific table.
+
+```{r}
+flights %>% anti_join(airlines, by="carrier")
+```
+
+Filters the `flights` table to only include flights from airlines that
+*are not* included in the `airlines` table.
+
+### SQL Constructs: Multi-table Queries
+
+Key idea: 
+    - Do a join to get an appropriate table
+    - Use the constructs for single-table queries
+
+You will get used to doing all at once.
+
+For the first part, where we use a join to get an appropriate table, the general SQL construct includes:
+  - The name of the first table to join
+  - The _type_ of join to do
+  - The name of the second table to join
+  - The join condition(s)
+  
+- Examples:
+
+```sql
+select title, year, me.name as producerName 
+from movies m join movieexec me
+where m.producer = me.id;
+```
+
+- Consider the query:
+
+```sql
+select title, year, producer, count(starName) 
+from movies join starsIn
+where title = starsIn.movieTitle and year = starsIn.movieYear
+group by title, year, producer
+```
+     
+- What about movies with no stars ? 
+- Need to use **outer joins**
+
+
+```sql
+select title, year, producer, count(starName) 
+from movies left outer join starsIn
+  on title = starsIn.movieTitle and year = starsIn.movieYear
+group by title, year, producer
+```
+
+As we saw before, all tuples from 'movies' that have no matches in starsIn are included with NULLs (in `dplyr` this was `NA`).
+So, if a tuple `(m1, 1990)` has no match in `starsIn`, we get `(m1, 1990, NULL)` in the result and the `count(starName)` works correctly then. Note however that `count(*)` would not work correctly (NULLs can have unintuitive behavior)
+
+In most systems `JOIN` corresponds to an _inner join_, and include `LEFT JOIN` and `RIGHT JOIN` as well.
