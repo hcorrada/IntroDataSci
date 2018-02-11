@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-10">
+<meta name="date" content="2018-02-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -214,6 +214,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.1" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#group-by-and-summarize"><i class="fa fa-check"></i><b>12.1</b> Group-by and summarize</a></li>
 <li class="chapter" data-level="12.2" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#subqueries"><i class="fa fa-check"></i><b>12.2</b> Subqueries</a></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="two-table-operations.html"><a href="two-table-operations.html"><i class="fa fa-check"></i><b>13</b> Two-table operations</a><ul>
+<li class="chapter" data-level="13.0.1" data-path="two-table-operations.html"><a href="two-table-operations.html#left-join"><i class="fa fa-check"></i><b>13.0.1</b> Left Join</a></li>
+<li class="chapter" data-level="13.0.2" data-path="two-table-operations.html"><a href="two-table-operations.html#join-conditions"><i class="fa fa-check"></i><b>13.0.2</b> Join conditions</a></li>
+<li class="chapter" data-level="13.0.3" data-path="two-table-operations.html"><a href="two-table-operations.html#filtering-joins"><i class="fa fa-check"></i><b>13.0.3</b> Filtering Joins</a></li>
+<li class="chapter" data-level="13.0.4" data-path="two-table-operations.html"><a href="two-table-operations.html#sql-constructs-multi-table-queries"><i class="fa fa-check"></i><b>13.0.4</b> SQL Constructs: Multi-table Queries</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -292,7 +298,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <img src="img/relationships.png" />
 
 </div>
-<p>Relationships are defined over <em>pairs</em> of entities. As such, relationship <span class="math inline">\(R\)</span> over sets of entities <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> is defined over the crossproduct set <span class="math inline">\(E_1 \times E_2\)</span>. For example, if <span class="math inline">\(e_1 \in E_1\)</span> and <span class="math inline">\(e_2 \in E_2\)</span>, then <span class="math inline">\((e_1, e_2) \in R\)</span>.</p>
+<p>Relationships are defined over <em>pairs</em> of entities. As such, relationship <span class="math inline">\(R\)</span> over sets of entities <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> is defined over the <em>cartesian product</em> <span class="math inline">\(E_1 \times E_2\)</span>. For example, if <span class="math inline">\(e_1 \in E_1\)</span> and <span class="math inline">\(e_2 \in E_2\)</span>, then <span class="math inline">\((e_1, e_2) \in R\)</span>.</p>
 <p>Arrows specify how entities participate in relationships. In particular, an arrow pointing from an entity set <span class="math inline">\(E_1\)</span> (square) into a relationship over <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span> (diamond) specifies that entities in <span class="math inline">\(E_1\)</span> appear in <em>only one</em> relationship pair. That is, there is a single entity <span class="math inline">\(e_2 \in E_2\)</span> such that <span class="math inline">\((e_1,e_2) \in R\)</span>.</p>
 <p>Think about what relationships are shown in this diagram?</p>
 <div class="figure">
