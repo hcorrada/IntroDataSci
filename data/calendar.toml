@@ -104,28 +104,29 @@ title = "Relational data operations: Joins"
 notes = "bookdown-notes/two-table-operations.html"
 
 [[day06.covers]]
-title = "Common operations for data tidying"
+title = "More SQL: data defintion, consistency and other constructs"
+notes = "bookdown-notes/sql-system-constructs.html"
 
 [day07]
 date = "2/15"
 
 [[day07.covers]]
-title = "Database systems overview"
-
-[[day07.covers]]
-title = "More SQL: data specification and consistency"
+title = "Database system query optimization"
 
 [[day07.covers]]
 title = "Alternative data models: the JSON data model"
+
+[[day07.covers]]
+title = "Data aquisition: loading and scraping"
 
 [day08]
 date = "2/20"
 
 [[day08.covers]]
-title = "Data aquisition: loading and scraping"
+title = "Data cleaning: handling text and dates"
 
 [[day08.covers]]
-title = "Data cleaning: handling text and dates"
+title = "Common operations for data tidying"
 
 [[day08.covers]]
 title = "Entity Resolution and Record Linkage"
