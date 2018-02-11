@@ -220,6 +220,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="13.0.3" data-path="two-table-operations.html"><a href="two-table-operations.html#filtering-joins"><i class="fa fa-check"></i><b>13.0.3</b> Filtering Joins</a></li>
 <li class="chapter" data-level="13.0.4" data-path="two-table-operations.html"><a href="two-table-operations.html#sql-constructs-multi-table-queries"><i class="fa fa-check"></i><b>13.0.4</b> SQL Constructs: Multi-table Queries</a></li>
 </ul></li>
+<li class="chapter" data-level="14" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html"><i class="fa fa-check"></i><b>14</b> SQL System Constructs</a><ul>
+<li class="chapter" data-level="14.1" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#sql-as-a-data-definition-language"><i class="fa fa-check"></i><b>14.1</b> SQL as a Data Definition Language</a></li>
+<li class="chapter" data-level="14.2" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#set-operations-and-comparisons"><i class="fa fa-check"></i><b>14.2</b> Set Operations and Comparisons</a></li>
+<li class="chapter" data-level="14.3" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#views"><i class="fa fa-check"></i><b>14.3</b> Views</a></li>
+<li class="chapter" data-level="14.4" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#nulls"><i class="fa fa-check"></i><b>14.4</b> NULLs</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -498,36 +504,36 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Frequently we will want to choose entities from a data frame at random. The <code>sample_n</code> function selects a specific number of entities at random:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_n</span>(arrest_tab, <span class="dv">10</span>)</code></pre></div>
 <pre><code>## # A tibble: 10 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation        
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                 
-##  1 12602348    26 W     M     12/12/2012 18:00      1100 Ward St          
-##  2 12535865    31 B     F     08/19/2012 11:00      600 E Fayette St      
-##  3 12446442    27 W     F     03/23/2012 16:50      2700 Port Covington St
-##  4 11378268    24 B     M     12/01/2011 05:22      &lt;NA&gt;                  
-##  5 12536590    27 B     M     08/21/2012 10:00      3400 Belvedere St     
-##  6 12488937    34 B     F     06/01/2012 15:40      500 N Athol Ave       
-##  7 12458351    47 W     M     04/13/2012 04:45      5500 Plymouth Rd      
-##  8 12473405    26 B     M     05/07/2012 01:40      2400 Frederick Ave    
-##  9 12506881    32 B     M     07/02/2012 19:50      &lt;NA&gt;                  
-## 10 12555438    45 B     F     09/19/2012 15:00      &lt;NA&gt;                  
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
+##  1 11251619    18 B     M     06/23/2011 22:10      3900 Belvieu Ave    
+##  2 11225798    42 B     M     05/25/2011 03:58      2500 Garret St      
+##  3 11337783    27 B     M     10/03/2011 17:15      3700 W Belvedere Ave
+##  4 11229378    49 B     M     05/30/2011 04:30      &lt;NA&gt;                
+##  5 12445934    56 B     M     03/22/2012 18:30      &lt;NA&gt;                
+##  6 12597985    27 B     M     12/05/2012 07:50      &lt;NA&gt;                
+##  7 11371870    25 B     M     11/18/2011 14:00      1000 Boyd St        
+##  8 12559208    43 B     F     09/25/2012 18:30      5700 Wabash Ave     
+##  9 11184504    29 B     F     04/01/2011 08:00      &lt;NA&gt;                
+## 10 11313735    28 W     M     09/05/2011 10:30      1000 N Bond St      
 ## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>The <code>sample_frac</code> function selects a fraction of entitites at random:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_frac</span>(arrest_tab, .<span class="dv">1</span>)</code></pre></div>
 <pre><code>## # A tibble: 10,453 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
-##  1 11383834    34 B     F     12/09/2011 00:00      &lt;NA&gt;                
-##  2 12470977    24 B     F     05/02/2012 16:58      &lt;NA&gt;                
-##  3 12476973    53 B     M     05/11/2012 20:15      2700 Round Rd       
-##  4 12407676    27 B     M     01/21/2012 22:07      600 Fallsway St     
-##  5 11382171    45 B     M     12/07/2011 02:00      3000 W Garrison Ave 
-##  6 12530561    28 B     F     08/10/2012 21:45      400 N Luzerne St    
-##  7 12513241    21 B     F     07/13/2012 23:45      1400 Bloomfield Ave 
-##  8 12456409    54 B     M     04/10/2012 13:36      500 Flat Iron Aly   
-##  9 11153772    53 B     M     02/16/2011 16:30      3400 W Clifton Ave  
-## 10 12413966    55 W     M     01/30/2012 18:31      Is95 Sb Fmt Plaza St
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation    
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;             
+##  1 12436247    21 B     F     03/07/2012 17:00      &lt;NA&gt;              
+##  2 12515603    22 W     M     07/18/2012 18:30      1700 Mchenry St   
+##  3 12609442    24 B     M     12/28/2012 15:25      2600 Woodbrook St 
+##  4 11316004    42 B     M     09/08/2011 02:50      2800 Bookert Dr   
+##  5 11393225    20 B     F     12/27/2011 03:00      600 N Wolfe St    
+##  6 11151243    26 B     F     02/13/2011 00:00      &lt;NA&gt;              
+##  7 12433529    19 B     M     03/02/2012 23:15      2700 Frederick Ave
+##  8 11352333    42 B     M     10/22/2011 23:30      &lt;NA&gt;              
+##  9 11365719    20 B     M     11/10/2011 10:20      1700 Homestead Ave
+## 10 12542442    31 B     M     08/30/2012 08:30      &lt;NA&gt;              
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -540,18 +546,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>)</code></pre></div>
 <pre><code>## # A tibble: 10,453 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
-##  1 12606607    46 B     M     12/20/2012 11:30      6400 Loch Raven Blvd
-##  2 12489495    45 W     M     06/03/2012 01:10      &lt;NA&gt;                
-##  3 11168866    19 B     M     03/10/2011 13:30      &lt;NA&gt;                
-##  4 12414848    29 B     M     02/01/2012 00:54      700 N Rose St       
-##  5       NA    31 B     M     05/30/2012 19:45      1200 Ashburton St   
-##  6 11375557    36 B     M     11/27/2011 01:40      400 E Baltimore St  
-##  7 11393330    40 B     M     12/27/2011 10:45      &lt;NA&gt;                
-##  8 11130737    43 B     F     01/08/2011 12:45      2400 E Wilgrey Ct   
-##  9 12591007    20 W     F     11/21/2012 08:00      &lt;NA&gt;                
-## 10 12521871    18 B     F     07/27/2012 23:00      800 Glade Ct        
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation    
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;             
+##  1 12493505    19 B     M     06/08/2012 21:30      1800 Ramsay St    
+##  2 11364398    46 B     F     11/08/2011 16:30      &lt;NA&gt;              
+##  3 12569300    19 B     M     10/11/2012 19:15      4700 Amberley St  
+##  4 11174768    19 B     M     03/19/2011 00:40      &lt;NA&gt;              
+##  5 11289832    51 B     F     08/07/2011 05:25      4100 Ridgewood Ave
+##  6 12561889    18 B     M     10/01/2012 01:20      1600 Spruce St    
+##  7 11306646    31 B     M     08/26/2011 13:00      &lt;NA&gt;              
+##  8 12574657    26 B     M     10/20/2012 21:15      2700 Ashland Ave  
+##  9 12526154    25 B     M     08/03/2012 23:00      &lt;NA&gt;              
+## 10 11344341    29 B     M     10/11/2011 19:40      1800 Lexington St 
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -571,16 +577,16 @@ analysis_tab</code></pre></div>
 <pre><code>## # A tibble: 17,885 x 3
 ##    sex   district     arrest_date
 ##    &lt;fct&gt; &lt;chr&gt;        &lt;chr&gt;      
-##  1 M     NORTHEASTERN 03/09/2012 
-##  2 F     NORTHERN     09/05/2011 
-##  3 M     SOUTHERN     12/24/2012 
-##  4 F     &lt;NA&gt;         05/21/2012 
-##  5 M     &lt;NA&gt;         08/13/2012 
-##  6 M     &lt;NA&gt;         03/18/2011 
-##  7 M     &lt;NA&gt;         06/15/2011 
-##  8 M     NORTHWESTERN 11/28/2012 
-##  9 M     &lt;NA&gt;         11/16/2011 
-## 10 M     &lt;NA&gt;         03/20/2012 
+##  1 F     SOUTHERN     04/26/2011 
+##  2 F     CENTRAL      07/27/2012 
+##  3 F     WESTERN      03/24/2011 
+##  4 M     SOUTHWESTERN 02/07/2012 
+##  5 M     &lt;NA&gt;         03/29/2011 
+##  6 M     NORTHEASTERN 05/21/2011 
+##  7 M     &lt;NA&gt;         03/11/2011 
+##  8 M     EASTERN      01/11/2012 
+##  9 M     CENTRAL      03/19/2011 
+## 10 M     &lt;NA&gt;         04/22/2011 
 ## # ... with 17,875 more rows</code></pre>
 
 </div>
