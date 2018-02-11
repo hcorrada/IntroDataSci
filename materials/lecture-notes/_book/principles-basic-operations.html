@@ -214,6 +214,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.1" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#group-by-and-summarize"><i class="fa fa-check"></i><b>12.1</b> Group-by and summarize</a></li>
 <li class="chapter" data-level="12.2" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#subqueries"><i class="fa fa-check"></i><b>12.2</b> Subqueries</a></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="two-table-operations.html"><a href="two-table-operations.html"><i class="fa fa-check"></i><b>13</b> Two-table operations</a><ul>
+<li class="chapter" data-level="13.0.1" data-path="two-table-operations.html"><a href="two-table-operations.html#left-join"><i class="fa fa-check"></i><b>13.0.1</b> Left Join</a></li>
+<li class="chapter" data-level="13.0.2" data-path="two-table-operations.html"><a href="two-table-operations.html#join-conditions"><i class="fa fa-check"></i><b>13.0.2</b> Join conditions</a></li>
+<li class="chapter" data-level="13.0.3" data-path="two-table-operations.html"><a href="two-table-operations.html#filtering-joins"><i class="fa fa-check"></i><b>13.0.3</b> Filtering Joins</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -328,9 +333,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  8 1.11e⁷ W     M     01/01/2011 05&#39;00&quot;     5200 Moravia … Unknown Offense
 ##  9 1.11e⁷ B     M     01/01/2011 07&#39;00&quot;     2400 Gainsdbo… 54-Armed Person
 ## 10 1.11e⁷ B     M     01/01/2011 15&#39;00&quot;     3300 Woodland… 54-Armed Person
-## # ... with 104,518 more rows, and 7 more variables:
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+## # ... with 104,518 more rows, and 7 more variables: incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 </div>
 <div id="rename" class="section level3">
 <h3><span class="header-section-number">6.1.2</span> <code>rename</code></h3>
@@ -389,9 +394,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 1 11126858    23 B     M     01/01/2011 00&#39;00&quot;     &lt;NA&gt;             
 ## 2 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave
 ## 3 11127018    53 B     M     01/01/2011 15&#39;00&quot;     3300 Woodland Ave
-## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>As before, the first argument is the data frame to operate on. The second argument is a <em>vector</em> of indices. We used the <code>c</code> function (for concatenate) to create a vector of indices.</p>
 <p>We can also use the range operator here:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">slice</span>(arrest_tab, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</code></pre></div>
@@ -403,9 +408,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 3 11126887    46 B     M     01/01/2011 01&#39;00&quot;     2800 Mayfield Ave
 ## 4 11126873    50 B     M     01/01/2011 04&#39;00&quot;     2100 Ashburton St
 ## 5 11126968    33 B     M     01/01/2011 05&#39;00&quot;     4000 Wilsby Ave  
-## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>To create general sequences of indices we would use the <code>seq</code> function. For example, to select entities in even positions we would use the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">slice</span>(arrest_tab, <span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">nrow</span>(arrest_tab), <span class="dt">by=</span><span class="dv">2</span>))</code></pre></div>
 <pre><code>## # A tibble: 52,264 x 15
@@ -492,36 +497,36 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Frequently we will want to choose entities from a data frame at random. The <code>sample_n</code> function selects a specific number of entities at random:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_n</span>(arrest_tab, <span class="dv">10</span>)</code></pre></div>
 <pre><code>## # A tibble: 10 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation   
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
-##  1 12434815    34 B     M     03/05/2012 23:30      &lt;NA&gt;             
-##  2 12480494    33 B     M     05/17/2012 18:32      500 Halfmile Ct  
-##  3 12597665    28 W     M     12/04/2012 15:45      &lt;NA&gt;             
-##  4 11131097    54 B     F     01/10/2011 09:50      &lt;NA&gt;             
-##  5 12475232    47 B     M     05/09/2012 10:20      2500 E Biddle St 
-##  6 12491181    26 B     F     06/05/2012 16:13      &lt;NA&gt;             
-##  7 12573875    20 B     M     10/18/2012 22:05      300 Mulberry St  
-##  8 12565701    30 W     F     10/05/2012 16:05      0 S Conkling St  
-##  9 11311966    57 B     M     09/01/2011 22:30      700 Whitelock Ave
-## 10 11271489    42 B     F     07/15/2011 18:45      1300 N Calhoun St
-## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation       
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                
+##  1 11356931    18 B     M     10/28/2011 14:00      3300 Belair Rd       
+##  2 12560014    23 W     M     09/26/2012 18:40      IS 95 @ Exit 50 St   
+##  3 11354403    65 B     M     10/25/2011 18:30      3700 W Belvedere Ave 
+##  4 12503041    27 B     M     06/25/2012 18:15      3200 Reisterstown Rd 
+##  5 11291226    55 W     M     08/09/2011 09:12      5900 Eastern Ave     
+##  6 12582985    50 B     M     11/05/2012 15:30      2000 Druid Hill Ave  
+##  7 12446903    44 B     M     03/24/2012 10:00      &lt;NA&gt;                 
+##  8 11316925    32 B     M     09/08/2011 19:10      500 Bloom St         
+##  9 12420463    43 B     M     02/09/2012 13:59      1600 Inverness Ave   
+## 10 12568382    41 B     F     10/10/2012 18:00      3000 Chesterfield Ave
+## # ... with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation
+## #   &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post
+## #   &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>The <code>sample_frac</code> function selects a fraction of entitites at random:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_frac</span>(arrest_tab, .<span class="dv">1</span>)</code></pre></div>
 <pre><code>## # A tibble: 10,453 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation    
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;             
-##  1 12526390    22 B     F     08/04/2012 17:50      500 Northbend Rd  
-##  2 11154464    22 B     M     02/17/2011 12:20      2100 Vine St      
-##  3       NA    21 B     F     01/25/2012 17:57      &lt;NA&gt;              
-##  4 11174955    20 B     M     03/19/2011 16:30      1400 N Fulton Ave 
-##  5 12450894    27 W     M     03/31/2012 00:20      100 S Highland St 
-##  6 12474884    45 B     M     05/08/2012 21:30      &lt;NA&gt;              
-##  7 12559066    29 W     F     09/25/2012 13:25      300 N Conkling St 
-##  8 12572734    23 B     M     10/17/2012 13:25      &lt;NA&gt;              
-##  9 11173466    47 B     M     03/17/2011 13:00      2600 Polk St      
-## 10 11309024    22 B     M     08/30/2011 08:00      3400 Edmondson Ave
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation       
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                
+##  1 12407701    41 B     M     01/21/2012 21:02      1200 Walters Ave     
+##  2 11331756    53 B     M     09/26/2011 10:30      3900 Main Ave        
+##  3 12603203    34 B     M     12/13/2012 20:35      400 N Bouldin St     
+##  4 12571353    23 B     M     10/16/2012 07:00      5400 Woodbourne Ave  
+##  5 12499580    16 B     M     06/19/2012 17:50      &lt;NA&gt;                 
+##  6 12470565    40 B     M     05/02/2012 03:57      800 N Fulton St      
+##  7 12501089    20 U     M     06/21/2012 21:50      500 Quail St         
+##  8 11201018    21 B     M     04/23/2011 07:30      &lt;NA&gt;                 
+##  9 11369371    25 W     M     11/15/2011 15:30      &lt;NA&gt;                 
+## 10 11351830    47 B     M     10/21/2011 16:30      1600 Pennsylvania Ave
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -534,18 +539,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>)</code></pre></div>
 <pre><code>## # A tibble: 10,453 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation        
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                 
-##  1 12417236    28 W     M     02/04/2012 17:00      2300 Cedely St        
-##  2 11339815    48 B     F     10/05/2011 13:00      2000 Gwynnfalls Parkw…
-##  3 12501226    29 B     M     06/22/2012 03:12      200 N Highland Ave    
-##  4 11344224    42 B     M     10/11/2011 16:50      3500 Spaulding Ave    
-##  5 11372477    46 W     F     11/19/2011 19:15      2300 Orleans St       
-##  6 12595702    34 B     F     11/30/2012 19:30      2600 E Chase St       
-##  7 12412084    45 B     M     01/27/2012 18:45      2800 Edmondson Ave    
-##  8 12459194    29 B     M     04/14/2012 12:00      400 S Sticker St      
-##  9 12426112    38 U     M     02/19/2012 05:35      500 S Linwood Ave     
-## 10 12415826    52 B     M     02/02/2012 10:00      &lt;NA&gt;                  
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation       
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                
+##  1       NA    24 B     M     03/31/2011 14:30      &lt;NA&gt;                 
+##  2 11207131    47 B     M     04/30/2011 17:20      3000 Mayfield Ave    
+##  3 11298242    22 B     M     08/16/2011 15:00      4600 Edmondson Ave   
+##  4 12579087    22 B     M     10/27/2012 17:15      1600 E Madison St    
+##  5 12483229    19 B     M     05/22/2012 15:20      &lt;NA&gt;                 
+##  6 11185470    18 B     M     04/02/2011 18:50      1000 N Central St    
+##  7 11387899    59 B     M     12/15/2011 15:00      &lt;NA&gt;                 
+##  8 11395027    21 W     F     12/29/2011 20:30      1900 Breitwert Ave   
+##  9 12561156    25 B     M     09/28/2012 21:10      300 W Baltimore St   
+## 10 11315619    59 B     F     09/07/2011 15:00      2500 Pennsylvania Ave
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -565,16 +570,16 @@ analysis_tab</code></pre></div>
 <pre><code>## # A tibble: 17,885 x 3
 ##    sex   district     arrest_date
 ##    &lt;fct&gt; &lt;chr&gt;        &lt;chr&gt;      
-##  1 M     NORTHEASTERN 10/08/2012 
-##  2 M     SOUTHWESTERN 11/19/2012 
-##  3 F     NORTHWESTERN 07/14/2012 
-##  4 M     EASTERN      07/16/2011 
-##  5 M     &lt;NA&gt;         05/24/2011 
-##  6 F     WESTERN      10/12/2011 
-##  7 F     CENTRAL      11/08/2012 
-##  8 M     &lt;NA&gt;         10/09/2012 
-##  9 M     &lt;NA&gt;         11/08/2011 
-## 10 M     EASTERN      07/31/2012 
+##  1 M     CENTRAL      04/16/2012 
+##  2 M     SOUTHWESTERN 05/27/2012 
+##  3 M     &lt;NA&gt;         12/31/2011 
+##  4 M     &lt;NA&gt;         11/03/2011 
+##  5 M     EASTERN      02/22/2012 
+##  6 M     SOUTHERN     12/18/2011 
+##  7 M     CENTRAL      09/01/2011 
+##  8 M     &lt;NA&gt;         05/21/2011 
+##  9 F     &lt;NA&gt;         10/01/2012 
+## 10 M     &lt;NA&gt;         02/22/2011 
 ## # ... with 17,875 more rows</code></pre>
 
 </div>
