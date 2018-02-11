@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="brief-introduction-to-rmarkdown.html">
-<link rel="next" href="tidy-data-i-the-er-model.html">
+<link rel="prev" href="two-table-operations.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -243,19 +243,123 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="best-practices-for-data-science-projects" class="section level1">
-<h1><span class="header-section-number">10</span> Best Practices for Data Science Projects</h1>
-<p>See this slidedeck for discussion of reproducibility, bias, ethics and responsibility along with some practical tips:</p>
-<p><a href="/IntroDataSci/slides/cmsc320_best-practices.pdf">Best Practices Slidedeck</a></p>
+<div id="sql-system-constructs" class="section level1">
+<h1><span class="header-section-number">14</span> SQL System Constructs</h1>
+<p>Database management systems are software applications designed for very efficient manipulation of data targeting a relatively small number of operations. Since they are also defined to operate over a fairly restrictive data model, they are extremely useful in situations where data consistency and safety are required. Here are some examples of capabilities found in DBMS that help in that regard:</p>
+<ul>
+<li>Transactions
+<ul>
+<li>A transaction is a sequence of queries and update statements executed as a single unit</li>
+<li>For example, transferring money from one account to another
+<ul>
+<li>Both the <em>deduction</em> from one account and <em>credit</em> to the other account should happen, or neither should</li>
+</ul></li>
+</ul></li>
+<li>Triggers
+<ul>
+<li>A trigger is a statement that is executed automatically by the system as a side effect of a modification to the database</li>
+</ul></li>
+<li>Integrity Constraints
+<ul>
+<li>Predicates on the database that must always hold</li>
+<li>Key Constraints: Specifiying something is a primary key or unique</li>
+</ul></li>
+</ul>
+<div id="sql-as-a-data-definition-language" class="section level2">
+<h2><span class="header-section-number">14.1</span> SQL as a Data Definition Language</h2>
+<p>The Structured Query Language (SQL) is both a <em>Data Definition Language</em> and a <em>Data Manipulation Language</em></p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">CREATE</span> <span class="kw">TABLE</span> &lt;name&gt; ( &lt;field&gt; &lt;domain&gt;, ... )
 
+<span class="kw">INSERT</span> <span class="kw">INTO</span> &lt;name&gt; (&lt;field names&gt;) <span class="kw">VALUES</span> (&lt;field values&gt;)
+
+<span class="kw">DELETE</span> <span class="kw">FROM</span> &lt;name&gt; <span class="kw">WHERE</span> &lt;condition&gt;
+
+<span class="kw">UPDATE</span> &lt;name&gt; <span class="kw">SET</span> &lt;field name&gt; = &lt;value&gt; <span class="kw">WHERE</span> &lt;condition&gt;
+
+<span class="kw">SELECT</span> &lt;fields&gt; <span class="kw">FROM</span> &lt;name&gt; <span class="kw">WHERE</span> &lt;condition&gt;</code></pre></div>
+<p>We can create tables and specify primary key attributes which enforce integrity constraints at the system level</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">CREATE</span> <span class="kw">TABLE</span> customer (
+  ssn <span class="dt">CHAR</span>(<span class="dv">9</span>) <span class="kw">PRIMARY</span> <span class="kw">KEY</span>, 
+  cname <span class="dt">CHAR</span>(<span class="dv">15</span>), address <span class="dt">CHAR</span>(<span class="dv">30</span>), city <span class="dt">CHAR</span>(<span class="dv">10</span>), 
+  <span class="kw">UNIQUE</span> (cname, address, city)); </code></pre></div>
+<p>Attribute constraints: Constraints on the values of attributes</p>
+<p><code>bname char(15) not null</code></p>
+<p><code>balance int not null, check (balance &gt;= 0)</code></p>
+<ul>
+<li>Referential integrity: prevent dangling tuples</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">CREATE</span> <span class="kw">TABLE</span>  branch(bname <span class="dt">CHAR</span>(<span class="dv">15</span>) <span class="kw">PRIMARY</span> <span class="kw">KEY</span>, ...);
+<span class="kw">CREATE</span> <span class="kw">TABLE</span> loan(..., <span class="kw">FOREIGN</span> <span class="kw">KEY</span> bname <span class="kw">REFERENCES</span> branch);</code></pre></div>
+<ul>
+<li><p>Can tell the system what to do if a referenced tuple is being deleted</p></li>
+<li>Global Constraints</li>
+<li><p>Single-table</p></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">CREATE</span> <span class="kw">TABLE</span> branch (...,
+  bcity  <span class="dt">CHAR</span>(<span class="dv">15</span>), 
+  assets <span class="dt">INT</span>, 
+  <span class="kw">CHECK</span> (<span class="kw">NOT</span>(bcity = ‘Bkln’) <span class="kw">OR</span> assets &gt; 5M))</code></pre></div>
+<ul>
+<li>Multi-table</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">CREATE</span> <span class="kw">ASSERTION</span> loan-constraint
+  <span class="kw">CHECK</span> (<span class="kw">NOT</span> <span class="kw">EXISTS</span> (
+    <span class="kw">SELECT</span>   * 
+    <span class="kw">FROM</span> loan <span class="kw">AS</span> L
+    <span class="kw">WHERE</span>  <span class="kw">NOT</span> <span class="kw">EXISTS</span>(
+      <span class="kw">SELECT</span>   *
+      <span class="kw">FROM</span> borrower B, depositor D, <span class="kw">account</span> A
+      <span class="kw">WHERE</span> B.cname = D.cname  <span class="kw">AND</span>
+        D.acct_no = A.acct_no  <span class="kw">AND</span>
+        L.lno  = B.lno)))</code></pre></div>
+</div>
+<div id="set-operations-and-comparisons" class="section level2">
+<h2><span class="header-section-number">14.2</span> Set Operations and Comparisons</h2>
+<ul>
+<li>Set operations</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> name 
+<span class="kw">from</span> movieExec
+union/intersect/minus
+<span class="kw">select</span> name 
+<span class="kw">from</span> movieStar</code></pre></div>
+<ul>
+<li>Set Comparisons</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> *
+<span class="kw">from</span> movies
+<span class="kw">where</span> <span class="dt">year</span> <span class="kw">in</span> [<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>];
+
+<span class="kw">select</span> *
+<span class="kw">from</span> movies
+<span class="kw">where</span> <span class="dt">year</span> <span class="kw">not</span> <span class="kw">in</span> (
+  <span class="kw">select</span> <span class="fu">extract</span>(<span class="dt">year</span> <span class="kw">from</span> birthdate) 
+  <span class="kw">from</span> MovieStar
+);</code></pre></div>
+</div>
+<div id="views" class="section level2">
+<h2><span class="header-section-number">14.3</span> Views</h2>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">create</span> <span class="kw">view</span> DisneyMovies
+<span class="kw">select</span> *
+<span class="kw">from</span> movie m
+<span class="kw">where</span> m.studioname = <span class="st">&#39;disney&#39;</span>;</code></pre></div>
+<p>Can use it in any place where a tablename is used. Views are used quite extensively to: (1) simplify queries, (2) hide data (by giving users access only to specific views). Views may be <em>materialized</em> or not.</p>
+</div>
+<div id="nulls" class="section level2">
+<h2><span class="header-section-number">14.4</span> NULLs</h2>
+<p>Value of any attribute can be NULL if value is unknown, or it is not applicable, or hidden, etc. It can lead to counterintuitive behavior. For example, the following query does not return movies where <code>length = NULL</code></p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> * <span class="kw">from</span> movies <span class="kw">where</span> <span class="fu">length</span> &gt;= <span class="dv">120</span> <span class="kw">or</span> <span class="fu">length</span> &lt;= <span class="dv">120</span>`</code></pre></div>
+<p>Aggregate operations can be especially tricky when NULLs are present.</p>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="brief-introduction-to-rmarkdown.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tidy-data-i-the-er-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="two-table-operations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
