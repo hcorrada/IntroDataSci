@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-11">
+<meta name="date" content="2018-02-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -226,6 +226,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="14.3" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#views"><i class="fa fa-check"></i><b>14.3</b> Views</a></li>
 <li class="chapter" data-level="14.4" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#nulls"><i class="fa fa-check"></i><b>14.4</b> NULLs</a></li>
 </ul></li>
+<li class="chapter" data-level="15" data-path="db-parting-shots.html"><a href="db-parting-shots.html"><i class="fa fa-check"></i><b>15</b> DB Parting Shots</a><ul>
+<li class="chapter" data-level="15.1" data-path="db-parting-shots.html"><a href="db-parting-shots.html#database-query-optimization"><i class="fa fa-check"></i><b>15.1</b> Database Query Optimization</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -266,9 +269,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  9  2013     1     1      557            600     -3.00      838
 ## 10  2013     1     1      558            600     -2.00      753
 ## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin
+## #   &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute
+## #   &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <p>And add the <code>airlines</code> table:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">airlines</code></pre></div>
 <pre><code>## # A tibble: 16 x 2
@@ -318,9 +321,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  9  2013     1     1      557            600     -3.00      838
 ## 10  2013     1     1      558            600     -2.00      753
 ## # ... with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin
+## #   &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute
+## #   &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
 <p>RHS variables for LHS observations with no matching RHS observations are coded as <code>NA</code>.</p>
 <div id="right-join" class="section level4">
 <h4><span class="header-section-number">13.0.1.1</span> Right Join</h4>
@@ -349,9 +352,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  9  2013     1     1     1552           1600     -8.00     1749
 ## 10  2013     1     1     1554           1600     -6.00     1701
 ## # ... with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin
+## #   &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute
+## #   &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
 <p>LHS variables for RHS observations with no matching LHS observations are coded as <code>NA</code>.</p>
 </div>
 <div id="inner-join" class="section level4">
@@ -374,9 +377,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  9  2013     1     1      557            600     -3.00      838
 ## 10  2013     1     1      558            600     -2.00      753
 ## # ... with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin
+## #   &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute
+## #   &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
 </div>
 <div id="full-join" class="section level4">
 <h4><span class="header-section-number">13.0.1.3</span> Full Join</h4>
@@ -398,9 +401,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  9  2013     1     1      557            600     -3.00      838
 ## 10  2013     1     1      558            600     -2.00      753
 ## # ... with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin
+## #   &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute
+## #   &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
 <p>All values coded as <code>NA</code> for non-matching observations as appropriate.</p>
 </div>
 </div>
@@ -423,11 +426,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>We’ve just seen <em>mutating joins</em> that create new tables. <em>Filtering joins</em> use join conditions to filter a specific table.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anti_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre></div>
 <pre><code>## # A tibble: 0 x 19
-## # ... with 19 variables: year &lt;int&gt;, month &lt;int&gt;, day &lt;int&gt;,
-## #   dep_time &lt;int&gt;, sched_dep_time &lt;int&gt;, dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;,
+## # ... with 19 variables: year &lt;int&gt;, month &lt;int&gt;, day &lt;int&gt;, dep_time
+## #   &lt;int&gt;, sched_dep_time &lt;int&gt;, dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;,
 ## #   sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
-## #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
-## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+## #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance
+## #   &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <p>Filters the <code>flights</code> table to only include flights from airlines that <em>are not</em> included in the <code>airlines</code> table.</p>
 </div>
 <div id="sql-constructs-multi-table-queries" class="section level3">
