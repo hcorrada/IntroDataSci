@@ -107,23 +107,22 @@ notes = "bookdown-notes/two-table-operations.html"
 title = "More SQL: data defintion, consistency and other constructs"
 notes = "bookdown-notes/sql-system-constructs.html"
 
+
+[[day06.covers]]
+title = "DB parting shots: query optimization and the JSON data model"
+notes = "bookdown-notes/db-parting-shots.html"
+
 [day07]
 date = "2/15"
 
 [[day07.covers]]
-title = "Database system query optimization"
-
-[[day07.covers]]
-title = "Alternative data models: the JSON data model"
-
-[[day07.covers]]
 title = "Data aquisition: loading and scraping"
+
+[[day07.covers]]
+title = "Data cleaning: handling text and dates"
 
 [day08]
 date = "2/20"
-
-[[day08.covers]]
-title = "Data cleaning: handling text and dates"
 
 [[day08.covers]]
 title = "Common operations for data tidying"
