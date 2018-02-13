@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="an-illustrative-analysis.html">
-<link rel="next" href="measurements-and-data-types.html">
+<link rel="prev" href="sql-system-constructs.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -247,146 +247,146 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="setting-up-the-r-data-science-toolbox" class="section level1">
-<h1><span class="header-section-number">4</span> Setting up the R Data Science Toolbox</h1>
-<p>Here we setup R, RStudio and anything else we will use in the course.</p>
-<div id="some-history" class="section level2">
-<h2><span class="header-section-number">4.1</span> Some history</h2>
-<p>R is an offspring of S, a language created in AT&amp;T Labs by John Chambers (now at Stanford) and others in 1976 with the goal of creating an environment for statistical computing and data analysis. The standard for the language in current use was settled in 1998. That same year, “S” won the ACM Software System award, awarded to software systems “that have a lasting influence, reflected in contributions to concepts, in commercial acceptance, or both”.</p>
-<p>In 1991, Robert Gentleman and Ross Ihaka created R to provide an open source implementation of the S language and environment. They also redesigned the language to enforce lexical scoping rules. It has been maintained by the R core group since 1997, and in 2015 an R consortium, including Microsoft, Google, and others, was created.</p>
-<p>Along with Python it is one of the most popular environments for data analysis (e.g., figure below from <a href="https://www.kdnuggets.com/2017/05/poll-analytics-data-science-machine-learning-software-leaders.html">KDNuggets 2017 software survey</a></p>
-<div class="figure">
-<img src="img/kdnuggets-2017.jpg" />
-
+<div id="db-parting-shots" class="section level1">
+<h1><span class="header-section-number">15</span> DB Parting Shots</h1>
+<div id="database-query-optimization" class="section level2">
+<h2><span class="header-section-number">15.1</span> Database Query Optimization</h2>
+<p>Earlier we made the distinction that SQL is a <em>declarative</em> language rather than a <em>procedural</em> language. A reason why data base systems rely on a declarative language is that it allows the system to decide how to <em>evaluate</em> a query <em>most efficiently</em>. Let’s think about this briefly.</p>
+<p>Consider a database where we have two tables <code>Batting</code> and <code>Master</code> and we want to evaluate this query: that <em>what is the maximum batting “average” for a player from the state of California</em>?</p>
+<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="fu">max</span>(<span class="fl">1.0</span> * b.H / b.AB) <span class="kw">as</span> best_ba
+<span class="kw">from</span> Batting <span class="kw">as</span> b <span class="kw">join</span> <span class="kw">Master</span> <span class="kw">as</span> m <span class="kw">on</span> b.playerId = m.playerId
+<span class="kw">where</span> b.AB &gt;= <span class="dv">100</span> <span class="kw">and</span> m.birthState = <span class="ot">&quot;CA&quot;</span></code></pre></div>
+<div class="knitsql-table">
+<table>
+<caption><span id="tab:unnamed-chunk-47">Table 15.1: </span>1 records</caption>
+<thead>
+<tr class="header">
+<th align="left">best_ba</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">0.405701754385965</td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>We use R for this class because we find that besides it being a state-of-the-art data analysis environment, it provides a clean end-to-end platform for teaching material across the data management-modeling-communication spectrum that we study in class. However, be aware that as you move on in the Data Science field you most likely will need to add Python to your toolbelt.</p>
-</div>
-<div id="setting-up-r" class="section level2">
-<h2><span class="header-section-number">4.2</span> Setting up R</h2>
-<p>R is a free, open source, environment for data analysis. It is available as a free binary download for Mac, Linux and Windows. For the more adventorous, it can also be compiled from source. To install R in your computer go to <a href="https://cran.r-project.org/index.html" class="uri">https://cran.r-project.org/index.html</a> and download and install the appropriate binary file.</p>
-<div class="figure">
-<img src="img/cran.png" />
-
-</div>
-<p>This will install the base R system: the R programming language, a few packages for common data analyses and a development environment.</p>
-</div>
-<div id="setting-up-rstudio" class="section level2">
-<h2><span class="header-section-number">4.3</span> Setting up Rstudio</h2>
-<p>We will actually use Rstudio to interact with R. Rstudio is a very powerful application to make data analysis with R easier to do. To install go to <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a> and download the appropriate version of Rstudio.</p>
-<div class="figure">
-<img src="img/rstudio.png" />
-
-</div>
-</div>
-<div id="a-first-look-at-rstudio" class="section level2">
-<h2><span class="header-section-number">4.4</span> A first look at Rstudio</h2>
-<p>Let’s take a first look at Rstudio. The first thing you will notice is that Rstudio is divided into panes. Let’s take a look first at the <em>Console</em>.</p>
-<div id="interactive-console" class="section level3">
-<h3><span class="header-section-number">4.4.1</span> Interactive Console</h3>
-<p>The most immediate way to interact with R is through the interactive console. Here we can write R instructions to perform our data analyses. We want to start using data so the first instructions we will look at deal with loading data.</p>
-<p>When you installed R, a few illustrative datasets were installed as well. Let’s take a look at the list of datasets you now have access to. Write the following command in the console</p>
-<div class="figure">
-<img src="img/rstudio_data.png" />
-
-</div>
-<p>This will list names and descriptions of datasets available in your R installation. Let’s try to find out more information about these datasets. In R, the first attempt to get help with something is to use the <code>?</code> operation. So, to get help about the <code>swiss</code> dataset we can enter the following in the console</p>
-<p>This will make the documentation for the <code>swiss</code> dataset open in another pane.</p>
-<div class="figure">
-<img src="img/rstudio_swiss.png" />
-
-</div>
-<p><strong>On your own:</strong> Find more information about a different dataset using the <code>?</code> operator.</p>
-</div>
-<div id="data-viewer" class="section level3">
-<h3><span class="header-section-number">4.4.2</span> Data Viewer</h3>
-<p>According to the documentation we just saw for <code>swiss</code>, this is a <code>data.frame</code> with 47 observations and 6 variables. The <code>data.frame</code> is the basic structure we will use to represent data throughout the course. We will see this again repeatedly, and use a couple of other names (e.g., <code>tibble</code>) to refer to this. Intuitively, you can think of the <code>data.frame</code> like a spreadsheet, with rows representing observations, and columns representing variables that describe those observations. Let’s see what the <code>swiss</code> data looks like using the Rstudio data viewer.</p>
-<div class="figure">
-<img src="img/rstudio_view_swiss.png" />
-
-</div>
-<p>The Data Viewer lets you reorder data by the values in a column. It also lets you filter rows of the data by values as well.</p>
-<p><strong>On your own</strong>: Use the Data Viewer to explore another of the datasets you saw listed before.</p>
-</div>
-<div id="names-values-and-functions" class="section level3">
-<h3><span class="header-section-number">4.4.3</span> Names, values and functions</h3>
-<p>Let’s make a very short pause to talk about something you may have noticed. In the console, we’ve now written a few instructions, e.g. <code>View(swiss)</code>. Let’s take a closer look at how these instructions are put together.</p>
-<p><em>expressions</em>: first of all, we call these instructions <em>expressions</em>, which are just text that R can evaluate into a value. <code>View(swiss)</code> is an expression.</p>
-<p><em>values</em>: so, what’s a value? They are numbers, strings, data frames, etc. This is the data we will be working with. The number <code>2</code> is a value. So is the string <code>&quot;Hector&quot;</code>.</p>
-<p>So, what value is produced when R evaluates the expression <code>View(swiss)</code>? Nothing, which we also treat as a value. That wasn’t very interesting, but it does have a side effect: it shows the <code>swiss</code> dataset in the Data viewer.</p>
-<p>How about a simpler expression: <code>swiss</code>, what value is produced when R evaluates the expression <code>swiss</code>? The data.frame containing that data. Try it out in the console.</p>
-<p><em>names</em>: so if <code>swiss</code> isn’t a value, what is it? It is a <em>name</em>. We use these to refer to values. So, when we write the expression <code>swiss</code>, we tell R we want the <em>value</em> referenced by the name <code>swiss</code>, that is, the data itself!</p>
-<div class="figure">
-<img src="img/names_values.png" />
-
-</div>
-<p><em>functions</em>: Besides numbers, strings, data frames, etc. another important type of value is the <em>function</em>. Functions are a series of instructions that take some input value and produce a different value. The name <code>View</code> refers to the function that takes a data frame as input, and displays it in the Data viewer. Functions are called using the parentheses we saw before: <code>View(swiss)</code>, the parentheses say that you are passing input <code>swiss</code> to the function <code>View</code>. We’ll see later how we can write our own functions.</p>
-</div>
-<div id="plotting" class="section level3">
-<h3><span class="header-section-number">4.4.4</span> Plotting</h3>
-<p>Next, I want to show the <em>Plots</em> pane in Rstudio. Let’s make a plot using the <code>swiss</code> dataset:</p>
-<div class="figure">
-<img src="img/rstudio_plot_swiss.png" />
-
-</div>
-<p>It’s not pretty, but it was very easy to produce. There’s a couple of things going on here…</p>
+<p>Now, let’s do the same computation using <code>dplyr</code> operations:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Lahman)
+<span class="kw">library</span>(tidyverse)</code></pre></div>
+<p>Here is one version that joins the two tables before filtering the rows that are included in the result.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Batting <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">inner_join</span>(Master, <span class="dt">by=</span><span class="st">&quot;playerID&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(AB <span class="op">&gt;=</span><span class="st"> </span><span class="dv">100</span>, birthState <span class="op">==</span><span class="st"> &quot;CA&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">AB=</span><span class="fl">1.0</span> <span class="op">*</span><span class="st"> </span>H <span class="op">/</span><span class="st"> </span>AB) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="kw">max</span>(AB))</code></pre></div>
+<pre><code>##     max(AB)
+## 1 0.4057018</code></pre>
+<p>Here is a second version that filters the rows of the tables <em>before</em> joining the two tables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Batting <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(AB <span class="op">&gt;=</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">inner_join</span>(
+    Master <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(birthState <span class="op">==</span><span class="st"> &quot;CA&quot;</span>)
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">AB =</span> <span class="fl">1.0</span> <span class="op">*</span><span class="st"> </span>H <span class="op">/</span><span class="st"> </span>AB) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="kw">max</span>(AB))</code></pre></div>
+<pre><code>## Joining, by = &quot;playerID&quot;</code></pre>
+<pre><code>##     max(AB)
+## 1 0.4057018</code></pre>
+<p>They both give the same result of course, but which one should be more efficient?</p>
+<p>In SQL we only write the one query describing our desired result, with the <em>procedural</em> versions with <code>dplyr</code> we need to think which of the two versions is more efficient.</p>
+<p>Database systems use <em>query optimization</em> to decide how to evaluate query efficiently. The goal of query optimization is to decide the most efficient query <em>plan</em> to use to evaluate a query out of the many possible candidate plans it could use. It needs to solve two problems: search the space of possible plans, approximate the <em>cost</em> of evaluating a specific plan. Let’s ignore the first, and discuss briefly the second.</p>
+<p>We should think of the two procedural versions above as two candidate plans that the DB system <em>could</em> use to evaluate the query. Query optimzation <em>approximates</em> what it would cost to evaluate each of the two plans and decides to use the most efficient plan.</p>
+<p>So, how does it approximate cost? A few ingredients are used:</p>
 <ul>
-<li><p><code>plot</code> is a function, it takes two inputs, the data to put in the x and y axes, evaluates to nothing, but creates a plot of the data</p></li>
-<li><p><code>swiss$Education</code> is how we refer to the <code>Education</code> column in the <code>swiss</code> data frame.</p></li>
+<li><p>Access cost: how much will it cost to access rows that satisfy a given predicate (<code>where</code> clause)? Consider the <code>Master</code> table. In our query we only need to find rows for players born in California. Suppose we have an <em>index</em> based on attribute <code>birthState</code>, e.g. a hash table that allows us to find rows for players from a specific state very efficiently. In that case, accessing these rows using the index is much more efficient than scanning the entire table. This is why creating indexes for tables becomes important.</p></li>
+<li><p>Operation cost: how much will it cost to perform a join? There is a difference between comparing every pair of rows in order to compute a join, versus using indexes to find a small number of rows that satisfy the join condition efficiently? For example, if the <code>Batting</code> table has an index on <code>playerId</code> it will be cheaper to join with a filtered <code>Master</code> table, i.e., only considering rows for players born in California.</p></li>
+<li><p>Result size estimation: how many rows will we get after we perform a join? We can use information on key constraints to estimate this type of result. Additionally, these estimates also depend on the number of rows that satisfy certain predicates (e.g., number of players born in California) so systems often use histograms to make these estimates.</p></li>
 </ul>
-<p><strong>On your own</strong>: Make a plot using other variables in the <code>swiss</code> dataset.</p>
+<p>As database system users we may create indices or key constraints that guide the query optimizer to choose more efficient queries.</p>
 </div>
-<div id="editor" class="section level3">
-<h3><span class="header-section-number">4.4.5</span> Editor</h3>
-<p>So far, we’ve made some good progress: we know how to write expressions on the R console so that they are evaluated, we are starting to get a basic understanding of how these expressions are constructed, we can use the Data viewer to explore data frames, and made one plot that was displayed in the Plots pane. To finish this quick tour, I want to look at two more Rstudio panes: the file editor, and the File viewer.</p>
-<p>As you have noticed, everytime we want to evaluate an expression on the console, we have to write it in. For example, if we want to change the plot we made above to include a different variable, we have to write the whole thing again. Also, what if I forgot what expression I used to make a specific plot? Even better, what if I wanted somebody else to make the plot I just made?</p>
-<p>By far, one of the biggest advantages of using R over Excel or other similar programs, is that we can write expressions in scripts that are easy to share with others, making analyses easier to reproduce. Let’s write a script that we can use to make the same plot we just made.</p>
-<p>In the Rstudio menu select <code>File&gt;New File&gt;R Script</code></p>
-<div class="figure">
-<img src="img/rstudio_new_script.png" />
+<div id="json-data-model" class="section level2">
+<h2><span class="header-section-number">15.2</span> JSON Data Model</h2>
+<p>The Entity-Relational data model we have described so far is mostly defined for <em>structured data</em>: where a specific and consistent schema is assumed.</p>
+<p>Data models like XML and JSON are instead intended for <em>semi-structured</em> data.</p>
+<div id="xml-extensible-markup-language" class="section level4">
+<h4><span class="header-section-number">15.2.0.1</span> XML: eXtensible Markup Language</h4>
+<p>Data models like XML rely on flexible, self-describing schemas:</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
+<span class="co">&lt;!-- Edited by XMLSpy --&gt;</span>
+<span class="kw">&lt;CATALOG&gt;</span>
+  <span class="kw">&lt;CD&gt;</span>
+    <span class="kw">&lt;TITLE&gt;</span>Empire Burlesque<span class="kw">&lt;/TITLE&gt;</span>
+    <span class="kw">&lt;ARTIST&gt;</span>Bob Dylan<span class="kw">&lt;/ARTIST&gt;</span>
+    <span class="kw">&lt;COUNTRY&gt;</span>USA<span class="kw">&lt;/COUNTRY&gt;</span>
+    <span class="kw">&lt;COMPANY&gt;</span>Columbia<span class="kw">&lt;/COMPANY&gt;</span>
+    <span class="kw">&lt;PRICE&gt;</span>10.90<span class="kw">&lt;/PRICE&gt;</span>
+    <span class="kw">&lt;YEAR&gt;</span>1985<span class="kw">&lt;/YEAR&gt;</span>
+  <span class="kw">&lt;/CD&gt;</span>
+  <span class="kw">&lt;CD&gt;</span>
+    <span class="kw">&lt;TITLE&gt;</span>Hide your heart<span class="kw">&lt;/TITLE&gt;</span>
+    <span class="kw">&lt;ARTIST&gt;</span>Bonnie Tyler<span class="kw">&lt;/ARTIST&gt;</span>
+    <span class="kw">&lt;COUNTRY&gt;</span>UK<span class="kw">&lt;/COUNTRY&gt;</span>
+    <span class="kw">&lt;COMPANY&gt;</span>CBS Records<span class="kw">&lt;/COMPANY&gt;</span>
+    <span class="kw">&lt;PRICE&gt;</span>9.90<span class="kw">&lt;/PRICE&gt;</span>
+    <span class="kw">&lt;YEAR&gt;</span>1988<span class="kw">&lt;/YEAR&gt;</span>
+  <span class="kw">&lt;/CD&gt;</span>
+  ...</code></pre></div>
+</div>
+<div id="json-javascript-object-notation" class="section level4">
+<h4><span class="header-section-number">15.2.0.2</span> JSON: Javascript Object Notation</h4>
+<p>Very similar to XML and seems to be replacing it for many purposes</p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;firstName&quot;</span><span class="fu">:</span> <span class="st">&quot;John&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;lastName&quot;</span><span class="fu">:</span> <span class="st">&quot;Smith&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;isAlive&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span>
+  <span class="dt">&quot;age&quot;</span><span class="fu">:</span> <span class="dv">25</span><span class="fu">,</span>
+  <span class="dt">&quot;height_cm&quot;</span><span class="fu">:</span> <span class="fl">167.6</span><span class="fu">,</span>
+  <span class="dt">&quot;address&quot;</span><span class="fu">:</span> <span class="fu">{</span>
+    <span class="dt">&quot;streetAddress&quot;</span><span class="fu">:</span> <span class="st">&quot;21 2nd Street&quot;</span><span class="fu">,</span>
+    <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;New York&quot;</span><span class="fu">,</span>
+    <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;NY&quot;</span><span class="fu">,</span>
+    <span class="dt">&quot;postalCode&quot;</span><span class="fu">:</span> <span class="st">&quot;10021-3100&quot;</span>
+  <span class="fu">},</span>
+  <span class="dt">&quot;phoneNumbers&quot;</span><span class="fu">:</span> <span class="ot">[</span>
+    <span class="fu">{</span>
+      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;home&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;number&quot;</span><span class="fu">:</span> <span class="st">&quot;212 555-1234&quot;</span>
+    <span class="fu">}</span><span class="ot">,</span>
+    <span class="fu">{</span>
+      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;office&quot;</span><span class="fu">,</span>
+      <span class="dt">&quot;number&quot;</span><span class="fu">:</span> <span class="st">&quot;646 555-4567&quot;</span>
+    <span class="fu">}</span>
+  <span class="ot">]</span><span class="fu">,</span>
+  <span class="dt">&quot;children&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span>
+  <span class="dt">&quot;spouse&quot;</span><span class="fu">:</span> <span class="kw">null</span>
+<span class="fu">}</span></code></pre></div>
+<p>This is the format most contemporary data REST APIs use to transfer data. For instance, here is part of a JSON record from a Twitter stream:</p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json"><span class="fu">{</span>
+  <span class="dt">&quot;created_at&quot;</span><span class="fu">:</span><span class="st">&quot;Sun May 05 14:01:34+00002013&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">331046012875583488</span><span class="fu">,</span>
+  <span class="dt">&quot;id_str&quot;</span><span class="fu">:</span><span class="st">&quot;331046012875583488&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;text&quot;</span><span class="fu">:</span><span class="st">&quot;</span><span class="ch">\u0425\u043e\u0447\u0443</span><span class="st">, </span><span class="ch">\u0447\u0442\u043e\u0431</span><span class="st"> </span><span class="ch">\u0442\u044b</span><span class="st"> </span><span class="ch">\u0441\u0434\u0435\u043b\u0430\u043b</span><span class="st"> </span><span class="ch">\u0432\u0441\u0451</span><span class="st"> </span><span class="ch">\u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e\u0435</span><span class="st">.</span><span class="ch">\n</span><span class="st"> </span><span class="ch">\\</span><span class="st">,,</span><span class="ch">\\</span><span class="st"> *_* </span><span class="ch">\/</span><span class="st">,,</span><span class="ch">\/</span><span class="st">&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;source&quot;</span><span class="fu">:</span><span class="st">&quot;</span><span class="ch">\u003c</span><span class="st">a href=</span><span class="ch">\&quot;</span><span class="st">http:</span><span class="ch">\/\/</span><span class="st">twitterfeed.com</span><span class="ch">\&quot;</span><span class="st">rel=</span><span class="ch">\&quot;</span><span class="st">nofollow</span><span class="ch">\&quot;\u003e</span><span class="st">twitterfeed</span><span class="ch">\u003c\/</span><span class="st">a</span><span class="ch">\u003e</span><span class="st">&quot;</span><span class="fu">,</span>
+  <span class="dt">&quot;in_reply_to_user_id_str&quot;</span><span class="fu">:</span><span class="kw">null</span><span class="fu">,</span>
+  <span class="dt">&quot;user&quot;</span><span class="fu">:{</span>
+    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">548422428</span><span class="fu">,</span>
+    <span class="dt">&quot;id_str&quot;</span><span class="fu">:</span><span class="st">&quot;548422428&quot;</span><span class="fu">,</span>
+    <span class="dt">&quot;name&quot;</span><span class="fu">:</span><span class="st">&quot;</span><span class="ch">\u0410\u0439\u0433\u0435\u0440\u0438\u043c</span><span class="st"> </span><span class="ch">\u041f\u043e\u0433\u043e\u0434\u0438\u043d\u0430</span><span class="st">&quot;</span><span class="fu">,</span>
+    <span class="dt">&quot;screen_name&quot;</span><span class="fu">:</span><span class="st">&quot;paddybyrny&quot;</span><span class="fu">,</span>
+    <span class="dt">&quot;location&quot;</span><span class="fu">:</span><span class="st">&quot;</span><span class="ch">\u0420\u043e\u0441\u0441\u0438\u044f</span><span class="st">;</span><span class="ch">\u0412\u043b\u0430\u0434\u0438\u0432\u043e\u0441\u0442\u043e\u043a</span><span class="st">&quot;</span><span class="fu">,</span>
+    <span class="dt">&quot;followers_count&quot;</span><span class="fu">:</span><span class="dv">4188</span><span class="fu">,</span>
+    <span class="dt">&quot;friends_count&quot;</span><span class="fu">:</span><span class="dv">4281</span><span class="fu">,</span>
+    <span class="dt">&quot;lang&quot;</span><span class="fu">:</span><span class="st">&quot;en&quot;</span><span class="fu">,</span>
+    <span class="dt">&quot;profile_background_image_url&quot;</span><span class="fu">:</span><span class="st">&quot;http:</span><span class="ch">\/\/</span><span class="st">a0.twimg.com</span><span class="ch">\/</span><span class="st">images</span><span class="ch">\/</span><span class="st">themes</span><span class="ch">\/</span><span class="st">theme1</span><span class="ch">\/</span><span class="st">bg.png&quot;</span><span class="fu">,</span>
+  <span class="fu">},</span>
+  <span class="dt">&quot;geo&quot;</span><span class="fu">:</span><span class="kw">null</span><span class="fu">,</span>
+  <span class="dt">&quot;coordinates&quot;</span><span class="fu">:</span><span class="kw">null</span><span class="fu">,</span>
+  <span class="dt">&quot;entities&quot;</span><span class="fu">:{</span>
+    <span class="dt">&quot;hashtags&quot;</span><span class="fu">:</span><span class="ot">[]</span><span class="fu">,</span><span class="dt">&quot;symbols&quot;</span><span class="fu">:</span><span class="ot">[]</span><span class="fu">,</span><span class="dt">&quot;urls&quot;</span><span class="fu">:</span><span class="ot">[]</span><span class="fu">,</span><span class="dt">&quot;user_mentions&quot;</span><span class="fu">:</span><span class="ot">[]</span>
+  <span class="fu">},</span><span class="dt">&quot;favorited&quot;</span><span class="fu">:</span><span class="kw">false</span><span class="fu">,</span><span class="dt">&quot;retweeted&quot;</span><span class="fu">:</span><span class="kw">false</span><span class="fu">,</span><span class="dt">&quot;filter_level&quot;</span><span class="fu">:</span><span class="st">&quot;medium&quot;</span><span class="fu">,</span><span class="dt">&quot;lang&quot;</span><span class="fu">:</span><span class="st">&quot;ru&quot;</span><span class="fu">}</span></code></pre></div>
 
 </div>
-<p>This will open a tab in the File editor in which we can write expressions:</p>
-<div class="figure">
-<img src="img/rstudio_file.png" />
-
-</div>
-<p>We can then evaluate the expressions in the file one at a time, or all at the same time.</p>
-<p>We can then save these expressions in a script. In the Rstudio menu select <code>File&gt;Save</code> and save as a text file. The convention is to use the <code>.R</code> or <code>.r</code> file extension, e.g., <code>swiss_plot.r</code>.</p>
-<p><strong>On your own:</strong> Add expressions for additional plots to the script and save again. Run the new expressions.</p>
-</div>
-<div id="files-viewer" class="section level3">
-<h3><span class="header-section-number">4.4.6</span> Files viewer</h3>
-<p>Rstudio includes a Files viewer that you can use to find and load files. You can find the Files near the Plots viewer</p>
-<div class="figure">
-<img src="img/rstudio_files.png" />
-
-</div>
-</div>
-</div>
-<div id="r-packages" class="section level2">
-<h2><span class="header-section-number">4.5</span> R packages</h2>
-<p>Another of R’s advantages for data analysis is that it has attracted a large number of extremely useful additions provided by users worldwide. These are housed in <a href="https://cran.r-project.org/web/packages/index.html">CRAN</a>.</p>
-<p>In this course we will make a lot of use of a set of packages bundled together into the <code>tidyverse</code> by Hadley Wickham and others. These packages make preparing, modeling and visualizing certain kinds data (which covers the vast majority of use cases) quite fun and pleasent. There is a webpage for the general tidyverse project: <a href="http://tidyverse.org" class="uri">http://tidyverse.org</a>, which includes pages for each of the packages included there.</p>
-<p>Let’s install the <code>tidyverse</code> into your R environment. There are two ways of installing packages. In the console, you can use the expression:</p>
-<p>In Rstudio, you can use the <em>Packages</em> tab:</p>
-<div class="figure">
-<img src="img/rstudio_install_packages.png" />
-
-</div>
-<p><strong>On your own:</strong> Install the following additional packages which we will use later on: <code>rvest</code>, <code>stringr</code>, <code>nycflights13</code> and <code>broom</code>.</p>
-</div>
-<div id="additional-r-resources" class="section level2">
-<h2><span class="header-section-number">4.6</span> Additional R resources</h2>
-<p>Resources for learning and reading about R are listed in our <a href="http://www.hcbravo.org/IntroDataScience/resources/">here</a>. Of note are the <a href="http://swirlstats.com/">swirl project</a> and DataCamp’s [introduction to R] course.</p>
-</div>
-<div id="literate-programming" class="section level2">
-<h2><span class="header-section-number">4.7</span> Literate Programming</h2>
-<p>One last note before we get started. R has great support for <a href="http://en.wikipedia.org/wiki/Literate_programming">literate programming</a>, where source code that contains both code, the result of evaluating that code, and text explaining that code co-exist in a single document. This is extremely valuable in data analysis, as many choices made by data analysts are worth explaning in text, and interpretation of the results of analyses can co-exist with the computations used in that analysis. This document you are reading contains both text and code. In class, we will use <a href="http://rmarkdown.rstudio.com/">Rmarkdown</a> for this purpose.</p>
-</div>
-<div id="finishing-your-setup" class="section level2">
-<h2><span class="header-section-number">4.8</span> Finishing your setup</h2>
-<p>Complete your exit ticket as instructed.</p>
-
 </div>
 </div>
             </section>
@@ -394,8 +394,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="an-illustrative-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="measurements-and-data-types.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="sql-system-constructs.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
