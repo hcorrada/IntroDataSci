@@ -75,5 +75,8 @@ Write a SQL query to answer each of the following questions:
 
 7) (BONUS from [MDSR book](https://mdsr-book.github.io/)): Identify players (by first and last name) that have attained through their career either a) 500 or more HRs or b) 3000 or more hits (H) _and_ have not been inducted to the Hall of Fame (see `HallOfFame` table).
 
+## Submitting
+
+Enter your answers in the shell Rmarkdown file linked above. Knit to PDF and submit to ELMS.
 
 
