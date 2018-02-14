@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-13">
+<meta name="date" content="2018-02-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -215,10 +215,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.2" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#subqueries"><i class="fa fa-check"></i><b>12.2</b> Subqueries</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="two-table-operations.html"><a href="two-table-operations.html"><i class="fa fa-check"></i><b>13</b> Two-table operations</a><ul>
-<li class="chapter" data-level="13.0.1" data-path="two-table-operations.html"><a href="two-table-operations.html#left-join"><i class="fa fa-check"></i><b>13.0.1</b> Left Join</a></li>
-<li class="chapter" data-level="13.0.2" data-path="two-table-operations.html"><a href="two-table-operations.html#join-conditions"><i class="fa fa-check"></i><b>13.0.2</b> Join conditions</a></li>
-<li class="chapter" data-level="13.0.3" data-path="two-table-operations.html"><a href="two-table-operations.html#filtering-joins"><i class="fa fa-check"></i><b>13.0.3</b> Filtering Joins</a></li>
-<li class="chapter" data-level="13.0.4" data-path="two-table-operations.html"><a href="two-table-operations.html#sql-constructs-multi-table-queries"><i class="fa fa-check"></i><b>13.0.4</b> SQL Constructs: Multi-table Queries</a></li>
+<li class="chapter" data-level="13.1" data-path="two-table-operations.html"><a href="two-table-operations.html#left-join"><i class="fa fa-check"></i><b>13.1</b> Left Join</a></li>
+<li class="chapter" data-level="13.2" data-path="two-table-operations.html"><a href="two-table-operations.html#right-join"><i class="fa fa-check"></i><b>13.2</b> Right Join</a></li>
+<li class="chapter" data-level="13.3" data-path="two-table-operations.html"><a href="two-table-operations.html#inner-join"><i class="fa fa-check"></i><b>13.3</b> Inner Join</a></li>
+<li class="chapter" data-level="13.4" data-path="two-table-operations.html"><a href="two-table-operations.html#full-join"><i class="fa fa-check"></i><b>13.4</b> Full Join</a></li>
+<li class="chapter" data-level="13.5" data-path="two-table-operations.html"><a href="two-table-operations.html#join-conditions"><i class="fa fa-check"></i><b>13.5</b> Join conditions</a></li>
+<li class="chapter" data-level="13.6" data-path="two-table-operations.html"><a href="two-table-operations.html#filtering-joins"><i class="fa fa-check"></i><b>13.6</b> Filtering Joins</a></li>
+<li class="chapter" data-level="13.7" data-path="two-table-operations.html"><a href="two-table-operations.html#sql-constructs-multi-table-queries"><i class="fa fa-check"></i><b>13.7</b> SQL Constructs: Multi-table Queries</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html"><i class="fa fa-check"></i><b>14</b> SQL System Constructs</a><ul>
 <li class="chapter" data-level="14.1" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#sql-as-a-data-definition-language"><i class="fa fa-check"></i><b>14.1</b> SQL as a Data Definition Language</a></li>
@@ -510,34 +513,34 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## # A tibble: 10 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation   
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
-##  1       NA    23 B     F     03/10/2011 11:46      &lt;NA&gt;             
-##  2 11141037    50 B     M     01/28/2011 10:30      &lt;NA&gt;             
-##  3 11310266    49 W     F     08/31/2011 13:15      200 N Conkling St
-##  4 11363449    46 B     M     11/07/2011 12:10      100 E Calvert St 
-##  5 12598006    21 B     M     12/05/2012 09:00      900 Bennett Pl   
-##  6 12496416    18 B     M     06/14/2012 13:40      &lt;NA&gt;             
-##  7 11217176    36 B     M     05/13/2011 07:30      &lt;NA&gt;             
-##  8 12508012    19 B     M     07/05/2012 07:15      &lt;NA&gt;             
-##  9 11269074    19 B     F     07/14/2011 07:09      &lt;NA&gt;             
-## 10       NA    27 W     M     06/29/2011 09:30      &lt;NA&gt;             
+##  1 11372459    32 W     M     11/19/2011 17:00      4000 Eastern Ave 
+##  2 11276769    24 B     M     07/21/2011 12:00      1700 Homestead St
+##  3 11359722    22 B     M     11/01/2011 23:30      &lt;NA&gt;             
+##  4 11252936    30 U     M     06/25/2011 15:38      7000 Hamlet Ave  
+##  5 12508395    23 B     M     07/05/2012 15:30      2200 Annapolis Rd
+##  6 12436829    28 W     M     03/08/2012 15:00      300 S Charles St 
+##  7 11211549    19 B     M     05/05/2011 19:00      2600 Llewelyn Ave
+##  8 11155308    21 B     F     02/18/2011 14:00      &lt;NA&gt;             
+##  9 12544660    20 B     M     09/02/2012 19:00      &lt;NA&gt;             
+## 10 11176462    20 B     F     03/22/2011 02:00      200 S Athol Ave  
 ## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>The <code>sample_frac</code> function selects a fraction of entitites at random:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_frac</span>(arrest_tab, .<span class="dv">1</span>)</code></pre></div>
 <pre><code>## # A tibble: 10,453 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation    
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;             
-##  1 12517449    19 B     M     07/21/2012 12:30      800 Glade Court St
-##  2 12400008    36 W     F     01/09/2012 08:28      &lt;NA&gt;              
-##  3 11292027    48 W     F     08/09/2011 20:00      &lt;NA&gt;              
-##  4 11207070    41 B     M     04/30/2011 17:00      &lt;NA&gt;              
-##  5 11341238    64 B     M     10/06/2011 16:30      0 W Oliver St     
-##  6 11333683    20 B     M     09/28/2011 11:00      300 S Payson St   
-##  7 12397768    38 B     M     01/04/2012 21:00      &lt;NA&gt;              
-##  8 12547170    20 B     M     09/06/2012 14:30      &lt;NA&gt;              
-##  9 11347666    47 B     F     10/17/2011 08:40      &lt;NA&gt;              
-## 10 12560631    22 B     M     09/27/2012 17:15      1500 Clifton Ave  
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation       
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                
+##  1 11141777    30 B     M     01/29/2011 03:55      700 Baker St         
+##  2 12472872    39 B     M     05/05/2012 08:47      3400 E Lombard St    
+##  3       NA    58 B     M     01/24/2011 17:00      &lt;NA&gt;                 
+##  4 12463902    46 W     M     04/22/2012 12:45      &lt;NA&gt;                 
+##  5 12585794    29 W     F     11/11/2012 02:20      1000 N Charles St    
+##  6 12589621    21 B     F     11/18/2012 20:20      &lt;NA&gt;                 
+##  7 11246844    38 B     M     06/19/2011 13:30      2500 Ashton St       
+##  8 12553619    21 B     M     09/17/2012 16:15      1700 Gywnn Falls Pkwy
+##  9 11360759    74 W     M     11/03/2011 05:30      &lt;NA&gt;                 
+## 10 11264313    18 B     M     07/08/2011 18:05      2000 W North Ave     
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -552,16 +555,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## # A tibble: 10,453 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
-##  1 11295891    37 U     M     08/13/2011 18:00      &lt;NA&gt;                
-##  2       NA    35 B     M     05/17/2012 12:50      &lt;NA&gt;                
-##  3 11380202    21 B     M     12/03/2011 13:00      2500 Biddle St      
-##  4 12537210    43 B     M     08/22/2012 00:15      400 Baltimore St    
-##  5 12507119    27 B     M     07/03/2012 08:33      &lt;NA&gt;                
-##  6 12439487    24 B     M     03/13/2012 10:00      3100 Woodland St    
-##  7 11312074    29 W     M     09/01/2011 23:55      200 S Broadway St   
-##  8 11344252    53 B     M     10/11/2011 18:30      2100 W Lexington Ave
-##  9 11317515    33 B     F     09/09/2011 12:30      100 N Ellwood St    
-## 10 11188451    38 B     M     04/07/2011 00:25      200 S Herring Ct    
+##  1       NA    27 B     M     11/16/2011 11:01      &lt;NA&gt;                
+##  2 11285673    58 B     M     08/02/2011 10:28      900 Pennsylvania Ave
+##  3 12521778    32 B     M     07/27/2012 22:00      200 N Eutaw St      
+##  4 11228135    18 B     M     05/27/2011 04:00      4500 Marble Hall Rd 
+##  5 12538851    43 B     F     08/24/2012 07:25      3900 Garrison Blvd  
+##  6 11359960    59 B     M     11/02/2011 09:15      2800 Ridgewood Ave  
+##  7 11364507    23 B     M     11/08/2011 18:00      5300 Frankford Ave  
+##  8 12559192    23 B     M     09/25/2012 19:00      1500 N Smallwood Ave
+##  9 12459149    42 B     M     04/14/2012 09:12      &lt;NA&gt;                
+## 10 11301838    54 B     F     08/20/2011 11:30      1500 Myrtle Ave     
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -581,16 +584,16 @@ analysis_tab</code></pre></div>
 <pre><code>## # A tibble: 17,885 x 3
 ##    sex   district     arrest_date
 ##    &lt;fct&gt; &lt;chr&gt;        &lt;chr&gt;      
-##  1 M     NORTHEASTERN 09/07/2012 
-##  2 M     NORTHERN     06/14/2011 
-##  3 M     NORTHEASTERN 06/18/2011 
-##  4 M     &lt;NA&gt;         03/30/2011 
-##  5 M     CENTRAL      11/12/2012 
-##  6 M     &lt;NA&gt;         06/14/2011 
-##  7 M     SOUTHWESTERN 09/22/2012 
-##  8 M     &lt;NA&gt;         09/11/2012 
-##  9 M     CENTRAL      03/01/2012 
-## 10 M     NORTHEASTERN 12/13/2012 
+##  1 M     SOUTHERN     09/22/2011 
+##  2 F     NORTHEASTERN 02/17/2012 
+##  3 M     &lt;NA&gt;         02/29/2012 
+##  4 M     SOUTHERN     02/08/2012 
+##  5 M     WESTERN      07/17/2012 
+##  6 F     &lt;NA&gt;         03/11/2011 
+##  7 M     &lt;NA&gt;         04/10/2011 
+##  8 M     &lt;NA&gt;         01/19/2012 
+##  9 M     WESTERN      01/26/2011 
+## 10 F     EASTERN      03/17/2012 
 ## # ... with 17,875 more rows</code></pre>
 
 </div>

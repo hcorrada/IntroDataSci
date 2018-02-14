@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-13">
+<meta name="date" content="2018-02-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -215,10 +215,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.2" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#subqueries"><i class="fa fa-check"></i><b>12.2</b> Subqueries</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="two-table-operations.html"><a href="two-table-operations.html"><i class="fa fa-check"></i><b>13</b> Two-table operations</a><ul>
-<li class="chapter" data-level="13.0.1" data-path="two-table-operations.html"><a href="two-table-operations.html#left-join"><i class="fa fa-check"></i><b>13.0.1</b> Left Join</a></li>
-<li class="chapter" data-level="13.0.2" data-path="two-table-operations.html"><a href="two-table-operations.html#join-conditions"><i class="fa fa-check"></i><b>13.0.2</b> Join conditions</a></li>
-<li class="chapter" data-level="13.0.3" data-path="two-table-operations.html"><a href="two-table-operations.html#filtering-joins"><i class="fa fa-check"></i><b>13.0.3</b> Filtering Joins</a></li>
-<li class="chapter" data-level="13.0.4" data-path="two-table-operations.html"><a href="two-table-operations.html#sql-constructs-multi-table-queries"><i class="fa fa-check"></i><b>13.0.4</b> SQL Constructs: Multi-table Queries</a></li>
+<li class="chapter" data-level="13.1" data-path="two-table-operations.html"><a href="two-table-operations.html#left-join"><i class="fa fa-check"></i><b>13.1</b> Left Join</a></li>
+<li class="chapter" data-level="13.2" data-path="two-table-operations.html"><a href="two-table-operations.html#right-join"><i class="fa fa-check"></i><b>13.2</b> Right Join</a></li>
+<li class="chapter" data-level="13.3" data-path="two-table-operations.html"><a href="two-table-operations.html#inner-join"><i class="fa fa-check"></i><b>13.3</b> Inner Join</a></li>
+<li class="chapter" data-level="13.4" data-path="two-table-operations.html"><a href="two-table-operations.html#full-join"><i class="fa fa-check"></i><b>13.4</b> Full Join</a></li>
+<li class="chapter" data-level="13.5" data-path="two-table-operations.html"><a href="two-table-operations.html#join-conditions"><i class="fa fa-check"></i><b>13.5</b> Join conditions</a></li>
+<li class="chapter" data-level="13.6" data-path="two-table-operations.html"><a href="two-table-operations.html#filtering-joins"><i class="fa fa-check"></i><b>13.6</b> Filtering Joins</a></li>
+<li class="chapter" data-level="13.7" data-path="two-table-operations.html"><a href="two-table-operations.html#sql-constructs-multi-table-queries"><i class="fa fa-check"></i><b>13.7</b> SQL Constructs: Multi-table Queries</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html"><i class="fa fa-check"></i><b>14</b> SQL System Constructs</a><ul>
 <li class="chapter" data-level="14.1" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#sql-as-a-data-definition-language"><i class="fa fa-check"></i><b>14.1</b> SQL as a Data Definition Language</a></li>
@@ -295,8 +298,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 15 WN      Southwest Airlines Co.     
 ## 16 YV      Mesa Airlines Inc.</code></pre>
 <p>Here, we want to add airline information to each flight. We can do so by joining the attributes of the respective airline from the <code>airlines</code> table with the <code>flights</code> table based on the values of attributes <code>flights$carrier</code> and <code>airlines$carrier</code>. Specifically, every row of <code>flights</code> with a specific value for <code>flights$carrier</code>, is joined with the the corresponding row in <code>airlines</code> with the same value for <code>airlines$carrier</code>. We will see four different ways of performing this operation that differ on how non-matching observations are handled.</p>
-<div id="left-join" class="section level3">
-<h3><span class="header-section-number">13.0.1</span> Left Join</h3>
+<div id="left-join" class="section level2">
+<h2><span class="header-section-number">13.1</span> Left Join</h2>
 <p>In a <code>left join</code>, all observations on left operand (LHS) are retained:</p>
 <div class="figure">
 <img src="img/join_lhs.png" />
@@ -326,8 +329,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
 <p>RHS variables for LHS observations with no matching RHS observations are coded as <code>NA</code>.</p>
-<div id="right-join" class="section level4">
-<h4><span class="header-section-number">13.0.1.1</span> Right Join</h4>
+</div>
+<div id="right-join" class="section level2">
+<h2><span class="header-section-number">13.2</span> Right Join</h2>
 <p>All observations on right operand (RHS) are retained:</p>
 <div class="figure">
 <img src="img/join_lhs.png" />
@@ -358,8 +362,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
 <p>LHS variables for RHS observations with no matching LHS observations are coded as <code>NA</code>.</p>
 </div>
-<div id="inner-join" class="section level4">
-<h4><span class="header-section-number">13.0.1.2</span> Inner Join</h4>
+<div id="inner-join" class="section level2">
+<h2><span class="header-section-number">13.3</span> Inner Join</h2>
 <p>Only observations matching on both tables are retained</p>
 <p><img src="img/join_lhs.png" /> <img src="img/inner_join.png" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
@@ -382,8 +386,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
 </div>
-<div id="full-join" class="section level4">
-<h4><span class="header-section-number">13.0.1.3</span> Full Join</h4>
+<div id="full-join" class="section level2">
+<h2><span class="header-section-number">13.4</span> Full Join</h2>
 <p>All observations are retained, regardless of matching condition</p>
 <p><img src="img/join_lhs.png" /> <img src="img/full_join.png" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
@@ -407,9 +411,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
 <p>All values coded as <code>NA</code> for non-matching observations as appropriate.</p>
 </div>
-</div>
-<div id="join-conditions" class="section level3">
-<h3><span class="header-section-number">13.0.2</span> Join conditions</h3>
+<div id="join-conditions" class="section level2">
+<h2><span class="header-section-number">13.5</span> Join conditions</h2>
 <p>All join operations are based on a matching condition:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre></div>
@@ -422,8 +425,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;carrier&quot;</span> =<span class="st"> &quot;name&quot;</span>))</code></pre></div>
 </div>
-<div id="filtering-joins" class="section level3">
-<h3><span class="header-section-number">13.0.3</span> Filtering Joins</h3>
+<div id="filtering-joins" class="section level2">
+<h2><span class="header-section-number">13.6</span> Filtering Joins</h2>
 <p>We’ve just seen <em>mutating joins</em> that create new tables. <em>Filtering joins</em> use join conditions to filter a specific table.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anti_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre></div>
 <pre><code>## # A tibble: 0 x 19
@@ -434,8 +437,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <p>Filters the <code>flights</code> table to only include flights from airlines that <em>are not</em> included in the <code>airlines</code> table.</p>
 </div>
-<div id="sql-constructs-multi-table-queries" class="section level3">
-<h3><span class="header-section-number">13.0.4</span> SQL Constructs: Multi-table Queries</h3>
+<div id="sql-constructs-multi-table-queries" class="section level2">
+<h2><span class="header-section-number">13.7</span> SQL Constructs: Multi-table Queries</h2>
 <p>Key idea: - Do a join to get an appropriate table - Use the constructs for single-table queries</p>
 <p>You will get used to doing all at once.</p>
 <p>For the first part, where we use a join to get an appropriate table, the general SQL construct includes: - The name of the first table to join - The <em>type</em> of join to do - The name of the second table to join - The join condition(s)</p>
