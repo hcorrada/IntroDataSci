@@ -16,6 +16,7 @@ from Batting as b join Master as m on b.playerId = m.playerId
 where b.AB >= 100 and m.birthState = "CA"
 ```
 
+
 Now, let's do the same computation using `dplyr` operations:
 
 ```{r}

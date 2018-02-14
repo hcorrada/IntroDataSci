@@ -29,7 +29,7 @@ airlines
 Here, we want to add airline information to each flight. We can do so by joining the attributes of the respective airline from the `airlines` table with the `flights` table based on the values of attributes `flights$carrier` and `airlines$carrier`. 
 Specifically, every row of `flights` with a specific value for `flights$carrier`, is joined with the the corresponding row in `airlines` with the same value for `airlines$carrier`. We will see four different ways of performing this operation that differ on how non-matching observations are handled.
 
-### Left Join 
+## Left Join 
 
 In a `left join`, all observations on left operand (LHS) are retained:
 
@@ -44,7 +44,7 @@ flights %>%
 
 RHS variables for LHS observations with no matching RHS observations are coded as `NA`.
 
-####  Right Join
+##  Right Join
 
 All observations on right operand (RHS) are retained:
 
@@ -59,7 +59,7 @@ flights %>%
 
 LHS variables for RHS observations with no matching LHS observations are coded as `NA`.
 
-#### Inner Join
+## Inner Join
 
 Only observations matching on both tables are retained
 
@@ -73,7 +73,7 @@ flights %>%
 
 
 
-#### Full Join 
+## Full Join 
 
 All observations are retained, regardless of matching condition
 
@@ -87,7 +87,7 @@ flights %>%
 
 All values coded as `NA` for non-matching observations as appropriate.
 
-### Join conditions
+## Join conditions
 
 All join operations are based on a matching condition:
 
@@ -116,7 +116,7 @@ flights %>%
 ```
 
 
-### Filtering Joins
+## Filtering Joins
 
 We've just seen *mutating joins* that create new tables. *Filtering joins* use join conditions to filter a specific table.
 
@@ -127,7 +127,7 @@ flights %>% anti_join(airlines, by="carrier")
 Filters the `flights` table to only include flights from airlines that
 *are not* included in the `airlines` table.
 
-### SQL Constructs: Multi-table Queries
+## SQL Constructs: Multi-table Queries
 
 Key idea: 
     - Do a join to get an appropriate table
