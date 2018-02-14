@@ -80,6 +80,13 @@ GROUP BY b.teamId, b.yearId
 ORDER BY AVE_BP DESC
 ```
 
+```{r, eval=FALSE}
+Batting %>%
+  filter(AB > 0, ...) %>%
+  group_by(teamId, yearId) %>%
+  summarize(ave_bp = mean(1.0 * H / AB))
+```
+
 ### Subqueries
 
 Sometimes it's easier to nest queries like the one above into query and subquery
@@ -94,6 +101,26 @@ FROM (SELECT b.teamId, b.yearId, 1.0 * b.H / b.AB AS BP
 GROUP BY teamID, yearID
 ORDER BY AVG_BP DESC;
 ```
+
+## Joins
+
+List all players from California, playing in 2015
+
+```{r}
+library(Lahman)
+library(tidyverse)
+
+Batting %>%
+  inner_join(Master, by="playerID") %>%
+  filter(yearID == "2015", birthState == "CA")
+```
+
+```{sql, connection=db}
+select b.playerId, b.teamId, m.birthState
+from Batting as b join master as m on b.playerId == m.playerId
+where yearId = "2015" and m.birthState = "CA"
+```
+
 
 
 Finally, we close the connection to the database:
