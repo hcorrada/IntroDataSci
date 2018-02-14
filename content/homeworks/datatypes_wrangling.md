@@ -1,5 +1,6 @@
 ---
-title: "Homework: Datatypes and Wrangling"
+title: "Homework 1: Datatypes and Wrangling"
+date: "2018-02-08"
 ---
 
 
