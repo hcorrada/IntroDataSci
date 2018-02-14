@@ -86,16 +86,6 @@ link = "classroom-notes/cmsc320_class-notes_20180208.pdf"
 title = "Datatypes and wrangling"
 link = "homeworks/datatypes_wrangling/"
 
-# [day08a]
-# date = "9/23"
-
-# [[day08a.covers]]
-# title = "NOT A LECTURE DAY"
-
-# [[day08a.workdue]]
-# title = "Data wrangling"
-# link = "https://myelms.umd.edu/courses/1199381/assignments/4270819"
-
 [day06]
 date = "2/13"
 
@@ -107,10 +97,12 @@ notes = "bookdown-notes/two-table-operations.html"
 title = "More SQL: data defintion, consistency and other constructs"
 notes = "bookdown-notes/sql-system-constructs.html"
 
-
 [[day06.covers]]
 title = "DB parting shots: query optimization and the JSON data model"
 notes = "bookdown-notes/db-parting-shots.html"
+
+[day06.class_notes]
+link = "classroom-notes/cmsc320_class-notes_20180213.pdf"
 
 [day07]
 date = "2/15"
