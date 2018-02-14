@@ -83,7 +83,7 @@ notes = "classroom-notes/sql_baseball.html"
 link = "classroom-notes/cmsc320_class-notes_20180208.pdf"
 
 [[day05.workdue]]
-title = "Datatypes and wrangling"
+title = "HW1: Datatypes and wrangling"
 link = "homeworks/datatypes_wrangling/"
 
 [day06]
@@ -121,6 +121,10 @@ title = "Common operations for data tidying"
 
 [[day08.covers]]
 title = "Entity Resolution and Record Linkage"
+
+[[day08.workdur]]
+title = "HW2: ER Model and SQL"
+link = "homeworks/er_sql/"
 
 [day09]
 date = "2/22"
