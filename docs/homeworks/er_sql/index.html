@@ -9,18 +9,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>Homeworks - CMSC320 Introduction to Data Science</title>
+    <title>Homework 2: ER Model and SQL - CMSC320 Introduction to Data Science</title>
     <meta name="generator" content="Hugo 0.24" />
 
     
     <meta name="description" content="Data Science course at the University of Maryland Department of Computer Science">
     
-    <link rel="canonical" href="http://www.hcbravo.org/IntroDataSci/homeworks/">
+    <link rel="canonical" href="http://www.hcbravo.org/IntroDataSci/homeworks/er_sql/">
     
     <meta name="author" content="Héctor Corrada Bravo">
     
 
-    <meta property="og:url" content="http://www.hcbravo.org/IntroDataSci/homeworks/">
+    <meta property="og:url" content="http://www.hcbravo.org/IntroDataSci/homeworks/er_sql/">
     <meta property="og:title" content="CMSC320 Introduction to Data Science">
     <meta property="og:image" content="http://www.hcbravo.org/IntroDataSci/images/logo.png">
     <meta name="apple-mobile-web-app-title" content="CMSC320 Introduction to Data Science">
@@ -69,12 +69,14 @@
     <script src="http://www.hcbravo.org/IntroDataSci/javascripts/modernizr.js"></script>
 
     
-    <link href="http://www.hcbravo.org/IntroDataSci/homeworks/index.xml" rel="alternate" type="application/rss+xml" title="CMSC320 Introduction to Data Science" />
-    <link href="http://www.hcbravo.org/IntroDataSci/homeworks/index.xml" rel="feed" type="application/rss+xml" title="CMSC320 Introduction to Data Science" />
-    
 
   </head>
   <body class="palette-primary-deep-orange palette-accent-blue">
+
+
+
+	
+	
 
 
 <div class="backdrop">
@@ -95,7 +97,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        Homeworks
+        Homework 2: ER Model and SQL
       </div>
     </div>
 
@@ -142,6 +144,9 @@
       
       <div class="name">
         <strong>CMSC320 Introduction to Data Science </strong>
+        
+          <br>
+          hcorrada/IntroDataSci.git
         
       </div>
     </div>
@@ -257,14 +262,11 @@
 
 
 
-<a class="current" title="Homeworks" href="http://www.hcbravo.org/IntroDataSci/homeworks/">
+<a  title="Homeworks" href="http://www.hcbravo.org/IntroDataSci/homeworks/">
 	
 	Homeworks
 </a>
 
-
-<ul id="scrollspy">
-</ul>
 
 
   
@@ -328,35 +330,84 @@
 
 	<article class="article">
 		<div class="wrapper">
-			<h1>Pages in Homework</h1>
+			<h1>Homework 2: ER Model and SQL </h1>
 
-			
-			<a href="http://www.hcbravo.org/IntroDataSci/homeworks/er_sql/" title="Homework 2: ER Model and SQL">
-				<h2>Homework 2: ER Model and SQL</h2>
-			</a>
-
-			<br>
-			Practice making an ER diagram and writing SQL queries.</p>
+			<p>Practice making an ER diagram and writing SQL queries.</p>
 
 <p><strong>DUE</strong>: Tuesday Feb. 20, 11:59pm</p>
 
-<p>
+<p></p>
 
-			<hr>
-			
-			<a href="http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/" title="Homework 1: Datatypes and Wrangling">
-				<h2>Homework 1: Datatypes and Wrangling</h2>
-			</a>
+<h2 id="setting-up-the-lahman-baseball-database">Setting up: The Lahman baseball database</h2>
 
-			<br>
-			In this assignment, you will explore and exercise your knowledge of data types, data operations and data plotting.</p>
+<p>You will be using data from a very useful database on baseball teams, players and seasons curated by Sean Lahman available at <a href="http://www.seanlahman.com/baseball-archive/statistics/">http://www.seanlahman.com/baseball-archive/statistics/</a>. The database has been made available as a <code>sqlite</code> database <a href="https://github.com/jknecht/baseball-archive-sqlite">https://github.com/jknecht/baseball-archive-sqlite</a>. <code>sqlite</code> is a light-weight, file-based database management system that is well suited for small projects and prototypes.</p>
 
-<p><strong>DUE</strong>: Thursday Feb. 8, 11:59pm</p>
+<p>You can read more about the dataset here: <a href="http://seanlahman.com/files/database/readme2016.txt">http://seanlahman.com/files/database/readme2016.txt</a></p>
 
-<p>
+<h3 id="download-database">Download Database</h3>
 
-			<hr>
-			
+<p>Create a directory for this homework and download the sqlite file into it.
+Download the file here:</p>
+
+<p><a href="https://github.com/jknecht/baseball-archive-sqlite/raw/master/lahman2016.sqlite">https://github.com/jknecht/baseball-archive-sqlite/raw/master/lahman2016.sqlite</a></p>
+
+<h3 id="setup-r">Setup R</h3>
+
+<p>Make sure the <code>RSQLite</code> package is installed, if not install it.</p>
+
+<p>Check you can connect to the database from R by evaluating the following code:</p>
+
+<pre><code class="language-r">db &lt;- DBI::dbConnect(RSQLite::SQLite(), &quot;lahman2016.sqlite&quot;)
+DBI::dbListTables(db)
+DBI::dbDisconnect(db)
+</code></pre>
+
+<p>You should see the list of tables in the Lahman database. Note that this assumes the working directory in the R console contains the SQLite file. Otherwise, you need to provide the full path to the file.</p>
+
+<h3 id="download-shell-file">Download shell file</h3>
+
+<p>Download the Rmarkdown shell file here: <a href="http://www.hcbravo.org/IntroDataSci/misc/hw2_er-sql.Rmd">HW2 Rmarkdown shell</a> and fill in with your answers.</p>
+
+<h3 id="optional-sqlite-command-line-interface">(Optional) SQLite Command Line Interface</h3>
+
+<p>You may find working with the SQLite command line interface useful as well. You can download here:
+<a href="https://sqlite.org/download.html">https://sqlite.org/download.html</a></p>
+
+<h2 id="er-diagram">ER Diagram</h2>
+
+<p>Consider the following subset of tables from the Lahman dataset:</p>
+
+<ul>
+<li><em>Franchises</em>: these are the corporate team entities. Attributes: <code>franchID</code>, <code>franchName</code>, <code>active</code>.</li>
+<li><em>Teams</em>: specific teams fielded by a franchise in a given season. Attributes: <code>yearID</code>, <code>teamID</code>, <code>lgID</code>, <code>franchID</code>, <code>G</code>, <code>W</code>, <code>L</code>.</li>
+<li><em>Master</em>: overall information about the people who play the game. Attributes: <code>playerID</code>, <code>birthYear</code>, <code>birthMonth</code>, <code>birthDay</code>, <code>birthCountry</code>, <code>birthState</code>, <code>birthCity</code>, <code>nameFirst</code>, <code>nameLast</code>, <code>nameGiven</code>, <code>weight</code>, <code>height</code>.</li>
+<li><em>Batting</em>: statistics of player performance on offense. Attributes: <code>playerID</code>, <code>yearID</code>, <code>teamID</code>, <code>lgID</code>, <code>G</code>,<code>AB</code>, <code>H</code>, <code>2B</code>, <code>3B</code>, <code>HR</code>.</li>
+<li><em>Salaries</em>: salary paid by team to player. Attributes: <code>yearID</code>, <code>teamID</code>, <code>lgID</code>, <code>playerID</code>, <code>salary</code>.</li>
+</ul>
+
+<p>Draw an ER diagram describing this Schema. Indicate primary keys as appropriate.</p>
+
+<h2 id="sql-exercise">SQL Exercise</h2>
+
+<p>Write a SQL query to answer each of the following questions:</p>
+
+<p>1) How many franchises are listed in the database (see <a href="https://sqlite.org/lang_aggfunc.html#count"><code>count</code></a>)?</p>
+
+<p>2) How many franchises are currently active?</p>
+
+<p>3) Which teams won more than 100 games between 2000 and 2015? Order result by descending number of wins. (Attribute <code>W</code> of the Teams table contains the number of wins)</p>
+
+<p>4) What is the franchise name of the team with the most total wins in the database?</p>
+
+<p>5) What is the franchise name of the team with the highest winning percentage in a season in the database? (Win percentage is <code>W/G</code>)</p>
+
+<p>6) What is the franchise name of the team with the highest single-year payroll between 2000 and 2015?</p>
+
+<p>7) (BONUS from <a href="https://mdsr-book.github.io/">MDSR book</a>): Identify players (by first and last name) that have attained through their career either a) 500 or more HRs or b) 3000 or more hits (H) <em>and</em> have not been inducted to the Hall of Fame (see <code>HallOfFame</code> table).</p>
+
+<h2 id="submitting">Submitting</h2>
+
+<p>Enter your answers in the shell Rmarkdown file linked above. Knit to PDF and submit to ELMS.</p>
 
 			<aside class="copyright" role="note">
 				
@@ -367,6 +418,41 @@
 				using the
 				<a href="http://github.com/digitalcraftsman/hugo-material-docs" target="_blank">Material</a> theme.
 			</aside>
+
+			<footer class="footer">
+				
+
+<nav class="pagination" aria-label="Footer">
+  <div class="previous">
+  
+  </div>
+
+  <div class="next">
+  
+      <a href="http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/" title="Homework 1: Datatypes and Wrangling">
+        <span class="direction">
+          Next
+        </span>
+        <div class="page">
+          <div class="stretch">
+            <div class="title">
+              Homework 1: Datatypes and Wrangling
+            </div>
+          </div>
+          <div class="button button-next" role="button" aria-label="Next">
+            <i class="icon icon-forward"></i>
+          </div>
+        </div>
+      </a>
+  
+  </div>
+</nav>
+
+
+
+
+
+			</footer>
 		</div>
 	</article>
 
@@ -382,8 +468,8 @@
 
     <script>
     
-      var base_url = '';
-      var repo_id  = '';
+      var base_url = 'http:\/\/www.hcbravo.org\/IntroDataSci\/';
+      var repo_id  = 'hcorrada\/IntroDataSci.git';
     
     </script>
 

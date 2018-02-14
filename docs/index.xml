@@ -7,10 +7,36 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Released under the MIT license</copyright>
-    <lastBuildDate>Tue, 22 Nov 2016 13:04:21 -0500</lastBuildDate>
+    <lastBuildDate>Tue, 20 Feb 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://www.hcbravo.org/IntroDataSci/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Homework 2: ER Model and SQL</title>
+      <link>http://www.hcbravo.org/IntroDataSci/homeworks/er_sql/</link>
+      <pubDate>Tue, 20 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/homeworks/er_sql/</guid>
+      <description>&lt;p&gt;Practice making an ER diagram and writing SQL queries.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;DUE&lt;/strong&gt;: Tuesday Feb. 20, 11:59pm&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Homework 1: Datatypes and Wrangling</title>
+      <link>http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/</link>
+      <pubDate>Thu, 08 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/</guid>
+      <description>&lt;p&gt;In this assignment, you will explore and exercise your knowledge of data types, data operations and data plotting.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;DUE&lt;/strong&gt;: Thursday Feb. 8, 11:59pm&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Project 3: Classification and Regression</title>
@@ -155,19 +181,6 @@ Grades and assignments posted in ELMS.</description>
       
       <guid>http://www.hcbravo.org/IntroDataSci/datasci_corner/</guid>
       <description>Lecturely droplets of Data Science interesting stuff&amp;hellip;</description>
-    </item>
-    
-    <item>
-      <title>Homework: Datatypes and Wrangling</title>
-      <link>http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/</guid>
-      <description>&lt;p&gt;In this assignment, you will explore and exercise your knowledge of data types, data operations and data plotting.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;DUE&lt;/strong&gt;: Thursday Feb. 8, 11:59pm&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>
