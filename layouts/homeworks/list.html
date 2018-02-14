@@ -21,7 +21,7 @@
 		<div class="wrapper">
 			<h1>Pages in {{ .Title | singularize }}</h1>
 
-			{{ range .Data.Pages }}
+			{{ range .Data.Pages.ByDate.Reverse }}
 			<a href="{{ .Permalink }}" title="{{ .Title }}">
 				<h2>{{ .Title }}</h2>
 			</a>

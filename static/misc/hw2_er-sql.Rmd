@@ -1,0 +1,67 @@
+---
+title: "HW2: ER Diagram and SQL"
+author: "Hector Corrada Bravo"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+  html_notebook:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+## ER Diagram
+
+_DELETE THESE INSTRUCTIONS FROM YOUR SUBMISSION: Make a `PNG` or `JPEG` file with your diagram and insert here:_
+
+![](/Users/hcorrada/tmp/er.png)
+
+## SQL
+
+```{r setupdb, include=FALSE}
+# make sure you write the path to your sqlite path here
+db <- DBI::dbConnect(RSQLite::SQLite(), "data/lahman2016.sqlite")
+```
+
+_DELETE THESE INSTRUCTIONS FROM YOUR SUBMISSION: write SQL in each of these chunks, set `eval=TRUE` to evaluate_
+
+1) How many franchises are listed in the database (see [`count`](https://sqlite.org/lang_aggfunc.html#count))?
+
+```{sql q1, connection=db, eval=FALSE}
+```
+
+2) How many franchises are currently active?
+
+```{sql q2, connection=db, eval=FALSE}
+```
+
+3) Which teams won more than 100 games between 2000 and 2015? Order result by descending number of wins. (attribute `W` of the Teams table contains the number of wins)
+
+```{sql q3, connection=db, eval=FALSE}
+```
+
+
+4) What is the franchise name of the team with the most total wins in the database?
+
+```{sql q4, connection=db, eval=FALSE}
+```
+
+5) What is the franchise name of the team with the highest winning percentage in a season in the database? (Win percentage is `W/G`)
+
+```{sql q5, connection=db, eval=FALSE}
+```
+
+6) What is the franchise name of the team with the highest single-year payroll between 2000 and 2015?
+
+```{sql q6, connection=db, eval=FALSE}
+```
+
+7) (BONUS from [MDSR book](https://mdsr-book.github.io/)): Identify players (by first and last name) that have attained through their career either a) 500 or more HRs or b) 3000 or more hits (H) _and_ have not been inducted to the Hall of Fame (see `HallOfFame` table).
+
+```{sql q7, connection=db, eval=FALSE}
+```
+
+```{r disconnectdb, include=FALSE}
+DBI::dbDisconnect(db)
+```
