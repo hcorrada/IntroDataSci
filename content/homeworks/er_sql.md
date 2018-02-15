@@ -49,7 +49,7 @@ https://sqlite.org/download.html
 
 Consider the following subset of tables from the Lahman dataset:
 
-- _Franchises_: these are the corporate team entities. Attributes: `franchID`, `franchName`, `active`. 
+- _TeamFranchises_: these are the corporate team entities. Attributes: `franchID`, `franchName`, `active`. 
 - _Teams_: specific teams fielded by a franchise in a given season. Attributes: `yearID`, `teamID`, `lgID`, `franchID`, `G`, `W`, `L`.
 - _Master_: overall information about the people who play the game. Attributes: `playerID`, `birthYear`, `birthMonth`, `birthDay`, `birthCountry`, `birthState`, `birthCity`, `nameFirst`, `nameLast`, `nameGiven`, `weight`, `height`.
 - _Batting_: statistics of player performance on offense. Attributes: `playerID`, `yearID`, `teamID`, `lgID`, `G`,`AB`, `H`, `2B`, `3B`, `HR`.
