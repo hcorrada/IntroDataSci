@@ -108,13 +108,14 @@ link = "classroom-notes/cmsc320_class-notes_20180213.pdf"
 date = "2/15"
 
 [[day07.covers]]
-title = "Data aquisition: loading and scraping"
-
-[[day07.covers]]
-title = "Data cleaning: handling text and dates"
+title = "Data acquisition: loading and scraping"
+notes = "bookdown-notes/ingesting-data.html"
 
 [day08]
 date = "2/20"
+
+[[day08.covers]]
+title = "Data cleaning: handling text and dates"
 
 [[day08.covers]]
 title = "Common operations for data tidying"
