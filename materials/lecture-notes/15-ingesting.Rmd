@@ -1,0 +1,184 @@
+# Ingesting data
+
+Now that we have a better understanding of data analysis languages with `tidyverse` and `SQL`, we turn to the first significant challenge in data analysis, getting data into R in a shape that we can use to start our analysis. We will look at two types of data ingestion: _structured ingestion_, where we read data that is already structured, like a comma separated value (CSV) file, and _scraping_ where we obtain data from text, usually in websites.
+
+There is an excellent discussion on data import here: http://r4ds.had.co.nz/data-import.html
+
+## Structured ingestion
+
+### CSV files (and similar)
+
+We saw in a previous chapter how we can use the `read_csv` file to read data from a CSV file into a data frame. Comma separated value (CSV) files are structured in a somewhat regular way, so reading into a data frame is straightforward. Each line in the CSV file corresponds to an observation (a row in a data frame). Each line contains values separated by a comma (`,`), corresponding to the variables of each observation. 
+
+This ideal principle of how a CSV file is constructed is frequently violated by data contained in CSV files. To get a sense of how to deal with these cases look at the documentation of the `read_csv` function. For instance:
+
+- the first line of the file may or may not contain the names of variables for the data frame (`col_names` argument). 
+
+- strings are quoted using `'` instead of `"` (`quote` argument)
+
+- missing data is encoded with a non-standard code, e.g., `-` (`na` argument)
+
+- values are separated by a character other than `,` (`read_delim` function)
+
+- file may contain header information before the actual data so we have to skip some lines when loading the data (`skip` argument)
+
+You should read the documentation of the `read_csv` function to appreciate the complexities it can maneuver when reading data from structured text files.
+
+```{r, eval=FALSE}
+?read_csv
+```
+
+When loading a CSV file, we need to determine how to treat values for each attribute in the dataset. When we call `read_csv`, it guesses as to the best way to parse each attribute (e.g., is it a number, is it a factor, is it free text, how is missing data encoded). The `readr` package implements a set of core functions `parse_*` that parses vectors into different data types (e.g., `parse_number`, `parse_datetime`, `parse_factor`). When we call `read_csv` it will print it's data types guesses and any problems it encounters. 
+
+The `problems` function let's you inspect parsing problems. E.g.,
+
+```{r}
+df <- read_csv(readr_example("challenge.csv"))
+problems(df)
+```
+
+The argument `col_types` is used to help the parser handle datatypes correctly.
+
+In class discussion: how to parse `readr_example("challenge.csv")`
+
+Other hints:
+
+  - You can read every attribute as character using `col_types=cols(.default=col_character())`. Combine this with `type_convert` to parse character attributes into other types:
+  
+```{r}
+df <- read_csv(readr_example("challenge.csv"), col_types=cols(.default=col_character())) %>%
+  type_convert(cols(x=col_double(), y=col_date()))
+```
+
+  - If nothing else works, you can read file lines using `read_lines` and then parse lines using string processing operations (which we will see shortly).
+
+### Excel spreadsheets
+
+Often you will need to ingest data that is stored in an Excel spreadsheet. The `readxl` package is used to do this. The main function for this package is the `read_excel` function. It contains similar arguments to the `read_csv` function we saw above. 
+
+## Scraping
+
+Often, data we want to use is hosted as part of HTML files in webpages. The markup structure of HTML allows to parse data into tables we can use for analysis. Let's use the Rotten Tomatoes ratings webpage for Diego Luna as an example:
+
+![](img/rt_diegoluna.png)
+
+We can scrape ratings for his movies from this page. To do this we need to figure out how the HTML page's markup can help us write R expressions to find this data in the page. Most web browsers have facilities to show page markup. In Google Chrome, you can use `View>Developer>Developer Tools`, and inspect the page markdown to find where the data is contained. In this example, we see that the data we want is in a `<table>` element in the page, with id `filmographyTbl`.
+
+![](img/rt_devtools.png)
+
+Now that we have that information, we can use the `rvest` package to scrape this data:
+
+```{r ingest_dl, cache=TRUE}
+library(rvest)
+
+url <- "https://www.rottentomatoes.com/celebrity/diego_luna"
+
+dl_tab <- url %>%
+  read_html() %>%
+  html_node("#filmographyTbl") %>%
+  html_table()
+
+head(dl_tab)
+```
+
+The main two functions we used here are `html_node` and `html_table`. `html_node` finds elements in the HTML page according to some selection criteria. Since we want the element with `id=filmographyTbl` we use the `#` selection operation since that corresponds to selection by id. Once the desired element in the page is selected, we can use the `html_table` function to parse the element's text into a data frame.
+
+The argument to the `html_node` function uses CSS selector syntax: https://www.w3.org/TR/CSS2/selector.html
+
+**On your own:** If you wanted to extract the TV filmography from the page, how would you change this call?
+
+### Scraping from dirty HTML tables
+
+We saw above how to extract data from HTML tables. But what if the data we want to extract is not cleanly formatted as a HTML table, or is spread over multiple html pages?
+
+Let's look at an example where we scrape titles and artists from billboard #1 songs: https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_2017
+
+Let's start by reading the HTML markup and finding the document node that contains the table we want to scrape
+
+```{r read_billboard_2017}
+library(rvest)
+url <- "https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_2017"
+singles_tab_node <- read_html(url) %>%
+  html_node(".plainrowheaders")
+singles_tab_node
+```
+
+Since the rows of the table are not cleanly aligned, we need to extract each attribute separately. Let's start with the dates in the first column. Since we noticed that the nodes containing dates have attribute `scope` we use the attribute CSS selector `[scope]`.
+
+```{r extract_date}
+dates <- singles_tab_node %>% html_nodes("[scope]") %>% html_text()
+dates %>% head()
+```
+
+Next, we extract song titles, first we grab the `tr` (table row) nodes and extract from each the first `td` node using the `td:first-of-type` CSS selector. Notice that this gets us the header row which we remove using the `magrittr::extract` function.
+The title nodes also tell us how many rows this spans, which we grab from the `rowspan` attribute.
+
+```{r extract_titles}
+title_nodes <- singles_tab_node %>% html_nodes("tr") %>% html_node("td:first-of-type") %>% magrittr::extract(-1)
+song_titles <- title_nodes %>% html_text()
+title_spans <- title_nodes %>% html_attr("rowspan")
+cbind(song_titles, title_spans) %>% head(10)
+```
+
+To get artist names we get the second data element (`td`) of each row using the `td:nth-of-type(2)` CSS selector (again removing the first entry in result coming from the header row)
+
+```{r extract_artists}
+artist_nodes <- singles_tab_node %>% html_nodes("tr") %>% html_node("td:nth-of-type(2)") %>% magrittr::extract(-1)
+artists <-  artist_nodes %>% html_text()
+artists %>% head(10)
+```
+
+Now that we've extracted each attribute separately we can combine them into a single data frame
+
+```{r make_df}
+billboard_df <- data_frame(month_day=dates, year="2017", song_title_raw=song_titles, title_span=title_spans,
+                           artist_raw=artists)
+billboard_df
+```
+
+This is by no means a clean data frame yet, but we will discuss how to clean up data like this in later lectures.
+We can now abstract these operations into a function that scrapes the same data for other years.
+
+
+```{r scrape_fun}
+scrape_billboard <- function(year, baseurl="https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_") {
+  url <- paste0(baseurl, year)
+  # find table node
+  singles_tab_node <- read_html(url) %>%
+    html_node(".plainrowheaders") 
+  
+  # extract dates
+  dates <- singles_tab_node %>% html_nodes("[scope]") %>% html_text()
+  
+  # extract titles and spans
+  title_nodes <- singles_tab_node %>% html_nodes("tr") %>% html_node("td:first-of-type") %>% magrittr::extract(-1)
+  song_titles <- title_nodes %>% html_text()
+  title_spans <- title_nodes %>% html_attr("rowspan")
+  
+  # extract artists
+  artist_nodes <- singles_tab_node %>% html_nodes("tr") %>% html_node("td:nth-of-type(2)") %>% magrittr::extract(-1)
+  artists <-  artist_nodes %>% html_text()
+  
+  # make data frame
+  data_frame(month_day=dates, year=year, song_title_raw=song_titles, title_span=title_spans,
+                           artist_raw=artists)
+}
+
+scrape_billboard("2016")
+```
+
+We can do this for a few years and create a (very dirty) dataset with songs for this current decade: 
+
+```{r scrape_decade}
+billboard_tab <- as.character(2010:2017) %>%
+  purrr::map_df(scrape_billboard)
+
+billboard_tab %>%
+  head(20) %>%
+  knitr::kable("html")
+```
+
+The function `purrr::map_df` is an example of a very powerful idiom in functional programming: mapping functions on elements of vectors. Here, we first create a vector of years (as strings) using `as.character(2010:2017)` we pass that to `purrr::map_df` which applies the function we create, `scrape_billboard` on each entry of the year vector. Each of these calls evaluates to a `data_frame` which are then bound (using `bind_rows`) to create a single long data frame. The tidyverse package `purrr` defines a lot of these functional programming idioms.
+
+One more thing: here's a very nice example of `rvest` at work: https://deanattali.com/blog/user2017/
+

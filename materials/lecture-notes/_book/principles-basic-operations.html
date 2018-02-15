@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-14">
+<meta name="date" content="2018-02-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -232,6 +232,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="15" data-path="db-parting-shots.html"><a href="db-parting-shots.html"><i class="fa fa-check"></i><b>15</b> DB Parting Shots</a><ul>
 <li class="chapter" data-level="15.1" data-path="db-parting-shots.html"><a href="db-parting-shots.html#database-query-optimization"><i class="fa fa-check"></i><b>15.1</b> Database Query Optimization</a></li>
 <li class="chapter" data-level="15.2" data-path="db-parting-shots.html"><a href="db-parting-shots.html#json-data-model"><i class="fa fa-check"></i><b>15.2</b> JSON Data Model</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ingesting-data.html"><a href="ingesting-data.html"><i class="fa fa-check"></i><b>16</b> Ingesting data</a><ul>
+<li class="chapter" data-level="16.1" data-path="ingesting-data.html"><a href="ingesting-data.html#structured-ingestion"><i class="fa fa-check"></i><b>16.1</b> Structured ingestion</a><ul>
+<li class="chapter" data-level="16.1.1" data-path="ingesting-data.html"><a href="ingesting-data.html#csv-files-and-similar"><i class="fa fa-check"></i><b>16.1.1</b> CSV files (and similar)</a></li>
+<li class="chapter" data-level="16.1.2" data-path="ingesting-data.html"><a href="ingesting-data.html#excel-spreadsheets"><i class="fa fa-check"></i><b>16.1.2</b> Excel spreadsheets</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping"><i class="fa fa-check"></i><b>16.2</b> Scraping</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping-from-dirty-html-tables"><i class="fa fa-check"></i><b>16.2.1</b> Scraping from dirty HTML tables</a></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -511,36 +520,36 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Frequently we will want to choose entities from a data frame at random. The <code>sample_n</code> function selects a specific number of entities at random:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_n</span>(arrest_tab, <span class="dv">10</span>)</code></pre></div>
 <pre><code>## # A tibble: 10 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation   
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
-##  1 11372459    32 W     M     11/19/2011 17:00      4000 Eastern Ave 
-##  2 11276769    24 B     M     07/21/2011 12:00      1700 Homestead St
-##  3 11359722    22 B     M     11/01/2011 23:30      &lt;NA&gt;             
-##  4 11252936    30 U     M     06/25/2011 15:38      7000 Hamlet Ave  
-##  5 12508395    23 B     M     07/05/2012 15:30      2200 Annapolis Rd
-##  6 12436829    28 W     M     03/08/2012 15:00      300 S Charles St 
-##  7 11211549    19 B     M     05/05/2011 19:00      2600 Llewelyn Ave
-##  8 11155308    21 B     F     02/18/2011 14:00      &lt;NA&gt;             
-##  9 12544660    20 B     M     09/02/2012 19:00      &lt;NA&gt;             
-## 10 11176462    20 B     F     03/22/2011 02:00      200 S Athol Ave  
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation        
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                 
+##  1       NA    54 B     M     02/27/2012 18:00      &lt;NA&gt;                  
+##  2 11145202    49 W     M     02/04/2011 09:00      1600 E 30Th St        
+##  3       NA    36 B     M     08/11/2011 16:00      &lt;NA&gt;                  
+##  4 11287806    40 B     M     08/04/2011 11:00      &lt;NA&gt;                  
+##  5 12507216    44 B     M     07/03/2012 09:00      &lt;NA&gt;                  
+##  6 11288210    24 W     F     08/04/2011 20:30      900 I70 Pr            
+##  7 11134058    43 B     M     01/14/2011 13:35      0 N Mile Marker 58.1 …
+##  8 11324139    21 B     M     09/17/2011 19:20      3500 Harford Rd       
+##  9 11223290    50 B     M     05/21/2011 18:45      1800 N Rutland Ave    
+## 10 11180447    19 B     M     03/27/2011 07:05      &lt;NA&gt;                  
 ## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>The <code>sample_frac</code> function selects a fraction of entitites at random:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_frac</span>(arrest_tab, .<span class="dv">1</span>)</code></pre></div>
 <pre><code>## # A tibble: 10,453 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation       
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                
-##  1 11141777    30 B     M     01/29/2011 03:55      700 Baker St         
-##  2 12472872    39 B     M     05/05/2012 08:47      3400 E Lombard St    
-##  3       NA    58 B     M     01/24/2011 17:00      &lt;NA&gt;                 
-##  4 12463902    46 W     M     04/22/2012 12:45      &lt;NA&gt;                 
-##  5 12585794    29 W     F     11/11/2012 02:20      1000 N Charles St    
-##  6 12589621    21 B     F     11/18/2012 20:20      &lt;NA&gt;                 
-##  7 11246844    38 B     M     06/19/2011 13:30      2500 Ashton St       
-##  8 12553619    21 B     M     09/17/2012 16:15      1700 Gywnn Falls Pkwy
-##  9 11360759    74 W     M     11/03/2011 05:30      &lt;NA&gt;                 
-## 10 11264313    18 B     M     07/08/2011 18:05      2000 W North Ave     
+##     arrest   age race  sex   arrestDate arrestTime arrestLocation         
+##      &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                  
+##  1  1.26e⁷    21 B     M     12/02/2012 08:30      &lt;NA&gt;                   
+##  2  1.13e⁷    21 B     M     09/29/2011 15:00      1100 Gleneagle Rd      
+##  3  1.14e⁷    46 B     M     12/28/2011 03:48      &lt;NA&gt;                   
+##  4  1.12e⁷    33 B     M     05/11/2011 13:50      2200 E. Northern Pkwy  
+##  5  1.12e⁷    37 B     F     03/10/2011 12:58      &lt;NA&gt;                   
+##  6  1.24e⁷    32 B     M     02/17/2012 08:01      Interstate 95 Mile Mar…
+##  7  1.12e⁷    33 W     M     04/16/2011 10:03      1000 S Charles St      
+##  8  1.26e⁷    43 B     M     12/14/2012 12:00      1500 Whitelock St      
+##  9  1.25e⁷    40 W     M     06/08/2012 14:30      1500 N Charles St      
+## 10  1.24e⁷    30 B     M     01/07/2012 22:15      4400 Park Heights Ave  
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -553,18 +562,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>)</code></pre></div>
 <pre><code>## # A tibble: 10,453 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
-##  1       NA    27 B     M     11/16/2011 11:01      &lt;NA&gt;                
-##  2 11285673    58 B     M     08/02/2011 10:28      900 Pennsylvania Ave
-##  3 12521778    32 B     M     07/27/2012 22:00      200 N Eutaw St      
-##  4 11228135    18 B     M     05/27/2011 04:00      4500 Marble Hall Rd 
-##  5 12538851    43 B     F     08/24/2012 07:25      3900 Garrison Blvd  
-##  6 11359960    59 B     M     11/02/2011 09:15      2800 Ridgewood Ave  
-##  7 11364507    23 B     M     11/08/2011 18:00      5300 Frankford Ave  
-##  8 12559192    23 B     M     09/25/2012 19:00      1500 N Smallwood Ave
-##  9 12459149    42 B     M     04/14/2012 09:12      &lt;NA&gt;                
-## 10 11301838    54 B     F     08/20/2011 11:30      1500 Myrtle Ave     
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation    
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;             
+##  1 12560624    19 B     M     09/27/2012 18:00      2300 W Lanvale St 
+##  2 11331124    31 B     M     09/25/2011 00:30      &lt;NA&gt;              
+##  3 11382189    20 B     F     12/07/2011 02:20      2600 Roselawn Ave 
+##  4 12579528    36 B     M     10/30/2012 12:45      1200 W North Ave  
+##  5 11148976    31 W     M     02/09/2011 18:00      &lt;NA&gt;              
+##  6 11180108    34 B     M     03/25/2011 23:59      200 W Clay St     
+##  7 12585565    43 W     M     11/10/2012 11:45      1500 Charlotte Ave
+##  8 12461574    27 B     M     04/18/2012 11:30      &lt;NA&gt;              
+##  9 11317729    37 W     M     09/09/2011 16:15      100 Deiner Pl     
+## 10 11212928    37 U     M     05/08/2011 00:00      1200 James St St  
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -584,16 +593,16 @@ analysis_tab</code></pre></div>
 <pre><code>## # A tibble: 17,885 x 3
 ##    sex   district     arrest_date
 ##    &lt;fct&gt; &lt;chr&gt;        &lt;chr&gt;      
-##  1 M     SOUTHERN     09/22/2011 
-##  2 F     NORTHEASTERN 02/17/2012 
-##  3 M     &lt;NA&gt;         02/29/2012 
-##  4 M     SOUTHERN     02/08/2012 
-##  5 M     WESTERN      07/17/2012 
-##  6 F     &lt;NA&gt;         03/11/2011 
-##  7 M     &lt;NA&gt;         04/10/2011 
-##  8 M     &lt;NA&gt;         01/19/2012 
-##  9 M     WESTERN      01/26/2011 
-## 10 F     EASTERN      03/17/2012 
+##  1 M     SOUTHERN     10/12/2011 
+##  2 M     NORTHWESTERN 08/08/2012 
+##  3 F     NORTHWESTERN 03/24/2011 
+##  4 F     WESTERN      09/13/2012 
+##  5 M     SOUTHERN     04/12/2011 
+##  6 M     &lt;NA&gt;         02/09/2011 
+##  7 M     NORTHEASTERN 05/22/2011 
+##  8 M     &lt;NA&gt;         06/21/2011 
+##  9 F     &lt;NA&gt;         02/06/2011 
+## 10 M     WESTERN      05/26/2011 
 ## # ... with 17,875 more rows</code></pre>
 
 </div>
