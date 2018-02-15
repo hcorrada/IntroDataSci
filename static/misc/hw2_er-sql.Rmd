@@ -36,7 +36,7 @@ _DELETE THESE INSTRUCTIONS FROM YOUR SUBMISSION: write SQL in each of these chun
 ```{sql q2, connection=db, eval=FALSE}
 ```
 
-3) Which teams won more than 100 games between 2000 and 2015? Order result by descending number of wins. (attribute `W` of the Teams table contains the number of wins)
+3) Which teams won more than 100 games in one season between 2000 and 2015? Order result by descending number of wins. (attribute `W` of the Teams table contains the number of wins)
 
 ```{sql q3, connection=db, eval=FALSE}
 ```
