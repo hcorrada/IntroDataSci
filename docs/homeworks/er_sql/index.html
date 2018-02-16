@@ -378,7 +378,7 @@ DBI::dbDisconnect(db)
 <p>Consider the following subset of tables from the Lahman dataset:</p>
 
 <ul>
-<li><em>Franchises</em>: these are the corporate team entities. Attributes: <code>franchID</code>, <code>franchName</code>, <code>active</code>.</li>
+<li><em>TeamFranchises</em>: these are the corporate team entities. Attributes: <code>franchID</code>, <code>franchName</code>, <code>active</code>.</li>
 <li><em>Teams</em>: specific teams fielded by a franchise in a given season. Attributes: <code>yearID</code>, <code>teamID</code>, <code>lgID</code>, <code>franchID</code>, <code>G</code>, <code>W</code>, <code>L</code>.</li>
 <li><em>Master</em>: overall information about the people who play the game. Attributes: <code>playerID</code>, <code>birthYear</code>, <code>birthMonth</code>, <code>birthDay</code>, <code>birthCountry</code>, <code>birthState</code>, <code>birthCity</code>, <code>nameFirst</code>, <code>nameLast</code>, <code>nameGiven</code>, <code>weight</code>, <code>height</code>.</li>
 <li><em>Batting</em>: statistics of player performance on offense. Attributes: <code>playerID</code>, <code>yearID</code>, <code>teamID</code>, <code>lgID</code>, <code>G</code>,<code>AB</code>, <code>H</code>, <code>2B</code>, <code>3B</code>, <code>HR</code>.</li>
@@ -395,7 +395,7 @@ DBI::dbDisconnect(db)
 
 <p>2) How many franchises are currently active?</p>
 
-<p>3) Which teams won more than 100 games between 2000 and 2015? Order result by descending number of wins. (Attribute <code>W</code> of the Teams table contains the number of wins)</p>
+<p>3) Which teams won more than 100 games in one season between 2000 and 2015? Order result by descending number of wins. (Attribute <code>W</code> of the Teams table contains the number of wins)</p>
 
 <p>4) What is the franchise name of the team with the most total wins in the database?</p>
 
