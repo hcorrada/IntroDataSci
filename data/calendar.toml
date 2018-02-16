@@ -111,6 +111,10 @@ date = "2/15"
 title = "Data acquisition: loading and scraping"
 notes = "bookdown-notes/ingesting-data.html"
 
+[[day07.covers]]
+title = "Notebook: Building a complex SQL query"
+notes = "classroom-notes/sql_pr.html"
+
 [day07.class_notes]
 link = "classroom-notes/cmsc320_class-notes_20190213.pdf"
 
