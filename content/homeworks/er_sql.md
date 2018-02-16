@@ -65,7 +65,7 @@ Write a SQL query to answer each of the following questions:
 
 2) How many franchises are currently active?
 
-3) Which teams won more than 100 games between 2000 and 2015? Order result by descending number of wins. (Attribute `W` of the Teams table contains the number of wins)
+3) Which teams won more than 100 games in one season between 2000 and 2015? Order result by descending number of wins. (Attribute `W` of the Teams table contains the number of wins)
 
 4) What is the franchise name of the team with the most total wins in the database?
 
