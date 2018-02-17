@@ -129,6 +129,106 @@ $(document).ready(function () {
 db &lt;- DBI::dbConnect(RSQLite::SQLite(), dbfile)</code></pre>
 <p>We build the query step by step (starting at the bottom…)</p>
 <ul>
+<li>Using with clause</li>
+</ul>
+<pre class="sql"><code>with
+  in_hof(playerID) as (
+    select distinct playerID
+    from HallOfFame
+    where inducted = &quot;Y&quot;
+  ),
+  from_pr_not_in_hof(playerID, nameFirst, nameLast) as (
+    select m.playerID, nameFirst, nameLast
+    from Master as m
+      left join in_hof as hof
+        on m.playerID = hof.playerID
+    where birthCountry = &quot;P.R.&quot; 
+      and hof.playerID is NULL
+  )
+select b.playerID, sum(H) as total_hits, 
+  nameFirst, nameLast
+from from_pr_not_in_hof as t
+  join Batting as b
+    on t.playerID = b.playerID
+group by b.playerID
+order by total_hits desc
+limit 10</code></pre>
+<div class="knitsql-table">
+<table>
+<caption>Displaying records 1 - 10</caption>
+<thead>
+<tr class="header">
+<th align="left">b.playerID</th>
+<th align="right">total_hits</th>
+<th align="left">nameFirst</th>
+<th align="left">nameLast</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">beltrca01</td>
+<td align="right">2617</td>
+<td align="left">Carlos</td>
+<td align="left">Beltran</td>
+</tr>
+<tr class="even">
+<td align="left">willibe02</td>
+<td align="right">2336</td>
+<td align="left">Bernie</td>
+<td align="left">Williams</td>
+</tr>
+<tr class="odd">
+<td align="left">cruzjo01</td>
+<td align="right">2251</td>
+<td align="left">Jose</td>
+<td align="left">Cruz</td>
+</tr>
+<tr class="even">
+<td align="left">sierrru01</td>
+<td align="right">2152</td>
+<td align="left">Ruben</td>
+<td align="left">Sierra</td>
+</tr>
+<tr class="odd">
+<td align="left">delgaca01</td>
+<td align="right">2038</td>
+<td align="left">Carlos</td>
+<td align="left">Delgado</td>
+</tr>
+<tr class="even">
+<td align="left">gonzaju03</td>
+<td align="right">1936</td>
+<td align="left">Juan</td>
+<td align="left">Gonzalez</td>
+</tr>
+<tr class="odd">
+<td align="left">santibe01</td>
+<td align="right">1830</td>
+<td align="left">Benito</td>
+<td align="left">Santiago</td>
+</tr>
+<tr class="even">
+<td align="left">powervi01</td>
+<td align="right">1716</td>
+<td align="left">Vic</td>
+<td align="left">Power</td>
+</tr>
+<tr class="odd">
+<td align="left">posadjo01</td>
+<td align="right">1664</td>
+<td align="left">Jorge</td>
+<td align="left">Posada</td>
+</tr>
+<tr class="even">
+<td align="left">lowelmi01</td>
+<td align="right">1619</td>
+<td align="left">Mike</td>
+<td align="left">Lowell</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
 <li>Final query: Ten players from PR <em>not</em> in HOF with the most career hits.</li>
 </ul>
 <pre class="sql"><code>select m.playerID, sum(b.H) as total_hits, nameFirst, nameLast
