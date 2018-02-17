@@ -18,6 +18,7 @@ ignorefiles = [ "lecture-note/.*" ]
 	# Repository
 	provider = "GitHub"
 	repo_url = "https://github.com/hcorrada/IntroDataSci.git"
+  raw_github_url = "https://raw.githubusercontent.com/hcorrada/IntroDataSci/master/static"
 
 	logo = "images/logo.png"
 	favicon = ""
