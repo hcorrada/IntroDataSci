@@ -1,0 +1,40 @@
+---
+title: "Wrangling Exercise"
+author: "CMSC320"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+This is an exercise on data wrangling using the flights dataset:
+
+```{r, eval=TRUE, message=FALSE}
+library(tidyverse)
+library(nycflights13)
+data(flights)
+data(airlines)
+```
+
+```{r, echo=FALSE, fig.width=3, fig.height=3}
+library(datamodelr)
+dm_f <- dm_from_data_frames(flights, airlines)
+
+dm_f <- dm_add_references(dm_f,
+                          flights$carrier == airlines$carrier)
+
+graph <- dm_create_graph(dm_f, rankdir="LR", col_attr = c("column", "type"))
+dm_render_graph(graph)
+```
+
+1. Filter flights to include only flights with an arrival delay greater than 2 hours (delays are recorded in minutes)  
+2. Select columns in the flights table that contain delay times (note that the function `matches` can be used to select columns with names that matches a regular expression. See `?dplyr::select`)  
+
+3. Find the minimum arrival delay (this can be a negative number) in the flights table. Use `summarize`.  
+
+4. Find minimum arrival delay (again, can be a negative number) in the flights table for each destination airport. Use `group_by' and 'summarize`.  
+
+5. List the name of all airlines and the number of flights for each airline in flights table. The `airlines` table has airline names.
+
+
+
