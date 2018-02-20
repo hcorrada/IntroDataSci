@@ -122,13 +122,12 @@ link = "classroom-notes/cmsc320_class-notes_20190213.pdf"
 date = "2/20"
 
 [[day08.covers]]
-title = "Data cleaning: handling text and dates"
-
-[[day08.covers]]
 title = "Common operations for data tidying"
+notes = "bookdown-notes/tidying-data.html"
 
 [[day08.covers]]
-title = "Entity Resolution and Record Linkage"
+title = "Data cleaning: handling text and dates"
+notes = "bookdown-notes/text-and-dates.html"
 
 [[day08.workdue]]
 title = "HW2: ER Model and SQL"
@@ -136,6 +135,9 @@ link = "homeworks/er_sql/"
 
 [day09]
 date = "2/22"
+
+[[day09.covers]]
+title = "Entity Resolution and Record Linkage"
 
 [[day09.covers]]
 title = "Midterm I catch-up and review"
