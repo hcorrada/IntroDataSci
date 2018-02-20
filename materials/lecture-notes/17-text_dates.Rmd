@@ -1,0 +1,282 @@
+# Text and Dates
+
+In this chapter we briefly discuss common patterns to handle text and date data and point to useful resources.
+
+## Text
+
+Frequently, data scraped or ingested will contain text that will need to be processed to either extract data, correct errors or resolve duplicate records. In this section we will look at a few common patterns: 1) tools for string operations, 2) tools using regular expressions, and 3) deriving attributes from text. For further reading consult: http://r4ds.had.co.nz/strings.html
+
+### String operations
+
+The `stringr` package contains a number of useful, commonly used string manipulation operations. 
+
+```{r}
+library(tidyverse)
+library(stringr)
+
+short_string <- "I love Spring"
+long_string <- "There's is nothing I love more than 320 in the Spring"
+```
+
+Here are a few common ones:
+
+- string length: `str_len`
+
+```{r}
+str_length(c(short_string, long_string))
+```
+
+- combining strings: `str_c`
+
+```{r}
+str_c(short_string, long_string, sep=". ")
+```
+
+- subsetting strings: `str_sub`
+
+```{r}
+str_sub(c(short_string, long_string), 2, 5)
+```
+
+- trim strings: `str_trim`
+
+```{r}
+str_trim("    I am padded    ", side="both")
+```
+
+### Regular expressions
+
+By far, the most powerful tools for extracting and cleaning text data are regular expressions. The `stringr` package provides a great number of tools based on regular expression matching.
+
+First, some basics
+
+```{r}
+strs <- c("apple", "banana", "pear")
+str_view(strs, "an")
+```
+
+- Match any character: `.`
+- Match the 'dot' character: `\\.`
+
+```{r}
+str_view(strs, ".a.")
+str_view(c(strs, "a.c"), "a\\.c")
+```
+
+- Anchor start (`^`), end (`$`)
+
+```{r}
+str_view(strs, "^a")
+str_view(strs, "a$")
+str_view(c("apple pie", "apple", "apple cake"), "apple")
+str_view(c("apple pie", "apple", "apple cake"), "^apple$")
+```
+
+- Character classes and alternatives
+
+* `\d`: match any digit
+* `\s`: match any whitespace (e.g., space, tab, newline)
+* `[abc]`: match set of characters (e.g, `a`, `b`, or `c`)
+* `[^abc]`: match anything except this set of characters
+* `|`: match any of one or more patterns
+
+Match vowels or digits
+```{r}
+str_view(c("t867nine", "gray9"), "[aeiou]|[0-9]")
+```
+
+- Repetition
+
+* `?`: zero or one
+* `+`: one or more
+* `*`: zero or more
+
+```{r}
+str_view(c("color", "colour"), "colou?r")
+```
+
+- Grouping and backreferences
+
+Parentheses define groups, which can be referenced using `\1`, `\2`, etc.
+
+```{r}
+fruit <- c("banana", "coconut", "cucumber", "jujube", "papaya", "salal berry")
+str_view(fruit, "(..)\\1")
+```
+
+### Tools using regular expressions
+
+- Determine which strings match a pattern: `str_detect`: given a vector of strings, return `TRUE` for those that match a regular expression, `FALSE` otherwise
+
+```{r}
+data(words)
+
+print(head(words))
+data_frame(word=words, result=str_detect(words, "^[aeiou]")) %>% sample_n(30)
+```
+
+Similarly, `str_count` returns the number of matches in a string instead of just `TRUE` or `FALSE`
+
+- Filter string vectors to include only those that match a regular expression
+
+```{r}
+data(sentences)
+print(head(sentences))
+
+colors <- c("red", "orange", "yellow", "green", "blue", "purple")
+colors_re <- str_c(colors, collapse="|")
+print(colors_re)
+
+sentences_with_color <- str_subset(sentences, colors_re) %>% head(10)
+str_view_all(sentences_with_color, colors_re)
+```
+
+- Extracting matches: `str_extract`, `str_extract_all`
+
+```{r}
+str_extract(sentences_with_color, colors_re)
+```
+
+- Grouped matches: `str_match`
+
+```{r}
+noun_re <- "(a|the) ([^ ]+)"
+noun_matches <- sentences %>%
+  str_subset(noun_re) %>%
+  str_match(noun_re) %>%
+  head(10)
+noun_matches
+```
+
+The result is a string matrix, with one row for each string in the input vector. The first column includes the complete match to the regular expression (just like `str_extract`), the remaining columns has the matches for the groups defined in the pattern. To extract the first group matches one would index one of the columns. For example, the matches for the second group are
+
+```{r}
+noun_matches[,3]
+```
+
+- Splitting strings: `str_split` split strings in a vector based on a match. For instance, to split sentences into words:
+
+```{r}
+sentences %>%
+  head(5) %>%
+  str_split(" ")
+```
+
+### Extracting attributes from text
+
+Handling free text in data pipelines and or statistical models is tricky. Frequently we extract attributes from text in order to perform analysis. 
+
+We draw from https://www.tidytextmining.com/tidytext.html for this discussion.
+
+We usually think of text datasets (called a text _corpus_) in terms of 
+
+- _documents_: the instances of free text in our dataset, and 
+
+- _terms_ the specific, e.g., words, they contain.
+
+In terms of the representation models we have used so far, we can think of _documents as entities_, described by attributes based on words, or _words as entitites_, described by attributes based on documents. To _tidy_ text data, we tend to create **one-token-per-row** data frames that list the instances of _terms_ in _documents_ in a dataset
+
+Here's a simple example using Jane Austen text
+
+```{r}
+library(janeaustenr)
+library(tidyverse)
+
+original_books <- austen_books() %>%
+  group_by(book) %>%
+  mutate(linenumber = row_number(),
+         chapter = cumsum(str_detect(text, regex("^chapter [\\divxlc]", ignore_case=TRUE)))) %>%
+  ungroup()
+
+original_books
+```
+
+Let's re-structure it as a **one-token-per-row** column using the `unnest_tokens` function in the `tidytext` package
+
+```{r}
+library(tidytext)
+
+tidy_books <- original_books %>%
+  unnest_tokens(word, text)
+tidy_books
+```
+
+Let's remove stop words from the data frame
+
+```{r}
+data(stop_words)
+
+tidy_books <- tidy_books %>%
+  anti_join(stop_words, by="word")
+
+tidy_books
+```
+
+Now, we can use this dataset to compute attributes for entities of interest. For instance, let's create a data frame with _words_ as entities, with an attribute containing the number of times the word appears in this corpus
+
+```{r}
+frequent_words <- tidy_books %>%
+  count(word, sort=TRUE) %>%
+  filter(n > 600)
+```
+
+Which can then use like other data frames as we have used previously. For example to plot most frequent words:
+
+```{r}
+frequent_words %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(x=word, y=n)) +
+    geom_col() +
+    theme_bw() +
+    labs(x=NULL, y="frequency") +
+    coord_flip()
+```
+
+## Handling dates
+
+The `lubridate` package provides common operations for parsing and operating on dates and times. See http://r4ds.had.co.nz/dates-and-times.html for more information.
+
+A number of functions for parsing dates in a variety of formats are provided, along with functions to extract specific components from parsed date objects
+
+```{r}
+library(lubridate)
+
+datetime <- ymd_hms("2016-07-08 12:34:56")
+
+year(datetime)
+
+month(datetime)
+
+day(datetime)
+
+mday(datetime)
+
+yday(datetime)
+
+wday(datetime)
+```
+
+They can also return month and day of the week names, abbreviated, as ordered factors
+
+```{r}
+month(datetime, label=TRUE)
+```
+
+We can also create attributes of type `datetime` from string attributes. Here's an example using the flights dataset
+
+```{r}
+flights_with_dt <- flights %>%
+  mutate(dep_dt=make_datetime(year, month, day, dep_time %/% 100, dep_time %% 100)) %>%
+  select(year, month, day, dep_time, dep_dt)
+flights_with_dt
+```
+
+With this attribute in place we can extract day of the week and plot the number of flights per day of the week
+
+```{r}
+flights_with_dt %>%
+  mutate(wday=wday(dep_dt, label=TRUE)) %>%
+  ggplot(aes(x=wday)) +
+    geom_bar()
+```
+
