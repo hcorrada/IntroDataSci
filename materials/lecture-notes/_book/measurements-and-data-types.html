@@ -25,14 +25,14 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-15">
+<meta name="date" content="2018-02-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="setting-up-the-r-data-science-toolbox.html">
+<link rel="prev" href="part-data-representation-modeling-ingestion-and-cleaning.html">
 <link rel="next" href="principles-basic-operations.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -153,6 +153,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.7" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.7</b> Literate Programming</a></li>
 <li class="chapter" data-level="4.8" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#finishing-your-setup"><i class="fa fa-check"></i><b>4.8</b> Finishing your setup</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html"><i class="fa fa-check"></i>(Part) Data representation modeling, ingestion and cleaning</a></li>
 <li class="chapter" data-level="5" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html"><i class="fa fa-check"></i><b>5</b> Measurements and Data Types</a><ul>
 <li class="chapter" data-level="5.1" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#a-data-analysis-to-get-us-going"><i class="fa fa-check"></i><b>5.1</b> A data analysis to get us going</a></li>
 <li class="chapter" data-level="5.2" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#getting-data"><i class="fa fa-check"></i><b>5.2</b> Getting data</a><ul>
@@ -240,6 +241,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="16.2" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping"><i class="fa fa-check"></i><b>16.2</b> Scraping</a><ul>
 <li class="chapter" data-level="16.2.1" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping-from-dirty-html-tables"><i class="fa fa-check"></i><b>16.2.1</b> Scraping from dirty HTML tables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="tidying-data.html"><a href="tidying-data.html"><i class="fa fa-check"></i><b>17</b> Tidying data</a><ul>
+<li class="chapter" data-level="17.1" data-path="tidying-data.html"><a href="tidying-data.html#tidy-data-1"><i class="fa fa-check"></i><b>17.1</b> Tidy Data</a></li>
+<li class="chapter" data-level="17.2" data-path="tidying-data.html"><a href="tidying-data.html#common-problems-in-messy-data"><i class="fa fa-check"></i><b>17.2</b> Common problems in messy data</a><ul>
+<li class="chapter" data-level="17.2.1" data-path="tidying-data.html"><a href="tidying-data.html#headers-as-values"><i class="fa fa-check"></i><b>17.2.1</b> Headers as values</a></li>
+<li class="chapter" data-level="17.2.2" data-path="tidying-data.html"><a href="tidying-data.html#multiple-variables-in-one-column"><i class="fa fa-check"></i><b>17.2.2</b> Multiple variables in one column</a></li>
+<li class="chapter" data-level="17.2.3" data-path="tidying-data.html"><a href="tidying-data.html#variables-stored-in-both-rows-and-columns"><i class="fa fa-check"></i><b>17.2.3</b> Variables stored in both rows and columns</a></li>
+<li class="chapter" data-level="17.2.4" data-path="tidying-data.html"><a href="tidying-data.html#multiple-types-in-one-table"><i class="fa fa-check"></i><b>17.2.4</b> Multiple types in one table</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -436,7 +446,7 @@ arrest_tab</code></pre></div>
           </div>
         </div>
       </div>
-<a href="setting-up-the-r-data-science-toolbox.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="part-data-representation-modeling-ingestion-and-cleaning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="principles-basic-operations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
