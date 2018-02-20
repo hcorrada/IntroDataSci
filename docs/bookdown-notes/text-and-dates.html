@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="an-illustrative-analysis.html">
-<link rel="next" href="part-data-representation-modeling-ingestion-and-cleaning.html">
+<link rel="prev" href="tidying-data.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -281,145 +281,344 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="setting-up-the-r-data-science-toolbox" class="section level1">
-<h1><span class="header-section-number">4</span> Setting up the R Data Science Toolbox</h1>
-<p>Here we setup R, RStudio and anything else we will use in the course.</p>
-<div id="some-history" class="section level2">
-<h2><span class="header-section-number">4.1</span> Some history</h2>
-<p>R is an offspring of S, a language created in AT&amp;T Labs by John Chambers (now at Stanford) and others in 1976 with the goal of creating an environment for statistical computing and data analysis. The standard for the language in current use was settled in 1998. That same year, “S” won the ACM Software System award, awarded to software systems “that have a lasting influence, reflected in contributions to concepts, in commercial acceptance, or both”.</p>
-<p>In 1991, Robert Gentleman and Ross Ihaka created R to provide an open source implementation of the S language and environment. They also redesigned the language to enforce lexical scoping rules. It has been maintained by the R core group since 1997, and in 2015 an R consortium, including Microsoft, Google, and others, was created.</p>
-<p>Along with Python it is one of the most popular environments for data analysis (e.g., figure below from <a href="https://www.kdnuggets.com/2017/05/poll-analytics-data-science-machine-learning-software-leaders.html">KDNuggets 2017 software survey</a></p>
-<div class="figure">
-<img src="img/kdnuggets-2017.jpg" />
+<div id="text-and-dates" class="section level1">
+<h1><span class="header-section-number">18</span> Text and Dates</h1>
+<p>In this chapter we briefly discuss common patterns to handle text and date data and point to useful resources.</p>
+<div id="text" class="section level2">
+<h2><span class="header-section-number">18.1</span> Text</h2>
+<p>Frequently, data scraped or ingested will contain text that will need to be processed to either extract data, correct errors or resolve duplicate records. In this section we will look at a few common patterns: 1) tools for string operations, 2) tools using regular expressions, and 3) deriving attributes from text. For further reading consult: <a href="http://r4ds.had.co.nz/strings.html" class="uri">http://r4ds.had.co.nz/strings.html</a></p>
+<div id="string-operations" class="section level3">
+<h3><span class="header-section-number">18.1.1</span> String operations</h3>
+<p>The <code>stringr</code> package contains a number of useful, commonly used string manipulation operations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(stringr)
 
-</div>
-<p>We use R for this class because we find that besides it being a state-of-the-art data analysis environment, it provides a clean end-to-end platform for teaching material across the data management-modeling-communication spectrum that we study in class. However, be aware that as you move on in the Data Science field you most likely will need to add Python to your toolbelt.</p>
-</div>
-<div id="setting-up-r" class="section level2">
-<h2><span class="header-section-number">4.2</span> Setting up R</h2>
-<p>R is a free, open source, environment for data analysis. It is available as a free binary download for Mac, Linux and Windows. For the more adventorous, it can also be compiled from source. To install R in your computer go to <a href="https://cran.r-project.org/index.html" class="uri">https://cran.r-project.org/index.html</a> and download and install the appropriate binary file.</p>
-<div class="figure">
-<img src="img/cran.png" />
-
-</div>
-<p>This will install the base R system: the R programming language, a few packages for common data analyses and a development environment.</p>
-</div>
-<div id="setting-up-rstudio" class="section level2">
-<h2><span class="header-section-number">4.3</span> Setting up Rstudio</h2>
-<p>We will actually use Rstudio to interact with R. Rstudio is a very powerful application to make data analysis with R easier to do. To install go to <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a> and download the appropriate version of Rstudio.</p>
-<div class="figure">
-<img src="img/rstudio.png" />
-
-</div>
-</div>
-<div id="a-first-look-at-rstudio" class="section level2">
-<h2><span class="header-section-number">4.4</span> A first look at Rstudio</h2>
-<p>Let’s take a first look at Rstudio. The first thing you will notice is that Rstudio is divided into panes. Let’s take a look first at the <em>Console</em>.</p>
-<div id="interactive-console" class="section level3">
-<h3><span class="header-section-number">4.4.1</span> Interactive Console</h3>
-<p>The most immediate way to interact with R is through the interactive console. Here we can write R instructions to perform our data analyses. We want to start using data so the first instructions we will look at deal with loading data.</p>
-<p>When you installed R, a few illustrative datasets were installed as well. Let’s take a look at the list of datasets you now have access to. Write the following command in the console</p>
-<div class="figure">
-<img src="img/rstudio_data.png" />
-
-</div>
-<p>This will list names and descriptions of datasets available in your R installation. Let’s try to find out more information about these datasets. In R, the first attempt to get help with something is to use the <code>?</code> operation. So, to get help about the <code>swiss</code> dataset we can enter the following in the console</p>
-<p>This will make the documentation for the <code>swiss</code> dataset open in another pane.</p>
-<div class="figure">
-<img src="img/rstudio_swiss.png" />
-
-</div>
-<p><strong>On your own:</strong> Find more information about a different dataset using the <code>?</code> operator.</p>
-</div>
-<div id="data-viewer" class="section level3">
-<h3><span class="header-section-number">4.4.2</span> Data Viewer</h3>
-<p>According to the documentation we just saw for <code>swiss</code>, this is a <code>data.frame</code> with 47 observations and 6 variables. The <code>data.frame</code> is the basic structure we will use to represent data throughout the course. We will see this again repeatedly, and use a couple of other names (e.g., <code>tibble</code>) to refer to this. Intuitively, you can think of the <code>data.frame</code> like a spreadsheet, with rows representing observations, and columns representing variables that describe those observations. Let’s see what the <code>swiss</code> data looks like using the Rstudio data viewer.</p>
-<div class="figure">
-<img src="img/rstudio_view_swiss.png" />
-
-</div>
-<p>The Data Viewer lets you reorder data by the values in a column. It also lets you filter rows of the data by values as well.</p>
-<p><strong>On your own</strong>: Use the Data Viewer to explore another of the datasets you saw listed before.</p>
-</div>
-<div id="names-values-and-functions" class="section level3">
-<h3><span class="header-section-number">4.4.3</span> Names, values and functions</h3>
-<p>Let’s make a very short pause to talk about something you may have noticed. In the console, we’ve now written a few instructions, e.g. <code>View(swiss)</code>. Let’s take a closer look at how these instructions are put together.</p>
-<p><em>expressions</em>: first of all, we call these instructions <em>expressions</em>, which are just text that R can evaluate into a value. <code>View(swiss)</code> is an expression.</p>
-<p><em>values</em>: so, what’s a value? They are numbers, strings, data frames, etc. This is the data we will be working with. The number <code>2</code> is a value. So is the string <code>&quot;Hector&quot;</code>.</p>
-<p>So, what value is produced when R evaluates the expression <code>View(swiss)</code>? Nothing, which we also treat as a value. That wasn’t very interesting, but it does have a side effect: it shows the <code>swiss</code> dataset in the Data viewer.</p>
-<p>How about a simpler expression: <code>swiss</code>, what value is produced when R evaluates the expression <code>swiss</code>? The data.frame containing that data. Try it out in the console.</p>
-<p><em>names</em>: so if <code>swiss</code> isn’t a value, what is it? It is a <em>name</em>. We use these to refer to values. So, when we write the expression <code>swiss</code>, we tell R we want the <em>value</em> referenced by the name <code>swiss</code>, that is, the data itself!</p>
-<div class="figure">
-<img src="img/names_values.png" />
-
-</div>
-<p><em>functions</em>: Besides numbers, strings, data frames, etc. another important type of value is the <em>function</em>. Functions are a series of instructions that take some input value and produce a different value. The name <code>View</code> refers to the function that takes a data frame as input, and displays it in the Data viewer. Functions are called using the parentheses we saw before: <code>View(swiss)</code>, the parentheses say that you are passing input <code>swiss</code> to the function <code>View</code>. We’ll see later how we can write our own functions.</p>
-</div>
-<div id="plotting" class="section level3">
-<h3><span class="header-section-number">4.4.4</span> Plotting</h3>
-<p>Next, I want to show the <em>Plots</em> pane in Rstudio. Let’s make a plot using the <code>swiss</code> dataset:</p>
-<div class="figure">
-<img src="img/rstudio_plot_swiss.png" />
-
-</div>
-<p>It’s not pretty, but it was very easy to produce. There’s a couple of things going on here…</p>
+short_string &lt;-<span class="st"> &quot;I love Spring&quot;</span>
+long_string &lt;-<span class="st"> &quot;There&#39;s is nothing I love more than 320 in the Spring&quot;</span></code></pre></div>
+<p>Here are a few common ones:</p>
 <ul>
-<li><p><code>plot</code> is a function, it takes two inputs, the data to put in the x and y axes, evaluates to nothing, but creates a plot of the data</p></li>
-<li><p><code>swiss$Education</code> is how we refer to the <code>Education</code> column in the <code>swiss</code> data frame.</p></li>
+<li>string length: <code>str_len</code></li>
 </ul>
-<p><strong>On your own</strong>: Make a plot using other variables in the <code>swiss</code> dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_length</span>(<span class="kw">c</span>(short_string, long_string))</code></pre></div>
+<pre><code>## [1] 13 53</code></pre>
+<ul>
+<li>combining strings: <code>str_c</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_c</span>(short_string, long_string, <span class="dt">sep=</span><span class="st">&quot;. &quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;I love Spring. There&#39;s is nothing I love more than 320 in the Spring&quot;</code></pre>
+<ul>
+<li>subsetting strings: <code>str_sub</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_sub</span>(<span class="kw">c</span>(short_string, long_string), <span class="dv">2</span>, <span class="dv">5</span>)</code></pre></div>
+<pre><code>## [1] &quot; lov&quot; &quot;here&quot;</code></pre>
+<ul>
+<li>trim strings: <code>str_trim</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_trim</span>(<span class="st">&quot;    I am padded    &quot;</span>, <span class="dt">side=</span><span class="st">&quot;both&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;I am padded&quot;</code></pre>
 </div>
-<div id="editor" class="section level3">
-<h3><span class="header-section-number">4.4.5</span> Editor</h3>
-<p>So far, we’ve made some good progress: we know how to write expressions on the R console so that they are evaluated, we are starting to get a basic understanding of how these expressions are constructed, we can use the Data viewer to explore data frames, and made one plot that was displayed in the Plots pane. To finish this quick tour, I want to look at two more Rstudio panes: the file editor, and the File viewer.</p>
-<p>As you have noticed, everytime we want to evaluate an expression on the console, we have to write it in. For example, if we want to change the plot we made above to include a different variable, we have to write the whole thing again. Also, what if I forgot what expression I used to make a specific plot? Even better, what if I wanted somebody else to make the plot I just made?</p>
-<p>By far, one of the biggest advantages of using R over Excel or other similar programs, is that we can write expressions in scripts that are easy to share with others, making analyses easier to reproduce. Let’s write a script that we can use to make the same plot we just made.</p>
-<p>In the Rstudio menu select <code>File&gt;New File&gt;R Script</code></p>
-<div class="figure">
-<img src="img/rstudio_new_script.png" />
+<div id="regular-expressions" class="section level3">
+<h3><span class="header-section-number">18.1.2</span> Regular expressions</h3>
+<p>By far, the most powerful tools for extracting and cleaning text data are regular expressions. The <code>stringr</code> package provides a great number of tools based on regular expression matching.</p>
+<p>First, some basics</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">strs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>)
+<span class="kw">str_view</span>(strs, <span class="st">&quot;an&quot;</span>)</code></pre></div>
+<div id="htmlwidget-4a5da423832965213cc8" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4a5da423832965213cc8">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<ul>
+<li>Match any character: <code>.</code></li>
+<li>Match the ‘dot’ character: <code>\\.</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(strs, <span class="st">&quot;.a.&quot;</span>)</code></pre></div>
+<div id="htmlwidget-a1abd1574a2897a339c7" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a1abd1574a2897a339c7">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>p<span class='match'>ear<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(<span class="kw">c</span>(strs, <span class="st">&quot;a.c&quot;</span>), <span class="st">&quot;a</span><span class="ch">\\</span><span class="st">.c&quot;</span>)</code></pre></div>
+<div id="htmlwidget-b869ebf5aff7dd8266b7" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b869ebf5aff7dd8266b7">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<ul>
+<li>Anchor start (<code>^</code>), end (<code>$</code>)</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(strs, <span class="st">&quot;^a&quot;</span>)</code></pre></div>
+<div id="htmlwidget-c72812da1679c29b8296" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c72812da1679c29b8296">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>pple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(strs, <span class="st">&quot;a$&quot;</span>)</code></pre></div>
+<div id="htmlwidget-99e665968ed2f89b9227" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-99e665968ed2f89b9227">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;apple pie&quot;</span>, <span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple cake&quot;</span>), <span class="st">&quot;apple&quot;</span>)</code></pre></div>
+<div id="htmlwidget-197ab091de68505cef2c" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-197ab091de68505cef2c">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span> pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li><span class='match'>apple<\/span> cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;apple pie&quot;</span>, <span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple cake&quot;</span>), <span class="st">&quot;^apple$&quot;</span>)</code></pre></div>
+<div id="htmlwidget-4695d5187bf526cdd246" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4695d5187bf526cdd246">{"x":{"html":"<ul>\n  <li>apple pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>apple cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<ul>
+<li><p>Character classes and alternatives</p></li>
+<li><code>\d</code>: match any digit</li>
+<li><code>\s</code>: match any whitespace (e.g., space, tab, newline)</li>
+<li><code>[abc]</code>: match set of characters (e.g, <code>a</code>, <code>b</code>, or <code>c</code>)</li>
+<li><code>[^abc]</code>: match anything except this set of characters</li>
+<li><p><code>|</code>: match any of one or more patterns</p></li>
+</ul>
+<p>Match vowels or digits</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;t867nine&quot;</span>, <span class="st">&quot;gray9&quot;</span>), <span class="st">&quot;[aeiou]|[0-9]&quot;</span>)</code></pre></div>
+<div id="htmlwidget-22ad0e51ad17b47cdd13" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-22ad0e51ad17b47cdd13">{"x":{"html":"<ul>\n  <li>t<span class='match'>8<\/span>67nine<\/li>\n  <li>gr<span class='match'>a<\/span>y9<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<ul>
+<li><p>Repetition</p></li>
+<li><code>?</code>: zero or one</li>
+<li><code>+</code>: one or more</li>
+<li><p><code>*</code>: zero or more</p></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;color&quot;</span>, <span class="st">&quot;colour&quot;</span>), <span class="st">&quot;colou?r&quot;</span>)</code></pre></div>
+<div id="htmlwidget-bd8b6478ecd1a7a93c7c" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bd8b6478ecd1a7a93c7c">{"x":{"html":"<ul>\n  <li><span class='match'>color<\/span><\/li>\n  <li><span class='match'>colour<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<ul>
+<li>Grouping and backreferences</li>
+</ul>
+<p>Parentheses define groups, which can be referenced using <code>\1</code>, <code>\2</code>, etc.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;banana&quot;</span>, <span class="st">&quot;coconut&quot;</span>, <span class="st">&quot;cucumber&quot;</span>, <span class="st">&quot;jujube&quot;</span>, <span class="st">&quot;papaya&quot;</span>, <span class="st">&quot;salal berry&quot;</span>)
+<span class="kw">str_view</span>(fruit, <span class="st">&quot;(..)</span><span class="ch">\\</span><span class="st">1&quot;</span>)</code></pre></div>
+<div id="htmlwidget-366619e745222ad41029" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-366619e745222ad41029">{"x":{"html":"<ul>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n  <li><span class='match'>coco<\/span>nut<\/li>\n  <li><span class='match'>cucu<\/span>mber<\/li>\n  <li><span class='match'>juju<\/span>be<\/li>\n  <li><span class='match'>papa<\/span>ya<\/li>\n  <li>s<span class='match'>alal<\/span> berry<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="tools-using-regular-expressions" class="section level3">
+<h3><span class="header-section-number">18.1.3</span> Tools using regular expressions</h3>
+<ul>
+<li>Determine which strings match a pattern: <code>str_detect</code>: given a vector of strings, return <code>TRUE</code> for those that match a regular expression, <code>FALSE</code> otherwise</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(words)
 
+<span class="kw">print</span>(<span class="kw">head</span>(words))</code></pre></div>
+<pre><code>## [1] &quot;a&quot;        &quot;able&quot;     &quot;about&quot;    &quot;absolute&quot; &quot;accept&quot;   &quot;account&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data_frame</span>(<span class="dt">word=</span>words, <span class="dt">result=</span><span class="kw">str_detect</span>(words, <span class="st">&quot;^[aeiou]&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">30</span>)</code></pre></div>
+<pre><code>## # A tibble: 30 x 2
+##    word   result
+##    &lt;chr&gt;  &lt;lgl&gt; 
+##  1 exact  T     
+##  2 get    F     
+##  3 policy F     
+##  4 cent   F     
+##  5 make   F     
+##  6 clear  F     
+##  7 heat   F     
+##  8 card   F     
+##  9 direct F     
+## 10 sign   F     
+## # ... with 20 more rows</code></pre>
+<p>Similarly, <code>str_count</code> returns the number of matches in a string instead of just <code>TRUE</code> or <code>FALSE</code></p>
+<ul>
+<li>Filter string vectors to include only those that match a regular expression</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(sentences)
+<span class="kw">print</span>(<span class="kw">head</span>(sentences))</code></pre></div>
+<pre><code>## [1] &quot;The birch canoe slid on the smooth planks.&quot; 
+## [2] &quot;Glue the sheet to the dark blue background.&quot;
+## [3] &quot;It&#39;s easy to tell the depth of a well.&quot;     
+## [4] &quot;These days a chicken leg is a rare dish.&quot;   
+## [5] &quot;Rice is often served in round bowls.&quot;       
+## [6] &quot;The juice of lemons makes fine punch.&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">colors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;purple&quot;</span>)
+colors_re &lt;-<span class="st"> </span><span class="kw">str_c</span>(colors, <span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>)
+<span class="kw">print</span>(colors_re)</code></pre></div>
+<pre><code>## [1] &quot;red|orange|yellow|green|blue|purple&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sentences_with_color &lt;-<span class="st"> </span><span class="kw">str_subset</span>(sentences, colors_re) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)
+<span class="kw">str_view_all</span>(sentences_with_color, colors_re)</code></pre></div>
+<div id="htmlwidget-151eb8288f8c285c2c7e" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-151eb8288f8c285c2c7e">{"x":{"html":"<ul>\n  <li>Glue the sheet to the dark <span class='match'>blue<\/span> background.<\/li>\n  <li>Two <span class='match'>blue<\/span> fish swam in the tank.<\/li>\n  <li>The colt rea<span class='match'>red<\/span> and threw the tall rider.<\/li>\n  <li>The wide road shimme<span class='match'>red<\/span> in the hot sun.<\/li>\n  <li>See the cat glaring at the sca<span class='match'>red<\/span> mouse.<\/li>\n  <li>A wisp of cloud hung in the <span class='match'>blue<\/span> air.<\/li>\n  <li>Leaves turn brown and <span class='match'>yellow<\/span> in the fall.<\/li>\n  <li>He orde<span class='match'>red<\/span> peach pie with ice cream.<\/li>\n  <li>Pure b<span class='match'>red<\/span> poodles have curls.<\/li>\n  <li>The spot on the blotter was made by <span class='match'>green<\/span> ink.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<ul>
+<li>Extracting matches: <code>str_extract</code>, <code>str_extract_all</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_extract</span>(sentences_with_color, colors_re)</code></pre></div>
+<pre><code>##  [1] &quot;blue&quot;   &quot;blue&quot;   &quot;red&quot;    &quot;red&quot;    &quot;red&quot;    &quot;blue&quot;   &quot;yellow&quot;
+##  [8] &quot;red&quot;    &quot;red&quot;    &quot;green&quot;</code></pre>
+<ul>
+<li>Grouped matches: <code>str_match</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">noun_re &lt;-<span class="st"> &quot;(a|the) ([^ ]+)&quot;</span>
+noun_matches &lt;-<span class="st"> </span>sentences <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">str_subset</span>(noun_re) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">str_match</span>(noun_re) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)
+noun_matches</code></pre></div>
+<pre><code>##       [,1]         [,2]  [,3]     
+##  [1,] &quot;the smooth&quot; &quot;the&quot; &quot;smooth&quot; 
+##  [2,] &quot;the sheet&quot;  &quot;the&quot; &quot;sheet&quot;  
+##  [3,] &quot;the depth&quot;  &quot;the&quot; &quot;depth&quot;  
+##  [4,] &quot;a chicken&quot;  &quot;a&quot;   &quot;chicken&quot;
+##  [5,] &quot;the parked&quot; &quot;the&quot; &quot;parked&quot; 
+##  [6,] &quot;the sun&quot;    &quot;the&quot; &quot;sun&quot;    
+##  [7,] &quot;the huge&quot;   &quot;the&quot; &quot;huge&quot;   
+##  [8,] &quot;the ball&quot;   &quot;the&quot; &quot;ball&quot;   
+##  [9,] &quot;the woman&quot;  &quot;the&quot; &quot;woman&quot;  
+## [10,] &quot;a helps&quot;    &quot;a&quot;   &quot;helps&quot;</code></pre>
+<p>The result is a string matrix, with one row for each string in the input vector. The first column includes the complete match to the regular expression (just like <code>str_extract</code>), the remaining columns has the matches for the groups defined in the pattern. To extract the first group matches one would index one of the columns. For example, the matches for the second group are</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">noun_matches[,<span class="dv">3</span>]</code></pre></div>
+<pre><code>##  [1] &quot;smooth&quot;  &quot;sheet&quot;   &quot;depth&quot;   &quot;chicken&quot; &quot;parked&quot;  &quot;sun&quot;     &quot;huge&quot;   
+##  [8] &quot;ball&quot;    &quot;woman&quot;   &quot;helps&quot;</code></pre>
+<ul>
+<li>Splitting strings: <code>str_split</code> split strings in a vector based on a match. For instance, to split sentences into words:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sentences <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">str_split</span>(<span class="st">&quot; &quot;</span>)</code></pre></div>
+<pre><code>## [[1]]
+## [1] &quot;The&quot;     &quot;birch&quot;   &quot;canoe&quot;   &quot;slid&quot;    &quot;on&quot;      &quot;the&quot;     &quot;smooth&quot; 
+## [8] &quot;planks.&quot;
+## 
+## [[2]]
+## [1] &quot;Glue&quot;        &quot;the&quot;         &quot;sheet&quot;       &quot;to&quot;          &quot;the&quot;        
+## [6] &quot;dark&quot;        &quot;blue&quot;        &quot;background.&quot;
+## 
+## [[3]]
+## [1] &quot;It&#39;s&quot;  &quot;easy&quot;  &quot;to&quot;    &quot;tell&quot;  &quot;the&quot;   &quot;depth&quot; &quot;of&quot;    &quot;a&quot;     &quot;well.&quot;
+## 
+## [[4]]
+## [1] &quot;These&quot;   &quot;days&quot;    &quot;a&quot;       &quot;chicken&quot; &quot;leg&quot;     &quot;is&quot;      &quot;a&quot;      
+## [8] &quot;rare&quot;    &quot;dish.&quot;  
+## 
+## [[5]]
+## [1] &quot;Rice&quot;   &quot;is&quot;     &quot;often&quot;  &quot;served&quot; &quot;in&quot;     &quot;round&quot;  &quot;bowls.&quot;</code></pre>
 </div>
-<p>This will open a tab in the File editor in which we can write expressions:</p>
-<div class="figure">
-<img src="img/rstudio_file.png" />
+<div id="extracting-attributes-from-text" class="section level3">
+<h3><span class="header-section-number">18.1.4</span> Extracting attributes from text</h3>
+<p>Handling free text in data pipelines and or statistical models is tricky. Frequently we extract attributes from text in order to perform analysis.</p>
+<p>We draw from <a href="https://www.tidytextmining.com/tidytext.html" class="uri">https://www.tidytextmining.com/tidytext.html</a> for this discussion.</p>
+<p>We usually think of text datasets (called a text <em>corpus</em>) in terms of</p>
+<ul>
+<li><p><em>documents</em>: the instances of free text in our dataset, and</p></li>
+<li><p><em>terms</em> the specific, e.g., words, they contain.</p></li>
+</ul>
+<p>In terms of the representation models we have used so far, we can think of <em>documents as entities</em>, described by attributes based on words, or <em>words as entitites</em>, described by attributes based on documents. To <em>tidy</em> text data, we tend to create <strong>one-token-per-row</strong> data frames that list the instances of <em>terms</em> in <em>documents</em> in a dataset</p>
+<p>Here’s a simple example using Jane Austen text</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(janeaustenr)
+<span class="kw">library</span>(tidyverse)
 
-</div>
-<p>We can then evaluate the expressions in the file one at a time, or all at the same time.</p>
-<p>We can then save these expressions in a script. In the Rstudio menu select <code>File&gt;Save</code> and save as a text file. The convention is to use the <code>.R</code> or <code>.r</code> file extension, e.g., <code>swiss_plot.r</code>.</p>
-<p><strong>On your own:</strong> Add expressions for additional plots to the script and save again. Run the new expressions.</p>
-</div>
-<div id="files-viewer" class="section level3">
-<h3><span class="header-section-number">4.4.6</span> Files viewer</h3>
-<p>Rstudio includes a Files viewer that you can use to find and load files. You can find the Files near the Plots viewer</p>
-<div class="figure">
-<img src="img/rstudio_files.png" />
+original_books &lt;-<span class="st"> </span><span class="kw">austen_books</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(book) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">linenumber =</span> <span class="kw">row_number</span>(),
+         <span class="dt">chapter =</span> <span class="kw">cumsum</span>(<span class="kw">str_detect</span>(text, <span class="kw">regex</span>(<span class="st">&quot;^chapter [</span><span class="ch">\\</span><span class="st">divxlc]&quot;</span>, <span class="dt">ignore_case=</span><span class="ot">TRUE</span>)))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>()
 
-</div>
-</div>
-</div>
-<div id="r-packages" class="section level2">
-<h2><span class="header-section-number">4.5</span> R packages</h2>
-<p>Another of R’s advantages for data analysis is that it has attracted a large number of extremely useful additions provided by users worldwide. These are housed in <a href="https://cran.r-project.org/web/packages/index.html">CRAN</a>.</p>
-<p>In this course we will make a lot of use of a set of packages bundled together into the <code>tidyverse</code> by Hadley Wickham and others. These packages make preparing, modeling and visualizing certain kinds data (which covers the vast majority of use cases) quite fun and pleasent. There is a webpage for the general tidyverse project: <a href="http://tidyverse.org" class="uri">http://tidyverse.org</a>, which includes pages for each of the packages included there.</p>
-<p>Let’s install the <code>tidyverse</code> into your R environment. There are two ways of installing packages. In the console, you can use the expression:</p>
-<p>In Rstudio, you can use the <em>Packages</em> tab:</p>
-<div class="figure">
-<img src="img/rstudio_install_packages.png" />
+original_books</code></pre></div>
+<pre><code>## # A tibble: 73,422 x 4
+##    text                  book                linenumber chapter
+##    &lt;chr&gt;                 &lt;fct&gt;                    &lt;int&gt;   &lt;int&gt;
+##  1 SENSE AND SENSIBILITY Sense &amp; Sensibility          1       0
+##  2 &quot;&quot;                    Sense &amp; Sensibility          2       0
+##  3 by Jane Austen        Sense &amp; Sensibility          3       0
+##  4 &quot;&quot;                    Sense &amp; Sensibility          4       0
+##  5 (1811)                Sense &amp; Sensibility          5       0
+##  6 &quot;&quot;                    Sense &amp; Sensibility          6       0
+##  7 &quot;&quot;                    Sense &amp; Sensibility          7       0
+##  8 &quot;&quot;                    Sense &amp; Sensibility          8       0
+##  9 &quot;&quot;                    Sense &amp; Sensibility          9       0
+## 10 CHAPTER 1             Sense &amp; Sensibility         10       1
+## # ... with 73,412 more rows</code></pre>
+<p>Let’s re-structure it as a <strong>one-token-per-row</strong> column using the <code>unnest_tokens</code> function in the <code>tidytext</code> package</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidytext)
 
+tidy_books &lt;-<span class="st"> </span>original_books <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">unnest_tokens</span>(word, text)
+tidy_books</code></pre></div>
+<pre><code>## # A tibble: 725,055 x 4
+##    book                linenumber chapter word       
+##    &lt;fct&gt;                    &lt;int&gt;   &lt;int&gt; &lt;chr&gt;      
+##  1 Sense &amp; Sensibility          1       0 sense      
+##  2 Sense &amp; Sensibility          1       0 and        
+##  3 Sense &amp; Sensibility          1       0 sensibility
+##  4 Sense &amp; Sensibility          3       0 by         
+##  5 Sense &amp; Sensibility          3       0 jane       
+##  6 Sense &amp; Sensibility          3       0 austen     
+##  7 Sense &amp; Sensibility          5       0 1811       
+##  8 Sense &amp; Sensibility         10       1 chapter    
+##  9 Sense &amp; Sensibility         10       1 1          
+## 10 Sense &amp; Sensibility         13       1 the        
+## # ... with 725,045 more rows</code></pre>
+<p>Let’s remove stop words from the data frame</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(stop_words)
+
+tidy_books &lt;-<span class="st"> </span>tidy_books <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">anti_join</span>(stop_words, <span class="dt">by=</span><span class="st">&quot;word&quot;</span>)
+
+tidy_books</code></pre></div>
+<pre><code>## # A tibble: 217,609 x 4
+##    book                linenumber chapter word       
+##    &lt;fct&gt;                    &lt;int&gt;   &lt;int&gt; &lt;chr&gt;      
+##  1 Sense &amp; Sensibility          1       0 sense      
+##  2 Sense &amp; Sensibility          1       0 sensibility
+##  3 Sense &amp; Sensibility          3       0 jane       
+##  4 Sense &amp; Sensibility          3       0 austen     
+##  5 Sense &amp; Sensibility          5       0 1811       
+##  6 Sense &amp; Sensibility         10       1 chapter    
+##  7 Sense &amp; Sensibility         10       1 1          
+##  8 Sense &amp; Sensibility         13       1 family     
+##  9 Sense &amp; Sensibility         13       1 dashwood   
+## 10 Sense &amp; Sensibility         13       1 settled    
+## # ... with 217,599 more rows</code></pre>
+<p>Now, we can use this dataset to compute attributes for entities of interest. For instance, let’s create a data frame with <em>words</em> as entities, with an attribute containing the number of times the word appears in this corpus</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">frequent_words &lt;-<span class="st"> </span>tidy_books <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">count</span>(word, <span class="dt">sort=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">600</span>)</code></pre></div>
+<p>Which can then use like other data frames as we have used previously. For example to plot most frequent words:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">frequent_words <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">reorder</span>(word, n)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>word, <span class="dt">y=</span>n)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_col</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="ot">NULL</span>, <span class="dt">y=</span><span class="st">&quot;frequency&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">coord_flip</span>()</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-93-1.svg" width="672" /></p>
 </div>
-<p><strong>On your own:</strong> Install the following additional packages which we will use later on: <code>rvest</code>, <code>stringr</code>, <code>nycflights13</code> and <code>broom</code>.</p>
 </div>
-<div id="additional-r-resources" class="section level2">
-<h2><span class="header-section-number">4.6</span> Additional R resources</h2>
-<p>Resources for learning and reading about R are listed in our <a href="http://www.hcbravo.org/IntroDataScience/resources/">here</a>. Of note are the <a href="http://swirlstats.com/">swirl project</a> and DataCamp’s [introduction to R] course.</p>
-</div>
-<div id="literate-programming" class="section level2">
-<h2><span class="header-section-number">4.7</span> Literate Programming</h2>
-<p>One last note before we get started. R has great support for <a href="http://en.wikipedia.org/wiki/Literate_programming">literate programming</a>, where source code that contains both code, the result of evaluating that code, and text explaining that code co-exist in a single document. This is extremely valuable in data analysis, as many choices made by data analysts are worth explaning in text, and interpretation of the results of analyses can co-exist with the computations used in that analysis. This document you are reading contains both text and code. In class, we will use <a href="http://rmarkdown.rstudio.com/">Rmarkdown</a> for this purpose.</p>
-</div>
-<div id="finishing-your-setup" class="section level2">
-<h2><span class="header-section-number">4.8</span> Finishing your setup</h2>
-<p>Complete your exit ticket as instructed.</p>
+<div id="handling-dates" class="section level2">
+<h2><span class="header-section-number">18.2</span> Handling dates</h2>
+<p>The <code>lubridate</code> package provides common operations for parsing and operating on dates and times. See <a href="http://r4ds.had.co.nz/dates-and-times.html" class="uri">http://r4ds.had.co.nz/dates-and-times.html</a> for more information.</p>
+<p>A number of functions for parsing dates in a variety of formats are provided, along with functions to extract specific components from parsed date objects</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lubridate)
+
+datetime &lt;-<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2016-07-08 12:34:56&quot;</span>)
+
+<span class="kw">year</span>(datetime)</code></pre></div>
+<pre><code>## [1] 2016</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">month</span>(datetime)</code></pre></div>
+<pre><code>## [1] 7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">day</span>(datetime)</code></pre></div>
+<pre><code>## [1] 8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mday</span>(datetime)</code></pre></div>
+<pre><code>## [1] 8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">yday</span>(datetime)</code></pre></div>
+<pre><code>## [1] 190</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wday</span>(datetime)</code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<p>They can also return month and day of the week names, abbreviated, as ordered factors</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">month</span>(datetime, <span class="dt">label=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] Jul
+## 12 Levels: Jan &lt; Feb &lt; Mar &lt; Apr &lt; May &lt; Jun &lt; Jul &lt; Aug &lt; Sep &lt; ... &lt; Dec</code></pre>
+<p>We can also create attributes of type <code>datetime</code> from string attributes. Here’s an example using the flights dataset</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights_with_dt &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_dt=</span><span class="kw">make_datetime</span>(year, month, day, dep_time <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span>, dep_time <span class="op">%%</span><span class="st"> </span><span class="dv">100</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(year, month, day, dep_time, dep_dt)
+flights_with_dt</code></pre></div>
+<pre><code>## # A tibble: 336,776 x 5
+##     year month   day dep_time dep_dt             
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;dttm&gt;             
+##  1  2013     1     1      517 2013-01-01 05:17:00
+##  2  2013     1     1      533 2013-01-01 05:33:00
+##  3  2013     1     1      542 2013-01-01 05:42:00
+##  4  2013     1     1      544 2013-01-01 05:44:00
+##  5  2013     1     1      554 2013-01-01 05:54:00
+##  6  2013     1     1      554 2013-01-01 05:54:00
+##  7  2013     1     1      555 2013-01-01 05:55:00
+##  8  2013     1     1      557 2013-01-01 05:57:00
+##  9  2013     1     1      557 2013-01-01 05:57:00
+## 10  2013     1     1      558 2013-01-01 05:58:00
+## # ... with 336,766 more rows</code></pre>
+<p>With this attribute in place we can extract day of the week and plot the number of flights per day of the week</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights_with_dt <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">wday=</span><span class="kw">wday</span>(dep_dt, <span class="dt">label=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>wday)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_bar</span>()</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-97-1.svg" width="672" /></p>
+
 </div>
 </div>
             </section>
@@ -427,8 +626,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="an-illustrative-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="part-data-representation-modeling-ingestion-and-cleaning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tidying-data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

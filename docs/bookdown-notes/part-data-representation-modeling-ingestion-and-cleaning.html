@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="an-illustrative-analysis.html">
-<link rel="next" href="part-data-representation-modeling-ingestion-and-cleaning.html">
+<link rel="prev" href="setting-up-the-r-data-science-toolbox.html">
+<link rel="next" href="measurements-and-data-types.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -281,154 +281,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="setting-up-the-r-data-science-toolbox" class="section level1">
-<h1><span class="header-section-number">4</span> Setting up the R Data Science Toolbox</h1>
-<p>Here we setup R, RStudio and anything else we will use in the course.</p>
-<div id="some-history" class="section level2">
-<h2><span class="header-section-number">4.1</span> Some history</h2>
-<p>R is an offspring of S, a language created in AT&amp;T Labs by John Chambers (now at Stanford) and others in 1976 with the goal of creating an environment for statistical computing and data analysis. The standard for the language in current use was settled in 1998. That same year, “S” won the ACM Software System award, awarded to software systems “that have a lasting influence, reflected in contributions to concepts, in commercial acceptance, or both”.</p>
-<p>In 1991, Robert Gentleman and Ross Ihaka created R to provide an open source implementation of the S language and environment. They also redesigned the language to enforce lexical scoping rules. It has been maintained by the R core group since 1997, and in 2015 an R consortium, including Microsoft, Google, and others, was created.</p>
-<p>Along with Python it is one of the most popular environments for data analysis (e.g., figure below from <a href="https://www.kdnuggets.com/2017/05/poll-analytics-data-science-machine-learning-software-leaders.html">KDNuggets 2017 software survey</a></p>
-<div class="figure">
-<img src="img/kdnuggets-2017.jpg" />
+<div id="part-data-representation-modeling-ingestion-and-cleaning" class="section level1 unnumbered">
+<h1>(Part) Data representation modeling, ingestion and cleaning</h1>
 
-</div>
-<p>We use R for this class because we find that besides it being a state-of-the-art data analysis environment, it provides a clean end-to-end platform for teaching material across the data management-modeling-communication spectrum that we study in class. However, be aware that as you move on in the Data Science field you most likely will need to add Python to your toolbelt.</p>
-</div>
-<div id="setting-up-r" class="section level2">
-<h2><span class="header-section-number">4.2</span> Setting up R</h2>
-<p>R is a free, open source, environment for data analysis. It is available as a free binary download for Mac, Linux and Windows. For the more adventorous, it can also be compiled from source. To install R in your computer go to <a href="https://cran.r-project.org/index.html" class="uri">https://cran.r-project.org/index.html</a> and download and install the appropriate binary file.</p>
-<div class="figure">
-<img src="img/cran.png" />
-
-</div>
-<p>This will install the base R system: the R programming language, a few packages for common data analyses and a development environment.</p>
-</div>
-<div id="setting-up-rstudio" class="section level2">
-<h2><span class="header-section-number">4.3</span> Setting up Rstudio</h2>
-<p>We will actually use Rstudio to interact with R. Rstudio is a very powerful application to make data analysis with R easier to do. To install go to <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a> and download the appropriate version of Rstudio.</p>
-<div class="figure">
-<img src="img/rstudio.png" />
-
-</div>
-</div>
-<div id="a-first-look-at-rstudio" class="section level2">
-<h2><span class="header-section-number">4.4</span> A first look at Rstudio</h2>
-<p>Let’s take a first look at Rstudio. The first thing you will notice is that Rstudio is divided into panes. Let’s take a look first at the <em>Console</em>.</p>
-<div id="interactive-console" class="section level3">
-<h3><span class="header-section-number">4.4.1</span> Interactive Console</h3>
-<p>The most immediate way to interact with R is through the interactive console. Here we can write R instructions to perform our data analyses. We want to start using data so the first instructions we will look at deal with loading data.</p>
-<p>When you installed R, a few illustrative datasets were installed as well. Let’s take a look at the list of datasets you now have access to. Write the following command in the console</p>
-<div class="figure">
-<img src="img/rstudio_data.png" />
-
-</div>
-<p>This will list names and descriptions of datasets available in your R installation. Let’s try to find out more information about these datasets. In R, the first attempt to get help with something is to use the <code>?</code> operation. So, to get help about the <code>swiss</code> dataset we can enter the following in the console</p>
-<p>This will make the documentation for the <code>swiss</code> dataset open in another pane.</p>
-<div class="figure">
-<img src="img/rstudio_swiss.png" />
-
-</div>
-<p><strong>On your own:</strong> Find more information about a different dataset using the <code>?</code> operator.</p>
-</div>
-<div id="data-viewer" class="section level3">
-<h3><span class="header-section-number">4.4.2</span> Data Viewer</h3>
-<p>According to the documentation we just saw for <code>swiss</code>, this is a <code>data.frame</code> with 47 observations and 6 variables. The <code>data.frame</code> is the basic structure we will use to represent data throughout the course. We will see this again repeatedly, and use a couple of other names (e.g., <code>tibble</code>) to refer to this. Intuitively, you can think of the <code>data.frame</code> like a spreadsheet, with rows representing observations, and columns representing variables that describe those observations. Let’s see what the <code>swiss</code> data looks like using the Rstudio data viewer.</p>
-<div class="figure">
-<img src="img/rstudio_view_swiss.png" />
-
-</div>
-<p>The Data Viewer lets you reorder data by the values in a column. It also lets you filter rows of the data by values as well.</p>
-<p><strong>On your own</strong>: Use the Data Viewer to explore another of the datasets you saw listed before.</p>
-</div>
-<div id="names-values-and-functions" class="section level3">
-<h3><span class="header-section-number">4.4.3</span> Names, values and functions</h3>
-<p>Let’s make a very short pause to talk about something you may have noticed. In the console, we’ve now written a few instructions, e.g. <code>View(swiss)</code>. Let’s take a closer look at how these instructions are put together.</p>
-<p><em>expressions</em>: first of all, we call these instructions <em>expressions</em>, which are just text that R can evaluate into a value. <code>View(swiss)</code> is an expression.</p>
-<p><em>values</em>: so, what’s a value? They are numbers, strings, data frames, etc. This is the data we will be working with. The number <code>2</code> is a value. So is the string <code>&quot;Hector&quot;</code>.</p>
-<p>So, what value is produced when R evaluates the expression <code>View(swiss)</code>? Nothing, which we also treat as a value. That wasn’t very interesting, but it does have a side effect: it shows the <code>swiss</code> dataset in the Data viewer.</p>
-<p>How about a simpler expression: <code>swiss</code>, what value is produced when R evaluates the expression <code>swiss</code>? The data.frame containing that data. Try it out in the console.</p>
-<p><em>names</em>: so if <code>swiss</code> isn’t a value, what is it? It is a <em>name</em>. We use these to refer to values. So, when we write the expression <code>swiss</code>, we tell R we want the <em>value</em> referenced by the name <code>swiss</code>, that is, the data itself!</p>
-<div class="figure">
-<img src="img/names_values.png" />
-
-</div>
-<p><em>functions</em>: Besides numbers, strings, data frames, etc. another important type of value is the <em>function</em>. Functions are a series of instructions that take some input value and produce a different value. The name <code>View</code> refers to the function that takes a data frame as input, and displays it in the Data viewer. Functions are called using the parentheses we saw before: <code>View(swiss)</code>, the parentheses say that you are passing input <code>swiss</code> to the function <code>View</code>. We’ll see later how we can write our own functions.</p>
-</div>
-<div id="plotting" class="section level3">
-<h3><span class="header-section-number">4.4.4</span> Plotting</h3>
-<p>Next, I want to show the <em>Plots</em> pane in Rstudio. Let’s make a plot using the <code>swiss</code> dataset:</p>
-<div class="figure">
-<img src="img/rstudio_plot_swiss.png" />
-
-</div>
-<p>It’s not pretty, but it was very easy to produce. There’s a couple of things going on here…</p>
-<ul>
-<li><p><code>plot</code> is a function, it takes two inputs, the data to put in the x and y axes, evaluates to nothing, but creates a plot of the data</p></li>
-<li><p><code>swiss$Education</code> is how we refer to the <code>Education</code> column in the <code>swiss</code> data frame.</p></li>
-</ul>
-<p><strong>On your own</strong>: Make a plot using other variables in the <code>swiss</code> dataset.</p>
-</div>
-<div id="editor" class="section level3">
-<h3><span class="header-section-number">4.4.5</span> Editor</h3>
-<p>So far, we’ve made some good progress: we know how to write expressions on the R console so that they are evaluated, we are starting to get a basic understanding of how these expressions are constructed, we can use the Data viewer to explore data frames, and made one plot that was displayed in the Plots pane. To finish this quick tour, I want to look at two more Rstudio panes: the file editor, and the File viewer.</p>
-<p>As you have noticed, everytime we want to evaluate an expression on the console, we have to write it in. For example, if we want to change the plot we made above to include a different variable, we have to write the whole thing again. Also, what if I forgot what expression I used to make a specific plot? Even better, what if I wanted somebody else to make the plot I just made?</p>
-<p>By far, one of the biggest advantages of using R over Excel or other similar programs, is that we can write expressions in scripts that are easy to share with others, making analyses easier to reproduce. Let’s write a script that we can use to make the same plot we just made.</p>
-<p>In the Rstudio menu select <code>File&gt;New File&gt;R Script</code></p>
-<div class="figure">
-<img src="img/rstudio_new_script.png" />
-
-</div>
-<p>This will open a tab in the File editor in which we can write expressions:</p>
-<div class="figure">
-<img src="img/rstudio_file.png" />
-
-</div>
-<p>We can then evaluate the expressions in the file one at a time, or all at the same time.</p>
-<p>We can then save these expressions in a script. In the Rstudio menu select <code>File&gt;Save</code> and save as a text file. The convention is to use the <code>.R</code> or <code>.r</code> file extension, e.g., <code>swiss_plot.r</code>.</p>
-<p><strong>On your own:</strong> Add expressions for additional plots to the script and save again. Run the new expressions.</p>
-</div>
-<div id="files-viewer" class="section level3">
-<h3><span class="header-section-number">4.4.6</span> Files viewer</h3>
-<p>Rstudio includes a Files viewer that you can use to find and load files. You can find the Files near the Plots viewer</p>
-<div class="figure">
-<img src="img/rstudio_files.png" />
-
-</div>
-</div>
-</div>
-<div id="r-packages" class="section level2">
-<h2><span class="header-section-number">4.5</span> R packages</h2>
-<p>Another of R’s advantages for data analysis is that it has attracted a large number of extremely useful additions provided by users worldwide. These are housed in <a href="https://cran.r-project.org/web/packages/index.html">CRAN</a>.</p>
-<p>In this course we will make a lot of use of a set of packages bundled together into the <code>tidyverse</code> by Hadley Wickham and others. These packages make preparing, modeling and visualizing certain kinds data (which covers the vast majority of use cases) quite fun and pleasent. There is a webpage for the general tidyverse project: <a href="http://tidyverse.org" class="uri">http://tidyverse.org</a>, which includes pages for each of the packages included there.</p>
-<p>Let’s install the <code>tidyverse</code> into your R environment. There are two ways of installing packages. In the console, you can use the expression:</p>
-<p>In Rstudio, you can use the <em>Packages</em> tab:</p>
-<div class="figure">
-<img src="img/rstudio_install_packages.png" />
-
-</div>
-<p><strong>On your own:</strong> Install the following additional packages which we will use later on: <code>rvest</code>, <code>stringr</code>, <code>nycflights13</code> and <code>broom</code>.</p>
-</div>
-<div id="additional-r-resources" class="section level2">
-<h2><span class="header-section-number">4.6</span> Additional R resources</h2>
-<p>Resources for learning and reading about R are listed in our <a href="http://www.hcbravo.org/IntroDataScience/resources/">here</a>. Of note are the <a href="http://swirlstats.com/">swirl project</a> and DataCamp’s [introduction to R] course.</p>
-</div>
-<div id="literate-programming" class="section level2">
-<h2><span class="header-section-number">4.7</span> Literate Programming</h2>
-<p>One last note before we get started. R has great support for <a href="http://en.wikipedia.org/wiki/Literate_programming">literate programming</a>, where source code that contains both code, the result of evaluating that code, and text explaining that code co-exist in a single document. This is extremely valuable in data analysis, as many choices made by data analysts are worth explaning in text, and interpretation of the results of analyses can co-exist with the computations used in that analysis. This document you are reading contains both text and code. In class, we will use <a href="http://rmarkdown.rstudio.com/">Rmarkdown</a> for this purpose.</p>
-</div>
-<div id="finishing-your-setup" class="section level2">
-<h2><span class="header-section-number">4.8</span> Finishing your setup</h2>
-<p>Complete your exit ticket as instructed.</p>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="an-illustrative-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="part-data-representation-modeling-ingestion-and-cleaning.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="setting-up-the-r-data-science-toolbox.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="measurements-and-data-types.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
