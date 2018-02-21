@@ -140,10 +140,8 @@ link = "homeworks/er_sql/"
 date = "2/22"
 
 [[day09.covers]]
-title = "Entity Resolution and Record Linkage"
-
-[[day09.covers]]
 title = "Midterm I catch-up and review"
+notes = "misc/midtermI_review.pdf"
 
 [day10]
 date = "2/27"
@@ -153,6 +151,9 @@ title = "Midterm I"
 
 [day11]
 date = "3/1"
+
+[[day11.covers]]
+title = "Entity Resolution and Record Linkage"
 
 [[day11.covers]]
 title = "Exploratory Data Analysis 1: Visualization"
