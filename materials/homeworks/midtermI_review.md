@@ -138,7 +138,9 @@ This document describes material that will be fair game in the midterm exam. Eac
 
 ### Level 1
 
-- The gather and spread data tidying operations
+- Common problems in data tidying
+- The gather and spread data tidying operations (data values as headers)
+- Normalizing data tables (More than one entity in a table)
 - Regular expression basics
 - Tools to extract and clean text data
 
