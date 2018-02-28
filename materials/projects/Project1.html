@@ -402,7 +402,7 @@ This work is supported by NASA’s Virtual Observatories Program
 <ol style="list-style-type: decimal">
 <li><p>Write a function <code>flare_similarity</code> which computes a <em>similarity</em> <span class="math inline">\(s(e_1, e_2)\)</span> between flares <span class="math inline">\(e_1 \in E_1\)</span> and <span class="math inline">\(e_2 \in E_2\)</span>.</p></li>
 <li><p>Write a second function <code>flare_match</code> that computes for each flare <span class="math inline">\(e_1 \in E_1\)</span> which flare <span class="math inline">\(e_2 \in E_2\)</span> is the most similar. Your function can return <code>NA</code> if there is no entity <span class="math inline">\(e_2\)</span> that is sufficiently similar. Here, you determine what is the best matching entry in the NASA data for each of the top 50 solar flares in the SpaceWeatherLive page, if there is such an entry.</p></li>
-<li><p>Add the result of <code>flare_match</code> to the top 50 table.</p></li>
+<li><p>Add the result of <code>flare_match</code> to the top 50 table as the <em>index</em> of the best matching row in the NASA table, or <code>NA</code>.</p></li>
 </ol>
 <p>In your submission, include an text explanation of how you define the similarity function <span class="math inline">\(s(e_1, e_2)\)</span> and how you use it to determine the best matching entitiy</p>
 </div>

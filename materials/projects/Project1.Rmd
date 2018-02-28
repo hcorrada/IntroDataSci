@@ -322,7 +322,7 @@ Let's see if we can improve how well the two datasets match each other by doing 
 
 2) Write a second function `flare_match` that computes for each flare $e_1 \in E_1$ which flare $e_2 \in E_2$ is the most similar. Your function can return `NA` if there is no entity $e_2$ that is sufficiently similar. Here, you determine what is the best matching entry in the NASA data for each of the top 50 solar flares in the SpaceWeatherLive page, if there is such an entry.
 
-3) Add the result of `flare_match` to the top 50 table.
+3) Add the result of `flare_match` to the top 50 table as the _index_ of the best matching row in the NASA table, or `NA`.
 
 In your submission, include an text explanation of how you define the similarity function $s(e_1, e_2)$ and how you use it to determine the best matching entitiy
 
