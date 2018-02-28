@@ -1,6 +1,6 @@
 ---
-title: "Project 1"
-author: "CMSC320"
+title: "Project 1: Data scraping and cleaning"
+author: "CMSC320, Spring 2018"
 output: html_document
 ---
 
@@ -8,48 +8,57 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-**Posted:** Sep 26, 2016  
+**Posted:** Feb 28, 2018    
 **Last Updated:** `r format(Sys.Date(), "%b %d, %Y")`  
-**Due:** Oct 10, 2016  
+**Due:** Mar 14, 2018    
 
 You've been hired by a new space weather startup looking to disrupt the space weather reporting business. Your first project
-is to provide better data about the top 50 solar flares recorded so far than that shown by your competitor [SpaceWeatherLive.com](https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares). To do this, they've pointed you to
-[this messy HTML page](http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html) from NASA ([available here also](/misc/waves_type2.html)) where you can get extra data your startup is going to post in your new spiffy site.
+is to provide better data about the top 50 solar flares recorded so far than the data shown by your startup
+'s competitor [SpaceWeatherLive.com](https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares). To do this, your boss pointed you to
+[this messy HTML page](http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html) from NASA ([available here also](/misc/waves_type2.html)) where you can get extra data that your startup can post in your new spiffy site.
 
-Of course, you don't have access to the raw data for either of these two tables, so as an enterprising data scientist you will scrape this information directly from each HTML page using all the great tools available to you in R. By the way, you should read up a bit on [Solar Flares](https://en.wikipedia.org/wiki/Solar_flare), [coronal mass ejections](https://www.spaceweatherlive.com/en/help/what-is-a-coronal-mass-ejection-cme), [the solar flare alphabet soup](http://spaceweather.com/glossary/flareclasses.html), [the scary storms of Halloween 2003](http://www.nasa.gov/topics/solarsystem/features/halloween_storms.html), and [sickening solar flares](https://science.nasa.gov/science-news/science-at-nasa/2005/27jan_solarflares). 
+Of course, you don't have access to the raw data for either of these two tables, so as an enterprising data scientist you will scrape this information directly from each HTML page using all the great tools we have seen in class. 
 
-Many of the operations used for the project are described in the book [R for Data Science](http://r4ds.had.co.nz/) by Hadley Wickham. I also highly recommend you look at the vignettes for the `readr` package https://cran.r-project.org/web/packages/readr/vignettes/column-types.html, and the `lubridate` package https://cran.r-project.org/web/packages/lubridate/vignettes/lubridate.html, and this `rvest` tutorial http://stat4701.github.io/edav/2015/04/02/rvest_tutorial/.
+By the way, you should read up a bit on [Solar Flares](https://en.wikipedia.org/wiki/Solar_flare), [coronal mass ejections](https://www.spaceweatherlive.com/en/help/what-is-a-coronal-mass-ejection-cme), [the solar flare alphabet soup](http://spaceweather.com/glossary/flareclasses.html), [the scary storms of Halloween 2003](http://www.nasa.gov/topics/solarsystem/features/halloween_storms.html), and [sickening solar flares](https://science.nasa.gov/science-news/science-at-nasa/2005/27jan_solarflares). 
+
+For this project you will do the following:
+
+- Scrape and prepare each of the two datasets  
+- Integrate the two datasets (including some Entity Resolution)  
+- Exploratory Analysis  
 
 ## Part 1: Data scraping and preparation
 
 ### Step 1: Scrape your competitor's data (10 pts)
 
-Use the `rvest` package to scrape data for the top 50 solar flares shown in [SpaceWeatherLive.com](https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares). Steps to do this are:
+Scrape data for the top 50 solar flares shown in [SpaceWeatherLive.com](https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares). Steps to do this are:
 
 1. Use the `html` function to read the html page from the url above
 2. Use the `html_nodes` function to find the page node corresponding to the table we want. Notice there are more than one table in that page, so you need to make sure you are finding the proper node.
 3. Use the `html_table` to parse the table into a data frame
-4. Set reasonable names for the table columns, e.g., `rank`, `x_classification`, `date`, `region`,
-`start_time`, `maximum_time`, `end_time`, `movie`. You can use `magrittr::set_colnames` to do this within a pipeline.
-5. Use the `tibble::as_tibble` function to make display and keeping track of column types easier.
+4. Rename attributes to some reasonable names for, e.g., `rank`, `flare_classification`, `date`, `flare_region`,
+`start_time`, `maximum_time`, `end_time`, `movie`. You can use `magrittr::set_colnames` within a pipeline.
+5. Finish the pipeline with a call to `as_data_frame` to make the data frame easier to use.
 
-The result should be a data frame, a `tibble` really with the first few rows as:
+The result should be a data frame, a `tibble` really, with the first few rows as:
 
 ```
-# A tibble: 50 × 8
-    rank x_class       date region start_time max_time end_time             movie
-   <int>   <chr>      <chr>  <chr>      <chr>    <chr>    <chr>             <chr>
-1      1   X28.0 2003/11/04   0486      19:29    19:53    20:06 MovieView archive
-2      2     X20 2001/04/02   9393      21:32    21:51    22:03 MovieView archive
-3      3   X17.2 2003/10/28   0486      09:51    11:10    11:24 MovieView archive
-4      4   X17.0 2005/09/07   0808      17:17    17:40    18:03 MovieView archive
-5      5   X14.4 2001/04/15   9415      13:19    13:50    13:55 MovieView archive
-6      6   X10.0 2003/10/29   0486      20:37    20:49    21:01 MovieView archive
-7      7    X9.4 1997/11/06      -      11:49    11:55    12:01 MovieView archive
-8      8    X9.0 2006/12/05   0930      10:18    10:35    10:45 MovieView archive
-9      9    X8.3 2003/11/02   0486      17:03    17:25    17:39 MovieView archive
-10    10    X7.1 2005/01/20   0720      06:36    07:01    07:26 MovieView archive
-# ... with 40 more rows
+# A tibble: 50 x 8
+    rank flare_classification date       flare_region
+   <int> <chr>                <chr>             <int>
+ 1     1 X28.0                2003/11/04          486
+ 2     2 X20.0                2001/04/02         9393
+ 3     3 X17.2                2003/10/28          486
+ 4     4 X17.0                2005/09/07          808
+ 5     5 X14.4                2001/04/15         9415
+ 6     6 X10.0                2003/10/29          486
+ 7     7 X9.4                 1997/11/06         8100
+ 8     8 X9.3                 2017/09/06         2673
+ 9     9 X9.0                 2006/12/05          930
+10    10 X8.3                 2003/11/02          486
+# ... with 40 more rows, and 4 more variables:
+#   start_time <chr>, max_time <chr>, end_time <chr>,
+#   movie <chr>
 ```
 
 ### Step 2: Tidy the top 50 solar flare data (10 pts)
@@ -58,26 +67,27 @@ Your next step is to make sure this table is usable using the `dplyr` and `tidyr
 
 1. Drop the last column of the table, since we are not going to use it moving forward.
 2. Use the `tidyr::unite` package to combine the `date` and each of the three time columns into three datetime columns. You will see why this is useful later on.
-3. Set regions coded as `-` as missing (`NA`). You can use `stringr::str_detect` here.
-4. Use the `readr::type_convert`` function to convert columns containing datetimes into actual datetime objects.
+3. Use the `readr::type_convert` function to convert columns containing datetimes into actual datetime objects (see `?col_datetime`, especially the `format` argument) .
 
-The result of this step should be a data frame with the first few rows as:
+The result of this step should be a data_frame with the first few rows as:
 
 ```
-# A tibble: 50 × 6
-    rank x_class      start_datetime        max_datetime        end_datetime region
-   <int>   <chr>              <dttm>              <dttm>              <dttm>  <chr>
-1      1   X28.0 2003-11-04 19:29:00 2003-11-04 19:53:00 2003-11-04 20:06:00   0486
-2      2     X20 2001-04-02 21:32:00 2001-04-02 21:51:00 2001-04-02 22:03:00   9393
-3      3   X17.2 2003-10-28 09:51:00 2003-10-28 11:10:00 2003-10-28 11:24:00   0486
-4      4   X17.0 2005-09-07 17:17:00 2005-09-07 17:40:00 2005-09-07 18:03:00   0808
-5      5   X14.4 2001-04-15 13:19:00 2001-04-15 13:50:00 2001-04-15 13:55:00   9415
-6      6   X10.0 2003-10-29 20:37:00 2003-10-29 20:49:00 2003-10-29 21:01:00   0486
-7      7    X9.4 1997-11-06 11:49:00 1997-11-06 11:55:00 1997-11-06 12:01:00   <NA>
-8      8    X9.0 2006-12-05 10:18:00 2006-12-05 10:35:00 2006-12-05 10:45:00   0930
-9      9    X8.3 2003-11-02 17:03:00 2003-11-02 17:25:00 2003-11-02 17:39:00   0486
-10    10    X7.1 2005-01-20 06:36:00 2005-01-20 07:01:00 2005-01-20 07:26:00   0720
-# ... with 40 more rows
+# A tibble: 50 x 6
+    rank flare_classification start_datetime     
+ * <int> <chr>                <dttm>             
+ 1     1 X28.0                2003-11-04 19:29:00
+ 2     2 X20.0                2001-04-02 21:32:00
+ 3     3 X17.2                2003-10-28 09:51:00
+ 4     4 X17.0                2005-09-07 17:17:00
+ 5     5 X14.4                2001-04-15 13:19:00
+ 6     6 X10.0                2003-10-29 20:37:00
+ 7     7 X9.4                 1997-11-06 11:49:00
+ 8     8 X9.3                 2017-09-06 11:53:00
+ 9     9 X9.0                 2006-12-05 10:18:00
+10    10 X8.3                 2003-11-02 17:03:00
+# ... with 40 more rows, and 3 more variables:
+#   max_datetime <dttm>, end_datetime <dttm>,
+#   flare_region <int>
 ```
 
 ### Step 3. Scrape the NASA data (15 pts)
@@ -230,58 +240,68 @@ Virtual Observatories Program</p>
 
 #### Tasks
 
-1. Use `rvest` functions (e.g., `html_node`, `html_text`) and `stringr` functions (e.g., `str_split`, `str_subset`) obtain each row of data as a long string. Create a `data_frame` at this point so it's easier to use `dplyr` and `tidyr` for the next few steps.
+1. Use `rvest` functions (e.g., `html_node`, `html_text`) and `stringr` functions (e.g., `str_split`, `str_subset`) to obtain each row of data as a long string. Create a `data_frame` using `as_data_frame` at this point so it's easier to use `dplyr` and `tidyr` for the next few steps.
 2. Use `tidyr::separate` to separate each line of text into a data row. Choose appropriate names for columns.
 
 The result of this step should be similar to:
 
 ```
-# A tibble: 482 × 14
-   start_date start_time end_date end_time start_frequency end_frequency flare_location flare_region
-*       <chr>      <chr>    <chr>    <chr>           <chr>         <chr>          <chr>        <chr>
-1  1997/04/01      14:00    04/01    14:15            8000          4000         S25E16         8026
-2  1997/04/07      14:30    04/07    17:30           11000          1000         S28E19         8027
-3  1997/05/12      05:15    05/14    16:00           12000            80         N21W08         8038
-4  1997/05/21      20:20    05/21    22:00            5000           500         N05W12         8040
-5  1997/09/23      21:53    09/23    22:16            6000          2000         S29E25         8088
-6  1997/11/03      05:15    11/03    12:00           14000           250         S20W13         8100
-7  1997/11/03      10:30    11/03    11:30           14000          5000         S16W21         8100
-8  1997/11/04      06:00    11/05    04:30           14000           100         S14W33         8100
-9  1997/11/06      12:20    11/07    08:30           14000           100         S18W63         8100
-10 1997/11/27      13:30    11/27    14:00           14000          7000         N17E63         8113
-# ... with 472 more rows, and 6 more variables: flare_classification <chr>, cme_date <chr>,
-#   cme_time <chr>, cme_angle <chr>, cme_width <chr>, cme_speed <chr>
+# A tibble: 482 x 14
+   start_date start_time end_date
+ * <chr>      <chr>      <chr>   
+ 1 1997/04/01 14:00      04/01   
+ 2 1997/04/07 14:30      04/07   
+ 3 1997/05/12 05:15      05/14   
+ 4 1997/05/21 20:20      05/21   
+ 5 1997/09/23 21:53      09/23   
+ 6 1997/11/03 05:15      11/03   
+ 7 1997/11/03 10:30      11/03   
+ 8 1997/11/04 06:00      11/05   
+ 9 1997/11/06 12:20      11/07   
+10 1997/11/27 13:30      11/27   
+# ... with 472 more rows, and 11 more
+#   variables: end_time <chr>,
+#   start_frequency <chr>, end_frequency
+#   <chr>, flare_location <chr>,
+#   flare_region <chr>,
+#   flare_classification <chr>, cme_date
+#   <chr>, cme_time <chr>, cme_angle
+#   <chr>, cme_width <chr>, cme_speed
+#   <chr>
 ```
 
 ### Step 4: Tidy the NASA the table (15 pts)
 
 Now, we tidy up the NASA table. Here we will code missing observations properly, recode columns that correspond to more than one piece of information, treat dates and times appropriately, and finally convert each column to the appropriate data type.
 
-1. Recode any missing entries as `NA`. Refer to the data description in http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html (and above) to see how missing entries are encoded in each column. 
-2. The CPA column (`cme_angle`) contains angles in degrees for most rows, except for halo flares, which are coded as `Halo`. Create a new column that indicates if a row corresponds to a halo flare or not, and then replace `Halo` entries in the `cme_angle` column as NA.
-3. The `width` column indicates if the given value is a lower bound. Create a new column that indicates if width is given as a lower bound, and remove any non-numeric part of the width column.
+1. Recode any missing entries as `NA`. Refer to the data description in http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html (and above) to see how missing entries are encoded. 
+2. The CPA column (`cme_angle`) contains angles in degrees for most rows, except for halo flares, which are coded as `Halo`. Create a new (logical) column that indicates if a row corresponds to a halo flare or not, and then replace `Halo` entries in the `cme_angle` column as NA.
+3. The `width` column indicates if the given value is a lower bound. Create a new (logical) column that indicates if width is given as a lower bound, and remove any non-numeric part of the width column.
 4. Combine date and time columns for `start`, `end` and `cme` so they can be encoded as `datetime` objects.
 5. Use the `readr::type_convert` function to convert columns to appropriate types.
 
 The output of this step should be similar to this (note the column types)
 
 ```
-# A tibble: 482 × 13
-        start_datetime        end_datetime        cme_datetime start_frequency end_frequency
-                <dttm>              <dttm>              <dttm>           <int>         <int>
-1  1997-04-01 14:00:00 1997-04-01 14:15:00 1997-04-01 15:18:00            8000          4000
-2  1997-04-07 14:30:00 1997-04-07 17:30:00 1997-04-07 14:27:00           11000          1000
-3  1997-05-12 05:15:00 1997-05-14 16:00:00 1997-05-12 05:30:00           12000            80
-4  1997-05-21 20:20:00 1997-05-21 22:00:00 1997-05-21 21:00:00            5000           500
-5  1997-09-23 21:53:00 1997-09-23 22:16:00 1997-09-23 22:02:00            6000          2000
-6  1997-11-03 05:15:00 1997-11-03 12:00:00 1997-11-03 05:28:00           14000           250
-7  1997-11-03 10:30:00 1997-11-03 11:30:00 1997-11-03 11:11:00           14000          5000
-8  1997-11-04 06:00:00 1997-11-05 04:30:00 1997-11-04 06:10:00           14000           100
-9  1997-11-06 12:20:00 1997-11-07 08:30:00 1997-11-06 12:10:00           14000           100
-10 1997-11-27 13:30:00 1997-11-27 14:00:00 1997-11-27 13:56:00           14000          7000
-# ... with 472 more rows, and 8 more variables: flare_location <chr>, flare_region <chr>,
-#   flare_classification <chr>, cme_angle <int>, cme_width <int>, cme_speed <int>, cme_halo <lgl>,
-#   cme_width_lb <lgl>
+# A tibble: 482 x 13
+   start_datetime      end_datetime       
+   <dttm>              <dttm>             
+ 1 1997-04-01 14:00:00 1997-04-01 14:15:00
+ 2 1997-04-07 14:30:00 1997-04-07 17:30:00
+ 3 1997-05-12 05:15:00 1997-05-14 16:00:00
+ 4 1997-05-21 20:20:00 1997-05-21 22:00:00
+ 5 1997-09-23 21:53:00 1997-09-23 22:16:00
+ 6 1997-11-03 05:15:00 1997-11-03 12:00:00
+ 7 1997-11-03 10:30:00 1997-11-03 11:30:00
+ 8 1997-11-04 06:00:00 1997-11-05 04:30:00
+ 9 1997-11-06 12:20:00 1997-11-07 08:30:00
+10 1997-11-27 13:30:00 1997-11-27 14:00:00
+# ... with 472 more rows, and 11 more variables:
+#   cme_datetime <dttm>, start_frequency <int>,
+#   end_frequency <int>, flare_location <chr>,
+#   flare_region <chr>, flare_classification <chr>,
+#   cme_angle <int>, cme_speed <int>, halo <lgl>,
+#   cme_width <int>, cme_width_limit <lgl>
 ```
 
 ## Part 2: Analysis
@@ -290,33 +310,39 @@ Now that you have data from both sites, let's start some analysis.
 
 ### Question 1: Replication (10 pts)
 
-Can you replicate the top 50 solar flare table in [SpaceWeatherLive.com](https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares) exactly using the data obtained from NASA? That is, if you get the top 50 solar flares from the NASA table based on their classification (e.g., `X28` is the highest), do you get data for the same solar flare events?
+Can you replicate the top 50 solar flare table in [SpaceWeatherLive.com](https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares) exactly using the data obtained from NASA? That is, if you get the top 50 solar flares from the NASA table based on their classification (e.g., `X28` is the highest), do you get data for the same 50 solar flare events in the SpaceWeatherLive page? If not, why not?
 
 Include code used to get the top 50 solar flares from the NASA table (be careful when ordering by classification, using `tidyr::separate` here is useful). Write a sentence or two discussing how well you can replicate the SpaceWeatherLive data from the NASA data.
 
-### Question 2: Integration (15 pts)
+### Question 2: Entity Resolution (15 pts)
 
-Write a function that finds the best matching row in the NASA data for each of the top 50 solar flares in the SpaceWeatherLive data. Here, you have to decide for yourself how you determine what is the best matching entry in the NASA data for each of the top 50 solar flares.
+Let's see if we can improve how well the two datasets match each other by doing some _Entity Resolution_. Let's denote entities (flares) from the SpaceWeatherLive page as $E_1$, and entities (flares) from the NASA data as $E_2$
 
-In your submission, include an explanation of how you are defining best matching rows across the two datasets in addition to the code used to find the best matches. Finally, use your function to add a new column to the NASA dataset indicating its rank according to SpaceWeatherLive, if it appears in that dataset.
+1) Write a function `flare_similarity` which computes a _similarity_ $s(e_1, e_2)$ between flares $e_1 \in E_1$ and $e_2 \in E_2$. 
+
+2) Write a second function `flare_match` that computes for each flare $e_1 \in E_1$ which flare $e_2 \in E_2$ is the most similar. Your function can return `NA` if there is no entity $e_2$ that is sufficiently similar. Here, you determine what is the best matching entry in the NASA data for each of the top 50 solar flares in the SpaceWeatherLive page, if there is such an entry.
+
+3) Add the result of `flare_match` to the top 50 table.
+
+In your submission, include an text explanation of how you define the similarity function $s(e_1, e_2)$ and how you use it to determine the best matching entitiy
 
 ### Question 3: Analysis (10 pts)
 
 Prepare one plot that shows the top 50 solar flares in context with all data available in the NASA dataset. Here are some possibilities (you can do something else)
 
-1. Plot attributes in the NASA dataset (e.g., starting or ending frequenciues, flare height or width) over time. Use graphical elements (e.g., text or points) to indicate flares in the top 50 classification.
+1. Plot attributes in the NASA dataset (e.g., starting or ending frequencies, flare height or width) over time. Use graphical elements (e.g., text or points) to indicate flares in the top 50 classification.
 
 2. Do flares in the top 50 tend to have Halo CMEs? You can make a barplot that compares the number (or proportion) of Halo CMEs in the top 50 flares vs. the dataset as a whole.
 
-3. Do strong flares cluster in time? Plot the number of flares per month over time, add a graphical element to indicate (e.g., text or points) to indicate the number of strong flares (in the top 50) to see if they cluster.
-
+3. Do strong flares cluster in space? Are there solar regions that have strong flares (in the top 50) more commonly than expected (considering the full flare dataset)?
 
 ## Submission
 
-Prepare and knit an Rmarkdown file that includes for each step in Part 1: (a) code to carry out the step discussed, (b) output showing the output of your code, similar to the examples above, and (c) a short prose description of how your code works. For questions 1 and 2 of Part 2, follow the instructions there. For Question 3 of part 2 provide: (a) a short description (2 sentences) of what the intent of your plot is (think in terms of our discussion on how we show variation, co-variation in terms of central trend, spread, skew etc.), (b) code to produce your plot, (c) a short text description of your plot, and (d) a sentence or two of interpretation of your plot (again think of variation, co-variation, etc.).
+Prepare and knit an Rmarkdown file that includes for each step in Part 1: (a) code to carry out the step discussed, (b) partial output showing the output of your code, similar to the examples above, and (c) a short prose description of how your code works. 
 
-Submit the resulting PDF to ELMS at: https://myelms.umd.edu/courses/1199381/assignments/4294153
+For questions 1 and 2 of Part 2, follow the instructions there. 
 
-### Group work
+For Question 3 of part 2 provide: (a) a short description (2 sentences) of what the intent of your plot is (think in terms of our discussion on how we show variation, co-variation in terms of central trend, spread, skew etc.), (b) code to produce your plot, (c) a short text description of your plot, and (d) a sentence or two of interpretation of your plot (again think of variation, co-variation, etc.).
 
-Working in groups in this project is encouraged but not required. If working on a group: (1) groups can be of 2 or 3 people, (2) each group member can submit the same writeup on ELMS, (3) in all cases, names of peers who worked in the group should be included in the writeup. As all group work and reflective of academic ethics code, there is an expectation that all group members will contribute equally in design, implementation and reporting of this work. If any student feels this expectation was not met when working on this project, they should contact the instructor team who will handle the situation as expediently and fairly as possible.
+Submit the resulting PDF to ELMS.
+
