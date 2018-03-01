@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-20">
+<meta name="date" content="2018-03-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -264,6 +264,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="18.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>18.2</b> Handling dates</a></li>
 </ul></li>
+<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a></li>
+<li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="20" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html"><i class="fa fa-check"></i><b>20</b> Exploratory Data Analysis: Visualization</a><ul>
+<li class="chapter" data-level="20.0.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>20.0.1</b> EDA (Exploratory Data Analysis)</a></li>
+<li class="chapter" data-level="20.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#visualization-of-single-variables"><i class="fa fa-check"></i><b>20.1</b> Visualization of single variables</a><ul>
+<li class="chapter" data-level="20.1.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#visualization-of-pairs-of-variables"><i class="fa fa-check"></i><b>20.1.1</b> Visualization of pairs of variables</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-with-the-grammar-of-graphics"><i class="fa fa-check"></i><b>20.2</b> EDA with the grammar of graphics</a><ul>
+<li class="chapter" data-level="20.2.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#other-aesthetics"><i class="fa fa-check"></i><b>20.2.1</b> Other aesthetics</a></li>
+<li class="chapter" data-level="20.2.2" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#faceting"><i class="fa fa-check"></i><b>20.2.2</b> Faceting</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -460,6 +472,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </table>
 <p>This data is for 5358 movies, including its release date, title, production budget and total gross. The latter two are in millions of U.S. dollars.</p>
 <p>One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. To do this, we can make a plot of domestic gross, which we are using for the subsequent analyses.</p>
+<pre><code>## Loading required package: methods</code></pre>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     date</code></pre>
 <p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-4-1.svg" width="672" /></p>
 <p>Although we don’t know for sure, since the source of our data does not state this specifically, it looks like the domestic gross measurement is not inflation adjusted since gross increases over time.</p>
 </div>
@@ -719,24 +737,24 @@ Figure 3.1: Ratings and U.S. Domestic Gross of Diego Luna’s movies.
 </thead>
 <tbody>
 <tr class="odd">
+<td align="left">100%</td>
+<td align="left">Museum (Museo)</td>
+<td align="left">Actor</td>
+<td align="left">—</td>
+<td align="right">2018</td>
+</tr>
+<tr class="even">
 <td align="left">92%</td>
 <td align="left">The Kindergarten Teacher</td>
 <td align="left">Actor</td>
 <td align="left">—</td>
 <td align="right">2018</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">No Score Yet</td>
 <td align="left">Viva - A vida é uma festa</td>
 <td align="left">Hector</td>
 <td align="left">—</td>
-<td align="right">2017</td>
-</tr>
-<tr class="odd">
-<td align="left">97%</td>
-<td align="left">Coco</td>
-<td align="left">Hector</td>
-<td align="left">$192M</td>
 <td align="right">2017</td>
 </tr>
 </tbody>
