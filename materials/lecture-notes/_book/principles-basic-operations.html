@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-20">
+<meta name="date" content="2018-03-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -263,6 +263,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="18.1.4" data-path="text-and-dates.html"><a href="text-and-dates.html#extracting-attributes-from-text"><i class="fa fa-check"></i><b>18.1.4</b> Extracting attributes from text</a></li>
 </ul></li>
 <li class="chapter" data-level="18.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>18.2</b> Handling dates</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a></li>
+<li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="20" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html"><i class="fa fa-check"></i><b>20</b> Exploratory Data Analysis: Visualization</a><ul>
+<li class="chapter" data-level="20.0.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>20.0.1</b> EDA (Exploratory Data Analysis)</a></li>
+<li class="chapter" data-level="20.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#visualization-of-single-variables"><i class="fa fa-check"></i><b>20.1</b> Visualization of single variables</a><ul>
+<li class="chapter" data-level="20.1.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#visualization-of-pairs-of-variables"><i class="fa fa-check"></i><b>20.1.1</b> Visualization of pairs of variables</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-with-the-grammar-of-graphics"><i class="fa fa-check"></i><b>20.2</b> EDA with the grammar of graphics</a><ul>
+<li class="chapter" data-level="20.2.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#other-aesthetics"><i class="fa fa-check"></i><b>20.2.1</b> Other aesthetics</a></li>
+<li class="chapter" data-level="20.2.2" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#faceting"><i class="fa fa-check"></i><b>20.2.2</b> Faceting</a></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -542,18 +554,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Frequently we will want to choose entities from a data frame at random. The <code>sample_n</code> function selects a specific number of entities at random:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample_n</span>(arrest_tab, <span class="dv">10</span>)</code></pre></div>
 <pre><code>## # A tibble: 10 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation     
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;              
-##  1       NA    56 B     M     03/25/2011 15:00      &lt;NA&gt;               
-##  2 11229048    24 B     M     05/29/2011 09:50      4100 Eastmont St   
-##  3 11362680    46 B     M     11/05/2011 11:30      &lt;NA&gt;               
-##  4 11254391    20 B     M     06/28/2011 01:30      &lt;NA&gt;               
-##  5 11155318    68 B     M     02/18/2011 17:30      2100 Greenmount Ave
-##  6 12551811    21 B     M     09/13/2012 15:05      100 W Hamburg St   
-##  7 11127543    55 B     M     01/03/2011 10:30      &lt;NA&gt;               
-##  8 11319366    20 B     M     09/12/2011 12:45      2500 Ashland Ave   
-##  9 11309198    43 B     M     08/30/2011 13:00      &lt;NA&gt;               
-## 10 12555421    59 B     M     09/19/2012 18:33      &lt;NA&gt;               
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation        
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                 
+##  1 11173320    18 B     M     03/17/2011 09:40      1200 N Luzerne St     
+##  2 12422568    23 B     M     02/13/2012 19:45      200 N Belnord Ave     
+##  3 11336281    49 W     M     10/01/2011 17:45      200 Denier Pl         
+##  4       NA    17 B     M     11/03/2012 09:00      &lt;NA&gt;                  
+##  5 12466910    55 B     M     04/26/2012 12:15      1200 N Broadway St    
+##  6 12527924    43 B     M     08/07/2012 11:30      1600 North Ave        
+##  7 11173326    47 B     F     03/17/2011 10:10      4000 Nw Northern Pkwy…
+##  8 11255030    41 B     M     06/28/2011 12:00      3000 Oakley Ave       
+##  9 12439898    30 B     M     03/13/2012 18:45      200 N Conkling St     
+## 10 12573632    22 B     M     10/18/2012 13:00      2300 Ocala Ave        
 ## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -562,16 +574,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## # A tibble: 10,453 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation       
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                
-##  1 12557031    43 B     M     09/21/2012 11:30      2200 Orem Ave        
-##  2 11306195    43 B     M     08/25/2011 21:00      500 Gold St          
-##  3 12567626    21 W     M     10/10/2012 01:03      &lt;NA&gt;                 
-##  4 12561604    19 B     M     09/30/2012 00:17      4400 Chalet Ct       
-##  5 12540277    35 W     M     08/27/2012 12:35      &lt;NA&gt;                 
-##  6 12517735    19 B     M     07/22/2012 08:00      &lt;NA&gt;                 
-##  7       NA    23 B     M     06/09/2011 13:00      &lt;NA&gt;                 
-##  8 11148079    57 B     M     02/08/2011 13:00      1200 N Patterson Park
-##  9       NA    46 W     M     05/31/2011 21:30      0 E.Randall St       
-## 10 11288108    51 B     F     08/04/2011 19:00      200 N Amity St       
+##  1 12465884    41 B     M     04/25/2012 07:20      &lt;NA&gt;                 
+##  2 11307118    34 B     M     08/26/2011 22:15      &lt;NA&gt;                 
+##  3       NA    23 B     F     09/10/2012 15:00      2300 Blk Annapolis Rd
+##  4 11264237    22 B     M     07/08/2011 16:00      &lt;NA&gt;                 
+##  5 12505057    32 B     M     06/28/2012 12:30      2700 Kinsey Ave      
+##  6 11229916    26 B     F     05/31/2011 08:40      2300 Sherwood Ave    
+##  7 12471138    43 B     M     05/02/2012 19:30      1800 Mount St        
+##  8 12489416    35 B     M     06/02/2012 20:45      900 N Augusta Ave    
+##  9 11335471    22 B     M     09/30/2011 10:45      400 N Bouldin St     
+## 10 11271634    51 B     M     07/15/2011 19:30      &lt;NA&gt;                 
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -584,18 +596,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>)</code></pre></div>
 <pre><code>## # A tibble: 10,453 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation   
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
-##  1 12496622    32 B     F     06/14/2012 18:40      1000 N Gay St    
-##  2       NA    24 B     M     03/23/2011 07:00      &lt;NA&gt;             
-##  3 12503434    26 B     F     06/26/2012 11:28      3200 Tioga Pkwy  
-##  4 11207166    39 B     M     04/30/2011 20:40      1000 Bennett Pl  
-##  5 11170202    35 B     M     03/13/2011 16:25      5500 O&#39;Donnell St
-##  6 11307754    43 B     F     08/29/2011 02:00      1800 E 29 St     
-##  7 11236850    45 W     M     06/08/2011 04:00      &lt;NA&gt;             
-##  8 11200468    27 B     M     04/22/2011 09:30      &lt;NA&gt;             
-##  9 11199762    31 U     M     04/21/2011 12:30      300 S Gilmor St  
-## 10 11251398    29 B     M     06/23/2011 14:45      &lt;NA&gt;             
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation     
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;              
+##  1 12490480    21 B     M     06/04/2012 22:50      2000 Robb St       
+##  2 11201424    21 B     M     04/24/2011 23:50      3700 Cottage Ave   
+##  3 12545381    58 B     M     09/04/2012 09:15      &lt;NA&gt;               
+##  4 11395005    19 B     M     12/29/2011 18:00      &lt;NA&gt;               
+##  5 12506050    41 B     F     06/29/2012 23:11      3400 Ravenwood Ave 
+##  6 11370279    18 B     M     11/16/2011 16:15      &lt;NA&gt;               
+##  7 11354294    47 B     M     10/25/2011 12:49      2500 N Maryland Ave
+##  8 12515496    26 B     M     07/18/2012 17:00      &lt;NA&gt;               
+##  9 12534458    24 B     M     08/17/2012 05:00      &lt;NA&gt;               
+## 10 11335206    20 B     M     09/30/2011 02:00      2800 Harford Rd    
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -615,16 +627,16 @@ analysis_tab</code></pre></div>
 <pre><code>## # A tibble: 17,885 x 3
 ##    sex   district     arrest_date
 ##    &lt;fct&gt; &lt;chr&gt;        &lt;chr&gt;      
-##  1 M     EASTERN      05/14/2011 
-##  2 F     NORTHEASTERN 03/31/2012 
-##  3 M     WESTERN      06/06/2012 
-##  4 M     NORTHEASTERN 08/09/2011 
-##  5 M     WESTERN      12/15/2011 
-##  6 F     NORTHWESTERN 09/19/2012 
-##  7 M     WESTERN      03/24/2011 
-##  8 M     &lt;NA&gt;         08/24/2011 
-##  9 F     SOUTHEASTERN 01/13/2011 
-## 10 M     &lt;NA&gt;         05/27/2011 
+##  1 M     NORTHEASTERN 08/21/2012 
+##  2 M     NORTHEASTERN 07/11/2011 
+##  3 M     NORTHEASTERN 07/12/2011 
+##  4 M     &lt;NA&gt;         06/12/2012 
+##  5 M     NORTHWESTERN 10/12/2012 
+##  6 M     EASTERN      09/27/2012 
+##  7 F     &lt;NA&gt;         03/09/2012 
+##  8 M     &lt;NA&gt;         05/25/2011 
+##  9 M     &lt;NA&gt;         04/04/2011 
+## 10 M     &lt;NA&gt;         11/08/2011 
 ## # ... with 17,875 more rows</code></pre>
 
 </div>

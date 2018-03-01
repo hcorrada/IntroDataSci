@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-02-20">
+<meta name="date" content="2018-03-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="tidying-data.html">
-
+<link rel="next" href="entity-resolution-and-record-linkage.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -264,6 +264,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="18.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>18.2</b> Handling dates</a></li>
 </ul></li>
+<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a></li>
+<li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="20" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html"><i class="fa fa-check"></i><b>20</b> Exploratory Data Analysis: Visualization</a><ul>
+<li class="chapter" data-level="20.0.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>20.0.1</b> EDA (Exploratory Data Analysis)</a></li>
+<li class="chapter" data-level="20.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#visualization-of-single-variables"><i class="fa fa-check"></i><b>20.1</b> Visualization of single variables</a><ul>
+<li class="chapter" data-level="20.1.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#visualization-of-pairs-of-variables"><i class="fa fa-check"></i><b>20.1.1</b> Visualization of pairs of variables</a></li>
+</ul></li>
+<li class="chapter" data-level="20.2" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-with-the-grammar-of-graphics"><i class="fa fa-check"></i><b>20.2</b> EDA with the grammar of graphics</a><ul>
+<li class="chapter" data-level="20.2.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#other-aesthetics"><i class="fa fa-check"></i><b>20.2.1</b> Other aesthetics</a></li>
+<li class="chapter" data-level="20.2.2" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#faceting"><i class="fa fa-check"></i><b>20.2.2</b> Faceting</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -323,33 +335,33 @@ long_string &lt;-<span class="st"> &quot;There&#39;s is nothing I love more than
 <p>First, some basics</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">strs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>)
 <span class="kw">str_view</span>(strs, <span class="st">&quot;an&quot;</span>)</code></pre></div>
-<div id="htmlwidget-4a5da423832965213cc8" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4a5da423832965213cc8">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-16289e07be4556a6b1af" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-16289e07be4556a6b1af">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ul>
 <li>Match any character: <code>.</code></li>
 <li>Match the ‘dot’ character: <code>\\.</code></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(strs, <span class="st">&quot;.a.&quot;</span>)</code></pre></div>
-<div id="htmlwidget-a1abd1574a2897a339c7" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a1abd1574a2897a339c7">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>p<span class='match'>ear<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5d15804ddaa8048b4633" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5d15804ddaa8048b4633">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>p<span class='match'>ear<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(<span class="kw">c</span>(strs, <span class="st">&quot;a.c&quot;</span>), <span class="st">&quot;a</span><span class="ch">\\</span><span class="st">.c&quot;</span>)</code></pre></div>
-<div id="htmlwidget-b869ebf5aff7dd8266b7" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b869ebf5aff7dd8266b7">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a0583894f6bfaeb13ff7" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a0583894f6bfaeb13ff7">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ul>
 <li>Anchor start (<code>^</code>), end (<code>$</code>)</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(strs, <span class="st">&quot;^a&quot;</span>)</code></pre></div>
-<div id="htmlwidget-c72812da1679c29b8296" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c72812da1679c29b8296">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>pple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0061573d2b8f892676ba" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0061573d2b8f892676ba">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>pple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(strs, <span class="st">&quot;a$&quot;</span>)</code></pre></div>
-<div id="htmlwidget-99e665968ed2f89b9227" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-99e665968ed2f89b9227">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d2acf7869d927fffcd60" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d2acf7869d927fffcd60">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;apple pie&quot;</span>, <span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple cake&quot;</span>), <span class="st">&quot;apple&quot;</span>)</code></pre></div>
-<div id="htmlwidget-197ab091de68505cef2c" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-197ab091de68505cef2c">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span> pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li><span class='match'>apple<\/span> cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-47c6b027a9eb36a2a37c" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-47c6b027a9eb36a2a37c">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span> pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li><span class='match'>apple<\/span> cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;apple pie&quot;</span>, <span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple cake&quot;</span>), <span class="st">&quot;^apple$&quot;</span>)</code></pre></div>
-<div id="htmlwidget-4695d5187bf526cdd246" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4695d5187bf526cdd246">{"x":{"html":"<ul>\n  <li>apple pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>apple cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-30d1423e6d759d9580f3" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-30d1423e6d759d9580f3">{"x":{"html":"<ul>\n  <li>apple pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>apple cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ul>
 <li><p>Character classes and alternatives</p></li>
 <li><code>\d</code>: match any digit</li>
@@ -360,8 +372,8 @@ long_string &lt;-<span class="st"> &quot;There&#39;s is nothing I love more than
 </ul>
 <p>Match vowels or digits</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;t867nine&quot;</span>, <span class="st">&quot;gray9&quot;</span>), <span class="st">&quot;[aeiou]|[0-9]&quot;</span>)</code></pre></div>
-<div id="htmlwidget-22ad0e51ad17b47cdd13" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-22ad0e51ad17b47cdd13">{"x":{"html":"<ul>\n  <li>t<span class='match'>8<\/span>67nine<\/li>\n  <li>gr<span class='match'>a<\/span>y9<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a82ad8025c92fd6b5189" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a82ad8025c92fd6b5189">{"x":{"html":"<ul>\n  <li>t<span class='match'>8<\/span>67nine<\/li>\n  <li>gr<span class='match'>a<\/span>y9<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ul>
 <li><p>Repetition</p></li>
 <li><code>?</code>: zero or one</li>
@@ -369,16 +381,16 @@ long_string &lt;-<span class="st"> &quot;There&#39;s is nothing I love more than
 <li><p><code>*</code>: zero or more</p></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;color&quot;</span>, <span class="st">&quot;colour&quot;</span>), <span class="st">&quot;colou?r&quot;</span>)</code></pre></div>
-<div id="htmlwidget-bd8b6478ecd1a7a93c7c" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-bd8b6478ecd1a7a93c7c">{"x":{"html":"<ul>\n  <li><span class='match'>color<\/span><\/li>\n  <li><span class='match'>colour<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3aaa292308f419e0bd82" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3aaa292308f419e0bd82">{"x":{"html":"<ul>\n  <li><span class='match'>color<\/span><\/li>\n  <li><span class='match'>colour<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ul>
 <li>Grouping and backreferences</li>
 </ul>
 <p>Parentheses define groups, which can be referenced using <code>\1</code>, <code>\2</code>, etc.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;banana&quot;</span>, <span class="st">&quot;coconut&quot;</span>, <span class="st">&quot;cucumber&quot;</span>, <span class="st">&quot;jujube&quot;</span>, <span class="st">&quot;papaya&quot;</span>, <span class="st">&quot;salal berry&quot;</span>)
 <span class="kw">str_view</span>(fruit, <span class="st">&quot;(..)</span><span class="ch">\\</span><span class="st">1&quot;</span>)</code></pre></div>
-<div id="htmlwidget-366619e745222ad41029" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-366619e745222ad41029">{"x":{"html":"<ul>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n  <li><span class='match'>coco<\/span>nut<\/li>\n  <li><span class='match'>cucu<\/span>mber<\/li>\n  <li><span class='match'>juju<\/span>be<\/li>\n  <li><span class='match'>papa<\/span>ya<\/li>\n  <li>s<span class='match'>alal<\/span> berry<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5f341d22d7b03105d5de" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5f341d22d7b03105d5de">{"x":{"html":"<ul>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n  <li><span class='match'>coco<\/span>nut<\/li>\n  <li><span class='match'>cucu<\/span>mber<\/li>\n  <li><span class='match'>juju<\/span>be<\/li>\n  <li><span class='match'>papa<\/span>ya<\/li>\n  <li>s<span class='match'>alal<\/span> berry<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="tools-using-regular-expressions" class="section level3">
 <h3><span class="header-section-number">18.1.3</span> Tools using regular expressions</h3>
@@ -391,18 +403,18 @@ long_string &lt;-<span class="st"> &quot;There&#39;s is nothing I love more than
 <pre><code>## [1] &quot;a&quot;        &quot;able&quot;     &quot;about&quot;    &quot;absolute&quot; &quot;accept&quot;   &quot;account&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data_frame</span>(<span class="dt">word=</span>words, <span class="dt">result=</span><span class="kw">str_detect</span>(words, <span class="st">&quot;^[aeiou]&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">30</span>)</code></pre></div>
 <pre><code>## # A tibble: 30 x 2
-##    word   result
-##    &lt;chr&gt;  &lt;lgl&gt; 
-##  1 exact  T     
-##  2 get    F     
-##  3 policy F     
-##  4 cent   F     
-##  5 make   F     
-##  6 clear  F     
-##  7 heat   F     
-##  8 card   F     
-##  9 direct F     
-## 10 sign   F     
+##    word     result
+##    &lt;chr&gt;    &lt;lgl&gt; 
+##  1 believe  F     
+##  2 clean    F     
+##  3 pass     F     
+##  4 almost   T     
+##  5 science  F     
+##  6 employ   T     
+##  7 foot     F     
+##  8 possible F     
+##  9 raise    F     
+## 10 quality  F     
 ## # ... with 20 more rows</code></pre>
 <p>Similarly, <code>str_count</code> returns the number of matches in a string instead of just <code>TRUE</code> or <code>FALSE</code></p>
 <ul>
@@ -422,8 +434,8 @@ colors_re &lt;-<span class="st"> </span><span class="kw">str_c</span>(colors, <s
 <pre><code>## [1] &quot;red|orange|yellow|green|blue|purple&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sentences_with_color &lt;-<span class="st"> </span><span class="kw">str_subset</span>(sentences, colors_re) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)
 <span class="kw">str_view_all</span>(sentences_with_color, colors_re)</code></pre></div>
-<div id="htmlwidget-151eb8288f8c285c2c7e" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-151eb8288f8c285c2c7e">{"x":{"html":"<ul>\n  <li>Glue the sheet to the dark <span class='match'>blue<\/span> background.<\/li>\n  <li>Two <span class='match'>blue<\/span> fish swam in the tank.<\/li>\n  <li>The colt rea<span class='match'>red<\/span> and threw the tall rider.<\/li>\n  <li>The wide road shimme<span class='match'>red<\/span> in the hot sun.<\/li>\n  <li>See the cat glaring at the sca<span class='match'>red<\/span> mouse.<\/li>\n  <li>A wisp of cloud hung in the <span class='match'>blue<\/span> air.<\/li>\n  <li>Leaves turn brown and <span class='match'>yellow<\/span> in the fall.<\/li>\n  <li>He orde<span class='match'>red<\/span> peach pie with ice cream.<\/li>\n  <li>Pure b<span class='match'>red<\/span> poodles have curls.<\/li>\n  <li>The spot on the blotter was made by <span class='match'>green<\/span> ink.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9afd6de346c1b8c56628" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9afd6de346c1b8c56628">{"x":{"html":"<ul>\n  <li>Glue the sheet to the dark <span class='match'>blue<\/span> background.<\/li>\n  <li>Two <span class='match'>blue<\/span> fish swam in the tank.<\/li>\n  <li>The colt rea<span class='match'>red<\/span> and threw the tall rider.<\/li>\n  <li>The wide road shimme<span class='match'>red<\/span> in the hot sun.<\/li>\n  <li>See the cat glaring at the sca<span class='match'>red<\/span> mouse.<\/li>\n  <li>A wisp of cloud hung in the <span class='match'>blue<\/span> air.<\/li>\n  <li>Leaves turn brown and <span class='match'>yellow<\/span> in the fall.<\/li>\n  <li>He orde<span class='match'>red<\/span> peach pie with ice cream.<\/li>\n  <li>Pure b<span class='match'>red<\/span> poodles have curls.<\/li>\n  <li>The spot on the blotter was made by <span class='match'>green<\/span> ink.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ul>
 <li>Extracting matches: <code>str_extract</code>, <code>str_extract_all</code></li>
 </ul>
@@ -626,8 +638,8 @@ flights_with_dt</code></pre></div>
           </div>
         </div>
       </div>
-<a href="tidying-data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="tidying-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="entity-resolution-and-record-linkage.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
