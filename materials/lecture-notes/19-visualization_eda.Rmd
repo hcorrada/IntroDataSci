@@ -121,7 +121,7 @@ flights %>%
 For pairs of continuous variables, the most useful visualization is the scatter plot. This gives an idea of how
 one variable varies (in terms of central trend, variance and skew) conditioned on another variable.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 flights %>%
   sample_frac(.25) %>%
   ggplot(aes(x=dep_delay, y=arr_delay)) +
