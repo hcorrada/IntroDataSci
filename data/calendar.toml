@@ -174,7 +174,7 @@ date = "3/6"
 
 [[day12.covers]]
 title = "Exploratory Data Analysis 2: Summary statistics"
-# notes = "lecture-note/eda/"
+notes = "bookdown-notes/exploratory-data-analysis-summary-statistics.html"
 
 [day13]
 date = "3/8"
@@ -250,8 +250,8 @@ date = "4/12"
 title = "Linear models for classification"
 # notes = "lecture-note/linear_models"
 
-[[day12.covers]]
-title = "Gradient descent"
+#[[day12.covers]]
+#title = "Gradient descent"
 # notes = "lecture-note/large_scale/"
 
 # [[day20.workdue]]
