@@ -251,6 +251,56 @@ diamonds %>%
   summarize(sd_depth = sd(depth), iqr_depth = IQR(depth))
 ```
 
+## Outliers
+
+We can use estimates of spread to identify outlier values in a dataset. Given an estimate of spread based on the techniques we've just seen, we can identify values that are _unusually_ far away from the center of the distribution. 
+
+One often cited rule of thumb is based on using standard deviation estimates. We can identify outliers as the set
+
+$$
+\mathrm{outliers_{sd}}(x) = \{x_j \, | \, |x_j| > \overline{x} + k \times \mathrm{sd}(x) \}
+$$
+where $\overline{x}$ is the sample mean of the data and $\mathrm{sd}(x)$ it's standard deviation. Multiplier $k$ determines if we are identifying (in Tukey's nomenclature) _outliers_ or points that are _far out_. Here is an example usage:
+
+```{r, warnings=FALSE}
+outlier_df <- diamonds %>%
+  summarize(mean_depth=mean(depth), sd_depth=sd(depth)) %>%
+  slice(rep(1, 4)) %>%
+  mutate(multiplier = c(-3, -1.5, 1.5, 3)) %>%
+  mutate(outlier_limit = mean_depth + multiplier * sd_depth)
+
+diamonds %>%
+  ggplot(aes(x=depth)) +
+    geom_histogram(bins=100) +
+    geom_vline(aes(xintercept=outlier_limit), data=outlier_df, color="blue")
+```
+
+While this method works relatively well in practice, it presents a fundamental problem. Severe outliers can significantly affect spread estimates based on standard deviation. Specifically, spread estimates will be inflated in the presence of severe outliers. To circumvent this problem, we use rank-based estimates of spread to identify outliers as:
+
+$$
+\mathrm{outliers_{IQR}}(x) = \{x_j \, | \, x_j < x_{(1/4)} - k \times \mathrm{IQR}(x) \mathrm{ or } x_j > x_{(3/4)} + k \times mathrm{IQR}(x)}
+$$
+This is usually referred to as the _Tukey outlier rule_, with multiplier $k$ serving the same role as before. We use the IQR here because it is less susceptible to be inflated by severe outliers in the dataset. It also works better for skewed data than the method based on standard deviation.
+
+Here we demonstrate its use again:
+
+
+```{r, warnings=FALSE}
+outlier_df <- diamonds %>%
+  summarize(q1=quantile(depth, 1/4), q3=quantile(depth, 3/4), iqr=IQR(depth)) %>%
+  slice(rep(1, 2)) %>%
+  mutate(multiplier = c(1.5, 3)) %>%
+  mutate(lower_outlier_limit = q1 - multiplier * iqr) %>%
+  mutate(upper_outlier_limit = q3 + multiplier * iqr)
+
+diamonds %>%
+  ggplot(aes(x=depth)) +
+    geom_histogram(bins=100) +
+    geom_vline(aes(xintercept=lower_outlier_limit), data=outlier_df, color="red") +
+    geom_vline(aes(xintercept=upper_outlier_limit), data=outlier_df, color="red")
+```
+
+
 ## Skew
 
 One last thought. Although there are formal ways of defining this precisely, the five-number summary can be used to understand if data is skewed. How? Consider the differences between the first and third quartiles to the median:
