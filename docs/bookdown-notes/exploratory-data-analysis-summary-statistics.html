@@ -285,12 +285,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="21.3.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#variance"><i class="fa fa-check"></i><b>21.3.1</b> Variance</a></li>
 <li class="chapter" data-level="21.3.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread-estimates-using-rank-statistics"><i class="fa fa-check"></i><b>21.3.2</b> Spread estimates using rank statistics</a></li>
 </ul></li>
-<li class="chapter" data-level="21.4" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#skew"><i class="fa fa-check"></i><b>21.4</b> Skew</a></li>
-<li class="chapter" data-level="21.5" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#covariance-and-correlation"><i class="fa fa-check"></i><b>21.5</b> Covariance and correlation</a></li>
-<li class="chapter" data-level="21.6" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#postscript-finding-maximaminima-using-derivatives"><i class="fa fa-check"></i><b>21.6</b> Postscript: Finding Maxima/Minima using Derivatives</a><ul>
-<li class="chapter" data-level="21.6.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#steps-to-find-maximaminima-of-function-fx"><i class="fa fa-check"></i><b>21.6.1</b> Steps to find Maxima/Minima of function <span class="math inline">\(f(x)\)</span></a></li>
-<li class="chapter" data-level="21.6.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#notes-on-finding-derivatives"><i class="fa fa-check"></i><b>21.6.2</b> Notes on Finding Derivatives</a></li>
-<li class="chapter" data-level="21.6.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#resources"><i class="fa fa-check"></i><b>21.6.3</b> Resources:</a></li>
+<li class="chapter" data-level="21.4" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#outliers"><i class="fa fa-check"></i><b>21.4</b> Outliers</a></li>
+<li class="chapter" data-level="21.5" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#skew"><i class="fa fa-check"></i><b>21.5</b> Skew</a></li>
+<li class="chapter" data-level="21.6" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#covariance-and-correlation"><i class="fa fa-check"></i><b>21.6</b> Covariance and correlation</a></li>
+<li class="chapter" data-level="21.7" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#postscript-finding-maximaminima-using-derivatives"><i class="fa fa-check"></i><b>21.7</b> Postscript: Finding Maxima/Minima using Derivatives</a><ul>
+<li class="chapter" data-level="21.7.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#steps-to-find-maximaminima-of-function-fx"><i class="fa fa-check"></i><b>21.7.1</b> Steps to find Maxima/Minima of function <span class="math inline">\(f(x)\)</span></a></li>
+<li class="chapter" data-level="21.7.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#notes-on-finding-derivatives"><i class="fa fa-check"></i><b>21.7.2</b> Notes on Finding Derivatives</a></li>
+<li class="chapter" data-level="21.7.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#resources"><i class="fa fa-check"></i><b>21.7.3</b> Resources:</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -511,8 +512,45 @@ diamonds <span class="op">%&gt;%</span>
 ## 1     1.43      1.50</code></pre>
 </div>
 </div>
+<div id="outliers" class="section level2">
+<h2><span class="header-section-number">21.4</span> Outliers</h2>
+<p>We can use estimates of spread to identify outlier values in a dataset. Given an estimate of spread based on the techniques we’ve just seen, we can identify values that are <em>unusually</em> far away from the center of the distribution.</p>
+<p>One often cited rule of thumb is based on using standard deviation estimates. We can identify outliers as the set</p>
+<p><span class="math display">\[
+\mathrm{outliers_{sd}}(x) = \{x_j \, | \, |x_j| &gt; \overline{x} + k \times \mathrm{sd}(x) \}
+\]</span> where <span class="math inline">\(\overline{x}\)</span> is the sample mean of the data and <span class="math inline">\(\mathrm{sd}(x)\)</span> it’s standard deviation. Multiplier <span class="math inline">\(k\)</span> determines if we are identifying (in Tukey’s nomenclature) <em>outliers</em> or points that are <em>far out</em>. Here is an example usage:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">outlier_df &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_depth=</span><span class="kw">mean</span>(depth), <span class="dt">sd_depth=</span><span class="kw">sd</span>(depth)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">slice</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">multiplier =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="op">-</span><span class="fl">1.5</span>, <span class="fl">1.5</span>, <span class="dv">3</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">outlier_limit =</span> mean_depth <span class="op">+</span><span class="st"> </span>multiplier <span class="op">*</span><span class="st"> </span>sd_depth)
+
+diamonds <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span>outlier_limit), <span class="dt">data=</span>outlier_df, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-129-1.svg" width="672" /></p>
+<p>While this method works relatively well in practice, it presents a fundamental problem. Severe outliers can significantly affect spread estimates based on standard deviation. Specifically, spread estimates will be inflated in the presence of severe outliers. To circumvent this problem, we use rank-based estimates of spread to identify outliers as:</p>
+<p><span class="math display">\[
+\mathrm{outliers_{IQR}}(x) = \{x_j \, | \, x_j &lt; x_{(1/4)} - k \times \mathrm{IQR}(x) \mathrm{ or } x_j &gt; x_{(3/4)} + k \times mathrm{IQR}(x)}
+\]</span> This is usually referred to as the <em>Tukey outlier rule</em>, with multiplier <span class="math inline">\(k\)</span> serving the same role as before. We use the IQR here because it is less susceptible to be inflated by severe outliers in the dataset. It also works better for skewed data than the method based on standard deviation.</p>
+<p>Here we demonstrate its use again:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">outlier_df &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">q1=</span><span class="kw">quantile</span>(depth, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>), <span class="dt">q3=</span><span class="kw">quantile</span>(depth, <span class="dv">3</span><span class="op">/</span><span class="dv">4</span>), <span class="dt">iqr=</span><span class="kw">IQR</span>(depth)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">slice</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">multiplier =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="dv">3</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lower_outlier_limit =</span> q1 <span class="op">-</span><span class="st"> </span>multiplier <span class="op">*</span><span class="st"> </span>iqr) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">upper_outlier_limit =</span> q3 <span class="op">+</span><span class="st"> </span>multiplier <span class="op">*</span><span class="st"> </span>iqr)
+
+diamonds <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span>lower_outlier_limit), <span class="dt">data=</span>outlier_df, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span>upper_outlier_limit), <span class="dt">data=</span>outlier_df, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-130-1.svg" width="672" /></p>
+</div>
 <div id="skew" class="section level2">
-<h2><span class="header-section-number">21.4</span> Skew</h2>
+<h2><span class="header-section-number">21.5</span> Skew</h2>
 <p>One last thought. Although there are formal ways of defining this precisely, the five-number summary can be used to understand if data is skewed. How? Consider the differences between the first and third quartiles to the median:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">med_depth =</span> <span class="kw">median</span>(depth), 
@@ -528,7 +566,7 @@ diamonds <span class="op">%&gt;%</span>
 <p>If one of these differences is larger than the other, then that indicates that this dataset might be skewed, that is, that the range of data on one side of the median is longer (or shorter) than the range of data on the other side of the median. Do you think our diamond depth dataset is skewed?</p>
 </div>
 <div id="covariance-and-correlation" class="section level2">
-<h2><span class="header-section-number">21.5</span> Covariance and correlation</h2>
+<h2><span class="header-section-number">21.6</span> Covariance and correlation</h2>
 <p>The scatter plot is a visual way of observing relationships between pairs of variables. Like descriptions of distributions of single variables, we would like to construct statistics that summarize the relationship between two variables quantitatively. To do this we will extend our notion of <em>spread</em> (or variation of data around the mean) to the notion of <em>co-variation</em>: do pairs of variables vary around the mean in the same way.</p>
 <p>Consider now data for two variables over the same <span class="math inline">\(n\)</span> entities: <span class="math inline">\((x_1,y_1), (x_2,y_2), \ldots, (x_n,y_n)\)</span>. For example, for each diamond, we have <code>carat</code> and <code>price</code> as two variables:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
@@ -536,7 +574,7 @@ diamonds <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(price)), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lty=</span><span class="dv">2</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(carat)), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-130-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-132-1.svg" width="672" /></p>
 <p>We want to capture the relationship: does <span class="math inline">\(x_i\)</span> vary in the same direction and scale away from its mean as <span class="math inline">\(y_i\)</span>? This leads to <em>covariance</em></p>
 <p><span class="math display">\[
 cov(x,y) = \frac{1}{n} \sum_{i=1}^n (x_i - \overline{x})(y_i - \overline{y})
@@ -549,14 +587,14 @@ cor(x,y) = \frac{cov(x,y)}{sd(x) sd(y)}
 <p>As before, we can also use rank statistics to define a measure of how two variables are associated. One of these, <em>Spearman correlation</em> is commonly used. It is defined as the Pearson correlation coefficient of the ranks (rather than actual values) of pairs of variables.</p>
 </div>
 <div id="postscript-finding-maximaminima-using-derivatives" class="section level2">
-<h2><span class="header-section-number">21.6</span> Postscript: Finding Maxima/Minima using Derivatives</h2>
+<h2><span class="header-section-number">21.7</span> Postscript: Finding Maxima/Minima using Derivatives</h2>
 <p>The values at which a function attains its maximum value are called <em>maxima</em> ( <em>maximum</em> if unique) of the function. Similarly, the values at which a function attains its minimum value are called <em>minima</em> ( <em>minimum</em> if unique) of the function.</p>
 <p>In a smoothly changing function maxima or minima are found where the function flattens (slope becomes <span class="math inline">\(0\)</span>). The first derivative of the function tells us where the slope is <span class="math inline">\(0\)</span>. This is the <em>first derivate test</em>.</p>
 <p>The derivate of the slope (the second derivative of the original function) can be useful to know if the value we found from first derivate test is a maxima or minima. When a function’s slope is zero at <span class="math inline">\(x\)</span>, and the second derivative at <span class="math inline">\(x\)</span> is:</p>
 
 <p>This is called the <em>second derivate test</em>.</p>
 <div id="steps-to-find-maximaminima-of-function-fx" class="section level3">
-<h3><span class="header-section-number">21.6.1</span> Steps to find Maxima/Minima of function <span class="math inline">\(f(x)\)</span></h3>
+<h3><span class="header-section-number">21.7.1</span> Steps to find Maxima/Minima of function <span class="math inline">\(f(x)\)</span></h3>
 <ol style="list-style-type: decimal">
 <li>Find the value(s) at which <span class="math inline">\(f&#39;(x)=0\)</span> (First derivative test).</li>
 <li>Find the value of the second derivative for each of the x’s found in step 1 (Second derivative test).</li>
@@ -564,7 +602,7 @@ cor(x,y) = \frac{cov(x,y)}{sd(x) sd(y)}
 </ol>
 </div>
 <div id="notes-on-finding-derivatives" class="section level3">
-<h3><span class="header-section-number">21.6.2</span> Notes on Finding Derivatives</h3>
+<h3><span class="header-section-number">21.7.2</span> Notes on Finding Derivatives</h3>
 <div id="sum-rule" class="section level4 unnumbered">
 <h4>Sum Rule</h4>
 <p>The derivative of the sum of two functions is the sum of the derivatives of the two functions:</p>
@@ -608,7 +646,7 @@ If we have two functions of the form <span class="math inline">\(f(x)\)</span> a
 </div>
 </div>
 <div id="resources" class="section level3">
-<h3><span class="header-section-number">21.6.3</span> Resources:</h3>
+<h3><span class="header-section-number">21.7.3</span> Resources:</h3>
 <ul>
 <li><p>A useful calculus cheat sheet: <a href="http://tutorial.math.lamar.edu/pdf/Calculus_Cheat_Sheet_Derivatives.pdf" class="uri">http://tutorial.math.lamar.edu/pdf/Calculus_Cheat_Sheet_Derivatives.pdf</a></p></li>
 <li><p>Discussion on finding maxima/minima: <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=3&amp;ved=0ahUKEwi32ZGPvbbPAhUCdj4KHcdyDZAQFggnMAI&amp;url=http%3A%2F%2Fwww.math.psu.edu%2Ftseng%2Fclass%2FMath140A%2FNotes-First_and_Second_Derivative_Tests.doc&amp;usg=AFQjCNEUih6RsfXq933pFwmoPk0yOvc1Mg&amp;sig2=zyxh1-zWe7TY7zYwnhpH8g&amp;cad=rja">https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=3&amp;ved=0ahUKEwi32ZGPvbbPAhUCdj4KHcdyDZAQFggnMAI&amp;url=http%3A%2F%2Fwww.math.psu.edu%2Ftseng%2Fclass%2FMath140A%2FNotes-First_and_Second_Derivative_Tests.doc&amp;usg=AFQjCNEUih6RsfXq933pFwmoPk0yOvc1Mg&amp;sig2=zyxh1-zWe7TY7zYwnhpH8g&amp;cad=rja</a></p></li>
