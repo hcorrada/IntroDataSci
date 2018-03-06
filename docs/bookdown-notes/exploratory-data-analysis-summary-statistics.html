@@ -366,10 +366,10 @@ RSS(\mu) = \frac{1}{2} \sum_{i=1}^n (x_i - \mu)^2
 <p>So, let’s find the derivative of RSS:</p>
 <p><span class="math display">\[
 \begin{eqnarray}
-\frac{\partial}{\partial \mu} \frac{1}{2} \sum_{i=1}^n (x_i - \mu)^2 &amp; = &amp; \frac{1}{2} \sum_{i=1}^n \frac{\partial}{\partial \mu} (x_i - \mu)^2 \\
-{} &amp; = &amp; \frac{1}{2} \sum_{i=1}^n 2(x_i - \mu) \times \frac{\partial}{\partial \mu} (x_i - \mu) \\
-{} &amp; = &amp; \frac{1}{2} \sum_{i=1}^n 2(x_i - \mu) \times (-1) \\
-{} &amp; = &amp; \frac{1}{2} 2 \sum_{i=1}^n (\mu - x_i) \\
+\frac{\partial}{\partial \mu} \frac{1}{2} \sum_{i=1}^n (x_i - \mu)^2 &amp; = &amp; \frac{1}{2} \sum_{i=1}^n \frac{\partial}{\partial \mu} (x_i - \mu)^2 \; \textrm{(sum rule)}\\
+{} &amp; = &amp; \frac{1}{2} \sum_{i=1}^n 2(x_i - \mu) \times \frac{\partial}{\partial \mu} (x_i - \mu) \; \textrm{(power rule and chain rule)}\\
+{} &amp; = &amp; \frac{1}{2} \sum_{i=1}^n 2(x_i - \mu) \times (-1) \; \textrm{(sum rule and power rule)}\\
+{} &amp; = &amp; \frac{1}{2} 2 \sum_{i=1}^n (\mu - x_i) \textrm{(rearranging)}\\
 {} &amp; = &amp; \sum_{i=1}^n \mu - \sum_{i=1}^n x_i \\
 {} &amp; = &amp; n\mu - \sum_{i=1}^n x_i
 \end{eqnarray}
