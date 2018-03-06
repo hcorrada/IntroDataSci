@@ -87,10 +87,10 @@ So, let's find the derivative of RSS:
 
 $$
 \begin{eqnarray}
-\frac{\partial}{\partial \mu} \frac{1}{2} \sum_{i=1}^n (x_i - \mu)^2 & = & \frac{1}{2} \sum_{i=1}^n \frac{\partial}{\partial \mu} (x_i - \mu)^2 \\
-{} & = & \frac{1}{2} \sum_{i=1}^n 2(x_i - \mu) \times \frac{\partial}{\partial \mu} (x_i - \mu) \\
-{} & = & \frac{1}{2} \sum_{i=1}^n 2(x_i - \mu) \times (-1) \\
-{} & = & \frac{1}{2} 2 \sum_{i=1}^n (\mu - x_i) \\
+\frac{\partial}{\partial \mu} \frac{1}{2} \sum_{i=1}^n (x_i - \mu)^2 & = & \frac{1}{2} \sum_{i=1}^n \frac{\partial}{\partial \mu} (x_i - \mu)^2 \; \textrm{(sum rule)}\\
+{} & = & \frac{1}{2} \sum_{i=1}^n 2(x_i - \mu) \times \frac{\partial}{\partial \mu} (x_i - \mu) \; \textrm{(power rule and chain rule)}\\
+{} & = & \frac{1}{2} \sum_{i=1}^n 2(x_i - \mu) \times (-1) \; \textrm{(sum rule and power rule)}\\
+{} & = & \frac{1}{2} 2 \sum_{i=1}^n (\mu - x_i) \textrm{(rearranging)}\\
 {} & = & \sum_{i=1}^n \mu - \sum_{i=1}^n x_i \\
 {} & = & n\mu - \sum_{i=1}^n x_i
 \end{eqnarray}
