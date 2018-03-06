@@ -57,7 +57,7 @@ We use notation $x_{(1)}$ and $x_{(n)}$ to denote the minimum and maximum statis
 
 ### Central Tendency
 
-Now that we know the range over which data is distributed, we can figure out a first summary of data is distributed across this range. Let's start with the _center_ of the data: the _median_ is a statistic defined such that half of the data has a smaller value. We can use notation $x_{(n/2)}$ (a rank statistic) to represent the median. Note that we can use an algorithm based on the quicksort partition scheme to compute the median (on average) in linear time.
+Now that we know the range over which data is distributed, we can figure out a first summary of data is distributed across this range. Let's start with the _center_ of the data: the _median_ is a statistic defined such that half of the data has a smaller value. We can use notation $x_{(n/2)}$ (a rank statistic) to represent the median. Note that we can use an algorithm based on the quicksort partition scheme to compute the median in linear time (on average).
 
 ```{r}
 median_depth <- median(diamonds$depth)
@@ -71,7 +71,7 @@ abline(v=median_depth, lwd=2.3, col="red")
 Of course, the best known statistic for central tendency is the _mean_, or average of the data: $\overline{x} = \frac{1}{n} \sum_{i=1}^n x_i$. It turns out that in this case, we can be a bit more formal about "center" means in this case. 
 Let's say that the _center_ of a dataset is a point in the range of the data that is _close_ to the data. To say that something is _close_ we need a measure of _distance_. 
 
-So for two points $x_1$ and $x_2$ what should we use for distance? We should base it on $(x_1 - x_2)$ but that's not enough since its sign depends on the order in which we write it. Using the absolute value solves that problem $|x_1 - x_2|$ since now the sign doesn't matter, but this has some issues that we will see later. So, next best thing we can do is use the square of the difference. So, in this case, the distance between data point $x_1$ and $x_2$ is $(x_1 - x_2)^2$. Here is a fun one: what's the largest distance between two points in our dataset?
+So for two points $x_1$ and $x_2$ what should we use for distance? We could base it on $(x_1 - x_2)$ but that's not enough since its sign depends on the order in which we write it. Using the absolute value solves that problem $|x_1 - x_2|$ since now the sign doesn't matter, but this has some issues that we will see later. So, next best thing we can do is use the square of the difference. So, in this case, the distance between data point $x_1$ and $x_2$ is $(x_1 - x_2)^2$. Here is a fun question: what's the largest distance between two points in our dataset?
 
 So, to define the _center_, let's build a criterion based on this distance by adding this distance across all points in our dataset:
 
@@ -270,7 +270,7 @@ $$
 
 Think of what would the covariance for $x$ and $y$ be if $x_i$ varies in the _opposite_ direction as $y_i$?
 
-Just like variance, we have an issue with units and interpretation for covaraince, so we introduce _correlation_ (formally, Pearson's correlation coefficient) to summarize this relationship in a _unit-less_ way:
+Just like variance, we have an issue with units and interpretation for covariance, so we introduce _correlation_ (formally, Pearson's correlation coefficient) to summarize this relationship in a _unit-less_ way:
 
 $$
 cor(x,y) = \frac{cov(x,y)}{sd(x) sd(y)}
