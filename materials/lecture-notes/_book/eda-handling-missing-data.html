@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="ingesting-data.html">
-<link rel="next" href="text-and-dates.html">
+<link rel="prev" href="eda-data-transformations.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -321,274 +321,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tidying-data" class="section level1">
-<h1><span class="header-section-number">17</span> Tidying data</h1>
-<p>This section is concerned with common problems in data preparation, namely use cases commonly found in raw datasets that need to be addressed to turn messy data into tidy data. These would be operations that you would perform on data obtained as a csv file from a collaborator or data repository, or as the result of scraping data from webpages or other sources. We derive many of our ideas from the paper <a href="http://www.jstatsoft.org/v59/i10/paper">Tidy Data</a> by Hadley Wickham. Associated with that paper we will use two very powerful R libraries <code>tidyr</code> and <code>dplyr</code> which are extremely useful in writing scripts for data cleaning, preparation and summarization. A basic design principle behind these libraries is trying to effectively and efficiently capture very common use cases and operations performed in data cleaning. The paper frames these use cases and operations which are them implemented in software.</p>
-<div id="tidy-data-1" class="section level2">
-<h2><span class="header-section-number">17.1</span> Tidy Data</h2>
-<p>Here we assume we are working with a data model based on rectangular data structures where</p>
-<ol style="list-style-type: decimal">
-<li>Each attribute (or variable) forms a column<br />
-</li>
-<li>Each entity (or observation) forms a row<br />
-</li>
-<li>Each type of entity (observational unit) forms a table</li>
-</ol>
-<p>Here is an example of a tidy dataset:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nycflights13)
-<span class="kw">head</span>(flights)</code></pre></div>
-<pre><code>## # A tibble: 6 x 19
-##    year month   day dep_time sched_dep_time dep_delay arr_time
-##   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-## 1  2013     1     1      517            515      2.00      830
-## 2  2013     1     1      533            529      4.00      850
-## 3  2013     1     1      542            540      2.00      923
-## 4  2013     1     1      544            545     -1.00     1004
-## 5  2013     1     1      554            600     -6.00      812
-## 6  2013     1     1      554            558     -4.00      740
-## # ... with 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
-## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
-## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
-## #   time_hour &lt;dttm&gt;</code></pre>
-<p>it has one observation per row, a single variable per column. Notice only information about flights are included here (e.g., no airport information other than the name) in these observations.</p>
-</div>
-<div id="common-problems-in-messy-data" class="section level2">
-<h2><span class="header-section-number">17.2</span> Common problems in messy data</h2>
-<p>The set of common operations we will study are based on these common problems found in datasets. We will see each one in detail:</p>
-<ul>
-<li>Column headers are values, not variable names (gather)<br />
-</li>
-<li>Multiple variables stored in one column (split)<br />
-</li>
-<li>Variables stored in both rows and column (rotate)<br />
-</li>
-<li>Multiple types of observational units are stored in the same table (normalize)<br />
-</li>
-<li>Single observational unit stored in multiple tables (join)</li>
-</ul>
-<p>We are using data from Hadley’s paper found in <a href="https://github.com/hadley/tidyr">github</a>. It’s included directory <code>data</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data_dir &lt;-<span class="st"> &quot;data&quot;</span></code></pre></div>
-<div id="headers-as-values" class="section level3">
-<h3><span class="header-section-number">17.2.1</span> Headers as values</h3>
-<p>The first problem we’ll see is the case where a table header contains values.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-
-pew &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;pew.csv&quot;</span>))</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   religion = col_character(),
-##   `&lt;$10k` = col_integer(),
-##   `$10-20k` = col_integer(),
-##   `$20-30k` = col_integer(),
-##   `$30-40k` = col_integer(),
-##   `$40-50k` = col_integer(),
-##   `$50-75k` = col_integer(),
-##   `$75-100k` = col_integer(),
-##   `$100-150k` = col_integer(),
-##   `&gt;150k` = col_integer(),
-##   `Don&#39;t know/refused` = col_integer()
-## )</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pew</code></pre></div>
-<pre><code>## # A tibble: 18 x 11
-##    religion      `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k`
-##    &lt;chr&gt;           &lt;int&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt;
-##  1 Agnostic           27        34        60        81        76       137
-##  2 Atheist            12        27        37        52        35        70
-##  3 Buddhist           27        21        30        34        33        58
-##  4 Catholic          418       617       732       670       638      1116
-##  5 Don’t know/r…      15        14        15        11        10        35
-##  6 Evangelical …     575       869      1064       982       881      1486
-##  7 Hindu               1         9         7         9        11        34
-##  8 Historically…     228       244       236       238       197       223
-##  9 Jehovah&#39;s Wi…      20        27        24        24        21        30
-## 10 Jewish             19        19        25        25        30        95
-## 11 Mainline Prot     289       495       619       655       651      1107
-## 12 Mormon             29        40        48        51        56       112
-## 13 Muslim              6         7         9        10         9        23
-## 14 Orthodox           13        17        23        32        32        47
-## 15 Other Christ…       9         7        11        13        13        14
-## 16 Other Faiths       20        33        40        46        49        63
-## 17 Other World …       5         2         3         4         2         7
-## 18 Unaffiliated      217       299       374       365       341       528
-## # ... with 4 more variables: `$75-100k` &lt;int&gt;, `$100-150k` &lt;int&gt;,
-## #   `&gt;150k` &lt;int&gt;, `Don&#39;t know/refused` &lt;int&gt;</code></pre>
-<p>This table has the number of survey respondents of a specific religion that report their income within some range. A tidy version of this table would consider the <em>variables</em> of each observation to be <code>religion, income, frequency</code> where <code>frequency</code> has the number of respondents for each religion and income range. The function to use in the <code>tidyr</code> package is <code>gather</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy_pew &lt;-<span class="st"> </span><span class="kw">gather</span>(pew, income, frequency, <span class="op">-</span>religion)
-tidy_pew</code></pre></div>
-<pre><code>## # A tibble: 180 x 3
-##    religion                income frequency
-##    &lt;chr&gt;                   &lt;chr&gt;      &lt;int&gt;
-##  1 Agnostic                &lt;$10k         27
-##  2 Atheist                 &lt;$10k         12
-##  3 Buddhist                &lt;$10k         27
-##  4 Catholic                &lt;$10k        418
-##  5 Don’t know/refused      &lt;$10k         15
-##  6 Evangelical Prot        &lt;$10k        575
-##  7 Hindu                   &lt;$10k          1
-##  8 Historically Black Prot &lt;$10k        228
-##  9 Jehovah&#39;s Witness       &lt;$10k         20
-## 10 Jewish                  &lt;$10k         19
-## # ... with 170 more rows</code></pre>
-<p>This says: gather all the columns from the <code>pew</code> (except <code>religion</code>) into key-value columns <code>income</code> and <code>frequency</code>. This table is much easier to use in other analyses.</p>
-<p>Another example: this table has a row for each song appearing in the billboard top 100. It contains track information, and the date it entered the top 100. It then shows the rank in each of the next 76 weeks.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">billboard &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;billboard.csv&quot;</span>))</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_integer(),
-##   artist = col_character(),
-##   track = col_character(),
-##   time = col_time(format = &quot;&quot;),
-##   date.entered = col_date(format = &quot;&quot;),
-##   wk66 = col_character(),
-##   wk67 = col_character(),
-##   wk68 = col_character(),
-##   wk69 = col_character(),
-##   wk70 = col_character(),
-##   wk71 = col_character(),
-##   wk72 = col_character(),
-##   wk73 = col_character(),
-##   wk74 = col_character(),
-##   wk75 = col_character(),
-##   wk76 = col_character()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">billboard</code></pre></div>
-<pre><code>## # A tibble: 317 x 81
-##     year artist   track   time  date.entered   wk1   wk2   wk3   wk4   wk5
-##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;tim&gt; &lt;date&gt;       &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-##  1  2000 2 Pac    Baby D… 04:22 2000-02-26      87    82    72    77    87
-##  2  2000 2Ge+her  The Ha… 03:15 2000-09-02      91    87    92    NA    NA
-##  3  2000 3 Doors… Krypto… 03:53 2000-04-08      81    70    68    67    66
-##  4  2000 3 Doors… Loser   04:24 2000-10-21      76    76    72    69    67
-##  5  2000 504 Boyz Wobble… 03:35 2000-04-15      57    34    25    17    17
-##  6  2000 98^0     Give M… 03:24 2000-08-19      51    39    34    26    26
-##  7  2000 A*Teens  Dancin… 03:44 2000-07-08      97    97    96    95   100
-##  8  2000 Aaliyah  I Don&#39;… 04:15 2000-01-29      84    62    51    41    38
-##  9  2000 Aaliyah  Try Ag… 04:03 2000-03-18      59    53    38    28    21
-## 10  2000 Adams, … Open M… 05:30 2000-08-26      76    76    74    69    68
-## # ... with 307 more rows, and 71 more variables: wk6 &lt;int&gt;, wk7 &lt;int&gt;,
-## #   wk8 &lt;int&gt;, wk9 &lt;int&gt;, wk10 &lt;int&gt;, wk11 &lt;int&gt;, wk12 &lt;int&gt;, wk13 &lt;int&gt;,
-## #   wk14 &lt;int&gt;, wk15 &lt;int&gt;, wk16 &lt;int&gt;, wk17 &lt;int&gt;, wk18 &lt;int&gt;,
-## #   wk19 &lt;int&gt;, wk20 &lt;int&gt;, wk21 &lt;int&gt;, wk22 &lt;int&gt;, wk23 &lt;int&gt;,
-## #   wk24 &lt;int&gt;, wk25 &lt;int&gt;, wk26 &lt;int&gt;, wk27 &lt;int&gt;, wk28 &lt;int&gt;,
-## #   wk29 &lt;int&gt;, wk30 &lt;int&gt;, wk31 &lt;int&gt;, wk32 &lt;int&gt;, wk33 &lt;int&gt;,
-## #   wk34 &lt;int&gt;, wk35 &lt;int&gt;, wk36 &lt;int&gt;, wk37 &lt;int&gt;, wk38 &lt;int&gt;,
-## #   wk39 &lt;int&gt;, wk40 &lt;int&gt;, wk41 &lt;int&gt;, wk42 &lt;int&gt;, wk43 &lt;int&gt;,
-## #   wk44 &lt;int&gt;, wk45 &lt;int&gt;, wk46 &lt;int&gt;, wk47 &lt;int&gt;, wk48 &lt;int&gt;,
-## #   wk49 &lt;int&gt;, wk50 &lt;int&gt;, wk51 &lt;int&gt;, wk52 &lt;int&gt;, wk53 &lt;int&gt;,
-## #   wk54 &lt;int&gt;, wk55 &lt;int&gt;, wk56 &lt;int&gt;, wk57 &lt;int&gt;, wk58 &lt;int&gt;,
-## #   wk59 &lt;int&gt;, wk60 &lt;int&gt;, wk61 &lt;int&gt;, wk62 &lt;int&gt;, wk63 &lt;int&gt;,
-## #   wk64 &lt;int&gt;, wk65 &lt;int&gt;, wk66 &lt;chr&gt;, wk67 &lt;chr&gt;, wk68 &lt;chr&gt;,
-## #   wk69 &lt;chr&gt;, wk70 &lt;chr&gt;, wk71 &lt;chr&gt;, wk72 &lt;chr&gt;, wk73 &lt;chr&gt;,
-## #   wk74 &lt;chr&gt;, wk75 &lt;chr&gt;, wk76 &lt;chr&gt;</code></pre>
-<p>Challenge: This dataset has values as column names. Which column names are values? How do we tidy this dataset?</p>
-</div>
-<div id="multiple-variables-in-one-column" class="section level3">
-<h3><span class="header-section-number">17.2.2</span> Multiple variables in one column</h3>
-<p>The next problem we’ll see is the case when we see multiple variables in a single column. Consider the following dataset of tuberculosis cases:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tb &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;tb.csv&quot;</span>))</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_integer(),
-##   iso2 = col_character()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tb</code></pre></div>
-<pre><code>## # A tibble: 5,769 x 22
-##    iso2   year   m04  m514  m014 m1524 m2534 m3544 m4554 m5564   m65    mu
-##    &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
-##  1 AD     1989    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-##  2 AD     1990    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-##  3 AD     1991    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-##  4 AD     1992    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-##  5 AD     1993    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-##  6 AD     1994    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-##  7 AD     1996    NA    NA     0     0     0     4     1     0     0    NA
-##  8 AD     1997    NA    NA     0     0     1     2     2     1     6    NA
-##  9 AD     1998    NA    NA     0     0     0     1     0     0     0    NA
-## 10 AD     1999    NA    NA     0     0     0     1     1     0     0    NA
-## # ... with 5,759 more rows, and 10 more variables: f04 &lt;int&gt;, f514 &lt;int&gt;,
-## #   f014 &lt;int&gt;, f1524 &lt;int&gt;, f2534 &lt;int&gt;, f3544 &lt;int&gt;, f4554 &lt;int&gt;,
-## #   f5564 &lt;int&gt;, f65 &lt;int&gt;, fu &lt;int&gt;</code></pre>
-<p>This table has a row for each year and strain of tuberculosis (given by the first two columns). The remaining columns state the number of cases for a given demographic. For example, <code>m1524</code> corresponds to males between 15 and 24 years old, and <code>f1524</code> are females age 15-24. As you can see each of these columns has two variables: <code>sex</code> and <code>age</code>.</p>
-<p>Challenge: what else is untidy about this dataset?</p>
-<p>So, we have to do two operations to tidy this table, first we need to use <code>gather</code> the tabulation columns into a <code>demo</code> and <code>n</code> columns (for demographic and number of cases):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy_tb &lt;-<span class="st"> </span><span class="kw">gather</span>(tb, demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)
-tidy_tb</code></pre></div>
-<pre><code>## # A tibble: 115,380 x 4
-##    iso2   year demo      n
-##    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;int&gt;
-##  1 AD     1989 m04      NA
-##  2 AD     1990 m04      NA
-##  3 AD     1991 m04      NA
-##  4 AD     1992 m04      NA
-##  5 AD     1993 m04      NA
-##  6 AD     1994 m04      NA
-##  7 AD     1996 m04      NA
-##  8 AD     1997 m04      NA
-##  9 AD     1998 m04      NA
-## 10 AD     1999 m04      NA
-## # ... with 115,370 more rows</code></pre>
-<p>Next, we need to <code>separate</code> the values in the <code>demo</code> column into two variables <code>sex</code> and <code>age</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy_tb &lt;-<span class="st"> </span><span class="kw">separate</span>(tidy_tb, demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)
-tidy_tb</code></pre></div>
-<pre><code>## # A tibble: 115,380 x 5
-##    iso2   year sex   age       n
-##    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
-##  1 AD     1989 m     04       NA
-##  2 AD     1990 m     04       NA
-##  3 AD     1991 m     04       NA
-##  4 AD     1992 m     04       NA
-##  5 AD     1993 m     04       NA
-##  6 AD     1994 m     04       NA
-##  7 AD     1996 m     04       NA
-##  8 AD     1997 m     04       NA
-##  9 AD     1998 m     04       NA
-## 10 AD     1999 m     04       NA
-## # ... with 115,370 more rows</code></pre>
-<p>This calls the <code>separate</code> function on table <code>tidy_db</code>, separating the <code>demo</code> variable into variables <code>sex</code> and <code>age</code> by separating each value after the first character (that’s the <code>sep</code> argument).</p>
-<p>We can put these two commands together in a pipeline:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy_tb &lt;-<span class="st"> </span>tb <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">gather</span>(demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)  <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">separate</span>(demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)
-tidy_tb</code></pre></div>
-<pre><code>## # A tibble: 115,380 x 5
-##    iso2   year sex   age       n
-##    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
-##  1 AD     1989 m     04       NA
-##  2 AD     1990 m     04       NA
-##  3 AD     1991 m     04       NA
-##  4 AD     1992 m     04       NA
-##  5 AD     1993 m     04       NA
-##  6 AD     1994 m     04       NA
-##  7 AD     1996 m     04       NA
-##  8 AD     1997 m     04       NA
-##  9 AD     1998 m     04       NA
-## 10 AD     1999 m     04       NA
-## # ... with 115,370 more rows</code></pre>
-</div>
-<div id="variables-stored-in-both-rows-and-columns" class="section level3">
-<h3><span class="header-section-number">17.2.3</span> Variables stored in both rows and columns</h3>
-<p>This is the messiest, commonly found type of data. Let’s take a look at an example, this is daily weather data from for one weather station in Mexico in 2010.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weather &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;weather.csv&quot;</span>))</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_double(),
-##   id = col_character(),
-##   year = col_integer(),
-##   month = col_integer(),
-##   element = col_character(),
-##   d9 = col_character(),
-##   d12 = col_character(),
-##   d18 = col_character(),
-##   d19 = col_character(),
-##   d20 = col_character(),
-##   d21 = col_character(),
-##   d22 = col_character(),
-##   d24 = col_character()
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weather</code></pre></div>
+<div id="eda-handling-missing-data" class="section level1">
+<h1><span class="header-section-number">23</span> EDA: Handling Missing Data</h1>
+<p>We can now move on to a very important aspect of data preparation and transformation: how to deal with missing data? By missing data we mean values that are unrecorded, unknown or unspecified in a dataset. We saw an example of this when we looked at the tidy unit. Here is the tidy weather dataset again:</p>
 <pre><code>## # A tibble: 22 x 35
 ##    id       year month element    d1    d2    d3    d4    d5    d6    d7
 ##    &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -607,11 +342,32 @@ tidy_tb</code></pre></div>
 ## #   d16 &lt;dbl&gt;, d17 &lt;dbl&gt;, d18 &lt;chr&gt;, d19 &lt;chr&gt;, d20 &lt;chr&gt;, d21 &lt;chr&gt;,
 ## #   d22 &lt;chr&gt;, d23 &lt;dbl&gt;, d24 &lt;chr&gt;, d25 &lt;dbl&gt;, d26 &lt;dbl&gt;, d27 &lt;dbl&gt;,
 ## #   d28 &lt;dbl&gt;, d29 &lt;dbl&gt;, d30 &lt;dbl&gt;, d31 &lt;dbl&gt;</code></pre>
-<p>So, we have two rows for each month, one with maximum daily temperature, one with minimum daily temperature, the columns starting with <code>d</code> correspond to the day in the where the measurements were made.</p>
-<p>Challenge: How would a tidy version of this data look like?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weather <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(day, value, d1<span class="op">:</span>d31, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(element, value)</code></pre></div>
+<p>And the result of tidying this dataset:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy_weather &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(day, temp, d1<span class="op">:</span>d31) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spread</span>(element, temp)
+tidy_weather</code></pre></div>
+<pre><code>## # A tibble: 341 x 6
+##    id       year month day   tmax  tmin 
+##    &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 MX17004  2010     1 d1    &lt;NA&gt;  &lt;NA&gt; 
+##  2 MX17004  2010     1 d10   &lt;NA&gt;  &lt;NA&gt; 
+##  3 MX17004  2010     1 d11   &lt;NA&gt;  &lt;NA&gt; 
+##  4 MX17004  2010     1 d12   &lt;NA&gt;  &lt;NA&gt; 
+##  5 MX17004  2010     1 d13   &lt;NA&gt;  &lt;NA&gt; 
+##  6 MX17004  2010     1 d14   &lt;NA&gt;  &lt;NA&gt; 
+##  7 MX17004  2010     1 d15   &lt;NA&gt;  &lt;NA&gt; 
+##  8 MX17004  2010     1 d16   &lt;NA&gt;  &lt;NA&gt; 
+##  9 MX17004  2010     1 d17   &lt;NA&gt;  &lt;NA&gt; 
+## 10 MX17004  2010     1 d18   &lt;NA&gt;  &lt;NA&gt; 
+## # ... with 331 more rows</code></pre>
+<p>In this dataset, temperature observations coded as <code>NA</code> are considered <em>missing</em>. Now, we can imagine that either the measurement failed in a specific day for a specific weather station, or that certain stations only measure temperatures on certain days of the month. Knowing which of these applies can change how we approach this missing data. As you can see, how to treat missing data depends highly on how the data was obtained, and the more you know about a dataset, the better decision you can make.</p>
+<p>In general, the central question with missing data is: Should we remove observations with missing values, or should we <em>impute</em> missing values? This also relates to the difference between values that are missing <em>at random</em> vs. values that are missing <em>systematically</em>. In the weather example above, the first case (of failed measurements) could be thought of as missing <em>at random</em>, and the second case as missing <em>systematically</em>.</p>
+<p>Data that is missing systematically can significantly bias an analysis. For example: Suppose we want to predict how sick someone is from test result. If doctors do not carry out the test because a patient is too sick, then the fact test is missing is a great predictor of how sick the patient is.</p>
+<p>So in general, the <strong>first step</strong> when dealing with missing data is to understand <em>why</em> and <em>how</em> data may be missing. I.e., talk to collaborator, or person who created the dataset. Once you know that, if a relatively small fraction of observations contain have missing values, then it may be safe to remove observations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy_weather_nomissing &lt;-<span class="st"> </span>tidy_weather <span class="op">%&gt;%</span>
+<span class="st">  </span>tidyr<span class="op">::</span><span class="kw">drop_na</span>(tmax, tmin)
+tidy_weather_nomissing</code></pre></div>
 <pre><code>## # A tibble: 33 x 6
 ##    id       year month day   tmax  tmin 
 ##    &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
@@ -626,137 +382,97 @@ tidy_tb</code></pre></div>
 ##  9 MX17004  2010     4 d27   36.3  16.7 
 ## 10 MX17004  2010     5 d27   33.2  18.2 
 ## # ... with 23 more rows</code></pre>
-<p>The new function we’ve used here is <code>spread</code>. It does the inverse of <code>gather</code> it spreads columns <code>element</code> and <code>value</code> into separate columns.</p>
-</div>
-<div id="multiple-types-in-one-table" class="section level3">
-<h3><span class="header-section-number">17.2.4</span> Multiple types in one table</h3>
-<p>Remember that an important aspect of tidy data is that it contains exactly one kind of observation in a single table. Let’s see the billboard example again after the <code>gather</code> operation we did before:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy_billboard &lt;-<span class="st"> </span>billboard <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(week, rank, wk1<span class="op">:</span>wk76, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)
-tidy_billboard</code></pre></div>
-<pre><code>## # A tibble: 5,307 x 7
-##     year artist         track               time  date.entered week  rank 
-##  * &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;               &lt;tim&gt; &lt;date&gt;       &lt;chr&gt; &lt;chr&gt;
-##  1  2000 2 Pac          Baby Don&#39;t Cry (Ke… 04:22 2000-02-26   wk1   87   
-##  2  2000 2Ge+her        The Hardest Part O… 03:15 2000-09-02   wk1   91   
-##  3  2000 3 Doors Down   Kryptonite          03:53 2000-04-08   wk1   81   
-##  4  2000 3 Doors Down   Loser               04:24 2000-10-21   wk1   76   
-##  5  2000 504 Boyz       Wobble Wobble       03:35 2000-04-15   wk1   57   
-##  6  2000 98^0           Give Me Just One N… 03:24 2000-08-19   wk1   51   
-##  7  2000 A*Teens        Dancing Queen       03:44 2000-07-08   wk1   97   
-##  8  2000 Aaliyah        I Don&#39;t Wanna       04:15 2000-01-29   wk1   84   
-##  9  2000 Aaliyah        Try Again           04:03 2000-03-18   wk1   59   
-## 10  2000 Adams, Yolanda Open My Heart       05:30 2000-08-26   wk1   76   
-## # ... with 5,297 more rows</code></pre>
-<p>Let’s sort this table by track to see a problem with this table:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy_billboard &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(track)
-tidy_billboard</code></pre></div>
-<pre><code>## # A tibble: 5,307 x 7
-##     year artist track                   time   date.entered week  rank 
-##    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;time&gt; &lt;date&gt;       &lt;chr&gt; &lt;chr&gt;
-##  1  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk1   100  
-##  2  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk2   99   
-##  3  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk3   96   
-##  4  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk4   76   
-##  5  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk5   55   
-##  6  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk6   37   
-##  7  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk7   24   
-##  8  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk8   24   
-##  9  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk9   30   
-## 10  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk10  36   
-## # ... with 5,297 more rows</code></pre>
-<p>We have a lot of repeated information in many of these rows (the artist, track name, year, title and date entered). The problem is that this table contains information about both tracks and rank in billboard. That’s two different kinds of observations that should belong in two different tables in a tidy dataset.</p>
-<p>Let’s make a song table that only includes information about songs:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">song &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">unique</span>()
-song</code></pre></div>
-<pre><code>## # A tibble: 317 x 5
-##    artist        track                    year time   date.entered
-##    &lt;chr&gt;         &lt;chr&gt;                   &lt;int&gt; &lt;time&gt; &lt;date&gt;      
-##  1 Nelly         (Hot S**t) Country G...  2000 04:17  2000-04-29  
-##  2 Nu Flavor     3 Little Words           2000 03:54  2000-06-03  
-##  3 Jean, Wyclef  911                      2000 04:00  2000-10-07  
-##  4 Brock, Chad   A Country Boy Can Su...  2000 03:54  2000-01-01  
-##  5 Clark, Terri  A Little Gasoline        2000 03:07  2000-12-16  
-##  6 Son By Four   A Puro Dolor (Purest...  2000 03:30  2000-04-08  
-##  7 Carter, Aaron Aaron&#39;s Party (Come ...  2000 03:23  2000-08-26  
-##  8 Nine Days     Absolutely (Story Of...  2000 03:09  2000-05-06  
-##  9 De La Soul    All Good?                2000 05:02  2000-12-23  
-## 10 Blink-182     All The Small Things     2000 02:52  1999-12-04  
-## # ... with 307 more rows</code></pre>
-<p>The <code>unique</code> function removes any duplicate rows in a table. That’s how we have a single row for each song.</p>
-<p>Next, we would like to remove all the song information from the rank table. But we need to do it in a way that still remembers which song each ranking observation corresponds to. To do that, let’s first give each song an identifier that we can use to link songs and rankings. So, we can produce the final version of our song table like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">song &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">unique</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">song_id =</span> <span class="kw">row_number</span>())
-song</code></pre></div>
-<pre><code>## # A tibble: 317 x 6
-##    artist        track                    year time   date.entered song_id
-##    &lt;chr&gt;         &lt;chr&gt;                   &lt;int&gt; &lt;time&gt; &lt;date&gt;         &lt;int&gt;
-##  1 Nelly         (Hot S**t) Country G...  2000 04:17  2000-04-29         1
-##  2 Nu Flavor     3 Little Words           2000 03:54  2000-06-03         2
-##  3 Jean, Wyclef  911                      2000 04:00  2000-10-07         3
-##  4 Brock, Chad   A Country Boy Can Su...  2000 03:54  2000-01-01         4
-##  5 Clark, Terri  A Little Gasoline        2000 03:07  2000-12-16         5
-##  6 Son By Four   A Puro Dolor (Purest...  2000 03:30  2000-04-08         6
-##  7 Carter, Aaron Aaron&#39;s Party (Come ...  2000 03:23  2000-08-26         7
-##  8 Nine Days     Absolutely (Story Of...  2000 03:09  2000-05-06         8
-##  9 De La Soul    All Good?                2000 05:02  2000-12-23         9
-## 10 Blink-182     All The Small Things     2000 02:52  1999-12-04        10
-## # ... with 307 more rows</code></pre>
-<p>The <code>mutate</code> function adds a new column to the table, in this case with column name <code>song_id</code> and value the row number the song appears in the table (from the <code>row_number</code> column).</p>
-<p>Now we can make a rank table, we combine the tidy billboard table with our new song table using a <code>join</code> (we’ll learn all about joins later). It checks the values on each row of the billboard table and looks for rows in the song table that have the exact same values, and makes a new row that combines the information from both tables.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidy_billboard <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(song, <span class="kw">c</span>(<span class="st">&quot;artist&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;track&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;date.entered&quot;</span>))</code></pre></div>
-<pre><code>## # A tibble: 5,307 x 8
-##     year artist track               time  date.entered week  rank  song_id
-##    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;               &lt;tim&gt; &lt;date&gt;       &lt;chr&gt; &lt;chr&gt;   &lt;int&gt;
-##  1  2000 Nelly  (Hot S**t) Country… 04:17 2000-04-29   wk1   100         1
-##  2  2000 Nelly  (Hot S**t) Country… 04:17 2000-04-29   wk2   99          1
-##  3  2000 Nelly  (Hot S**t) Country… 04:17 2000-04-29   wk3   96          1
-##  4  2000 Nelly  (Hot S**t) Country… 04:17 2000-04-29   wk4   76          1
-##  5  2000 Nelly  (Hot S**t) Country… 04:17 2000-04-29   wk5   55          1
-##  6  2000 Nelly  (Hot S**t) Country… 04:17 2000-04-29   wk6   37          1
-##  7  2000 Nelly  (Hot S**t) Country… 04:17 2000-04-29   wk7   24          1
-##  8  2000 Nelly  (Hot S**t) Country… 04:17 2000-04-29   wk8   24          1
-##  9  2000 Nelly  (Hot S**t) Country… 04:17 2000-04-29   wk9   30          1
-## 10  2000 Nelly  (Hot S**t) Country… 04:17 2000-04-29   wk10  36          1
-## # ... with 5,297 more rows</code></pre>
-<p>That adds the <code>song_id</code> variable to the <code>tidy_billboard</code> table. So now we can remove the song information and only keep ranking information and the <code>song_id</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rank &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(song, <span class="kw">c</span>(<span class="st">&quot;artist&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;track&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;date.entered&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(song_id, week, rank)
-rank</code></pre></div>
-<pre><code>## # A tibble: 5,307 x 3
-##    song_id week  rank 
-##      &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
-##  1       1 wk1   100  
-##  2       1 wk2   99   
-##  3       1 wk3   96   
-##  4       1 wk4   76   
-##  5       1 wk5   55   
-##  6       1 wk6   37   
-##  7       1 wk7   24   
-##  8       1 wk8   24   
-##  9       1 wk9   30   
-## 10       1 wk10  36   
-## # ... with 5,297 more rows</code></pre>
-<p>Challenge: Let’s do a little better job at tidying the billboard dataset:</p>
-<ol style="list-style-type: decimal">
-<li>When using <code>gather</code> to make the <code>week</code> and <code>rank</code> columns, remove any weeks where the song does not appear in the top 100. This is coded as missing (<code>NA</code>). See the <code>na.rm</code> argument to <code>gather</code>.<br />
-</li>
-<li>Make <code>week</code> a numeric variable (i.e., remove <code>wk</code>). See what the <code>extract_numeric</code> function does.<br />
-</li>
-<li>Instead of <code>date.entered</code> add a <code>date</code> column that states the actual date of each ranking. See how R deals with dates <code>?Date</code> and how you can turn a string into a <code>Date</code> using <code>as.Date</code>.<br />
-</li>
-<li>Sort the resulting table by date and rank.</li>
-<li>Make new <code>song</code> and <code>rank</code> tables. <code>song</code> will now not have the <code>date.entered</code> column, and <code>rank</code> will have the new <code>date</code> column you have just created.</li>
-</ol>
+<div id="dealing-with-data-missing-at-random" class="section level3">
+<h3><span class="header-section-number">23.0.1</span> Dealing with data missing at random</h3>
+<p>In the case of categorical variables, a useful approach is to encode missing as a new category and include that in subsequent modeling.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tb &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;tb.csv&quot;</span>))
+tidy_tb &lt;-<span class="st"> </span>tb <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)  <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">separate</span>(demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)
 
-</div>
+tidy_tb <span class="op">%&gt;%</span>
+<span class="st">  </span>tidyr<span class="op">::</span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">iso2=</span><span class="st">&quot;missing&quot;</span>))</code></pre></div>
+<pre><code>## # A tibble: 115,380 x 5
+##    iso2   year sex   age       n
+##    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+##  1 AD     1989 m     04       NA
+##  2 AD     1990 m     04       NA
+##  3 AD     1991 m     04       NA
+##  4 AD     1992 m     04       NA
+##  5 AD     1993 m     04       NA
+##  6 AD     1994 m     04       NA
+##  7 AD     1996 m     04       NA
+##  8 AD     1997 m     04       NA
+##  9 AD     1998 m     04       NA
+## 10 AD     1999 m     04       NA
+## # ... with 115,370 more rows</code></pre>
+<p>In the case of numeric values, we can use a simple method for imputation where we replace missing values for a variable with, for instance, the mean of non-missing values</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
+<span class="st">  </span>tidyr<span class="op">::</span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">dep_delay=</span><span class="kw">mean</span>(.<span class="op">$</span>dep_delay, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)))</code></pre></div>
+<pre><code>## # A tibble: 336,776 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515      2.00      830
+##  2  2013     1     1      533            529      4.00      850
+##  3  2013     1     1      542            540      2.00      923
+##  4  2013     1     1      544            545     -1.00     1004
+##  5  2013     1     1      554            600     -6.00      812
+##  6  2013     1     1      554            558     -4.00      740
+##  7  2013     1     1      555            600     -5.00      913
+##  8  2013     1     1      557            600     -3.00      709
+##  9  2013     1     1      557            600     -3.00      838
+## 10  2013     1     1      558            600     -2.00      753
+## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<p>A more complex method is to replace missing values for a variable predicting from other variables when variables are related (we will see linear regression using the <code>lm</code> and <code>predict</code> functions later on)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dep_delay_fit &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lm</span>(dep_delay<span class="op">~</span>origin, <span class="dt">data=</span>.)
+
+<span class="co"># use average delay conditioned on origin airport</span>
+flights <span class="op">%&gt;%</span>
+<span class="st">  </span>modelr<span class="op">::</span><span class="kw">add_predictions</span>(dep_delay_fit, <span class="dt">var=</span><span class="st">&quot;pred_delay&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_fixed =</span> 
+           <span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.na</span>(dep_delay), dep_delay, 
+                  pred_delay)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(origin, dest, dep_delay, dep_delay_fixed) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(dep_delay))</code></pre></div>
+<pre><code>## # A tibble: 8,255 x 4
+##    origin dest  dep_delay dep_delay_fixed
+##    &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;           &lt;dbl&gt;
+##  1 EWR    RDU          NA            15.1
+##  2 LGA    DFW          NA            10.3
+##  3 LGA    MIA          NA            10.3
+##  4 JFK    FLL          NA            12.1
+##  5 EWR    CVG          NA            15.1
+##  6 EWR    PIT          NA            15.1
+##  7 EWR    MHT          NA            15.1
+##  8 EWR    ATL          NA            15.1
+##  9 EWR    IND          NA            15.1
+## 10 JFK    LAX          NA            12.1
+## # ... with 8,245 more rows</code></pre>
+<p>In either case, a common approach is to add an additional indicator variable stating if numeric missing value was imputed</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_missing =</span> <span class="kw">is.na</span>(dep_delay))</code></pre></div>
+<pre><code>## # A tibble: 336,776 x 20
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515      2.00      830
+##  2  2013     1     1      533            529      4.00      850
+##  3  2013     1     1      542            540      2.00      923
+##  4  2013     1     1      544            545     -1.00     1004
+##  5  2013     1     1      554            600     -6.00      812
+##  6  2013     1     1      554            558     -4.00      740
+##  7  2013     1     1      555            600     -5.00      913
+##  8  2013     1     1      557            600     -3.00      709
+##  9  2013     1     1      557            600     -3.00      838
+## 10  2013     1     1      558            600     -2.00      753
+## # ... with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, dep_delay_missing &lt;lgl&gt;</code></pre>
+<p>In both of these cases note that imputing missing values has two effects. First, the central tendency of data is retained, for example, if we impute missing data using the mean of a numeric variable, the mean after imputation will not change. This is a good reason to impute based on estimates of central tendency. However, the <em>spread</em> of the data will change. After imputation, the spread of the data will be smaller relative to spread if we ignore missing values. This could be problematic as underestimating the spread of data can yield over-confident inferences in downstream analysis. We will not address these issues directly in later chapters, but you should be aware of this.</p>
+
 </div>
 </div>
             </section>
@@ -764,8 +480,8 @@ rank</code></pre></div>
           </div>
         </div>
       </div>
-<a href="ingesting-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="text-and-dates.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="eda-data-transformations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
