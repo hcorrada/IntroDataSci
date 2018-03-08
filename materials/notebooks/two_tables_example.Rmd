@@ -1,0 +1,143 @@
+---
+title: "Operating on all pairs of rows in two datasets"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+A quick note about two ways of operating on all pairs of rows in two datasets.
+
+## Data generation
+
+We will simulate two dataframes containing a datetime attribute, a categorical and a numeric attribute. Let's first define a function to generate dataframes.
+
+```{r}
+library(lubridate)
+library(tidyverse)
+
+generate_df <- function(dummy_name, n=10,
+                        min_date=ymd("2018/01/01"),
+                        max_date=ymd("2018/02/15"),
+                        cat_levels=letters[1:5],
+                        min_num=-10,
+                        max_num=10) {
+date_range <- seq(min_date, max_date, by=1)
+df <- data_frame(date = sample(date_range, n, replace=TRUE),
+           cat = factor(sample(cat_levels, n, replace=TRUE), levels=cat_levels),
+           num = runif(n, min_num, max_num),
+           dummy=runif(n, min_num, max_num))
+colnames(df)[ncol(df)] <- dummy_name
+df
+}
+```
+
+Now, generate the dataframes. We use the function `rowid_to_column` to keep track of row indices as we operate on the dataframes.
+
+```{r}
+set.seed(1234)
+df1 <- generate_df("a", n=5) %>% rowid_to_column()
+df2 <- generate_df("b", n=10) %>% rowid_to_column()
+
+df1
+df2
+```
+
+## Similarity functions
+
+We will define a similarity function between rows of the two dataframes. For dates we will compute the absolute difference in days between dates. For numeric values we also calculate the absolute difference. In both cases we use transformation $\exp{-d}$ to turn difference $d$ into a similarity. For the categorical attribute, we set similarity equal to 10 if values are equal, and 0 otherwise.
+
+```{r}
+diff_to_similarity <- function(d) {
+  exp(-d)
+}
+
+date_similarity <- function(d1, d2) {
+  d <- abs(as.integer(d1 - d2))
+  diff_to_similarity(d)
+}
+
+cat_similarity <- function(v1, v2) {
+  ifelse(v1 == v2, 10, 0)
+}
+
+num_similarity <- function(v1, v2) {
+  d <- abs(v1 - v2)
+  diff_to_similarity(d)
+}
+```
+
+## Version 1: Using matrices 
+
+In the first version we create a similarity matrix and iterate over rows of the two tables to fill in values of the matrix.
+
+```{r}
+sim_matrix <- matrix(NA, nrow(df1), nrow(df2))
+
+for (i in seq(1, nrow(df1))) {
+  for (j in seq(1, nrow(df2))) {
+    s <- date_similarity(df1$date[i], df2$date[j])
+    s <- s + cat_similarity(df1$cat[i], df2$cat[j]) 
+    s <- s + num_similarity(df1$num[i], df2$num[j])
+    sim_matrix[i,j] <- s
+  }
+}
+
+round(sim_matrix,2)
+```
+
+We can then use this similarity matrix as needed.
+
+## Version 2: Using data frames
+
+We can also use operations that work within a pipeline for this task. However, it is a bit more convoluted, and I include it here for reference (and because it's fun to figure out how to do it).
+
+First we create a data frame with all pairwise combinations of row indices from each of the two data frames.
+
+```{r}
+index_df <- df1 %>%
+  select(df1_id="rowid") %>%
+  mutate(df2_id=NA) %>%
+  bind_rows(df2 %>%
+              select(df2_id="rowid") %>%
+              mutate(df1_id = NA)) %>%
+  tidyr::expand(df1_id, df2_id) %>%
+  tidyr::drop_na()
+index_df
+```
+
+Next, we populate that data frame with attributes from the two dataframes by using joins on the row indices.
+
+```{r}
+similarity_df <- index_df %>%
+  inner_join(df1 %>% 
+               select(rowid, date.df1=date, 
+                      cat.df1=cat, num.df1=num),
+                      by=c(df1_id = "rowid")) %>%
+  inner_join(df2 %>% 
+               select(rowid, date.df2=date, 
+                      cat.df2=cat, 
+                      num.df2=num), 
+                      by=c(df2_id= "rowid"), 
+                      suffix=c(".ind", ".df2"))
+```
+
+With all relevant attributes in one data frame we can compute similarity as before.
+
+```{r}
+similarity_df <- similarity_df %>%
+  mutate(date_sim = date_similarity(date.df1, date.df2)) %>%
+  mutate(cat_sim = cat_similarity(cat.df1, cat.df2)) %>%
+  mutate(num_sim = num_similarity(num.df1, num.df2)) %>%
+  mutate(similarity = date_sim + cat_sim + num_sim) %>%
+  select(df1_id, df2_id, similarity)
+```
+
+If we wanted to find out which row in `df2` have highest similarity for each row of `df1`, we can use the group_by and summarize construct as we have done previously.
+
+```{r}
+similarity_df %>%
+  group_by(df1_id) %>%
+  summarize(df2_match_id=df2_id[which.max(similarity)])
+```
