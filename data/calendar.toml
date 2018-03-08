@@ -179,6 +179,11 @@ notes = "bookdown-notes/exploratory-data-analysis-summary-statistics.html"
 [day13]
 date = "3/8"
 
+
+[[day13.covers]]
+title = "Iteration over rows in two data frames"
+notes = "misc/two_tables_example.html"
+
 [[day13.covers]]
 title="Data transformations"
 notes = "bookdown-notes/eda-data-transformations.html"
