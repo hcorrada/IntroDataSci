@@ -532,7 +532,7 @@ diamonds <span class="op">%&gt;%</span>
 <p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-129-1.svg" width="672" /></p>
 <p>While this method works relatively well in practice, it presents a fundamental problem. Severe outliers can significantly affect spread estimates based on standard deviation. Specifically, spread estimates will be inflated in the presence of severe outliers. To circumvent this problem, we use rank-based estimates of spread to identify outliers as:</p>
 <p><span class="math display">\[
-\mathrm{outliers_{IQR}}(x) = \{x_j \, | \, x_j &lt; x_{(1/4)} - k \times \mathrm{IQR}(x) \mathrm{ or } x_j &gt; x_{(3/4)} + k \times \mathrm{IQR}(x)}
+\mathrm{outliers_{IQR}}(x) = \{x_j \, | \, x_j &lt; x_{(1/4)} - k \times \mathrm{IQR}(x) \; \mathrm{ or } \; x_j &gt; x_{(3/4)} + k \times \mathrm{IQR}(x)\}
 \]</span> This is usually referred to as the <em>Tukey outlier rule</em>, with multiplier <span class="math inline">\(k\)</span> serving the same role as before. We use the IQR here because it is less susceptible to be inflated by severe outliers in the dataset. It also works better for skewed data than the method based on standard deviation.</p>
 <p>Here we demonstrate its use again:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">outlier_df &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span>
