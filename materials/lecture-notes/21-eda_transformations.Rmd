@@ -1,16 +1,10 @@
----
-title: "Data transformations"
-author: "CMSC320"
-date: "`r Sys.Date()`"
-output: html_document
----
+# EDA: Data Transformations
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(cache=TRUE)
-library(png)
-library(grid)
-library(tidyr)
-library(dplyr)
+library(tidyverse)
+
+theme_set(theme_bw())
 ```
 
 
@@ -103,28 +97,20 @@ How about transforming data in the other direction, from continuous to discrete 
 
 It is also a useful way of capturing non-linear relationships in data: we will see this in our regression and prediction unit. Two standard methods used for discretization are to use **equal-length** bins, where variable range is divided into bins _regardless_ of the data distribution:
 
-```{r, eval=FALSE}
-is.missing <- is.na(flights$dep_delay)
+```{r, eval=TRUE}
 flights %>% 
-  mutate(dep_delay_fixed = 
-           ifelse(!is.missing, dep_delay, 
-                  mean(dep_delay, na.rm=TRUE))) %>%
-  mutate(dep_delay_discrete = cut(dep_delay_fixed, breaks=100)) %>%
-  ggplot(aes(dep_delay_discrete)) +
+  mutate(dep_delay_discrete = cut(dep_delay, breaks=100)) %>%
+  ggplot(aes(x=dep_delay_discrete)) +
   geom_bar()
 ```
 
 The second approach uses **equal-sized** bins, where the range is divided into bins _based_ on data distribution
 
-```{r, eval=FALSE}
-is.missing <- is.na(flights$dep_delay)
+```{r, eval=TRUE}
 flights %>% 
-  mutate(dep_delay_fixed = 
-           ifelse(!is.missing, dep_delay, 
-                  mean(dep_delay, na.rm=TRUE))) %>%
-  mutate(dep_delay_discrete = cut(dep_delay_fixed, 
-          breaks=quantile(dep_delay_fixed, probs=seq(0,1,len=11)))) %>%
-  ggplot(aes(dep_delay_discrete)) +
+  mutate(dep_delay_discrete = cut(dep_delay, 
+          breaks=quantile(dep_delay, probs=seq(0,1,len=11), na.rm=TRUE))) %>%
+  ggplot(aes(x=dep_delay_discrete)) +
   geom_bar()
 ```
 
@@ -140,13 +126,29 @@ Also, skewed data may arise when measuring *multiplicative* processes. This is v
 We have seen an example of skewed data previously when we looked at departure delays in our flights dataset.
 
 ```{r echo=FALSE}
-library(dplyr)
-library(ggplot2)
+library(tidyverse)
 library(nycflights13)
 ```
 
 ```{r, fig.width=20}
 flights %>% ggplot(aes(x=dep_delay)) + geom_histogram(binwidth=30)
+```
+
+Previously, we looked at a way of determining skew for a dataset. Let's see what that looks like for the `dep_delay` variable:
+
+```{r}
+compute_skew_stat <- function(df, attribute) {
+  attribute <- enquo(attribute)
+  
+  df %>%
+    summarize(med_attr=median(!!attribute, na.rm=TRUE), 
+              q1_attr=quantile(!!attribute, 1/4, na.rm=TRUE), 
+              q3_attr=quantile(!!attribute, 3/4, na.rm=TRUE)) %>%
+    mutate(d1 = med_attr - q1_attr, d2 = q3_attr - med_attr, skew_stat = d1 - d2) %>%
+    select(d1, d2, skew_stat)
+}
+
+flights %>% compute_skew_stat(dep_delay)
 ```
 
 In many cases a logarithmic transform is an appropriate transformation to reduce data skew:
@@ -160,9 +162,17 @@ In many cases a logarithmic transform is an appropriate transformation to reduce
 Here is a signed log transformation of departure delay data:
 
 ```{r}
-flights %>%
-  mutate(transformed_dep_delay = sign(dep_delay) * log2(abs(dep_delay) + 1)) %>%
+transformed_flights <- flights %>%
+  mutate(transformed_dep_delay = sign(dep_delay) * log2(abs(dep_delay) + 1))
+
+transformed_flights %>%
   ggplot(aes(x=transformed_dep_delay)) +
     geom_histogram(binwidth=1)
+```
+
+Let's see if that reduced the skew of the dataset:
+
+```{r}
+transformed_flights %>% compute_skew_stat(transformed_dep_delay)
 ```
 
