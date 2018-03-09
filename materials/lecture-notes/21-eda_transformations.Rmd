@@ -134,7 +134,7 @@ library(nycflights13)
 flights %>% ggplot(aes(x=dep_delay)) + geom_histogram(binwidth=30)
 ```
 
-Previously, we looked at a way of determining skew for a dataset. Let's see what that looks like for the `dep_delay` variable:
+Previously, we looked at a way of determining skew for a dataset. Let's see what that looks like for the `dep_delay` variable: (see [dplyr vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/programming.html) for info on 'enquo' and '!!')
 
 ```{r}
 compute_skew_stat <- function(df, attribute) {
@@ -175,4 +175,3 @@ Let's see if that reduced the skew of the dataset:
 ```{r}
 transformed_flights %>% compute_skew_stat(transformed_dep_delay)
 ```
-
