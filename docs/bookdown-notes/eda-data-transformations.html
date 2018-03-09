@@ -453,7 +453,7 @@ Wage <span class="op">%&gt;%</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">30</span>)</code></pre></div>
 <pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_bin).</code></pre>
 <p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-141-1.svg" width="1920" /></p>
-<p>Previously, we looked at a way of determining skew for a dataset. Let’s see what that looks like for the <code>dep_delay</code> variable:</p>
+<p>Previously, we looked at a way of determining skew for a dataset. Let’s see what that looks like for the <code>dep_delay</code> variable: (see <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/programming.html">dplyr vignette</a> for info on ‘enquo’ and ‘!!’)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">compute_skew_stat &lt;-<span class="st"> </span><span class="cf">function</span>(df, attribute) {
   attribute &lt;-<span class="st"> </span><span class="kw">enquo</span>(attribute)
   
