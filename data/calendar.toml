@@ -176,6 +176,9 @@ date = "3/6"
 title = "Exploratory Data Analysis 2: Summary statistics"
 notes = "bookdown-notes/exploratory-data-analysis-summary-statistics.html"
 
+[day12.class_notes]
+link = "cmsc320_class-notes_20180306.pdf"
+
 [day13]
 date = "3/8"
 
@@ -191,6 +194,9 @@ notes = "bookdown-notes/eda-data-transformations.html"
 [[day13.covers]]
 title = "Handling missing data"
 notes = "bookdown-notes/eda-handling-missing-data.html"
+
+[day13.class_notes]
+link = "cmsc320_class-notes_20180308.pdf"
 
 [day14]
 date = "3/13"
