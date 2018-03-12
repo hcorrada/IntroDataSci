@@ -1,0 +1,74 @@
+# Multivariate probability 
+
+### Joint and conditional probability
+
+Suppose that for each tweet I sample I can also say if it has _a lot_ of retweets or not. So, I have another binary random variable $Y \in \{0,1\}$ where $Y=1$ indicates the sampled tweet has a lot of retweets. (Note, we could say $Y\sim \mathrm{Bernoulli}(p_Y))$. So we could illustrate the population of "all" tweets as
+
+![](joint.png)
+
+We can talk of the joint probability distribution of $X$ and $Y$: $p(X=x, Y=y)$. Here we have the same conditions:
+
+1. $p(X=x,Y=y)\geq 0$ for all combination of values $x$ and $y$, and  
+2. $\sum_{\mathrm{all combination of values } X,Y \mathrm{ can take}} p(X=x,Y=y) = 1$
+
+We can also talk about _conditional probability_ where we look at the probability of a tweet being spam _conditioned_ on it not having lots of retweets:
+
+$$
+p(X=x | Y=y)
+$$
+
+which also needs to satisfy the properties of a probability distribution. So to make sure
+
+$$
+\sum_{\mathrm{all values } X \mathrm{ can take}} p(X=x|Y=y) = 1
+$$
+
+we define
+
+$$
+p(X=x | Y=y) = \frac{p(X=x,Y=y)}{p(Y=y)}
+$$
+
+This also lets us talk about _conditional independence_: if the probabilty of spam _does not_ depend on a tweet having lots of retweets, that is $p(X=x) = p(X=x|Y=y)$ for all $y$, then we say $X$ is _conditionally independent_ of $Y$. 
+
+Consider the tweet diagram above, is $X$ conditionally independent of $Y$? What would the diagram look like if $X$ was conditionally independent of $Y$?
+
+One more note, you can also see that for conditionally independent variables, the joint probability has an easy form $p(X=x,Y=y)=p(X=x)p(Y=y)$, which generalizes to more than two independent random variables.
+
+### Conditional expectation
+
+With conditional probabilty we can start talking about conditional expectation, which generalizes the concept of expectation we saw before. For example, the _conditional expected value_ (conditional mean) of $X$ given $Y=y$ is
+
+$$
+\mathbb{E} [ X|Y=y ] = \sum_{\mathrm{all values } X \mathrm{ can take}} x p(X=x|Y=y)
+$$
+
+This notion of conditional expectation, which follows from conditional probability, will serve as the basis for our Machine Learning method studies in the next few lectures!
+
+### Maximum likelihood
+
+One last note. We saw before how we estimated a parameter from matching expectation from a probability model with what we observed in data. The most popular method of estimation uses a similar idea: given data $x_1,x_2,\ldots,x_n$ and an assumed model of their distribution, e.g., $X_i\sim \mathrm{Bernoulli}(p)$ for all $i$, and they are iid, let's find the value of parameter $p$ that maximizes the likelihood (or probability) of the data we observe under this assumed probability model.
+
+We call the resulting estimate the _maximum likelihood estimate_. Here are some fun exercises to try:
+
+1) Given a sample $x_1$ with $X_1 \sim N(\mu,1)$, show that the maximum likelihood estimate of $\mu$, $\hat{\mu}=x_1$.
+
+It is most often convinient to _minimize negative log-likelihood_ instead of maximizing likelihood. So in this case:
+
+$$
+\begin{align}
+-\mathscr{L}(\mu) & = - \log p(X_1=x_1) \\
+{} & = \log{\sqrt{2\pi}} + \frac{1}{2}(x_1 - \mu)^2
+\end{align}
+$$
+
+To minimize this function of $\mu$ we can ignore all terms that are independent of $\mu$, and concentrate only on minimizing the last term. Now, this term is always positive, so the smallest value it can have is 0. So, we minimize it by setting $\hat{\mu}=x_1$.
+
+2) Given a sample $x_1,x_2,\ldots,x_n$ of $n$ iid random variables with $X_i \sim N(\mu,1)$ for all $i$, show that the maximum likelihood estimate of $\mu$, $\hat{\mu}=\overline{x}$ the sample mean!
+
+Here we would follow a similar approach, write out the negative log likelihood as a function $f(\mu;x_i)$ of $\mu$ that depends on data $x_i$. Two useful properties here are:
+
+1. $p(X_1=x_1,X_2=x_2,\ldots,X_n=x_n)=p(X_1=x_1)p(X_2=x_2)\cdots p(X_n=x_n)$, and  
+2. $\log \prod_i f(\mu;x_i) = \sum_i \log f(\mu;x_i)$
+
+Then find a value of $\mu$ that minimizes this function. Hint: we saw this when we showed that the sample mean is the minimizer of total squared distance in our exploratory analysis unit!
