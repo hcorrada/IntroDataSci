@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="tidy-data-i-the-er-model.html">
-<link rel="next" href="two-table-operations.html">
+<link rel="prev" href="univariate-distributions-and-statistics.html">
+<link rel="next" href="multivariate-probability.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -350,67 +350,251 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sql-i-single-table-queries" class="section level1">
-<h1><span class="header-section-number">12</span> SQL I: Single Table Queries</h1>
-<p>The Structured-Query-Language (SQL) is the predominant language used in database systems. It is tailored to the Relational data representation model.</p>
-<p>SQL is a declarative language, we don’t write a <em>procedure</em> to compute a relation, we <em>declare</em> what the relation we want to compute looks like. The actual execution is determined and optimized by the database engine. However, there are clear mappings between parts of SQL queries and the operations we have defined so far as implemented in the <code>tidyverse</code>.</p>
-<p>The basic construct in SQL is the so-called <code>SFW</code> construct: <em>select-from-where</em> which specifies:</p>
-<ul>
-<li><em>select</em>: which attributes you want the answer to have</li>
-<li><em>from</em>: which relation (table) you want the answer to be computed from</li>
-<li><em>where</em>: what conditions you want to be satisfied by the rows (tuples) of the answer</li>
-</ul>
-<p>E.g.: movies produced by disney in 1990: note the <em>rename</em></p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> m.title, m.year
-<span class="kw">from</span> movie m
-<span class="kw">where</span> m.studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> m.year = <span class="dv">1990</span></code></pre></div>
-<p>The <strong>select</strong> clause can contain expressions (this is paralleled by the <code>mutate</code> operation we saw previously)</p>
-<ul>
-<li><code>select title || ' (' || to_char(year) || ')' as titleyear</code></li>
-<li><code>select 2014 - year</code></li>
-</ul>
-<p>The <strong>where</strong> clause support a large number of different predicates and combinations thereof (this is parallel to the <code>filter</code> operation)</p>
-<ul>
-<li><code>year between 1990 and 1995</code></li>
-<li><code>title like 'star wars%'</code> <code>title like 'star wars _'</code></li>
-</ul>
-<p>We can include ordering, e.g., find distinct movies sorted by title</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="kw">distinct</span> title
-<span class="kw">from</span> movie
-<span class="kw">where</span> studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> <span class="dt">year</span> = <span class="dv">1990</span>
-<span class="kw">order</span> <span class="kw">by</span> title;</code></pre></div>
-<div id="group-by-and-summarize" class="section level2">
-<h2><span class="header-section-number">12.1</span> Group-by and summarize</h2>
-<p>SQL has an idiom for grouping and summarizing (<em>conditioning</em> as we called it before). Remember this is a very important concept that shows up in many data processing platforms</p>
-<ul>
-<li>What it does: Partition the tuples by the group attributes (<em>year</em> in this case), and do something (<em>compute avg</em> in this case) for each group</li>
-<li>Number of resulting tuples == Number of groups</li>
-</ul>
-<p>E.g., compute the average movie length by year</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> name, <span class="fu">avg</span>(<span class="fu">length</span>) 
-<span class="kw">from</span> movie
-<span class="kw">group</span> <span class="kw">by</span> <span class="dt">year</span></code></pre></div>
+<div id="experiment-design-and-hypothesis-testing" class="section level1">
+<h1><span class="header-section-number">25</span> Experiment design and hypothesis testing</h1>
+<div id="inference" class="section level3">
+<h3><span class="header-section-number">25.0.1</span> Inference</h3>
+<p>Now let’s use the CLT and LLN in data analysis. The picture of how we use probability in data analysis (statistical and machine learning) is somewhat like this:</p>
+<div class="figure">
+<img src="inference.png" />
+
 </div>
-<div id="subqueries" class="section level2">
-<h2><span class="header-section-number">12.2</span> Subqueries</h2>
-<p>You can nest queries as an expression in an SFW query. We refer to these “subqueries” as “nested subquery”:</p>
-<p>E.g., find movie with the maximum length</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>
-<span class="kw">from</span> movie
-<span class="kw">where</span> movie.length = (<span class="kw">select</span> <span class="fu">max</span>(<span class="fu">length</span>) <span class="kw">from</span> movie);</code></pre></div>
-<p>E.g., find movies with at least 5 stars: an example of a correlated subquery</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> * 
-<span class="kw">from</span> movies m
-<span class="kw">where</span> <span class="dv">5</span> &gt;= (<span class="kw">select</span> <span class="fu">count</span>(*)
-<span class="kw">from</span> starsIn si
-<span class="kw">where</span> si.title = m.title <span class="kw">and</span> si.year = m.year);</code></pre></div>
-<p>The nested subquery counts the number of actors for that movie.</p>
-<p>E.g., rank movies by their length.</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>, (<span class="kw">select</span> <span class="fu">count</span>(*) 
-<span class="kw">from</span> movies m2
-<span class="kw">where</span> m1.length &lt;= m2.length) <span class="kw">as</span> <span class="fu">rank</span>
-<span class="kw">from</span> movies m1;</code></pre></div>
-<p>Key insight: A movie is ranked 5th if there are exactly 4 movies with longer length. Most database systems support some sort of a <em>rank</em> keyword for doing this. Notice that the above query doesn’t work in presence of ties etc.</p>
+<p>The LLN tells us that our parameter <span class="math inline">\(\hat{p}\)</span> will be close to <span class="math inline">\(p\)</span> on average, the CLT lets us answer how confident are we that we found <span class="math inline">\(p\)</span>. We do this by constructing a <em>confidence interval</em> as follows. Since <span class="math inline">\(\hat{p} \sim N(p,\frac{\sqrt{p(1-p)}}{\sqrt{n}})\)</span>, we want to find an interval <span class="math inline">\([\hat{p}_{-}, \hat{p}_{+}]\)</span>, with <span class="math inline">\(\hat{p}\)</span> at its center, with 95%% of the probability specified by the CLT. Why? In that case, there is 95% that the value of parameter <span class="math inline">\(p\)</span> will be within that interval.</p>
+<p>Now, how do we calculate this interval, since we want the interval to contain 95%% of the probability, the probability for the tails (values outside this interval) will be <span class="math inline">\((1-.95)/2\)</span> (since there are two tails).</p>
+<p>So, the lower value of the interval will be one where the normal probability distribution (with mean <span class="math inline">\(\hat{p}\)</span> and standard deviation <span class="math inline">\(\frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}}\)</span>) is such that <span class="math inline">\(P(Y \leq \hat{p}_{-}) = .05/2\)</span>, which we can calculate using the function <code>qnorm</code> function in R:</p>
+<p><span class="math display">\[
+\begin{align}
+\hat{p}_{-} &amp; = \mathtt{qnorm}(.05/2, \hat{p}, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}}) \\
+{} &amp; = \hat{p} + \mathtt{qnorm}(.05/2,0, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}})
+\end{align}
+\]</span></p>
+<p>The upper value of the interval is computed with probability <span class="math inline">\(1-(.05/2)\)</span>, which by the symmetry of the normal distribution is given by <span class="math inline">\(\hat{p}_{+} = \hat{p} + -\mathtt{qnorm}(.05/2,0, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}})\)</span>.</p>
+<p>Let’s see how these intervals look for our twitter spam example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+<span class="co"># let&#39;s construct confidence intervals for samples of size n=10,100,500,1000,10000</span>
+tab &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sample_size=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">500</span>,<span class="dv">1000</span>,<span class="dv">10000</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">phat =</span> <span class="kw">sapply</span>(sample_size,get_estimate)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">se =</span> <span class="kw">sqrt</span>(phat<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>phat)) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lower =</span> phat <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">upper =</span> phat <span class="op">+</span><span class="st"> </span><span class="op">-</span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se))
+
+knitr<span class="op">::</span><span class="kw">kable</span>(tab)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">sample_size</th>
+<th align="right">phat</th>
+<th align="right">se</th>
+<th align="right">lower</th>
+<th align="right">upper</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">0.7000</td>
+<td align="right">0.1449138</td>
+<td align="right">0.4159742</td>
+<td align="right">0.9840258</td>
+</tr>
+<tr class="even">
+<td align="right">100</td>
+<td align="right">0.6900</td>
+<td align="right">0.0462493</td>
+<td align="right">0.5993530</td>
+<td align="right">0.7806470</td>
+</tr>
+<tr class="odd">
+<td align="right">500</td>
+<td align="right">0.7020</td>
+<td align="right">0.0204546</td>
+<td align="right">0.6619097</td>
+<td align="right">0.7420903</td>
+</tr>
+<tr class="even">
+<td align="right">1000</td>
+<td align="right">0.6940</td>
+<td align="right">0.0145727</td>
+<td align="right">0.6654380</td>
+<td align="right">0.7225620</td>
+</tr>
+<tr class="odd">
+<td align="right">10000</td>
+<td align="right">0.6982</td>
+<td align="right">0.0045904</td>
+<td align="right">0.6892030</td>
+<td align="right">0.7071970</td>
+</tr>
+</tbody>
+</table>
+<p>For our sample of <span class="math inline">\(n=500\)</span>, we would say that our estimate of <span class="math inline">\(p\)</span> is <span class="math inline">\(0.7 \pm -0.04\)</span>. A compact way of writing that is that our estimate of <span class="math inline">\(p\)</span> is <span class="math inline">\({}_{0.66}0.7_{0.74}\)</span>.</p>
+</div>
+<div id="hypothesis-testing" class="section level3">
+<h3><span class="header-section-number">25.0.2</span> Hypothesis testing</h3>
+<p>How else is this framework useful? Suppose that before I sampled tweets I thought (hypothesized) that more than 50% of tweets are spam. One way very popular way of thinking about this problem is to reject the hypothesis that this is not the case. In this case we have a <em>null</em> hypothesis that 50% or less of tweets are spam), against an <em>alternative</em> hypothesis that more than 50% of tweets are spam. You will see this written in statistics textbooks as:</p>
+<p><span class="math display">\[
+\begin{align}
+H_0: \, &amp; p &lt;= .5 &amp; \textrm{(null)} \\
+H_1: \, &amp; p &gt; .5 &amp; \textrm{(alternative)}
+\end{align}
+\]</span></p>
+<p>Note: this is a <em>one-sided</em> test vs. a <em>two-sided</em> test where the null hypothesis is that <span class="math inline">\(p=.5\)</span> and the alternative is <span class="math inline">\(p \neq .5\)</span>. According to the CLT, estimates <span class="math inline">\(\hat{p}\)</span> of <span class="math inline">\(p\)</span> from <span class="math inline">\(n\)</span> samples would be distributed as <span class="math inline">\(N(.5, \frac{\sqrt{.5(1-.5)}}{\sqrt{n}})\)</span> (we use <span class="math inline">\(p=.5\)</span> as this is the worst case for the hypothesis we want to test).</p>
+<p>Once we do have our sample of <span class="math inline">\(n\)</span> tweets we can get an estimate <span class="math inline">\(\hat{p}\)</span> as we did before. If we see that <span class="math inline">\(\hat{p}\)</span> (sample mean from our sample of tweets) is <em>too far</em> from <span class="math inline">\(p=.5\)</span> then we could reject the <em>null</em> hypothesis since the estimate we derived from the data we have is not statistically consistent with the <em>null</em> hypothesis. Now, how do we say our estimate <span class="math inline">\(\hat{p}\)</span> is too far? Here, we use the probability model given by the CLT. If <span class="math inline">\(P(Y \geq \hat{p}) \geq .95\)</span> under the null model (of <span class="math inline">\(p=.5\)</span>), we say it is too far and we reject.</p>
+<div class="figure">
+<img src="testing.png" />
+
+</div>
+<p>This 95% rejection threshold is conservative, but somewhat arbitrary. So we use on more metric, <span class="math inline">\(P(|Y| \geq \hat{p})\)</span> (the infamous p-value) to say: we could reject this hypothesis for all thresholds greater than this p-value.</p>
+<p>Let’s see how testing the hypothesis <span class="math inline">\(p &gt; .5\)</span> would look like for our tweet example</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab &lt;-<span class="st"> </span>tab <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p_value =</span> <span class="dv">1</span><span class="op">-</span><span class="kw">pnorm</span>(phat, <span class="dt">mean=</span>.<span class="dv">5</span>, <span class="dt">sd=</span>se))
+knitr<span class="op">::</span><span class="kw">kable</span>(tab)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">sample_size</th>
+<th align="right">phat</th>
+<th align="right">se</th>
+<th align="right">lower</th>
+<th align="right">upper</th>
+<th align="right">p_value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">0.7000</td>
+<td align="right">0.1449138</td>
+<td align="right">0.4159742</td>
+<td align="right">0.9840258</td>
+<td align="right">0.0837731</td>
+</tr>
+<tr class="even">
+<td align="right">100</td>
+<td align="right">0.6900</td>
+<td align="right">0.0462493</td>
+<td align="right">0.5993530</td>
+<td align="right">0.7806470</td>
+<td align="right">0.0000199</td>
+</tr>
+<tr class="odd">
+<td align="right">500</td>
+<td align="right">0.7020</td>
+<td align="right">0.0204546</td>
+<td align="right">0.6619097</td>
+<td align="right">0.7420903</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="right">1000</td>
+<td align="right">0.6940</td>
+<td align="right">0.0145727</td>
+<td align="right">0.6654380</td>
+<td align="right">0.7225620</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="right">10000</td>
+<td align="right">0.6982</td>
+<td align="right">0.0045904</td>
+<td align="right">0.6892030</td>
+<td align="right">0.7071970</td>
+<td align="right">0.0000000</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that rejection occurs when the parameter value for the null hypothesis <span class="math inline">\(p=.5\)</span> is outside the 95% confidence interval. Another note, these results hold for <span class="math inline">\(n\)</span> sufficiently large that the normal distribution in the CLT provides a good approximation of the distribution of estimates <span class="math inline">\(\hat{p}\)</span>. In cases where <span class="math inline">\(n\)</span> is smaller, the <span class="math inline">\(t\)</span>-distribution, as opposed to the normal distribution, provides a better approximation of the distribution of estimates <span class="math inline">\(\hat{p}\)</span>. In that case, instead of using <code>pnorm</code> in the calculations above, we would use <code>pt</code> (for <span class="math inline">\(t\)</span>-distribution) and the testing procedure above is referred to as a <span class="math inline">\(t\)</span>-test (one-sided or two-sided as above). Now, as <span class="math inline">\(n\)</span> grows, the <span class="math inline">\(t\)</span>-distribution approaches a normal distribution which is why analysts use the <span class="math inline">\(t\)</span>-test regularly.</p>
+</div>
+<div id="summary-1" class="section level3">
+<h3><span class="header-section-number">25.0.3</span> Summary</h3>
+<p><strong>Inference</strong>: estimate parameter from data based on assumed probability model (for example, matching expectation. We’ll see later another method called maximum likelihood).</p>
+<p>For <em>averages</em> the LLN and CLT tells us how to compute probabilities from a single parameter estimate, that is, derived from one dataset of samples. With these probabilities we can construct confidence intervals for our estimate.</p>
+<p><strong>Testing</strong>: Having a hypothesis about our parameter of interest, we can use probability <em>under this hypothesis</em> to see how statistically consistent our data is with that hypothesis, and reject the hypothesis if data is not statistically consistent enough (again using probability from CLT when dealing with averages).</p>
+</div>
+<div id="probability-distributions" class="section level3">
+<h3><span class="header-section-number">25.0.4</span> Probability Distributions</h3>
+<p>In this example we saw three distributions:</p>
+<div id="bernoulli" class="section level4">
+<h4><span class="header-section-number">25.0.4.1</span> Bernoulli</h4>
+<p>Notation: <span class="math inline">\(X \sim \mathrm{Bernoulli}(p)\)</span>.<br />
+Values: <span class="math inline">\(X \in \{0,1\}\)</span><br />
+Parameter: <span class="math inline">\(p\)</span>, <span class="math inline">\(p(X=1)=p\)</span> (probability of success).<br />
+Expected Value: <span class="math inline">\(\mathbb{E} X = p\)</span><br />
+Variance: <span class="math inline">\(\mathrm{var}(X) = p(1-p)\)</span>.</p>
+<p>We can write the probability mass function as</p>
+<p><span class="math display">\[
+p(X=x)=p^x(1-p)^{(1-x)}
+\]</span></p>
+</div>
+<div id="binomial" class="section level4">
+<h4><span class="header-section-number">25.0.4.2</span> Binomial</h4>
+<p>This corresponds to the number of <span class="math inline">\(1\)</span>’s in a draw of <span class="math inline">\(n\)</span> independent <span class="math inline">\(\mathrm{Bernoulli}(p)\)</span> random variables.</p>
+<p>Notation: <span class="math inline">\(X \sim \mathrm{Bin(n,p)}\)</span>.<br />
+Values: <span class="math inline">\(X \in 0,1,2,\ldots,n\)</span><br />
+Parameters: <span class="math inline">\(p\)</span> (probability of success), <span class="math inline">\(n\)</span> number of Bernoulli draws<br />
+Expected Value: <span class="math inline">\(\mathbb{E} X=np\)</span><br />
+Variance: <span class="math inline">\(\mathrm{var}(X) = np(1-p)\)</span></p>
+<p>Here the probability mass function is a little more complicated since we have many different ways in which <span class="math inline">\(n\)</span> draws of independent Bernoulli random variables result in the same number of successess</p>
+<p><span class="math display">\[
+p(X=k) = \binom{n}{k} p^k(1-p)^{n-k}
+\]</span></p>
+</div>
+<div id="normal-gaussian-distribution" class="section level4">
+<h4><span class="header-section-number">25.0.4.3</span> Normal (Gaussian) distribution</h4>
+<p>Notation: <span class="math inline">\(X \sim N(\mu,\sigma)\)</span><br />
+Values: <span class="math inline">\(X \in \mathbb{R}\)</span><br />
+Parameters: mean <span class="math inline">\(\mu\)</span>, standard deviation <span class="math inline">\(\sigma\)</span><br />
+Expected Value: <span class="math inline">\(\mathbb{E} X = \mu\)</span><br />
+Variance: <span class="math inline">\(\mathrm{var}(X) = \sigma^2\)</span></p>
+<p>The probability density function was given above.</p>
+<p>A useful reference for probability distributions can be found here: <a href="https://blog.cloudera.com/blog/2015/12/common-probability-distributions-the-data-scientists-crib-sheet/" class="uri">https://blog.cloudera.com/blog/2015/12/common-probability-distributions-the-data-scientists-crib-sheet/</a></p>
+</div>
+</div>
+<div id="distributions-in-r" class="section level3">
+<h3><span class="header-section-number">25.0.5</span> Distributions in R</h3>
+<p>For a majority of common distributions, R has the so-called <code>d,p,q,r</code> family of functions:</p>
+<table>
+<thead>
+<tr class="header">
+<th>function</th>
+<th>use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>d</code></td>
+<td>probability density (or mass) function</td>
+</tr>
+<tr class="even">
+<td><code>p</code></td>
+<td>cumulative probability function</td>
+</tr>
+<tr class="odd">
+<td><code>q</code></td>
+<td>quantile function</td>
+</tr>
+<tr class="even">
+<td><code>r</code></td>
+<td>random value generator</td>
+</tr>
+</tbody>
+</table>
+<p>For example, to use these for the Binomial distribution:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using n=10, p=.3</span>
+
+<span class="co"># compute probability mass function value for k=4 successess</span>
+<span class="kw">dbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)
+
+<span class="co"># compute cumulative probability function for k=4 successess</span>
+<span class="kw">pbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)
+
+<span class="co"># compute the number of success corresponding to the .80th quantile</span>
+<span class="kw">qbinom</span>(.<span class="dv">8</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)
+
+<span class="co"># generate a random value k</span>
+<span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</code></pre></div>
 
 </div>
 </div>
@@ -419,8 +603,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="tidy-data-i-the-er-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="two-table-operations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="univariate-distributions-and-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multivariate-probability.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
