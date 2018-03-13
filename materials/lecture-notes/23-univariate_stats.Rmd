@@ -2,7 +2,7 @@
 
 # Univariate distributions and statistics
 
-```{r setup, include=FALSE}
+```{r unistats_setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
 ```
 
