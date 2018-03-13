@@ -13,7 +13,7 @@ A quick note about two ways of operating on all pairs of rows in two datasets.
 
 We will simulate two dataframes containing a datetime attribute, a categorical and a numeric attribute. Let's first define a function to generate dataframes.
 
-```{r}
+```{r, message=FALSE}
 library(lubridate)
 library(tidyverse)
 
@@ -87,7 +87,16 @@ for (i in seq(1, nrow(df1))) {
 round(sim_matrix,2)
 ```
 
-We can then use this similarity matrix as needed.
+We can then use this similarity matrix as needed. To turn this into a tidy data frame we can use in subsequent analysis we could use something like this:
+
+```{r}
+sim_matrix %>%
+  magrittr::set_colnames(seq(1,ncol(.))) %>%
+  as_data_frame() %>%
+  rowid_to_column("df1_id") %>%
+  tidyr::gather(df2_id, similarity, -df1_id) %>%
+  mutate(df2_id = as.integer(df2_id))
+```
 
 ## Version 2: Using data frames
 
@@ -139,5 +148,5 @@ If we wanted to find out which row in `df2` have highest similarity for each row
 ```{r}
 similarity_df %>%
   group_by(df1_id) %>%
-  summarize(df2_match_id=df2_id[which.max(similarity)])
+  summarize(max_sim = max(similarity), df2_match_id=df2_id[which.max(similarity)])
 ```
