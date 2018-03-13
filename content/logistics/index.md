@@ -114,9 +114,8 @@ libraries, data resources and publishing mechanisms.
 
 ### Grading Procedures 
 
-* Projects (35%)
-* Quizzes (10%)
-* Written homework (20%)
+* Projects (40%)
+* Written homework (25%)
 * Midterm exams (20%)
 * Final Project (10%)
 * Class participation (5%)
