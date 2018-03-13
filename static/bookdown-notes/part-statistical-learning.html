@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="tidy-data-i-the-er-model.html">
-<link rel="next" href="two-table-operations.html">
+<link rel="prev" href="eda-handling-missing-data.html">
+<link rel="next" href="univariate-distributions-and-statistics.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -350,77 +350,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sql-i-single-table-queries" class="section level1">
-<h1><span class="header-section-number">12</span> SQL I: Single Table Queries</h1>
-<p>The Structured-Query-Language (SQL) is the predominant language used in database systems. It is tailored to the Relational data representation model.</p>
-<p>SQL is a declarative language, we don’t write a <em>procedure</em> to compute a relation, we <em>declare</em> what the relation we want to compute looks like. The actual execution is determined and optimized by the database engine. However, there are clear mappings between parts of SQL queries and the operations we have defined so far as implemented in the <code>tidyverse</code>.</p>
-<p>The basic construct in SQL is the so-called <code>SFW</code> construct: <em>select-from-where</em> which specifies:</p>
-<ul>
-<li><em>select</em>: which attributes you want the answer to have</li>
-<li><em>from</em>: which relation (table) you want the answer to be computed from</li>
-<li><em>where</em>: what conditions you want to be satisfied by the rows (tuples) of the answer</li>
-</ul>
-<p>E.g.: movies produced by disney in 1990: note the <em>rename</em></p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> m.title, m.year
-<span class="kw">from</span> movie m
-<span class="kw">where</span> m.studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> m.year = <span class="dv">1990</span></code></pre></div>
-<p>The <strong>select</strong> clause can contain expressions (this is paralleled by the <code>mutate</code> operation we saw previously)</p>
-<ul>
-<li><code>select title || ' (' || to_char(year) || ')' as titleyear</code></li>
-<li><code>select 2014 - year</code></li>
-</ul>
-<p>The <strong>where</strong> clause support a large number of different predicates and combinations thereof (this is parallel to the <code>filter</code> operation)</p>
-<ul>
-<li><code>year between 1990 and 1995</code></li>
-<li><code>title like 'star wars%'</code> <code>title like 'star wars _'</code></li>
-</ul>
-<p>We can include ordering, e.g., find distinct movies sorted by title</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="kw">distinct</span> title
-<span class="kw">from</span> movie
-<span class="kw">where</span> studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> <span class="dt">year</span> = <span class="dv">1990</span>
-<span class="kw">order</span> <span class="kw">by</span> title;</code></pre></div>
-<div id="group-by-and-summarize" class="section level2">
-<h2><span class="header-section-number">12.1</span> Group-by and summarize</h2>
-<p>SQL has an idiom for grouping and summarizing (<em>conditioning</em> as we called it before). Remember this is a very important concept that shows up in many data processing platforms</p>
-<ul>
-<li>What it does: Partition the tuples by the group attributes (<em>year</em> in this case), and do something (<em>compute avg</em> in this case) for each group</li>
-<li>Number of resulting tuples == Number of groups</li>
-</ul>
-<p>E.g., compute the average movie length by year</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> name, <span class="fu">avg</span>(<span class="fu">length</span>) 
-<span class="kw">from</span> movie
-<span class="kw">group</span> <span class="kw">by</span> <span class="dt">year</span></code></pre></div>
-</div>
-<div id="subqueries" class="section level2">
-<h2><span class="header-section-number">12.2</span> Subqueries</h2>
-<p>You can nest queries as an expression in an SFW query. We refer to these “subqueries” as “nested subquery”:</p>
-<p>E.g., find movie with the maximum length</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>
-<span class="kw">from</span> movie
-<span class="kw">where</span> movie.length = (<span class="kw">select</span> <span class="fu">max</span>(<span class="fu">length</span>) <span class="kw">from</span> movie);</code></pre></div>
-<p>E.g., find movies with at least 5 stars: an example of a correlated subquery</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> * 
-<span class="kw">from</span> movies m
-<span class="kw">where</span> <span class="dv">5</span> &gt;= (<span class="kw">select</span> <span class="fu">count</span>(*)
-<span class="kw">from</span> starsIn si
-<span class="kw">where</span> si.title = m.title <span class="kw">and</span> si.year = m.year);</code></pre></div>
-<p>The nested subquery counts the number of actors for that movie.</p>
-<p>E.g., rank movies by their length.</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>, (<span class="kw">select</span> <span class="fu">count</span>(*) 
-<span class="kw">from</span> movies m2
-<span class="kw">where</span> m1.length &lt;= m2.length) <span class="kw">as</span> <span class="fu">rank</span>
-<span class="kw">from</span> movies m1;</code></pre></div>
-<p>Key insight: A movie is ranked 5th if there are exactly 4 movies with longer length. Most database systems support some sort of a <em>rank</em> keyword for doing this. Notice that the above query doesn’t work in presence of ties etc.</p>
-
-</div>
+<div id="part-statistical-learning" class="section level1 unnumbered">
+<h1>(Part) Statistical Learning</h1>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="tidy-data-i-the-er-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="two-table-operations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="eda-handling-missing-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="univariate-distributions-and-statistics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
