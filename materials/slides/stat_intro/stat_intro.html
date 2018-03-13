@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introductory Thoughts on Stats</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2018-03-13" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introductory Thoughts on Stats]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+CMSC320: 2018-03-13
+]
+
+.logo[![](img/logo.png)]
+
+---
+
+
+
+# Why Stats?
+
+In this class we learn _Statistical and Machine Learning_ techniques for data analysis.
+
+By the time we are done, you should 
+
+- be able to read **critically** papers or reports that use these methods.
+- be able to use these methods for daata analysis
+
+---
+
+# Why Stats?
+
+In either case, you will need to ask yourself if findings are **statistically significant**. 
+
+---
+class: split-50
+
+# Why Stats?
+
+.column[
+- Use a classification algorithm to distinguish images
+- Accurate 70 out of 100 cases.
+- Could this happen by chance alone? 
+
+]
+
+.column[
+.image-50[![](img/images.png)]
+]
+
+---
+
+# Why Stats?
+
+To be able to answer these question, we need to understand some basic probabilistic and statistical principles. 
+
+In this course unit we will review some of these principles.
+
+---
+layout: true
+
+# Variation, randomness and stochasticity
+
+---
+class: split-30
+
+So far, we have not spoken about _randomness_ and _stochasticity_. 
+We have, however, spoken about _variation_. 
+
+.column[_spread_ in a dataset refers to the fact that in a population of entities
+there is naturally occuring variation in measurements]
+
+.column[
+![](stat_intro_files/figure-html/unnamed-chunk-1-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-50
+
+.column[
+Another example: in sets of tweets there is natural variation in the frequency of word usage.
+]
+
+.column[
+.image-50[![](img/trump_words.svg)]
+]
+
+---
+
+In summary, we can discuss the notion of _variation_ without referring to any randomness, stochasticity or noise. 
+
+---
+layout: true
+
+# Why Probability?
+
+---
+
+
+Because, we **do** want to distinguish, when possible:
+
+  - natural occuring variation, vs.
+  - randomness or stochasticity
+
+---
+
+Example: want to learn something about education loan debt for 19-30 year olds in Maryland. 
+
+- Find loan debt for **all** 19-30 year old Maryland residents, and calculate mean and standard deviation. 
+
+--
+
+- That's difficult to do for all residents. 
+
+--
+
+- Instead we sample (say by randomly sending Twitter surveys), and _estimate_ the average and standard deviation of debt in this population from the sample. 
+
+---
+
+Now, this presents an issue since we could do the same from a different random sample and get a different set of estimates. Why? 
+
+--
+
+Because there is naturally-occuring variation in this population.  
+
+---
+
+So, a simple question to ask is: 
+
+&gt; How good are our _estimates_ of debt mean and standard deviation from sample of 19-30 year old Marylanders? 
+
+---
+
+Another example: suppose we build a predictive model of loan debt for 19-30 year old Marylanders based on other variables (e.g., sex, income, education, wages, etc.) from our sample. 
+
+--
+
+&gt; How good will this model perform when predicting debt in general?
+
+---
+
+We use probability and statistics to answer these questions. 
+
+--
+
+- Probability captures stochasticity in the sampling process, while
+
+--
+
+- we _model_ naturally occuring variation in measurements in a population of interest.
+
+---
+layout: false
+
+# One final word
+
+The term _population_ means 
+
+&gt; **the entire** collection of entities we want to model 
+
+This could include people, but also images, text, chess positions, etc.
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
