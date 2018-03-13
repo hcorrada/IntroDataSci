@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Lecture Notes: Introduction to Data Science</title>
+  <meta name="description" content="Lecture Notes: Introduction to Data Science">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lecture Notes: Introduction to Data Science" />
+  
+  
+  
+
+<meta name="author" content="Héctor Corrada Bravo">
+
+
+<meta name="date" content="2018-03-13">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="part-statistical-learning.html">
+<link rel="next" href="experiment-design-and-hypothesis-testing.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="http://bit.ly/hcb-ids">CMSC320 Intro. Data Science</a></li>
+<li><a href="http://www.hcbravo.org">Hector Corrada Bravo</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html"><i class="fa fa-check"></i><b>2</b> Introduction and Overview</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#what-is-data-science"><i class="fa fa-check"></i><b>2.1</b> What is Data Science?</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data"><i class="fa fa-check"></i><b>2.1.1</b> Data</a></li>
+<li class="chapter" data-level="2.1.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#specific-questions"><i class="fa fa-check"></i><b>2.1.2</b> Specific Questions</a></li>
+<li class="chapter" data-level="2.1.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#interdisciplinary-activities"><i class="fa fa-check"></i><b>2.1.3</b> Interdisciplinary Activities</a></li>
+<li class="chapter" data-level="2.1.4" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data-centric-artifacts-and-applications"><i class="fa fa-check"></i><b>2.1.4</b> Data-Centric Artifacts and Applications</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#why-data-science"><i class="fa fa-check"></i><b>2.2</b> Why Data Science?</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data-science-in-society"><i class="fa fa-check"></i><b>2.3</b> Data Science in Society</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#course-organization"><i class="fa fa-check"></i><b>2.4</b> Course Organization</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#general-workflow"><i class="fa fa-check"></i><b>2.5</b> General Workflow</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#defining-the-goal"><i class="fa fa-check"></i><b>2.5.1</b> Defining the Goal</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data-collection-and-management"><i class="fa fa-check"></i><b>2.5.2</b> Data Collection and Management</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#modeling"><i class="fa fa-check"></i><b>2.5.3</b> Modeling</a></li>
+<li class="chapter" data-level="2.5.4" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#model-evaluation"><i class="fa fa-check"></i><b>2.5.4</b> Model Evaluation</a></li>
+<li class="chapter" data-level="2.5.5" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#presentation"><i class="fa fa-check"></i><b>2.5.5</b> Presentation</a></li>
+<li class="chapter" data-level="2.5.6" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#deployment"><i class="fa fa-check"></i><b>2.5.6</b> Deployment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html"><i class="fa fa-check"></i><b>3</b> An Illustrative Analysis</a><ul>
+<li class="chapter" data-level="3.1" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#gathering-data"><i class="fa fa-check"></i><b>3.1</b> Gathering data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#movie-ratings"><i class="fa fa-check"></i><b>3.1.1</b> Movie ratings</a></li>
+<li class="chapter" data-level="3.1.2" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#movie-budgets-and-revenue"><i class="fa fa-check"></i><b>3.1.2</b> Movie budgets and revenue</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#manipulating-the-data"><i class="fa fa-check"></i><b>3.2</b> Manipulating the data</a></li>
+<li class="chapter" data-level="3.3" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-the-data"><i class="fa fa-check"></i><b>3.3</b> Visualizing the data</a></li>
+<li class="chapter" data-level="3.4" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#modeling-data"><i class="fa fa-check"></i><b>3.4</b> Modeling data</a></li>
+<li class="chapter" data-level="3.5" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-model-result"><i class="fa fa-check"></i><b>3.5</b> Visualizing model result</a></li>
+<li class="chapter" data-level="3.6" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#abstracting-the-analysis"><i class="fa fa-check"></i><b>3.6</b> Abstracting the analysis</a></li>
+<li class="chapter" data-level="3.7" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#making-analyses-accessible"><i class="fa fa-check"></i><b>3.7</b> Making analyses accessible</a></li>
+<li class="chapter" data-level="3.8" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#summary"><i class="fa fa-check"></i><b>3.8</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the R Data Science Toolbox</a><ul>
+<li class="chapter" data-level="4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1</b> Some history</a></li>
+<li class="chapter" data-level="4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.2</b> Setting up R</a></li>
+<li class="chapter" data-level="4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.3</b> Setting up Rstudio</a></li>
+<li class="chapter" data-level="4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.4</b> A first look at Rstudio</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.4.1</b> Interactive Console</a></li>
+<li class="chapter" data-level="4.4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.4.2</b> Data Viewer</a></li>
+<li class="chapter" data-level="4.4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.4.3</b> Names, values and functions</a></li>
+<li class="chapter" data-level="4.4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.4.4</b> Plotting</a></li>
+<li class="chapter" data-level="4.4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.4.5</b> Editor</a></li>
+<li class="chapter" data-level="4.4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.4.6</b> Files viewer</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.5</b> R packages</a></li>
+<li class="chapter" data-level="4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.6</b> Additional R resources</a></li>
+<li class="chapter" data-level="4.7" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.7</b> Literate Programming</a></li>
+<li class="chapter" data-level="4.8" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#finishing-your-setup"><i class="fa fa-check"></i><b>4.8</b> Finishing your setup</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html"><i class="fa fa-check"></i>(Part) Data representation modeling, ingestion and cleaning</a><ul>
+<li class="chapter" data-level="4.9" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#a-data-analysis-to-get-us-going"><i class="fa fa-check"></i><b>4.9</b> A data analysis to get us going</a></li>
+<li class="chapter" data-level="4.10" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#getting-data"><i class="fa fa-check"></i><b>4.10</b> Getting data</a><ul>
+<li class="chapter" data-level="4.10.1" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#names-values-and-functions-1"><i class="fa fa-check"></i><b>4.10.1</b> Names, values and functions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.11" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#entities-and-attributes"><i class="fa fa-check"></i><b>4.11</b> Entities and attributes</a></li>
+<li class="chapter" data-level="4.12" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#categorical-attributes"><i class="fa fa-check"></i><b>4.12</b> Categorical attributes</a><ul>
+<li class="chapter" data-level="4.12.1" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#factors-in-r"><i class="fa fa-check"></i><b>4.12.1</b> Factors in R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.13" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#discrete-numeric-attributes"><i class="fa fa-check"></i><b>4.13</b> Discrete numeric attributes</a></li>
+<li class="chapter" data-level="4.14" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#continuous-numeric-data"><i class="fa fa-check"></i><b>4.14</b> Continuous numeric data</a></li>
+<li class="chapter" data-level="4.15" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#other-examples"><i class="fa fa-check"></i><b>4.15</b> Other examples</a></li>
+<li class="chapter" data-level="4.16" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#other-important-datatypes"><i class="fa fa-check"></i><b>4.16</b> Other important datatypes</a></li>
+<li class="chapter" data-level="4.17" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#units"><i class="fa fa-check"></i><b>4.17</b> Units</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html"><i class="fa fa-check"></i><b>5</b> Principles: Basic Operations</a><ul>
+<li class="chapter" data-level="5.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-attributes"><i class="fa fa-check"></i><b>5.1</b> Operations that select attributes</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#select"><i class="fa fa-check"></i><b>5.1.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#rename"><i class="fa fa-check"></i><b>5.1.2</b> <code>rename</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-entities"><i class="fa fa-check"></i><b>5.2</b> Operations that select entities</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#slice"><i class="fa fa-check"></i><b>5.2.1</b> <code>slice</code></a></li>
+<li class="chapter" data-level="5.2.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#filter"><i class="fa fa-check"></i><b>5.2.2</b> <code>filter</code></a></li>
+<li class="chapter" data-level="5.2.3" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#sample_n-and-sample_frac"><i class="fa fa-check"></i><b>5.2.3</b> <code>sample_n</code> and <code>sample_frac</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#pipelines-of-operations"><i class="fa fa-check"></i><b>5.3</b> Pipelines of operations</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="principles-more-operations.html"><a href="principles-more-operations.html"><i class="fa fa-check"></i><b>6</b> Principles: More Operations</a><ul>
+<li class="chapter" data-level="6.1" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-sort-entities"><i class="fa fa-check"></i><b>6.1</b> Operations that sort entities</a></li>
+<li class="chapter" data-level="6.2" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-create-new-attributes"><i class="fa fa-check"></i><b>6.2</b> Operations that create new attributes</a></li>
+<li class="chapter" data-level="6.3" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-summarize-attribute-values-over-entities"><i class="fa fa-check"></i><b>6.3</b> Operations that summarize attribute values over entities</a></li>
+<li class="chapter" data-level="6.4" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-group-entities"><i class="fa fa-check"></i><b>6.4</b> Operations that group entities</a></li>
+<li class="chapter" data-level="6.5" data-path="principles-more-operations.html"><a href="principles-more-operations.html#vectors"><i class="fa fa-check"></i><b>6.5</b> Vectors</a></li>
+<li class="chapter" data-level="6.6" data-path="principles-more-operations.html"><a href="principles-more-operations.html#attributes-as-vectors"><i class="fa fa-check"></i><b>6.6</b> Attributes as vectors</a></li>
+<li class="chapter" data-level="6.7" data-path="principles-more-operations.html"><a href="principles-more-operations.html#functions"><i class="fa fa-check"></i><b>6.7</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html"><i class="fa fa-check"></i><b>7</b> Basic plotting with <code>ggplot</code></a><ul>
+<li class="chapter" data-level="7.1" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#plot-construction-details"><i class="fa fa-check"></i><b>7.1</b> Plot Construction Details</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#mappings"><i class="fa fa-check"></i><b>7.1.1</b> Mappings</a></li>
+<li class="chapter" data-level="7.1.2" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#representations"><i class="fa fa-check"></i><b>7.1.2</b> Representations</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#frequently-used-plots"><i class="fa fa-check"></i><b>7.2</b> Frequently Used Plots</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#scatter-plot"><i class="fa fa-check"></i><b>7.2.1</b> Scatter plot</a></li>
+<li class="chapter" data-level="7.2.2" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#bar-graph"><i class="fa fa-check"></i><b>7.2.2</b> Bar graph</a></li>
+<li class="chapter" data-level="7.2.3" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#histogram"><i class="fa fa-check"></i><b>7.2.3</b> Histogram</a></li>
+<li class="chapter" data-level="7.2.4" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#boxplot"><i class="fa fa-check"></i><b>7.2.4</b> Boxplot</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="brief-introduction-to-rmarkdown.html"><a href="brief-introduction-to-rmarkdown.html"><i class="fa fa-check"></i><b>8</b> Brief Introduction to Rmarkdown</a></li>
+<li class="chapter" data-level="9" data-path="best-practices-for-data-science-projects.html"><a href="best-practices-for-data-science-projects.html"><i class="fa fa-check"></i><b>9</b> Best Practices for Data Science Projects</a></li>
+<li class="chapter" data-level="10" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html"><i class="fa fa-check"></i><b>10</b> Tidy Data I: The ER Model</a><ul>
+<li class="chapter" data-level="10.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#overview"><i class="fa fa-check"></i><b>10.1</b> Overview</a></li>
+<li class="chapter" data-level="10.2" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#the-entity-relationship-and-relational-models"><i class="fa fa-check"></i><b>10.2</b> The Entity-Relationship and Relational Models</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#formal-introduction-to-keys"><i class="fa fa-check"></i><b>10.2.1</b> Formal introduction to keys</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#tidy-data"><i class="fa fa-check"></i><b>10.3</b> Tidy Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html"><i class="fa fa-check"></i><b>11</b> SQL I: Single Table Queries</a><ul>
+<li class="chapter" data-level="11.1" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#group-by-and-summarize"><i class="fa fa-check"></i><b>11.1</b> Group-by and summarize</a></li>
+<li class="chapter" data-level="11.2" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#subqueries"><i class="fa fa-check"></i><b>11.2</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="two-table-operations.html"><a href="two-table-operations.html"><i class="fa fa-check"></i><b>12</b> Two-table operations</a><ul>
+<li class="chapter" data-level="12.1" data-path="two-table-operations.html"><a href="two-table-operations.html#left-join"><i class="fa fa-check"></i><b>12.1</b> Left Join</a></li>
+<li class="chapter" data-level="12.2" data-path="two-table-operations.html"><a href="two-table-operations.html#right-join"><i class="fa fa-check"></i><b>12.2</b> Right Join</a></li>
+<li class="chapter" data-level="12.3" data-path="two-table-operations.html"><a href="two-table-operations.html#inner-join"><i class="fa fa-check"></i><b>12.3</b> Inner Join</a></li>
+<li class="chapter" data-level="12.4" data-path="two-table-operations.html"><a href="two-table-operations.html#full-join"><i class="fa fa-check"></i><b>12.4</b> Full Join</a></li>
+<li class="chapter" data-level="12.5" data-path="two-table-operations.html"><a href="two-table-operations.html#join-conditions"><i class="fa fa-check"></i><b>12.5</b> Join conditions</a></li>
+<li class="chapter" data-level="12.6" data-path="two-table-operations.html"><a href="two-table-operations.html#filtering-joins"><i class="fa fa-check"></i><b>12.6</b> Filtering Joins</a></li>
+<li class="chapter" data-level="12.7" data-path="two-table-operations.html"><a href="two-table-operations.html#sql-constructs-multi-table-queries"><i class="fa fa-check"></i><b>12.7</b> SQL Constructs: Multi-table Queries</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html"><i class="fa fa-check"></i><b>13</b> SQL System Constructs</a><ul>
+<li class="chapter" data-level="13.1" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#sql-as-a-data-definition-language"><i class="fa fa-check"></i><b>13.1</b> SQL as a Data Definition Language</a></li>
+<li class="chapter" data-level="13.2" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#set-operations-and-comparisons"><i class="fa fa-check"></i><b>13.2</b> Set Operations and Comparisons</a></li>
+<li class="chapter" data-level="13.3" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#views"><i class="fa fa-check"></i><b>13.3</b> Views</a></li>
+<li class="chapter" data-level="13.4" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#nulls"><i class="fa fa-check"></i><b>13.4</b> NULLs</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="db-parting-shots.html"><a href="db-parting-shots.html"><i class="fa fa-check"></i><b>14</b> DB Parting Shots</a><ul>
+<li class="chapter" data-level="14.1" data-path="db-parting-shots.html"><a href="db-parting-shots.html#database-query-optimization"><i class="fa fa-check"></i><b>14.1</b> Database Query Optimization</a></li>
+<li class="chapter" data-level="14.2" data-path="db-parting-shots.html"><a href="db-parting-shots.html#json-data-model"><i class="fa fa-check"></i><b>14.2</b> JSON Data Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ingesting-data.html"><a href="ingesting-data.html"><i class="fa fa-check"></i><b>15</b> Ingesting data</a><ul>
+<li class="chapter" data-level="15.1" data-path="ingesting-data.html"><a href="ingesting-data.html#structured-ingestion"><i class="fa fa-check"></i><b>15.1</b> Structured ingestion</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="ingesting-data.html"><a href="ingesting-data.html#csv-files-and-similar"><i class="fa fa-check"></i><b>15.1.1</b> CSV files (and similar)</a></li>
+<li class="chapter" data-level="15.1.2" data-path="ingesting-data.html"><a href="ingesting-data.html#excel-spreadsheets"><i class="fa fa-check"></i><b>15.1.2</b> Excel spreadsheets</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping"><i class="fa fa-check"></i><b>15.2</b> Scraping</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping-from-dirty-html-tables"><i class="fa fa-check"></i><b>15.2.1</b> Scraping from dirty HTML tables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="tidying-data.html"><a href="tidying-data.html"><i class="fa fa-check"></i><b>16</b> Tidying data</a><ul>
+<li class="chapter" data-level="16.1" data-path="tidying-data.html"><a href="tidying-data.html#tidy-data-1"><i class="fa fa-check"></i><b>16.1</b> Tidy Data</a></li>
+<li class="chapter" data-level="16.2" data-path="tidying-data.html"><a href="tidying-data.html#common-problems-in-messy-data"><i class="fa fa-check"></i><b>16.2</b> Common problems in messy data</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="tidying-data.html"><a href="tidying-data.html#headers-as-values"><i class="fa fa-check"></i><b>16.2.1</b> Headers as values</a></li>
+<li class="chapter" data-level="16.2.2" data-path="tidying-data.html"><a href="tidying-data.html#multiple-variables-in-one-column"><i class="fa fa-check"></i><b>16.2.2</b> Multiple variables in one column</a></li>
+<li class="chapter" data-level="16.2.3" data-path="tidying-data.html"><a href="tidying-data.html#variables-stored-in-both-rows-and-columns"><i class="fa fa-check"></i><b>16.2.3</b> Variables stored in both rows and columns</a></li>
+<li class="chapter" data-level="16.2.4" data-path="tidying-data.html"><a href="tidying-data.html#multiple-types-in-one-table"><i class="fa fa-check"></i><b>16.2.4</b> Multiple types in one table</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="text-and-dates.html"><a href="text-and-dates.html"><i class="fa fa-check"></i><b>17</b> Text and Dates</a><ul>
+<li class="chapter" data-level="17.1" data-path="text-and-dates.html"><a href="text-and-dates.html#text"><i class="fa fa-check"></i><b>17.1</b> Text</a><ul>
+<li class="chapter" data-level="17.1.1" data-path="text-and-dates.html"><a href="text-and-dates.html#string-operations"><i class="fa fa-check"></i><b>17.1.1</b> String operations</a></li>
+<li class="chapter" data-level="17.1.2" data-path="text-and-dates.html"><a href="text-and-dates.html#regular-expressions"><i class="fa fa-check"></i><b>17.1.2</b> Regular expressions</a></li>
+<li class="chapter" data-level="17.1.3" data-path="text-and-dates.html"><a href="text-and-dates.html#tools-using-regular-expressions"><i class="fa fa-check"></i><b>17.1.3</b> Tools using regular expressions</a></li>
+<li class="chapter" data-level="17.1.4" data-path="text-and-dates.html"><a href="text-and-dates.html#extracting-attributes-from-text"><i class="fa fa-check"></i><b>17.1.4</b> Extracting attributes from text</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>17.2</b> Handling dates</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>18</b> Entity Resolution and Record Linkage</a></li>
+<li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="18.0.1" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>18.0.1</b> EDA (Exploratory Data Analysis)</a></li>
+<li class="chapter" data-level="18.1" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#visualization-of-single-variables"><i class="fa fa-check"></i><b>18.1</b> Visualization of single variables</a><ul>
+<li class="chapter" data-level="18.1.1" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#visualization-of-pairs-of-variables"><i class="fa fa-check"></i><b>18.1.1</b> Visualization of pairs of variables</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#eda-with-the-grammar-of-graphics"><i class="fa fa-check"></i><b>18.2</b> EDA with the grammar of graphics</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#other-aesthetics"><i class="fa fa-check"></i><b>18.2.1</b> Other aesthetics</a></li>
+<li class="chapter" data-level="18.2.2" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#faceting"><i class="fa fa-check"></i><b>18.2.2</b> Faceting</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html"><i class="fa fa-check"></i><b>19</b> Exploratory Data Analysis: Summary Statistics</a><ul>
+<li class="chapter" data-level="19.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#range"><i class="fa fa-check"></i><b>19.1</b> Range</a></li>
+<li class="chapter" data-level="19.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#central-tendency"><i class="fa fa-check"></i><b>19.2</b> Central Tendency</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#derivation-of-the-mean-as-central-tendency-statistic"><i class="fa fa-check"></i><b>19.2.1</b> Derivation of the mean as central tendency statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread"><i class="fa fa-check"></i><b>19.3</b> Spread</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#variance"><i class="fa fa-check"></i><b>19.3.1</b> Variance</a></li>
+<li class="chapter" data-level="19.3.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread-estimates-using-rank-statistics"><i class="fa fa-check"></i><b>19.3.2</b> Spread estimates using rank statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#outliers"><i class="fa fa-check"></i><b>19.4</b> Outliers</a></li>
+<li class="chapter" data-level="19.5" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#skew"><i class="fa fa-check"></i><b>19.5</b> Skew</a></li>
+<li class="chapter" data-level="19.6" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#covariance-and-correlation"><i class="fa fa-check"></i><b>19.6</b> Covariance and correlation</a></li>
+<li class="chapter" data-level="19.7" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#postscript-finding-maximaminima-using-derivatives"><i class="fa fa-check"></i><b>19.7</b> Postscript: Finding Maxima/Minima using Derivatives</a><ul>
+<li class="chapter" data-level="19.7.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#steps-to-find-maximaminima-of-function-fx"><i class="fa fa-check"></i><b>19.7.1</b> Steps to find Maxima/Minima of function <span class="math inline">\(f(x)\)</span></a></li>
+<li class="chapter" data-level="19.7.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#notes-on-finding-derivatives"><i class="fa fa-check"></i><b>19.7.2</b> Notes on Finding Derivatives</a></li>
+<li class="chapter" data-level="19.7.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#resources"><i class="fa fa-check"></i><b>19.7.3</b> Resources:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html"><i class="fa fa-check"></i><b>20</b> EDA: Data Transformations</a><ul>
+<li class="chapter" data-level="20.1" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#centering-and-scaling"><i class="fa fa-check"></i><b>20.1</b> Centering and scaling</a></li>
+<li class="chapter" data-level="20.2" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#treating-categorical-variables-as-numeric"><i class="fa fa-check"></i><b>20.2</b> Treating categorical variables as numeric</a><ul>
+<li class="chapter" data-level="20.2.1" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#discretizing-continuous-values."><i class="fa fa-check"></i><b>20.2.1</b> Discretizing continuous values.</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#skewed-data"><i class="fa fa-check"></i><b>20.3</b> Skewed Data</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html"><i class="fa fa-check"></i><b>21</b> EDA: Handling Missing Data</a><ul>
+<li class="chapter" data-level="21.0.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>21.0.1</b> Dealing with data missing at random</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html"><i class="fa fa-check"></i>(Part) Statistical Learning</a></li>
+<li class="chapter" data-level="22" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html"><i class="fa fa-check"></i><b>22</b> Univariate distributions and statistics</a><ul>
+<li class="chapter" data-level="22.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#variation-randomness-and-stochasticity"><i class="fa fa-check"></i><b>22.1</b> Variation, randomness and stochasticity</a><ul>
+<li class="chapter" data-level="22.1.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#random-variables"><i class="fa fa-check"></i><b>22.1.1</b> Random variables</a></li>
+</ul></li>
+<li class="chapter" data-level="22.2" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#discrete-probability-distributions"><i class="fa fa-check"></i><b>22.2</b> (Discrete) Probability distributions</a><ul>
+<li class="chapter" data-level="22.2.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#example-the-oracle-of-tweet"><i class="fa fa-check"></i><b>22.2.1</b> Example The oracle of TWEET</a></li>
+</ul></li>
+<li class="chapter" data-level="22.3" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#expectation"><i class="fa fa-check"></i><b>22.3</b> Expectation</a></li>
+<li class="chapter" data-level="22.4" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#estimation"><i class="fa fa-check"></i><b>22.4</b> Estimation</a><ul>
+<li class="chapter" data-level="22.4.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#law-of-large-numbers-lln"><i class="fa fa-check"></i><b>22.4.1</b> Law of large numbers (LLN)</a></li>
+<li class="chapter" data-level="22.4.2" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#central-limit-theorem-clt"><i class="fa fa-check"></i><b>22.4.2</b> Central Limit Theorem (CLT)</a></li>
+</ul></li>
+<li class="chapter" data-level="22.5" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#the-normal-distribution"><i class="fa fa-check"></i><b>22.5</b> The normal distribution</a><ul>
+<li class="chapter" data-level="22.5.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#clt-continued"><i class="fa fa-check"></i><b>22.5.1</b> CLT continued</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>23</b> Experiment design and hypothesis testing</a><ul>
+<li class="chapter" data-level="23.0.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#inference"><i class="fa fa-check"></i><b>23.0.1</b> Inference</a></li>
+<li class="chapter" data-level="23.0.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>23.0.2</b> Hypothesis testing</a></li>
+<li class="chapter" data-level="23.0.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#summary-1"><i class="fa fa-check"></i><b>23.0.3</b> Summary</a></li>
+<li class="chapter" data-level="23.0.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#probability-distributions"><i class="fa fa-check"></i><b>23.0.4</b> Probability Distributions</a></li>
+<li class="chapter" data-level="23.0.5" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#distributions-in-r"><i class="fa fa-check"></i><b>23.0.5</b> Distributions in R</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="multivariate-probability.html"><a href="multivariate-probability.html"><i class="fa fa-check"></i><b>24</b> Multivariate probability</a><ul>
+<li class="chapter" data-level="24.0.1" data-path="multivariate-probability.html"><a href="multivariate-probability.html#joint-and-conditional-probability"><i class="fa fa-check"></i><b>24.0.1</b> Joint and conditional probability</a></li>
+<li class="chapter" data-level="24.0.2" data-path="multivariate-probability.html"><a href="multivariate-probability.html#conditional-expectation"><i class="fa fa-check"></i><b>24.0.2</b> Conditional expectation</a></li>
+<li class="chapter" data-level="24.0.3" data-path="multivariate-probability.html"><a href="multivariate-probability.html#maximum-likelihood"><i class="fa fa-check"></i><b>24.0.3</b> Maximum likelihood</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lecture Notes: Introduction to Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="univariate-distributions-and-statistics" class="section level1">
+<h1><span class="header-section-number">22</span> Univariate distributions and statistics</h1>
+<p>One of the purposes of this class is for you to learn Statistical and Machine Learning techniques commonly used in data analysis. By the end of the term, you should be able to read papers that use these methods critically and analyze data using these methods.</p>
+<p>When using any of these tools we will be we will be asking ourselves if our findings are “statistically significant”. For example, if we make use of a classification algorithm to distinguish between to groups of entities and find that we can correctly predict a class in 70 out of our 100 cases, how can we determine if this could have happened by chance alone? To be able to answer these questions, we need to understand some basic probabilistic and statistical principles. In this section we will review some of these principles.</p>
+<div id="variation-randomness-and-stochasticity" class="section level2">
+<h2><span class="header-section-number">22.1</span> Variation, randomness and stochasticity</h2>
+<p>In the preceeding sections of the class we have not spoken too much about randomness and stochasticity. We have, however, spoken about <em>variation</em>. When we discussed the notion of <em>spread</em> in a given dataset, measured by the sample standard deviation, for example, we are referring to the fact that in a population of entities (e.g., a set of tweets) there is naturally occuring variation in measurements (different frequency of word usage, for example). Notice that we can discuss the notation of <em>variation</em> without referring to any randomness, stochasticity or noise.</p>
+<p>Why do we study probability then? Because, we <em>do</em> want to distinguish, when possible, between natural occuring variation and randomness or stochasticity. For instance, suppose we want to learn something about education loan debt for 19-30 year olds in Maryland. We could find loan debt for <strong>all</strong> 19-30 year old Maryland residents, and calculate mean and standard deviation. But that’s difficult to do for all residents. So, instead we sample (say by randomly sending Twitter surveys), and <em>estimate</em> the average and standard deviation of debt in this population from the sample. Now, this presents an issue since we could do the same from a different random sample and get a different set of estimates. Why? Because there is naturally-occuring variation in this population.</p>
+<p>So, a simple question to ask is, how good are our <em>estimates</em> of debt mean and standard deviation from sample of 19-30 year old Marylanders?</p>
+<p>In another example, suppose we build a predictive model of loan debt for 19-30 year old Marylanders based on other variables (e.g., sex, income, education, wages, etc.) from our sample. How good will this model perform when predicting debt in general?</p>
+<p>We use probability and statistics to answer these questions. We use probability to capture stochasticity in the sampling process and model naturally occuring variation in measurements in a population of interest.</p>
+<p>One final word, the term <em>population</em> which we use extensively here means <strong>the entire</strong> collection of entities we want to model. This could include people, but also images, text, GO positions, etc.</p>
+<div id="random-variables" class="section level3">
+<h3><span class="header-section-number">22.1.1</span> Random variables</h3>
+<p>The basic concept in our discussion of probability is the <em>random variable</em>. Consider a situation where you are tasked with determining if a given tweet was generated by a bot. You sample a tweet at random from the set of all tweets ever written and have a human expert decide if it was generated by a bot or not. You can denote this as a <em>binary</em> random variable <span class="math inline">\(X \in \{0,1\}\)</span>, with value <span class="math inline">\(1\)</span> if the tweet is bot-gerneated and 0 otherwise. Why is this a random value? Because it depends on the tweet that was <em>randomly</em> sampled.</p>
+</div>
+</div>
+<div id="discrete-probability-distributions" class="section level2">
+<h2><span class="header-section-number">22.2</span> (Discrete) Probability distributions</h2>
+<p>Now we can start talking about the distribution of values of a random variable. In our example, random variable <span class="math inline">\(X\)</span> can take values 0 or 1. We would like to specify how these values are distributed over the set of all possible tweets one can randomly sample. We use a probability distribution to do this.</p>
+<p>A <em>probability distribution</em> is a function <span class="math inline">\(P:\mathcal{D} \to [0,1]\)</span> over set <span class="math inline">\(\mathcal{D}\)</span> of all values random variable <span class="math inline">\(X\)</span> can take to the interval <span class="math inline">\([0,1]\)</span>. The function <span class="math inline">\(P\)</span> describes how values of <span class="math inline">\(X\)</span> are distributed over domain <span class="math inline">\(\mathcal{D}\)</span>.</p>
+<p>We start with a <em>probability mass function</em> <span class="math inline">\(p\)</span> which must satisfy two properties:</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(p(X=x) \geq 0\)</span> for all values <span class="math inline">\(x \in mathcal{D}\)</span>, and<br />
+</li>
+<li><span class="math inline">\(\sum_{x\in \mathcal{D}} p(X=x) = 1\)</span></li>
+</ol>
+<p>Now, how do we interpret quantity <span class="math inline">\(p(X=1)\)</span>?</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(p(X=1)\)</span> is the <em>probability</em> that a uniformly random sampled tweet is bot-generated, which implies<br />
+</li>
+<li>the proportion of bot-generated tweets in the set of “all” tweets is <span class="math inline">\(p(X=1)\)</span>.</li>
+</ol>
+<p>I say “all” because it’s really the set of tweets one could possibly sample.</p>
+<p>Armed with a <em>probability mass function</em> we can talk about a <em>cumulative probability distribution</em> that describes the sum of probability up to a given value. We saw a similar concept for the empirical distribution of data when we discussed quartiles.</p>
+<div id="example-the-oracle-of-tweet" class="section level3">
+<h3><span class="header-section-number">22.2.1</span> Example The oracle of TWEET</h3>
+<p>Suppose we have a magical oracle and know for a <em>fact</em> that 70% of “all” tweets are bot-generated. In that case <span class="math inline">\(p(X=1) = .7\)</span> and <span class="math inline">\(p(X=0)=1-.7=.3\)</span>.</p>
+</div>
+</div>
+<div id="expectation" class="section level2">
+<h2><span class="header-section-number">22.3</span> Expectation</h2>
+<p>What if I randomly sampled <span class="math inline">\(n=100\)</span> tweets? How many of those do I <em>expect</em> to be bot-generated? <em>Expectation</em> is a formal concept in probability:</p>
+<p><span class="math display">\[
+\mathbb{E} X = \sum_{x\in \mathcal{D}} x p(X=x)
+\]</span></p>
+<p>What is the expectation of <span class="math inline">\(X\)</span> (a single sample) in our tweet example?</p>
+<p><span class="math display">\[
+0 \times p(X=0) + 1 \times p(X=1) = \
+0 \times .3 + 1 \times .7 = .7
+\]</span></p>
+<p>Now, consider random variable <span class="math inline">\(Y=X_1 + X_2 + \cdots + X_{100}\)</span>. What is <span class="math inline">\(Y\)</span>?</p>
+<p>Remember we want to know the expected number of bot-generated tweets in a sample of <span class="math inline">\(n=100\)</span> tweets. We have <span class="math inline">\(X_i=\{0,1\}\)</span> for each of the <span class="math inline">\(n=100\)</span> tweets, each a random variable, which we obtained by uniformly and <em>independently</em> sampling for the set of all tweets.</p>
+<p>With that, now random variable <span class="math inline">\(Y\)</span> equals the number of bot-generated tweets in my sample of <span class="math inline">\(n=100\)</span> tweets. In this case:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{E} Y &amp; = \mathbb{E} (X_1 + X_2 + \cdots + X_{100}) \\
+{} &amp; = \mathbb{E} X_1 + \mathbb{E} X_2 + \cdots + \mathbb{E} X_{100} \\
+{} &amp; = .7 + .7 + \cdots + .7 \\
+{} &amp; = 100 \times .7 \\
+{} &amp; = 70
+\end{aligned}
+\]</span></p>
+<p>This uses some facts about expectation you can show in general.</p>
+<ol style="list-style-type: decimal">
+<li><p>For any pair of random variables <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, <span class="math inline">\(\mathbb{E} (X_1 + X_2) = \mathbb{E} X_1 + \mathbb{E} X_2\)</span>.</p></li>
+<li><p>For any random variable <span class="math inline">\(X\)</span> and <em>constant</em> a, <span class="math inline">\(\mathbb{E} aX = a \mathbb{E} X\)</span>.</p></li>
+</ol>
+</div>
+<div id="estimation" class="section level2">
+<h2><span class="header-section-number">22.4</span> Estimation</h2>
+<p>Our discussion so far has assumed that we have access to an oracle that told us <span class="math inline">\(p(X=1)=.7\)</span>, but we <em>don’t</em>. For our tweet analysis task, we need to <em>estimate</em> the proportion of “all” tweets that are bot-generated. This is where our probability model and the expectation we derive from it comes in.</p>
+<p>Given <em>data</em> <span class="math inline">\(x_1, x_2, x_3, \ldots, x_{100}\)</span>, with 67 of those tweets labeled as bot-generated (i.e., <span class="math inline">\(x_i=1\)</span> for 67 of them), we can say <span class="math inline">\(y=\sum_i x_i=67\)</span>. Now from our discussion above, we <em>expect</em> <span class="math inline">\(y=np\)</span> where <span class="math inline">\(p=p(X=1)\)</span>, so let’s use that observation to <em>estimate</em> <span class="math inline">\(p\)</span>!</p>
+<p><span class="math display">\[
+\begin{aligned}
+np = 67 &amp; \Rightarrow \\
+100p = 67 &amp; \Rightarrow \\
+\hat{p} = \frac{67}{100} &amp; \Rightarrow \\
+\hat{p} = .67
+\end{aligned}
+\]</span></p>
+<p>Our estimate is wrong, but close (remember we had an oracle of TWEET), but can we ever get it right? Can I say how wrong I should expect my estimates to be?</p>
+<p>Notice that our estimate of <span class="math inline">\(p\)</span>, <span class="math inline">\(\hat{p}\)</span> is the sample <em>mean</em> of <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span>. Let’s go back to our oracle of tweet to do a thought experiment and replicate how we derived our estimate from 100 tweets a few thousand times.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># proportion of bot-tweets in the the tweet population</span>
+<span class="co"># as given by the oracle of TWEET</span>
+p &lt;-<span class="st"> </span><span class="fl">0.7</span>
+
+<span class="co"># let&#39;s sample 100 tweets</span>
+<span class="co"># this function chooses between values in a vector (0 and 1)</span>
+<span class="co"># with probability given by vector prob</span>
+<span class="co"># we need 100 samples from this vector with replacement</span>
+<span class="co"># since there are fewer items in the vector than the size</span>
+<span class="co"># of the sample we are making</span>
+x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span><span class="dv">100</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p))
+
+<span class="co"># compute the estimated proportion that are bot-generated (using the sample mean)</span>
+phat &lt;-<span class="st"> </span><span class="kw">mean</span>(x)
+
+<span class="co"># if we had an oracle that let&#39;s us do this cheaply,</span>
+<span class="co"># we could replicate our experiment 1000 times</span>
+<span class="co"># (you don&#39;t in real life)</span>
+
+<span class="co"># first let&#39;s write a function that gets an estimate</span>
+<span class="co"># of proportion from a random sample</span>
+get_estimate &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">p=</span><span class="fl">0.7</span>) <span class="kw">mean</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span>n, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p)))
+
+<span class="co"># let&#39;s make a vector with 1000 _estimates_</span>
+phats_<span class="dv">100</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">100</span>))
+
+<span class="co"># now let&#39;s plot a histogram of the </span>
+<span class="kw">hist</span>(phats_<span class="dv">100</span>, <span class="dt">xlab=</span><span class="kw">expression</span>(<span class="kw">hat</span>(p)), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>), <span class="dt">main=</span><span class="st">&quot;Distribution of p estimates from 100 tweets&quot;</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-2-1.svg" width="672" /></p>
+<p>What does this say about our estimates of the proportion of bot-generated tweets if we use 100 tweets in our sample?</p>
+<p>Now what if instead of sampling <span class="math inline">\(n=100\)</span> tweets we used other sample sizes?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))
+<span class="co"># what if we sample 10 tweets</span>
+phats_<span class="dv">10</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10</span>))
+<span class="kw">hist</span>(phats_<span class="dv">10</span>, <span class="dt">main=</span><span class="st">&quot;10 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
+
+<span class="co"># what if we sample 100 tweets</span>
+phats_<span class="dv">100</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">100</span>))
+<span class="kw">hist</span>(phats_<span class="dv">100</span>, <span class="dt">main=</span><span class="st">&quot;100 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
+
+<span class="co"># what if we sample 500 tweets</span>
+phats_<span class="dv">500</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">500</span>))
+<span class="kw">hist</span>(phats_<span class="dv">500</span>, <span class="dt">main=</span><span class="st">&quot;500 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
+
+<span class="co"># what about 1000 tweets</span>
+phats_<span class="dv">1000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">1000</span>))
+<span class="kw">hist</span>(phats_<span class="dv">1000</span>, <span class="dt">main=</span><span class="st">&quot;1000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
+
+<span class="co"># what about 5000 tweets</span>
+phats_<span class="dv">5000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">5000</span>))
+<span class="kw">hist</span>(phats_<span class="dv">5000</span>, <span class="dt">main=</span><span class="st">&quot;5000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
+
+<span class="co"># what about 10000 tweets</span>
+phats_<span class="dv">10000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10000</span>))
+<span class="kw">hist</span>(phats_<span class="dv">10000</span>, <span class="dt">main=</span><span class="st">&quot;10000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-3-1.svg" width="672" /></p>
+<p>We can make a couple of observations:</p>
+<ol style="list-style-type: decimal">
+<li>The distribution of estimate <span class="math inline">\(\hat{p}\)</span> is <em>centered</em> at <span class="math inline">\(p=.7\)</span>, our unknown <em>population</em> proportion, and<br />
+</li>
+<li>The <em>spread</em> of the distribution depends on the number of samples <span class="math inline">\(n\)</span>.</li>
+</ol>
+<p>This is an illustration of two central tenets of statistics that serves as the foundation of much of what we will do later in the course to interpret the models we build from data.</p>
+<div id="law-of-large-numbers-lln" class="section level3">
+<h3><span class="header-section-number">22.4.1</span> Law of large numbers (LLN)</h3>
+<p>Given <em>independently</em> sampled random variables <span class="math inline">\(X_1,X_2,\cdots,X_n\)</span> with <span class="math inline">\(\mathbb{E} X_i=\mu\)</span> for all <span class="math inline">\(i\)</span>, the LLN states that the sample mean</p>
+<p><span class="math display">\[
+\frac{1}{n} \sum_i X_i \to \mu
+\]</span></p>
+<p><em>tends</em> to the population mean (under some assumptions beyond the scope of this class). regardless of the distribution of the <span class="math inline">\(X_i\)</span>.</p>
+<p>An implication of this is that using the sample mean is the right thing to estimate parameters by matching their expected value!</p>
+</div>
+<div id="central-limit-theorem-clt" class="section level3">
+<h3><span class="header-section-number">22.4.2</span> Central Limit Theorem (CLT)</h3>
+<p>The LLN says that estimates built using the sample mean will tend to the correct answer, the CLT describes how these estimates are <em>spread</em> around the correct answer.</p>
+<p>Here we will use the concept of <em>variance</em> which is expected <em>spread</em>, measured in squared distance, from the <em>expected value</em> of a random variable:</p>
+<p><span class="math display">\[
+\mathrm{var(X)} = \mathbb{E} (X - \mathbb{E} X)^2
+\]</span></p>
+<p>Example: consider the variance of our random tweet example:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathrm{var(X)} &amp; = \sum_{\mathcal{D}} (x-\mathbb{E} X)^2 p(X=x) \\
+{} &amp; = (0 - p)^2 \times (1-p) + (1 - p)^2 \times p \\
+{} &amp; = p^2(1-p) + (1-p)^2p \\
+{} &amp; = p(1-p) (p + (1-p)) \\
+{} &amp; = p(1-p) (p - p + 1) \\
+{} &amp; = p(1-p)
+\end{aligned}
+\]</span></p>
+<p>Now, we can state the CLT:</p>
+<p><span class="math display">\[
+\frac{1}{n} \sum_{i=1} X_i
+\]</span></p>
+<p>tends <em>towards</em> a <strong>normal</strong> distribution as <span class="math inline">\(n \rightarrow \infty\)</span>. This says, that as sample size increases the distribution of sample means is <em>well</em> approximated by a normal distribution. This means we can approximate the expected error of our estimates well.</p>
+</div>
+</div>
+<div id="the-normal-distribution" class="section level2">
+<h2><span class="header-section-number">22.5</span> The normal distribution</h2>
+<p>The normal distribution describes the distribution of <em>continuous</em> random variables over the range <span class="math inline">\((-\infty,\infty)\)</span> using two parameters: mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>. We write “<span class="math inline">\(Y\)</span> is normally distributed with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>” as <span class="math inline">\(Y\sim N(\mu,\sigma)\)</span>. We write its <em>probability density function</em> as:</p>
+<p><span class="math display">\[
+p(Y=y) = \frac{1}{\sqrt{2\pi}\sigma} \mathrm{exp} \left\{ -\frac{1}{2} \left( \frac{y-\mu}{\sigma} \right)^2 \right\}
+\]</span></p>
+<p>Here are three examples of probability density functions of normal distributions with mean <span class="math inline">\(\mu=60,50,60\)</span> and standard deviation <span class="math inline">\(\sigma=2,2,6\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 100 equally spaced values between 40 and 80</span>
+yrange &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">40</span>, <span class="dv">80</span>, <span class="dt">len=</span><span class="dv">100</span>)
+
+<span class="co"># values of the normal density function</span>
+density_values_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(yrange, <span class="dt">mean=</span><span class="dv">60</span>, <span class="dt">sd=</span><span class="dv">2</span>)
+density_values_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(yrange, <span class="dt">mean=</span><span class="dv">50</span>, <span class="dt">sd=</span><span class="dv">2</span>)
+density_values_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(yrange, <span class="dt">mean=</span><span class="dv">60</span>, <span class="dt">sd=</span><span class="dv">6</span>)
+
+<span class="co"># now plot the function</span>
+<span class="kw">plot</span>(yrange, density_values_<span class="dv">1</span>, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">xlab=</span><span class="st">&quot;y&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;density&quot;</span>)
+<span class="kw">lines</span>(yrange, density_values_<span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)
+<span class="kw">lines</span>(yrange, density_values_<span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;orange&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;mean 60, sd 2&quot;</span>, <span class="st">&quot;mean 50, sd 2&quot;</span>, <span class="st">&quot;mean 60, sd 6&quot;</span>), <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;orange&quot;</span>), <span class="dt">lwd=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-4-1.svg" width="672" /></p>
+<p>Like the discrete case, probability density functions for continuous random variables need to satisfy certain conditions:</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(p(Y=y) \geq 0\)</span> for all values <span class="math inline">\(Y \in (-\infty,\infty)\)</span>, and<br />
+</li>
+<li><span class="math inline">\(\int_{-\infty}^{\infty} p(Y=y) dy = 1\)</span></li>
+</ol>
+<p>One way of remembering the density function of the normal distribution is that probability decays exponentially with rate <span class="math inline">\(\sigma\)</span> based on squared distance to the mean <span class="math inline">\(\mu\)</span>. (Here is squared distance again!)</p>
+<p>Also, notice the term inside the squared?</p>
+<p><span class="math display">\[
+z = \left( \frac{y - \mu}{\sigma} \right)
+\]</span></p>
+<p>this is the <em>standardization</em> transformation we saw in previous lectures. In fact the name <em>standardization</em> comes from the <em>standard normal distribution</em> <span class="math inline">\(N(0,1)\)</span> (mean 0 and standard deviation 1), which is very convenient to work with because it’s density function is much simpler:</p>
+<p><span class="math display">\[
+p(Z=z) = \frac{1}{\sqrt{2\pi}} \mathrm{exp} \left\{ -\frac{1}{2} z^2 \right\}
+\]</span></p>
+<p>In fact, if random variable <span class="math inline">\(Y \sim N(\mu,\sigma)\)</span> then random variable <span class="math inline">\(Z=\frac{Y-\mu}{\sigma} \sim N(0,1)\)</span>.</p>
+<div id="clt-continued" class="section level3">
+<h3><span class="header-section-number">22.5.1</span> CLT continued</h3>
+<p>We need one last bit of terminology to finish the statement of the CLT. Consider data <span class="math inline">\(X_1,X_2,\cdots,X_n\)</span> with <span class="math inline">\(\mathbb{E}X_i= \mu\)</span> for all <span class="math inline">\(i\)</span>, <strong>and</strong> <span class="math inline">\(\mathrm{sd}(X_i)=\sigma\)</span> for all <span class="math inline">\(i\)</span>, and their sample mean <span class="math inline">\(Y=\frac{1}{n} \sum_i X_i\)</span>. The standard deviation of <span class="math inline">\(Y\)</span> is called the <em>standard error</em>:</p>
+<p><span class="math display">\[
+\mathrm{se}(Y) = \frac{\sigma}{\sqrt{n}}
+\]</span></p>
+<p>Ok, now we can make the CLT statement precise: the distribution of <span class="math inline">\(Y\)</span> tends <em>towards</em> <span class="math inline">\(N(\mu,\frac{\sigma}{\sqrt{n}})\)</span> as <span class="math inline">\(n \rightarrow \infty\)</span>. This says, that as sample size increases the distribution of sample means is well approximated by a normal distribution, and that the spread of the distribution goes to zero at the rate <span class="math inline">\(\sqrt{n}\)</span>.</p>
+<p>Disclaimer: there a few mathematical sublteties. Two important ones are that</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(X_1,\ldots,X_n\)</span> are iid (independent, identically distributed) random variables, and<br />
+</li>
+<li><span class="math inline">\(\mathrm{var}X &lt; \infty\)</span></li>
+</ol>
+<p>Let’s redo our simulated replications of our tweet samples to illustrate the CLT at work:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># we can calculate standard error for each of the</span>
+<span class="co"># settings we saw previously and compare these replications</span>
+<span class="co"># to the normal distribution given by the CLT</span>
+
+<span class="co"># let&#39;s write a function that adds a normal density</span>
+<span class="co"># plot for a given sample size</span>
+draw_normal_density &lt;-<span class="st"> </span><span class="cf">function</span>(n) {
+  se &lt;-<span class="st"> </span><span class="kw">sqrt</span>(p<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p))<span class="op">/</span><span class="kw">sqrt</span>(n)
+  f &lt;-<span class="st"> </span><span class="kw">dnorm</span>(<span class="kw">seq</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">1000</span>), <span class="dt">mean=</span>p, <span class="dt">sd=</span>se)
+  <span class="kw">lines</span>(<span class="kw">seq</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">1000</span>), f, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="fl">1.6</span>)
+}
+
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))
+<span class="co"># what if we sample 10 tweets</span>
+phats_<span class="dv">10</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10</span>))
+<span class="kw">hist</span>(phats_<span class="dv">10</span>, <span class="dt">main=</span><span class="st">&quot;10 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
+<span class="kw">draw_normal_density</span>(<span class="dv">10</span>)
+
+<span class="co"># what if we sample 100 tweets</span>
+phats_<span class="dv">100</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">100</span>))
+<span class="kw">hist</span>(phats_<span class="dv">100</span>, <span class="dt">main=</span><span class="st">&quot;100 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
+<span class="kw">draw_normal_density</span>(<span class="dv">100</span>)
+
+<span class="co"># what if we sample 500 tweets</span>
+phats_<span class="dv">500</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">500</span>))
+<span class="kw">hist</span>(phats_<span class="dv">500</span>, <span class="dt">main=</span><span class="st">&quot;500 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
+<span class="kw">draw_normal_density</span>(<span class="dv">500</span>)
+
+<span class="co"># what about 1000 tweets</span>
+phats_<span class="dv">1000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">1000</span>))
+<span class="kw">hist</span>(phats_<span class="dv">1000</span>, <span class="dt">main=</span><span class="st">&quot;1000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
+<span class="kw">draw_normal_density</span>(<span class="dv">1000</span>)
+
+<span class="co"># what about 5000 tweets</span>
+phats_<span class="dv">5000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">5000</span>))
+<span class="kw">hist</span>(phats_<span class="dv">5000</span>, <span class="dt">main=</span><span class="st">&quot;5000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
+<span class="kw">draw_normal_density</span>(<span class="dv">5000</span>)
+
+<span class="co"># what about 10000 tweets</span>
+phats_<span class="dv">10000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10000</span>))
+<span class="kw">hist</span>(phats_<span class="dv">10000</span>, <span class="dt">main=</span><span class="st">&quot;10000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
+<span class="kw">draw_normal_density</span>(<span class="dv">10000</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-5-1.svg" width="672" /></p>
+<p>Here we see the three main points of the LLN and CLT:</p>
+<ol style="list-style-type: decimal">
+<li>the normal density is centered around <span class="math inline">\(\mu=.7\)</span>,<br />
+</li>
+<li>the normal approximation gets better as <span class="math inline">\(n\)</span> increases, and<br />
+</li>
+<li>the standard error goes to 0 as <span class="math inline">\(n\)</span> increases.</li>
+</ol>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="part-statistical-learning.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="experiment-design-and-hypothesis-testing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
