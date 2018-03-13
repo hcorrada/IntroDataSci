@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="tidy-data-i-the-er-model.html">
-<link rel="next" href="two-table-operations.html">
+<link rel="prev" href="experiment-design-and-hypothesis-testing.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -350,67 +350,70 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sql-i-single-table-queries" class="section level1">
-<h1><span class="header-section-number">12</span> SQL I: Single Table Queries</h1>
-<p>The Structured-Query-Language (SQL) is the predominant language used in database systems. It is tailored to the Relational data representation model.</p>
-<p>SQL is a declarative language, we don’t write a <em>procedure</em> to compute a relation, we <em>declare</em> what the relation we want to compute looks like. The actual execution is determined and optimized by the database engine. However, there are clear mappings between parts of SQL queries and the operations we have defined so far as implemented in the <code>tidyverse</code>.</p>
-<p>The basic construct in SQL is the so-called <code>SFW</code> construct: <em>select-from-where</em> which specifies:</p>
-<ul>
-<li><em>select</em>: which attributes you want the answer to have</li>
-<li><em>from</em>: which relation (table) you want the answer to be computed from</li>
-<li><em>where</em>: what conditions you want to be satisfied by the rows (tuples) of the answer</li>
-</ul>
-<p>E.g.: movies produced by disney in 1990: note the <em>rename</em></p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> m.title, m.year
-<span class="kw">from</span> movie m
-<span class="kw">where</span> m.studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> m.year = <span class="dv">1990</span></code></pre></div>
-<p>The <strong>select</strong> clause can contain expressions (this is paralleled by the <code>mutate</code> operation we saw previously)</p>
-<ul>
-<li><code>select title || ' (' || to_char(year) || ')' as titleyear</code></li>
-<li><code>select 2014 - year</code></li>
-</ul>
-<p>The <strong>where</strong> clause support a large number of different predicates and combinations thereof (this is parallel to the <code>filter</code> operation)</p>
-<ul>
-<li><code>year between 1990 and 1995</code></li>
-<li><code>title like 'star wars%'</code> <code>title like 'star wars _'</code></li>
-</ul>
-<p>We can include ordering, e.g., find distinct movies sorted by title</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> <span class="kw">distinct</span> title
-<span class="kw">from</span> movie
-<span class="kw">where</span> studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> <span class="dt">year</span> = <span class="dv">1990</span>
-<span class="kw">order</span> <span class="kw">by</span> title;</code></pre></div>
-<div id="group-by-and-summarize" class="section level2">
-<h2><span class="header-section-number">12.1</span> Group-by and summarize</h2>
-<p>SQL has an idiom for grouping and summarizing (<em>conditioning</em> as we called it before). Remember this is a very important concept that shows up in many data processing platforms</p>
-<ul>
-<li>What it does: Partition the tuples by the group attributes (<em>year</em> in this case), and do something (<em>compute avg</em> in this case) for each group</li>
-<li>Number of resulting tuples == Number of groups</li>
-</ul>
-<p>E.g., compute the average movie length by year</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> name, <span class="fu">avg</span>(<span class="fu">length</span>) 
-<span class="kw">from</span> movie
-<span class="kw">group</span> <span class="kw">by</span> <span class="dt">year</span></code></pre></div>
+<div id="multivariate-probability" class="section level1">
+<h1><span class="header-section-number">26</span> Multivariate probability</h1>
+<div id="joint-and-conditional-probability" class="section level3">
+<h3><span class="header-section-number">26.0.1</span> Joint and conditional probability</h3>
+<p>Suppose that for each tweet I sample I can also say if it has <em>a lot</em> of retweets or not. So, I have another binary random variable <span class="math inline">\(Y \in \{0,1\}\)</span> where <span class="math inline">\(Y=1\)</span> indicates the sampled tweet has a lot of retweets. (Note, we could say <span class="math inline">\(Y\sim \mathrm{Bernoulli}(p_Y))\)</span>. So we could illustrate the population of “all” tweets as</p>
+<div class="figure">
+<img src="joint.png" />
+
 </div>
-<div id="subqueries" class="section level2">
-<h2><span class="header-section-number">12.2</span> Subqueries</h2>
-<p>You can nest queries as an expression in an SFW query. We refer to these “subqueries” as “nested subquery”:</p>
-<p>E.g., find movie with the maximum length</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>
-<span class="kw">from</span> movie
-<span class="kw">where</span> movie.length = (<span class="kw">select</span> <span class="fu">max</span>(<span class="fu">length</span>) <span class="kw">from</span> movie);</code></pre></div>
-<p>E.g., find movies with at least 5 stars: an example of a correlated subquery</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> * 
-<span class="kw">from</span> movies m
-<span class="kw">where</span> <span class="dv">5</span> &gt;= (<span class="kw">select</span> <span class="fu">count</span>(*)
-<span class="kw">from</span> starsIn si
-<span class="kw">where</span> si.title = m.title <span class="kw">and</span> si.year = m.year);</code></pre></div>
-<p>The nested subquery counts the number of actors for that movie.</p>
-<p>E.g., rank movies by their length.</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>, (<span class="kw">select</span> <span class="fu">count</span>(*) 
-<span class="kw">from</span> movies m2
-<span class="kw">where</span> m1.length &lt;= m2.length) <span class="kw">as</span> <span class="fu">rank</span>
-<span class="kw">from</span> movies m1;</code></pre></div>
-<p>Key insight: A movie is ranked 5th if there are exactly 4 movies with longer length. Most database systems support some sort of a <em>rank</em> keyword for doing this. Notice that the above query doesn’t work in presence of ties etc.</p>
+<p>We can talk of the joint probability distribution of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>: <span class="math inline">\(p(X=x, Y=y)\)</span>. Here we have the same conditions:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(p(X=x,Y=y)\geq 0\)</span> for all combination of values <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and<br />
+</li>
+<li><span class="math inline">\(\sum_{\mathrm{all combination of values } X,Y \mathrm{ can take}} p(X=x,Y=y) = 1\)</span></li>
+</ol>
+<p>We can also talk about <em>conditional probability</em> where we look at the probability of a tweet being spam <em>conditioned</em> on it not having lots of retweets:</p>
+<p><span class="math display">\[
+p(X=x | Y=y)
+\]</span></p>
+<p>which also needs to satisfy the properties of a probability distribution. So to make sure</p>
+<p><span class="math display">\[
+\sum_{\mathrm{all values } X \mathrm{ can take}} p(X=x|Y=y) = 1
+\]</span></p>
+<p>we define</p>
+<p><span class="math display">\[
+p(X=x | Y=y) = \frac{p(X=x,Y=y)}{p(Y=y)}
+\]</span></p>
+<p>This also lets us talk about <em>conditional independence</em>: if the probabilty of spam <em>does not</em> depend on a tweet having lots of retweets, that is <span class="math inline">\(p(X=x) = p(X=x|Y=y)\)</span> for all <span class="math inline">\(y\)</span>, then we say <span class="math inline">\(X\)</span> is <em>conditionally independent</em> of <span class="math inline">\(Y\)</span>.</p>
+<p>Consider the tweet diagram above, is <span class="math inline">\(X\)</span> conditionally independent of <span class="math inline">\(Y\)</span>? What would the diagram look like if <span class="math inline">\(X\)</span> was conditionally independent of <span class="math inline">\(Y\)</span>?</p>
+<p>One more note, you can also see that for conditionally independent variables, the joint probability has an easy form <span class="math inline">\(p(X=x,Y=y)=p(X=x)p(Y=y)\)</span>, which generalizes to more than two independent random variables.</p>
+</div>
+<div id="conditional-expectation" class="section level3">
+<h3><span class="header-section-number">26.0.2</span> Conditional expectation</h3>
+<p>With conditional probabilty we can start talking about conditional expectation, which generalizes the concept of expectation we saw before. For example, the <em>conditional expected value</em> (conditional mean) of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y=y\)</span> is</p>
+<p><span class="math display">\[
+\mathbb{E} [ X|Y=y ] = \sum_{\mathrm{all values } X \mathrm{ can take}} x p(X=x|Y=y)
+\]</span></p>
+<p>This notion of conditional expectation, which follows from conditional probability, will serve as the basis for our Machine Learning method studies in the next few lectures!</p>
+</div>
+<div id="maximum-likelihood" class="section level3">
+<h3><span class="header-section-number">26.0.3</span> Maximum likelihood</h3>
+<p>One last note. We saw before how we estimated a parameter from matching expectation from a probability model with what we observed in data. The most popular method of estimation uses a similar idea: given data <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> and an assumed model of their distribution, e.g., <span class="math inline">\(X_i\sim \mathrm{Bernoulli}(p)\)</span> for all <span class="math inline">\(i\)</span>, and they are iid, let’s find the value of parameter <span class="math inline">\(p\)</span> that maximizes the likelihood (or probability) of the data we observe under this assumed probability model.</p>
+<p>We call the resulting estimate the <em>maximum likelihood estimate</em>. Here are some fun exercises to try:</p>
+<ol style="list-style-type: decimal">
+<li>Given a sample <span class="math inline">\(x_1\)</span> with <span class="math inline">\(X_1 \sim N(\mu,1)\)</span>, show that the maximum likelihood estimate of <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\hat{\mu}=x_1\)</span>.</li>
+</ol>
+<p>It is most often convinient to <em>minimize negative log-likelihood</em> instead of maximizing likelihood. So in this case:</p>
+<p><span class="math display">\[
+\begin{align}
+-\mathscr{L}(\mu) &amp; = - \log p(X_1=x_1) \\
+{} &amp; = \log{\sqrt{2\pi}} + \frac{1}{2}(x_1 - \mu)^2
+\end{align}
+\]</span></p>
+<p>To minimize this function of <span class="math inline">\(\mu\)</span> we can ignore all terms that are independent of <span class="math inline">\(\mu\)</span>, and concentrate only on minimizing the last term. Now, this term is always positive, so the smallest value it can have is 0. So, we minimize it by setting <span class="math inline">\(\hat{\mu}=x_1\)</span>.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Given a sample <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> of <span class="math inline">\(n\)</span> iid random variables with <span class="math inline">\(X_i \sim N(\mu,1)\)</span> for all <span class="math inline">\(i\)</span>, show that the maximum likelihood estimate of <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\hat{\mu}=\overline{x}\)</span> the sample mean!</li>
+</ol>
+<p>Here we would follow a similar approach, write out the negative log likelihood as a function <span class="math inline">\(f(\mu;x_i)\)</span> of <span class="math inline">\(\mu\)</span> that depends on data <span class="math inline">\(x_i\)</span>. Two useful properties here are:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(p(X_1=x_1,X_2=x_2,\ldots,X_n=x_n)=p(X_1=x_1)p(X_2=x_2)\cdots p(X_n=x_n)\)</span>, and<br />
+</li>
+<li><span class="math inline">\(\log \prod_i f(\mu;x_i) = \sum_i \log f(\mu;x_i)\)</span></li>
+</ol>
+<p>Then find a value of <span class="math inline">\(\mu\)</span> that minimizes this function. Hint: we saw this when we showed that the sample mean is the minimizer of total squared distance in our exploratory analysis unit!</p>
 
 </div>
 </div>
@@ -419,8 +422,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="tidy-data-i-the-er-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="two-table-operations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="experiment-design-and-hypothesis-testing.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
