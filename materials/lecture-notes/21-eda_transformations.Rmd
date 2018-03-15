@@ -45,7 +45,7 @@ Question: what is the mean of $z$ in this case? What is it's standard deviation?
 Or, apply transformations that only _scale_ (but not center) data:
 
 $$
-z_i = \frac{x_i}{\mathrm{sd}(x_i)}
+z_i = \frac{x_i}{\mathrm{sd}(x)}
 $$
 
 Question: what is the mean of $z$ in this case? What is it's standard deviation?
