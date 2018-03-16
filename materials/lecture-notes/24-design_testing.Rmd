@@ -1,15 +1,16 @@
 # Experiment design and hypothesis testing
 
-### Inference
+In this section we see one instance in which we can apply the CLT in data analysis.
 
-Now let's use the CLT and LLN in data analysis. The picture of how we use probability in data analysis (statistical and machine learning) is somewhat like this:
+## Inference
 
-![](inference.png)
+One way to think about how we use probability in data analysis (statistical and machine learning) is like this:
 
-The LLN tells us that our parameter $\hat{p}$ will be close to $p$ on average, the CLT lets us answer how confident are we that we found $p$. We do this by constructing a _confidence interval_ as follows. Since $\hat{p} \sim N(p,\frac{\sqrt{p(1-p)}}{\sqrt{n}})$, we want to find an interval $[\hat{p}_{-}, \hat{p}_{+}]$, with $\hat{p}$ at its center, with 95%% of the probability specified by the CLT. Why? In that case, there is 95% that the value of parameter $p$ will be within that interval.
+![](img/inference.png)
 
-Now, how do we calculate this interval, since we want the interval to contain 95%% of the probability, the probability for the tails (values outside this interval) will be $(1-.95)/2$ (since there are two tails). 
+The LLN tells us that our parameter $\hat{p}$ will be close to $p$ on average, the CLT lets us answer how confident are we that we found $p$. We do this by constructing a _confidence interval_ as follows. Since $\hat{p} \sim N(p,\frac{\sqrt{p(1-p)}}{\sqrt{n}})$, we want to find an interval $[\hat{p}_{-}, \hat{p}_{+}]$, with $\hat{p}$ at its center, with 95% of the probability specified by the CLT. Why? In that case, there is 95% that the value of parameter $p$ will be within that interval.
 
+Now, how do we calculate this interval, since we want the interval to contain 95% of the probability? The probability for the tails (values outside this interval) will be $(1-.95)/2$ (since there are two tails). 
 So, the lower value of the interval will be one where the normal probability distribution (with mean $\hat{p}$ and standard deviation $\frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}}$) is such that $P(Y \leq \hat{p}_{-}) = .05/2$, which we can calculate using the function `qnorm` function in R: 
 
 $$
@@ -41,7 +42,7 @@ For our sample of $n=500$, we would say that our estimate of $p$ is $`r round(ta
 
 ### Hypothesis testing
 
-How else is this framework useful? Suppose that before I sampled tweets I thought (hypothesized) that more than 50% of tweets are spam. One way very popular way of thinking about this problem is to reject the hypothesis that this is not the case. In this case we have a _null_ hypothesis that 50% or less of tweets are spam), against an _alternative_ hypothesis that more than 50% of tweets are spam. You will see this written in statistics textbooks as:
+How else is this framework useful? Suppose that before I sampled tweets I thought (hypothesized) that more than 50% of tweets are bot-generated. One way very popular way of thinking about this problem is to reject the hypothesis that this is not the case. In this, case we have a _null_ hypothesis that 50% or less of tweets are bot-generated), against an _alternative_ hypothesis that more than 50% of tweets are bot-generated. You will see this written in statistics textbooks as:
 
 $$
 \begin{align}
@@ -54,9 +55,9 @@ Note: this is a _one-sided_ test vs. a _two-sided_ test where the null hypothesi
 
 Once we do have our sample of $n$ tweets we can get an estimate $\hat{p}$ as we did before. If we see that $\hat{p}$ (sample mean from our sample of tweets) is _too far_ from $p=.5$ then we could reject the _null_ hypothesis since the estimate we derived from the data we have is not statistically consistent with the _null_ hypothesis. Now, how do we say our estimate $\hat{p}$ is too far? Here, we use the probability model given by the CLT. If $P(Y \geq \hat{p}) \geq .95$ under the null model (of $p=.5$), we say it is too far and we reject.
 
-![](testing.png)
+![](img/testing.png)
 
-This 95% rejection threshold is conservative, but somewhat arbitrary. So we use on more metric, $P(|Y| \geq \hat{p})$ (the infamous p-value) to say: we could reject this hypothesis for all thresholds greater than this p-value.
+This 95% rejection threshold is conservative, but somewhat arbitrary. So we use one more metric, $P(|Y| \geq \hat{p})$ (the infamous p-value) to say: we could reject this hypothesis for all thresholds greater than this p-value.
 
 Let's see how testing the hypothesis $p > .5$ would look like for our tweet example
 
@@ -68,7 +69,7 @@ knitr::kable(tab)
 
 Notice that rejection occurs when the parameter value for the null hypothesis $p=.5$ is outside the 95% confidence interval. Another note, these results hold for $n$ sufficiently large that the normal distribution in the CLT provides a good approximation of the distribution of estimates $\hat{p}$. In cases where $n$ is smaller, the $t$-distribution, as opposed to the normal distribution, provides a better approximation of the distribution of estimates $\hat{p}$. In that case, instead of using `pnorm` in the calculations above, we would use `pt` (for $t$-distribution) and the testing procedure above is referred to as a $t$-test (one-sided or two-sided as above). Now, as $n$ grows, the $t$-distribution approaches a normal distribution which is why analysts use the $t$-test regularly.  
 
-### Summary
+## Summary
 
 **Inference**: estimate parameter from data based on assumed probability model (for example, matching expectation. We'll see later another method called maximum likelihood).
 
@@ -76,11 +77,11 @@ For _averages_ the LLN and CLT tells us how to compute probabilities from a sing
 
 **Testing**: Having a hypothesis about our parameter of interest, we can use probability _under this hypothesis_ to see how statistically consistent our data is with that hypothesis, and reject the hypothesis if data is not statistically consistent enough (again using probability from CLT when dealing with averages).
 
-### Probability Distributions
+## Probability Distributions
 
 In this example we saw three distributions:
 
-#### Bernoulli
+### Bernoulli
 
 Notation: $X \sim \mathrm{Bernoulli}(p)$.  
 Values: $X \in \{0,1\}$  
@@ -94,7 +95,7 @@ $$
 p(X=x)=p^x(1-p)^{(1-x)}
 $$
 
-#### Binomial
+### Binomial
 
 This corresponds to the number of $1$'s in a draw of $n$ independent $\mathrm{Bernoulli}(p)$ random variables.
 
@@ -110,7 +111,7 @@ $$
 p(X=k) = \binom{n}{k} p^k(1-p)^{n-k}
 $$
 
-#### Normal (Gaussian) distribution
+### Normal (Gaussian) distribution
 
 Notation: $X \sim N(\mu,\sigma)$  
 Values: $X \in \mathbb{R}$  
