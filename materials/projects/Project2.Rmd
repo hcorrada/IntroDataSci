@@ -39,6 +39,8 @@ You can get more information about this period in baseball history from:
 - [The Moneyball book](http://www.amazon.com/Moneyball-The-Winning-Unfair-Game/dp/0393324818)  
 - [The Moneyball movie](http://www.imdb.com/title/tt1210166/)  
 
+BTW, you may find this post informative: https://fivethirtyeight.com/features/dont-be-fooled-by-baseballs-small-budget-success-stories/
+
 # The Data
 
 We will be using the same dataset as HW2 (the SQL homework). Remember this is a useful database on baseball teams, players and seasons curated by Sean Lahman available at [http://www.seanlahman.com/baseball-archive/statistics/](http://www.seanlahman.com/baseball-archive/statistics/). The database has been made available as a `sqlite` database [https://github.com/jknecht/baseball-archive-sqlite](https://github.com/jknecht/baseball-archive-sqlite). You can check that homework again for instructions setting up.
@@ -54,7 +56,7 @@ The data you need to answer these questions is in the `Salaries` and `Teams` tab
 
 **Problem 1** Using SQL compute a relation containing the total payroll and winning percentage (number of wins / number of games * 100) for each team (that is, for each `teamID` and `yearID` combination). You should include other columns that will help when performing EDA later on (e.g., franchise ids, number of wins, number of games).
 
-As in HW2 you will write your query inside an Rmarkdown document. You can write a chunk alike this:
+As in HW2 you will write your query inside an Rmarkdown document. You can use something like this in your Rmarkdown:
 
 ```{r echo=FALSE, comment=""}
 cat(htmltools::includeText("project2_sql.Rmd"))
