@@ -1,0 +1,14 @@
+```{r connect_db}
+db <- DBI::dbConnect(RSQLite::SQLite(), "lahman2016.sqlite")
+```
+
+```{sql run_query, connection=db, output.var="payroll_df"}
+select ...
+from ...
+where ...
+```
+
+```{r print_result}
+payroll_df %>%
+  head()
+```
