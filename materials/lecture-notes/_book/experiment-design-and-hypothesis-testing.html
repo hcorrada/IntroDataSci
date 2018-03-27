@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-03-16">
+<meta name="date" content="2018-03-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -322,11 +322,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>25</b> Experiment design and hypothesis testing</a><ul>
-<li class="chapter" data-level="25.0.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#inference"><i class="fa fa-check"></i><b>25.0.1</b> Inference</a></li>
-<li class="chapter" data-level="25.0.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>25.0.2</b> Hypothesis testing</a></li>
-<li class="chapter" data-level="25.0.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#summary-1"><i class="fa fa-check"></i><b>25.0.3</b> Summary</a></li>
-<li class="chapter" data-level="25.0.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#probability-distributions"><i class="fa fa-check"></i><b>25.0.4</b> Probability Distributions</a></li>
-<li class="chapter" data-level="25.0.5" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#distributions-in-r"><i class="fa fa-check"></i><b>25.0.5</b> Distributions in R</a></li>
+<li class="chapter" data-level="25.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#inference"><i class="fa fa-check"></i><b>25.1</b> Inference</a><ul>
+<li class="chapter" data-level="25.1.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>25.1.1</b> Hypothesis testing</a></li>
+</ul></li>
+<li class="chapter" data-level="25.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#ab-testing"><i class="fa fa-check"></i><b>25.2</b> A/B Testing</a></li>
+<li class="chapter" data-level="25.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#summary-1"><i class="fa fa-check"></i><b>25.3</b> Summary</a></li>
+<li class="chapter" data-level="25.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#probability-distributions"><i class="fa fa-check"></i><b>25.4</b> Probability Distributions</a><ul>
+<li class="chapter" data-level="25.4.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#bernoulli"><i class="fa fa-check"></i><b>25.4.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="25.4.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#binomial"><i class="fa fa-check"></i><b>25.4.2</b> Binomial</a></li>
+<li class="chapter" data-level="25.4.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#normal-gaussian-distribution"><i class="fa fa-check"></i><b>25.4.3</b> Normal (Gaussian) distribution</a></li>
+<li class="chapter" data-level="25.4.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#distributions-in-r"><i class="fa fa-check"></i><b>25.4.4</b> Distributions in R</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="26" data-path="multivariate-probability.html"><a href="multivariate-probability.html"><i class="fa fa-check"></i><b>26</b> Multivariate probability</a><ul>
 <li class="chapter" data-level="26.0.1" data-path="multivariate-probability.html"><a href="multivariate-probability.html#joint-and-conditional-probability"><i class="fa fa-check"></i><b>26.0.1</b> Joint and conditional probability</a></li>
@@ -352,16 +358,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="experiment-design-and-hypothesis-testing" class="section level1">
 <h1><span class="header-section-number">25</span> Experiment design and hypothesis testing</h1>
-<div id="inference" class="section level3">
-<h3><span class="header-section-number">25.0.1</span> Inference</h3>
-<p>Now let’s use the CLT and LLN in data analysis. The picture of how we use probability in data analysis (statistical and machine learning) is somewhat like this:</p>
+<p>In this section we see one instance in which we can apply the CLT in data analysis.</p>
+<div id="inference" class="section level2">
+<h2><span class="header-section-number">25.1</span> Inference</h2>
+<p>One way to think about how we use probability in data analysis (statistical and machine learning) is like this:</p>
 <div class="figure">
-<img src="inference.png" />
+<img src="img/inference.png" />
 
 </div>
-<p>The LLN tells us that our parameter <span class="math inline">\(\hat{p}\)</span> will be close to <span class="math inline">\(p\)</span> on average, the CLT lets us answer how confident are we that we found <span class="math inline">\(p\)</span>. We do this by constructing a <em>confidence interval</em> as follows. Since <span class="math inline">\(\hat{p} \sim N(p,\frac{\sqrt{p(1-p)}}{\sqrt{n}})\)</span>, we want to find an interval <span class="math inline">\([\hat{p}_{-}, \hat{p}_{+}]\)</span>, with <span class="math inline">\(\hat{p}\)</span> at its center, with 95%% of the probability specified by the CLT. Why? In that case, there is 95% that the value of parameter <span class="math inline">\(p\)</span> will be within that interval.</p>
-<p>Now, how do we calculate this interval, since we want the interval to contain 95%% of the probability, the probability for the tails (values outside this interval) will be <span class="math inline">\((1-.95)/2\)</span> (since there are two tails).</p>
-<p>So, the lower value of the interval will be one where the normal probability distribution (with mean <span class="math inline">\(\hat{p}\)</span> and standard deviation <span class="math inline">\(\frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}}\)</span>) is such that <span class="math inline">\(P(Y \leq \hat{p}_{-}) = .05/2\)</span>, which we can calculate using the function <code>qnorm</code> function in R:</p>
+<p>The LLN tells us that our parameter <span class="math inline">\(\hat{p}\)</span> will be close to <span class="math inline">\(p\)</span> on average, the CLT lets us answer how confident are we that we found <span class="math inline">\(p\)</span>. We do this by constructing a <em>confidence interval</em> as follows. Since <span class="math inline">\(\hat{p} \sim N(p,\frac{\sqrt{p(1-p)}}{\sqrt{n}})\)</span>, we want to find an interval <span class="math inline">\([\hat{p}_{-}, \hat{p}_{+}]\)</span>, with <span class="math inline">\(\hat{p}\)</span> at its center, with 95% of the probability specified by the CLT. Why? In that case, there is 95% that the value of parameter <span class="math inline">\(p\)</span> will be within that interval.</p>
+<p>Now, how do we calculate this interval, since we want the interval to contain 95% of the probability? The probability for the tails (values outside this interval) will be <span class="math inline">\((1-.95)/2\)</span> (since there are two tails). So, the lower value of the interval will be one where the normal probability distribution (with mean <span class="math inline">\(\hat{p}\)</span> and standard deviation <span class="math inline">\(\frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}}\)</span>) is such that <span class="math inline">\(P(Y \leq \hat{p}_{-}) = .05/2\)</span>, which we can calculate using the function <code>qnorm</code> function in R:</p>
 <p><span class="math display">\[
 \begin{align}
 \hat{p}_{-} &amp; = \mathtt{qnorm}(.05/2, \hat{p}, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}}) \\
@@ -369,8 +375,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 \end{align}
 \]</span></p>
 <p>The upper value of the interval is computed with probability <span class="math inline">\(1-(.05/2)\)</span>, which by the symmetry of the normal distribution is given by <span class="math inline">\(\hat{p}_{+} = \hat{p} + -\mathtt{qnorm}(.05/2,0, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}})\)</span>.</p>
-<p>Let’s see how these intervals look for our twitter spam example:</p>
+<p>Let’s see how these intervals look for our twitter bot example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+
+get_estimate &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">p=</span><span class="fl">0.7</span>) <span class="kw">mean</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span>n, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p)))
 
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="co"># let&#39;s construct confidence intervals for samples of size n=10,100,500,1000,10000</span>
@@ -430,10 +438,9 @@ knitr<span class="op">::</span><span class="kw">kable</span>(tab)</code></pre></
 </tbody>
 </table>
 <p>For our sample of <span class="math inline">\(n=500\)</span>, we would say that our estimate of <span class="math inline">\(p\)</span> is <span class="math inline">\(0.7 \pm -0.04\)</span>. A compact way of writing that is that our estimate of <span class="math inline">\(p\)</span> is <span class="math inline">\({}_{0.66}0.7_{0.74}\)</span>.</p>
-</div>
 <div id="hypothesis-testing" class="section level3">
-<h3><span class="header-section-number">25.0.2</span> Hypothesis testing</h3>
-<p>How else is this framework useful? Suppose that before I sampled tweets I thought (hypothesized) that more than 50% of tweets are spam. One way very popular way of thinking about this problem is to reject the hypothesis that this is not the case. In this case we have a <em>null</em> hypothesis that 50% or less of tweets are spam), against an <em>alternative</em> hypothesis that more than 50% of tweets are spam. You will see this written in statistics textbooks as:</p>
+<h3><span class="header-section-number">25.1.1</span> Hypothesis testing</h3>
+<p>How else is this framework useful? Suppose that before I sampled tweets I thought (hypothesized) that more than 50% of tweets are bot-generated. One way very popular way of thinking about this problem is to reject the hypothesis that this is not the case. In this, case we have a <em>null</em> hypothesis that 50% or less of tweets are bot-generated), against an <em>alternative</em> hypothesis that more than 50% of tweets are bot-generated. You will see this written in statistics textbooks as:</p>
 <p><span class="math display">\[
 \begin{align}
 H_0: \, &amp; p &lt;= .5 &amp; \textrm{(null)} \\
@@ -443,10 +450,10 @@ H_1: \, &amp; p &gt; .5 &amp; \textrm{(alternative)}
 <p>Note: this is a <em>one-sided</em> test vs. a <em>two-sided</em> test where the null hypothesis is that <span class="math inline">\(p=.5\)</span> and the alternative is <span class="math inline">\(p \neq .5\)</span>. According to the CLT, estimates <span class="math inline">\(\hat{p}\)</span> of <span class="math inline">\(p\)</span> from <span class="math inline">\(n\)</span> samples would be distributed as <span class="math inline">\(N(.5, \frac{\sqrt{.5(1-.5)}}{\sqrt{n}})\)</span> (we use <span class="math inline">\(p=.5\)</span> as this is the worst case for the hypothesis we want to test).</p>
 <p>Once we do have our sample of <span class="math inline">\(n\)</span> tweets we can get an estimate <span class="math inline">\(\hat{p}\)</span> as we did before. If we see that <span class="math inline">\(\hat{p}\)</span> (sample mean from our sample of tweets) is <em>too far</em> from <span class="math inline">\(p=.5\)</span> then we could reject the <em>null</em> hypothesis since the estimate we derived from the data we have is not statistically consistent with the <em>null</em> hypothesis. Now, how do we say our estimate <span class="math inline">\(\hat{p}\)</span> is too far? Here, we use the probability model given by the CLT. If <span class="math inline">\(P(Y \geq \hat{p}) \geq .95\)</span> under the null model (of <span class="math inline">\(p=.5\)</span>), we say it is too far and we reject.</p>
 <div class="figure">
-<img src="testing.png" />
+<img src="img/testing.png" />
 
 </div>
-<p>This 95% rejection threshold is conservative, but somewhat arbitrary. So we use on more metric, <span class="math inline">\(P(|Y| \geq \hat{p})\)</span> (the infamous p-value) to say: we could reject this hypothesis for all thresholds greater than this p-value.</p>
+<p>This 95% rejection threshold is conservative, but somewhat arbitrary. So we use one more metric, <span class="math inline">\(P(|Y| \geq \hat{p})\)</span> (the infamous p-value) to say: we could reject this hypothesis for all thresholds greater than this p-value.</p>
 <p>Let’s see how testing the hypothesis <span class="math inline">\(p &gt; .5\)</span> would look like for our tweet example</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab &lt;-<span class="st"> </span>tab <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p_value =</span> <span class="dv">1</span><span class="op">-</span><span class="kw">pnorm</span>(phat, <span class="dt">mean=</span>.<span class="dv">5</span>, <span class="dt">sd=</span>se))
@@ -507,17 +514,27 @@ knitr<span class="op">::</span><span class="kw">kable</span>(tab)</code></pre></
 </table>
 <p>Notice that rejection occurs when the parameter value for the null hypothesis <span class="math inline">\(p=.5\)</span> is outside the 95% confidence interval. Another note, these results hold for <span class="math inline">\(n\)</span> sufficiently large that the normal distribution in the CLT provides a good approximation of the distribution of estimates <span class="math inline">\(\hat{p}\)</span>. In cases where <span class="math inline">\(n\)</span> is smaller, the <span class="math inline">\(t\)</span>-distribution, as opposed to the normal distribution, provides a better approximation of the distribution of estimates <span class="math inline">\(\hat{p}\)</span>. In that case, instead of using <code>pnorm</code> in the calculations above, we would use <code>pt</code> (for <span class="math inline">\(t\)</span>-distribution) and the testing procedure above is referred to as a <span class="math inline">\(t\)</span>-test (one-sided or two-sided as above). Now, as <span class="math inline">\(n\)</span> grows, the <span class="math inline">\(t\)</span>-distribution approaches a normal distribution which is why analysts use the <span class="math inline">\(t\)</span>-test regularly.</p>
 </div>
-<div id="summary-1" class="section level3">
-<h3><span class="header-section-number">25.0.3</span> Summary</h3>
+</div>
+<div id="ab-testing" class="section level2">
+<h2><span class="header-section-number">25.2</span> A/B Testing</h2>
+<p>A classic experimental design where hypothesis testing is commonly used in A/B testing. Here we are interested in seeing if proposed changes to a webpage has a desired effect. For example, we would like to know if page visitors follow a link more often after a page redesign.</p>
+<div class="figure">
+<img src="img/A-B_testing.png" />
+
+</div>
+<p>Here we have two estimates <span class="math inline">\(\hat{p}_A\)</span> and <span class="math inline">\(\hat{p}_B\)</span>, the proportion of clicks for design A and B respectively. The null hypothesis we would test is that <em>there is no difference in proportions</em> between the two designs. Mathematically, we would like to know “What is the probability that we observe a difference in proportions this large under the null hypothesis”. We will work this out as a homework exercise.</p>
+</div>
+<div id="summary-1" class="section level2">
+<h2><span class="header-section-number">25.3</span> Summary</h2>
 <p><strong>Inference</strong>: estimate parameter from data based on assumed probability model (for example, matching expectation. We’ll see later another method called maximum likelihood).</p>
 <p>For <em>averages</em> the LLN and CLT tells us how to compute probabilities from a single parameter estimate, that is, derived from one dataset of samples. With these probabilities we can construct confidence intervals for our estimate.</p>
 <p><strong>Testing</strong>: Having a hypothesis about our parameter of interest, we can use probability <em>under this hypothesis</em> to see how statistically consistent our data is with that hypothesis, and reject the hypothesis if data is not statistically consistent enough (again using probability from CLT when dealing with averages).</p>
 </div>
-<div id="probability-distributions" class="section level3">
-<h3><span class="header-section-number">25.0.4</span> Probability Distributions</h3>
+<div id="probability-distributions" class="section level2">
+<h2><span class="header-section-number">25.4</span> Probability Distributions</h2>
 <p>In this example we saw three distributions:</p>
-<div id="bernoulli" class="section level4">
-<h4><span class="header-section-number">25.0.4.1</span> Bernoulli</h4>
+<div id="bernoulli" class="section level3">
+<h3><span class="header-section-number">25.4.1</span> Bernoulli</h3>
 <p>Notation: <span class="math inline">\(X \sim \mathrm{Bernoulli}(p)\)</span>.<br />
 Values: <span class="math inline">\(X \in \{0,1\}\)</span><br />
 Parameter: <span class="math inline">\(p\)</span>, <span class="math inline">\(p(X=1)=p\)</span> (probability of success).<br />
@@ -528,8 +545,8 @@ Variance: <span class="math inline">\(\mathrm{var}(X) = p(1-p)\)</span>.</p>
 p(X=x)=p^x(1-p)^{(1-x)}
 \]</span></p>
 </div>
-<div id="binomial" class="section level4">
-<h4><span class="header-section-number">25.0.4.2</span> Binomial</h4>
+<div id="binomial" class="section level3">
+<h3><span class="header-section-number">25.4.2</span> Binomial</h3>
 <p>This corresponds to the number of <span class="math inline">\(1\)</span>’s in a draw of <span class="math inline">\(n\)</span> independent <span class="math inline">\(\mathrm{Bernoulli}(p)\)</span> random variables.</p>
 <p>Notation: <span class="math inline">\(X \sim \mathrm{Bin(n,p)}\)</span>.<br />
 Values: <span class="math inline">\(X \in 0,1,2,\ldots,n\)</span><br />
@@ -541,8 +558,8 @@ Variance: <span class="math inline">\(\mathrm{var}(X) = np(1-p)\)</span></p>
 p(X=k) = \binom{n}{k} p^k(1-p)^{n-k}
 \]</span></p>
 </div>
-<div id="normal-gaussian-distribution" class="section level4">
-<h4><span class="header-section-number">25.0.4.3</span> Normal (Gaussian) distribution</h4>
+<div id="normal-gaussian-distribution" class="section level3">
+<h3><span class="header-section-number">25.4.3</span> Normal (Gaussian) distribution</h3>
 <p>Notation: <span class="math inline">\(X \sim N(\mu,\sigma)\)</span><br />
 Values: <span class="math inline">\(X \in \mathbb{R}\)</span><br />
 Parameters: mean <span class="math inline">\(\mu\)</span>, standard deviation <span class="math inline">\(\sigma\)</span><br />
@@ -551,9 +568,8 @@ Variance: <span class="math inline">\(\mathrm{var}(X) = \sigma^2\)</span></p>
 <p>The probability density function was given above.</p>
 <p>A useful reference for probability distributions can be found here: <a href="https://blog.cloudera.com/blog/2015/12/common-probability-distributions-the-data-scientists-crib-sheet/" class="uri">https://blog.cloudera.com/blog/2015/12/common-probability-distributions-the-data-scientists-crib-sheet/</a></p>
 </div>
-</div>
 <div id="distributions-in-r" class="section level3">
-<h3><span class="header-section-number">25.0.5</span> Distributions in R</h3>
+<h3><span class="header-section-number">25.4.4</span> Distributions in R</h3>
 <p>For a majority of common distributions, R has the so-called <code>d,p,q,r</code> family of functions:</p>
 <table>
 <thead>
@@ -596,6 +612,7 @@ Variance: <span class="math inline">\(\mathrm{var}(X) = \sigma^2\)</span></p>
 <span class="co"># generate a random value k</span>
 <span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</code></pre></div>
 
+</div>
 </div>
 </div>
             </section>

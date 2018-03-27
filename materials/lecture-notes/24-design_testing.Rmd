@@ -22,10 +22,12 @@ $$
 
 The upper value of the interval is computed with probability $1-(.05/2)$, which by the symmetry of the normal distribution is given by $\hat{p}_{+} = \hat{p} + -\mathtt{qnorm}(.05/2,0, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}})$.
 
-Let's see how these intervals look for our twitter spam example:
+Let's see how these intervals look for our twitter bot example:
 
 ```{r, message=FALSE}
 library(dplyr)
+
+get_estimate <- function(n, p=0.7) mean(sample(c(0,1), size=n, replace=TRUE, prob=c(1-p,p)))
 
 set.seed(1)
 # let's construct confidence intervals for samples of size n=10,100,500,1000,10000
@@ -68,6 +70,14 @@ knitr::kable(tab)
 ```
 
 Notice that rejection occurs when the parameter value for the null hypothesis $p=.5$ is outside the 95% confidence interval. Another note, these results hold for $n$ sufficiently large that the normal distribution in the CLT provides a good approximation of the distribution of estimates $\hat{p}$. In cases where $n$ is smaller, the $t$-distribution, as opposed to the normal distribution, provides a better approximation of the distribution of estimates $\hat{p}$. In that case, instead of using `pnorm` in the calculations above, we would use `pt` (for $t$-distribution) and the testing procedure above is referred to as a $t$-test (one-sided or two-sided as above). Now, as $n$ grows, the $t$-distribution approaches a normal distribution which is why analysts use the $t$-test regularly.  
+
+## A/B Testing
+
+A classic experimental design where hypothesis testing is commonly used in A/B testing. Here we are interested in seeing if proposed changes to a webpage has a desired effect. For example, we would like to know if page visitors follow a link more often after a page redesign.  
+
+![](img/A-B_testing.png)
+
+Here we have two estimates $\hat{p}_A$ and $\hat{p}_B$, the proportion of clicks for design A and B respectively. The null hypothesis we would test is that _there is no difference in proportions_ between the two designs. Mathematically, we would like to know "What is the probability that we observe a difference in proportions this large under the null hypothesis". We will work this out as a homework exercise.
 
 ## Summary
 
