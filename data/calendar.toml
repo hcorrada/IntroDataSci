@@ -212,22 +212,18 @@ link = "cmsc320_class-notes_20180314.pdf"
 # title = "Project 1: Data scraping and cleaning"
 # link = "projects/Project1/"
 
-[day14a]
-date = "3/14"
-
-[[day14a.workdue]]
-title = "Project 1: Data scraping and cleaning"
-link = "projects/project1/"
-
 [day15]
 date = "3/15"
 
 [[day15.covers]]
-title = "Experiment design and hypothesis testing"
-# notes = "lecture-note/statlearn/"
+title = "No lecture: project and HW question"
 
 [day15a]
 date = "3/16"
+
+[[day15a.workdue]]
+title = "Project 1: Data scraping and cleaning"
+link = "projects/project1/"
 
 [[day15a.workdue]]
 title = "Homework 3: Data Transformations"
@@ -237,40 +233,50 @@ link = "homeworks/transformations/"
 date = "3/27"
 
 [[day16.covers]]
-title = "Multivariate probability and statistics"
-#notes = "bookdown-notes/univariate-distributions-and-statistics.html"
+title = "Experiment design and hypothesis testing"
+# notes = "lecture-note/statlearn/"
 
 [day17]
 date = "3/29"
 
 [[day17.covers]]
-title = "Data Analysis with Geometry"
+title = "Multivariate probability and statistics"
+#notes = "bookdown-notes/univariate-distributions-and-statistics.html"
 
 [day18]
 date = "4/3"
 
 [[day18.covers]]
-title = "Midterm II catch-up and review"
+title = "Data Analysis with Geometry"
 
 [day19]
 date = "4/5"
 
 [[day19.covers]]
-title = "Midterm II"
+title = "Linear models for regression"
+# notes = "lecture-note/linear_models/"
 
 [day20]
 date = "4/10"
 
 [[day20.covers]]
-title = "Linear models for regression"
-# notes = "lecture-note/linear_models/"
+title = "Linear models for classification"
+# notes = "lecture-note/linear_models"
 
 [day21]
 date = "4/12"
 
 [[day21.covers]]
-title = "Linear models for classification"
-# notes = "lecture-note/linear_models"
+title = "Non-linear models for regression and classification: Trees"
+# notes = "lecture-note/tree_methods/"
+
+[[day21.covers]]
+title = "Non-linear models for regression and classification: K-Nearest Neighbors"
+# notes = "lecture-note/svms/"
+
+[[day21.covers]]
+title = "Model evaluation using resampling"
+# notes = "lecture-note/evaluation/"
 
 #[[day12.covers]]
 #title = "Gradient descent"
@@ -284,29 +290,23 @@ title = "Linear models for classification"
 date = "4/17"
 
 [[day22.covers]]
-title = "Non-linear models for regression and classification: Trees"
-# notes = "lecture-note/tree_methods/"
+title = "Unsupervised Learning: Clustering"
 
 [[day22.covers]]
-title = "Non-linear models for regression and classification: K-Nearest Neighbors"
-# notes = "lecture-note/svms/"
-
-# [[day27.covers]]
-# title = "Model evaluation using resampling"
-# notes = "lecture-note/evaluation/"
+title = "Unsupervised Learning: Dimensionality Reduction"
+# notes = "lecture-note/pca/"
 
 [day23]
 date = "4/19"
 
 [[day23.covers]]
-title = "Unsupervised Learning: Clustering"
+title = "Midterm II catch-up and review"
 
 [day24]
 date = "4/24"
 
 [[day24.covers]]
-title = "Unsupervised Learning: Dimensionality Reduction"
-# notes = "lecture-note/pca/"
+title = "Midterm II"
 
 [day25]
 date = "4/26"
