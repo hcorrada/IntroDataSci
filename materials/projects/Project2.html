@@ -151,6 +151,7 @@ $(document).ready(function () {
 </li>
 <li><a href="http://www.imdb.com/title/tt1210166/">The Moneyball movie</a></li>
 </ul>
+<p>BTW, you may find this post informative: <a href="https://fivethirtyeight.com/features/dont-be-fooled-by-baseballs-small-budget-success-stories/" class="uri">https://fivethirtyeight.com/features/dont-be-fooled-by-baseballs-small-budget-success-stories/</a></p>
 </div>
 <div id="the-data" class="section level1">
 <h1>The Data</h1>
@@ -164,7 +165,7 @@ $(document).ready(function () {
 <h1>Wrangling</h1>
 <p>The data you need to answer these questions is in the <code>Salaries</code> and <code>Teams</code> tables of the database.</p>
 <p><strong>Problem 1</strong> Using SQL compute a relation containing the total payroll and winning percentage (number of wins / number of games * 100) for each team (that is, for each <code>teamID</code> and <code>yearID</code> combination). You should include other columns that will help when performing EDA later on (e.g., franchise ids, number of wins, number of games).</p>
-<p>As in HW2 you will write your query inside an Rmarkdown document. You can write a chunk alike this:</p>
+<p>As in HW2 you will write your query inside an Rmarkdown document. You can use something like this in your Rmarkdown:</p>
 <pre><code>```{r connect_db}
 db &lt;- DBI::dbConnect(RSQLite::SQLite(), &quot;lahman2016.sqlite&quot;)
 ```
