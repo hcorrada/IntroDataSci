@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-03-27">
+<meta name="date" content="2018-03-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -335,9 +335,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="26" data-path="multivariate-probability.html"><a href="multivariate-probability.html"><i class="fa fa-check"></i><b>26</b> Multivariate probability</a><ul>
-<li class="chapter" data-level="26.0.1" data-path="multivariate-probability.html"><a href="multivariate-probability.html#joint-and-conditional-probability"><i class="fa fa-check"></i><b>26.0.1</b> Joint and conditional probability</a></li>
-<li class="chapter" data-level="26.0.2" data-path="multivariate-probability.html"><a href="multivariate-probability.html#conditional-expectation"><i class="fa fa-check"></i><b>26.0.2</b> Conditional expectation</a></li>
-<li class="chapter" data-level="26.0.3" data-path="multivariate-probability.html"><a href="multivariate-probability.html#maximum-likelihood"><i class="fa fa-check"></i><b>26.0.3</b> Maximum likelihood</a></li>
+<li class="chapter" data-level="26.1" data-path="multivariate-probability.html"><a href="multivariate-probability.html#joint-and-conditional-probability"><i class="fa fa-check"></i><b>26.1</b> Joint and conditional probability</a></li>
+<li class="chapter" data-level="26.2" data-path="multivariate-probability.html"><a href="multivariate-probability.html#bayes-rule"><i class="fa fa-check"></i><b>26.2</b> Bayes’ Rule</a></li>
+<li class="chapter" data-level="26.3" data-path="multivariate-probability.html"><a href="multivariate-probability.html#conditional-expectation"><i class="fa fa-check"></i><b>26.3</b> Conditional expectation</a></li>
+<li class="chapter" data-level="26.4" data-path="multivariate-probability.html"><a href="multivariate-probability.html#maximum-likelihood"><i class="fa fa-check"></i><b>26.4</b> Maximum likelihood</a></li>
 </ul></li>
 </ul>
 
@@ -358,45 +359,55 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="multivariate-probability" class="section level1">
 <h1><span class="header-section-number">26</span> Multivariate probability</h1>
-<div id="joint-and-conditional-probability" class="section level3">
-<h3><span class="header-section-number">26.0.1</span> Joint and conditional probability</h3>
+<div id="joint-and-conditional-probability" class="section level2">
+<h2><span class="header-section-number">26.1</span> Joint and conditional probability</h2>
 <p>Suppose that for each tweet I sample I can also say if it has <em>a lot</em> of retweets or not. So, I have another binary random variable <span class="math inline">\(Y \in \{0,1\}\)</span> where <span class="math inline">\(Y=1\)</span> indicates the sampled tweet has a lot of retweets. (Note, we could say <span class="math inline">\(Y\sim \mathrm{Bernoulli}(p_Y))\)</span>. So we could illustrate the population of “all” tweets as</p>
 <div class="figure">
-<img src="joint.png" />
+<img src="img/joint.png" />
 
 </div>
-<p>We can talk of the joint probability distribution of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>: <span class="math inline">\(p(X=x, Y=y)\)</span>. Here we have the same conditions:</p>
+<p>We can talk of the joint probability distribution of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>: <span class="math inline">\(p(X=x, Y=y)\)</span>, where random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> can take values from domains <span class="math inline">\(\mathcal{D}_X\)</span> and <span class="math inline">\(\mathcal{D}_Y\)</span> respectively. Here we have the same conditions as we had for univariate distributions:</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(p(X=x,Y=y)\geq 0\)</span> for all combination of values <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and<br />
 </li>
-<li><span class="math inline">\(\sum_{\mathrm{all combination of values } X,Y \mathrm{ can take}} p(X=x,Y=y) = 1\)</span></li>
+<li><span class="math inline">\(\sum_{(x,y) \in \mathcal{D}_X \times \mathcal{D}_Y} p(X=x,Y=y) = 1\)</span></li>
 </ol>
-<p>We can also talk about <em>conditional probability</em> where we look at the probability of a tweet being spam <em>conditioned</em> on it not having lots of retweets:</p>
+<p>We can also talk about <em>conditional probability</em> where we look at the probability of a tweet being bot-generated or not, <em>conditioned</em> on wheter it has lots of retweets or not:</p>
 <p><span class="math display">\[
 p(X=x | Y=y)
 \]</span></p>
 <p>which also needs to satisfy the properties of a probability distribution. So to make sure</p>
 <p><span class="math display">\[
-\sum_{\mathrm{all values } X \mathrm{ can take}} p(X=x|Y=y) = 1
+\sum_{x \in \mathcal{D}_X} p(X=x|Y=y) = 1
 \]</span></p>
 <p>we define</p>
 <p><span class="math display">\[
 p(X=x | Y=y) = \frac{p(X=x,Y=y)}{p(Y=y)}
 \]</span></p>
-<p>This also lets us talk about <em>conditional independence</em>: if the probabilty of spam <em>does not</em> depend on a tweet having lots of retweets, that is <span class="math inline">\(p(X=x) = p(X=x|Y=y)\)</span> for all <span class="math inline">\(y\)</span>, then we say <span class="math inline">\(X\)</span> is <em>conditionally independent</em> of <span class="math inline">\(Y\)</span>.</p>
+<p>Here we use the important concept of <em>marginalization</em>, which follows from the properties of joint probability distribution we saw above: <span class="math inline">\(\sum_{x \in \mathcal{D}_X} p(X=x, Y=y) = p(Y=y)\)</span>.</p>
+<p>This also lets us talk about <em>conditional independence</em>: if the probabilty of a tweet being bot-generated <em>does not</em> depend on a tweet having lots of retweets, that is <span class="math inline">\(p(X=x) = p(X=x|Y=y)\)</span> for all <span class="math inline">\(y\)</span>, then we say <span class="math inline">\(X\)</span> is <em>conditionally independent</em> of <span class="math inline">\(Y\)</span>.</p>
 <p>Consider the tweet diagram above, is <span class="math inline">\(X\)</span> conditionally independent of <span class="math inline">\(Y\)</span>? What would the diagram look like if <span class="math inline">\(X\)</span> was conditionally independent of <span class="math inline">\(Y\)</span>?</p>
 <p>One more note, you can also see that for conditionally independent variables, the joint probability has an easy form <span class="math inline">\(p(X=x,Y=y)=p(X=x)p(Y=y)\)</span>, which generalizes to more than two independent random variables.</p>
 </div>
-<div id="conditional-expectation" class="section level3">
-<h3><span class="header-section-number">26.0.2</span> Conditional expectation</h3>
+<div id="bayes-rule" class="section level2">
+<h2><span class="header-section-number">26.2</span> Bayes’ Rule</h2>
+<p>One extremely useful and important rule of probability follows from our definitions of conditional and joint probability above. Bayes’ rule is pervasive in Statistics, Machine Learning and Artificial Intelligence. It is a very powerful tool to talk about uncertainty, beliefs, evidence, and many other technical and philosophical matters. It is however, of extreme simplicity.</p>
+<p>All Bayes’ Rule states is that</p>
+<p><span class="math display">\[
+p(X=x|Y=y) = \frac{p(Y=y|X=x)p(X=x)}{p(Y=y)}
+\]</span> which follow directly from our definitions above. One very common usage of Bayes’ Rule is that it let’s us define one conditional probability distribution based on another probability distribution. This is useful is the latter is easier to reason about, or estimate. For example, it may be hard to reason about <span class="math inline">\(p(X=x|Y=y)\)</span> in our tweet example. If you know a tweet has a lot retweets <span class="math inline">\((Y=1)\)</span>, what can you say about the probability that it is bot-generated, i.e., <span class="math inline">\(p(X=1|Y=1)\)</span>? Maybe not much, tweets have lots of retweets for many reasons. However, it may be easier to reason about the reverse: if I tell you a tweet is bot-generated <span class="math inline">\((X=1)\)</span>, what can you say about the probability that it has a lot of retweets, i.e., <span class="math inline">\(p(Y=1|X=1)\)</span>. That may be easier to reason about, at least bot-generated tweets are designed to get lots of retweets. At minimum, it’s easier to estimate because we can get a training set of bot-generated tweets and <em>estimate</em> this conditional probability.</p>
+<p>Bayes’ Rule tells us how to get the hard to reason about (or estimate) conditional probability <span class="math inline">\(p(X=x|Y=y)\)</span> in terms of the conditional probability that is easier to reason about (or estimate) <span class="math inline">\(p(Y=y|X=x)\)</span>. This is the basis of the Naive Bayes prediction method, which we’ll revisit briefly later on.</p>
+</div>
+<div id="conditional-expectation" class="section level2">
+<h2><span class="header-section-number">26.3</span> Conditional expectation</h2>
 <p>With conditional probabilty we can start talking about conditional expectation, which generalizes the concept of expectation we saw before. For example, the <em>conditional expected value</em> (conditional mean) of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y=y\)</span> is</p>
 <p><span class="math display">\[
-\mathbb{E} [ X|Y=y ] = \sum_{\mathrm{all values } X \mathrm{ can take}} x p(X=x|Y=y)
+\mathbb{E} [ X|Y=y ] = \sum_{x \in \mathcal{D}_X} x p(X=x|Y=y)
 \]</span></p>
 <p>This notion of conditional expectation, which follows from conditional probability, will serve as the basis for our Machine Learning method studies in the next few lectures!</p>
 </div>
-<div id="maximum-likelihood" class="section level3">
-<h3><span class="header-section-number">26.0.3</span> Maximum likelihood</h3>
+<div id="maximum-likelihood" class="section level2">
+<h2><span class="header-section-number">26.4</span> Maximum likelihood</h2>
 <p>One last note. We saw before how we estimated a parameter from matching expectation from a probability model with what we observed in data. The most popular method of estimation uses a similar idea: given data <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span> and an assumed model of their distribution, e.g., <span class="math inline">\(X_i\sim \mathrm{Bernoulli}(p)\)</span> for all <span class="math inline">\(i\)</span>, and they are iid, let’s find the value of parameter <span class="math inline">\(p\)</span> that maximizes the likelihood (or probability) of the data we observe under this assumed probability model.</p>
 <p>We call the resulting estimate the <em>maximum likelihood estimate</em>. Here are some fun exercises to try:</p>
 <ol style="list-style-type: decimal">
