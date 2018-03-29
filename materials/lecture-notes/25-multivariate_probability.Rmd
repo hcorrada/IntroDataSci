@@ -1,17 +1,18 @@
 # Multivariate probability 
 
-### Joint and conditional probability
+## Joint and conditional probability
 
 Suppose that for each tweet I sample I can also say if it has _a lot_ of retweets or not. So, I have another binary random variable $Y \in \{0,1\}$ where $Y=1$ indicates the sampled tweet has a lot of retweets. (Note, we could say $Y\sim \mathrm{Bernoulli}(p_Y))$. So we could illustrate the population of "all" tweets as
 
-![](joint.png)
+![](img/joint.png)
 
-We can talk of the joint probability distribution of $X$ and $Y$: $p(X=x, Y=y)$. Here we have the same conditions:
+We can talk of the joint probability distribution of $X$ and $Y$: $p(X=x, Y=y)$,
+where random variables $X$ and $Y$ can take values from domains $\mathcal{D}_X$ and $\mathcal{D}_Y$ respectively. Here we have the same conditions as we had for univariate distributions:
 
 1. $p(X=x,Y=y)\geq 0$ for all combination of values $x$ and $y$, and  
-2. $\sum_{\mathrm{all combination of values } X,Y \mathrm{ can take}} p(X=x,Y=y) = 1$
+2. $\sum_{(x,y) \in \mathcal{D}_X \times \mathcal{D}_Y} p(X=x,Y=y) = 1$
 
-We can also talk about _conditional probability_ where we look at the probability of a tweet being spam _conditioned_ on it not having lots of retweets:
+We can also talk about _conditional probability_ where we look at the probability of a tweet being bot-generated or not, _conditioned_ on wheter it has lots of retweets or not:
 
 $$
 p(X=x | Y=y)
@@ -20,7 +21,7 @@ $$
 which also needs to satisfy the properties of a probability distribution. So to make sure
 
 $$
-\sum_{\mathrm{all values } X \mathrm{ can take}} p(X=x|Y=y) = 1
+\sum_{x \in \mathcal{D}_X} p(X=x|Y=y) = 1
 $$
 
 we define
@@ -29,23 +30,38 @@ $$
 p(X=x | Y=y) = \frac{p(X=x,Y=y)}{p(Y=y)}
 $$
 
-This also lets us talk about _conditional independence_: if the probabilty of spam _does not_ depend on a tweet having lots of retweets, that is $p(X=x) = p(X=x|Y=y)$ for all $y$, then we say $X$ is _conditionally independent_ of $Y$. 
+Here we use the important concept of _marginalization_, which follows from the properties of joint probability distribution we saw above: $\sum_{x \in \mathcal{D}_X} p(X=x, Y=y) = p(Y=y)$.
+
+This also lets us talk about _conditional independence_: if the probabilty of a tweet being bot-generated _does not_ depend on a tweet having lots of retweets, that is $p(X=x) = p(X=x|Y=y)$ for all $y$, then we say $X$ is _conditionally independent_ of $Y$. 
 
 Consider the tweet diagram above, is $X$ conditionally independent of $Y$? What would the diagram look like if $X$ was conditionally independent of $Y$?
 
 One more note, you can also see that for conditionally independent variables, the joint probability has an easy form $p(X=x,Y=y)=p(X=x)p(Y=y)$, which generalizes to more than two independent random variables.
 
-### Conditional expectation
+## Bayes' Rule
+
+One extremely useful and important rule of probability follows from our definitions of conditional and joint probability above. Bayes' rule is pervasive in Statistics, Machine Learning and Artificial Intelligence. It is a very powerful tool to talk about uncertainty, beliefs, evidence, and many other technical and philosophical matters. It is however, of extreme simplicity. 
+
+All Bayes' Rule states is that 
+
+$$
+p(X=x|Y=y) = \frac{p(Y=y|X=x)p(X=x)}{p(Y=y)}
+$$
+which follow directly from our definitions above. One very common usage of Bayes' Rule is that it let's us define one conditional probability distribution based on another probability distribution. This is useful is the latter is easier to reason about, or estimate. For example, it may be hard to reason about $p(X=x|Y=y)$ in our tweet example. If you know a tweet has a lot retweets $(Y=1)$, what can you say about the probability that it is bot-generated, i.e., $p(X=1|Y=1)$? Maybe not much, tweets have lots of retweets for many reasons. However, it may be easier to reason about the reverse: if I tell you a tweet is bot-generated $(X=1)$, what can you say about the probability that it has a lot of retweets, i.e., $p(Y=1|X=1)$. That may be easier to reason about, at least bot-generated tweets are designed to get lots of retweets. At minimum, it's easier to estimate because we can get a training set of bot-generated tweets and _estimate_ this conditional probability.
+
+Bayes' Rule tells us how to get the hard to reason about (or estimate) conditional probability $p(X=x|Y=y)$ in terms of the conditional probability that is easier to reason about (or estimate) $p(Y=y|X=x)$. This is the basis of the Naive Bayes prediction method, which we'll revisit briefly later on.
+
+## Conditional expectation
 
 With conditional probabilty we can start talking about conditional expectation, which generalizes the concept of expectation we saw before. For example, the _conditional expected value_ (conditional mean) of $X$ given $Y=y$ is
 
 $$
-\mathbb{E} [ X|Y=y ] = \sum_{\mathrm{all values } X \mathrm{ can take}} x p(X=x|Y=y)
+\mathbb{E} [ X|Y=y ] = \sum_{x \in \mathcal{D}_X} x p(X=x|Y=y)
 $$
 
 This notion of conditional expectation, which follows from conditional probability, will serve as the basis for our Machine Learning method studies in the next few lectures!
 
-### Maximum likelihood
+## Maximum likelihood
 
 One last note. We saw before how we estimated a parameter from matching expectation from a probability model with what we observed in data. The most popular method of estimation uses a similar idea: given data $x_1,x_2,\ldots,x_n$ and an assumed model of their distribution, e.g., $X_i\sim \mathrm{Bernoulli}(p)$ for all $i$, and they are iid, let's find the value of parameter $p$ that maximizes the likelihood (or probability) of the data we observe under this assumed probability model.
 
