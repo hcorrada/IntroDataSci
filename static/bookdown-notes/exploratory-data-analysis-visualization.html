@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-03-29">
+<meta name="date" content="2018-03-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -382,19 +382,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nycflights13)
 
 flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">25</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">rowid_to_column</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>rowid, <span class="dt">y=</span>dep_delay)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_point</span>() </code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-98-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
 <p>That’s not particularly informative since there is no structure to this plot. Let’s sort the values in the plot and change the graphical representation to make easier to see.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">25</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>(dep_delay) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">rowid_to_column</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>rowid, <span class="dt">y=</span>dep_delay)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_point</span>() </code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-99-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-99-1.png" width="672" /></p>
 <p>What can we make of that plot now? Start thinking of <em>central tendency</em>, <em>spread</em> and <em>skew</em> as you look at that plot.</p>
 <p>Let’s now create a graphical summary of that variable to incorporate observations made from this initial plot. Let’s start with a <em>histogram</em>: it divides the <em>range</em> of the <code>dep_delay</code> attribute into <strong>equal-sized</strong> bins, then plots the number of observations within each bin. What additional information does this new visualization give us about this variable?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
@@ -415,7 +415,7 @@ flights <span class="op">%&gt;%</span>
 <span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>,<span class="dt">y=</span>dep_delay)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_boxplot</span>()</code></pre></div>
 <pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-102-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
 <p>That’s not very clear to see, so let’s do a transformation of this data to see this better:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">min_delay=</span><span class="kw">min</span>(dep_delay, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span>
@@ -423,7 +423,7 @@ flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span>log_dep_delay)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_boxplot</span>()</code></pre></div>
 <pre><code>## Warning: Removed 8256 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-103-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
 <p>So what does this represent: (a) central tendency (using the median) is represented by the black line within the box, (b) spread (using inter-quartile range) is represented by the box and whiskers. (c) outliers (data that is <em>unusually</em> outside the spread of the data)</p>
 <p>We will see more formal descriptions of these summary statistics in the next section, but you can see what we are trying to capture with them graphically.</p>
 <div id="visualization-of-pairs-of-variables" class="section level3">
@@ -436,14 +436,14 @@ flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>origin, <span class="dt">y=</span>log_dep_delay)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_boxplot</span>()</code></pre></div>
 <pre><code>## Warning: Removed 8256 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-104-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
 <p>For pairs of continuous variables, the most useful visualization is the scatter plot. This gives an idea of how one variable varies (in terms of central trend, variance and skew) conditioned on another variable.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">25</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay, <span class="dt">y=</span>arr_delay)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_point</span>()</code></pre></div>
-<pre><code>## Warning: Removed 2378 rows containing missing values (geom_point).</code></pre>
-<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-105-1.svg" width="672" /></p>
+<pre><code>## Warning: Removed 924 rows containing missing values (geom_point).</code></pre>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
 </div>
 </div>
 <div id="eda-with-the-grammar-of-graphics" class="section level2">
