@@ -1,6 +1,6 @@
 ---
 title: "Homework 4: A/B Testing"
-date: "2018-03-12**
+date: "2018-03-12"
 ---
 
 An exercise on statistical inference for A/B testing.
