@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Released under the MIT license</copyright>
-    <lastBuildDate>Tue, 22 Nov 2016 13:04:21 -0500</lastBuildDate>
+    <lastBuildDate>Tue, 03 Apr 2018 10:57:10 -0400</lastBuildDate>
     
 	<atom:link href="http://www.hcbravo.org/IntroDataSci/projects/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CMSC320 Final Project</title>
+      <link>http://www.hcbravo.org/IntroDataSci/projects/final_project/</link>
+      <pubDate>Tue, 03 Apr 2018 10:57:10 -0400</pubDate>
+      
+      <guid>http://www.hcbravo.org/IntroDataSci/projects/final_project/</guid>
+      <description>Summary In lieu of a final exam, CMSC320 students will turn in a tutorial that will walk users through the entire data science pipeline: data curation, parsing, and management; exploratory data analysis; hypothesis testing and machine learning to provide analysis; and then the curation of a message or messages covering insights learned during the tutorial. Students may choose an application area and dataset(s) that are of interest to them; please feel free to be creative about this!</description>
+    </item>
     
     <item>
       <title>Project 3: Classification and Regression</title>
@@ -35,7 +44,7 @@ All axes in plots should be labeled in an informative manner. Your answers to an
       <guid>http://www.hcbravo.org/IntroDataSci/projects/</guid>
       <description>COMING SOON
  Data scraping and cleaning Due March 14, 2018 (extended to 3/16/18) Data wrangling and EDA Due April 6, 2018
-  </description>
+  Final Project: Due May 18, 2018 12:30pm</description>
     </item>
     
     <item>
