@@ -12,3 +12,5 @@ COMING SOON
 3. [Regression and classification](project3/) Due Dec. 2, 2016  
 4. [Interactive data visualization and mapping](Project4/) Due Dec. 12, 2016
 -->
+
+[Final Project:](final_project/) Due May 18, 2018 12:30pm
