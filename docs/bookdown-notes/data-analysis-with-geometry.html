@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="two-table-operations.html">
-<link rel="next" href="db-parting-shots.html">
+<link rel="prev" href="part-machine-learning.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -372,113 +372,314 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sql-system-constructs" class="section level1">
-<h1><span class="header-section-number">14</span> SQL System Constructs</h1>
-<p>Database management systems are software applications designed for very efficient manipulation of data targeting a relatively small number of operations. Since they are also defined to operate over a fairly restrictive data model, they are extremely useful in situations where data consistency and safety are required. Here are some examples of capabilities found in DBMS that help in that regard:</p>
+<div id="data-analysis-with-geometry" class="section level1">
+<h1><span class="header-section-number">27</span> Data Analysis with Geometry</h1>
+<p>A common situation in data analysis is that one has an outcome attribute (variable) <span class="math inline">\(Y\)</span> and one or more independent covariate or predictor attributes <span class="math inline">\(X_1,\ldots,X_p\)</span>. One usually observes these variables for multiple “instances” (or entities).</p>
+<p>(Note) As before, we use upper case to denote a random variable. To denote actual numbers we use lower case. One way to think about it: <span class="math inline">\(Y\)</span> has not happened yet, and when it does, we see <span class="math inline">\(Y=y\)</span>.</p>
+<p>One may be interested in various things:</p>
 <ul>
-<li>Transactions
-<ul>
-<li>A transaction is a sequence of queries and update statements executed as a single unit</li>
-<li>For example, transferring money from one account to another
-<ul>
-<li>Both the <em>deduction</em> from one account and <em>credit</em> to the other account should happen, or neither should</li>
-</ul></li>
-</ul></li>
-<li>Triggers
-<ul>
-<li>A trigger is a statement that is executed automatically by the system as a side effect of a modification to the database</li>
-</ul></li>
-<li>Integrity Constraints
-<ul>
-<li>Predicates on the database that must always hold</li>
-<li>Key Constraints: Specifiying something is a primary key or unique</li>
-</ul></li>
+<li>What effects do the covariates have on the outcome?</li>
+<li>How well can we describe these effects?</li>
+<li>Can we predict the outcome using the covariates?, etc…</li>
 </ul>
-<div id="sql-as-a-data-definition-language" class="section level2">
-<h2><span class="header-section-number">14.1</span> SQL as a Data Definition Language</h2>
-<p>The Structured Query Language (SQL) is both a <em>Data Definition Language</em> and a <em>Data Manipulation Language</em></p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">CREATE</span> <span class="kw">TABLE</span> &lt;name&gt; ( &lt;field&gt; &lt;domain&gt;, ... )
-
-<span class="kw">INSERT</span> <span class="kw">INTO</span> &lt;name&gt; (&lt;field names&gt;) <span class="kw">VALUES</span> (&lt;field values&gt;)
-
-<span class="kw">DELETE</span> <span class="kw">FROM</span> &lt;name&gt; <span class="kw">WHERE</span> &lt;condition&gt;
-
-<span class="kw">UPDATE</span> &lt;name&gt; <span class="kw">SET</span> &lt;field name&gt; = &lt;value&gt; <span class="kw">WHERE</span> &lt;condition&gt;
-
-<span class="kw">SELECT</span> &lt;fields&gt; <span class="kw">FROM</span> &lt;name&gt; <span class="kw">WHERE</span> &lt;condition&gt;</code></pre></div>
-<p>We can create tables and specify primary key attributes which enforce integrity constraints at the system level</p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">CREATE</span> <span class="kw">TABLE</span> customer (
-  ssn <span class="dt">CHAR</span>(<span class="dv">9</span>) <span class="kw">PRIMARY</span> <span class="kw">KEY</span>, 
-  cname <span class="dt">CHAR</span>(<span class="dv">15</span>), address <span class="dt">CHAR</span>(<span class="dv">30</span>), city <span class="dt">CHAR</span>(<span class="dv">10</span>), 
-  <span class="kw">UNIQUE</span> (cname, address, city)); </code></pre></div>
-<p>Attribute constraints: Constraints on the values of attributes</p>
-<p><code>bname char(15) not null</code></p>
-<p><code>balance int not null, check (balance &gt;= 0)</code></p>
-<ul>
-<li>Referential integrity: prevent dangling tuples</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">CREATE</span> <span class="kw">TABLE</span>  branch(bname <span class="dt">CHAR</span>(<span class="dv">15</span>) <span class="kw">PRIMARY</span> <span class="kw">KEY</span>, ...);
-<span class="kw">CREATE</span> <span class="kw">TABLE</span> loan(..., <span class="kw">FOREIGN</span> <span class="kw">KEY</span> bname <span class="kw">REFERENCES</span> branch);</code></pre></div>
-<ul>
-<li><p>Can tell the system what to do if a referenced tuple is being deleted</p></li>
-<li>Global Constraints</li>
-<li><p>Single-table</p></li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">CREATE</span> <span class="kw">TABLE</span> branch (...,
-  bcity  <span class="dt">CHAR</span>(<span class="dv">15</span>), 
-  assets <span class="dt">INT</span>, 
-  <span class="kw">CHECK</span> (<span class="kw">NOT</span>(bcity = ‘Bkln’) <span class="kw">OR</span> assets &gt; 5M))</code></pre></div>
-<ul>
-<li>Multi-table</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">CREATE</span> <span class="kw">ASSERTION</span> loan-constraint
-  <span class="kw">CHECK</span> (<span class="kw">NOT</span> <span class="kw">EXISTS</span> (
-    <span class="kw">SELECT</span>   * 
-    <span class="kw">FROM</span> loan <span class="kw">AS</span> L
-    <span class="kw">WHERE</span>  <span class="kw">NOT</span> <span class="kw">EXISTS</span>(
-      <span class="kw">SELECT</span>   *
-      <span class="kw">FROM</span> borrower B, depositor D, <span class="kw">account</span> A
-      <span class="kw">WHERE</span> B.cname = D.cname  <span class="kw">AND</span>
-        D.acct_no = A.acct_no  <span class="kw">AND</span>
-        L.lno  = B.lno)))</code></pre></div>
+<div id="motivating-example-credit-analysis" class="section level2">
+<h2><span class="header-section-number">27.1</span> Motivating Example: Credit Analysis</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+default
+</th>
+<th style="text-align:left;">
+student
+</th>
+<th style="text-align:right;">
+balance
+</th>
+<th style="text-align:right;">
+income
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+729.5265
+</td>
+<td style="text-align:right;">
+44361.625
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+817.1804
+</td>
+<td style="text-align:right;">
+12106.135
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+1073.5492
+</td>
+<td style="text-align:right;">
+31767.139
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+529.2506
+</td>
+<td style="text-align:right;">
+35704.494
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+785.6559
+</td>
+<td style="text-align:right;">
+38463.496
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+919.5885
+</td>
+<td style="text-align:right;">
+7491.559
+</td>
+</tr>
+</tbody>
+</table>
+<p>Task: predict account default What is the outcome <span class="math inline">\(Y\)</span>? What are the predictors <span class="math inline">\(X_j\)</span>?</p>
+<p>We will sometimes call attributes <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span> the outcome/predictors, sometimes observed/covariates, and even input/output. We may call each entity an observation or example. We will denote predictors with <span class="math inline">\(X\)</span> and outcomes with <span class="math inline">\(Y\)</span> (quantitative) and <span class="math inline">\(G\)</span> (qualitative). Notice <span class="math inline">\(G\)</span> are not numbers, so we cannot add or multiply them. We will use <span class="math inline">\(G\)</span> to denote the set of possible values. For gender it would be <span class="math inline">\(G=\{Male,Female\}\)</span>.</p>
 </div>
-<div id="set-operations-and-comparisons" class="section level2">
-<h2><span class="header-section-number">14.2</span> Set Operations and Comparisons</h2>
+<div id="from-data-to-feature-vectors" class="section level2">
+<h2><span class="header-section-number">27.2</span> From data to feature vectors</h2>
+<p>The vast majority of ML algorithms we see in class treat instances as “feature vectors”. We can represent each instance as a <em>vector</em> in Euclidean space <span class="math inline">\(\langle x_1,\ldots,x_p,y \rangle\)</span>. This means:</p>
 <ul>
-<li>Set operations</li>
+<li>every measurement is represented as a continuous value</li>
+<li>in particular, categorical variables become numeric (e.g., one-hot encoding)</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> name 
-<span class="kw">from</span> movieExec
-union/intersect/minus
-<span class="kw">select</span> name 
-<span class="kw">from</span> movieStar</code></pre></div>
+<p>Here is the same credit data represented as a matrix of feature vectors</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+default
+</th>
+<th style="text-align:right;">
+student
+</th>
+<th style="text-align:right;">
+balance
+</th>
+<th style="text-align:right;">
+income
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1057.6332
+</td>
+<td style="text-align:right;">
+37229.81
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1717.0716
+</td>
+<td style="text-align:right;">
+38408.89
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2145.6077
+</td>
+<td style="text-align:right;">
+23516.19
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1704.5785
+</td>
+<td style="text-align:right;">
+16887.41
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+703.8388
+</td>
+<td style="text-align:right;">
+19318.06
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+-1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+853.4381
+</td>
+<td style="text-align:right;">
+58757.68
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="technical-notation" class="section level2">
+<h2><span class="header-section-number">27.3</span> Technical notation</h2>
 <ul>
-<li>Set Comparisons</li>
+<li><p>Observed values will be denoted in lower case. So <span class="math inline">\(x_i\)</span> means the <span class="math inline">\(i\)</span>th observation of the random variable <span class="math inline">\(X\)</span>.</p></li>
+<li>Matrices are represented with bold face upper case. For example <span class="math inline">\(\mathbf{X}\)</span> will represent all observed predictors.</li>
+<li><span class="math inline">\(N\)</span> (or <span class="math inline">\(n\)</span>) will usually mean the number of observations, or length of <span class="math inline">\(Y\)</span>. <span class="math inline">\(i\)</span> will be used to denote which observation and <span class="math inline">\(j\)</span> to denote which covariate or predictor.</li>
+<li>Vectors will not be bold, for example <span class="math inline">\(x_i\)</span> may mean all predictors for subject <span class="math inline">\(i\)</span>, unless it is the vector of a particular predictor <span class="math inline">\(\mathbf{x}_j\)</span>.</li>
+<li><p>All vectors are assumed to be column vectors, so the <span class="math inline">\(i\)</span>-th row of <span class="math inline">\(\mathbf{X}\)</span> will be <span class="math inline">\(x_i&#39;\)</span>, i.e., the transpose of <span class="math inline">\(x_i\)</span>.</p></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> *
-<span class="kw">from</span> movies
-<span class="kw">where</span> <span class="dt">year</span> <span class="kw">in</span> [<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>];
+</div>
+<div id="geometry-and-distances" class="section level2">
+<h2><span class="header-section-number">27.4</span> Geometry and Distances</h2>
+<p>Now that we think of instances as vectors we can do some interesting operations.</p>
+<p>Let’s try a first one: define a distance between two instances using Euclidean distance</p>
+<p><span class="math display">\[d(x_1,x_2) = \sqrt{\sum_{j=1}^p(x_{1j}-x_{2j})^2}\]</span></p>
+<div id="k-nearest-neighbor-classification" class="section level3">
+<h3><span class="header-section-number">27.4.1</span> K-nearest neighbor classification</h3>
+<p>Now that we have a distance between instances we can create a classifier. Suppose we want to predict the class for an instance <span class="math inline">\(x\)</span>.</p>
+<p>K-nearest neighbors uses the closest points in predictor space predict <span class="math inline">\(Y\)</span>.</p>
+<p><span class="math display">\[
+\hat{Y} = \frac{1}{k} \sum_{x_k \in N_k(x)} y_k.
+\]</span></p>
+<p><span class="math inline">\(N_k(x)\)</span> represents the <span class="math inline">\(k\)</span>-nearest points to <span class="math inline">\(x\)</span>. How would you use <span class="math inline">\(\hat{Y}\)</span> to make a prediction?</p>
+<div class="figure">
+<img src="img/knnalgo.png" />
 
-<span class="kw">select</span> *
-<span class="kw">from</span> movies
-<span class="kw">where</span> <span class="dt">year</span> <span class="kw">not</span> <span class="kw">in</span> (
-  <span class="kw">select</span> <span class="fu">extract</span>(<span class="dt">year</span> <span class="kw">from</span> birthdate) 
-  <span class="kw">from</span> MovieStar
-);</code></pre></div>
 </div>
-<div id="views" class="section level2">
-<h2><span class="header-section-number">14.3</span> Views</h2>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">create</span> <span class="kw">view</span> DisneyMovies
-<span class="kw">select</span> *
-<span class="kw">from</span> movie m
-<span class="kw">where</span> m.studioname = <span class="st">&#39;disney&#39;</span>;</code></pre></div>
-<p>Can use it in any place where a tablename is used. Views are used quite extensively to: (1) simplify queries, (2) hide data (by giving users access only to specific views). Views may be <em>materialized</em> or not.</p>
+<p>An important notion in ML and prediction is <em>inductive bias</em>. What assumptions we make about our data that allow us to make predictions. In KNN, our <em>inductive bias</em> is that points that are <strong>nearby</strong> will be of the same class. Parameter <span class="math inline">\(K\)</span> is a <em>hyper-parameter</em>, it’s value may affect prediction accuracy significantly.</p>
+<p>Question: which situation may lead to <em>overfitting</em>, high or low values of <span class="math inline">\(K\)</span>? Why?</p>
 </div>
-<div id="nulls" class="section level2">
-<h2><span class="header-section-number">14.4</span> NULLs</h2>
-<p>Value of any attribute can be NULL if value is unknown, or it is not applicable, or hidden, etc. It can lead to counterintuitive behavior. For example, the following query does not return movies where <code>length = NULL</code></p>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> * <span class="kw">from</span> movies <span class="kw">where</span> <span class="fu">length</span> &gt;= <span class="dv">120</span> <span class="kw">or</span> <span class="fu">length</span> &lt;= <span class="dv">120</span>`</code></pre></div>
-<p>Aggregate operations can be especially tricky when NULLs are present.</p>
+<div id="the-importance-of-transformations" class="section level3">
+<h3><span class="header-section-number">27.4.2</span> The importance of transformations</h3>
+<p>Feature scaling is an important issue in distance-based methods. In the example below, which of these two features will affect distance the most?</p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-163-1.svg" width="384" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="quick-vector-algebra-review" class="section level2">
+<h2><span class="header-section-number">27.5</span> Quick vector algebra review</h2>
+<ul>
+<li><p>A (real-valued) vector is just an array of real values, for instance <span class="math inline">\(x = \langle 1, 2.5, −6 \rangle\)</span> is a three-dimensional vector.</p></li>
+<li><p>Vector sums are computed pointwise, and are only defined when dimensions match, so</p></li>
+</ul>
+<p><span class="math display">\[\langle 1, 2.5, −6 \rangle + \langle 2, −2.5, 3 \rangle =  \langle 3, 0, −3 \rangle\]</span>.</p>
+<p>In general, if <span class="math inline">\(c = a + b\)</span> then <span class="math inline">\(cd = ad + bd\)</span> for all vectors <span class="math inline">\(d\)</span>.</p>
+<p>Vector addition can be viewed geometrically as taking a vector <span class="math inline">\(a\)</span>, then tacking on <span class="math inline">\(b\)</span> to the end of it; the new end point is exactly <span class="math inline">\(c\)</span>.</p>
+<p><img src="img/vector_sum.png" width="40%" /></p>
+<p><em>Scalar Multiplication</em>: vectors can be scaled by real values;</p>
+<p><span class="math display">\[2\langle 1, 2.5, −6 \rangle = \langle 2, 5, −12\rangle\]</span></p>
+<p>In general, <span class="math inline">\(ax = \langle ax_1, ax_2, \ldots, ax_p\rangle\)</span></p>
+<p>The norm of a vector <span class="math inline">\(x\)</span>, written <span class="math inline">\(\|x\|\)</span> is its length.</p>
+<p>Unless otherwise specified, this is its Euclidean length, namely:</p>
+<p><span class="math display">\[\|x\| = \sqrt{\sum_{j=1}^p x_j^2}\]</span></p>
+<div id="quiz" class="section level3">
+<h3><span class="header-section-number">27.5.1</span> Quiz</h3>
+<p>Write Euclidean distance of vectors <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> as a vector norm</p>
+<p>The <em>dot product</em>, or <em>inner product</em> of two vectors <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> is defined as</p>
+<p><span class="math display">\[u&#39;v = \sum_{j=1}^p u_i v_i\]</span></p>
+<p>A useful geometric interpretation of the inner product <span class="math inline">\(v&#39;u\)</span> is that it gives the projection of <span class="math inline">\(v\)</span> onto <span class="math inline">\(u\)</span> (when <span class="math inline">\(\|u\|=1\)</span>).</p>
+<p><img src="img/innerprod.png" width="40%" /></p>
+</div>
+</div>
+<div id="the-curse-of-dimensionality" class="section level2">
+<h2><span class="header-section-number">27.6</span> The curse of dimensionality</h2>
+<p>Distance-based methods like KNN can be problematic in high-dimensional problems Consider the case where we have many covariates. We want to use <span class="math inline">\(k\)</span>-nearest neighbor methods.<br />
+Basically, we need to define distance and look for small multi-dimensional “balls” around the target points. With many covariates this becomes difficult. Imagine we have equally spaced data and that each covariate is in <span class="math inline">\([0,1]\)</span>. We want to something like kNN with a local focus that uses 10% of the data in the local fitting. If we have <span class="math inline">\(p\)</span> covariates and we are forming <span class="math inline">\(p\)</span>-dimensional cubes, then each side of the cube must have size <span class="math inline">\(l\)</span> determined by <span class="math inline">\(l \times l \times \dots \times l = l^p = .10\)</span>. If the number of covariates is p=10, then <span class="math inline">\(l = .1^{1/10} = .8\)</span>. So it really isn’t local! If we reduce the percent of data we consider to 1%, <span class="math inline">\(l=0.63\)</span>. Still not very local.</p>
+<p>If we keep reducing the size of the neighborhoods we will end up with very small number of data points in each average and thus predictions with very large variance.</p>
+<p>This is known as <em>the curse of dimensionality</em>. Because of this so-called curse, it is not always possible to use KNN. But other methods, like Decision Trees, thrive on multidimensional data.</p>
+</div>
+<div id="summary-2" class="section level2">
+<h2><span class="header-section-number">27.7</span> Summary</h2>
+<ul>
+<li>We will represent many ML algorithms geometrically as vectors</li>
+<li>Vector math review</li>
+<li>K-nearest neighbors</li>
+<li>The curse of dimensionality</li>
+</ul>
 
 </div>
 </div>
@@ -487,8 +688,8 @@ union/intersect/minus
           </div>
         </div>
       </div>
-<a href="two-table-operations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="db-parting-shots.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="part-machine-learning.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
