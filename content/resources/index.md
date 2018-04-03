@@ -42,4 +42,6 @@ dataset portal maintained by CMU.
 * [Resources for data journalism with R](http://rddj.info)  
 * [Algorithms and datasets for computational social science and digital humanities](http://ropengov.github.io/)  
 * [Open population datasets](https://code.facebook.com/posts/596471193873876/open-population-datasets-and-open-challenges/)
+* [Google BigQuery Public Datasets](https://cloud.google.com/bigquery/public-data/)
+* [AWS Public Datasets](https://aws.amazon.com/public-datasets/)
 
