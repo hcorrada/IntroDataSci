@@ -20,10 +20,10 @@ and use the sample mean $\overline{x}=\frac{1}{n} \sum_{i=1}^{n} x_i=\frac{30}{5
 
 You remember that the hypothesis testing framework is setup in a way where you use your experiment to _reject_ the hypothesis
 that the new design _does not_ increase click rate.
-Therefore, you want to test the (null) hypothesis $p_B \leq p_A = 0.5$ and _reject_ it if $p(\hat{p}_B > p_A) \leq \alpha$ under this hypothesis.
+Therefore, you want to test the (null) hypothesis $p_B \leq p_A = 0.5$ and _reject_ it if $p(\overline{X} > \hat{p}_B) \leq \alpha$ under this hypothesis.
 Remember, $\alpha$ is the rejection level, and we will use $\alpha=0.05$ here.
 
-To compute $p(\hat{p}_B > 0.5)$ under the null hypothesis you will use the normal apprximation given by the Central Limit Theorem (CLT). 
+To compute $p(\overline{X} > \hat{p}_B)$ under the null hypothesis you will use the normal approximation given by the Central Limit Theorem (CLT). 
 
 (a) Derive expressions for $\mathrm{E} \overline{X}$ and $\mathrm{Var}(\overline {X})$ under the null hypothesis in terms of $p_A$. You will need to use the properties of
 expectations and variances described below. Here, I give you the derivation for $\mathrm{E} \overline{X}$, you need to do the same for $\mathrm{Var}(\overline{X})$.
@@ -38,7 +38,7 @@ expectations and variances described below. Here, I give you the derivation for 
 (b) Based on your derivation, compute values for $\mathrm{E} \overline{X}$ and $\mathrm{Var}(\overline{X})$ based on $p_A=0.5$ and $n=50$. Use R to do this.
 
 (c) Using the result above, you can now use the CLT by approximating the distribution of $\overline{X}$ as $N(\mathrm{E} \overline{X}, \sqrt{\mathrm{Var}(\overline{X})})$.
-Based on this approximation, compute $p(\hat{p}_B > p_A)$. Use the R function `pnorm` to compute this.
+Based on this approximation, compute $p(\overline{X} > \hat{p}_B)$. Use the R function `pnorm` to compute this.
 
 (d) Should you reject the null hypothesis $p_B \leq p_A$? Why?
 
@@ -55,11 +55,12 @@ In this second case, you also assume the click rate for the original version is 
 The data recorded for the experiment is the same. You showed the new design to $n=50$ subjects and recorded that
 $s=30$ clicked on the link of interest.
 
-You want to test the hypothesis $p_B \leq 0.75$ and reject it if $p(\hat{p}_B > 0.75) < 0.05$ under this hypothesis.
+You want to test the hypothesis $p_B \leq 0.75$ and reject it if $p(\overline{X} > \hat{p}_B) < 0.05$ under this hypothesis. Note the
+probability in this case is different since $p_A = 0.75$.
 
-(a) What are the values of $E \overline{X}$ and $\mathrm{Var}(\overline{X})$ under the null hypothesis in this case.
+(a) What are the values of $\mathrm{E} \overline{X}$ and $\mathrm{Var}(\overline{X})$ under the null hypothesis in this case.
 
-(b) Based on the CLT approximation, compute $p(\hat{p}_B > 0.75)$ under the null hypothesis. 
+(b) Based on the CLT approximation, compute $p(\overline{X} \hat{p}_B)$ under the null hypothesis. 
 
 (c) Should you reject the null hypothesis $p_B \leq 0.75$? Why?
 
@@ -106,11 +107,13 @@ expectations and variances described below. Here, I give you the derivation for 
 can be treated as independent identically distributed (iid) draws from a $\mathrm{Bernoulli}(p)$ distribution. Based on this observation, what would be your estimate of
 $p_A=p_B=p$?
 
-(d) Now that you have an estimate of $p$, compute a value for $\mathrm{Var}(Y)$. 
+(c) Now that you have an estimate of $p$, compute a value for $\mathrm{Var}(Y)$. 
 
-(e) What is your estimate $\hat{y}$ of $p_B - p_A$ based on the data your recorded for this experiment?
+(d) What is your estimate $\hat{y}$ of $p_B - p_A$ based on the data your recorded for this experiment?
 
-Now, we can reject the null hypothesis of no improvement if $p(\hat{y} > 0) \leq \alpha$ under the null hypothesis. 
+Now, we can reject the null hypothesis of no improvement if $p(Y > \hat{y}) \leq \alpha$ under the null hypothesis. 
+
+(e) Using the CLT approximation, what is $p(Y > \hat{y})$
 
 (f) Can you reject the null hypothesis of no improvement in this case? Why? Remember, we are using $\alpha=0.05$.
 
