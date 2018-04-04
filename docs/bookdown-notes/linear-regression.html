@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="sql-i-single-table-queries.html">
-<link rel="next" href="sql-system-constructs.html">
+<link rel="prev" href="data-analysis-with-geometry.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -396,222 +396,826 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="two-table-operations" class="section level1">
-<h1><span class="header-section-number">13</span> Two-table operations</h1>
-<p>So far we have looked at data operations defined over single tables and data frames. In this section we look at efficient methods to combine data from multiple tables. The fundamental operation here is the <code>join</code>, which is a workhorse of database system design and impementation. The <code>join</code> operation combines rows from two tables to create a new single table, based on matching criteria specified over attributes of each of the two tables.</p>
-<p>Consider the example of joining the <code>flights</code> and <code>airlines</code> table:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nycflights13)
-<span class="kw">data</span>(flights)
-<span class="kw">data</span>(airlines)</code></pre></div>
-<p>Let’s take a look at the <code>flights</code> table again:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights</code></pre></div>
-<pre><code>## # A tibble: 336,776 x 19
-##     year month   day dep_time sched_dep_time dep_delay arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1  2013     1     1      517            515      2.00      830
-##  2  2013     1     1      533            529      4.00      850
-##  3  2013     1     1      542            540      2.00      923
-##  4  2013     1     1      544            545     -1.00     1004
-##  5  2013     1     1      554            600     -6.00      812
-##  6  2013     1     1      554            558     -4.00      740
-##  7  2013     1     1      555            600     -5.00      913
-##  8  2013     1     1      557            600     -3.00      709
-##  9  2013     1     1      557            600     -3.00      838
-## 10  2013     1     1      558            600     -2.00      753
-## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
-<p>And add the <code>airlines</code> table:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">airlines</code></pre></div>
-<pre><code>## # A tibble: 16 x 2
-##    carrier name                       
-##    &lt;chr&gt;   &lt;chr&gt;                      
-##  1 9E      Endeavor Air Inc.          
-##  2 AA      American Airlines Inc.     
-##  3 AS      Alaska Airlines Inc.       
-##  4 B6      JetBlue Airways            
-##  5 DL      Delta Air Lines Inc.       
-##  6 EV      ExpressJet Airlines Inc.   
-##  7 F9      Frontier Airlines Inc.     
-##  8 FL      AirTran Airways Corporation
-##  9 HA      Hawaiian Airlines Inc.     
-## 10 MQ      Envoy Air                  
-## 11 OO      SkyWest Airlines Inc.      
-## 12 UA      United Air Lines Inc.      
-## 13 US      US Airways Inc.            
-## 14 VX      Virgin America             
-## 15 WN      Southwest Airlines Co.     
-## 16 YV      Mesa Airlines Inc.</code></pre>
-<p>Here, we want to add airline information to each flight. We can do so by joining the attributes of the respective airline from the <code>airlines</code> table with the <code>flights</code> table based on the values of attributes <code>flights$carrier</code> and <code>airlines$carrier</code>. Specifically, every row of <code>flights</code> with a specific value for <code>flights$carrier</code>, is joined with the the corresponding row in <code>airlines</code> with the same value for <code>airlines$carrier</code>. We will see four different ways of performing this operation that differ on how non-matching observations are handled.</p>
-<div id="left-join" class="section level2">
-<h2><span class="header-section-number">13.1</span> Left Join</h2>
-<p>In a <code>left join</code>, all observations on left operand (LHS) are retained:</p>
+<div id="linear-regression" class="section level1">
+<h1><span class="header-section-number">28</span> Linear Regression</h1>
+<p>Linear regression is a very elegant, simple, powerful and commonly used technique for data analysis. We use it extensively in exploratory data analysis (we used in project 2, for example) and in statistical analyses since it fits into the statistical framework we saw in the last unit, and thus lets us do things like construct confidence intervals and hypothesis testing for relationships between variables. It also provides predictions for continuous outcomes of interest.</p>
+<p>Note: Much of this development is based on “Introduction to Statistical Learning” by James, Witten, Hastie and Tibshirani. <a href="http://www-bcf.usc.edu/~gareth/ISL/" class="uri">http://www-bcf.usc.edu/~gareth/ISL/</a></p>
+<div id="simple-regression" class="section level2">
+<h2><span class="header-section-number">28.1</span> Simple Regression</h2>
+<p>Let’s start with the simplest linear model. The goal here is to analyze the relationship between a <em>continuous numerical</em> variable <span class="math inline">\(Y\)</span> and another (<em>numerical</em> or <em>categorical</em>) variable <span class="math inline">\(X\)</span>. We assume that in our population of interest the relationship between the two is given by a linear function:</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 X
+\]</span></p>
+<p>Here is (simulated) data from an advertising campaign measuring sales and the amount spent in advertising. We think that sales are related to the amount of money spent on TV advertising:</p>
+<p><span class="math display">\[
+\mathtt{sales} \approx \beta_0 + \beta_1 \times \mathtt{TV}
+\]</span></p>
 <div class="figure">
-<img src="img/join_lhs.png" />
+<img src="img/regression_example.png" />
 
 </div>
+<p>Given this data, we would say that we <em>regress</em> <code>sales</code> on <code>TV</code> when we perform this regression analysis. As before, given data we would like to estimate what this relationship is in the <em>population</em> (what is the population in this case?). What do we need to estimate in this case? Values for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. What is the criteria that we use to estimate them?</p>
+<p>Just like the previous unit we need to setup an <em>inverse problem</em>. What we are stating mathematically in the linear regression problem is that the <em>conditional expectation</em> (or conditional mean, conditional average) of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X=x\)</span> is defined by this linear relationship:</p>
+<p><span class="math display">\[
+\mathbb{E}[Y|X=x] = \beta_0 + \beta_1 x
+\]</span></p>
+<p>Given a dataset, the inverse problem is then to find the values of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> that minimize deviation between data and expectation, and again use squared devation to do this.</p>
+<p><strong>The linear regression problem</strong></p>
+<p>Given data <span class="math inline">\((x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)\)</span>, find values <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> that minimize <em>objective</em> or <em>loss</em> function RSS (residual sum of squares):</p>
+<p><span class="math display">\[
+\arg \min_{\beta_0,\beta_1} RSS = \frac{1}{2} \sum_i (y_i - (\beta_0 + \beta_1 x_i))^2
+\]</span></p>
 <div class="figure">
-<img src="img/left_join.png" />
+<img src="img/minimizing.png" />
 
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre></div>
-<pre><code>## # A tibble: 336,776 x 20
-##     year month   day dep_time sched_dep_time dep_delay arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1  2013     1     1      517            515      2.00      830
-##  2  2013     1     1      533            529      4.00      850
-##  3  2013     1     1      542            540      2.00      923
-##  4  2013     1     1      544            545     -1.00     1004
-##  5  2013     1     1      554            600     -6.00      812
-##  6  2013     1     1      554            558     -4.00      740
-##  7  2013     1     1      555            600     -5.00      913
-##  8  2013     1     1      557            600     -3.00      709
-##  9  2013     1     1      557            600     -3.00      838
-## 10  2013     1     1      558            600     -2.00      753
-## # ... with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
-<p>RHS variables for LHS observations with no matching RHS observations are coded as <code>NA</code>.</p>
+<p>Similar to what we did with the derivation of the mean as a measure of central tendency we can derive the values of minimizers<span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>. We use the same principle, compute derivatives (partial this time) of the objective function RSS, set to zero and solve to obtain:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\beta}_1 &amp; = \frac{\sum_{i=1}^n (y_i - \overline{y})(x_i - \overline{x})}{\sum_{i=1}^n (x_i - \overline{x})^2} \\
+{} &amp; = \frac{\mathrm{cov}(y,x)}{\mathrm{var}(x)} \\
+\hat{\beta}_0 &amp; = \overline{y} - \hat{\beta}_1 \overline{x} 
+\end{aligned}
+\]</span></p>
+<p>Let’s take a look at some data. Here is data measuring characteristics of cars, including horsepower, weight, displacement, miles per gallon. Let’s see how well a linear model captures the relationship between miles per gallon and weight</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ISLR)
+<span class="kw">library</span>(tidyverse)
+
+<span class="kw">data</span>(Auto)
+
+Auto <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>weight, <span class="dt">y=</span>mpg)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme_minimal</span>()</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-166-1.svg" width="672" /></p>
+<p>In R, linear models are built using the <code>lm</code> function</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span>weight, <span class="dt">data=</span>Auto)
+auto_fit</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ weight, data = Auto)
+## 
+## Coefficients:
+## (Intercept)       weight  
+##   46.216525    -0.007647</code></pre>
+<p>This states that for this dataset <span class="math inline">\(\hat{\beta}_0 = 46.2165245\)</span> and <span class="math inline">\(\hat{\beta}_1 = -0.0076473\)</span>. What’s the interpretation? According to this model, a weightless car <code>weight=0</code> would run <span class="math inline">\(\approx 46.22\)</span> <em>miles per gallon</em> on average, and, on average, a car would run <span class="math inline">\(\approx 0.01\)</span> <em>miles per gallon</em> fewer for every extra <em>pound</em> of weight. Note, that the units of the outcome <span class="math inline">\(Y\)</span> and the predictor <span class="math inline">\(X\)</span> matter for the interpretation of these values.</p>
 </div>
-<div id="right-join" class="section level2">
-<h2><span class="header-section-number">13.2</span> Right Join</h2>
-<p>All observations on right operand (RHS) are retained:</p>
+<div id="inference-1" class="section level2">
+<h2><span class="header-section-number">28.2</span> Inference</h2>
+<p>As we saw in the last unit, now that we have an estimate, we want to know its precision. We will see that similar arguments based on the CLT hold again. The main point is to understand that like the sample mean, the regression line we learn from a specific dataset is an estimate. A different sample from the same population would give us a different estimate (regression line). But, the CLT tells us that, on average, we are close to population regression line (I.e., close to <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>), that the spread around <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> is well approximated by a normal distribution and that the spread goes to zero as the sample size increases.</p>
 <div class="figure">
-<img src="img/join_lhs.png" />
+<img src="img/population_line.png" />
 
 </div>
+<div id="confidence-interval" class="section level3">
+<h3><span class="header-section-number">28.2.1</span> Confidence Interval</h3>
+<p>Using the same framework as before, we can construct a confidence interval to say how precise we think our estimates of the population regression line is. In particular, we want to see how precise our estimate of <span class="math inline">\(\beta_1\)</span> is, since that captures the relationship between the two variables. We again, use a similar framework. First, we calculate a standard error estimate for <span class="math inline">\(\beta_1\)</span>:</p>
+<p><span class="math display">\[
+\mathrm{se}(\hat{beta}_1)^2 = \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (x_i - \overline{x})^2}
+\]</span></p>
+<p>and construct a 95% confidence interval</p>
+<p><span class="math display">\[
+\beta_1 = \hat{\beta}_1 \pm 1.95 \times \mathrm{se}(\hat{beta}_1)
+\]</span></p>
+<p>Note, <span class="math inline">\(\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i\)</span>. Going back to our example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auto_fit_stats &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(term, estimate, std.error)
+auto_fit_stats</code></pre></div>
+<pre><code>##          term     estimate    std.error
+## 1 (Intercept) 46.216524549 0.7986724633
+## 2      weight -0.007647343 0.0002579633</code></pre>
+<p>This <code>tidy</code> function is defined by the <code>broom</code> package, which is very handy to manipulate the result of learning models in a consistent manner. The <code>select</code> call removes some extra information that we will discuss shortly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">confidence_interval_offset &lt;-<span class="st"> </span><span class="fl">1.95</span> <span class="op">*</span><span class="st"> </span>auto_fit_stats<span class="op">$</span>std.error[<span class="dv">2</span>]
+confidence_interval &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">c</span>(auto_fit_stats<span class="op">$</span>estimate[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>confidence_interval_offset,
+                               auto_fit_stats<span class="op">$</span>estimate[<span class="dv">2</span>],
+                               auto_fit_stats<span class="op">$</span>estimate[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>confidence_interval_offset), <span class="dv">4</span>)</code></pre></div>
+<p>Given the confidence interval, we would say, “on average, a car runs <span class="math inline">\(_{-0.0082} -0.0076_{-0.0071}\)</span> <em>miles per gallon</em> fewer per pound of weight.</p>
+</div>
+<div id="the-t-statistic-and-the-t-distribution" class="section level3">
+<h3><span class="header-section-number">28.2.2</span> The <span class="math inline">\(t\)</span>-statistic and the <span class="math inline">\(t\)</span>-distribution</h3>
+<p>As in the previous unit, we can also test a null hypothesis about this relationship: “there is no relationship between weight and miles per gallon”, which translates to <span class="math inline">\(\beta_1=0\)</span>. Again, using the same argument based on the CLT, if this hypothesis is true then the distribution of <span class="math inline">\(\hat{\beta}_1\)</span> is well approximated by <span class="math inline">\(N(0,\mathrm{se}(\hat{\beta}_1))\)</span>, and if we observe the learned <span class="math inline">\(\hat{\beta}_1\)</span> is <em>too far</em> from 0 according to this distribution then we <em>reject</em> the hypothesis.</p>
+<p>Now, there is a technicality here that we did not discuss in the previous unit that is worth paying attention to. We saw before that the CLT states that the normal approximation is good as sample size increases, but what about moderate sample sizes (say, less than 100)? The <span class="math inline">\(t\)</span> distribution provides a better approximation of the sampling distribution of these estimates for moderate sample sizes, and it tends to the normal distribution as sample size increases.</p>
+<p>The <span class="math inline">\(t\)</span> distribution is commonly used in this testing situation to obtain the probability of rejecting the null hypothesis. It is based on the <span class="math inline">\(t\)</span>-statistic</p>
+<p><span class="math display">\[
+\frac{\hat{\beta}_1}{\mathrm{se}(\hat{\beta}_1)}
+\]</span></p>
+<p>You can think of this as a <em>signal-to-noise</em> ratio, or a standardizing transformation on the estimated parameter. Under the null hypothesis, the <span class="math inline">\(t\)</span>-statistic is well approximated by a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-2\)</span> <em>degrees of freedom</em> (we will get back to <em>degrees of freedom</em> shortly). Like other distributions, you can compute with the <span class="math inline">\(t\)</span>-distribution using the <code>p,d,q,r</code>-family of functions, e.g., <code>pt</code> is the cumulative probability distribution function.</p>
+<p>In our example, we get a <span class="math inline">\(t\)</span> statistic and P-value as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auto_fit_stats &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tidy</span>()
+auto_fit_stats</code></pre></div>
+<pre><code>##          term     estimate    std.error statistic       p.value
+## 1 (Intercept) 46.216524549 0.7986724633  57.86668 1.623069e-193
+## 2      weight -0.007647343 0.0002579633 -29.64508 6.015296e-102</code></pre>
+<p>We would say: “We found a statistically significant relationship between weight and miles per gallon. On average, a car runs <span class="math inline">\(_{-0.0082} -0.0076_{-0.0071}\)</span> <em>miles per gallon</em> fewer per pound of weight (<span class="math inline">\(t\)</span>=-29.65, <span class="math inline">\(p\)</span>-value&lt;6.015296110^{-102}$).”</p>
+</div>
+<div id="global-fit" class="section level3">
+<h3><span class="header-section-number">28.2.3</span> Global Fit</h3>
+<p>Now, notice that we can make <em>predictions</em> based on our conditional expectation, and that prediction should be better than a prediction with a simple average. We can use this comparison as a measure of how good of a job we are doing using our model to fit this data: how much of the variance of <span class="math inline">\(Y\)</span> can we <em>explain</em> with our model. To do this we can calculate <em>total sum of squares</em>:</p>
+<p><span class="math display">\[
+TSS = \sum_i (y_i - \overline{y})^2
+\]</span></p>
+<p>(this is the squared error of a prediction using the sample mean of <span class="math inline">\(Y\)</span>)</p>
+<p>and the <em>residual sum of squares</em>:</p>
+<p><span class="math display">\[
+RSS = \sum_i (y_i - \hat{y}_i)^2
+\]</span></p>
+<p>(which is the squared error of a prediction using the linear model we learned)</p>
+<p>The commonly used <span class="math inline">\(R^2\)</span> measure comparse these two quantities:</p>
+<p><span class="math display">\[
+R^2 = \frac{\mathrm{TSS}-\mathrm{RSS}}{\mathrm{TSS}} = 1 - \frac{\mathrm{RSS}}{\mathrm{TSS}}
+\]</span></p>
+<p>These types of global statistics for the linear model can be obtained using the <code>glance</code> function in the <code>broom</code> package. In our example</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auto_fit <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(r.squared, sigma, statistic, df, p.value)</code></pre></div>
+<pre><code>##   r.squared    sigma statistic df       p.value
+## 1 0.6926304 4.332712  878.8309  2 6.015296e-102</code></pre>
+<p>We will explain the the columns <code>statistic</code>, <code>df</code> and <code>p.value</code> when we discuss regression using more than a single predictor <span class="math inline">\(X\)</span>.</p>
+</div>
+</div>
+<div id="some-important-technicalities" class="section level2">
+<h2><span class="header-section-number">28.3</span> Some important technicalities</h2>
+<p>We mentioned above that predictor <span class="math inline">\(X\)</span> could be <em>numeric</em> or <em>categorical</em>. However, this is not precisely true. We can use a transformation to represent <em>categorical</em> variables. Here is a simple example:</p>
+<p>Suppose we have a categorical variable <code>sex</code> with values <code>female</code> and <code>male</code>, and we want to show the relationship between, say <code>credit card balance</code> and <code>sex</code>. We can create a dummy variable <span class="math inline">\(x\)</span> as follows:</p>
+<p><span class="math display">\[
+x_i = \left\{
+\begin{aligned}
+1 &amp; \textrm{ if female} \\
+0 &amp; \textrm{o.w.}
+\end{aligned}
+\right.
+\]</span></p>
+<p>and fit a model <span class="math inline">\(y = \beta_0 + \beta_1 x\)</span>. What is the conditional expectation given by this model? If the person is male, then <span class="math inline">\(y=\beta_0\)</span>, if the person is female, then <span class="math inline">\(y=\beta_0 + \beta_1\)</span>. So, what is the interpretation of <span class="math inline">\(\beta_1\)</span>? The average difference in credit card balance between females and males.</p>
+<p>We could do a different encoding:</p>
+<p><span class="math display">\[
+x_i = \left\{
+\begin{aligned}
++1 &amp; \textrm{ if female} \\
+-1 &amp; \textrm{o.w.}
+\end{aligned}
+\right.
+\]</span></p>
+<p>Then what is the interpretation of <span class="math inline">\(\beta_1\)</span> in this case?</p>
+<p>Note, that when we call the <code>lm(y~x)</code> function and <code>x</code> is a factor with two levels, the first transformation is used by default. What if there are more than 2 levels? We need multiple regression, which we will see shortly.</p>
+</div>
+<div id="issues-with-linear-regression" class="section level2">
+<h2><span class="header-section-number">28.4</span> Issues with linear regression</h2>
+<p>There are some assumptions underlying the inferences and predictions we make using linear regression that we should verify are met when we use this framework. Let’s start with four important ones that apply to simple regression</p>
+<div id="non-linearity-of-outcome-predictor-relationship" class="section level3">
+<h3><span class="header-section-number">28.4.1</span> Non-linearity of outcome-predictor relationship</h3>
+<p>What if the underlying relationship is not linear? We will see later that we can capture non-linear relationships between variables, but for now, let’s concentrate on detecting if a linear relationship is a good approximation. We can use exploratory visual analysis to do this for now by plotting residuals <span class="math inline">\((y_i - \hat{y}_i)^2\)</span> as a function of the fitted values <span class="math inline">\(\hat{y}_i\)</span>.</p>
+<p>The <code>broom</code> package uses the <code>augment</code> function to help with this task. It augments the input data used to learn the linear model with information of the fitted model for each observation</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">augmented_auto &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">augment</span>()
+augmented_auto <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##   .rownames mpg weight  .fitted   .se.fit    .resid        .hat   .sigma
+## 1         1  18   3504 19.42024 0.2575448 -1.420236 0.003533343 4.337678
+## 2         2  15   3693 17.97489 0.2862653 -2.974889 0.004365337 4.335643
+## 3         3  18   3436 19.94026 0.2487426 -1.940256 0.003295950 4.337158
+## 4         4  16   3433 19.96320 0.2483756 -3.963198 0.003286232 4.333606
+## 5         5  17   3449 19.84084 0.2503543 -2.840840 0.003338799 4.335878
+## 6         6  15   4341 13.01941 0.4142337  1.980589 0.009140525 4.337104
+##        .cooksd .std.resid
+## 1 0.0001911753 -0.3283745
+## 2 0.0010380292 -0.6881147
+## 3 0.0003326721 -0.4485553
+## 4 0.0013838821 -0.9162219
+## 5 0.0007225022 -0.6567698
+## 6 0.0009727164  0.4592282</code></pre>
+<p>With that we can make the plot we need to check for possible non-linearity</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">augmented_auto <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>.fitted,<span class="dt">y=</span>.resid)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_smooth</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;fitted&quot;</span>, <span class="dt">y=</span><span class="st">&quot;residual&quot;</span>)</code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-173-1.svg" width="672" /></p>
+</div>
+<div id="correlated-error" class="section level3">
+<h3><span class="header-section-number">28.4.2</span> Correlated Error</h3>
+<p>For our inferences to be valid, we need residuals to be independent and identically distributed. We can spot non independence if we observe a trend in residuals as a function of the predictor <span class="math inline">\(X\)</span>. Here is a simulation to demonstrate this:</p>
 <div class="figure">
-<img src="img/right_join.png" />
+<img src="img/correlated_error.png" />
 
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">right_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre></div>
-<pre><code>## # A tibble: 336,776 x 20
-##     year month   day dep_time sched_dep_time dep_delay arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1  2013     1     1      810            810      0        1048
-##  2  2013     1     1     1451           1500     -9.00     1634
-##  3  2013     1     1     1452           1455     -3.00     1637
-##  4  2013     1     1     1454           1500     -6.00     1635
-##  5  2013     1     1     1507           1515     -8.00     1651
-##  6  2013     1     1     1530           1530      0        1650
-##  7  2013     1     1     1546           1540      6.00     1753
-##  8  2013     1     1     1550           1550      0        1844
-##  9  2013     1     1     1552           1600     -8.00     1749
-## 10  2013     1     1     1554           1600     -6.00     1701
-## # ... with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
-<p>LHS variables for RHS observations with no matching LHS observations are coded as <code>NA</code>.</p>
+<p>In this case, our standard error estimates would be underestimated and our confidence intervals and hypothesis testing results would be biased.</p>
 </div>
-<div id="inner-join" class="section level2">
-<h2><span class="header-section-number">13.3</span> Inner Join</h2>
-<p>Only observations matching on both tables are retained</p>
-<p><img src="img/join_lhs.png" /> <img src="img/inner_join.png" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">inner_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre></div>
-<pre><code>## # A tibble: 336,776 x 20
-##     year month   day dep_time sched_dep_time dep_delay arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1  2013     1     1      517            515      2.00      830
-##  2  2013     1     1      533            529      4.00      850
-##  3  2013     1     1      542            540      2.00      923
-##  4  2013     1     1      544            545     -1.00     1004
-##  5  2013     1     1      554            600     -6.00      812
-##  6  2013     1     1      554            558     -4.00      740
-##  7  2013     1     1      555            600     -5.00      913
-##  8  2013     1     1      557            600     -3.00      709
-##  9  2013     1     1      557            600     -3.00      838
-## 10  2013     1     1      558            600     -2.00      753
-## # ... with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
-</div>
-<div id="full-join" class="section level2">
-<h2><span class="header-section-number">13.4</span> Full Join</h2>
-<p>All observations are retained, regardless of matching condition</p>
-<p><img src="img/join_lhs.png" /> <img src="img/full_join.png" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">full_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre></div>
-<pre><code>## # A tibble: 336,776 x 20
-##     year month   day dep_time sched_dep_time dep_delay arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1  2013     1     1      517            515      2.00      830
-##  2  2013     1     1      533            529      4.00      850
-##  3  2013     1     1      542            540      2.00      923
-##  4  2013     1     1      544            545     -1.00     1004
-##  5  2013     1     1      554            600     -6.00      812
-##  6  2013     1     1      554            558     -4.00      740
-##  7  2013     1     1      555            600     -5.00      913
-##  8  2013     1     1      557            600     -3.00      709
-##  9  2013     1     1      557            600     -3.00      838
-## 10  2013     1     1      558            600     -2.00      753
-## # ... with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
-<p>All values coded as <code>NA</code> for non-matching observations as appropriate.</p>
-</div>
-<div id="join-conditions" class="section level2">
-<h2><span class="header-section-number">13.5</span> Join conditions</h2>
-<p>All join operations are based on a matching condition:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre></div>
-<p>specifies to join observations where <code>flights$carrier</code> equals <code>airlines$carrier</code>.</p>
-<p>In this case, where no conditions are specified using the <code>by</code> argument:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(airlines)</code></pre></div>
-<p>a <em>natural join</em> is perfomed. In this case all variables with the same name in both tables are used in join condition.</p>
-<p>You can also specify join conditions on arbitrary attributes using the <code>by</code> argument.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;carrier&quot;</span> =<span class="st"> &quot;name&quot;</span>))</code></pre></div>
-</div>
-<div id="filtering-joins" class="section level2">
-<h2><span class="header-section-number">13.6</span> Filtering Joins</h2>
-<p>We’ve just seen <em>mutating joins</em> that create new tables. <em>Filtering joins</em> use join conditions to filter a specific table.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anti_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre></div>
-<pre><code>## # A tibble: 0 x 19
-## # ... with 19 variables: year &lt;int&gt;, month &lt;int&gt;, day &lt;int&gt;,
-## #   dep_time &lt;int&gt;, sched_dep_time &lt;int&gt;, dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;,
-## #   sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
-## #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
-## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
-<p>Filters the <code>flights</code> table to only include flights from airlines that <em>are not</em> included in the <code>airlines</code> table.</p>
-</div>
-<div id="sql-constructs-multi-table-queries" class="section level2">
-<h2><span class="header-section-number">13.7</span> SQL Constructs: Multi-table Queries</h2>
-<p>Key idea: - Do a join to get an appropriate table - Use the constructs for single-table queries</p>
-<p>You will get used to doing all at once.</p>
-<p>For the first part, where we use a join to get an appropriate table, the general SQL construct includes: - The name of the first table to join - The <em>type</em> of join to do - The name of the second table to join - The join condition(s)</p>
-<ul>
-<li>Examples:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>, me.name <span class="kw">as</span> producerName 
-<span class="kw">from</span> movies m <span class="kw">join</span> movieexec me
-<span class="kw">where</span> m.producer = me.id;</code></pre></div>
-<ul>
-<li>Consider the query:</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>, producer, <span class="fu">count</span>(starName) 
-<span class="kw">from</span> movies <span class="kw">join</span> starsIn
-<span class="kw">where</span> title = starsIn.movieTitle <span class="kw">and</span> <span class="dt">year</span> = starsIn.movieYear
-<span class="kw">group</span> <span class="kw">by</span> title, <span class="dt">year</span>, producer</code></pre></div>
-<ul>
-<li>What about movies with no stars ?</li>
-<li>Need to use <strong>outer joins</strong></li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>, producer, <span class="fu">count</span>(starName) 
-<span class="kw">from</span> movies <span class="kw">left</span> <span class="kw">outer</span> <span class="kw">join</span> starsIn
-  <span class="kw">on</span> title = starsIn.movieTitle <span class="kw">and</span> <span class="dt">year</span> = starsIn.movieYear
-<span class="kw">group</span> <span class="kw">by</span> title, <span class="dt">year</span>, producer</code></pre></div>
-<p>As we saw before, all tuples from ‘movies’ that have no matches in starsIn are included with NULLs (in <code>dplyr</code> this was <code>NA</code>). So, if a tuple <code>(m1, 1990)</code> has no match in <code>starsIn</code>, we get <code>(m1, 1990, NULL)</code> in the result and the <code>count(starName)</code> works correctly then. Note however that <code>count(*)</code> would not work correctly (NULLs can have unintuitive behavior)</p>
-<p>In most systems <code>JOIN</code> corresponds to an <em>inner join</em>, and include <code>LEFT JOIN</code> and <code>RIGHT JOIN</code> as well.</p>
+<div id="non-constant-variance" class="section level3">
+<h3><span class="header-section-number">28.4.3</span> Non-constant variance</h3>
+<p>Another violation of the iid assumption would be observed if the spread of residuals is not independent of the fitted values. Here is an illustration, and a possible fix using a log transformation on the outcome <span class="math inline">\(Y\)</span>.</p>
+<div class="figure">
+<img src="img/residual_variance.png" />
 
+</div>
+</div>
+</div>
+<div id="multiple-linear-regression" class="section level2">
+<h2><span class="header-section-number">28.5</span> Multiple linear regression</h2>
+<p>Now that we’ve seen regression using a single predictor we’ll move on to regression using multiple predictors. In this case, we use models of conditional expectation represented as linear functions of multiple variables:</p>
+<p><span class="math display">\[
+\mathbb{E}[Y|X_1=x_1,X_2=x_2,\ldots,X_p=x_p] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots \beta_3 x_3
+\]</span></p>
+<p>In the case of our advertising example, this would be a model:</p>
+<p><span class="math display">\[
+\mathtt{sales} = \beta_0 + \beta_1 \times \mathtt{TV} + \beta_2 \times \mathtt{newspaper} + \beta_3 \times \mathtt{facebook}
+\]</span></p>
+<p>These models let us make statements of the type: “holding everything else constant, sales increased on average by 1000 per dollar spent on Facebook advertising” (this would be given by parameter <span class="math inline">\(\beta_3\)</span> in the example model).</p>
+<div id="estimation-in-multivariate-regression" class="section level3">
+<h3><span class="header-section-number">28.5.1</span> Estimation in multivariate regression</h3>
+<p>Generalizing simple regression, we estimate <span class="math inline">\(\beta\)</span>’s by minimizing an objective function that represents the difference between observed data and our expectation based on the linear model:</p>
+<p><span class="math display">\[
+\begin{aligned}
+RSS &amp; = \frac{1}{2} \sum_{i=1}^n (y_i - \hat{y}_i)^2 \\
+{} &amp; = \frac{1}{2} \sum_{i=1}^n (y_i - (\beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p))^2
+\end{aligned}
+\]</span></p>
+<div class="figure">
+<img src="img/multiple_rss.png" />
+
+</div>
+<p>The minimizer is found using numerical algorithms to solve this type of <em>least squares</em> problems. These are covered in Linear Algebra courses, and include the QR decomposition, Gauss-Seidel method, and many others. Later in the course we will look at <em>stochastic gradient descent</em>, a simple algorithm that scales to very large datasets.</p>
+</div>
+<div id="example-contd" class="section level3">
+<h3><span class="header-section-number">28.5.2</span> Example (cont’d)</h3>
+<p>Continuing with our Auto example, we can build a model for miles per gallon using multiple predictors:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span><span class="dv">1</span><span class="op">+</span>weight<span class="op">+</span>cylinders<span class="op">+</span>horsepower<span class="op">+</span>displacement<span class="op">+</span>year, <span class="dt">data=</span>Auto)
+auto_fit</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ 1 + weight + cylinders + horsepower + displacement + 
+##     year, data = Auto)
+## 
+## Coefficients:
+##  (Intercept)        weight     cylinders    horsepower  displacement  
+##   -12.779493     -0.006524     -0.343690     -0.007715      0.006996  
+##         year  
+##     0.749924</code></pre>
+<p>From this model we can make the statement: “Holding everything else constant, cars run 0.76 miles per gallon more each year on average”.</p>
+</div>
+<div id="statistical-statements-contd" class="section level3">
+<h3><span class="header-section-number">28.5.3</span> Statistical statements (cont’d)</h3>
+<p>Like simple linear regression, we can construct confidence intervals, and test a null hypothesis of no relationship (<span class="math inline">\(\beta_j=0\)</span>) for the parameter corresponding to each predictor. This is again nicely managed by the <code>broom</code> package:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auto_fit_stats &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tidy</span>()
+auto_fit_stats <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-12.7794934</td>
+<td align="right">4.2739387</td>
+<td align="right">-2.9900975</td>
+<td align="right">0.0029676</td>
+</tr>
+<tr class="even">
+<td align="left">weight</td>
+<td align="right">-0.0065245</td>
+<td align="right">0.0005866</td>
+<td align="right">-11.1215621</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">cylinders</td>
+<td align="right">-0.3436900</td>
+<td align="right">0.3315619</td>
+<td align="right">-1.0365786</td>
+<td align="right">0.3005812</td>
+</tr>
+<tr class="even">
+<td align="left">horsepower</td>
+<td align="right">-0.0077149</td>
+<td align="right">0.0107036</td>
+<td align="right">-0.7207702</td>
+<td align="right">0.4714872</td>
+</tr>
+<tr class="odd">
+<td align="left">displacement</td>
+<td align="right">0.0069964</td>
+<td align="right">0.0073095</td>
+<td align="right">0.9571736</td>
+<td align="right">0.3390787</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="right">0.7499243</td>
+<td align="right">0.0524361</td>
+<td align="right">14.3016700</td>
+<td align="right">0.0000000</td>
+</tr>
+</tbody>
+</table>
+<p>In this case we would reject the null hypothesis of no relationship only for predictors <code>weight</code> and <code>year</code>. We would write the statement for year as follows:</p>
+<p>“Holding everything else constant, cars run <span class="math inline">\({}_{0.65} 0.75_{0.85}\)</span> miles per gallon more each year on average (P-value=P-value&lt;1e-16)”.</p>
+</div>
+<div id="the-f-test" class="section level3">
+<h3><span class="header-section-number">28.5.4</span> The F-test</h3>
+<p>We can make additional statements for multivariate regression: “is there a relationship between <em>any</em> of the predictors and the response?”. Mathematically, we write this as <span class="math inline">\(\beta_1 = \beta_2 = \cdots = \beta_p = 0\)</span>.</p>
+<p>Under the null, our model for <span class="math inline">\(y\)</span> would be estimated by the sample mean <span class="math inline">\(\overline{y}\)</span>, and the error for that estimate is by total sum of squared error <span class="math inline">\(TSS\)</span>. As before, we can compare this to the residual sum of squared error <span class="math inline">\(RSS\)</span> using the <span class="math inline">\(F\)</span> statistic:</p>
+<p><span class="math display">\[
+\frac{(\mathrm{TSS}-\mathrm{RSS})/p}{\mathrm{RSS}/(n-p-1)}
+\]</span></p>
+<p>If this statistic is greater (enough) than 1, then we reject hypothesis that there is no relationship between response and predictors.</p>
+<p>Back to our example, we use the <code>glance</code> function to compute this type of summary:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auto_fit <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(r.squared, sigma, statistic, df, p.value) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+r.squared
+</th>
+<th style="text-align:right;">
+sigma
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.8089093
+</td>
+<td style="text-align:right;">
+3.433902
+</td>
+<td style="text-align:right;">
+326.7965
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<p>In comparison with the linear model only using <code>weight</code>, this multivariate model explains <em>more of the variance</em> of <code>mpg</code>, but using more predictors. This is where the notion of <em>degrees of freedom</em> comes in: we now have a model with expanded <em>representational</em> ability.</p>
+<p>However, the bigger the model, we are conditioning more and more, and intuitively, given a fixed dataset, have fewer data points to estimate conditional expectation for each value of the predictors. That means, that are estimated conditional expectation is less <em>precise</em>.</p>
+<p>To capture this phenomenon, we want statistics that tradeoff how well the model fits the data, and the “complexity” of the model. Now, we can look at the full output of the <code>glance</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auto_fit <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+r.squared
+</th>
+<th style="text-align:right;">
+adj.r.squared
+</th>
+<th style="text-align:right;">
+sigma
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+deviance
+</th>
+<th style="text-align:right;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.8089093
+</td>
+<td style="text-align:right;">
+0.806434
+</td>
+<td style="text-align:right;">
+3.433902
+</td>
+<td style="text-align:right;">
+326.7965
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+-1036.81
+</td>
+<td style="text-align:right;">
+2087.62
+</td>
+<td style="text-align:right;">
+2115.419
+</td>
+<td style="text-align:right;">
+4551.589
+</td>
+<td style="text-align:right;">
+386
+</td>
+</tr>
+</tbody>
+</table>
+<p>Columns <code>AIC</code> and <code>BIC</code> display statistics that penalize model fit with model size. The smaller this value, the better. Let’s now compare a model only using <code>weight</code>, a model only using <code>weight</code> and <code>year</code> and the full multiple regression model we saw before.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg<span class="op">~</span>weight, <span class="dt">data=</span>Auto) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+r.squared
+</th>
+<th style="text-align:right;">
+adj.r.squared
+</th>
+<th style="text-align:right;">
+sigma
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+deviance
+</th>
+<th style="text-align:right;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.6926304
+</td>
+<td style="text-align:right;">
+0.6918423
+</td>
+<td style="text-align:right;">
+4.332712
+</td>
+<td style="text-align:right;">
+878.8309
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+-1129.969
+</td>
+<td style="text-align:right;">
+2265.939
+</td>
+<td style="text-align:right;">
+2277.852
+</td>
+<td style="text-align:right;">
+7321.234
+</td>
+<td style="text-align:right;">
+390
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg<span class="op">~</span>weight<span class="op">+</span>year, <span class="dt">data=</span>Auto) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+r.squared
+</th>
+<th style="text-align:right;">
+adj.r.squared
+</th>
+<th style="text-align:right;">
+sigma
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+deviance
+</th>
+<th style="text-align:right;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.8081803
+</td>
+<td style="text-align:right;">
+0.8071941
+</td>
+<td style="text-align:right;">
+3.427153
+</td>
+<td style="text-align:right;">
+819.473
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-1037.556
+</td>
+<td style="text-align:right;">
+2083.113
+</td>
+<td style="text-align:right;">
+2098.998
+</td>
+<td style="text-align:right;">
+4568.952
+</td>
+<td style="text-align:right;">
+389
+</td>
+</tr>
+</tbody>
+</table>
+<p>In this case, using more predictors beyond <code>weight</code> and <code>year</code> doesn’t help.</p>
+</div>
+<div id="categorical-predictors-contd" class="section level3">
+<h3><span class="header-section-number">28.5.5</span> Categorical predictors (cont’d)</h3>
+<p>We saw transformations for categorical predictors with only two values, and deferred our discussion of categorical predictors with more than two values. In our example we have the <code>origin</code> predictor, corresponding to where the car was manufactured, which has multiple values</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Auto &lt;-<span class="st"> </span>Auto <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">origin=</span><span class="kw">factor</span>(origin))
+<span class="kw">levels</span>(Auto<span class="op">$</span>origin)</code></pre></div>
+<pre><code>## [1] &quot;1&quot; &quot;2&quot; &quot;3&quot;</code></pre>
+<p>As before, we can only use numerical predictors in linear regression models. The most common way of doing this is to create new dummy predictors to <em>encode</em> the value of the categorical predictor. Let’s take a categorical variable <code>major</code> that can take values <code>CS</code>, <code>MATH</code>, <code>BUS</code>. We can encode these values using variables <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span></p>
+<p><span class="math display">\[
+x_1 = \left\{
+\begin{aligned}
+1 &amp; \textrm{ if MATH} \\
+0 &amp; \textrm{ o.w.}
+\end{aligned}
+\right.
+\]</span></p>
+<p><span class="math display">\[
+x_2 = \left\{
+\begin{aligned}
+1 &amp; \textrm{ if BUS} \\
+0 &amp; \textrm{ o.w.}
+\end{aligned}
+\right.
+\]</span></p>
+<p>Now let’s build a model to capture the relationship between <code>salary</code> and <code>major</code>:</p>
+<p><span class="math display">\[
+\mathtt{salary} = \beta_0 + \beta_1 x_1 + \beta_2 x_2
+\]</span></p>
+<p>What is the expected salary for a CS major? <span class="math inline">\(\beta_0\)</span>.<br />
+For a MATH major? <span class="math inline">\(\beta_0 + \beta_1\)</span>. For a BUS major? <span class="math inline">\(\beta_0 + \beta_2\)</span>.</p>
+<p>So, <span class="math inline">\(\beta_1\)</span> is the average difference in salary between MATH and CS majors. How can we calculate the average difference in salary between MATH and BUS majors? <span class="math inline">\(\beta_1 - \beta_2\)</span>.</p>
+<p>The <code>lm</code> function in R does this transformation by default when a variable has class <code>factor</code>. We can see what the underlying numerical predictors look like by using the <code>model_matrix</code> function and passing it the model formula we build:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">extended_df &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>origin, <span class="dt">data=</span>Auto) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">origin =</span> Auto<span class="op">$</span>origin)
+
+extended_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##   (Intercept) origin2 origin3 origin
+## 1           1       0       0      1
+## 2           1       0       0      1
+## 3           1       0       0      1
+## 4           1       0       0      1
+## 5           1       0       0      1
+## 6           1       0       0      1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">extended_df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;2&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##   (Intercept) origin2 origin3 origin
+## 1           1       1       0      2
+## 2           1       1       0      2
+## 3           1       1       0      2
+## 4           1       1       0      2
+## 5           1       1       0      2
+## 6           1       1       0      2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">extended_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;3&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##   (Intercept) origin2 origin3 origin
+## 1           1       0       1      3
+## 2           1       0       1      3
+## 3           1       0       1      3
+## 4           1       0       1      3
+## 5           1       0       1      3
+## 6           1       0       1      3</code></pre>
+</div>
+</div>
+<div id="interactions-in-linear-models" class="section level2">
+<h2><span class="header-section-number">28.6</span> Interactions in linear models</h2>
+<p>The linear models so far include <em>additive</em> terms for a single predictor. That let us made statemnts of the type “holding everything else constant…”. But what if we think that a pair of predictors <em>together</em> have a relationship with the outcome. We can add these <em>interaction</em> terms to our linear models as products:</p>
+<p><span class="math display">\[
+\mathbb{E} Y|X_1=x_1,X_2=x2 = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_{12} x_1 x_2
+\]</span></p>
+<p>Consider the advertising example:</p>
+<p><span class="math display">\[
+\mathtt{sales} = \beta_0 + \beta_1 \times \mathtt{TV} + \beta_2 \times \mathtt{facebook} + \beta_3 \times (\mathtt{TV} \times \mathtt{facebook})
+\]</span></p>
+<p>If <span class="math inline">\(\beta_3\)</span> is positive, then the effect of increasing TV advertising money is increased if facebook advertising is also increased.</p>
+<p>When using categorical variables, interactions have an elegant interpretation. Consider our car example, and suppose we build a model with an interaction between <code>weight</code> and <code>origin</code>. Let’s look at what the numerical predictors look like:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">extended_df &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>weight<span class="op">+</span>origin<span class="op">+</span>weight<span class="op">:</span>origin, <span class="dt">data=</span>Auto) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">origin =</span> Auto<span class="op">$</span>origin)
+
+extended_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##   (Intercept) weight origin2 origin3 weight:origin2 weight:origin3 origin
+## 1           1   3504       0       0              0              0      1
+## 2           1   3693       0       0              0              0      1
+## 3           1   3436       0       0              0              0      1
+## 4           1   3433       0       0              0              0      1
+## 5           1   3449       0       0              0              0      1
+## 6           1   4341       0       0              0              0      1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">extended_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;2&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##   (Intercept) weight origin2 origin3 weight:origin2 weight:origin3 origin
+## 1           1   1835       1       0           1835              0      2
+## 2           1   2672       1       0           2672              0      2
+## 3           1   2430       1       0           2430              0      2
+## 4           1   2375       1       0           2375              0      2
+## 5           1   2234       1       0           2234              0      2
+## 6           1   2123       1       0           2123              0      2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">extended_df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;3&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##   (Intercept) weight origin2 origin3 weight:origin2 weight:origin3 origin
+## 1           1   2372       0       1              0           2372      3
+## 2           1   2130       0       1              0           2130      3
+## 3           1   2130       0       1              0           2130      3
+## 4           1   2228       0       1              0           2228      3
+## 5           1   1773       0       1              0           1773      3
+## 6           1   1613       0       1              0           1613      3</code></pre>
+<p>So what is the expected miles per gallon for a car with <code>origin == 1</code> as a function of weight?</p>
+<p><span class="math display">\[
+\mathtt{mpg} = \beta_0 + \beta_1 \times \mathtt{weight}
+\]</span></p>
+<p>Now how about a car with <code>origin == 2</code>?</p>
+<p><span class="math display">\[
+\mathtt{mpg} = \beta_0 + \beta_1 \times \mathtt{weight} + \beta_2 + \beta_4 \times \mathtt{weight}
+\]</span></p>
+<p>Now think of the graphical representation of these lines. For <code>origin == 1</code> the intercept of the regression line is <span class="math inline">\(\beta_0\)</span> and its slope is <span class="math inline">\(\beta_1\)</span>. For <code>origin == 2</code> the intercept of the regression line is <span class="math inline">\(\beta_0 + \beta_2\)</span> and its slope is <span class="math inline">\(\beta_1+\beta_4\)</span>.</p>
+<p><code>ggplot</code> does this when we map a factor variable to a aesthetic, say color, and use the <code>geom_smooth</code> method:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Auto <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>weight, <span class="dt">y=</span>mpg, <span class="dt">color=</span>origin)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-188-1.svg" width="672" /></p>
+<p>The intercept of the three lines seem to be different, but the slope of <code>origin == 3</code> looks different (decreases faster) than the slopes of <code>origin == 1</code> and <code>origin == 2</code> that look very similar to each other.</p>
+<p>Let’s fit the model and see how much statistical confidence we can give to those observations:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span>weight<span class="op">*</span>origin, <span class="dt">data=</span>Auto)
+auto_fit_stats &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tidy</span>() 
+auto_fit_stats <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">43.1484685</td>
+<td align="right">1.1861118</td>
+<td align="right">36.3780794</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">weight</td>
+<td align="right">-0.0068540</td>
+<td align="right">0.0003423</td>
+<td align="right">-20.0204971</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">origin2</td>
+<td align="right">1.1247469</td>
+<td align="right">2.8780381</td>
+<td align="right">0.3908033</td>
+<td align="right">0.6961582</td>
+</tr>
+<tr class="even">
+<td align="left">origin3</td>
+<td align="right">11.1116815</td>
+<td align="right">3.5743225</td>
+<td align="right">3.1087518</td>
+<td align="right">0.0020181</td>
+</tr>
+<tr class="odd">
+<td align="left">weight:origin2</td>
+<td align="right">0.0000036</td>
+<td align="right">0.0011106</td>
+<td align="right">0.0032191</td>
+<td align="right">0.9974332</td>
+</tr>
+<tr class="even">
+<td align="left">weight:origin3</td>
+<td align="right">-0.0038651</td>
+<td align="right">0.0015411</td>
+<td align="right">-2.5079723</td>
+<td align="right">0.0125521</td>
+</tr>
+</tbody>
+</table>
+<p>So we can say that for <code>origin == 3</code> the relationship between <code>mpg</code> and <code>weight</code> is different but not for the other two values of <code>origin</code>. Now, there is still an issue here because this could be the result of a poor fit from a linear model, it seems none of these lines do a very good job of modeling the data we have. We can again check this for this model:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auto_fit <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>.fitted, <span class="dt">y=</span>.resid)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-190-1.svg" width="672" /></p>
+<p>The fact that residuals are not centered around zero suggests that a linear fit does not work well in this case.</p>
+<div id="additional-issues-with-linear-regression" class="section level3">
+<h3><span class="header-section-number">28.6.1</span> Additional issues with linear regression</h3>
+<p>We saw previously some issues with linear regression that we should take into account when using this method for modeling. Multiple linear regression introduces an additional issue that is extremely important to consider when interpreting the results of these analyses: collinearity.</p>
+<div class="figure">
+<img src="img/collinearity.png" />
+
+</div>
+<p>In this example, you have two predictors that are very closely related. In that case, the set of <span class="math inline">\(\beta\)</span>’s that minimize RSS may not be unique, and therefore our interpretation is invalid. You can identify this potential problem by regressing predictors onto each other. The usual solution is to fit models only including one of the colinear variables.</p>
+
+</div>
 </div>
 </div>
             </section>
@@ -619,8 +1223,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="sql-i-single-table-queries.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="sql-system-constructs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-analysis-with-geometry.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
