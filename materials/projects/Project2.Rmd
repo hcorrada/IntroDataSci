@@ -72,7 +72,9 @@ _Note_: This combination of SQL and R (which you will use shortly). Is a very co
 
 ## Payroll distribution
 
-**Problem 2**. Write code to produce plots that illustrate the distribution of payrolls across teams conditioned on time (from 1990-2014).
+**Problem 2**. Write code to produce a plot (or plots) that illustrate the distribution of payrolls across teams conditioned on time (from 1990-2014). Note: you may
+create a single plot as long as the distributions for
+each year are **clearly** distinguishable (e.g., a single plot overlaying histograms is not OK).
 
 **Question 1**. What statements can you make about the distribution of payrolls conditioned on time based on these plots? Remember you can make statements in terms of central tendency, spread, etc.
 
