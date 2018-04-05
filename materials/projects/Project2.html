@@ -125,7 +125,7 @@ $(document).ready(function () {
 
 
 <p><strong>Posted:</strong> March 27, 2018<br />
-<strong>Last Updated:</strong> Apr 04, 2018<br />
+<strong>Last Updated:</strong> Apr 05, 2018<br />
 <strong>Due:</strong> April 6, 2018</p>
 <p>In this project you will apply your data wrangling and exploratory data analysis skills to baseball data. In particular, we want to know how well did Moneyball work for the Oakland A’s. Was it worthy of a movie?</p>
 <div class="figure">
@@ -165,6 +165,7 @@ $(document).ready(function () {
 <h1>Wrangling</h1>
 <p>The data you need to answer these questions is in the <code>Salaries</code> and <code>Teams</code> tables of the database.</p>
 <p><strong>Problem 1</strong> Using SQL compute a relation containing the total payroll and winning percentage (number of wins / number of games * 100) for each team (that is, for each <code>teamID</code> and <code>yearID</code> combination). You should include other columns that will help when performing EDA later on (e.g., franchise ids, number of wins, number of games).</p>
+<p><strong>Note:</strong> We will only use data for years 1990-2014 (inclusive) for the project. You can filter entities in your SQL query for Problem 1, or later when you use the result of this query below.</p>
 <p>As in HW2 you will write your query inside an Rmarkdown document. You can use something like this in your Rmarkdown:</p>
 <pre><code>```{r connect_db}
 db &lt;- DBI::dbConnect(RSQLite::SQLite(), &quot;lahman2016.sqlite&quot;)
@@ -190,7 +191,7 @@ payroll_df %&gt;%
 <h2>Payroll distribution</h2>
 <p><strong>Problem 2</strong>. Write code to produce a plot (or plots) that illustrate the distribution of payrolls across teams conditioned on time (from 1990-2014). Note: you may create a single plot as long as the distributions for each year are <strong>clearly</strong> distinguishable (e.g., a single plot overlaying histograms is not OK).</p>
 <p><strong>Question 1</strong>. What statements can you make about the distribution of payrolls conditioned on time based on these plots? Remember you can make statements in terms of central tendency, spread, etc.</p>
-<p><strong>Problem 3</strong>. Write code to produce plots that specifically show at least one of the statements you made in Question 1. For example, if you make a statement that there is a trend for payrolls to decrease over time, make a plot of a statistic for central tendency (e.g., mean payroll) vs. time to show that specficially.</p>
+<p><strong>Problem 3</strong>. Write code to produce a plot (or plots) that specifically show at least one of the statements you made in Question 1. For example, if you make a statement that there is a trend for payrolls to decrease over time, make a plot of a statistic for central tendency (e.g., mean payroll) vs. time to show that specifically.</p>
 </div>
 <div id="correlation-between-payroll-and-winning-percentage" class="section level2">
 <h2>Correlation between payroll and winning percentage</h2>
