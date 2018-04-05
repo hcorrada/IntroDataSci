@@ -56,6 +56,8 @@ The data you need to answer these questions is in the `Salaries` and `Teams` tab
 
 **Problem 1** Using SQL compute a relation containing the total payroll and winning percentage (number of wins / number of games * 100) for each team (that is, for each `teamID` and `yearID` combination). You should include other columns that will help when performing EDA later on (e.g., franchise ids, number of wins, number of games).
 
+**Note:** We will only use data for years 1990-2014 (inclusive) for the project. You can filter entities in your SQL query for Problem 1, or later when you use the result of this query below.
+
 As in HW2 you will write your query inside an Rmarkdown document. You can use something like this in your Rmarkdown:
 
 ```{r echo=FALSE, comment=""}
@@ -78,7 +80,7 @@ each year are **clearly** distinguishable (e.g., a single plot overlaying histog
 
 **Question 1**. What statements can you make about the distribution of payrolls conditioned on time based on these plots? Remember you can make statements in terms of central tendency, spread, etc.
 
-**Problem 3**. Write code to produce plots that specifically show at least one of the statements you made in Question 1. For example, if you make a statement that there is a trend for payrolls to decrease over time, make a plot of a statistic for central tendency (e.g., mean payroll) vs. time to show that specficially.
+**Problem 3**. Write code to produce a plot (or plots) that specifically show at least one of the statements you made in Question 1. For example, if you make a statement that there is a trend for payrolls to decrease over time, make a plot of a statistic for central tendency (e.g., mean payroll) vs. time to show that specifically.
 
 ## Correlation between payroll and winning percentage
 
