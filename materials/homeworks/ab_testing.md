@@ -60,7 +60,7 @@ probability in this case is different since $p_A = 0.75$.
 
 (a) What are the values of $\mathrm{E} \overline{X}$ and $\mathrm{Var}(\overline{X})$ under the null hypothesis in this case.
 
-(b) Based on the CLT approximation, compute $p(\overline{X} \hat{p}_B)$ under the null hypothesis. 
+(b) Based on the CLT approximation, compute $p(\overline{X} > \hat{p}_B)$ under the null hypothesis. 
 
 (c) Should you reject the null hypothesis $p_B \leq 0.75$? Why?
 
