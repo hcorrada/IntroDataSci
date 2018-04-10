@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Lecture Notes: Introduction to Data Science</title>
+  <meta name="description" content="Lecture Notes: Introduction to Data Science">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Lecture Notes: Introduction to Data Science" />
+  
+  
+  
+
+<meta name="author" content="Héctor Corrada Bravo">
+
+
+<meta name="date" content="2018-04-10">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="linear-models-for-classification.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="http://bit.ly/hcb-ids">CMSC320 Intro. Data Science</a></li>
+<li><a href="http://www.hcbravo.org">Hector Corrada Bravo</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preamble</a></li>
+<li class="chapter" data-level="2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html"><i class="fa fa-check"></i><b>2</b> Introduction and Overview</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#what-is-data-science"><i class="fa fa-check"></i><b>2.1</b> What is Data Science?</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data"><i class="fa fa-check"></i><b>2.1.1</b> Data</a></li>
+<li class="chapter" data-level="2.1.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#specific-questions"><i class="fa fa-check"></i><b>2.1.2</b> Specific Questions</a></li>
+<li class="chapter" data-level="2.1.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#interdisciplinary-activities"><i class="fa fa-check"></i><b>2.1.3</b> Interdisciplinary Activities</a></li>
+<li class="chapter" data-level="2.1.4" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data-centric-artifacts-and-applications"><i class="fa fa-check"></i><b>2.1.4</b> Data-Centric Artifacts and Applications</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#why-data-science"><i class="fa fa-check"></i><b>2.2</b> Why Data Science?</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data-science-in-society"><i class="fa fa-check"></i><b>2.3</b> Data Science in Society</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#course-organization"><i class="fa fa-check"></i><b>2.4</b> Course Organization</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#general-workflow"><i class="fa fa-check"></i><b>2.5</b> General Workflow</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#defining-the-goal"><i class="fa fa-check"></i><b>2.5.1</b> Defining the Goal</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#data-collection-and-management"><i class="fa fa-check"></i><b>2.5.2</b> Data Collection and Management</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#modeling"><i class="fa fa-check"></i><b>2.5.3</b> Modeling</a></li>
+<li class="chapter" data-level="2.5.4" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#model-evaluation"><i class="fa fa-check"></i><b>2.5.4</b> Model Evaluation</a></li>
+<li class="chapter" data-level="2.5.5" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#presentation"><i class="fa fa-check"></i><b>2.5.5</b> Presentation</a></li>
+<li class="chapter" data-level="2.5.6" data-path="introduction-and-overview.html"><a href="introduction-and-overview.html#deployment"><i class="fa fa-check"></i><b>2.5.6</b> Deployment</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html"><i class="fa fa-check"></i><b>3</b> An Illustrative Analysis</a><ul>
+<li class="chapter" data-level="3.1" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#gathering-data"><i class="fa fa-check"></i><b>3.1</b> Gathering data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#movie-ratings"><i class="fa fa-check"></i><b>3.1.1</b> Movie ratings</a></li>
+<li class="chapter" data-level="3.1.2" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#movie-budgets-and-revenue"><i class="fa fa-check"></i><b>3.1.2</b> Movie budgets and revenue</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#manipulating-the-data"><i class="fa fa-check"></i><b>3.2</b> Manipulating the data</a></li>
+<li class="chapter" data-level="3.3" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-the-data"><i class="fa fa-check"></i><b>3.3</b> Visualizing the data</a></li>
+<li class="chapter" data-level="3.4" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#modeling-data"><i class="fa fa-check"></i><b>3.4</b> Modeling data</a></li>
+<li class="chapter" data-level="3.5" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#visualizing-model-result"><i class="fa fa-check"></i><b>3.5</b> Visualizing model result</a></li>
+<li class="chapter" data-level="3.6" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#abstracting-the-analysis"><i class="fa fa-check"></i><b>3.6</b> Abstracting the analysis</a></li>
+<li class="chapter" data-level="3.7" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#making-analyses-accessible"><i class="fa fa-check"></i><b>3.7</b> Making analyses accessible</a></li>
+<li class="chapter" data-level="3.8" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#summary"><i class="fa fa-check"></i><b>3.8</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the R Data Science Toolbox</a><ul>
+<li class="chapter" data-level="4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1</b> Some history</a></li>
+<li class="chapter" data-level="4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.2</b> Setting up R</a></li>
+<li class="chapter" data-level="4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.3</b> Setting up Rstudio</a></li>
+<li class="chapter" data-level="4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.4</b> A first look at Rstudio</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.4.1</b> Interactive Console</a></li>
+<li class="chapter" data-level="4.4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.4.2</b> Data Viewer</a></li>
+<li class="chapter" data-level="4.4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.4.3</b> Names, values and functions</a></li>
+<li class="chapter" data-level="4.4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.4.4</b> Plotting</a></li>
+<li class="chapter" data-level="4.4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.4.5</b> Editor</a></li>
+<li class="chapter" data-level="4.4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.4.6</b> Files viewer</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.5</b> R packages</a></li>
+<li class="chapter" data-level="4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.6</b> Additional R resources</a></li>
+<li class="chapter" data-level="4.7" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.7</b> Literate Programming</a></li>
+<li class="chapter" data-level="4.8" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#finishing-your-setup"><i class="fa fa-check"></i><b>4.8</b> Finishing your setup</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html"><i class="fa fa-check"></i>(Part) Data representation modeling, ingestion and cleaning</a><ul>
+<li class="chapter" data-level="4.9" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#a-data-analysis-to-get-us-going"><i class="fa fa-check"></i><b>4.9</b> A data analysis to get us going</a></li>
+<li class="chapter" data-level="4.10" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#getting-data"><i class="fa fa-check"></i><b>4.10</b> Getting data</a><ul>
+<li class="chapter" data-level="4.10.1" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#names-values-and-functions-1"><i class="fa fa-check"></i><b>4.10.1</b> Names, values and functions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.11" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#entities-and-attributes"><i class="fa fa-check"></i><b>4.11</b> Entities and attributes</a></li>
+<li class="chapter" data-level="4.12" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#categorical-attributes"><i class="fa fa-check"></i><b>4.12</b> Categorical attributes</a><ul>
+<li class="chapter" data-level="4.12.1" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#factors-in-r"><i class="fa fa-check"></i><b>4.12.1</b> Factors in R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.13" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#discrete-numeric-attributes"><i class="fa fa-check"></i><b>4.13</b> Discrete numeric attributes</a></li>
+<li class="chapter" data-level="4.14" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#continuous-numeric-data"><i class="fa fa-check"></i><b>4.14</b> Continuous numeric data</a></li>
+<li class="chapter" data-level="4.15" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#other-examples"><i class="fa fa-check"></i><b>4.15</b> Other examples</a></li>
+<li class="chapter" data-level="4.16" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#other-important-datatypes"><i class="fa fa-check"></i><b>4.16</b> Other important datatypes</a></li>
+<li class="chapter" data-level="4.17" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#units"><i class="fa fa-check"></i><b>4.17</b> Units</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html"><i class="fa fa-check"></i><b>5</b> Principles: Basic Operations</a><ul>
+<li class="chapter" data-level="5.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-attributes"><i class="fa fa-check"></i><b>5.1</b> Operations that select attributes</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#select"><i class="fa fa-check"></i><b>5.1.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="5.1.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#rename"><i class="fa fa-check"></i><b>5.1.2</b> <code>rename</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-entities"><i class="fa fa-check"></i><b>5.2</b> Operations that select entities</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#slice"><i class="fa fa-check"></i><b>5.2.1</b> <code>slice</code></a></li>
+<li class="chapter" data-level="5.2.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#filter"><i class="fa fa-check"></i><b>5.2.2</b> <code>filter</code></a></li>
+<li class="chapter" data-level="5.2.3" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#sample_n-and-sample_frac"><i class="fa fa-check"></i><b>5.2.3</b> <code>sample_n</code> and <code>sample_frac</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#pipelines-of-operations"><i class="fa fa-check"></i><b>5.3</b> Pipelines of operations</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="principles-more-operations.html"><a href="principles-more-operations.html"><i class="fa fa-check"></i><b>6</b> Principles: More Operations</a><ul>
+<li class="chapter" data-level="6.1" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-sort-entities"><i class="fa fa-check"></i><b>6.1</b> Operations that sort entities</a></li>
+<li class="chapter" data-level="6.2" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-create-new-attributes"><i class="fa fa-check"></i><b>6.2</b> Operations that create new attributes</a></li>
+<li class="chapter" data-level="6.3" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-summarize-attribute-values-over-entities"><i class="fa fa-check"></i><b>6.3</b> Operations that summarize attribute values over entities</a></li>
+<li class="chapter" data-level="6.4" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-group-entities"><i class="fa fa-check"></i><b>6.4</b> Operations that group entities</a></li>
+<li class="chapter" data-level="6.5" data-path="principles-more-operations.html"><a href="principles-more-operations.html#vectors"><i class="fa fa-check"></i><b>6.5</b> Vectors</a></li>
+<li class="chapter" data-level="6.6" data-path="principles-more-operations.html"><a href="principles-more-operations.html#attributes-as-vectors"><i class="fa fa-check"></i><b>6.6</b> Attributes as vectors</a></li>
+<li class="chapter" data-level="6.7" data-path="principles-more-operations.html"><a href="principles-more-operations.html#functions"><i class="fa fa-check"></i><b>6.7</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html"><i class="fa fa-check"></i><b>7</b> Basic plotting with <code>ggplot</code></a><ul>
+<li class="chapter" data-level="7.1" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#plot-construction-details"><i class="fa fa-check"></i><b>7.1</b> Plot Construction Details</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#mappings"><i class="fa fa-check"></i><b>7.1.1</b> Mappings</a></li>
+<li class="chapter" data-level="7.1.2" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#representations"><i class="fa fa-check"></i><b>7.1.2</b> Representations</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#frequently-used-plots"><i class="fa fa-check"></i><b>7.2</b> Frequently Used Plots</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#scatter-plot"><i class="fa fa-check"></i><b>7.2.1</b> Scatter plot</a></li>
+<li class="chapter" data-level="7.2.2" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#bar-graph"><i class="fa fa-check"></i><b>7.2.2</b> Bar graph</a></li>
+<li class="chapter" data-level="7.2.3" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#histogram"><i class="fa fa-check"></i><b>7.2.3</b> Histogram</a></li>
+<li class="chapter" data-level="7.2.4" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#boxplot"><i class="fa fa-check"></i><b>7.2.4</b> Boxplot</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="brief-introduction-to-rmarkdown.html"><a href="brief-introduction-to-rmarkdown.html"><i class="fa fa-check"></i><b>8</b> Brief Introduction to Rmarkdown</a></li>
+<li class="chapter" data-level="9" data-path="best-practices-for-data-science-projects.html"><a href="best-practices-for-data-science-projects.html"><i class="fa fa-check"></i><b>9</b> Best Practices for Data Science Projects</a></li>
+<li class="chapter" data-level="10" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html"><i class="fa fa-check"></i><b>10</b> Tidy Data I: The ER Model</a><ul>
+<li class="chapter" data-level="10.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#overview"><i class="fa fa-check"></i><b>10.1</b> Overview</a></li>
+<li class="chapter" data-level="10.2" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#the-entity-relationship-and-relational-models"><i class="fa fa-check"></i><b>10.2</b> The Entity-Relationship and Relational Models</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#formal-introduction-to-keys"><i class="fa fa-check"></i><b>10.2.1</b> Formal introduction to keys</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#tidy-data"><i class="fa fa-check"></i><b>10.3</b> Tidy Data</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html"><i class="fa fa-check"></i><b>11</b> SQL I: Single Table Queries</a><ul>
+<li class="chapter" data-level="11.1" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#group-by-and-summarize"><i class="fa fa-check"></i><b>11.1</b> Group-by and summarize</a></li>
+<li class="chapter" data-level="11.2" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#subqueries"><i class="fa fa-check"></i><b>11.2</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="two-table-operations.html"><a href="two-table-operations.html"><i class="fa fa-check"></i><b>12</b> Two-table operations</a><ul>
+<li class="chapter" data-level="12.1" data-path="two-table-operations.html"><a href="two-table-operations.html#left-join"><i class="fa fa-check"></i><b>12.1</b> Left Join</a></li>
+<li class="chapter" data-level="12.2" data-path="two-table-operations.html"><a href="two-table-operations.html#right-join"><i class="fa fa-check"></i><b>12.2</b> Right Join</a></li>
+<li class="chapter" data-level="12.3" data-path="two-table-operations.html"><a href="two-table-operations.html#inner-join"><i class="fa fa-check"></i><b>12.3</b> Inner Join</a></li>
+<li class="chapter" data-level="12.4" data-path="two-table-operations.html"><a href="two-table-operations.html#full-join"><i class="fa fa-check"></i><b>12.4</b> Full Join</a></li>
+<li class="chapter" data-level="12.5" data-path="two-table-operations.html"><a href="two-table-operations.html#join-conditions"><i class="fa fa-check"></i><b>12.5</b> Join conditions</a></li>
+<li class="chapter" data-level="12.6" data-path="two-table-operations.html"><a href="two-table-operations.html#filtering-joins"><i class="fa fa-check"></i><b>12.6</b> Filtering Joins</a></li>
+<li class="chapter" data-level="12.7" data-path="two-table-operations.html"><a href="two-table-operations.html#sql-constructs-multi-table-queries"><i class="fa fa-check"></i><b>12.7</b> SQL Constructs: Multi-table Queries</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html"><i class="fa fa-check"></i><b>13</b> SQL System Constructs</a><ul>
+<li class="chapter" data-level="13.1" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#sql-as-a-data-definition-language"><i class="fa fa-check"></i><b>13.1</b> SQL as a Data Definition Language</a></li>
+<li class="chapter" data-level="13.2" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#set-operations-and-comparisons"><i class="fa fa-check"></i><b>13.2</b> Set Operations and Comparisons</a></li>
+<li class="chapter" data-level="13.3" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#views"><i class="fa fa-check"></i><b>13.3</b> Views</a></li>
+<li class="chapter" data-level="13.4" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#nulls"><i class="fa fa-check"></i><b>13.4</b> NULLs</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="db-parting-shots.html"><a href="db-parting-shots.html"><i class="fa fa-check"></i><b>14</b> DB Parting Shots</a><ul>
+<li class="chapter" data-level="14.1" data-path="db-parting-shots.html"><a href="db-parting-shots.html#database-query-optimization"><i class="fa fa-check"></i><b>14.1</b> Database Query Optimization</a></li>
+<li class="chapter" data-level="14.2" data-path="db-parting-shots.html"><a href="db-parting-shots.html#json-data-model"><i class="fa fa-check"></i><b>14.2</b> JSON Data Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="ingesting-data.html"><a href="ingesting-data.html"><i class="fa fa-check"></i><b>15</b> Ingesting data</a><ul>
+<li class="chapter" data-level="15.1" data-path="ingesting-data.html"><a href="ingesting-data.html#structured-ingestion"><i class="fa fa-check"></i><b>15.1</b> Structured ingestion</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="ingesting-data.html"><a href="ingesting-data.html#csv-files-and-similar"><i class="fa fa-check"></i><b>15.1.1</b> CSV files (and similar)</a></li>
+<li class="chapter" data-level="15.1.2" data-path="ingesting-data.html"><a href="ingesting-data.html#excel-spreadsheets"><i class="fa fa-check"></i><b>15.1.2</b> Excel spreadsheets</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping"><i class="fa fa-check"></i><b>15.2</b> Scraping</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping-from-dirty-html-tables"><i class="fa fa-check"></i><b>15.2.1</b> Scraping from dirty HTML tables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="tidying-data.html"><a href="tidying-data.html"><i class="fa fa-check"></i><b>16</b> Tidying data</a><ul>
+<li class="chapter" data-level="16.1" data-path="tidying-data.html"><a href="tidying-data.html#tidy-data-1"><i class="fa fa-check"></i><b>16.1</b> Tidy Data</a></li>
+<li class="chapter" data-level="16.2" data-path="tidying-data.html"><a href="tidying-data.html#common-problems-in-messy-data"><i class="fa fa-check"></i><b>16.2</b> Common problems in messy data</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="tidying-data.html"><a href="tidying-data.html#headers-as-values"><i class="fa fa-check"></i><b>16.2.1</b> Headers as values</a></li>
+<li class="chapter" data-level="16.2.2" data-path="tidying-data.html"><a href="tidying-data.html#multiple-variables-in-one-column"><i class="fa fa-check"></i><b>16.2.2</b> Multiple variables in one column</a></li>
+<li class="chapter" data-level="16.2.3" data-path="tidying-data.html"><a href="tidying-data.html#variables-stored-in-both-rows-and-columns"><i class="fa fa-check"></i><b>16.2.3</b> Variables stored in both rows and columns</a></li>
+<li class="chapter" data-level="16.2.4" data-path="tidying-data.html"><a href="tidying-data.html#multiple-types-in-one-table"><i class="fa fa-check"></i><b>16.2.4</b> Multiple types in one table</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="text-and-dates.html"><a href="text-and-dates.html"><i class="fa fa-check"></i><b>17</b> Text and Dates</a><ul>
+<li class="chapter" data-level="17.1" data-path="text-and-dates.html"><a href="text-and-dates.html#text"><i class="fa fa-check"></i><b>17.1</b> Text</a><ul>
+<li class="chapter" data-level="17.1.1" data-path="text-and-dates.html"><a href="text-and-dates.html#string-operations"><i class="fa fa-check"></i><b>17.1.1</b> String operations</a></li>
+<li class="chapter" data-level="17.1.2" data-path="text-and-dates.html"><a href="text-and-dates.html#regular-expressions"><i class="fa fa-check"></i><b>17.1.2</b> Regular expressions</a></li>
+<li class="chapter" data-level="17.1.3" data-path="text-and-dates.html"><a href="text-and-dates.html#tools-using-regular-expressions"><i class="fa fa-check"></i><b>17.1.3</b> Tools using regular expressions</a></li>
+<li class="chapter" data-level="17.1.4" data-path="text-and-dates.html"><a href="text-and-dates.html#extracting-attributes-from-text"><i class="fa fa-check"></i><b>17.1.4</b> Extracting attributes from text</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>17.2</b> Handling dates</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>18</b> Entity Resolution and Record Linkage</a></li>
+<li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a><ul>
+<li class="chapter" data-level="18.0.1" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>18.0.1</b> EDA (Exploratory Data Analysis)</a></li>
+<li class="chapter" data-level="18.1" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#visualization-of-single-variables"><i class="fa fa-check"></i><b>18.1</b> Visualization of single variables</a><ul>
+<li class="chapter" data-level="18.1.1" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#visualization-of-pairs-of-variables"><i class="fa fa-check"></i><b>18.1.1</b> Visualization of pairs of variables</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#eda-with-the-grammar-of-graphics"><i class="fa fa-check"></i><b>18.2</b> EDA with the grammar of graphics</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#other-aesthetics"><i class="fa fa-check"></i><b>18.2.1</b> Other aesthetics</a></li>
+<li class="chapter" data-level="18.2.2" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#faceting"><i class="fa fa-check"></i><b>18.2.2</b> Faceting</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html"><i class="fa fa-check"></i><b>19</b> Exploratory Data Analysis: Summary Statistics</a><ul>
+<li class="chapter" data-level="19.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#range"><i class="fa fa-check"></i><b>19.1</b> Range</a></li>
+<li class="chapter" data-level="19.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#central-tendency"><i class="fa fa-check"></i><b>19.2</b> Central Tendency</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#derivation-of-the-mean-as-central-tendency-statistic"><i class="fa fa-check"></i><b>19.2.1</b> Derivation of the mean as central tendency statistic</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread"><i class="fa fa-check"></i><b>19.3</b> Spread</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#variance"><i class="fa fa-check"></i><b>19.3.1</b> Variance</a></li>
+<li class="chapter" data-level="19.3.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread-estimates-using-rank-statistics"><i class="fa fa-check"></i><b>19.3.2</b> Spread estimates using rank statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#outliers"><i class="fa fa-check"></i><b>19.4</b> Outliers</a></li>
+<li class="chapter" data-level="19.5" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#skew"><i class="fa fa-check"></i><b>19.5</b> Skew</a></li>
+<li class="chapter" data-level="19.6" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#covariance-and-correlation"><i class="fa fa-check"></i><b>19.6</b> Covariance and correlation</a></li>
+<li class="chapter" data-level="19.7" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#postscript-finding-maximaminima-using-derivatives"><i class="fa fa-check"></i><b>19.7</b> Postscript: Finding Maxima/Minima using Derivatives</a><ul>
+<li class="chapter" data-level="19.7.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#steps-to-find-maximaminima-of-function-fx"><i class="fa fa-check"></i><b>19.7.1</b> Steps to find Maxima/Minima of function <span class="math inline">\(f(x)\)</span></a></li>
+<li class="chapter" data-level="19.7.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#notes-on-finding-derivatives"><i class="fa fa-check"></i><b>19.7.2</b> Notes on Finding Derivatives</a></li>
+<li class="chapter" data-level="19.7.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#resources"><i class="fa fa-check"></i><b>19.7.3</b> Resources:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html"><i class="fa fa-check"></i><b>20</b> EDA: Data Transformations</a><ul>
+<li class="chapter" data-level="20.1" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#centering-and-scaling"><i class="fa fa-check"></i><b>20.1</b> Centering and scaling</a></li>
+<li class="chapter" data-level="20.2" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#treating-categorical-variables-as-numeric"><i class="fa fa-check"></i><b>20.2</b> Treating categorical variables as numeric</a><ul>
+<li class="chapter" data-level="20.2.1" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#discretizing-continuous-values."><i class="fa fa-check"></i><b>20.2.1</b> Discretizing continuous values.</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#skewed-data"><i class="fa fa-check"></i><b>20.3</b> Skewed Data</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html"><i class="fa fa-check"></i><b>21</b> EDA: Handling Missing Data</a><ul>
+<li class="chapter" data-level="21.0.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>21.0.1</b> Dealing with data missing at random</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html"><i class="fa fa-check"></i>(Part) Statistical Learning</a><ul>
+<li class="chapter" data-level="21.1" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#variation-randomness-and-stochasticity"><i class="fa fa-check"></i><b>21.1</b> Variation, randomness and stochasticity</a><ul>
+<li class="chapter" data-level="21.1.1" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#random-variables"><i class="fa fa-check"></i><b>21.1.1</b> Random variables</a></li>
+</ul></li>
+<li class="chapter" data-level="21.2" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#discrete-probability-distributions"><i class="fa fa-check"></i><b>21.2</b> (Discrete) Probability distributions</a><ul>
+<li class="chapter" data-level="21.2.1" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#example-the-oracle-of-tweet"><i class="fa fa-check"></i><b>21.2.1</b> Example The oracle of TWEET</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#expectation"><i class="fa fa-check"></i><b>21.3</b> Expectation</a></li>
+<li class="chapter" data-level="21.4" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#estimation"><i class="fa fa-check"></i><b>21.4</b> Estimation</a><ul>
+<li class="chapter" data-level="21.4.1" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#law-of-large-numbers-lln"><i class="fa fa-check"></i><b>21.4.1</b> Law of large numbers (LLN)</a></li>
+<li class="chapter" data-level="21.4.2" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#central-limit-theorem-clt"><i class="fa fa-check"></i><b>21.4.2</b> Central Limit Theorem (CLT)</a></li>
+</ul></li>
+<li class="chapter" data-level="21.5" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#the-normal-distribution"><i class="fa fa-check"></i><b>21.5</b> The normal distribution</a><ul>
+<li class="chapter" data-level="21.5.1" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#clt-continued"><i class="fa fa-check"></i><b>21.5.1</b> CLT continued</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>22</b> Experiment design and hypothesis testing</a><ul>
+<li class="chapter" data-level="22.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#inference"><i class="fa fa-check"></i><b>22.1</b> Inference</a><ul>
+<li class="chapter" data-level="22.1.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>22.1.1</b> Hypothesis testing</a></li>
+</ul></li>
+<li class="chapter" data-level="22.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#ab-testing"><i class="fa fa-check"></i><b>22.2</b> A/B Testing</a></li>
+<li class="chapter" data-level="22.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#summary-1"><i class="fa fa-check"></i><b>22.3</b> Summary</a></li>
+<li class="chapter" data-level="22.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#probability-distributions"><i class="fa fa-check"></i><b>22.4</b> Probability Distributions</a><ul>
+<li class="chapter" data-level="22.4.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#bernoulli"><i class="fa fa-check"></i><b>22.4.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="22.4.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#binomial"><i class="fa fa-check"></i><b>22.4.2</b> Binomial</a></li>
+<li class="chapter" data-level="22.4.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#normal-gaussian-distribution"><i class="fa fa-check"></i><b>22.4.3</b> Normal (Gaussian) distribution</a></li>
+<li class="chapter" data-level="22.4.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#distributions-in-r"><i class="fa fa-check"></i><b>22.4.4</b> Distributions in R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="multivariate-probability.html"><a href="multivariate-probability.html"><i class="fa fa-check"></i><b>23</b> Multivariate probability</a><ul>
+<li class="chapter" data-level="23.1" data-path="multivariate-probability.html"><a href="multivariate-probability.html#joint-and-conditional-probability"><i class="fa fa-check"></i><b>23.1</b> Joint and conditional probability</a></li>
+<li class="chapter" data-level="23.2" data-path="multivariate-probability.html"><a href="multivariate-probability.html#bayes-rule"><i class="fa fa-check"></i><b>23.2</b> Bayes’ Rule</a></li>
+<li class="chapter" data-level="23.3" data-path="multivariate-probability.html"><a href="multivariate-probability.html#conditional-expectation"><i class="fa fa-check"></i><b>23.3</b> Conditional expectation</a></li>
+<li class="chapter" data-level="23.4" data-path="multivariate-probability.html"><a href="multivariate-probability.html#maximum-likelihood"><i class="fa fa-check"></i><b>23.4</b> Maximum likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="part-machine-learning.html"><a href="part-machine-learning.html"><i class="fa fa-check"></i>(Part) Machine Learning</a><ul>
+<li class="chapter" data-level="23.5" data-path="part-machine-learning.html"><a href="part-machine-learning.html#motivating-example-credit-analysis"><i class="fa fa-check"></i><b>23.5</b> Motivating Example: Credit Analysis</a></li>
+<li class="chapter" data-level="23.6" data-path="part-machine-learning.html"><a href="part-machine-learning.html#from-data-to-feature-vectors"><i class="fa fa-check"></i><b>23.6</b> From data to feature vectors</a></li>
+<li class="chapter" data-level="23.7" data-path="part-machine-learning.html"><a href="part-machine-learning.html#technical-notation"><i class="fa fa-check"></i><b>23.7</b> Technical notation</a></li>
+<li class="chapter" data-level="23.8" data-path="part-machine-learning.html"><a href="part-machine-learning.html#geometry-and-distances"><i class="fa fa-check"></i><b>23.8</b> Geometry and Distances</a><ul>
+<li class="chapter" data-level="23.8.1" data-path="part-machine-learning.html"><a href="part-machine-learning.html#k-nearest-neighbor-classification"><i class="fa fa-check"></i><b>23.8.1</b> K-nearest neighbor classification</a></li>
+<li class="chapter" data-level="23.8.2" data-path="part-machine-learning.html"><a href="part-machine-learning.html#the-importance-of-transformations"><i class="fa fa-check"></i><b>23.8.2</b> The importance of transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="23.9" data-path="part-machine-learning.html"><a href="part-machine-learning.html#quick-vector-algebra-review"><i class="fa fa-check"></i><b>23.9</b> Quick vector algebra review</a><ul>
+<li class="chapter" data-level="23.9.1" data-path="part-machine-learning.html"><a href="part-machine-learning.html#quiz"><i class="fa fa-check"></i><b>23.9.1</b> Quiz</a></li>
+</ul></li>
+<li class="chapter" data-level="23.10" data-path="part-machine-learning.html"><a href="part-machine-learning.html#the-curse-of-dimensionality"><i class="fa fa-check"></i><b>23.10</b> The curse of dimensionality</a></li>
+<li class="chapter" data-level="23.11" data-path="part-machine-learning.html"><a href="part-machine-learning.html#summary-2"><i class="fa fa-check"></i><b>23.11</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="linear-regression.html"><a href="linear-regression.html"><i class="fa fa-check"></i><b>24</b> Linear Regression</a><ul>
+<li class="chapter" data-level="24.1" data-path="linear-regression.html"><a href="linear-regression.html#simple-regression"><i class="fa fa-check"></i><b>24.1</b> Simple Regression</a></li>
+<li class="chapter" data-level="24.2" data-path="linear-regression.html"><a href="linear-regression.html#inference-1"><i class="fa fa-check"></i><b>24.2</b> Inference</a><ul>
+<li class="chapter" data-level="24.2.1" data-path="linear-regression.html"><a href="linear-regression.html#confidence-interval"><i class="fa fa-check"></i><b>24.2.1</b> Confidence Interval</a></li>
+<li class="chapter" data-level="24.2.2" data-path="linear-regression.html"><a href="linear-regression.html#the-t-statistic-and-the-t-distribution"><i class="fa fa-check"></i><b>24.2.2</b> The <span class="math inline">\(t\)</span>-statistic and the <span class="math inline">\(t\)</span>-distribution</a></li>
+<li class="chapter" data-level="24.2.3" data-path="linear-regression.html"><a href="linear-regression.html#global-fit"><i class="fa fa-check"></i><b>24.2.3</b> Global Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="24.3" data-path="linear-regression.html"><a href="linear-regression.html#some-important-technicalities"><i class="fa fa-check"></i><b>24.3</b> Some important technicalities</a></li>
+<li class="chapter" data-level="24.4" data-path="linear-regression.html"><a href="linear-regression.html#issues-with-linear-regression"><i class="fa fa-check"></i><b>24.4</b> Issues with linear regression</a><ul>
+<li class="chapter" data-level="24.4.1" data-path="linear-regression.html"><a href="linear-regression.html#non-linearity-of-outcome-predictor-relationship"><i class="fa fa-check"></i><b>24.4.1</b> Non-linearity of outcome-predictor relationship</a></li>
+<li class="chapter" data-level="24.4.2" data-path="linear-regression.html"><a href="linear-regression.html#correlated-error"><i class="fa fa-check"></i><b>24.4.2</b> Correlated Error</a></li>
+<li class="chapter" data-level="24.4.3" data-path="linear-regression.html"><a href="linear-regression.html#non-constant-variance"><i class="fa fa-check"></i><b>24.4.3</b> Non-constant variance</a></li>
+</ul></li>
+<li class="chapter" data-level="24.5" data-path="linear-regression.html"><a href="linear-regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>24.5</b> Multiple linear regression</a><ul>
+<li class="chapter" data-level="24.5.1" data-path="linear-regression.html"><a href="linear-regression.html#estimation-in-multivariate-regression"><i class="fa fa-check"></i><b>24.5.1</b> Estimation in multivariate regression</a></li>
+<li class="chapter" data-level="24.5.2" data-path="linear-regression.html"><a href="linear-regression.html#example-contd"><i class="fa fa-check"></i><b>24.5.2</b> Example (cont’d)</a></li>
+<li class="chapter" data-level="24.5.3" data-path="linear-regression.html"><a href="linear-regression.html#statistical-statements-contd"><i class="fa fa-check"></i><b>24.5.3</b> Statistical statements (cont’d)</a></li>
+<li class="chapter" data-level="24.5.4" data-path="linear-regression.html"><a href="linear-regression.html#the-f-test"><i class="fa fa-check"></i><b>24.5.4</b> The F-test</a></li>
+<li class="chapter" data-level="24.5.5" data-path="linear-regression.html"><a href="linear-regression.html#categorical-predictors-contd"><i class="fa fa-check"></i><b>24.5.5</b> Categorical predictors (cont’d)</a></li>
+</ul></li>
+<li class="chapter" data-level="24.6" data-path="linear-regression.html"><a href="linear-regression.html#interactions-in-linear-models"><i class="fa fa-check"></i><b>24.6</b> Interactions in linear models</a><ul>
+<li class="chapter" data-level="24.6.1" data-path="linear-regression.html"><a href="linear-regression.html#additional-issues-with-linear-regression"><i class="fa fa-check"></i><b>24.6.1</b> Additional issues with linear regression</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html"><i class="fa fa-check"></i><b>25</b> Linear models for classification</a><ul>
+<li class="chapter" data-level="25.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#an-example-classification-problem"><i class="fa fa-check"></i><b>25.1</b> An example classification problem</a></li>
+<li class="chapter" data-level="25.2" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#why-not-linear-regression"><i class="fa fa-check"></i><b>25.2</b> Why not linear regression?</a></li>
+<li class="chapter" data-level="25.3" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classification-as-probability-estimation-problem"><i class="fa fa-check"></i><b>25.3</b> Classification as probability estimation problem</a></li>
+<li class="chapter" data-level="25.4" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#logistic-regression"><i class="fa fa-check"></i><b>25.4</b> Logistic regression</a><ul>
+<li class="chapter" data-level="25.4.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#exercises"><i class="fa fa-check"></i><b>25.4.1</b> Exercises</a></li>
+<li class="chapter" data-level="25.4.2" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#making-predictions"><i class="fa fa-check"></i><b>25.4.2</b> Making predictions</a></li>
+<li class="chapter" data-level="25.4.3" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#multiple-logistic-regression"><i class="fa fa-check"></i><b>25.4.3</b> Multiple logistic regression</a></li>
+<li class="chapter" data-level="25.4.4" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#exercise"><i class="fa fa-check"></i><b>25.4.4</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="25.5" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>25.5</b> Linear Discriminant Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="linear-discriminant-analysis-1.html"><a href="linear-discriminant-analysis-1.html"><i class="fa fa-check"></i><b>26</b> Linear Discriminant Analysis</a><ul>
+<li class="chapter" data-level="26.0.1" data-path="linear-discriminant-analysis-1.html"><a href="linear-discriminant-analysis-1.html#classifier-evaluation"><i class="fa fa-check"></i><b>26.0.1</b> Classifier evaluation</a></li>
+<li class="chapter" data-level="26.1" data-path="linear-discriminant-analysis-1.html"><a href="linear-discriminant-analysis-1.html#summary-3"><i class="fa fa-check"></i><b>26.1</b> Summary</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lecture Notes: Introduction to Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="linear-discriminant-analysis-1" class="section level1">
+<h1><span class="header-section-number">26</span> Linear Discriminant Analysis</h1>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-12-1.svg" width="1440" /></p>
+<p>We can “score” values of <code>balance</code> based on these estimates:</p>
+<p><span class="math display">\[
+f_k(x) = \frac{1}{\sqrt{2\pi}\sigma} \exp \left(-\frac{1}{2\sigma^2} (x-\mu_k)^2 \right)
+\]</span></p>
+<p>Remember, what we want is <strong>posterior class probability</strong> <span class="math inline">\(p(Y=k|X)\)</span>, for that we need to include the probability that we <em>observe</em> class <span class="math inline">\(k\)</span>. This is called <strong>prior class probability</strong>, denoted <span class="math inline">\(\pi_k\)</span>, means the proportion of times you expect people to default regardless of any other attribute. We can estimate from training data as the proportion of observations with label <span class="math inline">\(k\)</span>. Bayes’ Rule (or Theorem) gives us a way of computing <span class="math inline">\(P(Y=k|X)\)</span> using score <span class="math inline">\(f_k(x)\)</span> (from the class normal assumption) and prior <span class="math inline">\(\pi_k\)</span>:</p>
+<p><span class="math display">\[
+P(Y=k|X) = \frac{f_k(x) \pi_k}{\sum_l f_l(x) \pi_l}
+\]</span></p>
+<p>If data (conditioned by class) is distributed so that <span class="math inline">\(f_k\)</span> is the right probability function to use, then predicting the class that maximizes <span class="math inline">\(P(Y=k|X)\)</span> is the <strong>optimal</strong> thing to do. This is referred to the <em>Bayes classifier</em> (aka the Holy Grail of classification)</p>
+<div id="how-to-train-lda" class="section level4">
+<h4><span class="header-section-number">26.0.0.1</span> How to train LDA</h4>
+<p>Compute class means and squared error based on class mean</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_stats &lt;-<span class="st"> </span>Default <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(default) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">class_mean=</span><span class="kw">mean</span>(balance),
+         <span class="dt">squared_error=</span>(balance<span class="op">-</span>class_mean)<span class="op">^</span><span class="dv">2</span>) </code></pre></div>
+<p>Compute class sizes and sum of squared errors</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_stats &lt;-<span class="st"> </span>lda_stats <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">class_mean=</span><span class="kw">first</span>(class_mean),
+            <span class="dt">class_size=</span><span class="kw">n</span>(),
+            <span class="dt">sum_squares=</span><span class="kw">sum</span>(squared_error))</code></pre></div>
+<p>Compute class prior and variance (note same variance for both classes)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_stats &lt;-<span class="st"> </span>lda_stats <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">class_prior=</span>class_size<span class="op">/</span><span class="kw">sum</span>(class_size),
+         <span class="dt">sigma2=</span><span class="kw">sum</span>(sum_squares) <span class="op">/</span><span class="st"> </span>(<span class="kw">sum</span>(class_size) <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(default, class_mean, class_prior, sigma2)
+
+knitr<span class="op">::</span><span class="kw">kable</span>(lda_stats)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">default</th>
+<th align="right">class_mean</th>
+<th align="right">class_prior</th>
+<th align="right">sigma2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">No</td>
+<td align="right">803.9438</td>
+<td align="right">0.9667</td>
+<td align="right">205318.6</td>
+</tr>
+<tr class="even">
+<td align="left">Yes</td>
+<td align="right">1747.8217</td>
+<td align="right">0.0333</td>
+<td align="right">205318.6</td>
+</tr>
+</tbody>
+</table>
+<p>How do we predict with LDA? Predict <code>Yes</code> if <span class="math inline">\(P(Y=1|X) &gt; P(Y=0|X)\)</span></p>
+<p>Equivalently:</p>
+<p><span class="math display">\[
+\log{\frac{P(Y=1|X)}{P(Y=0|X)}} &gt; 0 \Rightarrow \\
+\log f_1(x) + \log \pi_1 &gt; \log f_0(x) + \log \pi_0
+\]</span></p>
+<p>This turns out to be a linear function of <span class="math inline">\(x\)</span>!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lda_log_ratio &lt;-<span class="st"> </span><span class="cf">function</span>(balance, lda_stats) {
+  n &lt;-<span class="st"> </span><span class="kw">length</span>(balance)
+  
+  <span class="co"># subtract class mean</span>
+  centered_balance &lt;-<span class="st"> </span><span class="kw">rep</span>(balance, <span class="dv">2</span>) <span class="op">-</span><span class="st"> </span><span class="kw">rep</span>(lda_stats<span class="op">$</span>class_mean, <span class="dt">each=</span>n)
+  
+  <span class="co"># scale by standard deviation</span>
+  scaled_balance &lt;-<span class="st"> </span>centered_balance <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(lda_stats<span class="op">$</span>sigma2[<span class="dv">1</span>])
+  
+  <span class="co"># compute log normal density and add log class prior</span>
+  lprobs &lt;-<span class="st"> </span><span class="kw">dnorm</span>(scaled_balance, <span class="dt">log=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">rep</span>(lda_stats<span class="op">$</span>class_prior, <span class="dt">each=</span>n))
+  
+  <span class="co"># compute log ratio of class probabilities</span>
+  lprobs &lt;-<span class="st"> </span><span class="kw">matrix</span>(lprobs, <span class="dt">nc=</span><span class="dv">2</span>)
+  <span class="kw">colnames</span>(lprobs) &lt;-<span class="st"> </span>lda_stats<span class="op">$</span>default
+  lprobs[,<span class="st">&quot;Yes&quot;</span>] <span class="op">-</span><span class="st"> </span>lprobs[,<span class="st">&quot;No&quot;</span>]
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_balance &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">3000</span>, <span class="dt">len=</span><span class="dv">100</span>)
+<span class="kw">plot</span>(test_balance, <span class="kw">lda_log_ratio</span>(test_balance, lda_stats),
+     <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Balance&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Log Probability Ratio&quot;</span>, <span class="dt">cex=</span><span class="fl">1.4</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-17-1.svg" width="1152" /></p>
+</div>
+<div id="classifier-evaluation" class="section level3">
+<h3><span class="header-section-number">26.0.1</span> Classifier evaluation</h3>
+<p>How do we determine how well classifiers are performing? One way is to compute the <em>error rate</em> of the classifier, the percent of mistakes it makes when predicting class</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
+lda_fit &lt;-<span class="st"> </span><span class="kw">lda</span>(default <span class="op">~</span><span class="st"> </span>balance, <span class="dt">data=</span>Default)
+lda_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(lda_fit, <span class="dt">data=</span>Default)
+<span class="kw">print</span>(<span class="kw">table</span>(<span class="dt">predicted=</span>lda_pred<span class="op">$</span>class, <span class="dt">observed=</span>Default<span class="op">$</span>default))</code></pre></div>
+<pre><code>##          observed
+## predicted   No  Yes
+##       No  9643  257
+##       Yes   24   76</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># error rate</span>
+<span class="kw">mean</span>(Default<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>lda_pred<span class="op">$</span>class) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></code></pre></div>
+<pre><code>## [1] 2.81</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># dummy error rate</span>
+<span class="kw">mean</span>(Default<span class="op">$</span>default <span class="op">!=</span><span class="st"> &quot;No&quot;</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></code></pre></div>
+<pre><code>## [1] 3.33</code></pre>
+<p>In this case, it would seem that LDA performs well. But in fact, we can get similar error rate by always predicting “no default”. We can see from this table that LDA errors are not symmetric. It’s most common error is that <em>it misses true defaults</em>.</p>
+<p>We need a more precise language to describe classification mistakes:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right"></th>
+<th align="left">True Class +</th>
+<th>True Class -</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">Predicted Class +</td>
+<td align="left">True Positive (TP)</td>
+<td>False Positive (FP)</td>
+<td>P*</td>
+</tr>
+<tr class="even">
+<td align="right">Predicted Class -</td>
+<td align="left">False Negative (FN)</td>
+<td>True Negative (TN)</td>
+<td>N*</td>
+</tr>
+<tr class="odd">
+<td align="right">Total</td>
+<td align="left">P</td>
+<td>N</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Using these we can define statistics that describe classifier performance</p>
+<table style="width:100%;">
+<colgroup>
+<col width="34%" />
+<col width="13%" />
+<col width="52%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Name</th>
+<th align="left">Definition</th>
+<th>Synonyms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">False Positive Rate (FPR)</td>
+<td align="left">FP / N</td>
+<td>Type-I error, 1-Specificity</td>
+</tr>
+<tr class="even">
+<td align="right">True Positive Rate (TPR)</td>
+<td align="left">TP / P</td>
+<td>1 - Type-II error, power, sensitivity, <strong>recall</strong></td>
+</tr>
+<tr class="odd">
+<td align="right">Positive Predictive Value (PPV)</td>
+<td align="left">TP / P*</td>
+<td><strong>precision</strong>, 1-false discovery proportion</td>
+</tr>
+<tr class="even">
+<td align="right">Negative Predicitve Value (NPV)</td>
+<td align="left">FN / N*</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>In the credit default case we may want to increase <strong>TPR</strong> (recall, make sure we catch all defaults) at the expense of <strong>FPR</strong> (1-Specificity, clients we lose because we think they will default)</p>
+<p>This leads to a natural question: Can we adjust our classifiers TPR and FPR?</p>
+<p>Remember we are classifying <code>Yes</code> if</p>
+<p><span class="math display">\[
+\log \frac{P(Y=\mathtt{Yes}|X)}{P(Y=\mathtt{No}|X)} &gt; 0 \Rightarrow \\
+P(Y=\mathtt{Yes}|X) &gt; 0.5
+\]</span></p>
+<p>What would happen if we use <span class="math inline">\(P(Y=\mathtt{Yes}|X) &gt; 0.2\)</span>?</p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-19-1.svg" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ROCR)
+pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(lda_pred<span class="op">$</span>posterior[,<span class="st">&quot;Yes&quot;</span>], Default<span class="op">$</span>default)
+
+<span class="kw">layout</span>(<span class="kw">cbind</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>))
+<span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;fpr&quot;</span>))</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-20-1.svg" width="1152" /></p>
+<p>A way of describing the TPR and FPR tradeoff is by using the <strong>ROC curve</strong> (Receiver Operating Characteristic) and the <strong>AUROC</strong> (area under the ROC)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">auc &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)<span class="op">@</span>y.values)
+<span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>), 
+     <span class="dt">main=</span><span class="kw">paste</span>(<span class="st">&quot;LDA AUROC=&quot;</span>, <span class="kw">round</span>(auc, <span class="dv">2</span>)), 
+     <span class="dt">lwd=</span><span class="fl">1.4</span>, <span class="dt">cex.lab=</span><span class="fl">1.7</span>, <span class="dt">cex.main=</span><span class="fl">1.5</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-21-1.svg" width="1152" /></p>
+<p>Consider comparing an LDA model using all predictors in the dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">full_lda &lt;-<span class="st"> </span><span class="kw">lda</span>(default<span class="op">~</span>., <span class="dt">data=</span>Default)
+full_lda_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(full_lda, Default)
+
+pred_list &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="dt">balance_lda =</span> lda_pred<span class="op">$</span>posterior[,<span class="st">&quot;Yes&quot;</span>],
+  <span class="dt">full_lda =</span> full_lda_preds<span class="op">$</span>posterior[,<span class="st">&quot;Yes&quot;</span>],
+  <span class="dt">dummy =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">nrow</span>(Default)))
+
+pred_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_list,
+  prediction, Default<span class="op">$</span>default)
+
+aucs &lt;-<span class="st"> </span><span class="kw">sapply</span>(pred_objs, 
+  <span class="cf">function</span>(x) <span class="kw">unlist</span>(
+    <span class="kw">performance</span>(x, <span class="st">&quot;auc&quot;</span>)<span class="op">@</span>y.values))
+
+roc_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_objs, 
+  performance, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="dt">along=</span>roc_objs)) {
+  <span class="kw">plot</span>(roc_objs[[i]], <span class="dt">add =</span> i <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">col=</span>i, 
+       <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>)
+}
+<span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, 
+       <span class="dt">legend=</span><span class="kw">paste</span>(<span class="kw">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="kw">names</span>(pred_list)), <span class="st">&quot;AUROC=&quot;</span>,<span class="kw">round</span>(aucs, <span class="dv">2</span>)), 
+       <span class="dt">col=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-24-1.svg" width="672" /></p>
+<p>Another metric that is frequently used to understand classification errors and tradeoffs is the precision-recall curve:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caTools)
+pr_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_objs, 
+  performance, <span class="st">&quot;prec&quot;</span>, <span class="st">&quot;rec&quot;</span>)
+
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="dt">along=</span>pr_objs)) {
+  <span class="kw">plot</span>(pr_objs[[i]], <span class="dt">add =</span> i <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">col=</span>i, 
+       <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>)
+}
+<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, 
+       <span class="dt">legend=</span><span class="kw">paste</span>(<span class="kw">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="kw">names</span>(pred_list))),
+      <span class="dt">col=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-25-1.svg" width="960" /></p>
+</div>
+<div id="summary-3" class="section level2">
+<h2><span class="header-section-number">26.1</span> Summary</h2>
+<p>We approach classification as a class probability estimation problem. Logistic regression and LDA partition predictor space with linear functions. Logistic regression learns parameter using Maximum Likelihood (numerical optimization), while LDA learns parameter using means and variances (and assuming normal distribution)</p>
+<p>Error and accuracy statistics are not enough to understand classifier performance. Classifications can be done using probability cutoffs to trade, e.g., TPR-FPR (ROC curve), or precision-recall (PR curve). Area under ROC or PR curve summarize classifier performance across different cutoffs.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="linear-models-for-classification.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
