@@ -283,9 +283,8 @@ date = "4/10"
 title = "Linear models for classification"
 notes = "bookdown-notes/linear-models-for-classification.html"
 
-[[day20.workdue]]
-title = "Homework 4: A/B Testing"
-link = "homeworks/ab_testing/"
+[day20.class_notes]
+link = "cmsc320_class-notes_20180410.pdf"
 
 [day21]
 date = "4/12"
@@ -301,6 +300,10 @@ title = "Non-linear models for regression and classification: K-Nearest Neighbor
 [[day21.covers]]
 title = "Model evaluation using resampling"
 # notes = "lecture-note/evaluation/"
+
+[[day21.workdue]]
+title = "Homework 4: A/B Testing"
+link = "homeworks/ab_testing/"
 
 #[[day12.covers]]
 #title = "Gradient descent"
