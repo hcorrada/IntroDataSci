@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-10">
+<meta name="date" content="2018-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,45 +49,73 @@
 
 <script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.2.0/str_view.js"></script>
+<script src="libs/str_view-binding-1.3.0/str_view.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 </head>
@@ -395,6 +423,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="29.6" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classifier-evaluation"><i class="fa fa-check"></i><b>29.6</b> Classifier evaluation</a></li>
 <li class="chapter" data-level="29.7" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#summary-3"><i class="fa fa-check"></i><b>29.7</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="30" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html"><i class="fa fa-check"></i><b>30</b> Solving linear ML problems</a><ul>
+<li class="chapter" data-level="30.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#case-study"><i class="fa fa-check"></i><b>30.1</b> Case Study</a></li>
+<li class="chapter" data-level="30.2" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#gradient-descent"><i class="fa fa-check"></i><b>30.2</b> Gradient Descent</a></li>
+<li class="chapter" data-level="30.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>30.3</b> Stochastic gradient descent</a></li>
+<li class="chapter" data-level="30.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>30.4</b> Parallelizing gradient descent</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -418,9 +452,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="operations-that-sort-entities" class="section level2">
 <h2><span class="header-section-number">7.1</span> Operations that sort entities</h2>
 <p>The first operation we will look at today is used to sort entities based on their attribute values. As an example, suppose we wanted to find the arrests with the 10 youngest subjects. If we had an operation that re-orders entities based on the value of their <code>age</code> attribute, we can then use the <code>slice</code> operation we saw before to create a data frame with just the entities of interest</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(age) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">arrest_tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb61-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(age) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb61-3" data-line-number="3"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 10 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
@@ -439,9 +473,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>The <code>arrange</code> operation sorts entities by increasing value of the attributes passed as arguments.</p>
 <p>The <code>desc</code> helper function is used to indicate sorting by decreasing value. For example, to find the arrests with the 10 <em>oldest</em> subjects we would use:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(age)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">arrest_tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb63-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(age)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb63-3" data-line-number="3"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 10 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation     
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;              
@@ -462,14 +496,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="operations-that-create-new-attributes" class="section level2">
 <h2><span class="header-section-number">7.2</span> Operations that create new attributes</h2>
 <p>We will often see that for many analyses, be it for interpretation or for statistical modeling, we will create new attributes based on existing attributes in a dataset.</p>
-<div class="figure">
-<img src="img/mutate.png" />
-
-</div>
+<p><img src="img/mutate.png" /></p>
 <p>Suppose I want to represent age in months rather than years in our dataset. To do so I would multiply 12 to the existing age attribute. The function <code>mutate</code> creates new attributes based on the result of a given expression:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_months =</span> <span class="dv">12</span> <span class="op">*</span><span class="st"> </span>age) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(arrest, age, age_months)</code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">arrest_tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb65-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_months =</span> <span class="dv">12</span> <span class="op">*</span><span class="st"> </span>age) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb65-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(arrest, age, age_months)</a></code></pre></div>
 <pre><code>## # A tibble: 104,528 x 3
 ##      arrest   age age_months
 ##       &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;
@@ -488,21 +519,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="operations-that-summarize-attribute-values-over-entities" class="section level2">
 <h2><span class="header-section-number">7.3</span> Operations that summarize attribute values over entities</h2>
 <p>Once we have a set of entities and attributes in a given data frame, we may need to summarize attribute values over the set of entities in the data frame. It collapses the data frame to a single row containing the desired attribute summaries.</p>
-<div class="figure">
-<img src="img/summarize.png" />
-
-</div>
+<p><img src="img/summarize.png" /></p>
 <p>Continuing with the example we have seen below, we may want to know what the minmum, maximum and average age in the dataset is:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summarize</span>(arrest_tab, <span class="dt">min_age=</span><span class="kw">min</span>(age), <span class="dt">mean_age=</span><span class="kw">mean</span>(age), <span class="dt">max_age=</span><span class="kw">max</span>(age))</code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw">summarize</span>(arrest_tab, <span class="dt">min_age=</span><span class="kw">min</span>(age), <span class="dt">mean_age=</span><span class="kw">mean</span>(age), <span class="dt">max_age=</span><span class="kw">max</span>(age))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 3
 ##   min_age mean_age max_age
 ##     &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
 ## 1       0     33.2    87.0</code></pre>
 <p>The <code>summarize</code> functions takes a data frame and calls a summary function over attributes of the data frame. Common summary functions to use include:</p>
-<table style="width:36%;">
+<table>
 <colgroup>
-<col width="16%" />
-<col width="19%" />
+<col width="45%" />
+<col width="54%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -534,7 +562,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </tbody>
 </table>
 <p>Let’s see the number of distinct districts in our dataset:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summarize</span>(arrest_tab, <span class="kw">n_distinct</span>(district))</code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="kw">summarize</span>(arrest_tab, <span class="kw">n_distinct</span>(district))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   `n_distinct(district)`
 ##                    &lt;int&gt;
@@ -544,12 +572,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="operations-that-group-entities" class="section level2">
 <h2><span class="header-section-number">7.4</span> Operations that group entities</h2>
 <p>Summarization (therefore aggregation) goes hand in hand with data grouping, where summaries are computed <em>conditioned</em> on other attributes. The notion of <em>conditioning</em> is fundamental to data analysis and we will see it very frequently through the course. It is the basis of statistical analysis and Machine Learning models and it is essential in understanding the design of effective visualizations.</p>
-<div class="figure">
-<img src="img/groupby.png" />
-
-</div>
-<p>The goal is to group entities with the same value of one or more attributes. The <code>group_by</code> function in essence annotates the rows of a data frame as belonging to a specific group based on the value of some chosen attributes. This call returns a data frame that is grouped by the value of the <code>district</code> attribute.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(arrest_tab, district)</code></pre></div>
+<p><img src="img/groupby.png" /></p>
+<p>The goal is to group entities with the same value of one or
+more attributes. The <code>group_by</code> function in essence annotates the rows of a data frame as belonging to a specific group based on the value of some chosen attributes. This call returns a data frame that is grouped by the value of the <code>district</code> attribute.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw">group_by</span>(arrest_tab, district)</a></code></pre></div>
 <pre><code>## # A tibble: 104,528 x 15
 ## # Groups:   district [10]
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
@@ -569,9 +595,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>Subsequent operations are then performed <strong>for each group independently</strong>. For example, when <code>summarize</code> is applied to a grouped data frame, summaries are computed for each group of entities, rather than the whole set of entities.</p>
 <p>For instance, let’s calculate minimum, maximum and average age for each district in our dataset:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(district) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">min_age=</span><span class="kw">min</span>(age), <span class="dt">max_age=</span><span class="kw">max</span>(age), <span class="dt">mean_age=</span><span class="kw">mean</span>(age))</code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">arrest_tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb73-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(district) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb73-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">min_age=</span><span class="kw">min</span>(age), <span class="dt">max_age=</span><span class="kw">max</span>(age), <span class="dt">mean_age=</span><span class="kw">mean</span>(age))</a></code></pre></div>
 <pre><code>## # A tibble: 10 x 4
 ##    district     min_age max_age mean_age
 ##    &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
@@ -587,10 +613,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ## 10 &lt;NA&gt;             0      87.0     33.4</code></pre>
 <p>Note that after this operation we have effectively changed the entities represented in the result. The entities in our original dataset are arrests while the entities for the result of the last example are the districts. This is a general property of group_by and summarize: it defines a data set where entities are defined by distinct values of the attributes we use for grouping.</p>
 <p>Let’s look at another example combining some of the operations we have seen so far. Let’s compute the average age for subjects 21 years or older grouped by district and sex:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">21</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(district, sex) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_age=</span><span class="kw">mean</span>(age))</code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">arrest_tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb75-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">21</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb75-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(district, sex) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb75-4" data-line-number="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_age=</span><span class="kw">mean</span>(age))</a></code></pre></div>
 <pre><code>## # A tibble: 20 x 3
 ## # Groups:   district [?]
 ##    district     sex   mean_age
@@ -619,26 +645,26 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="vectors" class="section level2">
 <h2><span class="header-section-number">7.5</span> Vectors</h2>
 <p>We briefly saw previously operators to create vectors in R. For instance, we can use <code>seq</code> to create a vector that consists of a sequence of integers:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multiples_of_three &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">3</span>, <span class="dv">30</span>, <span class="dt">by=</span><span class="dv">3</span>)
-multiples_of_three</code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1">multiples_of_three &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">3</span>, <span class="dv">30</span>, <span class="dt">by=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb77-2" data-line-number="2">multiples_of_three</a></code></pre></div>
 <pre><code>##  [1]  3  6  9 12 15 18 21 24 27 30</code></pre>
 <p>Let’s how this is represented in R (the <code>str</code> is very handy to do this type of digging around):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(multiples_of_three)</code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw">str</span>(multiples_of_three)</a></code></pre></div>
 <pre><code>##  num [1:10] 3 6 9 12 15 18 21 24 27 30</code></pre>
 <p>So, this is a <code>numeric</code> vector of length 10. Like many other languages we use square brackets <code>[]</code> to index vectors:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multiples_of_three[<span class="dv">1</span>]</code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">multiples_of_three[<span class="dv">1</span>]</a></code></pre></div>
 <pre><code>## [1] 3</code></pre>
 <p>We can use ranges as before</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multiples_of_three[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1">multiples_of_three[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</a></code></pre></div>
 <pre><code>## [1]  3  6  9 12</code></pre>
 <p>We can use vectors of non-negative integers for indexing:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multiples_of_three[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)]</code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1">multiples_of_three[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)]</a></code></pre></div>
 <pre><code>## [1]  3  9 15</code></pre>
 <p>Or even logical vectors:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multiples_of_three[<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)]</code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1">multiples_of_three[<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)]</a></code></pre></div>
 <pre><code>## [1]  3  9 15 21 27</code></pre>
 <p>In R, most operations are designed to work with vectors directly (we call that <em>vectorized</em>). For example, if I want to add two vectors together I would write: (look no <code>for</code> loop!):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">multiples_of_three <span class="op">+</span><span class="st"> </span>multiples_of_three</code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1">multiples_of_three <span class="op">+</span><span class="st"> </span>multiples_of_three</a></code></pre></div>
 <pre><code>##  [1]  6 12 18 24 30 36 42 48 54 60</code></pre>
 <p>This also works for other arithmetic and logical operations (e.g., <code>-</code>, <code>*</code>, <code>/</code>, <code>&amp;</code>, <code>|</code>). Give them a try!</p>
 <p>In data analysis the <em>vector</em> is probably the most fundamental data type (other than basic numbers, strings, etc.). Why? Consider getting data about one attribute, say height, for a group of people. What do you get? An array of numbers, all in the same unit (say feet, inches or centimeters). How about their name? Then you get an array of strings. Abstractly, we think of vectors as arrays of values, all of the same <em>class</em> or datatype.</p>
@@ -646,30 +672,30 @@ multiples_of_three</code></pre></div>
 <div id="attributes-as-vectors" class="section level2">
 <h2><span class="header-section-number">7.6</span> Attributes as vectors</h2>
 <p>In fact, in the data frames we have been working on, each column, corresponding to an attribute, is a vector. We use the <code>pull</code> function to extract a vector from a data frame. We can then operate index them, or operate on them as vectors</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">age_vec &lt;-<span class="st"> </span>arrest_tab <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(age)
-age_vec[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1">age_vec &lt;-<span class="st"> </span>arrest_tab <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(age)</a>
+<a class="sourceLine" id="cb91-2" data-line-number="2">age_vec[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a></code></pre></div>
 <pre><code>##  [1] 23 37 46 50 33 41 29 20 24 53</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">12</span> <span class="op">*</span><span class="st"> </span>age_vec[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1"><span class="dv">12</span> <span class="op">*</span><span class="st"> </span>age_vec[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a></code></pre></div>
 <pre><code>##  [1] 276 444 552 600 396 492 348 240 288 636</code></pre>
 <p>We previously saw how the <code>$</code> operator serves the same function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">age_vec &lt;-<span class="st"> </span>arrest_tab<span class="op">$</span>age
-age_vec[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1">age_vec &lt;-<span class="st"> </span>arrest_tab<span class="op">$</span>age</a>
+<a class="sourceLine" id="cb95-2" data-line-number="2">age_vec[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a></code></pre></div>
 <pre><code>##  [1] 23 37 46 50 33 41 29 20 24 53</code></pre>
 <p>The <code>pull</code> function however, can be used as part of a pipeline (using operator <code>%&gt;%</code>):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arrest_tab <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">pull</span>(age) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mean</span>()</code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">arrest_tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb97-2" data-line-number="2"><span class="st">  </span><span class="kw">pull</span>(age) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb97-3" data-line-number="3"><span class="st">  </span><span class="kw">mean</span>()</a></code></pre></div>
 <pre><code>## [1] 33.19639</code></pre>
 </div>
 <div id="functions" class="section level2">
 <h2><span class="header-section-number">7.7</span> Functions</h2>
 <p>Once we have established useful pipelines for a dataset we will want to abstract them into reusable functions that we can apply in other analyses. To do that we would write our own functions that encapsulate the pipelines we have created. As an example, take a function that executes the age by district/sex summarization we created before:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">summarize_district &lt;-<span class="st"> </span><span class="cf">function</span>(df) {
-  df <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">filter</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">21</span>) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">group_by</span>(district, sex) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_age=</span><span class="kw">mean</span>(age))
-}</code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">summarize_district &lt;-<span class="st"> </span><span class="cf">function</span>(df) {</a>
+<a class="sourceLine" id="cb99-2" data-line-number="2">  df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb99-3" data-line-number="3"><span class="st">    </span><span class="kw">filter</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">21</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb99-4" data-line-number="4"><span class="st">    </span><span class="kw">group_by</span>(district, sex) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb99-5" data-line-number="5"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_age=</span><span class="kw">mean</span>(age))</a>
+<a class="sourceLine" id="cb99-6" data-line-number="6">}</a></code></pre></div>
 <p>You can include multiple expressions in the function definition (with the brackts <code>[]</code>). Notice there is no <code>return</code> statement in this function. When a function is called, it returns the value of the last expression in the function definition. In this example, it would be the data frame we get from applying the pipeline of operations.</p>
 <p>You can find more information about vectors, functions and other programming matters we might run into in class in Chapters 17-21 of <a href="http://r4ds.had.co.nz/program-intro.html">R for Data Science</a></p>
 
@@ -727,7 +753,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
