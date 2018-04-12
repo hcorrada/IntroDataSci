@@ -19,7 +19,7 @@ The following commands load the dataset
 library(gapminder)
 data(gapminder)
 
-head(gapminder)
+gapminder
 ```
 
 For this exercise you will explore how life expectancy has changed over 50 years across the world, and how economic measures like gross domestic product (GDP) are related to it.
@@ -31,8 +31,8 @@ For this exercise you will explore how life expectancy has changed over 50 years
 
 A slightly different way of making the same plot is looking at the distribution of life expectancy across countries as it changes over time:
 
-```{r, fig.width=12}
-library(dplyr)
+```{r, fig.width=12, message=FALSE}
+library(tidyverse)
 library(ggplot2)
 
 gapminder %>%
@@ -45,7 +45,7 @@ gapminder %>%
 
 This type of plot is called a _violin plot_, and it displays the distribution of the variable in the y-axis for each value of the variable in the x-axis.
 
-**Question 2**: _How would you describe the distribution of life expectancy across countries for individual years? Is it skewed, or not? Unimodal or not? Symmetric around it's center?_
+**Question 2**: _How would you describe the distribution of life expectancy across countries for individual years? Is it skewed, or not? Unimodal or not? Symmetric around its center?_
 
 Based on this plot, consider the following questions.
 
@@ -63,7 +63,7 @@ Based on this plot, consider the following questions.
 
 **Exercise 3**: _Make a violin plot of residuals vs. year for the linear model from Exercise 2 (use the `broom::augment` function)._
 
-**Question 8**: _Does the plot of Excersize 3 match your expectations (as you answered Question 4)?_
+**Question 8**: _Does the plot of Exercise 3 match your expectations (as you answered Question 4)?_
 
 **Exercise 4**: _Make a boxplot (or violin plot) of model residuals vs. continent._
 
