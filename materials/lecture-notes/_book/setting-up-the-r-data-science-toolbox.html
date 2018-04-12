@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-10">
+<meta name="date" content="2018-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,45 +49,73 @@
 
 <script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.2.0/str_view.js"></script>
+<script src="libs/str_view-binding-1.3.0/str_view.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 </head>
@@ -395,6 +423,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="29.6" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classifier-evaluation"><i class="fa fa-check"></i><b>29.6</b> Classifier evaluation</a></li>
 <li class="chapter" data-level="29.7" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#summary-3"><i class="fa fa-check"></i><b>29.7</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="30" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html"><i class="fa fa-check"></i><b>30</b> Solving linear ML problems</a><ul>
+<li class="chapter" data-level="30.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#case-study"><i class="fa fa-check"></i><b>30.1</b> Case Study</a></li>
+<li class="chapter" data-level="30.2" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#gradient-descent"><i class="fa fa-check"></i><b>30.2</b> Gradient Descent</a></li>
+<li class="chapter" data-level="30.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>30.3</b> Stochastic gradient descent</a></li>
+<li class="chapter" data-level="30.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>30.4</b> Parallelizing gradient descent</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -414,34 +448,27 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="setting-up-the-r-data-science-toolbox" class="section level1">
 <h1><span class="header-section-number">4</span> Setting up the R Data Science Toolbox</h1>
-<p>Here we setup R, RStudio and anything else we will use in the course.</p>
+<p>Here we setup R, RStudio and anything else
+we will use in the course.</p>
 <div id="some-history" class="section level2">
 <h2><span class="header-section-number">4.1</span> Some history</h2>
 <p>R is an offspring of S, a language created in AT&amp;T Labs by John Chambers (now at Stanford) and others in 1976 with the goal of creating an environment for statistical computing and data analysis. The standard for the language in current use was settled in 1998. That same year, “S” won the ACM Software System award, awarded to software systems “that have a lasting influence, reflected in contributions to concepts, in commercial acceptance, or both”.</p>
 <p>In 1991, Robert Gentleman and Ross Ihaka created R to provide an open source implementation of the S language and environment. They also redesigned the language to enforce lexical scoping rules. It has been maintained by the R core group since 1997, and in 2015 an R consortium, including Microsoft, Google, and others, was created.</p>
 <p>Along with Python it is one of the most popular environments for data analysis (e.g., figure below from <a href="https://www.kdnuggets.com/2017/05/poll-analytics-data-science-machine-learning-software-leaders.html">KDNuggets 2017 software survey</a></p>
-<div class="figure">
-<img src="img/kdnuggets-2017.jpg" />
-
-</div>
+<p><img src="img/kdnuggets-2017.jpg" /></p>
 <p>We use R for this class because we find that besides it being a state-of-the-art data analysis environment, it provides a clean end-to-end platform for teaching material across the data management-modeling-communication spectrum that we study in class. However, be aware that as you move on in the Data Science field you most likely will need to add Python to your toolbelt.</p>
 </div>
 <div id="setting-up-r" class="section level2">
 <h2><span class="header-section-number">4.2</span> Setting up R</h2>
-<p>R is a free, open source, environment for data analysis. It is available as a free binary download for Mac, Linux and Windows. For the more adventorous, it can also be compiled from source. To install R in your computer go to <a href="https://cran.r-project.org/index.html" class="uri">https://cran.r-project.org/index.html</a> and download and install the appropriate binary file.</p>
-<div class="figure">
-<img src="img/cran.png" />
-
-</div>
+<p>R is a free, open source, environment for data analysis. It is available as a free binary download for Mac, Linux and Windows. For the more adventorous, it can also be compiled from source. To install R in your computer go to
+<a href="https://cran.r-project.org/index.html" class="uri">https://cran.r-project.org/index.html</a> and download and install the appropriate binary file.</p>
+<p><img src="img/cran.png" /></p>
 <p>This will install the base R system: the R programming language, a few packages for common data analyses and a development environment.</p>
 </div>
 <div id="setting-up-rstudio" class="section level2">
 <h2><span class="header-section-number">4.3</span> Setting up Rstudio</h2>
 <p>We will actually use Rstudio to interact with R. Rstudio is a very powerful application to make data analysis with R easier to do. To install go to <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a> and download the appropriate version of Rstudio.</p>
-<div class="figure">
-<img src="img/rstudio.png" />
-
-</div>
+<p><img src="img/rstudio.png" /></p>
 </div>
 <div id="a-first-look-at-rstudio" class="section level2">
 <h2><span class="header-section-number">4.4</span> A first look at Rstudio</h2>
@@ -450,25 +477,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h3><span class="header-section-number">4.4.1</span> Interactive Console</h3>
 <p>The most immediate way to interact with R is through the interactive console. Here we can write R instructions to perform our data analyses. We want to start using data so the first instructions we will look at deal with loading data.</p>
 <p>When you installed R, a few illustrative datasets were installed as well. Let’s take a look at the list of datasets you now have access to. Write the following command in the console</p>
-<div class="figure">
-<img src="img/rstudio_data.png" />
-
-</div>
+<p><img src="img/rstudio_data.png" /></p>
 <p>This will list names and descriptions of datasets available in your R installation. Let’s try to find out more information about these datasets. In R, the first attempt to get help with something is to use the <code>?</code> operation. So, to get help about the <code>swiss</code> dataset we can enter the following in the console</p>
 <p>This will make the documentation for the <code>swiss</code> dataset open in another pane.</p>
-<div class="figure">
-<img src="img/rstudio_swiss.png" />
-
-</div>
+<p><img src="img/rstudio_swiss.png" /></p>
 <p><strong>On your own:</strong> Find more information about a different dataset using the <code>?</code> operator.</p>
 </div>
 <div id="data-viewer" class="section level3">
 <h3><span class="header-section-number">4.4.2</span> Data Viewer</h3>
 <p>According to the documentation we just saw for <code>swiss</code>, this is a <code>data.frame</code> with 47 observations and 6 variables. The <code>data.frame</code> is the basic structure we will use to represent data throughout the course. We will see this again repeatedly, and use a couple of other names (e.g., <code>tibble</code>) to refer to this. Intuitively, you can think of the <code>data.frame</code> like a spreadsheet, with rows representing observations, and columns representing variables that describe those observations. Let’s see what the <code>swiss</code> data looks like using the Rstudio data viewer.</p>
-<div class="figure">
-<img src="img/rstudio_view_swiss.png" />
-
-</div>
+<p><img src="img/rstudio_view_swiss.png" /></p>
 <p>The Data Viewer lets you reorder data by the values in a column. It also lets you filter rows of the data by values as well.</p>
 <p><strong>On your own</strong>: Use the Data Viewer to explore another of the datasets you saw listed before.</p>
 </div>
@@ -480,19 +498,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>So, what value is produced when R evaluates the expression <code>View(swiss)</code>? Nothing, which we also treat as a value. That wasn’t very interesting, but it does have a side effect: it shows the <code>swiss</code> dataset in the Data viewer.</p>
 <p>How about a simpler expression: <code>swiss</code>, what value is produced when R evaluates the expression <code>swiss</code>? The data.frame containing that data. Try it out in the console.</p>
 <p><em>names</em>: so if <code>swiss</code> isn’t a value, what is it? It is a <em>name</em>. We use these to refer to values. So, when we write the expression <code>swiss</code>, we tell R we want the <em>value</em> referenced by the name <code>swiss</code>, that is, the data itself!</p>
-<div class="figure">
-<img src="img/names_values.png" />
-
-</div>
+<p><img src="img/names_values.png" /></p>
 <p><em>functions</em>: Besides numbers, strings, data frames, etc. another important type of value is the <em>function</em>. Functions are a series of instructions that take some input value and produce a different value. The name <code>View</code> refers to the function that takes a data frame as input, and displays it in the Data viewer. Functions are called using the parentheses we saw before: <code>View(swiss)</code>, the parentheses say that you are passing input <code>swiss</code> to the function <code>View</code>. We’ll see later how we can write our own functions.</p>
 </div>
 <div id="plotting" class="section level3">
 <h3><span class="header-section-number">4.4.4</span> Plotting</h3>
 <p>Next, I want to show the <em>Plots</em> pane in Rstudio. Let’s make a plot using the <code>swiss</code> dataset:</p>
-<div class="figure">
-<img src="img/rstudio_plot_swiss.png" />
-
-</div>
+<p><img src="img/rstudio_plot_swiss.png" /></p>
 <p>It’s not pretty, but it was very easy to produce. There’s a couple of things going on here…</p>
 <ul>
 <li><p><code>plot</code> is a function, it takes two inputs, the data to put in the x and y axes, evaluates to nothing, but creates a plot of the data</p></li>
@@ -506,15 +518,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>As you have noticed, everytime we want to evaluate an expression on the console, we have to write it in. For example, if we want to change the plot we made above to include a different variable, we have to write the whole thing again. Also, what if I forgot what expression I used to make a specific plot? Even better, what if I wanted somebody else to make the plot I just made?</p>
 <p>By far, one of the biggest advantages of using R over Excel or other similar programs, is that we can write expressions in scripts that are easy to share with others, making analyses easier to reproduce. Let’s write a script that we can use to make the same plot we just made.</p>
 <p>In the Rstudio menu select <code>File&gt;New File&gt;R Script</code></p>
-<div class="figure">
-<img src="img/rstudio_new_script.png" />
-
-</div>
+<p><img src="img/rstudio_new_script.png" /></p>
 <p>This will open a tab in the File editor in which we can write expressions:</p>
-<div class="figure">
-<img src="img/rstudio_file.png" />
-
-</div>
+<p><img src="img/rstudio_file.png" /></p>
 <p>We can then evaluate the expressions in the file one at a time, or all at the same time.</p>
 <p>We can then save these expressions in a script. In the Rstudio menu select <code>File&gt;Save</code> and save as a text file. The convention is to use the <code>.R</code> or <code>.r</code> file extension, e.g., <code>swiss_plot.r</code>.</p>
 <p><strong>On your own:</strong> Add expressions for additional plots to the script and save again. Run the new expressions.</p>
@@ -522,10 +528,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="files-viewer" class="section level3">
 <h3><span class="header-section-number">4.4.6</span> Files viewer</h3>
 <p>Rstudio includes a Files viewer that you can use to find and load files. You can find the Files near the Plots viewer</p>
-<div class="figure">
-<img src="img/rstudio_files.png" />
-
-</div>
+<p><img src="img/rstudio_files.png" /></p>
 </div>
 </div>
 <div id="r-packages" class="section level2">
@@ -534,10 +537,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>In this course we will make a lot of use of a set of packages bundled together into the <code>tidyverse</code> by Hadley Wickham and others. These packages make preparing, modeling and visualizing certain kinds data (which covers the vast majority of use cases) quite fun and pleasent. There is a webpage for the general tidyverse project: <a href="http://tidyverse.org" class="uri">http://tidyverse.org</a>, which includes pages for each of the packages included there.</p>
 <p>Let’s install the <code>tidyverse</code> into your R environment. There are two ways of installing packages. In the console, you can use the expression:</p>
 <p>In Rstudio, you can use the <em>Packages</em> tab:</p>
-<div class="figure">
-<img src="img/rstudio_install_packages.png" />
-
-</div>
+<p><img src="img/rstudio_install_packages.png" /></p>
 <p><strong>On your own:</strong> Install the following additional packages which we will use later on: <code>rvest</code>, <code>stringr</code>, <code>nycflights13</code> and <code>broom</code>.</p>
 </div>
 <div id="additional-r-resources" class="section level2">
@@ -606,7 +606,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');

@@ -290,24 +290,12 @@ link = "cmsc320_class-notes_20180410.pdf"
 date = "4/12"
 
 [[day21.covers]]
-title = "Non-linear models for regression and classification: Trees"
-# notes = "lecture-note/tree_methods/"
-
-[[day21.covers]]
-title = "Non-linear models for regression and classification: K-Nearest Neighbors"
-# notes = "lecture-note/svms/"
-
-[[day21.covers]]
-title = "Model evaluation using resampling"
-# notes = "lecture-note/evaluation/"
+title = "Solving linear ML problems"
+#notes = "lecture-note/large_scale/"
 
 [[day21.workdue]]
 title = "Homework 4: A/B Testing"
 link = "homeworks/ab_testing/"
-
-#[[day12.covers]]
-#title = "Gradient descent"
-# notes = "lecture-note/large_scale/"
 
 # [[day20.workdue]]
 # title = "Project 2: Data wrangling and EDA"
@@ -317,11 +305,16 @@ link = "homeworks/ab_testing/"
 date = "4/17"
 
 [[day22.covers]]
-title = "Unsupervised Learning: Clustering"
+title = "Non-linear models for regression and classification: Trees"
+# notes = "lecture-note/tree_methods/"
 
 [[day22.covers]]
-title = "Unsupervised Learning: Dimensionality Reduction"
-# notes = "lecture-note/pca/"
+title = "Non-linear models for regression and classification: K-Nearest Neighbors"
+# notes = "lecture-note/svms/"
+
+[[day22.covers]]
+title = "Model evaluation using resampling"
+# notes = "lecture-note/evaluation/"
 
 [day23]
 date = "4/19"
@@ -339,13 +332,20 @@ title = "Midterm II"
 date = "4/26"
 
 [[day25.covers]]
-title = "Design principles for data visualization"
+title = "Unsupervised Learning: Clustering"
+
+[[day25.covers]]
+title = "Unsupervised Learning: Dimensionality Reduction"
+# notes = "lecture-note/pca/"
 
 # [[day24.covers]]
 # title = "Project 3 Discussion: matrix representation of learning problems, maximum likelihood and logistic regression"
 
 [day26]
 date = "5/1"
+
+[[day26.covers]]
+title = "Design principles for data visualization"
 
 [[day26.covers]]
 title = "Introduction to interactive data visualization"
