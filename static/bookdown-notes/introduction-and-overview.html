@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-10">
+<meta name="date" content="2018-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,45 +49,73 @@
 
 <script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.2.0/str_view.js"></script>
+<script src="libs/str_view-binding-1.3.0/str_view.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 </head>
@@ -395,6 +423,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="29.6" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classifier-evaluation"><i class="fa fa-check"></i><b>29.6</b> Classifier evaluation</a></li>
 <li class="chapter" data-level="29.7" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#summary-3"><i class="fa fa-check"></i><b>29.7</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="30" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html"><i class="fa fa-check"></i><b>30</b> Solving linear ML problems</a><ul>
+<li class="chapter" data-level="30.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#case-study"><i class="fa fa-check"></i><b>30.1</b> Case Study</a></li>
+<li class="chapter" data-level="30.2" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#gradient-descent"><i class="fa fa-check"></i><b>30.2</b> Gradient Descent</a></li>
+<li class="chapter" data-level="30.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>30.3</b> Stochastic gradient descent</a></li>
+<li class="chapter" data-level="30.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>30.4</b> Parallelizing gradient descent</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -451,12 +485,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>“Because now we really do have essentially free and ubiquitous data. So the complimentary scarce factor is the ability to understand that data and extract value from it.”</p>
 </blockquote>
 <blockquote>
-<p>Hal Varian (<a href="http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers" class="uri">http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers</a>)</p>
+<p>Hal Varian
+(<a href="http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers" class="uri">http://www.mckinsey.com/insights/innovation/hal_varian_on_how_the_web_challenges_managers</a>)</p>
 </blockquote>
 </div>
 <div id="data-science-in-society" class="section level2">
 <h2><span class="header-section-number">2.3</span> Data Science in Society</h2>
-<p>Because of the large amount of data produced across many spheres of human social and creative activity, many societal questions may be addressed by establishing patterns in data. In the humanities, this can range from unproblematic quesitions of how to dissect a large creative corpora, say music, literature, based on raw characteristics of those works, text, sound and image. To more problematic questions, of analysis of intent, understanding, appreciation and valuation of these creative corpora.</p>
+<p>Because of the large amount of data produced across many
+spheres of human social and creative activity, many societal questions may be addressed by establishing patterns in data. In the humanities, this can range from unproblematic quesitions of how to dissect a large creative corpora, say music, literature, based on raw characteristics of those works, text, sound and image. To more problematic questions, of analysis of intent, understanding, appreciation and valuation of these creative corpora.</p>
 <p>In the social sciences, issues of fairness and transparency in the current era of big data are especially problematic. Is data collected representative of population for which inferences are drawn? Are methods employed learning latent unfair factors from ostensibly fair data? These are issues that the research community is now starting to address.</p>
 <p>In all settings, issues of ethical collection of data, application of models, and deployment of data-centric artifacts are essential to grapple with. Issues of privacy are equally important.</p>
 </div>
@@ -516,10 +552,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="general-workflow" class="section level2">
 <h2><span class="header-section-number">2.5</span> General Workflow</h2>
 <p>The data science activities we will cover are roughly organized into a general workflow that will help us navigate this material.</p>
-<div class="figure">
-<img src="img/zumel_mount_cycle.png" />
-
-</div>
+<p><img src="img/zumel_mount_cycle.png" /></p>
 <div id="defining-the-goal" class="section level3">
 <h3><span class="header-section-number">2.5.1</span> Defining the Goal</h3>
 <ul>
@@ -536,13 +569,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>What data is available?</li>
 <li>Is it good enough?</li>
 <li>Is it enough?</li>
-<li>What are sensible measurements to derive from this data? Units, transformations, rates, ratios, etc.</li>
+<li>What are sensible measurements to derive from this data?
+Units, transformations, rates, ratios, etc.</li>
 </ul>
 </div>
 <div id="modeling" class="section level3">
 <h3><span class="header-section-number">2.5.3</span> Modeling</h3>
 <ul>
-<li>What kind of problem is it? E.g., classification, clustering, regression, etc.</li>
+<li>What kind of problem is it?
+E.g., classification, clustering, regression, etc.</li>
 <li>What kind of model should I use?</li>
 <li>Do I have enough data for it?</li>
 <li>Does it really answer the question?</li>
@@ -626,7 +661,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
