@@ -4,10 +4,6 @@ author: "CMSC320"
 output: html_document
 ---
 
-**Posted: November 14, 2016**  
-**Due: December 2, 2016**  
-**Last Update: `r format(Sys.Date(), "%B %d, %Y")`**
-
 ```{r, echo=FALSE}
 knitr::opts_chunk$set(cache=FALSE)
 ```
@@ -94,4 +90,4 @@ Based on this plot, consider the following questions.
 
 ### Submission
 
-Prepare an Rmd file with code and answers. Knit the writeup to PDF and submit to ELMS (link at http://www.hcbravo.org/IntroDataSci/projects/project3/).
+Prepare an Rmd file with code and answers. Knit the writeup to PDF and submit to ELMS.
