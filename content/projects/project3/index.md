@@ -3,17 +3,16 @@ date: 2016-11-22T13:04:21-05:00
 title: "Project 3: Regression and Sentiment Analysis"
 ---
 
-POSTED: April 12, 2018
-LAST UPDATE: April 12, 2018
-DUE: April 30, 2018
+POSTED: April 12, 2018  
+LAST UPDATE: April 12, 2018  
+DUE: April 30, 2018  
 
 This project has two parts:
 
   a. [Regression](gapminder/)  
-  b. [Classification](classification/) (COMING SOON!)  
+  b. Classification <!--[Classification](classification/)--> (COMING SOON!)  
 
 Follow instructions on each of these two to complete your project.
-
 
 ## Submission
 
