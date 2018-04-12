@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-10">
+<meta name="date" content="2018-04-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,45 +49,73 @@
 
 <script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.2.0/str_view.js"></script>
+<script src="libs/str_view-binding-1.3.0/str_view.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 </head>
@@ -395,6 +423,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="29.6" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classifier-evaluation"><i class="fa fa-check"></i><b>29.6</b> Classifier evaluation</a></li>
 <li class="chapter" data-level="29.7" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#summary-3"><i class="fa fa-check"></i><b>29.7</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="30" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html"><i class="fa fa-check"></i><b>30</b> Solving linear ML problems</a><ul>
+<li class="chapter" data-level="30.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#case-study"><i class="fa fa-check"></i><b>30.1</b> Case Study</a></li>
+<li class="chapter" data-level="30.2" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#gradient-descent"><i class="fa fa-check"></i><b>30.2</b> Gradient Descent</a></li>
+<li class="chapter" data-level="30.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>30.3</b> Stochastic gradient descent</a></li>
+<li class="chapter" data-level="30.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>30.4</b> Parallelizing gradient descent</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -418,12 +452,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="inference" class="section level2">
 <h2><span class="header-section-number">25.1</span> Inference</h2>
 <p>One way to think about how we use probability in data analysis (statistical and machine learning) is like this:</p>
-<div class="figure">
-<img src="img/inference.png" />
-
-</div>
+<p><img src="img/inference.png" /></p>
 <p>The LLN tells us that our parameter <span class="math inline">\(\hat{p}\)</span> will be close to <span class="math inline">\(p\)</span> on average, the CLT lets us answer how confident are we that we found <span class="math inline">\(p\)</span>. We do this by constructing a <em>confidence interval</em> as follows. Since <span class="math inline">\(\hat{p} \sim N(p,\frac{\sqrt{p(1-p)}}{\sqrt{n}})\)</span>, we want to find an interval <span class="math inline">\([\hat{p}_{-}, \hat{p}_{+}]\)</span>, with <span class="math inline">\(\hat{p}\)</span> at its center, with 95% of the probability specified by the CLT. Why? In that case, there is 95% that the value of parameter <span class="math inline">\(p\)</span> will be within that interval.</p>
-<p>Now, how do we calculate this interval, since we want the interval to contain 95% of the probability? The probability for the tails (values outside this interval) will be <span class="math inline">\((1-.95)/2\)</span> (since there are two tails). So, the lower value of the interval will be one where the normal probability distribution (with mean <span class="math inline">\(\hat{p}\)</span> and standard deviation <span class="math inline">\(\frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}}\)</span>) is such that <span class="math inline">\(P(Y \leq \hat{p}_{-}) = .05/2\)</span>, which we can calculate using the function <code>qnorm</code> function in R:</p>
+<p>Now, how do we calculate this interval, since we want the interval to contain 95% of the probability? The probability for the tails (values outside this interval) will be <span class="math inline">\((1-.95)/2\)</span> (since there are two tails).
+So, the lower value of the interval will be one where the normal probability distribution (with mean <span class="math inline">\(\hat{p}\)</span> and standard deviation <span class="math inline">\(\frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}}\)</span>) is such that <span class="math inline">\(P(Y \leq \hat{p}_{-}) = .05/2\)</span>, which we can calculate using the function <code>qnorm</code> function in R:</p>
 <p><span class="math display">\[
 \begin{align}
 \hat{p}_{-} &amp; = \mathtt{qnorm}(.05/2, \hat{p}, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}}) \\
@@ -432,64 +464,64 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 \]</span></p>
 <p>The upper value of the interval is computed with probability <span class="math inline">\(1-(.05/2)\)</span>, which by the symmetry of the normal distribution is given by <span class="math inline">\(\hat{p}_{+} = \hat{p} + -\mathtt{qnorm}(.05/2,0, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}})\)</span>.</p>
 <p>Let’s see how these intervals look for our twitter bot example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-
-get_estimate &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">p=</span><span class="fl">0.7</span>) <span class="kw">mean</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span>n, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p)))
-
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
-<span class="co"># let&#39;s construct confidence intervals for samples of size n=10,100,500,1000,10000</span>
-tab &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sample_size=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">500</span>,<span class="dv">1000</span>,<span class="dv">10000</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">phat =</span> <span class="kw">sapply</span>(sample_size,get_estimate)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">se =</span> <span class="kw">sqrt</span>(phat<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>phat)) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lower =</span> phat <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">upper =</span> phat <span class="op">+</span><span class="st"> </span><span class="op">-</span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se))
-
-knitr<span class="op">::</span><span class="kw">kable</span>(tab)</code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb359-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb359-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb359-3" data-line-number="3">get_estimate &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">p=</span><span class="fl">0.7</span>) <span class="kw">mean</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span>n, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p)))</a>
+<a class="sourceLine" id="cb359-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb359-5" data-line-number="5"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb359-6" data-line-number="6"><span class="co"># let&#39;s construct confidence intervals for samples of size n=10,100,500,1000,10000</span></a>
+<a class="sourceLine" id="cb359-7" data-line-number="7">tab &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sample_size=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">500</span>,<span class="dv">1000</span>,<span class="dv">10000</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb359-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">phat =</span> <span class="kw">sapply</span>(sample_size,get_estimate)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb359-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">se =</span> <span class="kw">sqrt</span>(phat<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>phat)) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb359-10" data-line-number="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lower =</span> phat <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb359-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">upper =</span> phat <span class="op">+</span><span class="st"> </span><span class="op">-</span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se))</a>
+<a class="sourceLine" id="cb359-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb359-13" data-line-number="13">knitr<span class="op">::</span><span class="kw">kable</span>(tab)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
-<th align="right">sample_size</th>
-<th align="right">phat</th>
-<th align="right">se</th>
-<th align="right">lower</th>
-<th align="right">upper</th>
+<th align="left">sample_size</th>
+<th align="center">phat</th>
+<th align="center">se</th>
+<th align="center">lower</th>
+<th align="center">upper</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">10</td>
-<td align="right">0.7000</td>
-<td align="right">0.1449138</td>
-<td align="right">0.4159742</td>
-<td align="right">0.9840258</td>
+<td align="left">10</td>
+<td align="center">0.7000</td>
+<td align="center">0.1449138</td>
+<td align="center">0.4159742</td>
+<td align="center">0.9840258</td>
 </tr>
 <tr class="even">
-<td align="right">100</td>
-<td align="right">0.6900</td>
-<td align="right">0.0462493</td>
-<td align="right">0.5993530</td>
-<td align="right">0.7806470</td>
+<td align="left">100</td>
+<td align="center">0.6900</td>
+<td align="center">0.0462493</td>
+<td align="center">0.5993530</td>
+<td align="center">0.7806470</td>
 </tr>
 <tr class="odd">
-<td align="right">500</td>
-<td align="right">0.7020</td>
-<td align="right">0.0204546</td>
-<td align="right">0.6619097</td>
-<td align="right">0.7420903</td>
+<td align="left">500</td>
+<td align="center">0.7020</td>
+<td align="center">0.0204546</td>
+<td align="center">0.6619097</td>
+<td align="center">0.7420903</td>
 </tr>
 <tr class="even">
-<td align="right">1000</td>
-<td align="right">0.6940</td>
-<td align="right">0.0145727</td>
-<td align="right">0.6654380</td>
-<td align="right">0.7225620</td>
+<td align="left">1000</td>
+<td align="center">0.6940</td>
+<td align="center">0.0145727</td>
+<td align="center">0.6654380</td>
+<td align="center">0.7225620</td>
 </tr>
 <tr class="odd">
-<td align="right">10000</td>
-<td align="right">0.6982</td>
-<td align="right">0.0045904</td>
-<td align="right">0.6892030</td>
-<td align="right">0.7071970</td>
+<td align="left">10000</td>
+<td align="center">0.6982</td>
+<td align="center">0.0045904</td>
+<td align="center">0.6892030</td>
+<td align="center">0.7071970</td>
 </tr>
 </tbody>
 </table>
@@ -505,66 +537,63 @@ H_1: \, &amp; p &gt; .5 &amp; \textrm{(alternative)}
 \]</span></p>
 <p>Note: this is a <em>one-sided</em> test vs. a <em>two-sided</em> test where the null hypothesis is that <span class="math inline">\(p=.5\)</span> and the alternative is <span class="math inline">\(p \neq .5\)</span>. According to the CLT, estimates <span class="math inline">\(\hat{p}\)</span> of <span class="math inline">\(p\)</span> from <span class="math inline">\(n\)</span> samples would be distributed as <span class="math inline">\(N(.5, \frac{\sqrt{.5(1-.5)}}{\sqrt{n}})\)</span> (we use <span class="math inline">\(p=.5\)</span> as this is the worst case for the hypothesis we want to test).</p>
 <p>Once we do have our sample of <span class="math inline">\(n\)</span> tweets we can get an estimate <span class="math inline">\(\hat{p}\)</span> as we did before. If we see that <span class="math inline">\(\hat{p}\)</span> (sample mean from our sample of tweets) is <em>too far</em> from <span class="math inline">\(p=.5\)</span> then we could reject the <em>null</em> hypothesis since the estimate we derived from the data we have is not statistically consistent with the <em>null</em> hypothesis. Now, how do we say our estimate <span class="math inline">\(\hat{p}\)</span> is too far? Here, we use the probability model given by the CLT. If <span class="math inline">\(P(Y \geq \hat{p}) \geq .95\)</span> under the null model (of <span class="math inline">\(p=.5\)</span>), we say it is too far and we reject.</p>
-<div class="figure">
-<img src="img/testing.png" />
-
-</div>
+<p><img src="img/testing.png" /></p>
 <p>This 95% rejection threshold is conservative, but somewhat arbitrary. So we use one more metric, <span class="math inline">\(P(|Y| \geq \hat{p})\)</span> (the infamous p-value) to say: we could reject this hypothesis for all thresholds greater than this p-value.</p>
 <p>Let’s see how testing the hypothesis <span class="math inline">\(p &gt; .5\)</span> would look like for our tweet example</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab &lt;-<span class="st"> </span>tab <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p_value =</span> <span class="dv">1</span><span class="op">-</span><span class="kw">pnorm</span>(phat, <span class="dt">mean=</span>.<span class="dv">5</span>, <span class="dt">sd=</span>se))
-knitr<span class="op">::</span><span class="kw">kable</span>(tab)</code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb360-1" data-line-number="1">tab &lt;-<span class="st"> </span>tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb360-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p_value =</span> <span class="dv">1</span><span class="op">-</span><span class="kw">pnorm</span>(phat, <span class="dt">mean=</span>.<span class="dv">5</span>, <span class="dt">sd=</span>se))</a>
+<a class="sourceLine" id="cb360-3" data-line-number="3">knitr<span class="op">::</span><span class="kw">kable</span>(tab)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
-<th align="right">sample_size</th>
-<th align="right">phat</th>
-<th align="right">se</th>
-<th align="right">lower</th>
-<th align="right">upper</th>
-<th align="right">p_value</th>
+<th align="left">sample_size</th>
+<th align="center">phat</th>
+<th align="center">se</th>
+<th align="center">lower</th>
+<th align="center">upper</th>
+<th align="center">p_value</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">10</td>
-<td align="right">0.7000</td>
-<td align="right">0.1449138</td>
-<td align="right">0.4159742</td>
-<td align="right">0.9840258</td>
-<td align="right">0.0837731</td>
+<td align="left">10</td>
+<td align="center">0.7000</td>
+<td align="center">0.1449138</td>
+<td align="center">0.4159742</td>
+<td align="center">0.9840258</td>
+<td align="center">0.0837731</td>
 </tr>
 <tr class="even">
-<td align="right">100</td>
-<td align="right">0.6900</td>
-<td align="right">0.0462493</td>
-<td align="right">0.5993530</td>
-<td align="right">0.7806470</td>
-<td align="right">0.0000199</td>
+<td align="left">100</td>
+<td align="center">0.6900</td>
+<td align="center">0.0462493</td>
+<td align="center">0.5993530</td>
+<td align="center">0.7806470</td>
+<td align="center">0.0000199</td>
 </tr>
 <tr class="odd">
-<td align="right">500</td>
-<td align="right">0.7020</td>
-<td align="right">0.0204546</td>
-<td align="right">0.6619097</td>
-<td align="right">0.7420903</td>
-<td align="right">0.0000000</td>
+<td align="left">500</td>
+<td align="center">0.7020</td>
+<td align="center">0.0204546</td>
+<td align="center">0.6619097</td>
+<td align="center">0.7420903</td>
+<td align="center">0.0000000</td>
 </tr>
 <tr class="even">
-<td align="right">1000</td>
-<td align="right">0.6940</td>
-<td align="right">0.0145727</td>
-<td align="right">0.6654380</td>
-<td align="right">0.7225620</td>
-<td align="right">0.0000000</td>
+<td align="left">1000</td>
+<td align="center">0.6940</td>
+<td align="center">0.0145727</td>
+<td align="center">0.6654380</td>
+<td align="center">0.7225620</td>
+<td align="center">0.0000000</td>
 </tr>
 <tr class="odd">
-<td align="right">10000</td>
-<td align="right">0.6982</td>
-<td align="right">0.0045904</td>
-<td align="right">0.6892030</td>
-<td align="right">0.7071970</td>
-<td align="right">0.0000000</td>
+<td align="left">10000</td>
+<td align="center">0.6982</td>
+<td align="center">0.0045904</td>
+<td align="center">0.6892030</td>
+<td align="center">0.7071970</td>
+<td align="center">0.0000000</td>
 </tr>
 </tbody>
 </table>
@@ -574,10 +603,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(tab)</code></pre></
 <div id="ab-testing" class="section level2">
 <h2><span class="header-section-number">25.2</span> A/B Testing</h2>
 <p>A classic experimental design where hypothesis testing is commonly used in A/B testing. Here we are interested in seeing if proposed changes to a webpage has a desired effect. For example, we would like to know if page visitors follow a link more often after a page redesign.</p>
-<div class="figure">
-<img src="img/A-B_testing.png" />
-
-</div>
+<p><img src="img/A-B_testing.png" /></p>
 <p>Here we have two estimates <span class="math inline">\(\hat{p}_A\)</span> and <span class="math inline">\(\hat{p}_B\)</span>, the proportion of clicks for design A and B respectively. The null hypothesis we would test is that <em>there is no difference in proportions</em> between the two designs. Mathematically, we would like to know “What is the probability that we observe a difference in proportions this large under the null hypothesis”. We will work this out as a homework exercise.</p>
 </div>
 <div id="summary-1" class="section level2">
@@ -654,19 +680,19 @@ Variance: <span class="math inline">\(\mathrm{var}(X) = \sigma^2\)</span></p>
 </tbody>
 </table>
 <p>For example, to use these for the Binomial distribution:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using n=10, p=.3</span>
-
-<span class="co"># compute probability mass function value for k=4 successess</span>
-<span class="kw">dbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)
-
-<span class="co"># compute cumulative probability function for k=4 successess</span>
-<span class="kw">pbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)
-
-<span class="co"># compute the number of success corresponding to the .80th quantile</span>
-<span class="kw">qbinom</span>(.<span class="dv">8</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)
-
-<span class="co"># generate a random value k</span>
-<span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</code></pre></div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb361-1" data-line-number="1"><span class="co"># using n=10, p=.3</span></a>
+<a class="sourceLine" id="cb361-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb361-3" data-line-number="3"><span class="co"># compute probability mass function value for k=4 successess</span></a>
+<a class="sourceLine" id="cb361-4" data-line-number="4"><span class="kw">dbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb361-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb361-6" data-line-number="6"><span class="co"># compute cumulative probability function for k=4 successess</span></a>
+<a class="sourceLine" id="cb361-7" data-line-number="7"><span class="kw">pbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb361-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb361-9" data-line-number="9"><span class="co"># compute the number of success corresponding to the .80th quantile</span></a>
+<a class="sourceLine" id="cb361-10" data-line-number="10"><span class="kw">qbinom</span>(.<span class="dv">8</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb361-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb361-12" data-line-number="12"><span class="co"># generate a random value k</span></a>
+<a class="sourceLine" id="cb361-13" data-line-number="13"><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a></code></pre></div>
 
 </div>
 </div>
@@ -723,7 +749,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    var src = "";
+    var src = "true";
     if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
