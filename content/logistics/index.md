@@ -37,7 +37,7 @@ This page constiutes the official syllabus for this class.
       Office Hours: Tues and Thur 11a-1p AVW 3126  
     - Yang Jiao (Graduate)   
       <jiaoyang.tju@gmail.com>  
-      Office Hours: Tues and Thur 9a-11a AVW 3368
+      Office Hours: Friday 11a-3p AVW 1120  
     - Ashley Chang (Undergraduate)   
       <ashleyyc@gmail.com>  
       Office Hours: Tues and Thur 11a-1p AVW 1120  
