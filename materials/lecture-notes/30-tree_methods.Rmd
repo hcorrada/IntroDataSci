@@ -24,6 +24,7 @@ with(Auto, plot(weight, mpg, pch=19, cex=1.4))
 Let's take a look at what a regression tree estimates in this case.
 
 ```{r}
+library(tree)
 tree <- tree(mpg~weight, data=Auto)
 plot(tree)
 text(tree, pretty=0, cex=1.3)
