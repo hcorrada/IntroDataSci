@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-12">
+<meta name="date" content="2018-04-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -429,6 +429,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="30.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>30.3</b> Stochastic gradient descent</a></li>
 <li class="chapter" data-level="30.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>30.4</b> Parallelizing gradient descent</a></li>
 </ul></li>
+<li class="chapter" data-level="31" data-path="tree-based-methods.html"><a href="tree-based-methods.html"><i class="fa fa-check"></i><b>31</b> Tree-Based Methods</a><ul>
+<li class="chapter" data-level="31.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-trees"><i class="fa fa-check"></i><b>31.1</b> Regression Trees</a></li>
+<li class="chapter" data-level="31.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#classification-decision-trees"><i class="fa fa-check"></i><b>31.2</b> Classification (Decision) Trees</a></li>
+<li class="chapter" data-level="31.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#specifics-of-the-partitioning-algorithm"><i class="fa fa-check"></i><b>31.3</b> Specifics of the partitioning algorithm</a><ul>
+<li class="chapter" data-level="31.3.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#the-predictor-space"><i class="fa fa-check"></i><b>31.3.1</b> The predictor space</a></li>
+<li class="chapter" data-level="31.3.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#learning-strategy"><i class="fa fa-check"></i><b>31.3.2</b> Learning Strategy</a></li>
+<li class="chapter" data-level="31.3.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-growing"><i class="fa fa-check"></i><b>31.3.3</b> Tree Growing</a></li>
+<li class="chapter" data-level="31.3.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#deviance-as-a-measure-of-impurity"><i class="fa fa-check"></i><b>31.3.4</b> Deviance as a measure of impurity</a></li>
+<li class="chapter" data-level="31.3.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#other-measures-of-impurity"><i class="fa fa-check"></i><b>31.3.5</b> Other measures of impurity</a></li>
+<li class="chapter" data-level="31.3.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-pruning"><i class="fa fa-check"></i><b>31.3.6</b> Tree Pruning</a></li>
+</ul></li>
+<li class="chapter" data-level="31.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#properties-of-tree-method"><i class="fa fa-check"></i><b>31.4</b> Properties of Tree Method</a></li>
+<li class="chapter" data-level="31.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>31.5</b> Random Forests</a></li>
+<li class="chapter" data-level="31.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>31.6</b> Tree-based methods summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -459,9 +474,9 @@ parts of SQL queries and the operations we have defined so far as implemented in
 <li><em>where</em>: what conditions you want to be satisfied by the rows (tuples) of the answer</li>
 </ul>
 <p>E.g.: movies produced by disney in 1990: note the <em>rename</em></p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="kw">select</span> m.title, m.year</a>
-<a class="sourceLine" id="cb110-2" data-line-number="2"><span class="kw">from</span> movie m</a>
-<a class="sourceLine" id="cb110-3" data-line-number="3"><span class="kw">where</span> m.studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> m.year = <span class="dv">1990</span></a></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb109-1" data-line-number="1"><span class="kw">select</span> m.title, m.year</a>
+<a class="sourceLine" id="cb109-2" data-line-number="2"><span class="kw">from</span> movie m</a>
+<a class="sourceLine" id="cb109-3" data-line-number="3"><span class="kw">where</span> m.studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> m.year = <span class="dv">1990</span></a></code></pre></div>
 <p>The <strong>select</strong> clause can contain expressions (this is paralleled by the <code>mutate</code> operation we saw previously)</p>
 <ul>
 <li><code>select title || ' (' || to_char(year) || ')' as titleyear</code></li>
@@ -474,10 +489,10 @@ parts of SQL queries and the operations we have defined so far as implemented in
 <code>title like 'star wars _'</code></li>
 </ul>
 <p>We can include ordering, e.g., find distinct movies sorted by title</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb111-1" data-line-number="1"><span class="kw">select</span> <span class="kw">distinct</span> title</a>
-<a class="sourceLine" id="cb111-2" data-line-number="2"><span class="kw">from</span> movie</a>
-<a class="sourceLine" id="cb111-3" data-line-number="3"><span class="kw">where</span> studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> <span class="dt">year</span> = <span class="dv">1990</span></a>
-<a class="sourceLine" id="cb111-4" data-line-number="4"><span class="kw">order</span> <span class="kw">by</span> title;</a></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="kw">select</span> <span class="kw">distinct</span> title</a>
+<a class="sourceLine" id="cb110-2" data-line-number="2"><span class="kw">from</span> movie</a>
+<a class="sourceLine" id="cb110-3" data-line-number="3"><span class="kw">where</span> studioname = <span class="st">&#39;disney&#39;</span> <span class="kw">and</span> <span class="dt">year</span> = <span class="dv">1990</span></a>
+<a class="sourceLine" id="cb110-4" data-line-number="4"><span class="kw">order</span> <span class="kw">by</span> title;</a></code></pre></div>
 <div id="group-by-and-summarize" class="section level2">
 <h2><span class="header-section-number">12.1</span> Group-by and summarize</h2>
 <p>SQL has an idiom for grouping and summarizing (<em>conditioning</em> as we called it before). Remember this is a very important concept that shows up in many data processing platforms</p>
@@ -486,29 +501,29 @@ parts of SQL queries and the operations we have defined so far as implemented in
 <li>Number of resulting tuples == Number of groups</li>
 </ul>
 <p>E.g., compute the average movie length by year</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">select</span> name, <span class="fu">avg</span>(<span class="fu">length</span>) </a>
-<a class="sourceLine" id="cb112-2" data-line-number="2"><span class="kw">from</span> movie</a>
-<a class="sourceLine" id="cb112-3" data-line-number="3"><span class="kw">group</span> <span class="kw">by</span> <span class="dt">year</span></a></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb111-1" data-line-number="1"><span class="kw">select</span> name, <span class="fu">avg</span>(<span class="fu">length</span>) </a>
+<a class="sourceLine" id="cb111-2" data-line-number="2"><span class="kw">from</span> movie</a>
+<a class="sourceLine" id="cb111-3" data-line-number="3"><span class="kw">group</span> <span class="kw">by</span> <span class="dt">year</span></a></code></pre></div>
 </div>
 <div id="subqueries" class="section level2">
 <h2><span class="header-section-number">12.2</span> Subqueries</h2>
 <p>You can nest queries as an expression in an SFW query. We refer to these “subqueries” as “nested subquery”:</p>
 <p>E.g., find movie with the maximum length</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span></a>
-<a class="sourceLine" id="cb113-2" data-line-number="2"><span class="kw">from</span> movie</a>
-<a class="sourceLine" id="cb113-3" data-line-number="3"><span class="kw">where</span> movie.length = (<span class="kw">select</span> <span class="fu">max</span>(<span class="fu">length</span>) <span class="kw">from</span> movie);</a></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span></a>
+<a class="sourceLine" id="cb112-2" data-line-number="2"><span class="kw">from</span> movie</a>
+<a class="sourceLine" id="cb112-3" data-line-number="3"><span class="kw">where</span> movie.length = (<span class="kw">select</span> <span class="fu">max</span>(<span class="fu">length</span>) <span class="kw">from</span> movie);</a></code></pre></div>
 <p>E.g., find movies with at least 5 stars: an example of a correlated subquery</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="kw">select</span> * </a>
-<a class="sourceLine" id="cb114-2" data-line-number="2"><span class="kw">from</span> movies m</a>
-<a class="sourceLine" id="cb114-3" data-line-number="3"><span class="kw">where</span> <span class="dv">5</span> &gt;= (<span class="kw">select</span> <span class="fu">count</span>(*)</a>
-<a class="sourceLine" id="cb114-4" data-line-number="4"><span class="kw">from</span> starsIn si</a>
-<a class="sourceLine" id="cb114-5" data-line-number="5"><span class="kw">where</span> si.title = m.title <span class="kw">and</span> si.year = m.year);</a></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="kw">select</span> * </a>
+<a class="sourceLine" id="cb113-2" data-line-number="2"><span class="kw">from</span> movies m</a>
+<a class="sourceLine" id="cb113-3" data-line-number="3"><span class="kw">where</span> <span class="dv">5</span> &gt;= (<span class="kw">select</span> <span class="fu">count</span>(*)</a>
+<a class="sourceLine" id="cb113-4" data-line-number="4"><span class="kw">from</span> starsIn si</a>
+<a class="sourceLine" id="cb113-5" data-line-number="5"><span class="kw">where</span> si.title = m.title <span class="kw">and</span> si.year = m.year);</a></code></pre></div>
 <p>The nested subquery counts the number of actors for that movie.</p>
 <p>E.g., rank movies by their length.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span>, (<span class="kw">select</span> <span class="fu">count</span>(*) </a>
-<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="kw">from</span> movies m2</a>
-<a class="sourceLine" id="cb115-3" data-line-number="3"><span class="kw">where</span> m1.length &lt;= m2.length) <span class="kw">as</span> <span class="fu">rank</span></a>
-<a class="sourceLine" id="cb115-4" data-line-number="4"><span class="kw">from</span> movies m1;</a></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span>, (<span class="kw">select</span> <span class="fu">count</span>(*) </a>
+<a class="sourceLine" id="cb114-2" data-line-number="2"><span class="kw">from</span> movies m2</a>
+<a class="sourceLine" id="cb114-3" data-line-number="3"><span class="kw">where</span> m1.length &lt;= m2.length) <span class="kw">as</span> <span class="fu">rank</span></a>
+<a class="sourceLine" id="cb114-4" data-line-number="4"><span class="kw">from</span> movies m1;</a></code></pre></div>
 <p>Key insight: A movie is ranked 5th if there are exactly 4 movies with longer length. Most database systems support some sort of a <em>rank</em> keyword for doing this. Notice that the above query doesn’t work in presence of ties etc.</p>
 
 </div>

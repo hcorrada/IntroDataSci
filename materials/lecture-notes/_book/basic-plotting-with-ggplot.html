@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-12">
+<meta name="date" content="2018-04-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -429,6 +429,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="30.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>30.3</b> Stochastic gradient descent</a></li>
 <li class="chapter" data-level="30.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>30.4</b> Parallelizing gradient descent</a></li>
 </ul></li>
+<li class="chapter" data-level="31" data-path="tree-based-methods.html"><a href="tree-based-methods.html"><i class="fa fa-check"></i><b>31</b> Tree-Based Methods</a><ul>
+<li class="chapter" data-level="31.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-trees"><i class="fa fa-check"></i><b>31.1</b> Regression Trees</a></li>
+<li class="chapter" data-level="31.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#classification-decision-trees"><i class="fa fa-check"></i><b>31.2</b> Classification (Decision) Trees</a></li>
+<li class="chapter" data-level="31.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#specifics-of-the-partitioning-algorithm"><i class="fa fa-check"></i><b>31.3</b> Specifics of the partitioning algorithm</a><ul>
+<li class="chapter" data-level="31.3.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#the-predictor-space"><i class="fa fa-check"></i><b>31.3.1</b> The predictor space</a></li>
+<li class="chapter" data-level="31.3.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#learning-strategy"><i class="fa fa-check"></i><b>31.3.2</b> Learning Strategy</a></li>
+<li class="chapter" data-level="31.3.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-growing"><i class="fa fa-check"></i><b>31.3.3</b> Tree Growing</a></li>
+<li class="chapter" data-level="31.3.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#deviance-as-a-measure-of-impurity"><i class="fa fa-check"></i><b>31.3.4</b> Deviance as a measure of impurity</a></li>
+<li class="chapter" data-level="31.3.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#other-measures-of-impurity"><i class="fa fa-check"></i><b>31.3.5</b> Other measures of impurity</a></li>
+<li class="chapter" data-level="31.3.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-pruning"><i class="fa fa-check"></i><b>31.3.6</b> Tree Pruning</a></li>
+</ul></li>
+<li class="chapter" data-level="31.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#properties-of-tree-method"><i class="fa fa-check"></i><b>31.4</b> Properties of Tree Method</a></li>
+<li class="chapter" data-level="31.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>31.5</b> Random Forests</a></li>
+<li class="chapter" data-level="31.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>31.6</b> Tree-based methods summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -451,11 +466,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We will spend a good amount of time in the course discussing data visualization. It serves many important roles in data analysis. We use it to gain understanding of dataset characteristics throughout analyses and it is a key element of communicating insights we have derived from data analyses with our target audience. In this section, we will introduce basic functionality of the <code>ggplot</code> package to start our discussion of visualization throughout the course.</p>
 <p>The <code>ggplot</code> package is designed to work well with the <code>tidyverse</code> set of packages. As such, it is designed around the Entity-Attribute data model.
 Also, it can be included as part of data frame operation pipelines. Let’s start with a simple example. Let’s create a <em>dot plot</em> of the number of arrests per district in our dataset:</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">arrest_tab <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb100-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(district) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb100-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">num_arrests=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb100-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">y=</span>district, <span class="dt">x=</span>num_arrests)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb100-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">arrest_tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb99-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(district) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb99-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">num_arrests=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb99-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">y=</span>district, <span class="dt">x=</span>num_arrests)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb99-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/district_dotplot-1.svg" width="672" /></p>
 <p>The <code>ggplot</code> design is very elegant, takes some thinking to get used to, but is extremely powerful. The central premise is to characterize the building pieces behind <code>ggplot</code> plots as follows:</p>
 <ol style="list-style-type: decimal">
@@ -472,9 +487,9 @@ Also, it can be included as part of data frame operation pipelines. Let’s star
 <li><p><strong>Geometry</strong>: Here we choose points as the <em>geometric</em> representations of our chosen graphical characteristics using the <code>geom_point</code> function.</p></li>
 </ol>
 <p>In general, the <code>ggplot</code> call will have the following structure:</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="op">&lt;</span>data_frame<span class="op">&gt;</span><span class="st"> </span><span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb101-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="op">&lt;</span>graphical_characteristic<span class="op">&gt;=</span><span class="er">&lt;</span>attribute<span class="op">&gt;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb101-3" data-line-number="3"><span class="st">    </span>geom_<span class="op">&lt;</span>representation<span class="op">&gt;</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1"><span class="op">&lt;</span>data_frame<span class="op">&gt;</span><span class="st"> </span><span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb100-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="op">&lt;</span>graphical_characteristic<span class="op">&gt;=</span><span class="er">&lt;</span>attribute<span class="op">&gt;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb100-3" data-line-number="3"><span class="st">    </span>geom_<span class="op">&lt;</span>representation<span class="op">&gt;</span>()</a></code></pre></div>
 <div id="plot-construction-details" class="section level2">
 <h2><span class="header-section-number">8.1</span> Plot Construction Details</h2>
 <div id="mappings" class="section level3">
@@ -555,7 +570,7 @@ Also, it can be included as part of data frame operation pipelines. Let’s star
 <div id="frequently-used-plots" class="section level2">
 <h2><span class="header-section-number">8.2</span> Frequently Used Plots</h2>
 <p>We will look comprehensively at data visualization in more detail later in the course, but for now will list a few common plots we use in data analysis and how they are created using <code>ggplot</code>. Let’s switch data frame to the <code>mpg</code> dataset for our examples:</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1">mpg</a></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1">mpg</a></code></pre></div>
 <pre><code>## # A tibble: 234 x 11
 ##    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl   
 ##    &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;
@@ -573,35 +588,35 @@ Also, it can be included as part of data frame operation pipelines. Let’s star
 <div id="scatter-plot" class="section level3">
 <h3><span class="header-section-number">8.2.1</span> Scatter plot</h3>
 <p>Used to visualize the relationship between two attributes.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1">mpg <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb104-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>displ, <span class="dt">y=</span>hwy)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb104-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">color=</span>cyl))</a></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">mpg <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb103-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>displ, <span class="dt">y=</span>hwy)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb103-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">color=</span>cyl))</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/scatter_example-1.svg" width="672" /></p>
 </div>
 <div id="bar-graph" class="section level3">
 <h3><span class="header-section-number">8.2.2</span> Bar graph</h3>
 <p>Used to visualize the relationship between a continuous variable to a categorical (or discrete) attribute</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1">mpg <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb105-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(cyl) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb105-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_mpg=</span><span class="kw">mean</span>(hwy)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb105-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>cyl, <span class="dt">y=</span>mean_mpg)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb105-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1">mpg <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb104-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(cyl) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb104-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_mpg=</span><span class="kw">mean</span>(hwy)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb104-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>cyl, <span class="dt">y=</span>mean_mpg)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb104-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>)</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/bargraph_mpg-1.svg" width="672" /></p>
 </div>
 <div id="histogram" class="section level3">
 <h3><span class="header-section-number">8.2.3</span> Histogram</h3>
 <p>Used to visualize the distribution of the values of a numeric attribute</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1">mpg <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb106-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>hwy)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb106-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_histogram</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1">mpg <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb105-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>hwy)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb105-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_histogram</span>()</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/hist_mpg-1.svg" width="672" /></p>
 </div>
 <div id="boxplot" class="section level3">
 <h3><span class="header-section-number">8.2.4</span> Boxplot</h3>
 <p>Used to visualize the distribution of a numeric attribute based on a categorical attribute</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1">mpg <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb107-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>class, <span class="dt">y=</span>hwy)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb107-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1">mpg <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb106-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">x=</span>class, <span class="dt">y=</span>hwy)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb106-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/hist_dot-1.svg" width="672" /></p>
 
 </div>

@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-12">
+<meta name="date" content="2018-04-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -429,6 +429,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="30.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>30.3</b> Stochastic gradient descent</a></li>
 <li class="chapter" data-level="30.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>30.4</b> Parallelizing gradient descent</a></li>
 </ul></li>
+<li class="chapter" data-level="31" data-path="tree-based-methods.html"><a href="tree-based-methods.html"><i class="fa fa-check"></i><b>31</b> Tree-Based Methods</a><ul>
+<li class="chapter" data-level="31.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-trees"><i class="fa fa-check"></i><b>31.1</b> Regression Trees</a></li>
+<li class="chapter" data-level="31.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#classification-decision-trees"><i class="fa fa-check"></i><b>31.2</b> Classification (Decision) Trees</a></li>
+<li class="chapter" data-level="31.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#specifics-of-the-partitioning-algorithm"><i class="fa fa-check"></i><b>31.3</b> Specifics of the partitioning algorithm</a><ul>
+<li class="chapter" data-level="31.3.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#the-predictor-space"><i class="fa fa-check"></i><b>31.3.1</b> The predictor space</a></li>
+<li class="chapter" data-level="31.3.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#learning-strategy"><i class="fa fa-check"></i><b>31.3.2</b> Learning Strategy</a></li>
+<li class="chapter" data-level="31.3.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-growing"><i class="fa fa-check"></i><b>31.3.3</b> Tree Growing</a></li>
+<li class="chapter" data-level="31.3.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#deviance-as-a-measure-of-impurity"><i class="fa fa-check"></i><b>31.3.4</b> Deviance as a measure of impurity</a></li>
+<li class="chapter" data-level="31.3.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#other-measures-of-impurity"><i class="fa fa-check"></i><b>31.3.5</b> Other measures of impurity</a></li>
+<li class="chapter" data-level="31.3.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-pruning"><i class="fa fa-check"></i><b>31.3.6</b> Tree Pruning</a></li>
+</ul></li>
+<li class="chapter" data-level="31.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#properties-of-tree-method"><i class="fa fa-check"></i><b>31.4</b> Properties of Tree Method</a></li>
+<li class="chapter" data-level="31.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>31.5</b> Random Forests</a></li>
+<li class="chapter" data-level="31.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>31.6</b> Tree-based methods summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -460,8 +475,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Each type of entity (observational unit) forms a table</li>
 </ol>
 <p>Here is an example of a tidy dataset:</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1"><span class="kw">library</span>(nycflights13)</a>
-<a class="sourceLine" id="cb179-2" data-line-number="2"><span class="kw">head</span>(flights)</a></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb178-2" data-line-number="2"><span class="kw">head</span>(flights)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 19
 ##    year month   day dep_time sched_dep_time dep_delay arr_time
 ##   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
@@ -492,13 +507,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Single observational unit stored in multiple tables (join)</li>
 </ul>
 <p>We are using data from Hadley’s paper found in <a href="https://github.com/hadley/tidyr">github</a>. It’s included directory <code>data</code>:</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1">data_dir &lt;-<span class="st"> &quot;data&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">data_dir &lt;-<span class="st"> &quot;data&quot;</span></a></code></pre></div>
 <div id="headers-as-values" class="section level3">
 <h3><span class="header-section-number">17.2.1</span> Headers as values</h3>
 <p>The first problem we’ll see is the case where a table header contains values.</p>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb182-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb182-3" data-line-number="3">pew &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;pew.csv&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb181-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb181-3" data-line-number="3">pew &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;pew.csv&quot;</span>))</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   religion = col_character(),
@@ -513,7 +528,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   `&gt;150k` = col_integer(),
 ##   `Don&#39;t know/refused` = col_integer()
 ## )</code></pre>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1">pew</a></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1">pew</a></code></pre></div>
 <pre><code>## # A tibble: 18 x 11
 ##    religion      `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k`
 ##    &lt;chr&gt;           &lt;int&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt;
@@ -538,8 +553,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## # ... with 4 more variables: `$75-100k` &lt;int&gt;, `$100-150k` &lt;int&gt;,
 ## #   `&gt;150k` &lt;int&gt;, `Don&#39;t know/refused` &lt;int&gt;</code></pre>
 <p>This table has the number of survey respondents of a specific religion that report their income within some range. A tidy version of this table would consider the <em>variables</em> of each observation to be <code>religion, income, frequency</code> where <code>frequency</code> has the number of respondents for each religion and income range. The function to use in the <code>tidyr</code> package is <code>gather</code>:</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1">tidy_pew &lt;-<span class="st"> </span><span class="kw">gather</span>(pew, income, frequency, <span class="op">-</span>religion)</a>
-<a class="sourceLine" id="cb186-2" data-line-number="2">tidy_pew</a></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1">tidy_pew &lt;-<span class="st"> </span><span class="kw">gather</span>(pew, income, frequency, <span class="op">-</span>religion)</a>
+<a class="sourceLine" id="cb185-2" data-line-number="2">tidy_pew</a></code></pre></div>
 <pre><code>## # A tibble: 180 x 3
 ##    religion                income frequency
 ##    &lt;chr&gt;                   &lt;chr&gt;      &lt;int&gt;
@@ -556,7 +571,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## # ... with 170 more rows</code></pre>
 <p>This says: gather all the columns from the <code>pew</code> (except <code>religion</code>) into key-value columns <code>income</code> and <code>frequency</code>. This table is much easier to use in other analyses.</p>
 <p>Another example: this table has a row for each song appearing in the billboard top 100. It contains track information, and the date it entered the top 100. It then shows the rank in each of the next 76 weeks.</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" data-line-number="1">billboard &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;billboard.csv&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1">billboard &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;billboard.csv&quot;</span>))</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_integer(),
@@ -577,7 +592,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##   wk76 = col_character()
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb191-1" data-line-number="1">billboard</a></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1">billboard</a></code></pre></div>
 <pre><code>## # A tibble: 317 x 81
 ##     year artist   track   time  date.entered   wk1   wk2   wk3   wk4   wk5
 ##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;tim&gt; &lt;date&gt;       &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
@@ -612,14 +627,14 @@ This dataset has values as column names. Which column names are values? How do w
 <div id="multiple-variables-in-one-column" class="section level3">
 <h3><span class="header-section-number">17.2.2</span> Multiple variables in one column</h3>
 <p>The next problem we’ll see is the case when we see multiple variables in a single column. Consider the following dataset of tuberculosis cases:</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb193-1" data-line-number="1">tb &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;tb.csv&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1">tb &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;tb.csv&quot;</span>))</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_integer(),
 ##   iso2 = col_character()
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" data-line-number="1">tb</a></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb195-1" data-line-number="1">tb</a></code></pre></div>
 <pre><code>## # A tibble: 5,769 x 22
 ##    iso2   year   m04  m514  m014 m1524 m2534 m3544 m4554 m5564   m65    mu
 ##    &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
@@ -639,8 +654,8 @@ This dataset has values as column names. Which column names are values? How do w
 <p>This table has a row for each year and strain of tuberculosis (given by the first two columns). The remaining columns state the number of cases for a given demographic. For example, <code>m1524</code> corresponds to males between 15 and 24 years old, and <code>f1524</code> are females age 15-24. As you can see each of these columns has two variables: <code>sex</code> and <code>age</code>.</p>
 <p>Challenge: what else is untidy about this dataset?</p>
 <p>So, we have to do two operations to tidy this table, first we need to use <code>gather</code> the tabulation columns into a <code>demo</code> and <code>n</code> columns (for demographic and number of cases):</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" data-line-number="1">tidy_tb &lt;-<span class="st"> </span><span class="kw">gather</span>(tb, demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)</a>
-<a class="sourceLine" id="cb198-2" data-line-number="2">tidy_tb</a></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb197-1" data-line-number="1">tidy_tb &lt;-<span class="st"> </span><span class="kw">gather</span>(tb, demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)</a>
+<a class="sourceLine" id="cb197-2" data-line-number="2">tidy_tb</a></code></pre></div>
 <pre><code>## # A tibble: 115,380 x 4
 ##    iso2   year demo      n
 ##    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;int&gt;
@@ -656,8 +671,8 @@ This dataset has values as column names. Which column names are values? How do w
 ## 10 AD     1999 m04      NA
 ## # ... with 115,370 more rows</code></pre>
 <p>Next, we need to <code>separate</code> the values in the <code>demo</code> column into two variables <code>sex</code> and <code>age</code></p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1">tidy_tb &lt;-<span class="st"> </span><span class="kw">separate</span>(tidy_tb, demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb200-2" data-line-number="2">tidy_tb</a></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" data-line-number="1">tidy_tb &lt;-<span class="st"> </span><span class="kw">separate</span>(tidy_tb, demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb199-2" data-line-number="2">tidy_tb</a></code></pre></div>
 <pre><code>## # A tibble: 115,380 x 5
 ##    iso2   year sex   age       n
 ##    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
@@ -674,10 +689,10 @@ This dataset has values as column names. Which column names are values? How do w
 ## # ... with 115,370 more rows</code></pre>
 <p>This calls the <code>separate</code> function on table <code>tidy_db</code>, separating the <code>demo</code> variable into variables <code>sex</code> and <code>age</code> by separating each value after the first character (that’s the <code>sep</code> argument).</p>
 <p>We can put these two commands together in a pipeline:</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" data-line-number="1">tidy_tb &lt;-<span class="st"> </span>tb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb202-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb202-3" data-line-number="3"><span class="st">  </span><span class="kw">separate</span>(demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb202-4" data-line-number="4">tidy_tb</a></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" data-line-number="1">tidy_tb &lt;-<span class="st"> </span>tb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb201-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)  <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb201-3" data-line-number="3"><span class="st">  </span><span class="kw">separate</span>(demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb201-4" data-line-number="4">tidy_tb</a></code></pre></div>
 <pre><code>## # A tibble: 115,380 x 5
 ##    iso2   year sex   age       n
 ##    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
@@ -696,7 +711,7 @@ This dataset has values as column names. Which column names are values? How do w
 <div id="variables-stored-in-both-rows-and-columns" class="section level3">
 <h3><span class="header-section-number">17.2.3</span> Variables stored in both rows and columns</h3>
 <p>This is the messiest, commonly found type of data. Let’s take a look at an example, this is daily weather data from for one weather station in Mexico in 2010.</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb204-1" data-line-number="1">weather &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;weather.csv&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb203-1" data-line-number="1">weather &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;weather.csv&quot;</span>))</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_double(),
@@ -714,7 +729,7 @@ This dataset has values as column names. Which column names are values? How do w
 ##   d24 = col_character()
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" data-line-number="1">weather</a></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb206-1" data-line-number="1">weather</a></code></pre></div>
 <pre><code>## # A tibble: 22 x 35
 ##    id       year month element    d1    d2    d3    d4    d5    d6    d7
 ##    &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -735,9 +750,9 @@ This dataset has values as column names. Which column names are values? How do w
 ## #   d28 &lt;dbl&gt;, d29 &lt;dbl&gt;, d30 &lt;dbl&gt;, d31 &lt;dbl&gt;</code></pre>
 <p>So, we have two rows for each month, one with maximum daily temperature, one with minimum daily temperature, the columns starting with <code>d</code> correspond to the day in the where the measurements were made.</p>
 <p>Challenge: How would a tidy version of this data look like?</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" data-line-number="1">weather <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb209-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(day, value, d1<span class="op">:</span>d31, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb209-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(element, value)</a></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb208-1" data-line-number="1">weather <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb208-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(day, value, d1<span class="op">:</span>d31, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb208-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(element, value)</a></code></pre></div>
 <pre><code>## # A tibble: 33 x 6
 ##    id       year month day   tmax  tmin 
 ##    &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
@@ -757,9 +772,9 @@ This dataset has values as column names. Which column names are values? How do w
 <div id="multiple-types-in-one-table" class="section level3">
 <h3><span class="header-section-number">17.2.4</span> Multiple types in one table</h3>
 <p>Remember that an important aspect of tidy data is that it contains exactly one kind of observation in a single table. Let’s see the billboard example again after the <code>gather</code> operation we did before:</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" data-line-number="1">tidy_billboard &lt;-<span class="st"> </span>billboard <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb211-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(week, rank, wk1<span class="op">:</span>wk76, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb211-3" data-line-number="3">tidy_billboard</a></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb210-1" data-line-number="1">tidy_billboard &lt;-<span class="st"> </span>billboard <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb210-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(week, rank, wk1<span class="op">:</span>wk76, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb210-3" data-line-number="3">tidy_billboard</a></code></pre></div>
 <pre><code>## # A tibble: 5,307 x 7
 ##     year artist         track               time  date.entered week  rank 
 ##  * &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;               &lt;tim&gt; &lt;date&gt;       &lt;chr&gt; &lt;chr&gt;
@@ -775,9 +790,9 @@ This dataset has values as column names. Which column names are values? How do w
 ## 10  2000 Adams, Yolanda Open My Heart       05:30 2000-08-26   wk1   76   
 ## # ... with 5,297 more rows</code></pre>
 <p>Let’s sort this table by track to see a problem with this table:</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb213-1" data-line-number="1">tidy_billboard &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb213-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(track)</a>
-<a class="sourceLine" id="cb213-3" data-line-number="3">tidy_billboard</a></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" data-line-number="1">tidy_billboard &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb212-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(track)</a>
+<a class="sourceLine" id="cb212-3" data-line-number="3">tidy_billboard</a></code></pre></div>
 <pre><code>## # A tibble: 5,307 x 7
 ##     year artist track                   time   date.entered week  rank 
 ##    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;time&gt; &lt;date&gt;       &lt;chr&gt; &lt;chr&gt;
@@ -794,10 +809,10 @@ This dataset has values as column names. Which column names are values? How do w
 ## # ... with 5,297 more rows</code></pre>
 <p>We have a lot of repeated information in many of these rows (the artist, track name, year, title and date entered). The problem is that this table contains information about both tracks and rank in billboard. That’s two different kinds of observations that should belong in two different tables in a tidy dataset.</p>
 <p>Let’s make a song table that only includes information about songs:</p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" data-line-number="1">song &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb215-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb215-3" data-line-number="3"><span class="st">  </span><span class="kw">unique</span>()</a>
-<a class="sourceLine" id="cb215-4" data-line-number="4">song</a></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" data-line-number="1">song &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb214-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb214-3" data-line-number="3"><span class="st">  </span><span class="kw">unique</span>()</a>
+<a class="sourceLine" id="cb214-4" data-line-number="4">song</a></code></pre></div>
 <pre><code>## # A tibble: 317 x 5
 ##    artist        track                    year time   date.entered
 ##    &lt;chr&gt;         &lt;chr&gt;                   &lt;int&gt; &lt;time&gt; &lt;date&gt;      
@@ -814,11 +829,11 @@ This dataset has values as column names. Which column names are values? How do w
 ## # ... with 307 more rows</code></pre>
 <p>The <code>unique</code> function removes any duplicate rows in a table. That’s how we have a single row for each song.</p>
 <p>Next, we would like to remove all the song information from the rank table. But we need to do it in a way that still remembers which song each ranking observation corresponds to. To do that, let’s first give each song an identifier that we can use to link songs and rankings. So, we can produce the final version of our song table like this:</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" data-line-number="1">song &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb217-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb217-3" data-line-number="3"><span class="st">  </span><span class="kw">unique</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb217-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">song_id =</span> <span class="kw">row_number</span>())</a>
-<a class="sourceLine" id="cb217-5" data-line-number="5">song</a></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" data-line-number="1">song &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb216-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb216-3" data-line-number="3"><span class="st">  </span><span class="kw">unique</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb216-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">song_id =</span> <span class="kw">row_number</span>())</a>
+<a class="sourceLine" id="cb216-5" data-line-number="5">song</a></code></pre></div>
 <pre><code>## # A tibble: 317 x 6
 ##    artist        track                    year time   date.entered song_id
 ##    &lt;chr&gt;         &lt;chr&gt;                   &lt;int&gt; &lt;time&gt; &lt;date&gt;         &lt;int&gt;
@@ -835,8 +850,8 @@ This dataset has values as column names. Which column names are values? How do w
 ## # ... with 307 more rows</code></pre>
 <p>The <code>mutate</code> function adds a new column to the table, in this case with column name <code>song_id</code> and value the row number the song appears in the table (from the <code>row_number</code> column).</p>
 <p>Now we can make a rank table, we combine the tidy billboard table with our new song table using a <code>join</code> (we’ll learn all about joins later). It checks the values on each row of the billboard table and looks for rows in the song table that have the exact same values, and makes a new row that combines the information from both tables.</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" data-line-number="1">tidy_billboard <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb219-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(song, <span class="kw">c</span>(<span class="st">&quot;artist&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;track&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;date.entered&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" data-line-number="1">tidy_billboard <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb218-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(song, <span class="kw">c</span>(<span class="st">&quot;artist&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;track&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;date.entered&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 5,307 x 8
 ##     year artist track               time  date.entered week  rank  song_id
 ##    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;               &lt;tim&gt; &lt;date&gt;       &lt;chr&gt; &lt;chr&gt;   &lt;int&gt;
@@ -852,10 +867,10 @@ This dataset has values as column names. Which column names are values? How do w
 ## 10  2000 Nelly  (Hot S**t) Country… 04:17 2000-04-29   wk10  36          1
 ## # ... with 5,297 more rows</code></pre>
 <p>That adds the <code>song_id</code> variable to the <code>tidy_billboard</code> table. So now we can remove the song information and only keep ranking information and the <code>song_id</code>.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" data-line-number="1">rank &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb221-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(song, <span class="kw">c</span>(<span class="st">&quot;artist&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;track&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;date.entered&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb221-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(song_id, week, rank)</a>
-<a class="sourceLine" id="cb221-4" data-line-number="4">rank</a></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" data-line-number="1">rank &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb220-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(song, <span class="kw">c</span>(<span class="st">&quot;artist&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;track&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;date.entered&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb220-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(song_id, week, rank)</a>
+<a class="sourceLine" id="cb220-4" data-line-number="4">rank</a></code></pre></div>
 <pre><code>## # A tibble: 5,307 x 3
 ##    song_id week  rank 
 ##      &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
