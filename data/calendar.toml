@@ -306,7 +306,7 @@ date = "4/17"
 
 [[day22.covers]]
 title = "Non-linear models for regression and classification: Trees"
-# notes = "lecture-note/tree_methods/"
+notes = "bookdown-notes/tree-based-methods.html"
 
 #[[day22.covers]]
 #title = "Non-linear models for regression and classification: K-Nearest Neighbors"
@@ -314,7 +314,8 @@ title = "Non-linear models for regression and classification: Trees"
 
 [[day22.covers]]
 title = "Model evaluation using resampling"
-# notes = "lecture-note/evaluation/"
+notes = "bookdown-notes/model-selection.html"
+
 
 [[day22.workdue]]
 title = "Homework 5: Regression Interpretation"
