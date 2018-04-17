@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-12">
+<meta name="date" content="2018-04-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="linear-models-for-classification.html">
-
+<link rel="next" href="tree-based-methods.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -429,6 +429,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="30.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>30.3</b> Stochastic gradient descent</a></li>
 <li class="chapter" data-level="30.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>30.4</b> Parallelizing gradient descent</a></li>
 </ul></li>
+<li class="chapter" data-level="31" data-path="tree-based-methods.html"><a href="tree-based-methods.html"><i class="fa fa-check"></i><b>31</b> Tree-Based Methods</a><ul>
+<li class="chapter" data-level="31.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-trees"><i class="fa fa-check"></i><b>31.1</b> Regression Trees</a></li>
+<li class="chapter" data-level="31.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#classification-decision-trees"><i class="fa fa-check"></i><b>31.2</b> Classification (Decision) Trees</a></li>
+<li class="chapter" data-level="31.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#specifics-of-the-partitioning-algorithm"><i class="fa fa-check"></i><b>31.3</b> Specifics of the partitioning algorithm</a><ul>
+<li class="chapter" data-level="31.3.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#the-predictor-space"><i class="fa fa-check"></i><b>31.3.1</b> The predictor space</a></li>
+<li class="chapter" data-level="31.3.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#learning-strategy"><i class="fa fa-check"></i><b>31.3.2</b> Learning Strategy</a></li>
+<li class="chapter" data-level="31.3.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-growing"><i class="fa fa-check"></i><b>31.3.3</b> Tree Growing</a></li>
+<li class="chapter" data-level="31.3.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#deviance-as-a-measure-of-impurity"><i class="fa fa-check"></i><b>31.3.4</b> Deviance as a measure of impurity</a></li>
+<li class="chapter" data-level="31.3.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#other-measures-of-impurity"><i class="fa fa-check"></i><b>31.3.5</b> Other measures of impurity</a></li>
+<li class="chapter" data-level="31.3.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-pruning"><i class="fa fa-check"></i><b>31.3.6</b> Tree Pruning</a></li>
+</ul></li>
+<li class="chapter" data-level="31.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#properties-of-tree-method"><i class="fa fa-check"></i><b>31.4</b> Properties of Tree Method</a></li>
+<li class="chapter" data-level="31.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>31.5</b> Random Forests</a></li>
+<li class="chapter" data-level="31.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>31.6</b> Tree-based methods summary</a></li>
+</ul></li>
+<li class="chapter" data-level="32" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>32</b> Model Selection</a><ul>
+<li class="chapter" data-level="32.1" data-path="model-selection.html"><a href="model-selection.html#cross-validation"><i class="fa fa-check"></i><b>32.1</b> Cross Validation</a></li>
+<li class="chapter" data-level="32.2" data-path="model-selection.html"><a href="model-selection.html#validation-set"><i class="fa fa-check"></i><b>32.2</b> Validation Set</a></li>
+<li class="chapter" data-level="32.3" data-path="model-selection.html"><a href="model-selection.html#resampled-validation-set"><i class="fa fa-check"></i><b>32.3</b> Resampled validation set</a></li>
+<li class="chapter" data-level="32.4" data-path="model-selection.html"><a href="model-selection.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>32.4</b> Leave-one-out Cross-Validation</a></li>
+<li class="chapter" data-level="32.5" data-path="model-selection.html"><a href="model-selection.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>32.5</b> k-fold Cross-Validation</a></li>
+<li class="chapter" data-level="32.6" data-path="model-selection.html"><a href="model-selection.html#cross-validation-in-classification"><i class="fa fa-check"></i><b>32.6</b> Cross-Validation in Classification</a></li>
+<li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
+<li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -709,8 +734,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="linear-models-for-classification.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="linear-models-for-classification.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tree-based-methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
