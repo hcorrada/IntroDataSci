@@ -444,6 +444,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="31.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>31.5</b> Random Forests</a></li>
 <li class="chapter" data-level="31.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>31.6</b> Tree-based methods summary</a></li>
 </ul></li>
+<li class="chapter" data-level="32" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>32</b> Model Selection</a><ul>
+<li class="chapter" data-level="32.1" data-path="model-selection.html"><a href="model-selection.html#cross-validation"><i class="fa fa-check"></i><b>32.1</b> Cross Validation</a></li>
+<li class="chapter" data-level="32.2" data-path="model-selection.html"><a href="model-selection.html#validation-set"><i class="fa fa-check"></i><b>32.2</b> Validation Set</a></li>
+<li class="chapter" data-level="32.3" data-path="model-selection.html"><a href="model-selection.html#resampled-validation-set"><i class="fa fa-check"></i><b>32.3</b> Resampled validation set</a></li>
+<li class="chapter" data-level="32.4" data-path="model-selection.html"><a href="model-selection.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>32.4</b> Leave-one-out Cross-Validation</a></li>
+<li class="chapter" data-level="32.5" data-path="model-selection.html"><a href="model-selection.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>32.5</b> k-fold Cross-Validation</a></li>
+<li class="chapter" data-level="32.6" data-path="model-selection.html"><a href="model-selection.html#cross-validation-in-classification"><i class="fa fa-check"></i><b>32.6</b> Cross-Validation in Classification</a></li>
+<li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
+<li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -483,10 +493,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   d22 &lt;chr&gt;, d23 &lt;dbl&gt;, d24 &lt;chr&gt;, d25 &lt;dbl&gt;, d26 &lt;dbl&gt;, d27 &lt;dbl&gt;,
 ## #   d28 &lt;dbl&gt;, d29 &lt;dbl&gt;, d30 &lt;dbl&gt;, d31 &lt;dbl&gt;</code></pre>
 <p>And the result of tidying this dataset:</p>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb342-1" data-line-number="1">tidy_weather &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb342-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(day, temp, d1<span class="op">:</span>d31) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb342-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(element, temp)</a>
-<a class="sourceLine" id="cb342-4" data-line-number="4">tidy_weather</a></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb343-1" data-line-number="1">tidy_weather &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb343-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(day, temp, d1<span class="op">:</span>d31) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb343-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(element, temp)</a>
+<a class="sourceLine" id="cb343-4" data-line-number="4">tidy_weather</a></code></pre></div>
 <pre><code>## # A tibble: 341 x 6
 ##    id       year month day   tmax  tmin 
 ##    &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
@@ -506,9 +516,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Data that is missing systematically can significantly bias an analysis. For example:
 Suppose we want to predict how sick someone is from test result. If doctors do not carry out the test because a patient is too sick, then the fact test is missing is a great predictor of how sick the patient is.</p>
 <p>So in general, the <strong>first step</strong> when dealing with missing data is to understand <em>why</em> and <em>how</em> data may be missing. I.e., talk to collaborator, or person who created the dataset. Once you know that, if a relatively small fraction of observations contain have missing values, then it may be safe to remove observations.</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb344-1" data-line-number="1">tidy_weather_nomissing &lt;-<span class="st"> </span>tidy_weather <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb344-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">drop_na</span>(tmax, tmin)</a>
-<a class="sourceLine" id="cb344-3" data-line-number="3">tidy_weather_nomissing</a></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb345-1" data-line-number="1">tidy_weather_nomissing &lt;-<span class="st"> </span>tidy_weather <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb345-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">drop_na</span>(tmax, tmin)</a>
+<a class="sourceLine" id="cb345-3" data-line-number="3">tidy_weather_nomissing</a></code></pre></div>
 <pre><code>## # A tibble: 33 x 6
 ##    id       year month day   tmax  tmin 
 ##    &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
@@ -526,13 +536,13 @@ Suppose we want to predict how sick someone is from test result. If doctors do n
 <div id="dealing-with-data-missing-at-random" class="section level3">
 <h3><span class="header-section-number">23.0.1</span> Dealing with data missing at random</h3>
 <p>In the case of categorical variables, a useful approach is to encode missing as a new category and include that in subsequent modeling.</p>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb346-1" data-line-number="1">tb &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;tb.csv&quot;</span>))</a>
-<a class="sourceLine" id="cb346-2" data-line-number="2">tidy_tb &lt;-<span class="st"> </span>tb <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb346-3" data-line-number="3"><span class="st">  </span><span class="kw">gather</span>(demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb346-4" data-line-number="4"><span class="st">  </span><span class="kw">separate</span>(demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb346-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb346-6" data-line-number="6">tidy_tb <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb346-7" data-line-number="7"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">iso2=</span><span class="st">&quot;missing&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb347-1" data-line-number="1">tb &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;tb.csv&quot;</span>))</a>
+<a class="sourceLine" id="cb347-2" data-line-number="2">tidy_tb &lt;-<span class="st"> </span>tb <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb347-3" data-line-number="3"><span class="st">  </span><span class="kw">gather</span>(demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)  <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb347-4" data-line-number="4"><span class="st">  </span><span class="kw">separate</span>(demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb347-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb347-6" data-line-number="6">tidy_tb <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb347-7" data-line-number="7"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">iso2=</span><span class="st">&quot;missing&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 115,380 x 5
 ##    iso2   year sex   age       n
 ##    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
@@ -549,8 +559,8 @@ Suppose we want to predict how sick someone is from test result. If doctors do n
 ## # ... with 115,370 more rows</code></pre>
 <p>In the case of numeric values, we can use a simple method for imputation where we
 replace missing values for a variable with, for instance, the mean of non-missing values</p>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb348-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb348-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">dep_delay=</span><span class="kw">mean</span>(.<span class="op">$</span>dep_delay, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb349-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb349-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">dep_delay=</span><span class="kw">mean</span>(.<span class="op">$</span>dep_delay, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)))</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
@@ -570,16 +580,16 @@ replace missing values for a variable with, for instance, the mean of non-missin
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <p>A more complex method is to replace missing values for a variable predicting from
 other variables when variables are related (we will see linear regression using the <code>lm</code> and <code>predict</code> functions later on)</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb350-1" data-line-number="1">dep_delay_fit &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lm</span>(dep_delay<span class="op">~</span>origin, <span class="dt">data=</span>.)</a>
-<a class="sourceLine" id="cb350-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb350-3" data-line-number="3"><span class="co"># use average delay conditioned on origin airport</span></a>
-<a class="sourceLine" id="cb350-4" data-line-number="4">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb350-5" data-line-number="5"><span class="st">  </span>modelr<span class="op">::</span><span class="kw">add_predictions</span>(dep_delay_fit, <span class="dt">var=</span><span class="st">&quot;pred_delay&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb350-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_fixed =</span> </a>
-<a class="sourceLine" id="cb350-7" data-line-number="7">           <span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.na</span>(dep_delay), dep_delay, </a>
-<a class="sourceLine" id="cb350-8" data-line-number="8">                  pred_delay)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb350-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(origin, dest, dep_delay, dep_delay_fixed) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb350-10" data-line-number="10"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(dep_delay))</a></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb351-1" data-line-number="1">dep_delay_fit &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lm</span>(dep_delay<span class="op">~</span>origin, <span class="dt">data=</span>.)</a>
+<a class="sourceLine" id="cb351-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb351-3" data-line-number="3"><span class="co"># use average delay conditioned on origin airport</span></a>
+<a class="sourceLine" id="cb351-4" data-line-number="4">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb351-5" data-line-number="5"><span class="st">  </span>modelr<span class="op">::</span><span class="kw">add_predictions</span>(dep_delay_fit, <span class="dt">var=</span><span class="st">&quot;pred_delay&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb351-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_fixed =</span> </a>
+<a class="sourceLine" id="cb351-7" data-line-number="7">           <span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.na</span>(dep_delay), dep_delay, </a>
+<a class="sourceLine" id="cb351-8" data-line-number="8">                  pred_delay)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb351-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(origin, dest, dep_delay, dep_delay_fixed) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb351-10" data-line-number="10"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(dep_delay))</a></code></pre></div>
 <pre><code>## # A tibble: 8,255 x 4
 ##    origin dest  dep_delay dep_delay_fixed
 ##    &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;           &lt;dbl&gt;
@@ -596,8 +606,8 @@ other variables when variables are related (we will see linear regression using 
 ## # ... with 8,245 more rows</code></pre>
 <p>In either case, a common approach is to add an additional indicator
 variable stating if numeric missing value was imputed</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb352-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb352-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_missing =</span> <span class="kw">is.na</span>(dep_delay))</a></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb353-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb353-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_missing =</span> <span class="kw">is.na</span>(dep_delay))</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 20
 ##     year month   day dep_time sched_dep_time dep_delay arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;

@@ -444,6 +444,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="31.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>31.5</b> Random Forests</a></li>
 <li class="chapter" data-level="31.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>31.6</b> Tree-based methods summary</a></li>
 </ul></li>
+<li class="chapter" data-level="32" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>32</b> Model Selection</a><ul>
+<li class="chapter" data-level="32.1" data-path="model-selection.html"><a href="model-selection.html#cross-validation"><i class="fa fa-check"></i><b>32.1</b> Cross Validation</a></li>
+<li class="chapter" data-level="32.2" data-path="model-selection.html"><a href="model-selection.html#validation-set"><i class="fa fa-check"></i><b>32.2</b> Validation Set</a></li>
+<li class="chapter" data-level="32.3" data-path="model-selection.html"><a href="model-selection.html#resampled-validation-set"><i class="fa fa-check"></i><b>32.3</b> Resampled validation set</a></li>
+<li class="chapter" data-level="32.4" data-path="model-selection.html"><a href="model-selection.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>32.4</b> Leave-one-out Cross-Validation</a></li>
+<li class="chapter" data-level="32.5" data-path="model-selection.html"><a href="model-selection.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>32.5</b> k-fold Cross-Validation</a></li>
+<li class="chapter" data-level="32.6" data-path="model-selection.html"><a href="model-selection.html#cross-validation-in-classification"><i class="fa fa-check"></i><b>32.6</b> Cross-Validation in Classification</a></li>
+<li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
+<li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -484,49 +494,49 @@ we will concentrate on exploration of single or pairs of variables. Later on in 
 <h2><span class="header-section-number">20.1</span> Visualization of single variables</h2>
 <p>Let’s begin by using R’s basic graphics capabilities which are great for creating quick plots especially for EDA. We will then see <code>ggplot2</code> that requires you to be a bit more thoughtful on data exploration that can lead to good ideas about analysis and modeling.</p>
 <p>Let’s start with a very simple visualization of values of the <code>dep_delay</code> attribute in the flights dataset.</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb283-1" data-line-number="1"><span class="kw">library</span>(nycflights13)</a>
-<a class="sourceLine" id="cb283-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb283-3" data-line-number="3">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb283-4" data-line-number="4"><span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb283-5" data-line-number="5"><span class="st">  </span><span class="kw">rowid_to_column</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb283-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>rowid, <span class="dt">y=</span>dep_delay)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb283-7" data-line-number="7"><span class="st">    </span><span class="kw">geom_point</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" data-line-number="1"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb284-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb284-3" data-line-number="3">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-4" data-line-number="4"><span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-5" data-line-number="5"><span class="st">  </span><span class="kw">rowid_to_column</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>rowid, <span class="dt">y=</span>dep_delay)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb284-7" data-line-number="7"><span class="st">    </span><span class="kw">geom_point</span>() </a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-98-1.png" width="672" /></p>
 <p>That’s not particularly informative since there is no structure to this plot. Let’s sort the values in the plot and change the graphical representation to make easier to see.</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb284-2" data-line-number="2"><span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb284-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(dep_delay) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb284-4" data-line-number="4"><span class="st">  </span><span class="kw">rowid_to_column</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb284-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>rowid, <span class="dt">y=</span>dep_delay)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb284-6" data-line-number="6"><span class="st">    </span><span class="kw">geom_point</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb285-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-2" data-line-number="2"><span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(dep_delay) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-4" data-line-number="4"><span class="st">  </span><span class="kw">rowid_to_column</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb285-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>rowid, <span class="dt">y=</span>dep_delay)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb285-6" data-line-number="6"><span class="st">    </span><span class="kw">geom_point</span>() </a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-99-1.png" width="672" /></p>
 <p>What can we make of that plot now? Start thinking of <em>central tendency</em>, <em>spread</em> and <em>skew</em> as you look at that plot.</p>
 <p>Let’s now create a graphical summary of that variable to incorporate observations made from this initial plot. Let’s start with a <em>histogram</em>: it divides the <em>range</em> of the <code>dep_delay</code> attribute into <strong>equal-sized</strong> bins, then plots the number of observations within each bin. What additional information does this new visualization give us about this variable?</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb285-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb285-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb285-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_histogram</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb286-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb286-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb286-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_histogram</span>() </a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_bin).</code></pre>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-100-1.svg" width="672" /></p>
 <p>The <code>nclass</code> parameter controls the number of bins into which the <code>dep_delay</code> range is divided. Try changing that parameter and see what happens.</p>
 <p>Now, we can (conceptually) make the bins as small as possible and get a smooth curve that describes the <em>distribution</em> of values of the <code>dep_delay</code> variable. We call this a <em>density</em> plot:</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb288-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb288-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb288-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_density</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb289-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb289-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb289-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_density</span>()</a></code></pre></div>
 <pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_density).</code></pre>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-101-1.svg" width="672" /></p>
 <p>Now, one more very useful way of succintly graphically summarizing the distribution of a variable is using a <code>boxplot</code>.</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb290-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb290-2" data-line-number="2"><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>,<span class="dt">y=</span>dep_delay)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb290-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb291-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb291-2" data-line-number="2"><span class="st">   </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>,<span class="dt">y=</span>dep_delay)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb291-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
 <pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-102-1.png" width="672" /></p>
 <p>That’s not very clear to see, so let’s do a transformation of this data to see this better:</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb292-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb292-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">min_delay=</span><span class="kw">min</span>(dep_delay, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb292-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log_dep_delay =</span> <span class="kw">log</span>(dep_delay <span class="op">-</span><span class="st"> </span>min_delay)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb292-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span>log_dep_delay)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb292-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb293-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb293-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">min_delay=</span><span class="kw">min</span>(dep_delay, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb293-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log_dep_delay =</span> <span class="kw">log</span>(dep_delay <span class="op">-</span><span class="st"> </span>min_delay)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb293-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>, <span class="dt">y=</span>log_dep_delay)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb293-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
 <pre><code>## Warning: Removed 8256 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-103-1.png" width="672" /></p>
 <p>So what does this represent:
@@ -538,19 +548,19 @@ we will concentrate on exploration of single or pairs of variables. Later on in 
 <h3><span class="header-section-number">20.1.1</span> Visualization of pairs of variables</h3>
 <p>Now we can start looking at the relationship between pairs of attributes. That is, how are each of the distributional properties we care about (central trend, spread and skew) of the values of an attribute changing based on the value of a different attribute. Suppose we want to see the relationship between <code>dep_delay</code>, a <em>numeric</em> variable, and <code>origin</code>, a <em>categorical</em> variable.</p>
 <p>Previously, we saw use the <code>group_by</code>-<code>summarize</code> operations to compute attribute summaries based on the value of another attribute. We also called this <em>conditioning</em>. In visualization we can start thinking about conditioning as we saw before. Here is how we can see a plot of the distribution of departure delays <em>conditioned</em> on origin airport.</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb294-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb294-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">min_delay =</span> <span class="kw">min</span>(dep_delay, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb294-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log_dep_delay =</span> <span class="kw">log</span>(dep_delay <span class="op">-</span><span class="st"> </span>min_delay)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb294-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>origin, <span class="dt">y=</span>log_dep_delay)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb294-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb295-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb295-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">min_delay =</span> <span class="kw">min</span>(dep_delay, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb295-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log_dep_delay =</span> <span class="kw">log</span>(dep_delay <span class="op">-</span><span class="st"> </span>min_delay)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb295-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>origin, <span class="dt">y=</span>log_dep_delay)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb295-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
 <pre><code>## Warning: Removed 8256 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-104-1.png" width="672" /></p>
 <p>For pairs of continuous variables, the most useful visualization is the scatter plot. This gives an idea of how
 one variable varies (in terms of central trend, variance and skew) conditioned on another variable.</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb296-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb296-2" data-line-number="2"><span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb296-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay, <span class="dt">y=</span>arr_delay)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb296-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb297-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-2" data-line-number="2"><span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb297-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay, <span class="dt">y=</span>arr_delay)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb297-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <pre><code>## Warning: Removed 927 rows containing missing values (geom_point).</code></pre>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-105-1.png" width="672" /></p>
 </div>
@@ -565,16 +575,16 @@ one variable varies (in terms of central trend, variance and skew) conditioned o
 <li>The <em>geometric</em> representation of these attributes</li>
 </ol>
 <p>Let’s start with a simple example:</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb298-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb298-2" data-line-number="2"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb298-3" data-line-number="3"><span class="kw">library</span>(Lahman)</a>
-<a class="sourceLine" id="cb298-4" data-line-number="4">batting &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(Batting)</a>
-<a class="sourceLine" id="cb298-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb298-6" data-line-number="6"><span class="co"># scatter plot of at bats vs. runs for 2010</span></a>
-<a class="sourceLine" id="cb298-7" data-line-number="7">batting <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb298-8" data-line-number="8"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb298-9" data-line-number="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb298-10" data-line-number="10"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb299-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb299-2" data-line-number="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb299-3" data-line-number="3"><span class="kw">library</span>(Lahman)</a>
+<a class="sourceLine" id="cb299-4" data-line-number="4">batting &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(Batting)</a>
+<a class="sourceLine" id="cb299-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb299-6" data-line-number="6"><span class="co"># scatter plot of at bats vs. runs for 2010</span></a>
+<a class="sourceLine" id="cb299-7" data-line-number="7">batting <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb299-8" data-line-number="8"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb299-9" data-line-number="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb299-10" data-line-number="10"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-106-1.svg" width="672" /></p>
 <p><strong>Data</strong>: Batting table filtering for year<br />
 <strong>Aesthetic attributes</strong>:
@@ -583,60 +593,60 @@ one variable varies (in terms of central trend, variance and skew) conditioned o
 <p><strong>Geometric Representation</strong>: points!</p>
 <p>Now, you can cleanly distinguish the constituent parts of the plot.
 E.g., change the geometric representation</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb299-1" data-line-number="1"><span class="co"># scatter plot of at bats vs. runs for 2010</span></a>
-<a class="sourceLine" id="cb299-2" data-line-number="2">batting <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb299-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb299-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R, <span class="dt">label=</span>teamID)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb299-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_text</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb299-6" data-line-number="6"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb300-1" data-line-number="1"><span class="co"># scatter plot of at bats vs. runs for 2010</span></a>
+<a class="sourceLine" id="cb300-2" data-line-number="2">batting <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb300-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb300-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R, <span class="dt">label=</span>teamID)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb300-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_text</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb300-6" data-line-number="6"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-107-1.svg" width="672" /></p>
 <p>E.g., change the data.</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb300-1" data-line-number="1"><span class="co"># scatter plot of at bats vs. runs for 1995</span></a>
-<a class="sourceLine" id="cb300-2" data-line-number="2">batting <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb300-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;1995&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb300-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb300-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb301-1" data-line-number="1"><span class="co"># scatter plot of at bats vs. runs for 1995</span></a>
+<a class="sourceLine" id="cb301-2" data-line-number="2">batting <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb301-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;1995&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb301-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb301-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-108-1.svg" width="672" /></p>
 <p>E.g., change the aesthetic.</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb301-1" data-line-number="1"><span class="co"># scatter plot of at bats vs. hits for 2010</span></a>
-<a class="sourceLine" id="cb301-2" data-line-number="2">batting <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb301-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb301-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>H)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb301-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb302-1" data-line-number="1"><span class="co"># scatter plot of at bats vs. hits for 2010</span></a>
+<a class="sourceLine" id="cb302-2" data-line-number="2">batting <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb302-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb302-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>H)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb302-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-109-1.svg" width="672" /></p>
 <p>Let’s make a line plot</p>
 <p>What do we change? (data, aesthetic or geometry?)</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb302-1" data-line-number="1">batting <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb302-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb302-3" data-line-number="3"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">100</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb302-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>H)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb302-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_line</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb303-1" data-line-number="1">batting <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb303-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb303-3" data-line-number="3"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dv">100</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb303-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>H)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb303-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_line</span>()</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-110-1.svg" width="672" /></p>
 <p>Let’s add a regression line</p>
 <p>What do we add? (data, aesthetic or geometry?)</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb303-1" data-line-number="1">batting <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb303-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb303-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>H)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb303-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb303-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</a></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb304-1" data-line-number="1">batting <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb304-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb304-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>H)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb304-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb304-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-111-1.svg" width="672" /></p>
 <p>What can we see about central trend, variation and skew with this plot?</p>
 <div id="other-aesthetics" class="section level3">
 <h3><span class="header-section-number">20.2.1</span> Other aesthetics</h3>
 <p>Using other aesthetics we can incorporate information from other variables.</p>
 <p>Color: color by categorical variable</p>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb304-1" data-line-number="1">batting <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb304-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb304-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>H, <span class="dt">color=</span>lgID)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb304-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb304-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-112-1.svg" width="672" /></p>
-<p>Size: size by (discrete) numeric variable</p>
 <div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb305-1" data-line-number="1">batting <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb305-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb305-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R, <span class="dt">size=</span>HR)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb305-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>H, <span class="dt">color=</span>lgID)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb305-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb305-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-112-1.svg" width="672" /></p>
+<p>Size: size by (discrete) numeric variable</p>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb306-1" data-line-number="1">batting <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb306-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">==</span><span class="st"> &quot;2010&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb306-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R, <span class="dt">size=</span>HR)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb306-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb306-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-113-1.svg" width="672" /></p>
 </div>
 <div id="faceting" class="section level3">
@@ -644,12 +654,12 @@ E.g., change the geometric representation</p>
 <p>The last major component of exploratory analysis called <code>faceting</code> in visualization,
 corresponds to <code>conditioning</code> in statistical modeling, we’ve seen it as the motivation of <code>grouping</code>
 when wrangling data.</p>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb306-1" data-line-number="1">batting <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb306-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;1995&quot;</span>, <span class="st">&quot;2000&quot;</span>, <span class="st">&quot;2010&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb306-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R, <span class="dt">size=</span>HR)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb306-4" data-line-number="4"><span class="st">  </span><span class="kw">facet_grid</span>(lgID<span class="op">~</span>yearID) <span class="op">+</span></a>
-<a class="sourceLine" id="cb306-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb306-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</a></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb307-1" data-line-number="1">batting <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb307-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(yearID <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;1995&quot;</span>, <span class="st">&quot;2000&quot;</span>, <span class="st">&quot;2010&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb307-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>AB, <span class="dt">y=</span>R, <span class="dt">size=</span>HR)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb307-4" data-line-number="4"><span class="st">  </span><span class="kw">facet_grid</span>(lgID<span class="op">~</span>yearID) <span class="op">+</span></a>
+<a class="sourceLine" id="cb307-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb307-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</a></code></pre></div>
 <p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-114-1.svg" width="672" /></p>
 
 </div>

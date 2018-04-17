@@ -444,6 +444,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="31.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>31.5</b> Random Forests</a></li>
 <li class="chapter" data-level="31.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>31.6</b> Tree-based methods summary</a></li>
 </ul></li>
+<li class="chapter" data-level="32" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>32</b> Model Selection</a><ul>
+<li class="chapter" data-level="32.1" data-path="model-selection.html"><a href="model-selection.html#cross-validation"><i class="fa fa-check"></i><b>32.1</b> Cross Validation</a></li>
+<li class="chapter" data-level="32.2" data-path="model-selection.html"><a href="model-selection.html#validation-set"><i class="fa fa-check"></i><b>32.2</b> Validation Set</a></li>
+<li class="chapter" data-level="32.3" data-path="model-selection.html"><a href="model-selection.html#resampled-validation-set"><i class="fa fa-check"></i><b>32.3</b> Resampled validation set</a></li>
+<li class="chapter" data-level="32.4" data-path="model-selection.html"><a href="model-selection.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>32.4</b> Leave-one-out Cross-Validation</a></li>
+<li class="chapter" data-level="32.5" data-path="model-selection.html"><a href="model-selection.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>32.5</b> k-fold Cross-Validation</a></li>
+<li class="chapter" data-level="32.6" data-path="model-selection.html"><a href="model-selection.html#cross-validation-in-classification"><i class="fa fa-check"></i><b>32.6</b> Cross-Validation in Classification</a></li>
+<li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
+<li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -479,19 +489,19 @@ So, the lower value of the interval will be one where the normal probability dis
 \]</span></p>
 <p>The upper value of the interval is computed with probability <span class="math inline">\(1-(.05/2)\)</span>, which by the symmetry of the normal distribution is given by <span class="math inline">\(\hat{p}_{+} = \hat{p} + -\mathtt{qnorm}(.05/2,0, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}})\)</span>.</p>
 <p>Let’s see how these intervals look for our twitter bot example:</p>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb358-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb358-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb358-3" data-line-number="3">get_estimate &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">p=</span><span class="fl">0.7</span>) <span class="kw">mean</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span>n, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p)))</a>
-<a class="sourceLine" id="cb358-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb358-5" data-line-number="5"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb358-6" data-line-number="6"><span class="co"># let&#39;s construct confidence intervals for samples of size n=10,100,500,1000,10000</span></a>
-<a class="sourceLine" id="cb358-7" data-line-number="7">tab &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sample_size=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">500</span>,<span class="dv">1000</span>,<span class="dv">10000</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">phat =</span> <span class="kw">sapply</span>(sample_size,get_estimate)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">se =</span> <span class="kw">sqrt</span>(phat<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>phat)) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-10" data-line-number="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lower =</span> phat <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb358-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">upper =</span> phat <span class="op">+</span><span class="st"> </span><span class="op">-</span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se))</a>
-<a class="sourceLine" id="cb358-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb358-13" data-line-number="13">knitr<span class="op">::</span><span class="kw">kable</span>(tab)</a></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb359-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb359-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb359-3" data-line-number="3">get_estimate &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">p=</span><span class="fl">0.7</span>) <span class="kw">mean</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span>n, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p)))</a>
+<a class="sourceLine" id="cb359-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb359-5" data-line-number="5"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb359-6" data-line-number="6"><span class="co"># let&#39;s construct confidence intervals for samples of size n=10,100,500,1000,10000</span></a>
+<a class="sourceLine" id="cb359-7" data-line-number="7">tab &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sample_size=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">500</span>,<span class="dv">1000</span>,<span class="dv">10000</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb359-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">phat =</span> <span class="kw">sapply</span>(sample_size,get_estimate)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb359-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">se =</span> <span class="kw">sqrt</span>(phat<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>phat)) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb359-10" data-line-number="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lower =</span> phat <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb359-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">upper =</span> phat <span class="op">+</span><span class="st"> </span><span class="op">-</span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se))</a>
+<a class="sourceLine" id="cb359-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb359-13" data-line-number="13">knitr<span class="op">::</span><span class="kw">kable</span>(tab)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -555,9 +565,9 @@ H_1: \, &amp; p &gt; .5 &amp; \textrm{(alternative)}
 <p><img src="img/testing.png" /></p>
 <p>This 95% rejection threshold is conservative, but somewhat arbitrary. So we use one more metric, <span class="math inline">\(P(|Y| \geq \hat{p})\)</span> (the infamous p-value) to say: we could reject this hypothesis for all thresholds greater than this p-value.</p>
 <p>Let’s see how testing the hypothesis <span class="math inline">\(p &gt; .5\)</span> would look like for our tweet example</p>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb359-1" data-line-number="1">tab &lt;-<span class="st"> </span>tab <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb359-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p_value =</span> <span class="dv">1</span><span class="op">-</span><span class="kw">pnorm</span>(phat, <span class="dt">mean=</span>.<span class="dv">5</span>, <span class="dt">sd=</span>se))</a>
-<a class="sourceLine" id="cb359-3" data-line-number="3">knitr<span class="op">::</span><span class="kw">kable</span>(tab)</a></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb360-1" data-line-number="1">tab &lt;-<span class="st"> </span>tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb360-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p_value =</span> <span class="dv">1</span><span class="op">-</span><span class="kw">pnorm</span>(phat, <span class="dt">mean=</span>.<span class="dv">5</span>, <span class="dt">sd=</span>se))</a>
+<a class="sourceLine" id="cb360-3" data-line-number="3">knitr<span class="op">::</span><span class="kw">kable</span>(tab)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -695,19 +705,19 @@ Variance: <span class="math inline">\(\mathrm{var}(X) = \sigma^2\)</span></p>
 </tbody>
 </table>
 <p>For example, to use these for the Binomial distribution:</p>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb360-1" data-line-number="1"><span class="co"># using n=10, p=.3</span></a>
-<a class="sourceLine" id="cb360-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb360-3" data-line-number="3"><span class="co"># compute probability mass function value for k=4 successess</span></a>
-<a class="sourceLine" id="cb360-4" data-line-number="4"><span class="kw">dbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb360-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb360-6" data-line-number="6"><span class="co"># compute cumulative probability function for k=4 successess</span></a>
-<a class="sourceLine" id="cb360-7" data-line-number="7"><span class="kw">pbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb360-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb360-9" data-line-number="9"><span class="co"># compute the number of success corresponding to the .80th quantile</span></a>
-<a class="sourceLine" id="cb360-10" data-line-number="10"><span class="kw">qbinom</span>(.<span class="dv">8</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb360-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb360-12" data-line-number="12"><span class="co"># generate a random value k</span></a>
-<a class="sourceLine" id="cb360-13" data-line-number="13"><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb361-1" data-line-number="1"><span class="co"># using n=10, p=.3</span></a>
+<a class="sourceLine" id="cb361-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb361-3" data-line-number="3"><span class="co"># compute probability mass function value for k=4 successess</span></a>
+<a class="sourceLine" id="cb361-4" data-line-number="4"><span class="kw">dbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb361-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb361-6" data-line-number="6"><span class="co"># compute cumulative probability function for k=4 successess</span></a>
+<a class="sourceLine" id="cb361-7" data-line-number="7"><span class="kw">pbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb361-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb361-9" data-line-number="9"><span class="co"># compute the number of success corresponding to the .80th quantile</span></a>
+<a class="sourceLine" id="cb361-10" data-line-number="10"><span class="kw">qbinom</span>(.<span class="dv">8</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb361-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb361-12" data-line-number="12"><span class="co"># generate a random value k</span></a>
+<a class="sourceLine" id="cb361-13" data-line-number="13"><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a></code></pre></div>
 
 </div>
 </div>

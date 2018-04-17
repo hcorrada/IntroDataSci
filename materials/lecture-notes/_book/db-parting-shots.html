@@ -444,6 +444,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="31.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>31.5</b> Random Forests</a></li>
 <li class="chapter" data-level="31.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>31.6</b> Tree-based methods summary</a></li>
 </ul></li>
+<li class="chapter" data-level="32" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>32</b> Model Selection</a><ul>
+<li class="chapter" data-level="32.1" data-path="model-selection.html"><a href="model-selection.html#cross-validation"><i class="fa fa-check"></i><b>32.1</b> Cross Validation</a></li>
+<li class="chapter" data-level="32.2" data-path="model-selection.html"><a href="model-selection.html#validation-set"><i class="fa fa-check"></i><b>32.2</b> Validation Set</a></li>
+<li class="chapter" data-level="32.3" data-path="model-selection.html"><a href="model-selection.html#resampled-validation-set"><i class="fa fa-check"></i><b>32.3</b> Resampled validation set</a></li>
+<li class="chapter" data-level="32.4" data-path="model-selection.html"><a href="model-selection.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>32.4</b> Leave-one-out Cross-Validation</a></li>
+<li class="chapter" data-level="32.5" data-path="model-selection.html"><a href="model-selection.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>32.5</b> k-fold Cross-Validation</a></li>
+<li class="chapter" data-level="32.6" data-path="model-selection.html"><a href="model-selection.html#cross-validation-in-classification"><i class="fa fa-check"></i><b>32.6</b> Cross-Validation in Classification</a></li>
+<li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
+<li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -467,9 +477,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">15.1</span> Database Query Optimization</h2>
 <p>Earlier we made the distinction that SQL is a <em>declarative</em> language rather than a <em>procedural</em> language. A reason why data base systems rely on a declarative language is that it allows the system to decide how to <em>evaluate</em> a query <em>most efficiently</em>. Let’s think about this briefly.</p>
 <p>Consider a database where we have two tables <code>Batting</code> and <code>Master</code> and we want to evaluate this query: that <em>what is the maximum batting “average” for a player from the state of California</em>?</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">select</span> <span class="fu">max</span>(<span class="fl">1.0</span> * b.H / b.AB) <span class="kw">as</span> best_ba</a>
-<a class="sourceLine" id="cb145-2" data-line-number="2"><span class="kw">from</span> Batting <span class="kw">as</span> b <span class="kw">join</span> <span class="kw">Master</span> <span class="kw">as</span> m <span class="kw">on</span> b.playerId = m.playerId</a>
-<a class="sourceLine" id="cb145-3" data-line-number="3"><span class="kw">where</span> b.AB &gt;= <span class="dv">100</span> <span class="kw">and</span> m.birthState = <span class="ot">&quot;CA&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="kw">select</span> <span class="fu">max</span>(<span class="fl">1.0</span> * b.H / b.AB) <span class="kw">as</span> best_ba</a>
+<a class="sourceLine" id="cb146-2" data-line-number="2"><span class="kw">from</span> Batting <span class="kw">as</span> b <span class="kw">join</span> <span class="kw">Master</span> <span class="kw">as</span> m <span class="kw">on</span> b.playerId = m.playerId</a>
+<a class="sourceLine" id="cb146-3" data-line-number="3"><span class="kw">where</span> b.AB &gt;= <span class="dv">100</span> <span class="kw">and</span> m.birthState = <span class="ot">&quot;CA&quot;</span></a></code></pre></div>
 <div class="knitsql-table">
 <table>
 <caption><span id="tab:unnamed-chunk-47">Table 15.1: </span>1 records</caption>
@@ -486,24 +496,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <p>Now, let’s do the same computation using <code>dplyr</code> operations:</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="kw">library</span>(Lahman)</a>
-<a class="sourceLine" id="cb146-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1"><span class="kw">library</span>(Lahman)</a>
+<a class="sourceLine" id="cb147-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
 <p>Here is one version that joins the two tables before filtering the rows that are included in the result.</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1">Batting <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb147-2" data-line-number="2"><span class="st">  </span><span class="kw">inner_join</span>(Master, <span class="dt">by=</span><span class="st">&quot;playerID&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb147-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(AB <span class="op">&gt;=</span><span class="st"> </span><span class="dv">100</span>, birthState <span class="op">==</span><span class="st"> &quot;CA&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb147-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">AB=</span><span class="fl">1.0</span> <span class="op">*</span><span class="st"> </span>H <span class="op">/</span><span class="st"> </span>AB) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb147-5" data-line-number="5"><span class="st">  </span><span class="kw">summarize</span>(<span class="kw">max</span>(AB))</a></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1">Batting <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb148-2" data-line-number="2"><span class="st">  </span><span class="kw">inner_join</span>(Master, <span class="dt">by=</span><span class="st">&quot;playerID&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb148-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(AB <span class="op">&gt;=</span><span class="st"> </span><span class="dv">100</span>, birthState <span class="op">==</span><span class="st"> &quot;CA&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb148-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">AB=</span><span class="fl">1.0</span> <span class="op">*</span><span class="st"> </span>H <span class="op">/</span><span class="st"> </span>AB) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb148-5" data-line-number="5"><span class="st">  </span><span class="kw">summarize</span>(<span class="kw">max</span>(AB))</a></code></pre></div>
 <pre><code>##     max(AB)
 ## 1 0.4057018</code></pre>
 <p>Here is a second version that filters the rows of the tables <em>before</em> joining the two tables.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1">Batting <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb149-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(AB <span class="op">&gt;=</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb149-3" data-line-number="3"><span class="st">  </span><span class="kw">inner_join</span>(</a>
-<a class="sourceLine" id="cb149-4" data-line-number="4">    Master <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(birthState <span class="op">==</span><span class="st"> &quot;CA&quot;</span>)</a>
-<a class="sourceLine" id="cb149-5" data-line-number="5">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb149-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">AB =</span> <span class="fl">1.0</span> <span class="op">*</span><span class="st"> </span>H <span class="op">/</span><span class="st"> </span>AB) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb149-7" data-line-number="7"><span class="st">  </span><span class="kw">summarize</span>(<span class="kw">max</span>(AB))</a></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1">Batting <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(AB <span class="op">&gt;=</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-3" data-line-number="3"><span class="st">  </span><span class="kw">inner_join</span>(</a>
+<a class="sourceLine" id="cb150-4" data-line-number="4">    Master <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(birthState <span class="op">==</span><span class="st"> &quot;CA&quot;</span>)</a>
+<a class="sourceLine" id="cb150-5" data-line-number="5">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">AB =</span> <span class="fl">1.0</span> <span class="op">*</span><span class="st"> </span>H <span class="op">/</span><span class="st"> </span>AB) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb150-7" data-line-number="7"><span class="st">  </span><span class="kw">summarize</span>(<span class="kw">max</span>(AB))</a></code></pre></div>
 <pre><code>## Joining, by = &quot;playerID&quot;</code></pre>
 <pre><code>##     max(AB)
 ## 1 0.4057018</code></pre>
@@ -526,79 +536,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="xml-extensible-markup-language" class="section level4">
 <h4><span class="header-section-number">15.2.0.1</span> XML: eXtensible Markup Language</h4>
 <p>Data models like XML rely on flexible, self-describing schemas:</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></a>
-<a class="sourceLine" id="cb152-2" data-line-number="2"><span class="co">&lt;!-- Edited by XMLSpy --&gt;</span></a>
-<a class="sourceLine" id="cb152-3" data-line-number="3"><span class="kw">&lt;CATALOG&gt;</span></a>
-<a class="sourceLine" id="cb152-4" data-line-number="4">  <span class="kw">&lt;CD&gt;</span></a>
-<a class="sourceLine" id="cb152-5" data-line-number="5">    <span class="kw">&lt;TITLE&gt;</span>Empire Burlesque<span class="kw">&lt;/TITLE&gt;</span></a>
-<a class="sourceLine" id="cb152-6" data-line-number="6">    <span class="kw">&lt;ARTIST&gt;</span>Bob Dylan<span class="kw">&lt;/ARTIST&gt;</span></a>
-<a class="sourceLine" id="cb152-7" data-line-number="7">    <span class="kw">&lt;COUNTRY&gt;</span>USA<span class="kw">&lt;/COUNTRY&gt;</span></a>
-<a class="sourceLine" id="cb152-8" data-line-number="8">    <span class="kw">&lt;COMPANY&gt;</span>Columbia<span class="kw">&lt;/COMPANY&gt;</span></a>
-<a class="sourceLine" id="cb152-9" data-line-number="9">    <span class="kw">&lt;PRICE&gt;</span>10.90<span class="kw">&lt;/PRICE&gt;</span></a>
-<a class="sourceLine" id="cb152-10" data-line-number="10">    <span class="kw">&lt;YEAR&gt;</span>1985<span class="kw">&lt;/YEAR&gt;</span></a>
-<a class="sourceLine" id="cb152-11" data-line-number="11">  <span class="kw">&lt;/CD&gt;</span></a>
-<a class="sourceLine" id="cb152-12" data-line-number="12">  <span class="kw">&lt;CD&gt;</span></a>
-<a class="sourceLine" id="cb152-13" data-line-number="13">    <span class="kw">&lt;TITLE&gt;</span>Hide your heart<span class="kw">&lt;/TITLE&gt;</span></a>
-<a class="sourceLine" id="cb152-14" data-line-number="14">    <span class="kw">&lt;ARTIST&gt;</span>Bonnie Tyler<span class="kw">&lt;/ARTIST&gt;</span></a>
-<a class="sourceLine" id="cb152-15" data-line-number="15">    <span class="kw">&lt;COUNTRY&gt;</span>UK<span class="kw">&lt;/COUNTRY&gt;</span></a>
-<a class="sourceLine" id="cb152-16" data-line-number="16">    <span class="kw">&lt;COMPANY&gt;</span>CBS Records<span class="kw">&lt;/COMPANY&gt;</span></a>
-<a class="sourceLine" id="cb152-17" data-line-number="17">    <span class="kw">&lt;PRICE&gt;</span>9.90<span class="kw">&lt;/PRICE&gt;</span></a>
-<a class="sourceLine" id="cb152-18" data-line-number="18">    <span class="kw">&lt;YEAR&gt;</span>1988<span class="kw">&lt;/YEAR&gt;</span></a>
-<a class="sourceLine" id="cb152-19" data-line-number="19">  <span class="kw">&lt;/CD&gt;</span></a>
-<a class="sourceLine" id="cb152-20" data-line-number="20">  ...</a></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></a>
+<a class="sourceLine" id="cb153-2" data-line-number="2"><span class="co">&lt;!-- Edited by XMLSpy --&gt;</span></a>
+<a class="sourceLine" id="cb153-3" data-line-number="3"><span class="kw">&lt;CATALOG&gt;</span></a>
+<a class="sourceLine" id="cb153-4" data-line-number="4">  <span class="kw">&lt;CD&gt;</span></a>
+<a class="sourceLine" id="cb153-5" data-line-number="5">    <span class="kw">&lt;TITLE&gt;</span>Empire Burlesque<span class="kw">&lt;/TITLE&gt;</span></a>
+<a class="sourceLine" id="cb153-6" data-line-number="6">    <span class="kw">&lt;ARTIST&gt;</span>Bob Dylan<span class="kw">&lt;/ARTIST&gt;</span></a>
+<a class="sourceLine" id="cb153-7" data-line-number="7">    <span class="kw">&lt;COUNTRY&gt;</span>USA<span class="kw">&lt;/COUNTRY&gt;</span></a>
+<a class="sourceLine" id="cb153-8" data-line-number="8">    <span class="kw">&lt;COMPANY&gt;</span>Columbia<span class="kw">&lt;/COMPANY&gt;</span></a>
+<a class="sourceLine" id="cb153-9" data-line-number="9">    <span class="kw">&lt;PRICE&gt;</span>10.90<span class="kw">&lt;/PRICE&gt;</span></a>
+<a class="sourceLine" id="cb153-10" data-line-number="10">    <span class="kw">&lt;YEAR&gt;</span>1985<span class="kw">&lt;/YEAR&gt;</span></a>
+<a class="sourceLine" id="cb153-11" data-line-number="11">  <span class="kw">&lt;/CD&gt;</span></a>
+<a class="sourceLine" id="cb153-12" data-line-number="12">  <span class="kw">&lt;CD&gt;</span></a>
+<a class="sourceLine" id="cb153-13" data-line-number="13">    <span class="kw">&lt;TITLE&gt;</span>Hide your heart<span class="kw">&lt;/TITLE&gt;</span></a>
+<a class="sourceLine" id="cb153-14" data-line-number="14">    <span class="kw">&lt;ARTIST&gt;</span>Bonnie Tyler<span class="kw">&lt;/ARTIST&gt;</span></a>
+<a class="sourceLine" id="cb153-15" data-line-number="15">    <span class="kw">&lt;COUNTRY&gt;</span>UK<span class="kw">&lt;/COUNTRY&gt;</span></a>
+<a class="sourceLine" id="cb153-16" data-line-number="16">    <span class="kw">&lt;COMPANY&gt;</span>CBS Records<span class="kw">&lt;/COMPANY&gt;</span></a>
+<a class="sourceLine" id="cb153-17" data-line-number="17">    <span class="kw">&lt;PRICE&gt;</span>9.90<span class="kw">&lt;/PRICE&gt;</span></a>
+<a class="sourceLine" id="cb153-18" data-line-number="18">    <span class="kw">&lt;YEAR&gt;</span>1988<span class="kw">&lt;/YEAR&gt;</span></a>
+<a class="sourceLine" id="cb153-19" data-line-number="19">  <span class="kw">&lt;/CD&gt;</span></a>
+<a class="sourceLine" id="cb153-20" data-line-number="20">  ...</a></code></pre></div>
 </div>
 <div id="json-javascript-object-notation" class="section level4">
 <h4><span class="header-section-number">15.2.0.2</span> JSON: Javascript Object Notation</h4>
 <p>Very similar to XML and seems to be replacing it for many purposes</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="fu">{</span></a>
-<a class="sourceLine" id="cb153-2" data-line-number="2">  <span class="dt">&quot;firstName&quot;</span><span class="fu">:</span> <span class="st">&quot;John&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb153-3" data-line-number="3">  <span class="dt">&quot;lastName&quot;</span><span class="fu">:</span> <span class="st">&quot;Smith&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb153-4" data-line-number="4">  <span class="dt">&quot;isAlive&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb153-5" data-line-number="5">  <span class="dt">&quot;age&quot;</span><span class="fu">:</span> <span class="dv">25</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb153-6" data-line-number="6">  <span class="dt">&quot;height_cm&quot;</span><span class="fu">:</span> <span class="fl">167.6</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb153-7" data-line-number="7">  <span class="dt">&quot;address&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
-<a class="sourceLine" id="cb153-8" data-line-number="8">    <span class="dt">&quot;streetAddress&quot;</span><span class="fu">:</span> <span class="st">&quot;21 2nd Street&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb153-9" data-line-number="9">    <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;New York&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb153-10" data-line-number="10">    <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;NY&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb153-11" data-line-number="11">    <span class="dt">&quot;postalCode&quot;</span><span class="fu">:</span> <span class="st">&quot;10021-3100&quot;</span></a>
-<a class="sourceLine" id="cb153-12" data-line-number="12">  <span class="fu">},</span></a>
-<a class="sourceLine" id="cb153-13" data-line-number="13">  <span class="dt">&quot;phoneNumbers&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
-<a class="sourceLine" id="cb153-14" data-line-number="14">    <span class="fu">{</span></a>
-<a class="sourceLine" id="cb153-15" data-line-number="15">      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;home&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb153-16" data-line-number="16">      <span class="dt">&quot;number&quot;</span><span class="fu">:</span> <span class="st">&quot;212 555-1234&quot;</span></a>
-<a class="sourceLine" id="cb153-17" data-line-number="17">    <span class="fu">}</span><span class="ot">,</span></a>
-<a class="sourceLine" id="cb153-18" data-line-number="18">    <span class="fu">{</span></a>
-<a class="sourceLine" id="cb153-19" data-line-number="19">      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;office&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb153-20" data-line-number="20">      <span class="dt">&quot;number&quot;</span><span class="fu">:</span> <span class="st">&quot;646 555-4567&quot;</span></a>
-<a class="sourceLine" id="cb153-21" data-line-number="21">    <span class="fu">}</span></a>
-<a class="sourceLine" id="cb153-22" data-line-number="22">  <span class="ot">]</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb153-23" data-line-number="23">  <span class="dt">&quot;children&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb153-24" data-line-number="24">  <span class="dt">&quot;spouse&quot;</span><span class="fu">:</span> <span class="kw">null</span></a>
-<a class="sourceLine" id="cb153-25" data-line-number="25"><span class="fu">}</span></a></code></pre></div>
-<p>This is the format most contemporary data REST APIs use to transfer data. For instance, here is part of a JSON record from a Twitter stream:</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb154-1" data-line-number="1"><span class="fu">{</span></a>
-<a class="sourceLine" id="cb154-2" data-line-number="2">  <span class="dt">&quot;created_at&quot;</span><span class="fu">:</span><span class="st">&quot;Sun May 05 14:01:34+00002013&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-3" data-line-number="3">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">331046012875583488</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-4" data-line-number="4">  <span class="dt">&quot;id_str&quot;</span><span class="fu">:</span><span class="st">&quot;331046012875583488&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-5" data-line-number="5">  <span class="dt">&quot;text&quot;</span><span class="fu">:</span><span class="st">&quot;</span><span class="ch">\u0425\u043e\u0447\u0443</span><span class="st">, </span><span class="ch">\u0447\u0442\u043e\u0431</span><span class="st"> </span><span class="ch">\u0442\u044b</span><span class="st"> </span><span class="ch">\u0441\u0434\u0435\u043b\u0430\u043b</span><span class="st"> </span><span class="ch">\u0432\u0441\u0451</span><span class="st"> </span><span class="ch">\u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e\u0435</span><span class="st">.</span><span class="ch">\n</span><span class="st"> </span><span class="ch">\\</span><span class="st">,,</span><span class="ch">\\</span><span class="st"> *_* </span><span class="ch">\/</span><span class="st">,,</span><span class="ch">\/</span><span class="st">&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-6" data-line-number="6">  <span class="dt">&quot;source&quot;</span><span class="fu">:</span><span class="st">&quot;</span><span class="ch">\u003c</span><span class="st">a href=</span><span class="ch">\&quot;</span><span class="st">http:</span><span class="ch">\/\/</span><span class="st">twitterfeed.com</span><span class="ch">\&quot;</span><span class="st">rel=</span><span class="ch">\&quot;</span><span class="st">nofollow</span><span class="ch">\&quot;\u003e</span><span class="st">twitterfeed</span><span class="ch">\u003c\/</span><span class="st">a</span><span class="ch">\u003e</span><span class="st">&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-7" data-line-number="7">  <span class="dt">&quot;in_reply_to_user_id_str&quot;</span><span class="fu">:</span><span class="kw">null</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-8" data-line-number="8">  <span class="dt">&quot;user&quot;</span><span class="fu">:{</span></a>
-<a class="sourceLine" id="cb154-9" data-line-number="9">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">548422428</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-10" data-line-number="10">    <span class="dt">&quot;id_str&quot;</span><span class="fu">:</span><span class="st">&quot;548422428&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-11" data-line-number="11">    <span class="dt">&quot;name&quot;</span><span class="fu">:</span><span class="st">&quot;</span><span class="ch">\u0410\u0439\u0433\u0435\u0440\u0438\u043c</span><span class="st"> </span><span class="ch">\u041f\u043e\u0433\u043e\u0434\u0438\u043d\u0430</span><span class="st">&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-12" data-line-number="12">    <span class="dt">&quot;screen_name&quot;</span><span class="fu">:</span><span class="st">&quot;paddybyrny&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-13" data-line-number="13">    <span class="dt">&quot;location&quot;</span><span class="fu">:</span><span class="st">&quot;</span><span class="ch">\u0420\u043e\u0441\u0441\u0438\u044f</span><span class="st">;</span><span class="ch">\u0412\u043b\u0430\u0434\u0438\u0432\u043e\u0441\u0442\u043e\u043a</span><span class="st">&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-14" data-line-number="14">    <span class="dt">&quot;followers_count&quot;</span><span class="fu">:</span><span class="dv">4188</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-15" data-line-number="15">    <span class="dt">&quot;friends_count&quot;</span><span class="fu">:</span><span class="dv">4281</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-16" data-line-number="16">    <span class="dt">&quot;lang&quot;</span><span class="fu">:</span><span class="st">&quot;en&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-17" data-line-number="17">    <span class="dt">&quot;profile_background_image_url&quot;</span><span class="fu">:</span><span class="st">&quot;http:</span><span class="ch">\/\/</span><span class="st">a0.twimg.com</span><span class="ch">\/</span><span class="st">images</span><span class="ch">\/</span><span class="st">themes</span><span class="ch">\/</span><span class="st">theme1</span><span class="ch">\/</span><span class="st">bg.png&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-18" data-line-number="18">  <span class="fu">},</span></a>
-<a class="sourceLine" id="cb154-19" data-line-number="19">  <span class="dt">&quot;geo&quot;</span><span class="fu">:</span><span class="kw">null</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-20" data-line-number="20">  <span class="dt">&quot;coordinates&quot;</span><span class="fu">:</span><span class="kw">null</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb154-21" data-line-number="21">  <span class="dt">&quot;entities&quot;</span><span class="fu">:{</span></a>
-<a class="sourceLine" id="cb154-22" data-line-number="22">    <span class="dt">&quot;hashtags&quot;</span><span class="fu">:</span><span class="ot">[]</span><span class="fu">,</span><span class="dt">&quot;symbols&quot;</span><span class="fu">:</span><span class="ot">[]</span><span class="fu">,</span><span class="dt">&quot;urls&quot;</span><span class="fu">:</span><span class="ot">[]</span><span class="fu">,</span><span class="dt">&quot;user_mentions&quot;</span><span class="fu">:</span><span class="ot">[]</span></a>
-<a class="sourceLine" id="cb154-23" data-line-number="23">  <span class="fu">},</span><span class="dt">&quot;favorited&quot;</span><span class="fu">:</span><span class="kw">false</span><span class="fu">,</span><span class="dt">&quot;retweeted&quot;</span><span class="fu">:</span><span class="kw">false</span><span class="fu">,</span><span class="dt">&quot;filter_level&quot;</span><span class="fu">:</span><span class="st">&quot;medium&quot;</span><span class="fu">,</span><span class="dt">&quot;lang&quot;</span><span class="fu">:</span><span class="st">&quot;ru&quot;</span><span class="fu">}</span></a></code></pre></div>
+<a class="sourceLine" id="cb154-2" data-line-number="2">  <span class="dt">&quot;firstName&quot;</span><span class="fu">:</span> <span class="st">&quot;John&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb154-3" data-line-number="3">  <span class="dt">&quot;lastName&quot;</span><span class="fu">:</span> <span class="st">&quot;Smith&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb154-4" data-line-number="4">  <span class="dt">&quot;isAlive&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb154-5" data-line-number="5">  <span class="dt">&quot;age&quot;</span><span class="fu">:</span> <span class="dv">25</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb154-6" data-line-number="6">  <span class="dt">&quot;height_cm&quot;</span><span class="fu">:</span> <span class="fl">167.6</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb154-7" data-line-number="7">  <span class="dt">&quot;address&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb154-8" data-line-number="8">    <span class="dt">&quot;streetAddress&quot;</span><span class="fu">:</span> <span class="st">&quot;21 2nd Street&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb154-9" data-line-number="9">    <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;New York&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb154-10" data-line-number="10">    <span class="dt">&quot;state&quot;</span><span class="fu">:</span> <span class="st">&quot;NY&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb154-11" data-line-number="11">    <span class="dt">&quot;postalCode&quot;</span><span class="fu">:</span> <span class="st">&quot;10021-3100&quot;</span></a>
+<a class="sourceLine" id="cb154-12" data-line-number="12">  <span class="fu">},</span></a>
+<a class="sourceLine" id="cb154-13" data-line-number="13">  <span class="dt">&quot;phoneNumbers&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb154-14" data-line-number="14">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb154-15" data-line-number="15">      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;home&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb154-16" data-line-number="16">      <span class="dt">&quot;number&quot;</span><span class="fu">:</span> <span class="st">&quot;212 555-1234&quot;</span></a>
+<a class="sourceLine" id="cb154-17" data-line-number="17">    <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb154-18" data-line-number="18">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb154-19" data-line-number="19">      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;office&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb154-20" data-line-number="20">      <span class="dt">&quot;number&quot;</span><span class="fu">:</span> <span class="st">&quot;646 555-4567&quot;</span></a>
+<a class="sourceLine" id="cb154-21" data-line-number="21">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb154-22" data-line-number="22">  <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb154-23" data-line-number="23">  <span class="dt">&quot;children&quot;</span><span class="fu">:</span> <span class="ot">[]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb154-24" data-line-number="24">  <span class="dt">&quot;spouse&quot;</span><span class="fu">:</span> <span class="kw">null</span></a>
+<a class="sourceLine" id="cb154-25" data-line-number="25"><span class="fu">}</span></a></code></pre></div>
+<p>This is the format most contemporary data REST APIs use to transfer data. For instance, here is part of a JSON record from a Twitter stream:</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb155-1" data-line-number="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb155-2" data-line-number="2">  <span class="dt">&quot;created_at&quot;</span><span class="fu">:</span><span class="st">&quot;Sun May 05 14:01:34+00002013&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-3" data-line-number="3">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">331046012875583488</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-4" data-line-number="4">  <span class="dt">&quot;id_str&quot;</span><span class="fu">:</span><span class="st">&quot;331046012875583488&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-5" data-line-number="5">  <span class="dt">&quot;text&quot;</span><span class="fu">:</span><span class="st">&quot;</span><span class="ch">\u0425\u043e\u0447\u0443</span><span class="st">, </span><span class="ch">\u0447\u0442\u043e\u0431</span><span class="st"> </span><span class="ch">\u0442\u044b</span><span class="st"> </span><span class="ch">\u0441\u0434\u0435\u043b\u0430\u043b</span><span class="st"> </span><span class="ch">\u0432\u0441\u0451</span><span class="st"> </span><span class="ch">\u043d\u0435\u043e\u0431\u0445\u043e\u0434\u0438\u043c\u043e\u0435</span><span class="st">.</span><span class="ch">\n</span><span class="st"> </span><span class="ch">\\</span><span class="st">,,</span><span class="ch">\\</span><span class="st"> *_* </span><span class="ch">\/</span><span class="st">,,</span><span class="ch">\/</span><span class="st">&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-6" data-line-number="6">  <span class="dt">&quot;source&quot;</span><span class="fu">:</span><span class="st">&quot;</span><span class="ch">\u003c</span><span class="st">a href=</span><span class="ch">\&quot;</span><span class="st">http:</span><span class="ch">\/\/</span><span class="st">twitterfeed.com</span><span class="ch">\&quot;</span><span class="st">rel=</span><span class="ch">\&quot;</span><span class="st">nofollow</span><span class="ch">\&quot;\u003e</span><span class="st">twitterfeed</span><span class="ch">\u003c\/</span><span class="st">a</span><span class="ch">\u003e</span><span class="st">&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-7" data-line-number="7">  <span class="dt">&quot;in_reply_to_user_id_str&quot;</span><span class="fu">:</span><span class="kw">null</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-8" data-line-number="8">  <span class="dt">&quot;user&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb155-9" data-line-number="9">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">548422428</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-10" data-line-number="10">    <span class="dt">&quot;id_str&quot;</span><span class="fu">:</span><span class="st">&quot;548422428&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-11" data-line-number="11">    <span class="dt">&quot;name&quot;</span><span class="fu">:</span><span class="st">&quot;</span><span class="ch">\u0410\u0439\u0433\u0435\u0440\u0438\u043c</span><span class="st"> </span><span class="ch">\u041f\u043e\u0433\u043e\u0434\u0438\u043d\u0430</span><span class="st">&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-12" data-line-number="12">    <span class="dt">&quot;screen_name&quot;</span><span class="fu">:</span><span class="st">&quot;paddybyrny&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-13" data-line-number="13">    <span class="dt">&quot;location&quot;</span><span class="fu">:</span><span class="st">&quot;</span><span class="ch">\u0420\u043e\u0441\u0441\u0438\u044f</span><span class="st">;</span><span class="ch">\u0412\u043b\u0430\u0434\u0438\u0432\u043e\u0441\u0442\u043e\u043a</span><span class="st">&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-14" data-line-number="14">    <span class="dt">&quot;followers_count&quot;</span><span class="fu">:</span><span class="dv">4188</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-15" data-line-number="15">    <span class="dt">&quot;friends_count&quot;</span><span class="fu">:</span><span class="dv">4281</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-16" data-line-number="16">    <span class="dt">&quot;lang&quot;</span><span class="fu">:</span><span class="st">&quot;en&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-17" data-line-number="17">    <span class="dt">&quot;profile_background_image_url&quot;</span><span class="fu">:</span><span class="st">&quot;http:</span><span class="ch">\/\/</span><span class="st">a0.twimg.com</span><span class="ch">\/</span><span class="st">images</span><span class="ch">\/</span><span class="st">themes</span><span class="ch">\/</span><span class="st">theme1</span><span class="ch">\/</span><span class="st">bg.png&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-18" data-line-number="18">  <span class="fu">},</span></a>
+<a class="sourceLine" id="cb155-19" data-line-number="19">  <span class="dt">&quot;geo&quot;</span><span class="fu">:</span><span class="kw">null</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-20" data-line-number="20">  <span class="dt">&quot;coordinates&quot;</span><span class="fu">:</span><span class="kw">null</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb155-21" data-line-number="21">  <span class="dt">&quot;entities&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb155-22" data-line-number="22">    <span class="dt">&quot;hashtags&quot;</span><span class="fu">:</span><span class="ot">[]</span><span class="fu">,</span><span class="dt">&quot;symbols&quot;</span><span class="fu">:</span><span class="ot">[]</span><span class="fu">,</span><span class="dt">&quot;urls&quot;</span><span class="fu">:</span><span class="ot">[]</span><span class="fu">,</span><span class="dt">&quot;user_mentions&quot;</span><span class="fu">:</span><span class="ot">[]</span></a>
+<a class="sourceLine" id="cb155-23" data-line-number="23">  <span class="fu">},</span><span class="dt">&quot;favorited&quot;</span><span class="fu">:</span><span class="kw">false</span><span class="fu">,</span><span class="dt">&quot;retweeted&quot;</span><span class="fu">:</span><span class="kw">false</span><span class="fu">,</span><span class="dt">&quot;filter_level&quot;</span><span class="fu">:</span><span class="st">&quot;medium&quot;</span><span class="fu">,</span><span class="dt">&quot;lang&quot;</span><span class="fu">:</span><span class="st">&quot;ru&quot;</span><span class="fu">}</span></a></code></pre></div>
 
 </div>
 </div>
