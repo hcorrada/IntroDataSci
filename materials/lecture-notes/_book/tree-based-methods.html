@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="solving-linear-ml-problems.html">
-
+<link rel="next" href="model-selection.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -47,6 +47,9 @@
 
 
 
+<script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
+<link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+<script src="libs/str_view-binding-1.3.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -181,261 +184,275 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.7" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.7</b> Literate Programming</a></li>
 <li class="chapter" data-level="4.8" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#finishing-your-setup"><i class="fa fa-check"></i><b>4.8</b> Finishing your setup</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html"><i class="fa fa-check"></i>(Part) Data representation modeling, ingestion and cleaning</a><ul>
-<li class="chapter" data-level="4.9" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#a-data-analysis-to-get-us-going"><i class="fa fa-check"></i><b>4.9</b> A data analysis to get us going</a></li>
-<li class="chapter" data-level="4.10" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#getting-data"><i class="fa fa-check"></i><b>4.10</b> Getting data</a><ul>
-<li class="chapter" data-level="4.10.1" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#names-values-and-functions-1"><i class="fa fa-check"></i><b>4.10.1</b> Names, values and functions</a></li>
+<li class="chapter" data-level="" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html"><i class="fa fa-check"></i>(Part) Data representation modeling, ingestion and cleaning</a></li>
+<li class="chapter" data-level="5" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html"><i class="fa fa-check"></i><b>5</b> Measurements and Data Types</a><ul>
+<li class="chapter" data-level="5.1" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#a-data-analysis-to-get-us-going"><i class="fa fa-check"></i><b>5.1</b> A data analysis to get us going</a></li>
+<li class="chapter" data-level="5.2" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#getting-data"><i class="fa fa-check"></i><b>5.2</b> Getting data</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#names-values-and-functions-1"><i class="fa fa-check"></i><b>5.2.1</b> Names, values and functions</a></li>
 </ul></li>
-<li class="chapter" data-level="4.11" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#entities-and-attributes"><i class="fa fa-check"></i><b>4.11</b> Entities and attributes</a></li>
-<li class="chapter" data-level="4.12" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#categorical-attributes"><i class="fa fa-check"></i><b>4.12</b> Categorical attributes</a><ul>
-<li class="chapter" data-level="4.12.1" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#factors-in-r"><i class="fa fa-check"></i><b>4.12.1</b> Factors in R</a></li>
+<li class="chapter" data-level="5.3" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#entities-and-attributes"><i class="fa fa-check"></i><b>5.3</b> Entities and attributes</a></li>
+<li class="chapter" data-level="5.4" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#categorical-attributes"><i class="fa fa-check"></i><b>5.4</b> Categorical attributes</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#factors-in-r"><i class="fa fa-check"></i><b>5.4.1</b> Factors in R</a></li>
 </ul></li>
-<li class="chapter" data-level="4.13" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#discrete-numeric-attributes"><i class="fa fa-check"></i><b>4.13</b> Discrete numeric attributes</a></li>
-<li class="chapter" data-level="4.14" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#continuous-numeric-data"><i class="fa fa-check"></i><b>4.14</b> Continuous numeric data</a></li>
-<li class="chapter" data-level="4.15" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#other-examples"><i class="fa fa-check"></i><b>4.15</b> Other examples</a></li>
-<li class="chapter" data-level="4.16" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#other-important-datatypes"><i class="fa fa-check"></i><b>4.16</b> Other important datatypes</a></li>
-<li class="chapter" data-level="4.17" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html#units"><i class="fa fa-check"></i><b>4.17</b> Units</a></li>
+<li class="chapter" data-level="5.5" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#discrete-numeric-attributes"><i class="fa fa-check"></i><b>5.5</b> Discrete numeric attributes</a></li>
+<li class="chapter" data-level="5.6" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#continuous-numeric-data"><i class="fa fa-check"></i><b>5.6</b> Continuous numeric data</a></li>
+<li class="chapter" data-level="5.7" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#other-examples"><i class="fa fa-check"></i><b>5.7</b> Other examples</a></li>
+<li class="chapter" data-level="5.8" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#other-important-datatypes"><i class="fa fa-check"></i><b>5.8</b> Other important datatypes</a></li>
+<li class="chapter" data-level="5.9" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#units"><i class="fa fa-check"></i><b>5.9</b> Units</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html"><i class="fa fa-check"></i><b>5</b> Principles: Basic Operations</a><ul>
-<li class="chapter" data-level="5.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-attributes"><i class="fa fa-check"></i><b>5.1</b> Operations that select attributes</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#select"><i class="fa fa-check"></i><b>5.1.1</b> <code>select</code></a></li>
-<li class="chapter" data-level="5.1.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#rename"><i class="fa fa-check"></i><b>5.1.2</b> <code>rename</code></a></li>
+<li class="chapter" data-level="6" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html"><i class="fa fa-check"></i><b>6</b> Principles: Basic Operations</a><ul>
+<li class="chapter" data-level="6.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-attributes"><i class="fa fa-check"></i><b>6.1</b> Operations that select attributes</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#select"><i class="fa fa-check"></i><b>6.1.1</b> <code>select</code></a></li>
+<li class="chapter" data-level="6.1.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#rename"><i class="fa fa-check"></i><b>6.1.2</b> <code>rename</code></a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-entities"><i class="fa fa-check"></i><b>5.2</b> Operations that select entities</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#slice"><i class="fa fa-check"></i><b>5.2.1</b> <code>slice</code></a></li>
-<li class="chapter" data-level="5.2.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#filter"><i class="fa fa-check"></i><b>5.2.2</b> <code>filter</code></a></li>
-<li class="chapter" data-level="5.2.3" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#sample_n-and-sample_frac"><i class="fa fa-check"></i><b>5.2.3</b> <code>sample_n</code> and <code>sample_frac</code></a></li>
+<li class="chapter" data-level="6.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-entities"><i class="fa fa-check"></i><b>6.2</b> Operations that select entities</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#slice"><i class="fa fa-check"></i><b>6.2.1</b> <code>slice</code></a></li>
+<li class="chapter" data-level="6.2.2" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#filter"><i class="fa fa-check"></i><b>6.2.2</b> <code>filter</code></a></li>
+<li class="chapter" data-level="6.2.3" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#sample_n-and-sample_frac"><i class="fa fa-check"></i><b>6.2.3</b> <code>sample_n</code> and <code>sample_frac</code></a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#pipelines-of-operations"><i class="fa fa-check"></i><b>5.3</b> Pipelines of operations</a></li>
+<li class="chapter" data-level="6.3" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#pipelines-of-operations"><i class="fa fa-check"></i><b>6.3</b> Pipelines of operations</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="principles-more-operations.html"><a href="principles-more-operations.html"><i class="fa fa-check"></i><b>6</b> Principles: More Operations</a><ul>
-<li class="chapter" data-level="6.1" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-sort-entities"><i class="fa fa-check"></i><b>6.1</b> Operations that sort entities</a></li>
-<li class="chapter" data-level="6.2" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-create-new-attributes"><i class="fa fa-check"></i><b>6.2</b> Operations that create new attributes</a></li>
-<li class="chapter" data-level="6.3" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-summarize-attribute-values-over-entities"><i class="fa fa-check"></i><b>6.3</b> Operations that summarize attribute values over entities</a></li>
-<li class="chapter" data-level="6.4" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-group-entities"><i class="fa fa-check"></i><b>6.4</b> Operations that group entities</a></li>
-<li class="chapter" data-level="6.5" data-path="principles-more-operations.html"><a href="principles-more-operations.html#vectors"><i class="fa fa-check"></i><b>6.5</b> Vectors</a></li>
-<li class="chapter" data-level="6.6" data-path="principles-more-operations.html"><a href="principles-more-operations.html#attributes-as-vectors"><i class="fa fa-check"></i><b>6.6</b> Attributes as vectors</a></li>
-<li class="chapter" data-level="6.7" data-path="principles-more-operations.html"><a href="principles-more-operations.html#functions"><i class="fa fa-check"></i><b>6.7</b> Functions</a></li>
+<li class="chapter" data-level="7" data-path="principles-more-operations.html"><a href="principles-more-operations.html"><i class="fa fa-check"></i><b>7</b> Principles: More Operations</a><ul>
+<li class="chapter" data-level="7.1" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-sort-entities"><i class="fa fa-check"></i><b>7.1</b> Operations that sort entities</a></li>
+<li class="chapter" data-level="7.2" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-create-new-attributes"><i class="fa fa-check"></i><b>7.2</b> Operations that create new attributes</a></li>
+<li class="chapter" data-level="7.3" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-summarize-attribute-values-over-entities"><i class="fa fa-check"></i><b>7.3</b> Operations that summarize attribute values over entities</a></li>
+<li class="chapter" data-level="7.4" data-path="principles-more-operations.html"><a href="principles-more-operations.html#operations-that-group-entities"><i class="fa fa-check"></i><b>7.4</b> Operations that group entities</a></li>
+<li class="chapter" data-level="7.5" data-path="principles-more-operations.html"><a href="principles-more-operations.html#vectors"><i class="fa fa-check"></i><b>7.5</b> Vectors</a></li>
+<li class="chapter" data-level="7.6" data-path="principles-more-operations.html"><a href="principles-more-operations.html#attributes-as-vectors"><i class="fa fa-check"></i><b>7.6</b> Attributes as vectors</a></li>
+<li class="chapter" data-level="7.7" data-path="principles-more-operations.html"><a href="principles-more-operations.html#functions"><i class="fa fa-check"></i><b>7.7</b> Functions</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html"><i class="fa fa-check"></i><b>7</b> Basic plotting with <code>ggplot</code></a><ul>
-<li class="chapter" data-level="7.1" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#plot-construction-details"><i class="fa fa-check"></i><b>7.1</b> Plot Construction Details</a><ul>
-<li class="chapter" data-level="7.1.1" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#mappings"><i class="fa fa-check"></i><b>7.1.1</b> Mappings</a></li>
-<li class="chapter" data-level="7.1.2" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#representations"><i class="fa fa-check"></i><b>7.1.2</b> Representations</a></li>
+<li class="chapter" data-level="8" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html"><i class="fa fa-check"></i><b>8</b> Basic plotting with <code>ggplot</code></a><ul>
+<li class="chapter" data-level="8.1" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#plot-construction-details"><i class="fa fa-check"></i><b>8.1</b> Plot Construction Details</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#mappings"><i class="fa fa-check"></i><b>8.1.1</b> Mappings</a></li>
+<li class="chapter" data-level="8.1.2" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#representations"><i class="fa fa-check"></i><b>8.1.2</b> Representations</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#frequently-used-plots"><i class="fa fa-check"></i><b>7.2</b> Frequently Used Plots</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#scatter-plot"><i class="fa fa-check"></i><b>7.2.1</b> Scatter plot</a></li>
-<li class="chapter" data-level="7.2.2" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#bar-graph"><i class="fa fa-check"></i><b>7.2.2</b> Bar graph</a></li>
-<li class="chapter" data-level="7.2.3" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#histogram"><i class="fa fa-check"></i><b>7.2.3</b> Histogram</a></li>
-<li class="chapter" data-level="7.2.4" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#boxplot"><i class="fa fa-check"></i><b>7.2.4</b> Boxplot</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="brief-introduction-to-rmarkdown.html"><a href="brief-introduction-to-rmarkdown.html"><i class="fa fa-check"></i><b>8</b> Brief Introduction to Rmarkdown</a></li>
-<li class="chapter" data-level="9" data-path="best-practices-for-data-science-projects.html"><a href="best-practices-for-data-science-projects.html"><i class="fa fa-check"></i><b>9</b> Best Practices for Data Science Projects</a></li>
-<li class="chapter" data-level="10" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html"><i class="fa fa-check"></i><b>10</b> Tidy Data I: The ER Model</a><ul>
-<li class="chapter" data-level="10.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#overview"><i class="fa fa-check"></i><b>10.1</b> Overview</a></li>
-<li class="chapter" data-level="10.2" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#the-entity-relationship-and-relational-models"><i class="fa fa-check"></i><b>10.2</b> The Entity-Relationship and Relational Models</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#formal-introduction-to-keys"><i class="fa fa-check"></i><b>10.2.1</b> Formal introduction to keys</a></li>
-</ul></li>
-<li class="chapter" data-level="10.3" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#tidy-data"><i class="fa fa-check"></i><b>10.3</b> Tidy Data</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html"><i class="fa fa-check"></i><b>11</b> SQL I: Single Table Queries</a><ul>
-<li class="chapter" data-level="11.1" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#group-by-and-summarize"><i class="fa fa-check"></i><b>11.1</b> Group-by and summarize</a></li>
-<li class="chapter" data-level="11.2" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#subqueries"><i class="fa fa-check"></i><b>11.2</b> Subqueries</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="two-table-operations.html"><a href="two-table-operations.html"><i class="fa fa-check"></i><b>12</b> Two-table operations</a><ul>
-<li class="chapter" data-level="12.1" data-path="two-table-operations.html"><a href="two-table-operations.html#left-join"><i class="fa fa-check"></i><b>12.1</b> Left Join</a></li>
-<li class="chapter" data-level="12.2" data-path="two-table-operations.html"><a href="two-table-operations.html#right-join"><i class="fa fa-check"></i><b>12.2</b> Right Join</a></li>
-<li class="chapter" data-level="12.3" data-path="two-table-operations.html"><a href="two-table-operations.html#inner-join"><i class="fa fa-check"></i><b>12.3</b> Inner Join</a></li>
-<li class="chapter" data-level="12.4" data-path="two-table-operations.html"><a href="two-table-operations.html#full-join"><i class="fa fa-check"></i><b>12.4</b> Full Join</a></li>
-<li class="chapter" data-level="12.5" data-path="two-table-operations.html"><a href="two-table-operations.html#join-conditions"><i class="fa fa-check"></i><b>12.5</b> Join conditions</a></li>
-<li class="chapter" data-level="12.6" data-path="two-table-operations.html"><a href="two-table-operations.html#filtering-joins"><i class="fa fa-check"></i><b>12.6</b> Filtering Joins</a></li>
-<li class="chapter" data-level="12.7" data-path="two-table-operations.html"><a href="two-table-operations.html#sql-constructs-multi-table-queries"><i class="fa fa-check"></i><b>12.7</b> SQL Constructs: Multi-table Queries</a></li>
-</ul></li>
-<li class="chapter" data-level="13" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html"><i class="fa fa-check"></i><b>13</b> SQL System Constructs</a><ul>
-<li class="chapter" data-level="13.1" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#sql-as-a-data-definition-language"><i class="fa fa-check"></i><b>13.1</b> SQL as a Data Definition Language</a></li>
-<li class="chapter" data-level="13.2" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#set-operations-and-comparisons"><i class="fa fa-check"></i><b>13.2</b> Set Operations and Comparisons</a></li>
-<li class="chapter" data-level="13.3" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#views"><i class="fa fa-check"></i><b>13.3</b> Views</a></li>
-<li class="chapter" data-level="13.4" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#nulls"><i class="fa fa-check"></i><b>13.4</b> NULLs</a></li>
-</ul></li>
-<li class="chapter" data-level="14" data-path="db-parting-shots.html"><a href="db-parting-shots.html"><i class="fa fa-check"></i><b>14</b> DB Parting Shots</a><ul>
-<li class="chapter" data-level="14.1" data-path="db-parting-shots.html"><a href="db-parting-shots.html#database-query-optimization"><i class="fa fa-check"></i><b>14.1</b> Database Query Optimization</a></li>
-<li class="chapter" data-level="14.2" data-path="db-parting-shots.html"><a href="db-parting-shots.html#json-data-model"><i class="fa fa-check"></i><b>14.2</b> JSON Data Model</a></li>
-</ul></li>
-<li class="chapter" data-level="15" data-path="ingesting-data.html"><a href="ingesting-data.html"><i class="fa fa-check"></i><b>15</b> Ingesting data</a><ul>
-<li class="chapter" data-level="15.1" data-path="ingesting-data.html"><a href="ingesting-data.html#structured-ingestion"><i class="fa fa-check"></i><b>15.1</b> Structured ingestion</a><ul>
-<li class="chapter" data-level="15.1.1" data-path="ingesting-data.html"><a href="ingesting-data.html#csv-files-and-similar"><i class="fa fa-check"></i><b>15.1.1</b> CSV files (and similar)</a></li>
-<li class="chapter" data-level="15.1.2" data-path="ingesting-data.html"><a href="ingesting-data.html#excel-spreadsheets"><i class="fa fa-check"></i><b>15.1.2</b> Excel spreadsheets</a></li>
-</ul></li>
-<li class="chapter" data-level="15.2" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping"><i class="fa fa-check"></i><b>15.2</b> Scraping</a><ul>
-<li class="chapter" data-level="15.2.1" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping-from-dirty-html-tables"><i class="fa fa-check"></i><b>15.2.1</b> Scraping from dirty HTML tables</a></li>
+<li class="chapter" data-level="8.2" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#frequently-used-plots"><i class="fa fa-check"></i><b>8.2</b> Frequently Used Plots</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#scatter-plot"><i class="fa fa-check"></i><b>8.2.1</b> Scatter plot</a></li>
+<li class="chapter" data-level="8.2.2" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#bar-graph"><i class="fa fa-check"></i><b>8.2.2</b> Bar graph</a></li>
+<li class="chapter" data-level="8.2.3" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#histogram"><i class="fa fa-check"></i><b>8.2.3</b> Histogram</a></li>
+<li class="chapter" data-level="8.2.4" data-path="basic-plotting-with-ggplot.html"><a href="basic-plotting-with-ggplot.html#boxplot"><i class="fa fa-check"></i><b>8.2.4</b> Boxplot</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="tidying-data.html"><a href="tidying-data.html"><i class="fa fa-check"></i><b>16</b> Tidying data</a><ul>
-<li class="chapter" data-level="16.1" data-path="tidying-data.html"><a href="tidying-data.html#tidy-data-1"><i class="fa fa-check"></i><b>16.1</b> Tidy Data</a></li>
-<li class="chapter" data-level="16.2" data-path="tidying-data.html"><a href="tidying-data.html#common-problems-in-messy-data"><i class="fa fa-check"></i><b>16.2</b> Common problems in messy data</a><ul>
-<li class="chapter" data-level="16.2.1" data-path="tidying-data.html"><a href="tidying-data.html#headers-as-values"><i class="fa fa-check"></i><b>16.2.1</b> Headers as values</a></li>
-<li class="chapter" data-level="16.2.2" data-path="tidying-data.html"><a href="tidying-data.html#multiple-variables-in-one-column"><i class="fa fa-check"></i><b>16.2.2</b> Multiple variables in one column</a></li>
-<li class="chapter" data-level="16.2.3" data-path="tidying-data.html"><a href="tidying-data.html#variables-stored-in-both-rows-and-columns"><i class="fa fa-check"></i><b>16.2.3</b> Variables stored in both rows and columns</a></li>
-<li class="chapter" data-level="16.2.4" data-path="tidying-data.html"><a href="tidying-data.html#multiple-types-in-one-table"><i class="fa fa-check"></i><b>16.2.4</b> Multiple types in one table</a></li>
+<li class="chapter" data-level="9" data-path="brief-introduction-to-rmarkdown.html"><a href="brief-introduction-to-rmarkdown.html"><i class="fa fa-check"></i><b>9</b> Brief Introduction to Rmarkdown</a></li>
+<li class="chapter" data-level="10" data-path="best-practices-for-data-science-projects.html"><a href="best-practices-for-data-science-projects.html"><i class="fa fa-check"></i><b>10</b> Best Practices for Data Science Projects</a></li>
+<li class="chapter" data-level="11" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html"><i class="fa fa-check"></i><b>11</b> Tidy Data I: The ER Model</a><ul>
+<li class="chapter" data-level="11.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#overview"><i class="fa fa-check"></i><b>11.1</b> Overview</a></li>
+<li class="chapter" data-level="11.2" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#the-entity-relationship-and-relational-models"><i class="fa fa-check"></i><b>11.2</b> The Entity-Relationship and Relational Models</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#formal-introduction-to-keys"><i class="fa fa-check"></i><b>11.2.1</b> Formal introduction to keys</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="tidy-data-i-the-er-model.html"><a href="tidy-data-i-the-er-model.html#tidy-data"><i class="fa fa-check"></i><b>11.3</b> Tidy Data</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html"><i class="fa fa-check"></i><b>12</b> SQL I: Single Table Queries</a><ul>
+<li class="chapter" data-level="12.1" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#group-by-and-summarize"><i class="fa fa-check"></i><b>12.1</b> Group-by and summarize</a></li>
+<li class="chapter" data-level="12.2" data-path="sql-i-single-table-queries.html"><a href="sql-i-single-table-queries.html#subqueries"><i class="fa fa-check"></i><b>12.2</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="two-table-operations.html"><a href="two-table-operations.html"><i class="fa fa-check"></i><b>13</b> Two-table operations</a><ul>
+<li class="chapter" data-level="13.1" data-path="two-table-operations.html"><a href="two-table-operations.html#left-join"><i class="fa fa-check"></i><b>13.1</b> Left Join</a></li>
+<li class="chapter" data-level="13.2" data-path="two-table-operations.html"><a href="two-table-operations.html#right-join"><i class="fa fa-check"></i><b>13.2</b> Right Join</a></li>
+<li class="chapter" data-level="13.3" data-path="two-table-operations.html"><a href="two-table-operations.html#inner-join"><i class="fa fa-check"></i><b>13.3</b> Inner Join</a></li>
+<li class="chapter" data-level="13.4" data-path="two-table-operations.html"><a href="two-table-operations.html#full-join"><i class="fa fa-check"></i><b>13.4</b> Full Join</a></li>
+<li class="chapter" data-level="13.5" data-path="two-table-operations.html"><a href="two-table-operations.html#join-conditions"><i class="fa fa-check"></i><b>13.5</b> Join conditions</a></li>
+<li class="chapter" data-level="13.6" data-path="two-table-operations.html"><a href="two-table-operations.html#filtering-joins"><i class="fa fa-check"></i><b>13.6</b> Filtering Joins</a></li>
+<li class="chapter" data-level="13.7" data-path="two-table-operations.html"><a href="two-table-operations.html#sql-constructs-multi-table-queries"><i class="fa fa-check"></i><b>13.7</b> SQL Constructs: Multi-table Queries</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html"><i class="fa fa-check"></i><b>14</b> SQL System Constructs</a><ul>
+<li class="chapter" data-level="14.1" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#sql-as-a-data-definition-language"><i class="fa fa-check"></i><b>14.1</b> SQL as a Data Definition Language</a></li>
+<li class="chapter" data-level="14.2" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#set-operations-and-comparisons"><i class="fa fa-check"></i><b>14.2</b> Set Operations and Comparisons</a></li>
+<li class="chapter" data-level="14.3" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#views"><i class="fa fa-check"></i><b>14.3</b> Views</a></li>
+<li class="chapter" data-level="14.4" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#nulls"><i class="fa fa-check"></i><b>14.4</b> NULLs</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="db-parting-shots.html"><a href="db-parting-shots.html"><i class="fa fa-check"></i><b>15</b> DB Parting Shots</a><ul>
+<li class="chapter" data-level="15.1" data-path="db-parting-shots.html"><a href="db-parting-shots.html#database-query-optimization"><i class="fa fa-check"></i><b>15.1</b> Database Query Optimization</a></li>
+<li class="chapter" data-level="15.2" data-path="db-parting-shots.html"><a href="db-parting-shots.html#json-data-model"><i class="fa fa-check"></i><b>15.2</b> JSON Data Model</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ingesting-data.html"><a href="ingesting-data.html"><i class="fa fa-check"></i><b>16</b> Ingesting data</a><ul>
+<li class="chapter" data-level="16.1" data-path="ingesting-data.html"><a href="ingesting-data.html#structured-ingestion"><i class="fa fa-check"></i><b>16.1</b> Structured ingestion</a><ul>
+<li class="chapter" data-level="16.1.1" data-path="ingesting-data.html"><a href="ingesting-data.html#csv-files-and-similar"><i class="fa fa-check"></i><b>16.1.1</b> CSV files (and similar)</a></li>
+<li class="chapter" data-level="16.1.2" data-path="ingesting-data.html"><a href="ingesting-data.html#excel-spreadsheets"><i class="fa fa-check"></i><b>16.1.2</b> Excel spreadsheets</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping"><i class="fa fa-check"></i><b>16.2</b> Scraping</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping-from-dirty-html-tables"><i class="fa fa-check"></i><b>16.2.1</b> Scraping from dirty HTML tables</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="text-and-dates.html"><a href="text-and-dates.html"><i class="fa fa-check"></i><b>17</b> Text and Dates</a><ul>
-<li class="chapter" data-level="17.1" data-path="text-and-dates.html"><a href="text-and-dates.html#text"><i class="fa fa-check"></i><b>17.1</b> Text</a><ul>
-<li class="chapter" data-level="17.1.1" data-path="text-and-dates.html"><a href="text-and-dates.html#string-operations"><i class="fa fa-check"></i><b>17.1.1</b> String operations</a></li>
-<li class="chapter" data-level="17.1.2" data-path="text-and-dates.html"><a href="text-and-dates.html#regular-expressions"><i class="fa fa-check"></i><b>17.1.2</b> Regular expressions</a></li>
-<li class="chapter" data-level="17.1.3" data-path="text-and-dates.html"><a href="text-and-dates.html#tools-using-regular-expressions"><i class="fa fa-check"></i><b>17.1.3</b> Tools using regular expressions</a></li>
-<li class="chapter" data-level="17.1.4" data-path="text-and-dates.html"><a href="text-and-dates.html#extracting-attributes-from-text"><i class="fa fa-check"></i><b>17.1.4</b> Extracting attributes from text</a></li>
-</ul></li>
-<li class="chapter" data-level="17.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>17.2</b> Handling dates</a></li>
-</ul></li>
-<li class="chapter" data-level="18" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>18</b> Entity Resolution and Record Linkage</a></li>
-<li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a><ul>
-<li class="chapter" data-level="18.0.1" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>18.0.1</b> EDA (Exploratory Data Analysis)</a></li>
-<li class="chapter" data-level="18.1" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#visualization-of-single-variables"><i class="fa fa-check"></i><b>18.1</b> Visualization of single variables</a><ul>
-<li class="chapter" data-level="18.1.1" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#visualization-of-pairs-of-variables"><i class="fa fa-check"></i><b>18.1.1</b> Visualization of pairs of variables</a></li>
-</ul></li>
-<li class="chapter" data-level="18.2" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#eda-with-the-grammar-of-graphics"><i class="fa fa-check"></i><b>18.2</b> EDA with the grammar of graphics</a><ul>
-<li class="chapter" data-level="18.2.1" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#other-aesthetics"><i class="fa fa-check"></i><b>18.2.1</b> Other aesthetics</a></li>
-<li class="chapter" data-level="18.2.2" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html#faceting"><i class="fa fa-check"></i><b>18.2.2</b> Faceting</a></li>
+<li class="chapter" data-level="17" data-path="tidying-data.html"><a href="tidying-data.html"><i class="fa fa-check"></i><b>17</b> Tidying data</a><ul>
+<li class="chapter" data-level="17.1" data-path="tidying-data.html"><a href="tidying-data.html#tidy-data-1"><i class="fa fa-check"></i><b>17.1</b> Tidy Data</a></li>
+<li class="chapter" data-level="17.2" data-path="tidying-data.html"><a href="tidying-data.html#common-problems-in-messy-data"><i class="fa fa-check"></i><b>17.2</b> Common problems in messy data</a><ul>
+<li class="chapter" data-level="17.2.1" data-path="tidying-data.html"><a href="tidying-data.html#headers-as-values"><i class="fa fa-check"></i><b>17.2.1</b> Headers as values</a></li>
+<li class="chapter" data-level="17.2.2" data-path="tidying-data.html"><a href="tidying-data.html#multiple-variables-in-one-column"><i class="fa fa-check"></i><b>17.2.2</b> Multiple variables in one column</a></li>
+<li class="chapter" data-level="17.2.3" data-path="tidying-data.html"><a href="tidying-data.html#variables-stored-in-both-rows-and-columns"><i class="fa fa-check"></i><b>17.2.3</b> Variables stored in both rows and columns</a></li>
+<li class="chapter" data-level="17.2.4" data-path="tidying-data.html"><a href="tidying-data.html#multiple-types-in-one-table"><i class="fa fa-check"></i><b>17.2.4</b> Multiple types in one table</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html"><i class="fa fa-check"></i><b>19</b> Exploratory Data Analysis: Summary Statistics</a><ul>
-<li class="chapter" data-level="19.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#range"><i class="fa fa-check"></i><b>19.1</b> Range</a></li>
-<li class="chapter" data-level="19.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#central-tendency"><i class="fa fa-check"></i><b>19.2</b> Central Tendency</a><ul>
-<li class="chapter" data-level="19.2.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#derivation-of-the-mean-as-central-tendency-statistic"><i class="fa fa-check"></i><b>19.2.1</b> Derivation of the mean as central tendency statistic</a></li>
+<li class="chapter" data-level="18" data-path="text-and-dates.html"><a href="text-and-dates.html"><i class="fa fa-check"></i><b>18</b> Text and Dates</a><ul>
+<li class="chapter" data-level="18.1" data-path="text-and-dates.html"><a href="text-and-dates.html#text"><i class="fa fa-check"></i><b>18.1</b> Text</a><ul>
+<li class="chapter" data-level="18.1.1" data-path="text-and-dates.html"><a href="text-and-dates.html#string-operations"><i class="fa fa-check"></i><b>18.1.1</b> String operations</a></li>
+<li class="chapter" data-level="18.1.2" data-path="text-and-dates.html"><a href="text-and-dates.html#regular-expressions"><i class="fa fa-check"></i><b>18.1.2</b> Regular expressions</a></li>
+<li class="chapter" data-level="18.1.3" data-path="text-and-dates.html"><a href="text-and-dates.html#tools-using-regular-expressions"><i class="fa fa-check"></i><b>18.1.3</b> Tools using regular expressions</a></li>
+<li class="chapter" data-level="18.1.4" data-path="text-and-dates.html"><a href="text-and-dates.html#extracting-attributes-from-text"><i class="fa fa-check"></i><b>18.1.4</b> Extracting attributes from text</a></li>
 </ul></li>
-<li class="chapter" data-level="19.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread"><i class="fa fa-check"></i><b>19.3</b> Spread</a><ul>
-<li class="chapter" data-level="19.3.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#variance"><i class="fa fa-check"></i><b>19.3.1</b> Variance</a></li>
-<li class="chapter" data-level="19.3.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread-estimates-using-rank-statistics"><i class="fa fa-check"></i><b>19.3.2</b> Spread estimates using rank statistics</a></li>
+<li class="chapter" data-level="18.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>18.2</b> Handling dates</a></li>
 </ul></li>
-<li class="chapter" data-level="19.4" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#outliers"><i class="fa fa-check"></i><b>19.4</b> Outliers</a></li>
-<li class="chapter" data-level="19.5" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#skew"><i class="fa fa-check"></i><b>19.5</b> Skew</a></li>
-<li class="chapter" data-level="19.6" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#covariance-and-correlation"><i class="fa fa-check"></i><b>19.6</b> Covariance and correlation</a></li>
-<li class="chapter" data-level="19.7" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#postscript-finding-maximaminima-using-derivatives"><i class="fa fa-check"></i><b>19.7</b> Postscript: Finding Maxima/Minima using Derivatives</a><ul>
-<li class="chapter" data-level="19.7.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#steps-to-find-maximaminima-of-function-fx"><i class="fa fa-check"></i><b>19.7.1</b> Steps to find Maxima/Minima of function <span class="math inline">\(f(x)\)</span></a></li>
-<li class="chapter" data-level="19.7.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#notes-on-finding-derivatives"><i class="fa fa-check"></i><b>19.7.2</b> Notes on Finding Derivatives</a></li>
-<li class="chapter" data-level="19.7.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#resources"><i class="fa fa-check"></i><b>19.7.3</b> Resources:</a></li>
+<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a></li>
+<li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="20" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html"><i class="fa fa-check"></i><b>20</b> Exploratory Data Analysis: Visualization</a><ul>
+<li class="chapter" data-level="20.0.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>20.0.1</b> EDA (Exploratory Data Analysis)</a></li>
+<li class="chapter" data-level="20.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#visualization-of-single-variables"><i class="fa fa-check"></i><b>20.1</b> Visualization of single variables</a><ul>
+<li class="chapter" data-level="20.1.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#visualization-of-pairs-of-variables"><i class="fa fa-check"></i><b>20.1.1</b> Visualization of pairs of variables</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="20" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html"><i class="fa fa-check"></i><b>20</b> EDA: Data Transformations</a><ul>
-<li class="chapter" data-level="20.1" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#centering-and-scaling"><i class="fa fa-check"></i><b>20.1</b> Centering and scaling</a></li>
-<li class="chapter" data-level="20.2" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#treating-categorical-variables-as-numeric"><i class="fa fa-check"></i><b>20.2</b> Treating categorical variables as numeric</a><ul>
-<li class="chapter" data-level="20.2.1" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#discretizing-continuous-values."><i class="fa fa-check"></i><b>20.2.1</b> Discretizing continuous values.</a></li>
-</ul></li>
-<li class="chapter" data-level="20.3" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#skewed-data"><i class="fa fa-check"></i><b>20.3</b> Skewed Data</a></li>
-</ul></li>
-<li class="chapter" data-level="21" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html"><i class="fa fa-check"></i><b>21</b> EDA: Handling Missing Data</a><ul>
-<li class="chapter" data-level="21.0.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>21.0.1</b> Dealing with data missing at random</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html"><i class="fa fa-check"></i>(Part) Statistical Learning</a><ul>
-<li class="chapter" data-level="21.1" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#variation-randomness-and-stochasticity"><i class="fa fa-check"></i><b>21.1</b> Variation, randomness and stochasticity</a><ul>
-<li class="chapter" data-level="21.1.1" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#random-variables"><i class="fa fa-check"></i><b>21.1.1</b> Random variables</a></li>
-</ul></li>
-<li class="chapter" data-level="21.2" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#discrete-probability-distributions"><i class="fa fa-check"></i><b>21.2</b> (Discrete) Probability distributions</a><ul>
-<li class="chapter" data-level="21.2.1" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#example-the-oracle-of-tweet"><i class="fa fa-check"></i><b>21.2.1</b> Example The oracle of TWEET</a></li>
-</ul></li>
-<li class="chapter" data-level="21.3" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#expectation"><i class="fa fa-check"></i><b>21.3</b> Expectation</a></li>
-<li class="chapter" data-level="21.4" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#estimation"><i class="fa fa-check"></i><b>21.4</b> Estimation</a><ul>
-<li class="chapter" data-level="21.4.1" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#law-of-large-numbers-lln"><i class="fa fa-check"></i><b>21.4.1</b> Law of large numbers (LLN)</a></li>
-<li class="chapter" data-level="21.4.2" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#central-limit-theorem-clt"><i class="fa fa-check"></i><b>21.4.2</b> Central Limit Theorem (CLT)</a></li>
-</ul></li>
-<li class="chapter" data-level="21.5" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#the-normal-distribution"><i class="fa fa-check"></i><b>21.5</b> The normal distribution</a><ul>
-<li class="chapter" data-level="21.5.1" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html#clt-continued"><i class="fa fa-check"></i><b>21.5.1</b> CLT continued</a></li>
+<li class="chapter" data-level="20.2" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-with-the-grammar-of-graphics"><i class="fa fa-check"></i><b>20.2</b> EDA with the grammar of graphics</a><ul>
+<li class="chapter" data-level="20.2.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#other-aesthetics"><i class="fa fa-check"></i><b>20.2.1</b> Other aesthetics</a></li>
+<li class="chapter" data-level="20.2.2" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#faceting"><i class="fa fa-check"></i><b>20.2.2</b> Faceting</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="22" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>22</b> Experiment design and hypothesis testing</a><ul>
-<li class="chapter" data-level="22.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#inference"><i class="fa fa-check"></i><b>22.1</b> Inference</a><ul>
-<li class="chapter" data-level="22.1.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>22.1.1</b> Hypothesis testing</a></li>
+<li class="chapter" data-level="21" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html"><i class="fa fa-check"></i><b>21</b> Exploratory Data Analysis: Summary Statistics</a><ul>
+<li class="chapter" data-level="21.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#range"><i class="fa fa-check"></i><b>21.1</b> Range</a></li>
+<li class="chapter" data-level="21.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#central-tendency"><i class="fa fa-check"></i><b>21.2</b> Central Tendency</a><ul>
+<li class="chapter" data-level="21.2.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#derivation-of-the-mean-as-central-tendency-statistic"><i class="fa fa-check"></i><b>21.2.1</b> Derivation of the mean as central tendency statistic</a></li>
 </ul></li>
-<li class="chapter" data-level="22.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#ab-testing"><i class="fa fa-check"></i><b>22.2</b> A/B Testing</a></li>
-<li class="chapter" data-level="22.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#summary-1"><i class="fa fa-check"></i><b>22.3</b> Summary</a></li>
-<li class="chapter" data-level="22.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#probability-distributions"><i class="fa fa-check"></i><b>22.4</b> Probability Distributions</a><ul>
-<li class="chapter" data-level="22.4.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#bernoulli"><i class="fa fa-check"></i><b>22.4.1</b> Bernoulli</a></li>
-<li class="chapter" data-level="22.4.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#binomial"><i class="fa fa-check"></i><b>22.4.2</b> Binomial</a></li>
-<li class="chapter" data-level="22.4.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#normal-gaussian-distribution"><i class="fa fa-check"></i><b>22.4.3</b> Normal (Gaussian) distribution</a></li>
-<li class="chapter" data-level="22.4.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#distributions-in-r"><i class="fa fa-check"></i><b>22.4.4</b> Distributions in R</a></li>
+<li class="chapter" data-level="21.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread"><i class="fa fa-check"></i><b>21.3</b> Spread</a><ul>
+<li class="chapter" data-level="21.3.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#variance"><i class="fa fa-check"></i><b>21.3.1</b> Variance</a></li>
+<li class="chapter" data-level="21.3.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread-estimates-using-rank-statistics"><i class="fa fa-check"></i><b>21.3.2</b> Spread estimates using rank statistics</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="23" data-path="multivariate-probability.html"><a href="multivariate-probability.html"><i class="fa fa-check"></i><b>23</b> Multivariate probability</a><ul>
-<li class="chapter" data-level="23.1" data-path="multivariate-probability.html"><a href="multivariate-probability.html#joint-and-conditional-probability"><i class="fa fa-check"></i><b>23.1</b> Joint and conditional probability</a></li>
-<li class="chapter" data-level="23.2" data-path="multivariate-probability.html"><a href="multivariate-probability.html#bayes-rule"><i class="fa fa-check"></i><b>23.2</b> Bayes’ Rule</a></li>
-<li class="chapter" data-level="23.3" data-path="multivariate-probability.html"><a href="multivariate-probability.html#conditional-expectation"><i class="fa fa-check"></i><b>23.3</b> Conditional expectation</a></li>
-<li class="chapter" data-level="23.4" data-path="multivariate-probability.html"><a href="multivariate-probability.html#maximum-likelihood"><i class="fa fa-check"></i><b>23.4</b> Maximum likelihood</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="part-machine-learning.html"><a href="part-machine-learning.html"><i class="fa fa-check"></i>(Part) Machine Learning</a><ul>
-<li class="chapter" data-level="23.5" data-path="part-machine-learning.html"><a href="part-machine-learning.html#motivating-example-credit-analysis"><i class="fa fa-check"></i><b>23.5</b> Motivating Example: Credit Analysis</a></li>
-<li class="chapter" data-level="23.6" data-path="part-machine-learning.html"><a href="part-machine-learning.html#from-data-to-feature-vectors"><i class="fa fa-check"></i><b>23.6</b> From data to feature vectors</a></li>
-<li class="chapter" data-level="23.7" data-path="part-machine-learning.html"><a href="part-machine-learning.html#technical-notation"><i class="fa fa-check"></i><b>23.7</b> Technical notation</a></li>
-<li class="chapter" data-level="23.8" data-path="part-machine-learning.html"><a href="part-machine-learning.html#geometry-and-distances"><i class="fa fa-check"></i><b>23.8</b> Geometry and Distances</a><ul>
-<li class="chapter" data-level="23.8.1" data-path="part-machine-learning.html"><a href="part-machine-learning.html#k-nearest-neighbor-classification"><i class="fa fa-check"></i><b>23.8.1</b> K-nearest neighbor classification</a></li>
-<li class="chapter" data-level="23.8.2" data-path="part-machine-learning.html"><a href="part-machine-learning.html#the-importance-of-transformations"><i class="fa fa-check"></i><b>23.8.2</b> The importance of transformations</a></li>
-</ul></li>
-<li class="chapter" data-level="23.9" data-path="part-machine-learning.html"><a href="part-machine-learning.html#quick-vector-algebra-review"><i class="fa fa-check"></i><b>23.9</b> Quick vector algebra review</a><ul>
-<li class="chapter" data-level="23.9.1" data-path="part-machine-learning.html"><a href="part-machine-learning.html#quiz"><i class="fa fa-check"></i><b>23.9.1</b> Quiz</a></li>
-</ul></li>
-<li class="chapter" data-level="23.10" data-path="part-machine-learning.html"><a href="part-machine-learning.html#the-curse-of-dimensionality"><i class="fa fa-check"></i><b>23.10</b> The curse of dimensionality</a></li>
-<li class="chapter" data-level="23.11" data-path="part-machine-learning.html"><a href="part-machine-learning.html#summary-2"><i class="fa fa-check"></i><b>23.11</b> Summary</a></li>
-</ul></li>
-<li class="chapter" data-level="24" data-path="linear-regression.html"><a href="linear-regression.html"><i class="fa fa-check"></i><b>24</b> Linear Regression</a><ul>
-<li class="chapter" data-level="24.1" data-path="linear-regression.html"><a href="linear-regression.html#simple-regression"><i class="fa fa-check"></i><b>24.1</b> Simple Regression</a></li>
-<li class="chapter" data-level="24.2" data-path="linear-regression.html"><a href="linear-regression.html#inference-1"><i class="fa fa-check"></i><b>24.2</b> Inference</a><ul>
-<li class="chapter" data-level="24.2.1" data-path="linear-regression.html"><a href="linear-regression.html#confidence-interval"><i class="fa fa-check"></i><b>24.2.1</b> Confidence Interval</a></li>
-<li class="chapter" data-level="24.2.2" data-path="linear-regression.html"><a href="linear-regression.html#the-t-statistic-and-the-t-distribution"><i class="fa fa-check"></i><b>24.2.2</b> The <span class="math inline">\(t\)</span>-statistic and the <span class="math inline">\(t\)</span>-distribution</a></li>
-<li class="chapter" data-level="24.2.3" data-path="linear-regression.html"><a href="linear-regression.html#global-fit"><i class="fa fa-check"></i><b>24.2.3</b> Global Fit</a></li>
-</ul></li>
-<li class="chapter" data-level="24.3" data-path="linear-regression.html"><a href="linear-regression.html#some-important-technicalities"><i class="fa fa-check"></i><b>24.3</b> Some important technicalities</a></li>
-<li class="chapter" data-level="24.4" data-path="linear-regression.html"><a href="linear-regression.html#issues-with-linear-regression"><i class="fa fa-check"></i><b>24.4</b> Issues with linear regression</a><ul>
-<li class="chapter" data-level="24.4.1" data-path="linear-regression.html"><a href="linear-regression.html#non-linearity-of-outcome-predictor-relationship"><i class="fa fa-check"></i><b>24.4.1</b> Non-linearity of outcome-predictor relationship</a></li>
-<li class="chapter" data-level="24.4.2" data-path="linear-regression.html"><a href="linear-regression.html#correlated-error"><i class="fa fa-check"></i><b>24.4.2</b> Correlated Error</a></li>
-<li class="chapter" data-level="24.4.3" data-path="linear-regression.html"><a href="linear-regression.html#non-constant-variance"><i class="fa fa-check"></i><b>24.4.3</b> Non-constant variance</a></li>
-</ul></li>
-<li class="chapter" data-level="24.5" data-path="linear-regression.html"><a href="linear-regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>24.5</b> Multiple linear regression</a><ul>
-<li class="chapter" data-level="24.5.1" data-path="linear-regression.html"><a href="linear-regression.html#estimation-in-multivariate-regression"><i class="fa fa-check"></i><b>24.5.1</b> Estimation in multivariate regression</a></li>
-<li class="chapter" data-level="24.5.2" data-path="linear-regression.html"><a href="linear-regression.html#example-contd"><i class="fa fa-check"></i><b>24.5.2</b> Example (cont’d)</a></li>
-<li class="chapter" data-level="24.5.3" data-path="linear-regression.html"><a href="linear-regression.html#statistical-statements-contd"><i class="fa fa-check"></i><b>24.5.3</b> Statistical statements (cont’d)</a></li>
-<li class="chapter" data-level="24.5.4" data-path="linear-regression.html"><a href="linear-regression.html#the-f-test"><i class="fa fa-check"></i><b>24.5.4</b> The F-test</a></li>
-<li class="chapter" data-level="24.5.5" data-path="linear-regression.html"><a href="linear-regression.html#categorical-predictors-contd"><i class="fa fa-check"></i><b>24.5.5</b> Categorical predictors (cont’d)</a></li>
-</ul></li>
-<li class="chapter" data-level="24.6" data-path="linear-regression.html"><a href="linear-regression.html#interactions-in-linear-models"><i class="fa fa-check"></i><b>24.6</b> Interactions in linear models</a><ul>
-<li class="chapter" data-level="24.6.1" data-path="linear-regression.html"><a href="linear-regression.html#additional-issues-with-linear-regression"><i class="fa fa-check"></i><b>24.6.1</b> Additional issues with linear regression</a></li>
+<li class="chapter" data-level="21.4" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#outliers"><i class="fa fa-check"></i><b>21.4</b> Outliers</a></li>
+<li class="chapter" data-level="21.5" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#skew"><i class="fa fa-check"></i><b>21.5</b> Skew</a></li>
+<li class="chapter" data-level="21.6" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#covariance-and-correlation"><i class="fa fa-check"></i><b>21.6</b> Covariance and correlation</a></li>
+<li class="chapter" data-level="21.7" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#postscript-finding-maximaminima-using-derivatives"><i class="fa fa-check"></i><b>21.7</b> Postscript: Finding Maxima/Minima using Derivatives</a><ul>
+<li class="chapter" data-level="21.7.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#steps-to-find-maximaminima-of-function-fx"><i class="fa fa-check"></i><b>21.7.1</b> Steps to find Maxima/Minima of function <span class="math inline">\(f(x)\)</span></a></li>
+<li class="chapter" data-level="21.7.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#notes-on-finding-derivatives"><i class="fa fa-check"></i><b>21.7.2</b> Notes on Finding Derivatives</a></li>
+<li class="chapter" data-level="21.7.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#resources"><i class="fa fa-check"></i><b>21.7.3</b> Resources:</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html"><i class="fa fa-check"></i><b>25</b> Linear models for classification</a><ul>
-<li class="chapter" data-level="25.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#an-example-classification-problem"><i class="fa fa-check"></i><b>25.1</b> An example classification problem</a></li>
-<li class="chapter" data-level="25.2" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#why-not-linear-regression"><i class="fa fa-check"></i><b>25.2</b> Why not linear regression?</a></li>
-<li class="chapter" data-level="25.3" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classification-as-probability-estimation-problem"><i class="fa fa-check"></i><b>25.3</b> Classification as probability estimation problem</a></li>
-<li class="chapter" data-level="25.4" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#logistic-regression"><i class="fa fa-check"></i><b>25.4</b> Logistic regression</a><ul>
-<li class="chapter" data-level="25.4.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#exercises"><i class="fa fa-check"></i><b>25.4.1</b> Exercises</a></li>
-<li class="chapter" data-level="25.4.2" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#making-predictions"><i class="fa fa-check"></i><b>25.4.2</b> Making predictions</a></li>
-<li class="chapter" data-level="25.4.3" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#multiple-logistic-regression"><i class="fa fa-check"></i><b>25.4.3</b> Multiple logistic regression</a></li>
-<li class="chapter" data-level="25.4.4" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#exercise"><i class="fa fa-check"></i><b>25.4.4</b> Exercise</a></li>
+<li class="chapter" data-level="22" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html"><i class="fa fa-check"></i><b>22</b> EDA: Data Transformations</a><ul>
+<li class="chapter" data-level="22.1" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#centering-and-scaling"><i class="fa fa-check"></i><b>22.1</b> Centering and scaling</a></li>
+<li class="chapter" data-level="22.2" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#treating-categorical-variables-as-numeric"><i class="fa fa-check"></i><b>22.2</b> Treating categorical variables as numeric</a><ul>
+<li class="chapter" data-level="22.2.1" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#discretizing-continuous-values."><i class="fa fa-check"></i><b>22.2.1</b> Discretizing continuous values.</a></li>
 </ul></li>
-<li class="chapter" data-level="25.5" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>25.5</b> Linear Discriminant Analysis</a><ul>
-<li class="chapter" data-level="25.5.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#how-to-train-lda"><i class="fa fa-check"></i><b>25.5.1</b> How to train LDA</a></li>
+<li class="chapter" data-level="22.3" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#skewed-data"><i class="fa fa-check"></i><b>22.3</b> Skewed Data</a></li>
 </ul></li>
-<li class="chapter" data-level="25.6" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classifier-evaluation"><i class="fa fa-check"></i><b>25.6</b> Classifier evaluation</a></li>
-<li class="chapter" data-level="25.7" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#summary-3"><i class="fa fa-check"></i><b>25.7</b> Summary</a></li>
+<li class="chapter" data-level="23" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html"><i class="fa fa-check"></i><b>23</b> EDA: Handling Missing Data</a><ul>
+<li class="chapter" data-level="23.0.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>23.0.1</b> Dealing with data missing at random</a></li>
 </ul></li>
-<li class="chapter" data-level="26" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html"><i class="fa fa-check"></i><b>26</b> Solving linear ML problems</a><ul>
-<li class="chapter" data-level="26.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#case-study"><i class="fa fa-check"></i><b>26.1</b> Case Study</a></li>
-<li class="chapter" data-level="26.2" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#gradient-descent"><i class="fa fa-check"></i><b>26.2</b> Gradient Descent</a></li>
-<li class="chapter" data-level="26.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>26.3</b> Stochastic gradient descent</a></li>
-<li class="chapter" data-level="26.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>26.4</b> Parallelizing gradient descent</a></li>
+<li class="chapter" data-level="" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html"><i class="fa fa-check"></i>(Part) Statistical Learning</a></li>
+<li class="chapter" data-level="24" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html"><i class="fa fa-check"></i><b>24</b> Univariate distributions and statistics</a><ul>
+<li class="chapter" data-level="24.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#variation-randomness-and-stochasticity"><i class="fa fa-check"></i><b>24.1</b> Variation, randomness and stochasticity</a><ul>
+<li class="chapter" data-level="24.1.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#random-variables"><i class="fa fa-check"></i><b>24.1.1</b> Random variables</a></li>
 </ul></li>
-<li class="chapter" data-level="27" data-path="tree-based-methods.html"><a href="tree-based-methods.html"><i class="fa fa-check"></i><b>27</b> Tree-Based Methods</a><ul>
-<li class="chapter" data-level="27.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-trees"><i class="fa fa-check"></i><b>27.1</b> Regression Trees</a></li>
-<li class="chapter" data-level="27.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#classification-decision-trees"><i class="fa fa-check"></i><b>27.2</b> Classification (Decision) Trees</a></li>
-<li class="chapter" data-level="27.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#specifics-of-the-partitioning-algorithm"><i class="fa fa-check"></i><b>27.3</b> Specifics of the partitioning algorithm</a><ul>
-<li class="chapter" data-level="27.3.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#the-predictor-space"><i class="fa fa-check"></i><b>27.3.1</b> The predictor space</a></li>
-<li class="chapter" data-level="27.3.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#learning-strategy"><i class="fa fa-check"></i><b>27.3.2</b> Learning Strategy</a></li>
-<li class="chapter" data-level="27.3.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-growing"><i class="fa fa-check"></i><b>27.3.3</b> Tree Growing</a></li>
-<li class="chapter" data-level="27.3.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#deviance-as-a-measure-of-impurity"><i class="fa fa-check"></i><b>27.3.4</b> Deviance as a measure of impurity</a></li>
-<li class="chapter" data-level="27.3.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#other-measures-of-impurity"><i class="fa fa-check"></i><b>27.3.5</b> Other measures of impurity</a></li>
-<li class="chapter" data-level="27.3.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-pruning"><i class="fa fa-check"></i><b>27.3.6</b> Tree Pruning</a></li>
+<li class="chapter" data-level="24.2" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#discrete-probability-distributions"><i class="fa fa-check"></i><b>24.2</b> (Discrete) Probability distributions</a><ul>
+<li class="chapter" data-level="24.2.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#example-the-oracle-of-tweet"><i class="fa fa-check"></i><b>24.2.1</b> Example The oracle of TWEET</a></li>
 </ul></li>
-<li class="chapter" data-level="27.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#properties-of-tree-method"><i class="fa fa-check"></i><b>27.4</b> Properties of Tree Method</a></li>
-<li class="chapter" data-level="27.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>27.5</b> Random Forests</a></li>
-<li class="chapter" data-level="27.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>27.6</b> Tree-based methods summary</a></li>
+<li class="chapter" data-level="24.3" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#expectation"><i class="fa fa-check"></i><b>24.3</b> Expectation</a></li>
+<li class="chapter" data-level="24.4" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#estimation"><i class="fa fa-check"></i><b>24.4</b> Estimation</a><ul>
+<li class="chapter" data-level="24.4.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#law-of-large-numbers-lln"><i class="fa fa-check"></i><b>24.4.1</b> Law of large numbers (LLN)</a></li>
+<li class="chapter" data-level="24.4.2" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#central-limit-theorem-clt"><i class="fa fa-check"></i><b>24.4.2</b> Central Limit Theorem (CLT)</a></li>
+</ul></li>
+<li class="chapter" data-level="24.5" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#the-normal-distribution"><i class="fa fa-check"></i><b>24.5</b> The normal distribution</a><ul>
+<li class="chapter" data-level="24.5.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#clt-continued"><i class="fa fa-check"></i><b>24.5.1</b> CLT continued</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>25</b> Experiment design and hypothesis testing</a><ul>
+<li class="chapter" data-level="25.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#inference"><i class="fa fa-check"></i><b>25.1</b> Inference</a><ul>
+<li class="chapter" data-level="25.1.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>25.1.1</b> Hypothesis testing</a></li>
+</ul></li>
+<li class="chapter" data-level="25.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#ab-testing"><i class="fa fa-check"></i><b>25.2</b> A/B Testing</a></li>
+<li class="chapter" data-level="25.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#summary-1"><i class="fa fa-check"></i><b>25.3</b> Summary</a></li>
+<li class="chapter" data-level="25.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#probability-distributions"><i class="fa fa-check"></i><b>25.4</b> Probability Distributions</a><ul>
+<li class="chapter" data-level="25.4.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#bernoulli"><i class="fa fa-check"></i><b>25.4.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="25.4.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#binomial"><i class="fa fa-check"></i><b>25.4.2</b> Binomial</a></li>
+<li class="chapter" data-level="25.4.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#normal-gaussian-distribution"><i class="fa fa-check"></i><b>25.4.3</b> Normal (Gaussian) distribution</a></li>
+<li class="chapter" data-level="25.4.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#distributions-in-r"><i class="fa fa-check"></i><b>25.4.4</b> Distributions in R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="multivariate-probability.html"><a href="multivariate-probability.html"><i class="fa fa-check"></i><b>26</b> Multivariate probability</a><ul>
+<li class="chapter" data-level="26.1" data-path="multivariate-probability.html"><a href="multivariate-probability.html#joint-and-conditional-probability"><i class="fa fa-check"></i><b>26.1</b> Joint and conditional probability</a></li>
+<li class="chapter" data-level="26.2" data-path="multivariate-probability.html"><a href="multivariate-probability.html#bayes-rule"><i class="fa fa-check"></i><b>26.2</b> Bayes’ Rule</a></li>
+<li class="chapter" data-level="26.3" data-path="multivariate-probability.html"><a href="multivariate-probability.html#conditional-expectation"><i class="fa fa-check"></i><b>26.3</b> Conditional expectation</a></li>
+<li class="chapter" data-level="26.4" data-path="multivariate-probability.html"><a href="multivariate-probability.html#maximum-likelihood"><i class="fa fa-check"></i><b>26.4</b> Maximum likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="part-machine-learning.html"><a href="part-machine-learning.html"><i class="fa fa-check"></i>(Part) Machine Learning</a></li>
+<li class="chapter" data-level="27" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html"><i class="fa fa-check"></i><b>27</b> Data Analysis with Geometry</a><ul>
+<li class="chapter" data-level="27.1" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#motivating-example-credit-analysis"><i class="fa fa-check"></i><b>27.1</b> Motivating Example: Credit Analysis</a></li>
+<li class="chapter" data-level="27.2" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#from-data-to-feature-vectors"><i class="fa fa-check"></i><b>27.2</b> From data to feature vectors</a></li>
+<li class="chapter" data-level="27.3" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#technical-notation"><i class="fa fa-check"></i><b>27.3</b> Technical notation</a></li>
+<li class="chapter" data-level="27.4" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#geometry-and-distances"><i class="fa fa-check"></i><b>27.4</b> Geometry and Distances</a><ul>
+<li class="chapter" data-level="27.4.1" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#k-nearest-neighbor-classification"><i class="fa fa-check"></i><b>27.4.1</b> K-nearest neighbor classification</a></li>
+<li class="chapter" data-level="27.4.2" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#the-importance-of-transformations"><i class="fa fa-check"></i><b>27.4.2</b> The importance of transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="27.5" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#quick-vector-algebra-review"><i class="fa fa-check"></i><b>27.5</b> Quick vector algebra review</a><ul>
+<li class="chapter" data-level="27.5.1" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#quiz"><i class="fa fa-check"></i><b>27.5.1</b> Quiz</a></li>
+</ul></li>
+<li class="chapter" data-level="27.6" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#the-curse-of-dimensionality"><i class="fa fa-check"></i><b>27.6</b> The curse of dimensionality</a></li>
+<li class="chapter" data-level="27.7" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#summary-2"><i class="fa fa-check"></i><b>27.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="28" data-path="linear-regression.html"><a href="linear-regression.html"><i class="fa fa-check"></i><b>28</b> Linear Regression</a><ul>
+<li class="chapter" data-level="28.1" data-path="linear-regression.html"><a href="linear-regression.html#simple-regression"><i class="fa fa-check"></i><b>28.1</b> Simple Regression</a></li>
+<li class="chapter" data-level="28.2" data-path="linear-regression.html"><a href="linear-regression.html#inference-1"><i class="fa fa-check"></i><b>28.2</b> Inference</a><ul>
+<li class="chapter" data-level="28.2.1" data-path="linear-regression.html"><a href="linear-regression.html#confidence-interval"><i class="fa fa-check"></i><b>28.2.1</b> Confidence Interval</a></li>
+<li class="chapter" data-level="28.2.2" data-path="linear-regression.html"><a href="linear-regression.html#the-t-statistic-and-the-t-distribution"><i class="fa fa-check"></i><b>28.2.2</b> The <span class="math inline">\(t\)</span>-statistic and the <span class="math inline">\(t\)</span>-distribution</a></li>
+<li class="chapter" data-level="28.2.3" data-path="linear-regression.html"><a href="linear-regression.html#global-fit"><i class="fa fa-check"></i><b>28.2.3</b> Global Fit</a></li>
+</ul></li>
+<li class="chapter" data-level="28.3" data-path="linear-regression.html"><a href="linear-regression.html#some-important-technicalities"><i class="fa fa-check"></i><b>28.3</b> Some important technicalities</a></li>
+<li class="chapter" data-level="28.4" data-path="linear-regression.html"><a href="linear-regression.html#issues-with-linear-regression"><i class="fa fa-check"></i><b>28.4</b> Issues with linear regression</a><ul>
+<li class="chapter" data-level="28.4.1" data-path="linear-regression.html"><a href="linear-regression.html#non-linearity-of-outcome-predictor-relationship"><i class="fa fa-check"></i><b>28.4.1</b> Non-linearity of outcome-predictor relationship</a></li>
+<li class="chapter" data-level="28.4.2" data-path="linear-regression.html"><a href="linear-regression.html#correlated-error"><i class="fa fa-check"></i><b>28.4.2</b> Correlated Error</a></li>
+<li class="chapter" data-level="28.4.3" data-path="linear-regression.html"><a href="linear-regression.html#non-constant-variance"><i class="fa fa-check"></i><b>28.4.3</b> Non-constant variance</a></li>
+</ul></li>
+<li class="chapter" data-level="28.5" data-path="linear-regression.html"><a href="linear-regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>28.5</b> Multiple linear regression</a><ul>
+<li class="chapter" data-level="28.5.1" data-path="linear-regression.html"><a href="linear-regression.html#estimation-in-multivariate-regression"><i class="fa fa-check"></i><b>28.5.1</b> Estimation in multivariate regression</a></li>
+<li class="chapter" data-level="28.5.2" data-path="linear-regression.html"><a href="linear-regression.html#example-contd"><i class="fa fa-check"></i><b>28.5.2</b> Example (cont’d)</a></li>
+<li class="chapter" data-level="28.5.3" data-path="linear-regression.html"><a href="linear-regression.html#statistical-statements-contd"><i class="fa fa-check"></i><b>28.5.3</b> Statistical statements (cont’d)</a></li>
+<li class="chapter" data-level="28.5.4" data-path="linear-regression.html"><a href="linear-regression.html#the-f-test"><i class="fa fa-check"></i><b>28.5.4</b> The F-test</a></li>
+<li class="chapter" data-level="28.5.5" data-path="linear-regression.html"><a href="linear-regression.html#categorical-predictors-contd"><i class="fa fa-check"></i><b>28.5.5</b> Categorical predictors (cont’d)</a></li>
+</ul></li>
+<li class="chapter" data-level="28.6" data-path="linear-regression.html"><a href="linear-regression.html#interactions-in-linear-models"><i class="fa fa-check"></i><b>28.6</b> Interactions in linear models</a><ul>
+<li class="chapter" data-level="28.6.1" data-path="linear-regression.html"><a href="linear-regression.html#additional-issues-with-linear-regression"><i class="fa fa-check"></i><b>28.6.1</b> Additional issues with linear regression</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="29" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html"><i class="fa fa-check"></i><b>29</b> Linear models for classification</a><ul>
+<li class="chapter" data-level="29.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#an-example-classification-problem"><i class="fa fa-check"></i><b>29.1</b> An example classification problem</a></li>
+<li class="chapter" data-level="29.2" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#why-not-linear-regression"><i class="fa fa-check"></i><b>29.2</b> Why not linear regression?</a></li>
+<li class="chapter" data-level="29.3" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classification-as-probability-estimation-problem"><i class="fa fa-check"></i><b>29.3</b> Classification as probability estimation problem</a></li>
+<li class="chapter" data-level="29.4" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#logistic-regression"><i class="fa fa-check"></i><b>29.4</b> Logistic regression</a><ul>
+<li class="chapter" data-level="29.4.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#exercises"><i class="fa fa-check"></i><b>29.4.1</b> Exercises</a></li>
+<li class="chapter" data-level="29.4.2" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#making-predictions"><i class="fa fa-check"></i><b>29.4.2</b> Making predictions</a></li>
+<li class="chapter" data-level="29.4.3" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#multiple-logistic-regression"><i class="fa fa-check"></i><b>29.4.3</b> Multiple logistic regression</a></li>
+<li class="chapter" data-level="29.4.4" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#exercise"><i class="fa fa-check"></i><b>29.4.4</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="29.5" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>29.5</b> Linear Discriminant Analysis</a><ul>
+<li class="chapter" data-level="29.5.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#how-to-train-lda"><i class="fa fa-check"></i><b>29.5.1</b> How to train LDA</a></li>
+</ul></li>
+<li class="chapter" data-level="29.6" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classifier-evaluation"><i class="fa fa-check"></i><b>29.6</b> Classifier evaluation</a></li>
+<li class="chapter" data-level="29.7" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#summary-3"><i class="fa fa-check"></i><b>29.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="30" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html"><i class="fa fa-check"></i><b>30</b> Solving linear ML problems</a><ul>
+<li class="chapter" data-level="30.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#case-study"><i class="fa fa-check"></i><b>30.1</b> Case Study</a></li>
+<li class="chapter" data-level="30.2" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#gradient-descent"><i class="fa fa-check"></i><b>30.2</b> Gradient Descent</a></li>
+<li class="chapter" data-level="30.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>30.3</b> Stochastic gradient descent</a></li>
+<li class="chapter" data-level="30.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>30.4</b> Parallelizing gradient descent</a></li>
+</ul></li>
+<li class="chapter" data-level="31" data-path="tree-based-methods.html"><a href="tree-based-methods.html"><i class="fa fa-check"></i><b>31</b> Tree-Based Methods</a><ul>
+<li class="chapter" data-level="31.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-trees"><i class="fa fa-check"></i><b>31.1</b> Regression Trees</a></li>
+<li class="chapter" data-level="31.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#classification-decision-trees"><i class="fa fa-check"></i><b>31.2</b> Classification (Decision) Trees</a></li>
+<li class="chapter" data-level="31.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#specifics-of-the-partitioning-algorithm"><i class="fa fa-check"></i><b>31.3</b> Specifics of the partitioning algorithm</a><ul>
+<li class="chapter" data-level="31.3.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#the-predictor-space"><i class="fa fa-check"></i><b>31.3.1</b> The predictor space</a></li>
+<li class="chapter" data-level="31.3.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#learning-strategy"><i class="fa fa-check"></i><b>31.3.2</b> Learning Strategy</a></li>
+<li class="chapter" data-level="31.3.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-growing"><i class="fa fa-check"></i><b>31.3.3</b> Tree Growing</a></li>
+<li class="chapter" data-level="31.3.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#deviance-as-a-measure-of-impurity"><i class="fa fa-check"></i><b>31.3.4</b> Deviance as a measure of impurity</a></li>
+<li class="chapter" data-level="31.3.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#other-measures-of-impurity"><i class="fa fa-check"></i><b>31.3.5</b> Other measures of impurity</a></li>
+<li class="chapter" data-level="31.3.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-pruning"><i class="fa fa-check"></i><b>31.3.6</b> Tree Pruning</a></li>
+</ul></li>
+<li class="chapter" data-level="31.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#properties-of-tree-method"><i class="fa fa-check"></i><b>31.4</b> Properties of Tree Method</a></li>
+<li class="chapter" data-level="31.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>31.5</b> Random Forests</a></li>
+<li class="chapter" data-level="31.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>31.6</b> Tree-based methods summary</a></li>
+</ul></li>
+<li class="chapter" data-level="32" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>32</b> Model Selection</a><ul>
+<li class="chapter" data-level="32.1" data-path="model-selection.html"><a href="model-selection.html#cross-validation"><i class="fa fa-check"></i><b>32.1</b> Cross Validation</a></li>
+<li class="chapter" data-level="32.2" data-path="model-selection.html"><a href="model-selection.html#validation-set"><i class="fa fa-check"></i><b>32.2</b> Validation Set</a></li>
+<li class="chapter" data-level="32.3" data-path="model-selection.html"><a href="model-selection.html#resampled-validation-set"><i class="fa fa-check"></i><b>32.3</b> Resampled validation set</a></li>
+<li class="chapter" data-level="32.4" data-path="model-selection.html"><a href="model-selection.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>32.4</b> Leave-one-out Cross-Validation</a></li>
+<li class="chapter" data-level="32.5" data-path="model-selection.html"><a href="model-selection.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>32.5</b> k-fold Cross-Validation</a></li>
+<li class="chapter" data-level="32.6" data-path="model-selection.html"><a href="model-selection.html#cross-validation-in-classification"><i class="fa fa-check"></i><b>32.6</b> Cross-Validation in Classification</a></li>
+<li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
+<li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
 </ul></li>
 </ul>
 
@@ -455,20 +472,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="tree-based-methods" class="section level1">
-<h1><span class="header-section-number">27</span> Tree-Based Methods</h1>
+<h1><span class="header-section-number">31</span> Tree-Based Methods</h1>
 <p>We saw in previous units the limitation of using linear methods for classification. In particular, the partition of predictor space into regions using a linear model like logistic regression is very limiting. In this unit, we look at a set of elegant and versatile methods that allow these regions to take more complex shapes, but still produce models that are interpretable. These are very popular, well-known and studied methods in Statistical Learning. We will concentrate on Regression and Decision Trees and their extension to Random Forests.</p>
 <div id="regression-trees" class="section level2">
-<h2><span class="header-section-number">27.1</span> Regression Trees</h2>
+<h2><span class="header-section-number">31.1</span> Regression Trees</h2>
 <p>Consider a task where we are trying to predict a car’s fuel consumption in miles per gallon based on the car’s weight. A linear model in this case is not a good fit.</p>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-2-1.svg" width="672" /></p>
+<pre><code>## 
+## Attaching package: &#39;ISLR&#39;</code></pre>
+<pre><code>## The following object is masked _by_ &#39;.GlobalEnv&#39;:
+## 
+##     Auto</code></pre>
+<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-226-1.svg" width="672" /></p>
 <p>Let’s take a look at what a regression tree estimates in this case.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tree)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">tree &lt;-<span class="st"> </span><span class="kw">tree</span>(mpg<span class="op">~</span>weight, <span class="dt">data=</span>Auto)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">plot</span>(tree)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">text</span>(tree, <span class="dt">pretty=</span><span class="dv">0</span>, <span class="dt">cex=</span><span class="fl">1.3</span>)</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-3-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb429-1" data-line-number="1"><span class="kw">library</span>(tree)</a>
+<a class="sourceLine" id="cb429-2" data-line-number="2">tree &lt;-<span class="st"> </span><span class="kw">tree</span>(mpg<span class="op">~</span>weight, <span class="dt">data=</span>Auto)</a>
+<a class="sourceLine" id="cb429-3" data-line-number="3"><span class="kw">plot</span>(tree)</a>
+<a class="sourceLine" id="cb429-4" data-line-number="4"><span class="kw">text</span>(tree, <span class="dt">pretty=</span><span class="dv">0</span>, <span class="dt">cex=</span><span class="fl">1.3</span>)</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-227-1.svg" width="672" /></p>
 <p>The decision trees partitions the <code>weight</code> predictor into regions based on its value. We can show this graphically as below. The idea behind the regression tree is that outcome <span class="math inline">\(Y\)</span> (<code>mpg</code> in this case) is estimated (or predicted) to be it’s mean <em>within each of the data partitions</em>. Think of it as the conditional mean of <span class="math inline">\(Y\)</span> where conditioning is given by this region partitioning.</p>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-4-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-228-1.svg" width="672" /></p>
 <p>Regression and decision trees operate by prediction an outcome variable <span class="math inline">\(Y\)</span> by partitioning feature (predictor) space.</p>
 <p>The regression tree model then:</p>
 <ol style="list-style-type: decimal">
@@ -491,29 +513,29 @@ R_1(j,s) = \{X|X_j &lt; s\} \mathrm{ and } R_2(j,s) \{X|X_j \geq s\}
 <p>This is then applied recursively to regions <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span>. Within each region a prediction is made using <span class="math inline">\(\hat{y}_{R_j}\)</span> which is the mean of the response <span class="math inline">\(Y\)</span> of observations in <span class="math inline">\(R_j\)</span>.</p>
 <p><img src="img/8.3.png" /></p>
 <p>Consider building a model that used both <code>horsepower</code> and <code>weight</code>. In this plot the value of the response <span class="math inline">\(Y\)</span> is indicated by the size of the point.</p>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-5-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-229-1.svg" width="672" /></p>
 <p>This is what a decision tree would look like for these two predictors:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">tree &lt;-<span class="st"> </span><span class="kw">tree</span>(mpg<span class="op">~</span>horsepower<span class="op">+</span>weight, <span class="dt">data=</span>Auto)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">plot</span>(tree)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">text</span>(tree, <span class="dt">pretty=</span><span class="dv">0</span>)</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-6-1.svg" width="672" /></p>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-7-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb430-1" data-line-number="1">tree &lt;-<span class="st"> </span><span class="kw">tree</span>(mpg<span class="op">~</span>horsepower<span class="op">+</span>weight, <span class="dt">data=</span>Auto)</a>
+<a class="sourceLine" id="cb430-2" data-line-number="2"><span class="kw">plot</span>(tree)</a>
+<a class="sourceLine" id="cb430-3" data-line-number="3"><span class="kw">text</span>(tree, <span class="dt">pretty=</span><span class="dv">0</span>)</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-230-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-231-1.svg" width="672" /></p>
 </div>
 <div id="classification-decision-trees" class="section level2">
-<h2><span class="header-section-number">27.2</span> Classification (Decision) Trees</h2>
+<h2><span class="header-section-number">31.2</span> Classification (Decision) Trees</h2>
 <p>Classification, or decision trees, are used in classification problems, where the outcome is categorical. The same partitioning principle holds, but now, each region predicts the majority class for training observations within region.</p>
 <p>The recursive partitioning method requires a score function to choose predictors (and values) to partition with. In classification we could use a naive approach of looking for partitions that minimize training error. However, better performing approaches use more sophisticated metrics, which we will see shortly.</p>
 <p>Let’s look at how a classification tree performs on a credit card default dataset.</p>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-9-1.png" width="672" /></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">default_tree &lt;-<span class="st"> </span><span class="kw">tree</span>(default<span class="op">~</span>student<span class="op">+</span>balance<span class="op">+</span>income, <span class="dt">data=</span>Default)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">plot</span>(default_tree)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">text</span>(default_tree, <span class="dt">pretty=</span><span class="dv">0</span>)</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-10-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-233-1.png" width="672" /></p>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1">default_tree &lt;-<span class="st"> </span><span class="kw">tree</span>(default<span class="op">~</span>student<span class="op">+</span>balance<span class="op">+</span>income, <span class="dt">data=</span>Default)</a>
+<a class="sourceLine" id="cb431-2" data-line-number="2"><span class="kw">plot</span>(default_tree)</a>
+<a class="sourceLine" id="cb431-3" data-line-number="3"><span class="kw">text</span>(default_tree, <span class="dt">pretty=</span><span class="dv">0</span>)</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-234-1.svg" width="672" /></p>
 </div>
 <div id="specifics-of-the-partitioning-algorithm" class="section level2">
-<h2><span class="header-section-number">27.3</span> Specifics of the partitioning algorithm</h2>
+<h2><span class="header-section-number">31.3</span> Specifics of the partitioning algorithm</h2>
 <div id="the-predictor-space" class="section level3">
-<h3><span class="header-section-number">27.3.1</span> The predictor space</h3>
+<h3><span class="header-section-number">31.3.1</span> The predictor space</h3>
 <p>Suppose we have <span class="math inline">\(p\)</span> explanatory variables <span class="math inline">\(X_1,\ldots,X_p\)</span> and <span class="math inline">\(N\)</span> observations.</p>
 <p>Each of the <span class="math inline">\(X_i\)</span> can be</p>
 <ol style="list-style-type: lower-alpha">
@@ -523,7 +545,7 @@ R_1(j,s) = \{X|X_j &lt; s\} \mathrm{ and } R_2(j,s) \{X|X_j \geq s\}
 </ol>
 </div>
 <div id="learning-strategy" class="section level3">
-<h3><span class="header-section-number">27.3.2</span> Learning Strategy</h3>
+<h3><span class="header-section-number">31.3.2</span> Learning Strategy</h3>
 <p>The general procedure for tree learning is the following:</p>
 <ol style="list-style-type: decimal">
 <li><strong>Grow</strong> an overly large tree using forward selection as follows: at each step, find the <em>best</em> split among all attributes. Grow until all terminal nodes either</li>
@@ -537,7 +559,7 @@ R_1(j,s) = \{X|X_j &lt; s\} \mathrm{ and } R_2(j,s) \{X|X_j \geq s\}
 </ol>
 </div>
 <div id="tree-growing" class="section level3">
-<h3><span class="header-section-number">27.3.3</span> Tree Growing</h3>
+<h3><span class="header-section-number">31.3.3</span> Tree Growing</h3>
 <p>The recursive partitioning algorithm is as follows:</p>
 <p>INITIALIZE All cases in the root node<br />
 REPEAT Find optimal allowed split<br />
@@ -547,7 +569,7 @@ STOP Stop when pre-defined criterion is met</p>
 pieces. The fundamental idea is to select each split of a subset so that the data in each of the descendent subsets are “purer” than the data in the parent subset.</p>
 </div>
 <div id="deviance-as-a-measure-of-impurity" class="section level3">
-<h3><span class="header-section-number">27.3.4</span> Deviance as a measure of impurity</h3>
+<h3><span class="header-section-number">31.3.4</span> Deviance as a measure of impurity</h3>
 <p>A simple approach is to assume a multinomial model and then use deviance as a definition of impurity.</p>
 <p>Assume <span class="math inline">\(Y \in \mathcal{G}=\{1,2,\ldots,k\}\)</span>.</p>
 <ul>
@@ -559,7 +581,7 @@ pieces. The fundamental idea is to select each split of a subset so that the dat
 </ul>
 </div>
 <div id="other-measures-of-impurity" class="section level3">
-<h3><span class="header-section-number">27.3.5</span> Other measures of impurity</h3>
+<h3><span class="header-section-number">31.3.5</span> Other measures of impurity</h3>
 <p>Other commonly used measures of impurity at a node <span class="math inline">\(i\)</span> of a
 classification tree are</p>
 <p><strong>missclasification rate</strong>: <span class="math inline">\(\frac{1}{n_i} \sum_{j\in A_i} I(y_j \neq k_i)=1-\hat{p}_{ik_i}\)</span><br />
@@ -574,7 +596,7 @@ D = \sum_{\text{cases } j} (y_j-\mu_{[j]})^2
 to.</p>
 </div>
 <div id="tree-pruning" class="section level3">
-<h3><span class="header-section-number">27.3.6</span> Tree Pruning</h3>
+<h3><span class="header-section-number">31.3.6</span> Tree Pruning</h3>
 <ul>
 <li>Grow a big tree <span class="math inline">\(T\)</span></li>
 <li>Consider snipping off terminal subtrees (resulting in
@@ -589,7 +611,7 @@ nested.</p>
 </div>
 </div>
 <div id="properties-of-tree-method" class="section level2">
-<h2><span class="header-section-number">27.4</span> Properties of Tree Method</h2>
+<h2><span class="header-section-number">31.4</span> Properties of Tree Method</h2>
 <p>Good properties of Regression and Classification trees include:</p>
 <ul>
 <li>Decision trees are very “natural” constructs, in particular when the explanatory variables are catgorical (and even better when they are binary)</li>
@@ -610,7 +632,7 @@ nested.</p>
 </ul>
 </div>
 <div id="random-forests" class="section level2">
-<h2><span class="header-section-number">27.5</span> Random Forests</h2>
+<h2><span class="header-section-number">31.5</span> Random Forests</h2>
 <p>Random Forests are a <strong>very popular</strong> approach that addresses these shortcomings via resampling of the training data. Their goal is to improve prediction performance and reduce instability by <em>averaging</em> multiple decision trees (a forest constructed with randomness). It uses two ideas to accomplish this.</p>
 <p>The first idea is <em>Bagging</em> (bootstrap aggregation)
 General scheme:
@@ -628,68 +650,68 @@ for classification: predict with majority vote (most frequent class)</p>
 <p><img src="img/bootstrap.png" /></p>
 <p>The second idea used in Random Forests is to use a random selection of features to split when deciding partitions. Specifically, when building each tree <span class="math inline">\(T_j\)</span>, at each recursive partition only consider a randomly selected subset of predictors to check for best split. This reduces correlation between trees in forest, improving prediction accuracy.</p>
 <p>Let’s look at the same car dataset again</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1234</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">train_indices &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(Auto), <span class="kw">nrow</span>(Auto)<span class="op">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">train_set &lt;-<span class="st"> </span>Auto[train_indices,]</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">test_set &lt;-<span class="st"> </span>Auto[<span class="op">-</span>train_indices,]</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="kw">library</span>(randomForest)</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">auto_rf &lt;-<span class="st"> </span><span class="kw">randomForest</span>(mpg<span class="op">~</span>cylinders<span class="op">+</span>displacement<span class="op">+</span>horsepower<span class="op">+</span>weight<span class="op">+</span>acceleration<span class="op">+</span>year<span class="op">+</span>origin, <span class="dt">importance=</span><span class="ot">TRUE</span>, <span class="dt">mtry=</span><span class="dv">3</span>, <span class="dt">data=</span>train_set)</a></code></pre></div>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb432-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1234</span>)</a>
+<a class="sourceLine" id="cb432-2" data-line-number="2">train_indices &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(Auto), <span class="kw">nrow</span>(Auto)<span class="op">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb432-3" data-line-number="3">train_set &lt;-<span class="st"> </span>Auto[train_indices,]</a>
+<a class="sourceLine" id="cb432-4" data-line-number="4">test_set &lt;-<span class="st"> </span>Auto[<span class="op">-</span>train_indices,]</a>
+<a class="sourceLine" id="cb432-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb432-6" data-line-number="6"><span class="kw">library</span>(randomForest)</a>
+<a class="sourceLine" id="cb432-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb432-8" data-line-number="8">auto_rf &lt;-<span class="st"> </span><span class="kw">randomForest</span>(mpg<span class="op">~</span>cylinders<span class="op">+</span>displacement<span class="op">+</span>horsepower<span class="op">+</span>weight<span class="op">+</span>acceleration<span class="op">+</span>year<span class="op">+</span>origin, <span class="dt">importance=</span><span class="ot">TRUE</span>, <span class="dt">mtry=</span><span class="dv">3</span>, <span class="dt">data=</span>train_set)</a></code></pre></div>
 <p>Let’s plot the predicted miles per gallon given by a random forest compared to the observed miiles per gallon in the training dataset.</p>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-12-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-236-1.svg" width="672" /></p>
 <p>Now let’s look at the same plot on a <em>testing</em> dataset.</p>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-13-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-237-1.svg" width="672" /></p>
 <p>A disadvantage of random forests is that we lose interpretability. However, we can use the fact that a bootstrap sample was used to construct trees to measure <em>variable importance</em> from the random forest.</p>
 <p>Here is a table of <em>variable importance</em> for the random forest we just constructed.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">variable_importance &lt;-<span class="st"> </span><span class="kw">importance</span>(auto_rf)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(<span class="kw">round</span>(variable_importance, <span class="dt">digits=</span><span class="dv">2</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb433-1" data-line-number="1">variable_importance &lt;-<span class="st"> </span><span class="kw">importance</span>(auto_rf)</a>
+<a class="sourceLine" id="cb433-2" data-line-number="2">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(<span class="kw">round</span>(variable_importance, <span class="dt">digits=</span><span class="dv">2</span>)))</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
-<th></th>
-<th align="right">%IncMSE</th>
-<th align="right">IncNodePurity</th>
+<th align="right">%I</th>
+<th>ncMSE In</th>
+<th align="left">cNodePurity</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>cylinders</td>
-<td align="right">14.38</td>
-<td align="right">2251.77</td>
+<td align="right">cylinders</td>
+<td>14.38</td>
+<td align="left">2251.77</td>
 </tr>
 <tr class="even">
-<td>displacement</td>
-<td align="right">19.91</td>
-<td align="right">2779.83</td>
+<td align="right">displacement</td>
+<td>19.91</td>
+<td align="left">2779.83</td>
 </tr>
 <tr class="odd">
-<td>horsepower</td>
-<td align="right">20.54</td>
-<td align="right">2483.77</td>
+<td align="right">horsepower</td>
+<td>20.54</td>
+<td align="left">2483.77</td>
 </tr>
 <tr class="even">
-<td>weight</td>
-<td align="right">21.29</td>
-<td align="right">2349.77</td>
+<td align="right">weight</td>
+<td>21.29</td>
+<td align="left">2349.77</td>
 </tr>
 <tr class="odd">
-<td>acceleration</td>
-<td align="right">6.37</td>
-<td align="right">361.65</td>
+<td align="right">acceleration</td>
+<td>6.37</td>
+<td align="left">361.65</td>
 </tr>
 <tr class="even">
-<td>year</td>
-<td align="right">44.27</td>
-<td align="right">1332.41</td>
+<td align="right">year</td>
+<td>44.27</td>
+<td align="left">1332.41</td>
 </tr>
 </tbody>
 </table>
 <p>And a barplot of the same data.</p>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-15-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-239-1.svg" width="672" /></p>
 </div>
 <div id="tree-based-methods-summary" class="section level2">
-<h2><span class="header-section-number">27.6</span> Tree-based methods summary</h2>
+<h2><span class="header-section-number">31.6</span> Tree-based methods summary</h2>
 <p>Tree-based methods are very interpretable <em>prediction</em> models. For which some inferential tasks are possible (e.g., variable importance in random forests), but are much more limited than the linear models we saw previously. These methods are very commonly used across many application domains and Random Forests often perform at state-of-the-art for many tasks.</p>
 
 </div>
@@ -699,8 +721,8 @@ for classification: predict with majority vote (most frequent class)</p>
           </div>
         </div>
       </div>
-<a href="solving-linear-ml-problems.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="solving-linear-ml-problems.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-selection.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
