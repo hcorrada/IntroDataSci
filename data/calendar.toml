@@ -315,10 +315,6 @@ notes = "bookdown-notes/tree-based-methods.html"
 #title = "Non-linear models for regression and classification: K-Nearest Neighbors"
 # notes = "lecture-note/svms/"
 
-[[day22.covers]]
-title = "Model evaluation using resampling"
-notes = "bookdown-notes/model-selection.html"
-
 
 [[day22.workdue]]
 title = "Homework 5: Regression Interpretation"
@@ -346,6 +342,10 @@ title = "Midterm II"
 
 [day25]
 date = "4/26"
+
+[[day25.covers]]
+title = "Model evaluation using resampling"
+notes = "bookdown-notes/model-selection.html"
 
 [[day25.covers]]
 title = "Unsupervised Learning: Clustering"
