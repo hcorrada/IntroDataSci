@@ -177,13 +177,43 @@ where $f(x_i) = \beta_1 x_i$.
 
 For multiple predictors (e.g., adding an intercept), this generalizes to the _gradient_ i.e., the vector of first derivatives of _loss_ with respect to parameters.
 
+In this case, the model sets 
+$f(\mathbf{x}_i, \mathbf{\beta}) = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip}$
+
+and the gradient given by partial derivatives for each parameter
+
+$$
+\nabla_{\mathbf{\beta}}L(\mathbf{\beta}) = 
+\left[
+\begin{array}{c}
+\frac{\partial L(\mathbf{\beta})}{\partial \beta_0} \\
+\frac{\partial L(\mathbf{\beta})}{\partial \beta_1} \\
+\vdots \\
+\frac{\partial L(\mathbf{\beta})}{\partial \beta_p} \\
+\end{array}
+\right]
+$$
+
 The update equation is exactly the same for least squares regression
 
 $$
 \mathbf{\beta} = \mathbf{\beta} + \alpha \sum_{i=1}^n (y_i - f(\mathbf{x}_i, \beta)) \mathbf{x}_i
 $$
 
-where $f(\mathbf{x}_i, \mathbf{\beta}) = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip}$
+where $f(\mathbf{x}_i, \mathbf{\beta}) = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip}$ and $\mathbf{x}_i$ is the vector of data values for entity $i$ with an additional entry of 1 to account for the intercept parameter $\beta_0$:
+
+$$
+\mathbf{x}_i =
+\left[
+\begin{array}{c}
+1 \\
+x_{i1} \\
+x_{i2} \\
+\vdots \\
+x_{ip}
+\end{array}
+\right]
+$$
 
 Gradiest descent falls within a family of optimization methods called _first-order methods_ (first-order means they use derivatives only). These methods have properties amenable to use with very large datasets:
 
@@ -193,6 +223,80 @@ Gradiest descent falls within a family of optimization methods called _first-ord
 4. Easily parallelizable  
 
 Drawback: Can take many steps before converging
+
+### Logistic Regression
+
+Gradient descent is also used to solve the logistic regression problem. The same procedure follows: (1) define a loss function; (2) derive the update equation; (3) run the iterative gradient descent algorithm. Let's take a look at the first two steps in this case.
+
+For logistic regression, we turn to _maximum likelihood_ to formulate a loss function. We mentioned this concept previously, but it follows directly from the "inverse problem" view of data analysis we have been using throughout this unit. For logistic regression, we will assume that the data is generated from a _Bernoulli_ probability distribution. Once we make that assumption, we setup an inverse problem that looks for parameter values that maximizes the probability of the data we observe under this assumption.
+
+For the logistic regression problem we are given dataset $\{\langle \mathbf{x}_1, y_1\rangle, \ldots, \langle \mathbf{x}_n, y_n \rangle \}$, where outcomes $y_i \in \{0,1\}$ since we are learning a binary classification problem. The goal is to estimate parameters $\mathbf{\beta}$ in model
+
+$$
+\log{ \frac{p(Y=1 | \mathbf{X}=\mathbf{x})}{1-p(Y=1 | \mathbf{X}=\mathbf{x})}} =
+\beta_0 + \beta_0 x_{1} + \cdots + \beta_p x_{p}
+$$
+To establish a loss function we first assume a model for data generation. The assumption we make here is if an entity has attribute values $\mathbf{x}$, then the outcome $Y$ is a $\mathrm{Bernoulli}(p(\mathbf{\beta}; \mathbf{x}))$ random variable and derive this probability from the equation above as
+
+$$
+p(\mathbf{\beta}; \mathbf{x}) = \frac{e^{f(\mathbf{\beta}; \mathbf{x})}}{1+e^{f(\mathbf{\beta}; \mathbf{x})}}
+$$
+
+Note that we use the same notation $f(\mathbf{\beta}; \mathbf{x})$ as we did in linear regression.
+
+Now, we can ask, what is the probability of the data we observe for entity $i$ under this model?
+We can write this probability in this form:
+
+$$
+p(\mathbf{\beta}; \mathbf{x}_i)^{y_i}(1-p(\mathbf{\beta};\mathbf{x}_i))^{(1-y_i)}
+$$
+
+Note that this expression equals $p(\mathbf{\beta};\mathbf{x}_i)$ if $y_i=1$ and $1-p(\mathbf{\beta}; \mathbf{x}_i)$ othwerwise, which is the behavoir we desire for this probability model.
+
+Now, we can put these together for all observed entities since we assume that these are generated independently to get a _likelihood_ function:
+
+$$
+\mathcal{L}(\mathbf{\beta}) = \prod_{i=1}^n p_i(\mathbf{\beta}; \mathbf{x}_i)^{y_i}(1-p_i(\mathbf{\beta};\mathbf{x}_i))^{(1-y_i)}
+$$
+
+Now, we need to turn this into a loss function we can _minimize_. The likelihood function we wrote down is one we would _maximize_. Also, it is usually more convenient to work with the logarithm of likelihoods. So the loss function we use for gradient descent is the _negative log likelihood_
+
+$$
+L(\mathbf{\beta}) = \sum_{i=1}^n -y_i f(\mathbf{\beta}; \mathbf{x}_i) + \log(1+e^{f(\mathbf{\beta};\mathbf{x}_i)})
+$$
+
+We leave this derivation as an exercise, but note that 
+
+$$
+\log{p(\mathbf{\beta};\mathbf{x}_i)} = 
+f(\mathbf{\beta};\mathbf{x}_i) - \log{(1+e^{f(\mathbf{\beta};\mathbf{x}_i)})}
+$$
+
+and
+
+$$
+\log{(1-p(\mathbf{\beta};\mathbf{x}_i))} = 
+ - \log{(1+e^{f(\mathbf{\beta};\mathbf{x}_i)})}
+$$
+
+So, now that we have a loss function, we need to derive it's gradient to use the gradient descent algorithm.
+
+$$
+\begin{aligned}
+\nabla_{\mathbf{\beta}}L(\mathbf{\beta}) & = & 
+\nabla_{\mathbf{\beta}} \sum_{i=1}^n -y_i f(\mathbf{\beta};\mathbf{x}) + \log{(1+e^{f(\mathbf{\beta}; \mathbf{x}_i)})} \\
+{} & = & \sum_{i=1}^n -y_i \nabla_{\mathbf{\beta}}f(\mathbf{\beta};\mathbf{x}_i) + \nabla_{\mathbf{\beta}} \log{(1+e^{f(\mathbf{\beta};\mathbf{x}_i)})}\\
+{} & = & \sum_{i=1}^n -y_i \mathbf{x}_i + \frac{1}{1+e^{f(\mathbf{\beta};\mathbf{x}_i)}} \nabla_{\mathbf{\beta}} (1+e^{f(\mathbf{\beta};\mathbf{x}_i)}) \\
+{} & = & \sum_{i=1}^n -y_i \mathbf{x}_i +
+\frac{e^{f(\mathbf{\beta};\mathbf{x}_i)}}{1+e^{f(\mathbf{\beta};\mathbf{x}_i)}} \nabla_{\mathbf{\beta}}f(\mathbf{\beta};\mathbf{x}_i) \\
+{} & = & \sum_{i=1}^n -y_i \mathbf{x}_i +
+p(\mathbf{\beta};\mathbf{x}_i) \mathbf{x}_i \\
+{} & = & \sum_{i=1}^n 
+(p(\mathbf{\beta};\mathbf{x}_i) - y_i) \mathbf{x}_i
+\end{aligned}
+$$
+
+Note the nice similarity to the gradient for linear regression. It multiplies each data (expanded) data vector $\mathbf{x}_i$ by the difference between a prediction, in this case the probability that the outcome $y_i=1$ and the observed outcome $y_i$. You will see that a similar pattern holds for many other probability models.
 
 ## Stochastic gradient descent
 
