@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-17">
+<meta name="date" content="2018-04-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -425,7 +425,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="30" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html"><i class="fa fa-check"></i><b>30</b> Solving linear ML problems</a><ul>
 <li class="chapter" data-level="30.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#case-study"><i class="fa fa-check"></i><b>30.1</b> Case Study</a></li>
-<li class="chapter" data-level="30.2" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#gradient-descent"><i class="fa fa-check"></i><b>30.2</b> Gradient Descent</a></li>
+<li class="chapter" data-level="30.2" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#gradient-descent"><i class="fa fa-check"></i><b>30.2</b> Gradient Descent</a><ul>
+<li class="chapter" data-level="30.2.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#logistic-regression-1"><i class="fa fa-check"></i><b>30.2.1</b> Logistic Regression</a></li>
+</ul></li>
 <li class="chapter" data-level="30.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>30.3</b> Stochastic gradient descent</a></li>
 <li class="chapter" data-level="30.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>30.4</b> Parallelizing gradient descent</a></li>
 </ul></li>
@@ -597,11 +599,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 \]</span></p>
 <p>where <span class="math inline">\(f(x_i) = \beta_1 x_i\)</span>.</p>
 <p>For multiple predictors (e.g., adding an intercept), this generalizes to the <em>gradient</em> i.e., the vector of first derivatives of <em>loss</em> with respect to parameters.</p>
+<p>In this case, the model sets
+<span class="math inline">\(f(\mathbf{x}_i, \mathbf{\beta}) = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip}\)</span></p>
+<p>and the gradient given by partial derivatives for each parameter</p>
+<p><span class="math display">\[
+\nabla_{\mathbf{\beta}}L(\mathbf{\beta}) = 
+\left[
+\begin{array}{c}
+\frac{\partial L(\mathbf{\beta})}{\partial \beta_0} \\
+\frac{\partial L(\mathbf{\beta})}{\partial \beta_1} \\
+\vdots \\
+\frac{\partial L(\mathbf{\beta})}{\partial \beta_p} \\
+\end{array}
+\right]
+\]</span></p>
 <p>The update equation is exactly the same for least squares regression</p>
 <p><span class="math display">\[
 \mathbf{\beta} = \mathbf{\beta} + \alpha \sum_{i=1}^n (y_i - f(\mathbf{x}_i, \beta)) \mathbf{x}_i
 \]</span></p>
-<p>where <span class="math inline">\(f(\mathbf{x}_i, \mathbf{\beta}) = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip}\)</span></p>
+<p>where <span class="math inline">\(f(\mathbf{x}_i, \mathbf{\beta}) = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip}\)</span> and <span class="math inline">\(\mathbf{x}_i\)</span> is the vector of data values for entity <span class="math inline">\(i\)</span> with an additional entry of 1 to account for the intercept parameter <span class="math inline">\(\beta_0\)</span>:</p>
+<p><span class="math display">\[
+\mathbf{x}_i =
+\left[
+\begin{array}{c}
+1 \\
+x_{i1} \\
+x_{i2} \\
+\vdots \\
+x_{ip}
+\end{array}
+\right]
+\]</span></p>
 <p>Gradiest descent falls within a family of optimization methods called <em>first-order methods</em> (first-order means they use derivatives only). These methods have properties amenable to use with very large datasets:</p>
 <ol style="list-style-type: decimal">
 <li>Inexpensive updates<br />
@@ -613,6 +641,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Easily parallelizable</li>
 </ol>
 <p>Drawback: Can take many steps before converging</p>
+<div id="logistic-regression-1" class="section level3">
+<h3><span class="header-section-number">30.2.1</span> Logistic Regression</h3>
+<p>Gradient descent is also used to solve the logistic regression problem. The same procedure follows: (1) define a loss function; (2) derive the update equation; (3) run the iterative gradient descent algorithm. Let’s take a look at the first two steps in this case.</p>
+<p>For logistic regression, we turn to <em>maximum likelihood</em> to formulate a loss function. We mentioned this concept previously, but it follows directly from the “inverse problem” view of data analysis we have been using throughout this unit. For logistic regression, we will assume that the data is generated from a <em>Bernoulli</em> probability distribution. Once we make that assumption, we setup an inverse problem that looks for parameter values that maximizes the probability of the data we observe under this assumption.</p>
+<p>For the logistic regression problem we are given dataset <span class="math inline">\(\{\langle \mathbf{x}_1, y_1\rangle, \ldots, \langle \mathbf{x}_n, y_n \rangle \}\)</span>, where outcomes <span class="math inline">\(y_i \in \{0,1\}\)</span> since we are learning a binary classification problem. The goal is to estimate parameters <span class="math inline">\(\mathbf{\beta}\)</span> in model</p>
+<p><span class="math display">\[
+\log{ \frac{p(Y=1 | \mathbf{X}=\mathbf{x})}{1-p(Y=1 | \mathbf{X}=\mathbf{x})}} =
+\beta_0 + \beta_0 x_{1} + \cdots + \beta_p x_{p}
+\]</span>
+To establish a loss function we first assume a model for data generation. The assumption we make here is if an entity has attribute values <span class="math inline">\(\mathbf{x}\)</span>, then the outcome <span class="math inline">\(Y\)</span> is a <span class="math inline">\(\mathrm{Bernoulli}(p(\mathbf{\beta}; \mathbf{x}))\)</span> random variable and derive this probability from the equation above as</p>
+<p><span class="math display">\[
+p(\mathbf{\beta}; \mathbf{x}) = \frac{e^{f(\mathbf{\beta}; \mathbf{x})}}{1+e^{f(\mathbf{\beta}; \mathbf{x})}}
+\]</span></p>
+<p>Note that we use the same notation <span class="math inline">\(f(\mathbf{\beta}; \mathbf{x})\)</span> as we did in linear regression.</p>
+<p>Now, we can ask, what is the probability of the data we observe for entity <span class="math inline">\(i\)</span> under this model?
+We can write this probability in this form:</p>
+<p><span class="math display">\[
+p(\mathbf{\beta}; \mathbf{x}_i)^{y_i}(1-p(\mathbf{\beta};\mathbf{x}_i))^{(1-y_i)}
+\]</span></p>
+<p>Note that this expression equals <span class="math inline">\(p(\mathbf{\beta};\mathbf{x}_i)\)</span> if <span class="math inline">\(y_i=1\)</span> and <span class="math inline">\(1-p(\mathbf{\beta}; \mathbf{x}_i)\)</span> othwerwise, which is the behavoir we desire for this probability model.</p>
+<p>Now, we can put these together for all observed entities since we assume that these are generated independently to get a <em>likelihood</em> function:</p>
+<p><span class="math display">\[
+\mathcal{L}(\mathbf{\beta}) = \prod_{i=1}^n p_i(\mathbf{\beta}; \mathbf{x}_i)^{y_i}(1-p_i(\mathbf{\beta};\mathbf{x}_i))^{(1-y_i)}
+\]</span></p>
+<p>Now, we need to turn this into a loss function we can <em>minimize</em>. The likelihood function we wrote down is one we would <em>maximize</em>. Also, it is usually more convenient to work with the logarithm of likelihoods. So the loss function we use for gradient descent is the <em>negative log likelihood</em></p>
+<p><span class="math display">\[
+L(\mathbf{\beta}) = \sum_{i=1}^n -y_i f(\mathbf{\beta}; \mathbf{x}_i) + \log(1+e^{f(\mathbf{\beta};\mathbf{x}_i)})
+\]</span></p>
+<p>We leave this derivation as an exercise, but note that</p>
+<p><span class="math display">\[
+\log{p(\mathbf{\beta};\mathbf{x}_i)} = 
+f(\mathbf{\beta};\mathbf{x}_i) - \log{(1+e^{f(\mathbf{\beta};\mathbf{x}_i)})}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\log{(1-p(\mathbf{\beta};\mathbf{x}_i))} = 
+ - \log{(1+e^{f(\mathbf{\beta};\mathbf{x}_i)})}
+\]</span></p>
+<p>So, now that we have a loss function, we need to derive it’s gradient to use the gradient descent algorithm.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\nabla_{\mathbf{\beta}}L(\mathbf{\beta}) &amp; = &amp; 
+\nabla_{\mathbf{\beta}} \sum_{i=1}^n -y_i f(\mathbf{\beta};\mathbf{x}) + \log{(1+e^{f(\mathbf{\beta}; \mathbf{x}_i)})} \\
+{} &amp; = &amp; \sum_{i=1}^n -y_i \nabla_{\mathbf{\beta}}f(\mathbf{\beta};\mathbf{x}_i) + \nabla_{\mathbf{\beta}} \log{(1+e^{f(\mathbf{\beta};\mathbf{x}_i)})}\\
+{} &amp; = &amp; \sum_{i=1}^n -y_i \mathbf{x}_i + \frac{1}{1+e^{f(\mathbf{\beta};\mathbf{x}_i)}} \nabla_{\mathbf{\beta}} (1+e^{f(\mathbf{\beta};\mathbf{x}_i)}) \\
+{} &amp; = &amp; \sum_{i=1}^n -y_i \mathbf{x}_i +
+\frac{e^{f(\mathbf{\beta};\mathbf{x}_i)}}{1+e^{f(\mathbf{\beta};\mathbf{x}_i)}} \nabla_{\mathbf{\beta}}f(\mathbf{\beta};\mathbf{x}_i) \\
+{} &amp; = &amp; \sum_{i=1}^n -y_i \mathbf{x}_i +
+p(\mathbf{\beta};\mathbf{x}_i) \mathbf{x}_i \\
+{} &amp; = &amp; \sum_{i=1}^n 
+(p(\mathbf{\beta};\mathbf{x}_i) - y_i) \mathbf{x}_i
+\end{aligned}
+\]</span></p>
+<p>Note the nice similarity to the gradient for linear regression. It multiplies each data (expanded) data vector <span class="math inline">\(\mathbf{x}_i\)</span> by the difference between a prediction, in this case the probability that the outcome <span class="math inline">\(y_i=1\)</span> and the observed outcome <span class="math inline">\(y_i\)</span>. You will see that a similar pattern holds for many other probability models.</p>
+</div>
 </div>
 <div id="stochastic-gradient-descent" class="section level2">
 <h2><span class="header-section-number">30.3</span> Stochastic gradient descent</h2>
