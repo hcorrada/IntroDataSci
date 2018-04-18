@@ -334,6 +334,10 @@ notes = "misc/midtermII_review.pdf"
 title = "In class exercise: classification"
 notes = "misc/prediction_metrics.pdf"
 
+[[day23.covers]]
+title = "In class discussion: gradient descent for logistic regression"
+notes = "bookdown-notes/solving-linear-ml-problems.html#logistic-regression-1"
+
 [day24]
 date = "4/24"
 
