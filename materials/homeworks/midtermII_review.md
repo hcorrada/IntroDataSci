@@ -108,18 +108,6 @@ This document describes material that will be fair game in the midterm exam. Eac
 - What is the random forest method? What is it's relationship to regression and decision trees.
 - How can we measure "variable importance" using the random forest algorithm.
 
-## Model evaluation using resampling
-
-### Level 1
-
-- What is the difference between _model assessment_ and _model selection_
-- Describe how $k$-fold cross validation is used for model assessment. Describe how $k$-fold cross validation is used for _model selection_.
-- How to compare models using cross-validation estimates of error.
-
-### Level 2
-
-- Why is $k$-fold cross validation preferable over other resampling methods (e.g., single validation set, or resampled validation sets).
-
 # Midterm Structure
 
 The midterm will consist of three sections: ~10-15 multiple choice questions, ~5-8 short questions, and 1 or 2 longer questions. 
