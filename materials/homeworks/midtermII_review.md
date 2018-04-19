@@ -24,6 +24,7 @@ This document describes material that will be fair game in the midterm exam. Eac
 - Centering and scaling data transformation (standardization)
 - Standard units
 - Ways of discretizing continuous numeric data
+- Relationship between arithmetic and geometric mean
 
 ## Level 2
 
@@ -48,13 +49,14 @@ This document describes material that will be fair game in the midterm exam. Eac
 - The Bernoulli, Binomial and Normal distributions
 - Joint and conditional distribution for discrete probability distributions
 - Bayes Rule
-- Conditional expectation for discrete probability distributions
+- Conditional Independence
 
 ## Level 2
 
 - Using the CLT to get a confidence interval for the mean
 - Using the CLT to test a simple hypothesis about the mean
 - Application to A/B Testing
+- Conditional expectation for discrete probability distributions
 
 ## Linear models for regression
 
@@ -66,6 +68,7 @@ This document describes material that will be fair game in the midterm exam. Eac
 - How the t-statistic and t-test is used in linear regression.
 - Diagnostic plots for linear regression
 - How to encode categorical predictors in a linear regression model, and how to interpret their coefficient estimates
+- Gradient descent for linear regression
 
 ### Level 2
 
@@ -86,8 +89,9 @@ This document describes material that will be fair game in the midterm exam. Eac
 - How do we calculate error rate for a classification problem?
 - What are False positive and false negative errors?
 - What is the False positive rate? True positive rate?
+- Gradient descent for logistic regression
 
-### Level 2
+### Level 2 (not covered)
 
 - Understanding classification as a probability estimation problem.
 - What are precision and recall?
@@ -102,7 +106,7 @@ This document describes material that will be fair game in the midterm exam. Eac
 - Do tree-based methods learn linear or non-linear functions between predictors and outputs?
 - How to use recursive partitioning to build a regression tree
 
-### Level 2
+### Level 2 (not covered)
 
 - What does it mean to "prune" a decision tree, why is that a good idea?
 - What is the random forest method? What is it's relationship to regression and decision trees.
