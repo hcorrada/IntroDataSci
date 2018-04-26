@@ -1,0 +1,113 @@
+---
+title:  "Project 3 (part 2): Classification"
+author: "CMSC320"
+output: html_document
+---
+
+**Posted: April 26, 2016**  
+**Due: May 4, 2016**  
+**Last Update: `r format(Sys.Date(), "%B %d, %Y")`**
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=TRUE)
+```
+
+## Data
+
+We will use Mortgage Affordability data from Zillow to experiment with classification algorithms. The data was downloaded from Zillow Research page: https://www.zillow.com/research/data/
+
+It is made available here: http://www.hcbravo.org/IntroDataSci/misc/Affordability_Wide_2017Q4_Public.csv
+
+### Preparing data
+
+First, we will tidy the data. Please include this piece of code in your submission.
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(lubridate)
+theme_set(theme_bw())
+```
+
+```{r}
+csv_file <- "Affordability_Wide_2017Q4_Public.csv"
+tidy_afford <- read_csv(csv_file) %>%
+  filter(Index == "Mortgage Affordability") %>%
+  drop_na() %>%
+  filter(RegionID != 0, RegionName != "United States") %>%
+  dplyr::select(RegionID, RegionName, matches("^[1|2]")) %>%
+  gather(time, affordability, matches("^[1|2]")) %>%
+  type_convert(col_types=cols(time=col_date(format="%Y-%m")))
+tidy_afford
+```
+
+This is what the data looks like:
+
+```{r}
+tidy_afford %>%
+  ggplot(aes(x=time,y=affordability,group=factor(RegionID))) +
+  geom_line(color="GRAY", alpha=3/4, size=1/2) +
+  labs(title="County-Level Mortgage Affordability over Time",
+          x="Date", y="Mortgage Affordability")
+```
+
+## The prediction task
+
+The prediction task we are going to answer is:
+
+> Can we predict if mortgage affordability will increase or decrease a year from now"
+
+Specifically, we will do this for the last observation in the dataset (quarter 4 (Q4) of 2017). To create the outcome we will predict we will compare affordability for Q4 of 2017 and to Q4 of 2016 and label it as `up` or `down` depending on the sign of the this difference. Let's create the outcome we want to predict (again, copy this bit of code to your submission):
+
+```{r}
+outcome_df <- tidy_afford %>%
+  mutate(yq = quarter(time, with_year=TRUE)) %>%
+  filter(yq %in% c("2016.4", "2017.4")) %>%
+  select(RegionID, RegionName, yq, affordability) %>%
+  spread(yq, affordability) %>%
+  mutate(diff = `2017.4` - `2016.4`) %>%
+  mutate(Direction = ifelse(diff>0, "up", "down")) %>%
+  select(RegionID, RegionName, Direction)
+outcome_df
+```
+
+Now, you have a dataframe with outcomes (labels) for each county in the dataset.
+
+The goal is then given predictors $X_i$ for county $i$, build a classifier for outcome $G_i \in \{\mathtt{up},\mathtt{down}\}$.
+
+## Your project
+
+Your goal for this project is to do an experiment to address a (one, single) technical question about our ability to make this prediction. There is a list of possible questions you may address below. Each of them asks two compare two specific choices in the classification workflow (e.g., two classification algorithms, two feature representations, etc.). You will implement each of the two choices and use 10-fold cross validation (across RegionID's) to compare their relative performance. You will also create an AUROC curve to compare them.
+
+### Possible Questions
+
+#### Feature representation and preprocessing
+
+- Does standardizing affordability for each region affect  prediction performance? Compare standardized to non-standardized affordability.
+- Is using quarter to quarter change (continuous or discrete) improve prediction performance? Compare quarter to quarter change in affordability as predictors to affordability as predictor?
+- Should we use the full time series for each region, or should we use only the last few years? Compare full time series to a subset of the time series?
+- Should we expand the training set to multiple time series per region? For example, create a similar outcome for each time point in the dataset (change relative to affordability one year ago) and use data from the last couple of years as predictors. Train on the extended dataset and test on the 2017 data above?
+- Should we do dimensionality reduction (PCA) and use the embedded data to do prediction?
+- Create your own question!
+
+#### Classification Algorithm
+
+- Is a decision tree better than logistic regression?
+- Is a random forest better than a decision tree?
+- Is K-nearest neighbors bettern than a random forest?
+- Create your own question!
+
+#### Algorithm tuning
+
+- Does tuning hyper-parameters using cross-validation improve performance?
+
+Note that you still have to make some choices regardless of the question you choose. For example, to do the feature preprocessing and representation experiments you have to choose a classifier (random forest for example), and decide what to do about hyper-parameters if appropriate.
+
+## Submission
+
+Prepare an Rmarkdown file which includes:
+
+1) Code to prepare data (copied from chunks above)
+2) Discussion of the question you have chosen to address including discussion of other choices you have made (e.g., feature representation, classification algorithm) to carry out your experiment.
+3) Code to carry out your cross-validation experiment.
+4) Table (result of hypothesis testing difference between algorithms) and AUROC curve plot.
+5) Interpretation and discussion of your experiment results.
