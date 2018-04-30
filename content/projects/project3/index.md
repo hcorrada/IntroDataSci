@@ -1,6 +1,6 @@
 ---
 date: 2016-11-22T13:04:21-05:00
-title: "Project 3: Regression and Sentiment Analysis"
+title: "Project 3: Regression and Classification"
 ---
 
 POSTED: April 12, 2018  
