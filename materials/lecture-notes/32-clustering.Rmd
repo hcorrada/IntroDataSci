@@ -1,0 +1,301 @@
+# Unsupervised Learning: Clustering
+
+So far we have seen "Supervised Methods" where our goal is to analyze a _response_ (or outcome) based
+on various _predictors_. In many cases, especially for Exploratory Data Analysis, we want methods to extract patterns on
+variables without analyzing a specific _response_. Methods for the latter case are called "Unsupervised Methods". Examples are _Principal Component Analysis_ and _Clustering_.
+
+Interpretation of these methods is much more _subjective_ than in Supervised Learning. For example: 
+if we want to know if a given _predictor_ is related to _response_, we can perform statistical inference using hypothesis testing. In another example, if we want to know which predictors are useful for prediction: use cross-validation to do model selection. Finally, if we want to see how well we can predict a specific response, we can use cross-validation to report on test error. In unsupervised methods, there is no similar clean evaluation methodology. Nonetheless, they can be very useful methods to understand data at hand.
+
+## Motivating Example
+
+Throughout this unit we will use a time series dataset of mortgage affordability
+as calculated and distributed by Zillow: https://www.zillow.com/research/data/. 
+
+```{r clustering_setup, echo=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(readr)
+library(lubridate)
+
+datadir <- "data"
+url <- "http://files.zillowstatic.com/research/public/Affordability_Wide_2017Q4_Public.csv"
+filename <- basename(url)
+datafile <- file.path(datadir, filename)
+
+if (!file.exists(datafile)) {
+  download.file(url, file.path(datadir, filename))
+}
+
+afford_data <- read_csv(datafile)
+```
+
+```{r tidy_zillow, echo=TRUE, cache=TRUE}
+tidy_afford <- afford_data %>%
+  filter(Index == "Mortgage Affordability") %>% 
+  drop_na() %>%
+  filter(RegionID != 0) %>%
+  dplyr::select(RegionID, matches("^[1|2]")) %>%
+  gather(time, affordability, matches("^[1|2]")) %>%
+  type_convert(col_types=cols(time=col_date(format="%Y-%m")))
+
+wide_afford_df <- tidy_afford %>%
+  dplyr::select(RegionID, time, affordability) %>%
+  spread(time, affordability)
+
+value_mat <-  wide_afford_df %>%
+  dplyr::select(-RegionID) %>%
+  as.matrix() 
+```
+
+```{r zillow_stats, echo=FALSE}
+ncounties <- nrow(wide_afford_df)
+year_range <- range(year(tidy_afford$time))
+```
+
+The dataset contains affordability measurements for `r ncounties` counties with data from `r min(year_range)` to `r max(year_range)`. Here we plot the time series of affordability for all counties.
+
+```{r zillow_plot1, echo=TRUE, cache=TRUE, warning=FALSE}
+tidy_afford %>%
+  ggplot(aes(x=time,y=affordability,group=factor(RegionID))) +
+  geom_line(color="GRAY", alpha=3/4, size=1/2) +
+  labs(title="County-Level Mortgage Affordability over Time",
+          x="Date", y="Mortgage Affordability")
+```
+
+A natural question to ask about this data is, "can we partition counties into groups of counties with similar value trends across time"
+
+## Some Preliminaries
+
+Mathematically, the previous sections on "Supervised Learning" we were concerned with estimates that minimize some error function relative to the outcome of interest $Y$:
+
+$$
+\mu(x) = \arg \min_{\theta} E_{Y|X} L(Y, \beta)
+$$
+
+In order to do this, explicitly or not, the methods we were using would be concerned with properties of the conditional probability distribution $p(Y|X)$, and do so without concerning itself with probability distribution $p(X)$ of the covariates themselves. 
+
+In unsupervised learning, we are interested in properties of $p(X)$. In our example, what can we say about the distribution of home value time series? Since the dimensionality of $p(X)$ can be large, unsupervised learning methods seek to find structured representations of $p(X)$ that would be possible to estimate. 
+
+In _clustering_ we assume that predictor space is partitioned and that $p(X)$ is defined over those partitions. In _dimensionality reduction_ we assume that $p(X)$ is really defined over a space of smaller dimension. We will start studying clustering first.
+
+## Cluster Analysis
+
+The high-level goal of cluster analysis is to organize objects (observations) that are _similar_ to each other into groups. We want objects within a group to be more _similar_ to each other than objects in different groups. 
+
+Central to this high-level goal is how to measure the degree of _similarity_ between objects. A clustering method then uses the _similarity_ measure provided to it to group objects into clusters.
+
+```{r setup_kmeans, echo=TRUE, warning=FALSE, message=FALSE}
+library(broom)
+library(stringr)
+```
+
+```{r kmeans1, cache=FALSE, echo=FALSE}
+set.seed(1234)
+kmeans_res <- kmeans(value_mat, centers=9)
+
+augmented_data <- kmeans_res %>%
+  broom::augment(wide_afford_df) %>%
+  gather(time, affordability, matches("^X")) %>%
+  mutate(time=stringr::str_replace(time, "X", "")) %>%
+  type_convert(col_types=cols(time=col_date(format="%Y.%m.%d"))) %>%
+  rename(cluster=.cluster)
+        
+kmeans_centers <- kmeans_res %>%
+  broom::tidy(col.names=colnames(value_mat)) %>%
+  dplyr::select(cluster, matches("^[1|2]")) %>%
+  gather(time, affordability, -cluster) %>%
+  type_convert(col_types=cols(time=col_date(format="%Y-%m-%d")))
+```
+
+```{r kmeans_plot, echo=TRUE, cache=TRUE, fig.height=6}
+augmented_data %>%
+  ggplot(aes(x=time, y=affordability)) +
+    geom_line(aes(group=RegionID), color="GRAY", alpha=1/2, size=1/2) +
+    facet_wrap(~cluster) +
+    geom_line(data=kmeans_centers, color="BLACK", alpha=1/2, size=1/2) +
+  labs(main="Kmeans Clustering (k=9)",
+       xlab="Date", ylab="affordability") +
+  theme(axis.text.x=element_text(angle=45, hjust=1))
+```
+
+This plot shows the result of the k-means algorithm partitioning the data into 16 clusters. We observe that series within each cluster have similar trends. The darker series within each cluster shows the average time series within the cluster. We also see that some clusters correspond to very similar series suggesting that partitioning the data into fewer clusters would be better.
+
+## Dissimilarity-based Clustering
+
+For certain algorithms, instead of similarity we work with dissimilarity, often represented as distances. When we have observations defined over attributes, or predictors, we define dissimilarity based on these attributes. 
+
+Given measurements $x_{ij}$ for $i=1,\ldots,N$ observations over $j=1,\ldots,p$ predictors. Suppose we define a dissimilarity $d_j(x_{ij}, x_{i'j})$, we can then define a dissimilarity between objects as
+
+$$
+d(x_i, x_{i'}) = \sum_{j=1}^p d_j(x_{ij},x_{i'j})
+$$
+
+In the k-means algorithm, and many other algorithms, the most common usage is squared distance
+
+$$
+d_j(x_{ij},x_{i'j}) = (x_{ij}-x_{i'j})^2
+$$
+
+We can use different dissimilarities, for example
+
+$$
+d_j(x_{ij}, x_{i'j}) = |x_{ij}-x_{i'j}|
+$$
+
+which may affect our choice of clustering algorithm later on. 
+
+For categorical variables, we could set 
+
+$$
+d_j(x_{ij},x_{i'j}) =
+\begin{cases}
+0 \; \textrm{if } x_{ij} = x_{i'j} \\
+1 \; \textrm{o.w.}
+\end{cases}
+$$
+
+If the values the categorical variable have an intrinsic similarity we could generalize using symmetric matrix $L$ with elements $L_{rr'} = L_{r'r}$, $L_{rr}=0$ and $L_{rr'} \geq 0$ otherwise. This may of course lead to a dissimilarity that is not a proper distance.
+
+## K-means Clustering
+
+A commonly used algorithm to perform clustering is the K-means algorithm. It is appropriate when using squared Euclidean distance as the measure of object dissimilarity.
+
+$$
+\begin{aligned}
+d(x_{i},x_{i'}) & = \sum_{j=1}^p (x_{ij}-x_{i'j})^2 \\
+{} & = \|x_i - x_{i'}\|^2
+\end{aligned}
+$$
+
+K-means partitions observations into $K$ clusters, with $K$ provided as a parameter. Given some clustering, or partition, $C$, the cluster assignment of observation $x_i$ to cluster $k \in \{1,\ldots,K\}$ is denoted as $C(i)=k$. K-means seeks to minimize a clustering criterion measuring the dissimilarity of observations assigned to the same cluster.
+
+$$
+W(C) = \frac{1}{2} \sum_{k=1}^K \sum_{i: \, C(i)=k} \sum_{i':\, C(i')=k} \|x_i - x_{i'}\|^2 
+$$
+
+Note however, that this is equivalent to minimizing
+
+$$
+W(C) = \frac{1}{2}\sum_{k=1}^K N_k \sum_{i:\,C(i)=k} \|x_i - \bar{x}_k\|^2
+$$
+
+where $\bar{x}_k=(\bar{x}_{k1},\ldots,\bar{x}_{kp})$ and $\bar{x}_{kj}$ is the average of predictor $j$ over the observations assigned to cluster $k$, i.e., $C(i)=k$, and $N_k$ is the number of observations assigned to cluster $k$. Thus the criteria to minimize is the total distance given by each observation to the mean (centroid) of the cluster to which the observation is assigned.
+
+An iterative algorithm is used to minimize this criterion
+
+0. Initialize by choosing $K$ observations as centroids $m_1,m_2,\ldots,m_k$
+1. Assign each observation $i$ to the cluster with the nearest centroid, i.e., set $C(i)=\arg\min_{1 \leq k \leq K} \|x_i - m_k\|^2$
+2. Update centroids $m_k=\bar{x}_k$
+3. Iterate steps 1 and 2 until convergence
+
+Here we illustrate the k-means algorithm over four iterations on our example data with $K=4$. Each row in this plot is an iteration of the algorithm, and each column corresponds to a cluster. We observe, that in this case, there is little update of the cluster assignments and centroids beyond the first iteration.
+
+```{r kmeans_illustration, echo=FALSE, message=FALSE, cache=TRUE}
+set.seed(1234)
+
+K <- 4
+nobs <- nrow(value_mat)
+centroid_indices <- sample(nobs, K)
+centroids <- value_mat[centroid_indices,]
+
+assign_cluster <- function(x, m) {
+#  browser()
+  xx <- rowSums(x^2)
+  mm <- rowSums(m^2)
+  xm <- tcrossprod(x, m)
+  
+  d <- xx - 2*xm
+  d <- sweep(d, 2, mm, FUN="+")
+  apply(d, 1, which.min)
+}
+
+get_centroids <- function(x, a) {
+  inds <- split(seq_len(nobs), a)
+  sapply(inds, function(i) colMeans(x[i,,drop=FALSE])) %>%
+    t()
+}
+
+message("Iteration 1")
+assignments <- assign_cluster(value_mat, centroids)
+
+centroid_df <- as.data.frame(cbind(centroids, cluster=seq_len(K), iteration=1))
+
+assignments_df <- cbind(wide_afford_df, cluster=assignments, iteration=1)
+
+for (it in seq(2,3)) {
+  message("Iteration ", it)
+  centroids <- get_centroids(value_mat, assignments)
+  assignments <- assign_cluster(value_mat, centroids)
+  
+  tmp <- as.data.frame(cbind(centroids, cluster=seq_len(K), iteration=it))
+centroid_df <- rbind(centroid_df, tmp)
+
+  tmp <- cbind(wide_afford_df, cluster=assignments, iteration=it)
+assignments_df <- rbind(assignments_df, tmp)
+}
+```
+
+```{r kmeans_illustration2, echo=FALSE, cache=TRUE}
+tall_assignments_df <- assignments_df %>%
+  gather(time, affordability, matches("^[1|2]")) %>%
+  type_convert(col_types=cols(time=col_date(format="%Y-%m-%d"))) 
+
+tall_centroids_df <- centroid_df %>% 
+  gather(time,affordability,matches("^[1|2]")) %>%
+  type_convert(col_types=cols(time=col_date(format="%Y-%m-%d")))
+
+pl <- tall_assignments_df %>%
+  ggplot(aes(x=time, y=affordability)) +
+    geom_line(aes(group=RegionID), color="GRAY", alpha=1/2, size=1/2) + 
+    facet_grid(iteration~cluster) +
+    geom_line(data=tall_centroids_df, color="BLACK") +
+    labs(xlab="Date", ylab="mortgage affordability") +
+    theme(axis.text.x=element_text(angle=45, hjust=1))
+show(pl)
+```
+
+Criterion $W(C)$ is reduced in each iteration so the algorithm is assured to converge. However, as this is not a convex criterion, the clustering we obtain may not be globally optimal. To address this in practice, the algorithm is run with multiple initializations (step 0) and the best clustering achieved is used. Also, selection of observations as centroids can be improved using the K-means++ algorithm:
+
+0. Choose an observation as centroid $m_1$ uniformly at random  
+1. To choose centroid $m_k$, compute for each observation $i$ not chosen as a centroid the distance to the nearest centroid $d_i = \min_{1\leq l < k} \|x_i - m_l\|^2$
+2. Set centroid $m_k$ to an observation randomly chosen with probability $\frac{e^d_i}{\sum_{i'} e^d_{i'}}$
+3. Iterate steps 1 and 2 until $K$ centroids are chosen
+
+This ensures that initial centroids are well distributed in predictor space and yield a better clustering.
+
+## Choosing the number of clusters
+
+The number of parameters must be determined before running the K-means algorithm. As opposed to the supervised learning setting where model selection is performed by minimizing expected prediction error through, for example, cross-validation, there is no clean direct method for choosing the number of clusters to use in the K-means algorithm. 
+
+```{r gapstat, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE, results="hide"}
+set.seed(1234)
+gap_stat <- cluster::clusGap(value_mat, FUN=kmeans, nstart=15, B=100, K.max=9)
+
+gap_stat_df <- gap_stat$Tab %>%
+  as_tibble() %>%
+  rowid_to_column("k")
+```
+
+Furthermore, looking at criterion $W(C)$ alone is not sufficient as the criterion will become smaller as the value of $K$ is reduced. Here we show the behavior of $W_K(C)$ in our example dataset. However, there are properties of this statistic that may be used to heuristically choose a proper value of $K$.
+
+```{r logw_plot, echo=FALSE}
+gap_stat_df %>%
+  ggplot(aes(x=k, y=logW)) +
+    geom_line() +
+    geom_point()
+```
+
+The intuition behind the method is that, supposing there is a true underlying number $K^*$ of clusters in the data, improvement in the $W_K(C)$ statistic will be fast for values of $K \leq K^*$, and slower for values of $K > K^*$. In the first case, there will be a cluster which will contain observations belonging to two of the true underlying clusters, and therefore will have poor within cluster similarity. As $K$ is increased, observations may then be separated into separate clusters, providing a sharp improvement in the $W_K(C)$ statistic. On the other hand, for values of $K > K^*$ observations belonging to a single true cluster are split into multiple cluster, all with generally high within-cluster similarity, therefore splitting these clusters further will not improve the $W_K(C)$ statistic very sharply. The curve will therefore have an inflection point around $K^*$. We see this behavior in our example plot, where improvement in $W_K(C)$ is slower after $K=3$. 
+
+The _gap statistic_ is used to identify the inflection point in the curve. It compares the behavior of the $W_K(C)$ statistic based on the data with the behavior of the $W_K(C)$ statistic for data generated uniformly at random over the range of the data. Below we plot the gap statistic for our example data. For this dataset, the gap statistic suggests that there is no clear cluster structure and therefore $K=1$ is an optimal choice.
+
+```{r gapstat_plot, echo=FALSE}
+factoextra::fviz_gap_stat(gap_stat)
+```
+
+
+## Summary 
+
+Clustering methods are intuitive methods useful to understand structure within unlabeled observations. 
+
+The K-means algorithm is a frequently used, easy to implement and understand algorithm for clustering based on Euclidean distance between data entities.

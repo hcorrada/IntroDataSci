@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="Lecture Notes: Introduction to Data Science">
-  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-18">
+<meta name="date" content="2018-05-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,7 +49,7 @@
 
 <script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.0/str_view.js"></script>
+<script src="libs/str_view-binding-1.2.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -456,6 +456,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
 <li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="33" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html"><i class="fa fa-check"></i><b>33</b> Unsupervised Learning: Clustering</a><ul>
+<li class="chapter" data-level="33.1" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#motivating-example"><i class="fa fa-check"></i><b>33.1</b> Motivating Example</a></li>
+<li class="chapter" data-level="33.2" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#some-preliminaries"><i class="fa fa-check"></i><b>33.2</b> Some Preliminaries</a></li>
+<li class="chapter" data-level="33.3" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#cluster-analysis"><i class="fa fa-check"></i><b>33.3</b> Cluster Analysis</a></li>
+<li class="chapter" data-level="33.4" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#dissimilarity-based-clustering"><i class="fa fa-check"></i><b>33.4</b> Dissimilarity-based Clustering</a></li>
+<li class="chapter" data-level="33.5" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#k-means-clustering"><i class="fa fa-check"></i><b>33.5</b> K-means Clustering</a></li>
+<li class="chapter" data-level="33.6" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#choosing-the-number-of-clusters"><i class="fa fa-check"></i><b>33.6</b> Choosing the number of clusters</a></li>
+<li class="chapter" data-level="33.7" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#summary-5"><i class="fa fa-check"></i><b>33.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html"><i class="fa fa-check"></i><b>34</b> Unsupervised Learning: Dimensionality Reduction</a><ul>
+<li class="chapter" data-level="34.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#principal-component-analysis"><i class="fa fa-check"></i><b>34.1</b> Principal Component Analysis</a><ul>
+<li class="chapter" data-level="34.1.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#solving-the-pca"><i class="fa fa-check"></i><b>34.1.1</b> Solving the PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="34.2" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#multidimensional-scaling"><i class="fa fa-check"></i><b>34.2</b> Multidimensional Scaling</a></li>
+<li class="chapter" data-level="34.3" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#summary-6"><i class="fa fa-check"></i><b>34.3</b> Summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -656,13 +672,15 @@ CSV file scraped originally in Summer 2017 for this analysis and leave the issue
 </table>
 <p>This data is for 5358 movies, including its release date, title, production budget and total gross. The latter two are in millions of U.S. dollars.</p>
 <p>One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. To do this, we can make a plot of domestic gross, which we are using for the subsequent analyses.</p>
+<pre><code>## Warning: package &#39;lubridate&#39; was built under R version 3.4.4</code></pre>
 <pre><code>## Loading required package: methods</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;lubridate&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:base&#39;:
 ## 
 ##     date</code></pre>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-4-1.svg" width="672" /></p>
+<pre><code>## Warning: package &#39;bindrcpp&#39; was built under R version 3.4.4</code></pre>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-4-1.svg" width="672" /></p>
 <p>Although we don’t know for sure, since the source of our data does not state this specifically, it looks like the domestic gross measurement is not inflation adjusted since gross increases over time.</p>
 </div>
 </div>
@@ -786,7 +804,7 @@ that the end result has the information in both tables for each movie.</p>
 <td align="right">68.61399</td>
 </tr>
 <tr class="even">
-<td align="right">75</td>
+<td align="right">76</td>
 <td align="left">Frida</td>
 <td align="left">Alejandro Gomez</td>
 <td align="left">$25.7M</td>
@@ -803,7 +821,7 @@ that the end result has the information in both tables for each movie.</p>
 <h2><span class="header-section-number">3.3</span> Visualizing the data</h2>
 <p>Now that we have the data we need, we can make a plot:</p>
 <div class="figure"><span id="fig:unnamed-chunk-7"></span>
-<img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-7-1.svg" alt="Ratings and U.S. Domestic Gross of Diego Luna's movies." width="672" />
+<img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-7-1.svg" alt="Ratings and U.S. Domestic Gross of Diego Luna's movies." width="672" />
 <p class="caption">
 Figure 3.1: Ratings and U.S. Domestic Gross of Diego Luna’s movies.
 </p>
@@ -813,6 +831,7 @@ Figure 3.1: Ratings and U.S. Domestic Gross of Diego Luna’s movies.
 <div id="modeling-data" class="section level2">
 <h2><span class="header-section-number">3.4</span> Modeling data</h2>
 <p>We can use a clustering algorithm to partition Diego Luna’s movies. We can use the data we obtained so far and see if the k-means clustering algorithm partitions these movies into three sensible groups using the movie’s rating and domestic gross.</p>
+<pre><code>## Warning: package &#39;broom&#39; was built under R version 3.4.4</code></pre>
 <p>Let’s see how the movies are grouped:</p>
 <table>
 <thead>
@@ -850,7 +869,7 @@ Figure 3.1: Ratings and U.S. Domestic Gross of Diego Luna’s movies.
 </tr>
 <tr class="odd">
 <td align="left">Frida</td>
-<td align="right">75</td>
+<td align="right">76</td>
 <td align="right">25.88500</td>
 <td align="left">1</td>
 </tr>
@@ -891,10 +910,10 @@ Figure 3.1: Ratings and U.S. Domestic Gross of Diego Luna’s movies.
 <h2><span class="header-section-number">3.5</span> Visualizing model result</h2>
 <p>Let’s remake the same plot as before, but use color to
 indicate each movie’s cluster assignment given by the k-means algorithm.</p>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-10-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-10-1.svg" width="672" /></p>
 <p>The algorithm did make the Star Wars movie it’s own group since it’s so different that the other movies. The grouping of the remaining movies is not as clean.</p>
 <p>To make the plot and clustering more interpretable, let’s annotate the graph with some movie titles. In the k-means algorithm, each group of movies is represented by an average rating and an average domestic gross. What we can do is find the movie in each group that is closest to the average and use that movie title to annotate each group in the plot.</p>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-12-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-12-1.svg" width="672" /></p>
 <p>Roughly, movies are clustered into Star Wars and low vs. high rated movies. The latter seem to have some difference in domestic gross. For example, movies like <a href="https://www.rottentomatoes.com/m/1133499_1133499_terminal">“The Terminal”</a> have lower rating but make slightly more money than movies like <a href="https://www.rottentomatoes.com/m/frida">“Frida”</a>. We could use statistical modeling to see if that’s the case, but will skip that for now. Do note also, that the clustering algorithm we used seems to be assigning one of the movies incorrectly, which warrants further investigation.</p>
 </div>
 <div id="abstracting-the-analysis" class="section level2">
@@ -948,8 +967,8 @@ indicate each movie’s cluster assignment given by the k-means algorithm.</p>
 <p>Good start. We can then write functions for each of the steps we did with Diego Luna before.</p>
 <p>Then put all of these steps into one function that calls our new functions to put all of our analysis together:</p>
 <p>We can test this with Gael García Bernal</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">analyze_actor</span>(<span class="st">&quot;Gael Garcia Bernal&quot;</span>)</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/test_bbg-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">analyze_actor</span>(<span class="st">&quot;Gael Garcia Bernal&quot;</span>)</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/test_bbg-1.svg" width="672" /></p>
 </div>
 <div id="making-analyses-accessible" class="section level2">
 <h2><span class="header-section-number">3.7</span> Making analyses accessible</h2>
@@ -995,10 +1014,11 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
