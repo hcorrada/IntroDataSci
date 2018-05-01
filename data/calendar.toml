@@ -370,10 +370,11 @@ date = "5/1"
 
 [[day26.covers]]
 title = "Unsupervised Learning: Clustering"
+notes = "bookdown-notes/unsupervised-learning-clustering.html"
 
 [[day26.covers]]
 title = "Unsupervised Learning: Dimensionality Reduction"
-# notes = "lecture-note/pca/"
+notes = "bookdown-notes/unsupervised-learning-dimensionality-reduction.html"
 
 [day27]
 date = "5/3"
