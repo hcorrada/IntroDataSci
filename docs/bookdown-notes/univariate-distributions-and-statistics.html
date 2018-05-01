@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="Lecture Notes: Introduction to Data Science">
-  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-18">
+<meta name="date" content="2018-05-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,7 +49,7 @@
 
 <script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.0/str_view.js"></script>
+<script src="libs/str_view-binding-1.2.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -456,6 +456,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
 <li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="33" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html"><i class="fa fa-check"></i><b>33</b> Unsupervised Learning: Clustering</a><ul>
+<li class="chapter" data-level="33.1" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#motivating-example"><i class="fa fa-check"></i><b>33.1</b> Motivating Example</a></li>
+<li class="chapter" data-level="33.2" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#some-preliminaries"><i class="fa fa-check"></i><b>33.2</b> Some Preliminaries</a></li>
+<li class="chapter" data-level="33.3" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#cluster-analysis"><i class="fa fa-check"></i><b>33.3</b> Cluster Analysis</a></li>
+<li class="chapter" data-level="33.4" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#dissimilarity-based-clustering"><i class="fa fa-check"></i><b>33.4</b> Dissimilarity-based Clustering</a></li>
+<li class="chapter" data-level="33.5" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#k-means-clustering"><i class="fa fa-check"></i><b>33.5</b> K-means Clustering</a></li>
+<li class="chapter" data-level="33.6" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#choosing-the-number-of-clusters"><i class="fa fa-check"></i><b>33.6</b> Choosing the number of clusters</a></li>
+<li class="chapter" data-level="33.7" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#summary-5"><i class="fa fa-check"></i><b>33.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html"><i class="fa fa-check"></i><b>34</b> Unsupervised Learning: Dimensionality Reduction</a><ul>
+<li class="chapter" data-level="34.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#principal-component-analysis"><i class="fa fa-check"></i><b>34.1</b> Principal Component Analysis</a><ul>
+<li class="chapter" data-level="34.1.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#solving-the-pca"><i class="fa fa-check"></i><b>34.1.1</b> Solving the PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="34.2" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#multidimensional-scaling"><i class="fa fa-check"></i><b>34.2</b> Multidimensional Scaling</a></li>
+<li class="chapter" data-level="34.3" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#summary-6"><i class="fa fa-check"></i><b>34.3</b> Summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -556,62 +572,62 @@ np = 67 &amp; \Rightarrow \\
 \]</span></p>
 <p>Our estimate is wrong, but close (remember we had an oracle of TWEET), but can we ever get it right? Can I say how wrong I should expect my estimates to be?</p>
 <p>Notice that our estimate of <span class="math inline">\(p\)</span>, <span class="math inline">\(\hat{p}\)</span> is the sample <em>mean</em> of <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span>. Let’s go back to our oracle of tweet to do a thought experiment and replicate how we derived our estimate from 100 tweets a few thousand times.</p>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb355-1" data-line-number="1"><span class="co"># proportion of bot-tweets in the the tweet population</span></a>
-<a class="sourceLine" id="cb355-2" data-line-number="2"><span class="co"># as given by the oracle of TWEET</span></a>
-<a class="sourceLine" id="cb355-3" data-line-number="3">p &lt;-<span class="st"> </span><span class="fl">0.7</span></a>
-<a class="sourceLine" id="cb355-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb355-5" data-line-number="5"><span class="co"># let&#39;s sample 100 tweets</span></a>
-<a class="sourceLine" id="cb355-6" data-line-number="6"><span class="co"># this function chooses between values in a vector (0 and 1)</span></a>
-<a class="sourceLine" id="cb355-7" data-line-number="7"><span class="co"># with probability given by vector prob</span></a>
-<a class="sourceLine" id="cb355-8" data-line-number="8"><span class="co"># we need 100 samples from this vector with replacement</span></a>
-<a class="sourceLine" id="cb355-9" data-line-number="9"><span class="co"># since there are fewer items in the vector than the size</span></a>
-<a class="sourceLine" id="cb355-10" data-line-number="10"><span class="co"># of the sample we are making</span></a>
-<a class="sourceLine" id="cb355-11" data-line-number="11">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span><span class="dv">100</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p))</a>
-<a class="sourceLine" id="cb355-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb355-13" data-line-number="13"><span class="co"># compute the estimated proportion that are bot-generated (using the sample mean)</span></a>
-<a class="sourceLine" id="cb355-14" data-line-number="14">phat &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
-<a class="sourceLine" id="cb355-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb355-16" data-line-number="16"><span class="co"># if we had an oracle that let&#39;s us do this cheaply,</span></a>
-<a class="sourceLine" id="cb355-17" data-line-number="17"><span class="co"># we could replicate our experiment 1000 times</span></a>
-<a class="sourceLine" id="cb355-18" data-line-number="18"><span class="co"># (you don&#39;t in real life)</span></a>
-<a class="sourceLine" id="cb355-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb355-20" data-line-number="20"><span class="co"># first let&#39;s write a function that gets an estimate</span></a>
-<a class="sourceLine" id="cb355-21" data-line-number="21"><span class="co"># of proportion from a random sample</span></a>
-<a class="sourceLine" id="cb355-22" data-line-number="22">get_estimate &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">p=</span><span class="fl">0.7</span>) <span class="kw">mean</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span>n, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p)))</a>
-<a class="sourceLine" id="cb355-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb355-24" data-line-number="24"><span class="co"># let&#39;s make a vector with 1000 _estimates_</span></a>
-<a class="sourceLine" id="cb355-25" data-line-number="25">phats_<span class="dv">100</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">100</span>))</a>
-<a class="sourceLine" id="cb355-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb355-27" data-line-number="27"><span class="co"># now let&#39;s plot a histogram of the </span></a>
-<a class="sourceLine" id="cb355-28" data-line-number="28"><span class="kw">hist</span>(phats_<span class="dv">100</span>, <span class="dt">xlab=</span><span class="kw">expression</span>(<span class="kw">hat</span>(p)), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>), <span class="dt">main=</span><span class="st">&quot;Distribution of p estimates from 100 tweets&quot;</span>)</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-154-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb358-1" data-line-number="1"><span class="co"># proportion of bot-tweets in the the tweet population</span></a>
+<a class="sourceLine" id="cb358-2" data-line-number="2"><span class="co"># as given by the oracle of TWEET</span></a>
+<a class="sourceLine" id="cb358-3" data-line-number="3">p &lt;-<span class="st"> </span><span class="fl">0.7</span></a>
+<a class="sourceLine" id="cb358-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb358-5" data-line-number="5"><span class="co"># let&#39;s sample 100 tweets</span></a>
+<a class="sourceLine" id="cb358-6" data-line-number="6"><span class="co"># this function chooses between values in a vector (0 and 1)</span></a>
+<a class="sourceLine" id="cb358-7" data-line-number="7"><span class="co"># with probability given by vector prob</span></a>
+<a class="sourceLine" id="cb358-8" data-line-number="8"><span class="co"># we need 100 samples from this vector with replacement</span></a>
+<a class="sourceLine" id="cb358-9" data-line-number="9"><span class="co"># since there are fewer items in the vector than the size</span></a>
+<a class="sourceLine" id="cb358-10" data-line-number="10"><span class="co"># of the sample we are making</span></a>
+<a class="sourceLine" id="cb358-11" data-line-number="11">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span><span class="dv">100</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p))</a>
+<a class="sourceLine" id="cb358-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb358-13" data-line-number="13"><span class="co"># compute the estimated proportion that are bot-generated (using the sample mean)</span></a>
+<a class="sourceLine" id="cb358-14" data-line-number="14">phat &lt;-<span class="st"> </span><span class="kw">mean</span>(x)</a>
+<a class="sourceLine" id="cb358-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb358-16" data-line-number="16"><span class="co"># if we had an oracle that let&#39;s us do this cheaply,</span></a>
+<a class="sourceLine" id="cb358-17" data-line-number="17"><span class="co"># we could replicate our experiment 1000 times</span></a>
+<a class="sourceLine" id="cb358-18" data-line-number="18"><span class="co"># (you don&#39;t in real life)</span></a>
+<a class="sourceLine" id="cb358-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb358-20" data-line-number="20"><span class="co"># first let&#39;s write a function that gets an estimate</span></a>
+<a class="sourceLine" id="cb358-21" data-line-number="21"><span class="co"># of proportion from a random sample</span></a>
+<a class="sourceLine" id="cb358-22" data-line-number="22">get_estimate &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">p=</span><span class="fl">0.7</span>) <span class="kw">mean</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span>n, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p)))</a>
+<a class="sourceLine" id="cb358-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb358-24" data-line-number="24"><span class="co"># let&#39;s make a vector with 1000 _estimates_</span></a>
+<a class="sourceLine" id="cb358-25" data-line-number="25">phats_<span class="dv">100</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb358-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb358-27" data-line-number="27"><span class="co"># now let&#39;s plot a histogram of the </span></a>
+<a class="sourceLine" id="cb358-28" data-line-number="28"><span class="kw">hist</span>(phats_<span class="dv">100</span>, <span class="dt">xlab=</span><span class="kw">expression</span>(<span class="kw">hat</span>(p)), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>), <span class="dt">main=</span><span class="st">&quot;Distribution of p estimates from 100 tweets&quot;</span>)</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-154-1.svg" width="672" /></p>
 <p>What does this say about our estimates of the proportion of bot-generated tweets if we use 100 tweets in our sample?</p>
 <p>Now what if instead of sampling <span class="math inline">\(n=100\)</span> tweets we used other sample sizes?</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb356-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb356-2" data-line-number="2"><span class="co"># what if we sample 10 tweets</span></a>
-<a class="sourceLine" id="cb356-3" data-line-number="3">phats_<span class="dv">10</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb356-4" data-line-number="4"><span class="kw">hist</span>(phats_<span class="dv">10</span>, <span class="dt">main=</span><span class="st">&quot;10 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb356-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb356-6" data-line-number="6"><span class="co"># what if we sample 100 tweets</span></a>
-<a class="sourceLine" id="cb356-7" data-line-number="7">phats_<span class="dv">100</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">100</span>))</a>
-<a class="sourceLine" id="cb356-8" data-line-number="8"><span class="kw">hist</span>(phats_<span class="dv">100</span>, <span class="dt">main=</span><span class="st">&quot;100 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb356-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb356-10" data-line-number="10"><span class="co"># what if we sample 500 tweets</span></a>
-<a class="sourceLine" id="cb356-11" data-line-number="11">phats_<span class="dv">500</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">500</span>))</a>
-<a class="sourceLine" id="cb356-12" data-line-number="12"><span class="kw">hist</span>(phats_<span class="dv">500</span>, <span class="dt">main=</span><span class="st">&quot;500 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb356-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb356-14" data-line-number="14"><span class="co"># what about 1000 tweets</span></a>
-<a class="sourceLine" id="cb356-15" data-line-number="15">phats_<span class="dv">1000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">1000</span>))</a>
-<a class="sourceLine" id="cb356-16" data-line-number="16"><span class="kw">hist</span>(phats_<span class="dv">1000</span>, <span class="dt">main=</span><span class="st">&quot;1000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb356-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb356-18" data-line-number="18"><span class="co"># what about 5000 tweets</span></a>
-<a class="sourceLine" id="cb356-19" data-line-number="19">phats_<span class="dv">5000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">5000</span>))</a>
-<a class="sourceLine" id="cb356-20" data-line-number="20"><span class="kw">hist</span>(phats_<span class="dv">5000</span>, <span class="dt">main=</span><span class="st">&quot;5000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb356-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb356-22" data-line-number="22"><span class="co"># what about 10000 tweets</span></a>
-<a class="sourceLine" id="cb356-23" data-line-number="23">phats_<span class="dv">10000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10000</span>))</a>
-<a class="sourceLine" id="cb356-24" data-line-number="24"><span class="kw">hist</span>(phats_<span class="dv">10000</span>, <span class="dt">main=</span><span class="st">&quot;10000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-155-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb359-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb359-2" data-line-number="2"><span class="co"># what if we sample 10 tweets</span></a>
+<a class="sourceLine" id="cb359-3" data-line-number="3">phats_<span class="dv">10</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb359-4" data-line-number="4"><span class="kw">hist</span>(phats_<span class="dv">10</span>, <span class="dt">main=</span><span class="st">&quot;10 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb359-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb359-6" data-line-number="6"><span class="co"># what if we sample 100 tweets</span></a>
+<a class="sourceLine" id="cb359-7" data-line-number="7">phats_<span class="dv">100</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb359-8" data-line-number="8"><span class="kw">hist</span>(phats_<span class="dv">100</span>, <span class="dt">main=</span><span class="st">&quot;100 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb359-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb359-10" data-line-number="10"><span class="co"># what if we sample 500 tweets</span></a>
+<a class="sourceLine" id="cb359-11" data-line-number="11">phats_<span class="dv">500</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">500</span>))</a>
+<a class="sourceLine" id="cb359-12" data-line-number="12"><span class="kw">hist</span>(phats_<span class="dv">500</span>, <span class="dt">main=</span><span class="st">&quot;500 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb359-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb359-14" data-line-number="14"><span class="co"># what about 1000 tweets</span></a>
+<a class="sourceLine" id="cb359-15" data-line-number="15">phats_<span class="dv">1000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">1000</span>))</a>
+<a class="sourceLine" id="cb359-16" data-line-number="16"><span class="kw">hist</span>(phats_<span class="dv">1000</span>, <span class="dt">main=</span><span class="st">&quot;1000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb359-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb359-18" data-line-number="18"><span class="co"># what about 5000 tweets</span></a>
+<a class="sourceLine" id="cb359-19" data-line-number="19">phats_<span class="dv">5000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">5000</span>))</a>
+<a class="sourceLine" id="cb359-20" data-line-number="20"><span class="kw">hist</span>(phats_<span class="dv">5000</span>, <span class="dt">main=</span><span class="st">&quot;5000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb359-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb359-22" data-line-number="22"><span class="co"># what about 10000 tweets</span></a>
+<a class="sourceLine" id="cb359-23" data-line-number="23">phats_<span class="dv">10000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10000</span>))</a>
+<a class="sourceLine" id="cb359-24" data-line-number="24"><span class="kw">hist</span>(phats_<span class="dv">10000</span>, <span class="dt">main=</span><span class="st">&quot;10000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-155-1.svg" width="672" /></p>
 <p>We can make a couple of observations:</p>
 <ol style="list-style-type: decimal">
 <li>The distribution of estimate <span class="math inline">\(\hat{p}\)</span> is <em>centered</em> at <span class="math inline">\(p=.7\)</span>, our unknown <em>population</em> proportion, and<br />
@@ -661,20 +677,20 @@ We write “<span class="math inline">\(Y\)</span> is normally distributed with 
 p(Y=y) = \frac{1}{\sqrt{2\pi}\sigma} \mathrm{exp} \left\{ -\frac{1}{2} \left( \frac{y-\mu}{\sigma} \right)^2 \right\}
 \]</span></p>
 <p>Here are three examples of probability density functions of normal distributions with mean <span class="math inline">\(\mu=60,50,60\)</span> and standard deviation <span class="math inline">\(\sigma=2,2,6\)</span>:</p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb357-1" data-line-number="1"><span class="co"># 100 equally spaced values between 40 and 80</span></a>
-<a class="sourceLine" id="cb357-2" data-line-number="2">yrange &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">40</span>, <span class="dv">80</span>, <span class="dt">len=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb357-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb357-4" data-line-number="4"><span class="co"># values of the normal density function</span></a>
-<a class="sourceLine" id="cb357-5" data-line-number="5">density_values_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(yrange, <span class="dt">mean=</span><span class="dv">60</span>, <span class="dt">sd=</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb357-6" data-line-number="6">density_values_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(yrange, <span class="dt">mean=</span><span class="dv">50</span>, <span class="dt">sd=</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb357-7" data-line-number="7">density_values_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(yrange, <span class="dt">mean=</span><span class="dv">60</span>, <span class="dt">sd=</span><span class="dv">6</span>)</a>
-<a class="sourceLine" id="cb357-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb357-9" data-line-number="9"><span class="co"># now plot the function</span></a>
-<a class="sourceLine" id="cb357-10" data-line-number="10"><span class="kw">plot</span>(yrange, density_values_<span class="dv">1</span>, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">xlab=</span><span class="st">&quot;y&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;density&quot;</span>)</a>
-<a class="sourceLine" id="cb357-11" data-line-number="11"><span class="kw">lines</span>(yrange, density_values_<span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb357-12" data-line-number="12"><span class="kw">lines</span>(yrange, density_values_<span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;orange&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb357-13" data-line-number="13"><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;mean 60, sd 2&quot;</span>, <span class="st">&quot;mean 50, sd 2&quot;</span>, <span class="st">&quot;mean 60, sd 6&quot;</span>), <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;orange&quot;</span>), <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-156-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb360-1" data-line-number="1"><span class="co"># 100 equally spaced values between 40 and 80</span></a>
+<a class="sourceLine" id="cb360-2" data-line-number="2">yrange &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">40</span>, <span class="dv">80</span>, <span class="dt">len=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb360-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb360-4" data-line-number="4"><span class="co"># values of the normal density function</span></a>
+<a class="sourceLine" id="cb360-5" data-line-number="5">density_values_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(yrange, <span class="dt">mean=</span><span class="dv">60</span>, <span class="dt">sd=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb360-6" data-line-number="6">density_values_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(yrange, <span class="dt">mean=</span><span class="dv">50</span>, <span class="dt">sd=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb360-7" data-line-number="7">density_values_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">dnorm</span>(yrange, <span class="dt">mean=</span><span class="dv">60</span>, <span class="dt">sd=</span><span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb360-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb360-9" data-line-number="9"><span class="co"># now plot the function</span></a>
+<a class="sourceLine" id="cb360-10" data-line-number="10"><span class="kw">plot</span>(yrange, density_values_<span class="dv">1</span>, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">xlab=</span><span class="st">&quot;y&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;density&quot;</span>)</a>
+<a class="sourceLine" id="cb360-11" data-line-number="11"><span class="kw">lines</span>(yrange, density_values_<span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb360-12" data-line-number="12"><span class="kw">lines</span>(yrange, density_values_<span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;orange&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb360-13" data-line-number="13"><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;mean 60, sd 2&quot;</span>, <span class="st">&quot;mean 50, sd 2&quot;</span>, <span class="st">&quot;mean 60, sd 6&quot;</span>), <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;orange&quot;</span>), <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-156-1.svg" width="672" /></p>
 <p>Like the discrete case, probability density functions for continuous random variables need to satisfy certain conditions:</p>
 <ol style="list-style-type: lower-alpha">
 <li><span class="math inline">\(p(Y=y) \geq 0\)</span> for all values <span class="math inline">\(Y \in (-\infty,\infty)\)</span>, and<br />
@@ -706,49 +722,49 @@ p(Z=z) = \frac{1}{\sqrt{2\pi}} \mathrm{exp} \left\{ -\frac{1}{2} z^2 \right\}
 <li><span class="math inline">\(\mathrm{var}X &lt; \infty\)</span></li>
 </ol>
 <p>Let’s redo our simulated replications of our tweet samples to illustrate the CLT at work:</p>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb358-1" data-line-number="1"><span class="co"># we can calculate standard error for each of the</span></a>
-<a class="sourceLine" id="cb358-2" data-line-number="2"><span class="co"># settings we saw previously and compare these replications</span></a>
-<a class="sourceLine" id="cb358-3" data-line-number="3"><span class="co"># to the normal distribution given by the CLT</span></a>
-<a class="sourceLine" id="cb358-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb358-5" data-line-number="5"><span class="co"># let&#39;s write a function that adds a normal density</span></a>
-<a class="sourceLine" id="cb358-6" data-line-number="6"><span class="co"># plot for a given sample size</span></a>
-<a class="sourceLine" id="cb358-7" data-line-number="7">draw_normal_density &lt;-<span class="st"> </span><span class="cf">function</span>(n) {</a>
-<a class="sourceLine" id="cb358-8" data-line-number="8">  se &lt;-<span class="st"> </span><span class="kw">sqrt</span>(p<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p))<span class="op">/</span><span class="kw">sqrt</span>(n)</a>
-<a class="sourceLine" id="cb358-9" data-line-number="9">  f &lt;-<span class="st"> </span><span class="kw">dnorm</span>(<span class="kw">seq</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">1000</span>), <span class="dt">mean=</span>p, <span class="dt">sd=</span>se)</a>
-<a class="sourceLine" id="cb358-10" data-line-number="10">  <span class="kw">lines</span>(<span class="kw">seq</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">1000</span>), f, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="fl">1.6</span>)</a>
-<a class="sourceLine" id="cb358-11" data-line-number="11">}</a>
-<a class="sourceLine" id="cb358-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb358-13" data-line-number="13"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb358-14" data-line-number="14"><span class="co"># what if we sample 10 tweets</span></a>
-<a class="sourceLine" id="cb358-15" data-line-number="15">phats_<span class="dv">10</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb358-16" data-line-number="16"><span class="kw">hist</span>(phats_<span class="dv">10</span>, <span class="dt">main=</span><span class="st">&quot;10 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb358-17" data-line-number="17"><span class="kw">draw_normal_density</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb358-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb358-19" data-line-number="19"><span class="co"># what if we sample 100 tweets</span></a>
-<a class="sourceLine" id="cb358-20" data-line-number="20">phats_<span class="dv">100</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">100</span>))</a>
-<a class="sourceLine" id="cb358-21" data-line-number="21"><span class="kw">hist</span>(phats_<span class="dv">100</span>, <span class="dt">main=</span><span class="st">&quot;100 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb358-22" data-line-number="22"><span class="kw">draw_normal_density</span>(<span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb358-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb358-24" data-line-number="24"><span class="co"># what if we sample 500 tweets</span></a>
-<a class="sourceLine" id="cb358-25" data-line-number="25">phats_<span class="dv">500</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">500</span>))</a>
-<a class="sourceLine" id="cb358-26" data-line-number="26"><span class="kw">hist</span>(phats_<span class="dv">500</span>, <span class="dt">main=</span><span class="st">&quot;500 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb358-27" data-line-number="27"><span class="kw">draw_normal_density</span>(<span class="dv">500</span>)</a>
-<a class="sourceLine" id="cb358-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb358-29" data-line-number="29"><span class="co"># what about 1000 tweets</span></a>
-<a class="sourceLine" id="cb358-30" data-line-number="30">phats_<span class="dv">1000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">1000</span>))</a>
-<a class="sourceLine" id="cb358-31" data-line-number="31"><span class="kw">hist</span>(phats_<span class="dv">1000</span>, <span class="dt">main=</span><span class="st">&quot;1000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb358-32" data-line-number="32"><span class="kw">draw_normal_density</span>(<span class="dv">1000</span>)</a>
-<a class="sourceLine" id="cb358-33" data-line-number="33"></a>
-<a class="sourceLine" id="cb358-34" data-line-number="34"><span class="co"># what about 5000 tweets</span></a>
-<a class="sourceLine" id="cb358-35" data-line-number="35">phats_<span class="dv">5000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">5000</span>))</a>
-<a class="sourceLine" id="cb358-36" data-line-number="36"><span class="kw">hist</span>(phats_<span class="dv">5000</span>, <span class="dt">main=</span><span class="st">&quot;5000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb358-37" data-line-number="37"><span class="kw">draw_normal_density</span>(<span class="dv">5000</span>)</a>
-<a class="sourceLine" id="cb358-38" data-line-number="38"></a>
-<a class="sourceLine" id="cb358-39" data-line-number="39"><span class="co"># what about 10000 tweets</span></a>
-<a class="sourceLine" id="cb358-40" data-line-number="40">phats_<span class="dv">10000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10000</span>))</a>
-<a class="sourceLine" id="cb358-41" data-line-number="41"><span class="kw">hist</span>(phats_<span class="dv">10000</span>, <span class="dt">main=</span><span class="st">&quot;10000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb358-42" data-line-number="42"><span class="kw">draw_normal_density</span>(<span class="dv">10000</span>)</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-157-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb361-1" data-line-number="1"><span class="co"># we can calculate standard error for each of the</span></a>
+<a class="sourceLine" id="cb361-2" data-line-number="2"><span class="co"># settings we saw previously and compare these replications</span></a>
+<a class="sourceLine" id="cb361-3" data-line-number="3"><span class="co"># to the normal distribution given by the CLT</span></a>
+<a class="sourceLine" id="cb361-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb361-5" data-line-number="5"><span class="co"># let&#39;s write a function that adds a normal density</span></a>
+<a class="sourceLine" id="cb361-6" data-line-number="6"><span class="co"># plot for a given sample size</span></a>
+<a class="sourceLine" id="cb361-7" data-line-number="7">draw_normal_density &lt;-<span class="st"> </span><span class="cf">function</span>(n) {</a>
+<a class="sourceLine" id="cb361-8" data-line-number="8">  se &lt;-<span class="st"> </span><span class="kw">sqrt</span>(p<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p))<span class="op">/</span><span class="kw">sqrt</span>(n)</a>
+<a class="sourceLine" id="cb361-9" data-line-number="9">  f &lt;-<span class="st"> </span><span class="kw">dnorm</span>(<span class="kw">seq</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">1000</span>), <span class="dt">mean=</span>p, <span class="dt">sd=</span>se)</a>
+<a class="sourceLine" id="cb361-10" data-line-number="10">  <span class="kw">lines</span>(<span class="kw">seq</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">1000</span>), f, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="fl">1.6</span>)</a>
+<a class="sourceLine" id="cb361-11" data-line-number="11">}</a>
+<a class="sourceLine" id="cb361-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb361-13" data-line-number="13"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb361-14" data-line-number="14"><span class="co"># what if we sample 10 tweets</span></a>
+<a class="sourceLine" id="cb361-15" data-line-number="15">phats_<span class="dv">10</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb361-16" data-line-number="16"><span class="kw">hist</span>(phats_<span class="dv">10</span>, <span class="dt">main=</span><span class="st">&quot;10 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb361-17" data-line-number="17"><span class="kw">draw_normal_density</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb361-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb361-19" data-line-number="19"><span class="co"># what if we sample 100 tweets</span></a>
+<a class="sourceLine" id="cb361-20" data-line-number="20">phats_<span class="dv">100</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">100</span>))</a>
+<a class="sourceLine" id="cb361-21" data-line-number="21"><span class="kw">hist</span>(phats_<span class="dv">100</span>, <span class="dt">main=</span><span class="st">&quot;100 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb361-22" data-line-number="22"><span class="kw">draw_normal_density</span>(<span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb361-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb361-24" data-line-number="24"><span class="co"># what if we sample 500 tweets</span></a>
+<a class="sourceLine" id="cb361-25" data-line-number="25">phats_<span class="dv">500</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">500</span>))</a>
+<a class="sourceLine" id="cb361-26" data-line-number="26"><span class="kw">hist</span>(phats_<span class="dv">500</span>, <span class="dt">main=</span><span class="st">&quot;500 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb361-27" data-line-number="27"><span class="kw">draw_normal_density</span>(<span class="dv">500</span>)</a>
+<a class="sourceLine" id="cb361-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb361-29" data-line-number="29"><span class="co"># what about 1000 tweets</span></a>
+<a class="sourceLine" id="cb361-30" data-line-number="30">phats_<span class="dv">1000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">1000</span>))</a>
+<a class="sourceLine" id="cb361-31" data-line-number="31"><span class="kw">hist</span>(phats_<span class="dv">1000</span>, <span class="dt">main=</span><span class="st">&quot;1000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb361-32" data-line-number="32"><span class="kw">draw_normal_density</span>(<span class="dv">1000</span>)</a>
+<a class="sourceLine" id="cb361-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb361-34" data-line-number="34"><span class="co"># what about 5000 tweets</span></a>
+<a class="sourceLine" id="cb361-35" data-line-number="35">phats_<span class="dv">5000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">5000</span>))</a>
+<a class="sourceLine" id="cb361-36" data-line-number="36"><span class="kw">hist</span>(phats_<span class="dv">5000</span>, <span class="dt">main=</span><span class="st">&quot;5000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb361-37" data-line-number="37"><span class="kw">draw_normal_density</span>(<span class="dv">5000</span>)</a>
+<a class="sourceLine" id="cb361-38" data-line-number="38"></a>
+<a class="sourceLine" id="cb361-39" data-line-number="39"><span class="co"># what about 10000 tweets</span></a>
+<a class="sourceLine" id="cb361-40" data-line-number="40">phats_<span class="dv">10000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10000</span>))</a>
+<a class="sourceLine" id="cb361-41" data-line-number="41"><span class="kw">hist</span>(phats_<span class="dv">10000</span>, <span class="dt">main=</span><span class="st">&quot;10000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb361-42" data-line-number="42"><span class="kw">draw_normal_density</span>(<span class="dv">10000</span>)</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-157-1.svg" width="672" /></p>
 <p>Here we see the three main points of the LLN and CLT:</p>
 <ol style="list-style-type: decimal">
 <li>the normal density is centered around <span class="math inline">\(\mu=.7\)</span>,<br />
@@ -785,10 +801,11 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",

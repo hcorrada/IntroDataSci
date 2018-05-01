@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="Lecture Notes: Introduction to Data Science">
-  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-18">
+<meta name="date" content="2018-05-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,7 +49,7 @@
 
 <script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.0/str_view.js"></script>
+<script src="libs/str_view-binding-1.2.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -456,6 +456,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
 <li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="33" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html"><i class="fa fa-check"></i><b>33</b> Unsupervised Learning: Clustering</a><ul>
+<li class="chapter" data-level="33.1" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#motivating-example"><i class="fa fa-check"></i><b>33.1</b> Motivating Example</a></li>
+<li class="chapter" data-level="33.2" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#some-preliminaries"><i class="fa fa-check"></i><b>33.2</b> Some Preliminaries</a></li>
+<li class="chapter" data-level="33.3" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#cluster-analysis"><i class="fa fa-check"></i><b>33.3</b> Cluster Analysis</a></li>
+<li class="chapter" data-level="33.4" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#dissimilarity-based-clustering"><i class="fa fa-check"></i><b>33.4</b> Dissimilarity-based Clustering</a></li>
+<li class="chapter" data-level="33.5" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#k-means-clustering"><i class="fa fa-check"></i><b>33.5</b> K-means Clustering</a></li>
+<li class="chapter" data-level="33.6" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#choosing-the-number-of-clusters"><i class="fa fa-check"></i><b>33.6</b> Choosing the number of clusters</a></li>
+<li class="chapter" data-level="33.7" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#summary-5"><i class="fa fa-check"></i><b>33.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html"><i class="fa fa-check"></i><b>34</b> Unsupervised Learning: Dimensionality Reduction</a><ul>
+<li class="chapter" data-level="34.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#principal-component-analysis"><i class="fa fa-check"></i><b>34.1</b> Principal Component Analysis</a><ul>
+<li class="chapter" data-level="34.1.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#solving-the-pca"><i class="fa fa-check"></i><b>34.1.1</b> Solving the PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="34.2" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#multidimensional-scaling"><i class="fa fa-check"></i><b>34.2</b> Multidimensional Scaling</a></li>
+<li class="chapter" data-level="34.3" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#summary-6"><i class="fa fa-check"></i><b>34.3</b> Summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -491,10 +507,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>file may contain header information before the actual data so we have to skip some lines when loading the data (<code>skip</code> argument)</p></li>
 </ul>
 <p>You should read the documentation of the <code>read_csv</code> function to appreciate the complexities it can maneuver when reading data from structured text files.</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1">?read_csv</a></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1">?read_csv</a></code></pre></div>
 <p>When loading a CSV file, we need to determine how to treat values for each attribute in the dataset. When we call <code>read_csv</code>, it guesses as to the best way to parse each attribute (e.g., is it a number, is it a factor, is it free text, how is missing data encoded). The <code>readr</code> package implements a set of core functions <code>parse_*</code> that parses vectors into different data types (e.g., <code>parse_number</code>, <code>parse_datetime</code>, <code>parse_factor</code>). When we call <code>read_csv</code> it will print it’s data types guesses and any problems it encounters.</p>
 <p>The <code>problems</code> function let’s you inspect parsing problems. E.g.,</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">readr_example</span>(<span class="st">&quot;challenge.csv&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">readr_example</span>(<span class="st">&quot;challenge.csv&quot;</span>))</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   x = col_integer(),
@@ -506,7 +522,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## row # A tibble: 5 x 5 col     row col   expected               actual             file               expected   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                  &lt;chr&gt;              &lt;chr&gt;              actual 1  1001 x     no trailing characters .23837975086644292 &#39;/Library/Framewo… file 2  1002 x     no trailing characters .41167997173033655 &#39;/Library/Framewo… row 3  1003 x     no trailing characters .7460716762579978  &#39;/Library/Framewo… col 4  1004 x     no trailing characters .723450553836301   &#39;/Library/Framewo… expected 5  1005 x     no trailing characters .614524137461558   &#39;/Library/Framewo…
 ## ... ................. ... .......................................................................... ........ .......................................................................... ...... .......................................................................... .... .......................................................................... ... .......................................................................... ... .......................................................................... ........ ..........................................................................
 ## See problems(...) for more details.</code></pre>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="kw">problems</span>(df)</a></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="kw">problems</span>(df)</a></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 5
 ##      row col   expected               actual             file             
 ##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                  &lt;chr&gt;              &lt;chr&gt;            
@@ -527,8 +543,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>You can read every attribute as character using <code>col_types=cols(.default=col_character())</code>. Combine this with <code>type_convert</code> to parse character attributes into other types:</li>
 </ul>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">readr_example</span>(<span class="st">&quot;challenge.csv&quot;</span>), <span class="dt">col_types=</span><span class="kw">cols</span>(<span class="dt">.default=</span><span class="kw">col_character</span>())) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb163-2" data-line-number="2"><span class="st">  </span><span class="kw">type_convert</span>(<span class="kw">cols</span>(<span class="dt">x=</span><span class="kw">col_double</span>(), <span class="dt">y=</span><span class="kw">col_date</span>()))</a></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">readr_example</span>(<span class="st">&quot;challenge.csv&quot;</span>), <span class="dt">col_types=</span><span class="kw">cols</span>(<span class="dt">.default=</span><span class="kw">col_character</span>())) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb166-2" data-line-number="2"><span class="st">  </span><span class="kw">type_convert</span>(<span class="kw">cols</span>(<span class="dt">x=</span><span class="kw">col_double</span>(), <span class="dt">y=</span><span class="kw">col_date</span>()))</a></code></pre></div>
 <ul>
 <li>If nothing else works, you can read file lines using <code>read_lines</code> and then parse lines using string processing operations (which we will see shortly).</li>
 </ul>
@@ -545,23 +561,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We can scrape ratings for his movies from this page. To do this we need to figure out how the HTML page’s markup can help us write R expressions to find this data in the page. Most web browsers have facilities to show page markup. In Google Chrome, you can use <code>View&gt;Developer&gt;Developer Tools</code>, and inspect the page markdown to find where the data is contained. In this example, we see that the data we want is in a <code>&lt;table&gt;</code> element in the page, with id <code>filmographyTbl</code>.</p>
 <p><img src="img/rt_devtools.png" /></p>
 <p>Now that we have that information, we can use the <code>rvest</code> package to scrape this data:</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="kw">library</span>(rvest)</a>
-<a class="sourceLine" id="cb164-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb164-3" data-line-number="3">url &lt;-<span class="st"> &quot;https://www.rottentomatoes.com/celebrity/diego_luna&quot;</span></a>
-<a class="sourceLine" id="cb164-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb164-5" data-line-number="5">dl_tab &lt;-<span class="st"> </span>url <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb164-6" data-line-number="6"><span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb164-7" data-line-number="7"><span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;#filmographyTbl&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb164-8" data-line-number="8"><span class="st">  </span><span class="kw">html_table</span>()</a>
-<a class="sourceLine" id="cb164-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb164-10" data-line-number="10"><span class="kw">head</span>(dl_tab)</a></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="kw">library</span>(rvest)</a>
+<a class="sourceLine" id="cb167-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb167-3" data-line-number="3">url &lt;-<span class="st"> &quot;https://www.rottentomatoes.com/celebrity/diego_luna&quot;</span></a>
+<a class="sourceLine" id="cb167-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb167-5" data-line-number="5">dl_tab &lt;-<span class="st"> </span>url <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb167-6" data-line-number="6"><span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb167-7" data-line-number="7"><span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;#filmographyTbl&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb167-8" data-line-number="8"><span class="st">  </span><span class="kw">html_table</span>()</a>
+<a class="sourceLine" id="cb167-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb167-10" data-line-number="10"><span class="kw">head</span>(dl_tab)</a></code></pre></div>
 <pre><code>##   RATING                        TITLE
 ## 1     5%                   Flatliners
 ## 2    85% Rogue One: A Star Wars Story
 ## 3    88%                 Blood Father
 ## 4    62%            Mr. Pig (Sr. Pig)
 ## 5    82%             The Book of Life
-## 6    38%                 Cesar Chavez
+## 6    39%                 Cesar Chavez
 ##                                                                                                                                                                                                                                                                                                     CREDIT
 ## 1                                                                                                                                                                                                                                                                                                      Ray
 ## 2                                                                                                                                                                                                                                                                                    Captain Cassian Andor
@@ -584,11 +600,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We saw above how to extract data from HTML tables. But what if the data we want to extract is not cleanly formatted as a HTML table, or is spread over multiple html pages?</p>
 <p>Let’s look at an example where we scrape titles and artists from billboard #1 songs: <a href="https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_2017" class="uri">https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_2017</a></p>
 <p>Let’s start by reading the HTML markup and finding the document node that contains the table we want to scrape</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1"><span class="kw">library</span>(rvest)</a>
-<a class="sourceLine" id="cb166-2" data-line-number="2">url &lt;-<span class="st"> &quot;https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_2017&quot;</span></a>
-<a class="sourceLine" id="cb166-3" data-line-number="3">singles_tab_node &lt;-<span class="st"> </span><span class="kw">read_html</span>(url) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb166-4" data-line-number="4"><span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;.plainrowheaders&quot;</span>)</a>
-<a class="sourceLine" id="cb166-5" data-line-number="5">singles_tab_node</a></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1"><span class="kw">library</span>(rvest)</a>
+<a class="sourceLine" id="cb169-2" data-line-number="2">url &lt;-<span class="st"> &quot;https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_2017&quot;</span></a>
+<a class="sourceLine" id="cb169-3" data-line-number="3">singles_tab_node &lt;-<span class="st"> </span><span class="kw">read_html</span>(url) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb169-4" data-line-number="4"><span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;.plainrowheaders&quot;</span>)</a>
+<a class="sourceLine" id="cb169-5" data-line-number="5">singles_tab_node</a></code></pre></div>
 <pre><code>## {xml_node}
 ## &lt;table class=&quot;wikitable plainrowheaders&quot; style=&quot;text-align: center&quot;&gt;
 ##  [1] &lt;tr&gt;\n&lt;th&gt;Issue date&lt;/th&gt;\n&lt;th&gt;Song&lt;/th&gt;\n&lt;th&gt;Artist(s)&lt;/th&gt;\n&lt;th&gt;R ...
@@ -613,16 +629,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [20] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;May 13&lt;/th&gt;\n&lt;td&gt;&quot;&lt;a href=&quot;/wiki/That%27s_Wha ...
 ## ...</code></pre>
 <p>Since the rows of the table are not cleanly aligned, we need to extract each attribute separately. Let’s start with the dates in the first column. Since we noticed that the nodes containing dates have attribute <code>scope</code> we use the attribute CSS selector <code>[scope]</code>.</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1">dates &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;[scope]&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
-<a class="sourceLine" id="cb168-2" data-line-number="2">dates <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1">dates &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;[scope]&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
+<a class="sourceLine" id="cb171-2" data-line-number="2">dates <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code>## [1] &quot;January 7&quot;   &quot;January 14&quot;  &quot;January 21&quot;  &quot;January 28&quot;  &quot;February 4&quot; 
 ## [6] &quot;February 11&quot;</code></pre>
 <p>Next, we extract song titles, first we grab the <code>tr</code> (table row) nodes and extract from each the first <code>td</code> node using the <code>td:first-of-type</code> CSS selector. Notice that this gets us the header row which we remove using the <code>magrittr::extract</code> function.
 The title nodes also tell us how many rows this spans, which we grab from the <code>rowspan</code> attribute.</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1">title_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:first-of-type&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb170-2" data-line-number="2">song_titles &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
-<a class="sourceLine" id="cb170-3" data-line-number="3">title_spans &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_attr</span>(<span class="st">&quot;rowspan&quot;</span>)</a>
-<a class="sourceLine" id="cb170-4" data-line-number="4"><span class="kw">cbind</span>(song_titles, title_spans) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1">title_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:first-of-type&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb173-2" data-line-number="2">song_titles &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
+<a class="sourceLine" id="cb173-3" data-line-number="3">title_spans &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_attr</span>(<span class="st">&quot;rowspan&quot;</span>)</a>
+<a class="sourceLine" id="cb173-4" data-line-number="4"><span class="kw">cbind</span>(song_titles, title_spans) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a></code></pre></div>
 <pre><code>##       song_titles          title_spans
 ##  [1,] &quot;\&quot;Starboy\&quot;&quot;        NA         
 ##  [2,] &quot;\&quot;Black Beatles\&quot;&quot;  NA         
@@ -635,9 +651,9 @@ The title nodes also tell us how many rows this spans, which we grab from the <c
 ##  [9,] &quot;[10]&quot;               NA         
 ## [10,] &quot;[11]&quot;               NA</code></pre>
 <p>To get artist names we get the second data element (<code>td</code>) of each row using the <code>td:nth-of-type(2)</code> CSS selector (again removing the first entry in result coming from the header row)</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1">artist_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:nth-of-type(2)&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb172-2" data-line-number="2">artists &lt;-<span class="st">  </span>artist_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
-<a class="sourceLine" id="cb172-3" data-line-number="3">artists <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1">artist_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:nth-of-type(2)&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb175-2" data-line-number="2">artists &lt;-<span class="st">  </span>artist_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
+<a class="sourceLine" id="cb175-3" data-line-number="3">artists <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a></code></pre></div>
 <pre><code>##  [1] &quot;The Weeknd featuring Daft Punk&quot;   
 ##  [2] &quot;Rae Sremmurd featuring Gucci Mane&quot;
 ##  [3] &quot;Migos featuring Lil Uzi Vert&quot;     
@@ -649,9 +665,9 @@ The title nodes also tell us how many rows this spans, which we grab from the <c
 ##  [9] NA                                 
 ## [10] NA</code></pre>
 <p>Now that we’ve extracted each attribute separately we can combine them into a single data frame</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1">billboard_df &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">month_day=</span>dates, <span class="dt">year=</span><span class="st">&quot;2017&quot;</span>, <span class="dt">song_title_raw=</span>song_titles, <span class="dt">title_span=</span>title_spans,</a>
-<a class="sourceLine" id="cb174-2" data-line-number="2">                           <span class="dt">artist_raw=</span>artists)</a>
-<a class="sourceLine" id="cb174-3" data-line-number="3">billboard_df</a></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1">billboard_df &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">month_day=</span>dates, <span class="dt">year=</span><span class="st">&quot;2017&quot;</span>, <span class="dt">song_title_raw=</span>song_titles, <span class="dt">title_span=</span>title_spans,</a>
+<a class="sourceLine" id="cb177-2" data-line-number="2">                           <span class="dt">artist_raw=</span>artists)</a>
+<a class="sourceLine" id="cb177-3" data-line-number="3">billboard_df</a></code></pre></div>
 <pre><code>## # A tibble: 52 x 5
 ##    month_day   year  song_title_raw       title_span artist_raw           
 ##    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;      &lt;chr&gt;                
@@ -668,30 +684,30 @@ The title nodes also tell us how many rows this spans, which we grab from the <c
 ## # ... with 42 more rows</code></pre>
 <p>This is by no means a clean data frame yet, but we will discuss how to clean up data like this in later lectures.
 We can now abstract these operations into a function that scrapes the same data for other years.</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1">scrape_billboard &lt;-<span class="st"> </span><span class="cf">function</span>(year, <span class="dt">baseurl=</span><span class="st">&quot;https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_&quot;</span>) {</a>
-<a class="sourceLine" id="cb176-2" data-line-number="2">  url &lt;-<span class="st"> </span><span class="kw">paste0</span>(baseurl, year)</a>
-<a class="sourceLine" id="cb176-3" data-line-number="3">  <span class="co"># find table node</span></a>
-<a class="sourceLine" id="cb176-4" data-line-number="4">  singles_tab_node &lt;-<span class="st"> </span><span class="kw">read_html</span>(url) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb176-5" data-line-number="5"><span class="st">    </span><span class="kw">html_node</span>(<span class="st">&quot;.plainrowheaders&quot;</span>) </a>
-<a class="sourceLine" id="cb176-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb176-7" data-line-number="7">  <span class="co"># extract dates</span></a>
-<a class="sourceLine" id="cb176-8" data-line-number="8">  dates &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;[scope]&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
-<a class="sourceLine" id="cb176-9" data-line-number="9">  </a>
-<a class="sourceLine" id="cb176-10" data-line-number="10">  <span class="co"># extract titles and spans</span></a>
-<a class="sourceLine" id="cb176-11" data-line-number="11">  title_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:first-of-type&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb176-12" data-line-number="12">  song_titles &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
-<a class="sourceLine" id="cb176-13" data-line-number="13">  title_spans &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_attr</span>(<span class="st">&quot;rowspan&quot;</span>)</a>
-<a class="sourceLine" id="cb176-14" data-line-number="14">  </a>
-<a class="sourceLine" id="cb176-15" data-line-number="15">  <span class="co"># extract artists</span></a>
-<a class="sourceLine" id="cb176-16" data-line-number="16">  artist_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:nth-of-type(2)&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb176-17" data-line-number="17">  artists &lt;-<span class="st">  </span>artist_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
-<a class="sourceLine" id="cb176-18" data-line-number="18">  </a>
-<a class="sourceLine" id="cb176-19" data-line-number="19">  <span class="co"># make data frame</span></a>
-<a class="sourceLine" id="cb176-20" data-line-number="20">  <span class="kw">data_frame</span>(<span class="dt">month_day=</span>dates, <span class="dt">year=</span>year, <span class="dt">song_title_raw=</span>song_titles, <span class="dt">title_span=</span>title_spans,</a>
-<a class="sourceLine" id="cb176-21" data-line-number="21">                           <span class="dt">artist_raw=</span>artists)</a>
-<a class="sourceLine" id="cb176-22" data-line-number="22">}</a>
-<a class="sourceLine" id="cb176-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb176-24" data-line-number="24"><span class="kw">scrape_billboard</span>(<span class="st">&quot;2016&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1">scrape_billboard &lt;-<span class="st"> </span><span class="cf">function</span>(year, <span class="dt">baseurl=</span><span class="st">&quot;https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_&quot;</span>) {</a>
+<a class="sourceLine" id="cb179-2" data-line-number="2">  url &lt;-<span class="st"> </span><span class="kw">paste0</span>(baseurl, year)</a>
+<a class="sourceLine" id="cb179-3" data-line-number="3">  <span class="co"># find table node</span></a>
+<a class="sourceLine" id="cb179-4" data-line-number="4">  singles_tab_node &lt;-<span class="st"> </span><span class="kw">read_html</span>(url) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb179-5" data-line-number="5"><span class="st">    </span><span class="kw">html_node</span>(<span class="st">&quot;.plainrowheaders&quot;</span>) </a>
+<a class="sourceLine" id="cb179-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb179-7" data-line-number="7">  <span class="co"># extract dates</span></a>
+<a class="sourceLine" id="cb179-8" data-line-number="8">  dates &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;[scope]&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
+<a class="sourceLine" id="cb179-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb179-10" data-line-number="10">  <span class="co"># extract titles and spans</span></a>
+<a class="sourceLine" id="cb179-11" data-line-number="11">  title_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:first-of-type&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb179-12" data-line-number="12">  song_titles &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
+<a class="sourceLine" id="cb179-13" data-line-number="13">  title_spans &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_attr</span>(<span class="st">&quot;rowspan&quot;</span>)</a>
+<a class="sourceLine" id="cb179-14" data-line-number="14">  </a>
+<a class="sourceLine" id="cb179-15" data-line-number="15">  <span class="co"># extract artists</span></a>
+<a class="sourceLine" id="cb179-16" data-line-number="16">  artist_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:nth-of-type(2)&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb179-17" data-line-number="17">  artists &lt;-<span class="st">  </span>artist_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
+<a class="sourceLine" id="cb179-18" data-line-number="18">  </a>
+<a class="sourceLine" id="cb179-19" data-line-number="19">  <span class="co"># make data frame</span></a>
+<a class="sourceLine" id="cb179-20" data-line-number="20">  <span class="kw">data_frame</span>(<span class="dt">month_day=</span>dates, <span class="dt">year=</span>year, <span class="dt">song_title_raw=</span>song_titles, <span class="dt">title_span=</span>title_spans,</a>
+<a class="sourceLine" id="cb179-21" data-line-number="21">                           <span class="dt">artist_raw=</span>artists)</a>
+<a class="sourceLine" id="cb179-22" data-line-number="22">}</a>
+<a class="sourceLine" id="cb179-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb179-24" data-line-number="24"><span class="kw">scrape_billboard</span>(<span class="st">&quot;2016&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 53 x 5
 ##    month_day   year  song_title_raw       title_span artist_raw           
 ##    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;      &lt;chr&gt;                
@@ -707,12 +723,12 @@ We can now abstract these operations into a function that scrapes the same data 
 ## 10 March 5     2016  &quot;\&quot;Work\&quot;&quot;           9          Rihanna featuring Dr…
 ## # ... with 43 more rows</code></pre>
 <p>We can do this for a few years and create a (very dirty) dataset with songs for this current decade:</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1">billboard_tab &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dv">2010</span><span class="op">:</span><span class="dv">2017</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb178-2" data-line-number="2"><span class="st">  </span>purrr<span class="op">::</span><span class="kw">map_df</span>(scrape_billboard)</a>
-<a class="sourceLine" id="cb178-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb178-4" data-line-number="4">billboard_tab <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb178-5" data-line-number="5"><span class="st">  </span><span class="kw">head</span>(<span class="dv">20</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb178-6" data-line-number="6"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1">billboard_tab &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dv">2010</span><span class="op">:</span><span class="dv">2017</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb181-2" data-line-number="2"><span class="st">  </span>purrr<span class="op">::</span><span class="kw">map_df</span>(scrape_billboard)</a>
+<a class="sourceLine" id="cb181-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb181-4" data-line-number="4">billboard_tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb181-5" data-line-number="5"><span class="st">  </span><span class="kw">head</span>(<span class="dv">20</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb181-6" data-line-number="6"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1106,10 +1122,11 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",

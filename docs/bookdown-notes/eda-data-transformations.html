@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="Lecture Notes: Introduction to Data Science">
-  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-18">
+<meta name="date" content="2018-05-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,7 +49,7 @@
 
 <script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.0/str_view.js"></script>
+<script src="libs/str_view-binding-1.2.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -456,6 +456,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
 <li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="33" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html"><i class="fa fa-check"></i><b>33</b> Unsupervised Learning: Clustering</a><ul>
+<li class="chapter" data-level="33.1" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#motivating-example"><i class="fa fa-check"></i><b>33.1</b> Motivating Example</a></li>
+<li class="chapter" data-level="33.2" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#some-preliminaries"><i class="fa fa-check"></i><b>33.2</b> Some Preliminaries</a></li>
+<li class="chapter" data-level="33.3" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#cluster-analysis"><i class="fa fa-check"></i><b>33.3</b> Cluster Analysis</a></li>
+<li class="chapter" data-level="33.4" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#dissimilarity-based-clustering"><i class="fa fa-check"></i><b>33.4</b> Dissimilarity-based Clustering</a></li>
+<li class="chapter" data-level="33.5" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#k-means-clustering"><i class="fa fa-check"></i><b>33.5</b> K-means Clustering</a></li>
+<li class="chapter" data-level="33.6" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#choosing-the-number-of-clusters"><i class="fa fa-check"></i><b>33.6</b> Choosing the number of clusters</a></li>
+<li class="chapter" data-level="33.7" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#summary-5"><i class="fa fa-check"></i><b>33.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html"><i class="fa fa-check"></i><b>34</b> Unsupervised Learning: Dimensionality Reduction</a><ul>
+<li class="chapter" data-level="34.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#principal-component-analysis"><i class="fa fa-check"></i><b>34.1</b> Principal Component Analysis</a><ul>
+<li class="chapter" data-level="34.1.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#solving-the-pca"><i class="fa fa-check"></i><b>34.1.1</b> Solving the PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="34.2" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#multidimensional-scaling"><i class="fa fa-check"></i><b>34.2</b> Multidimensional Scaling</a></li>
+<li class="chapter" data-level="34.3" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#summary-6"><i class="fa fa-check"></i><b>34.3</b> Summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -483,14 +499,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 z_i = \frac{(x_i - \overline{x})}{\mathrm{sd}(x)}
 \]</span></p>
 <p>where <span class="math inline">\(\overline{x}\)</span> is the mean of data <span class="math inline">\(x\)</span>, and <span class="math inline">\(\mathrm{sd}(x)\)</span> is its standard deviation.</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb325-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb325-2" data-line-number="2"><span class="kw">data</span>(diamonds)</a>
-<a class="sourceLine" id="cb325-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb325-4" data-line-number="4">diamonds <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb325-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">scaled_depth =</span> (depth <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(depth)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(depth)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb325-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>scaled_depth)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb325-7" data-line-number="7"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span>.<span class="dv">5</span>)</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-134-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb328-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb328-2" data-line-number="2"><span class="kw">data</span>(diamonds)</a>
+<a class="sourceLine" id="cb328-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb328-4" data-line-number="4">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb328-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">scaled_depth =</span> (depth <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(depth)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(depth)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb328-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>scaled_depth)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb328-7" data-line-number="7"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span>.<span class="dv">5</span>)</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-134-1.svg" width="672" /></p>
 <p>Question: what is the mean of <span class="math inline">\(z\)</span>? What is it’s standard deviation? Another name for this transformation is to <em>standardize</em> a variable.</p>
 <p>One useful result of applying this transformation to variables in a dataset is that all variables are in the same, and thus comparable units.</p>
 <p>On occasion, you will have use to apply transformations that only <em>center</em> (but not scale) data:</p>
@@ -508,13 +524,13 @@ z_i = \frac{x_i}{\mathrm{sd}(x)}
 <h2><span class="header-section-number">22.2</span> Treating categorical variables as numeric</h2>
 <p>Many modeling algorithms work strictly on numeric measurements. For example, we will see methods to predict some variable given values for other variables such as linear regression or support vector machines, that are strictly defined for numeric measurements. In this case, we would need to transform categorical variables into something that we can treat as numeric. We will see more of this in later sections of the course but let’s see a couple of important guidelines for <em>binary</em> variables (categorical variables that only take two values, e.g., <code>health_insurance</code>).</p>
 <p>One option is to encode one value of the variable as 1 and the other as 0. For instance:</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb326-1" data-line-number="1"><span class="kw">library</span>(ISLR)</a>
-<a class="sourceLine" id="cb326-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb326-3" data-line-number="3"><span class="kw">data</span>(Wage)</a>
-<a class="sourceLine" id="cb326-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb326-5" data-line-number="5">Wage <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb326-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">numeric_insurace =</span> <span class="kw">ifelse</span>(health_ins <span class="op">==</span><span class="st"> &quot;1. Yes&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb326-7" data-line-number="7"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb329-1" data-line-number="1"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb329-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb329-3" data-line-number="3"><span class="kw">data</span>(Wage)</a>
+<a class="sourceLine" id="cb329-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb329-5" data-line-number="5">Wage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb329-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">numeric_insurace =</span> <span class="kw">ifelse</span>(health_ins <span class="op">==</span><span class="st"> &quot;1. Yes&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb329-7" data-line-number="7"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code>##   year age           maritl     race       education             region
 ## 1 2006  18 1. Never Married 1. White    1. &lt; HS Grad 2. Middle Atlantic
 ## 2 2004  24 1. Never Married 1. White 4. College Grad 2. Middle Atlantic
@@ -537,9 +553,9 @@ z_i = \frac{x_i}{\mathrm{sd}(x)}
 ## 5                1
 ## 6                1</code></pre>
 <p>Another option is to encode one value as 1 and the other as -1:</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb328-1" data-line-number="1">Wage <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb328-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">numeric_insurance =</span> <span class="kw">ifelse</span>(health_ins <span class="op">==</span><span class="st"> &quot;1. Yes&quot;</span>, <span class="dv">1</span>, <span class="dv">-1</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb328-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb331-1" data-line-number="1">Wage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">numeric_insurance =</span> <span class="kw">ifelse</span>(health_ins <span class="op">==</span><span class="st"> &quot;1. Yes&quot;</span>, <span class="dv">1</span>, <span class="dv">-1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code>##   year age           maritl     race       education             region
 ## 1 2006  18 1. Never Married 1. White    1. &lt; HS Grad 2. Middle Atlantic
 ## 2 2004  24 1. Never Married 1. White 4. College Grad 2. Middle Atlantic
@@ -563,13 +579,13 @@ z_i = \frac{x_i}{\mathrm{sd}(x)}
 ## 6                 1</code></pre>
 <p>The decision of which of these two transformations to use is based on the method to use or the goal of your analysis. For instance, when predicting someone’s wage based on their health insurance status, the 0/1 encoding let’s us make statements like: “on average, wage increases by $XX if a person has health insurance”. On the other hand, a prediction algorithm called a Support Vector Machine is strictly defined on data coded as 1/-1.</p>
 <p>For categorical attributes with more than two values, we extend this idea and encode <em>each</em> value of the categorical variable as a 0/1 column. You will see this referred to as <em>one-hot-encoding</em>.</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb330-1" data-line-number="1">Wage <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb330-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">race_white =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;1. White&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb330-3" data-line-number="3">         <span class="dt">race_black =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;2. Black&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb330-4" data-line-number="4">         <span class="dt">race_asian =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;3. Asian&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb330-5" data-line-number="5">         <span class="dt">race_other =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;4. Other&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb330-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;race&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb330-7" data-line-number="7"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb333-1" data-line-number="1">Wage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">race_white =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;1. White&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb333-3" data-line-number="3">         <span class="dt">race_black =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;2. Black&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb333-4" data-line-number="4">         <span class="dt">race_asian =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;3. Asian&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb333-5" data-line-number="5">         <span class="dt">race_other =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;4. Other&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;race&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-7" data-line-number="7"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code>##       race race_white race_black race_asian race_other
 ## 1 1. White          1          0          0          0
 ## 2 1. White          1          0          0          0
@@ -582,18 +598,18 @@ z_i = \frac{x_i}{\mathrm{sd}(x)}
 <h3><span class="header-section-number">22.2.1</span> Discretizing continuous values.</h3>
 <p>How about transforming data in the other direction, from continuous to discrete values. This can make it easier to compare differences related to continuous measurements: Do doctors prescribe a certain medication to older kids more often? Is there a difference in wage based on age?</p>
 <p>It is also a useful way of capturing non-linear relationships in data: we will see this in our regression and prediction unit. Two standard methods used for discretization are to use <strong>equal-length</strong> bins, where variable range is divided into bins <em>regardless</em> of the data distribution:</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb332-1" data-line-number="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb332-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_discrete =</span> <span class="kw">cut</span>(dep_delay, <span class="dt">breaks=</span><span class="dv">100</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb332-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay_discrete)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb332-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-138-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb335-1" data-line-number="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb335-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_discrete =</span> <span class="kw">cut</span>(dep_delay, <span class="dt">breaks=</span><span class="dv">100</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay_discrete)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb335-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-138-1.svg" width="672" /></p>
 <p>The second approach uses <strong>equal-sized</strong> bins, where the range is divided into bins <em>based</em> on data distribution</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb333-1" data-line-number="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb333-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_discrete =</span> <span class="kw">cut</span>(dep_delay, </a>
-<a class="sourceLine" id="cb333-3" data-line-number="3">          <span class="dt">breaks=</span><span class="kw">quantile</span>(dep_delay, <span class="dt">probs=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">11</span>), <span class="dt">na.rm=</span><span class="ot">TRUE</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb333-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay_discrete)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb333-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-139-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb336-1" data-line-number="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb336-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_discrete =</span> <span class="kw">cut</span>(dep_delay, </a>
+<a class="sourceLine" id="cb336-3" data-line-number="3">          <span class="dt">breaks=</span><span class="kw">quantile</span>(dep_delay, <span class="dt">probs=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">11</span>), <span class="dt">na.rm=</span><span class="ot">TRUE</span>))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb336-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay_discrete)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb336-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-139-1.svg" width="672" /></p>
 <p>In both cases, the <code>cut</code> function is used to apply discretization, with the <code>breaks</code> argument determining which method is applied. In the first example, <code>breaks=100</code> specifies that 100 bins of equal-length are to be used. In the second example, the <code>quantile</code> function is used to define 10 equal-sized bins.</p>
 </div>
 </div>
@@ -602,22 +618,22 @@ z_i = \frac{x_i}{\mathrm{sd}(x)}
 <p>In many data analysis, variables will have a <em>skewed</em> distribution over their range. In the last section we saw one way of defining skew using quartiles and median. Variables with skewed distributions can be hard to incorporate into some modeling procedures, especially in the presence of other variables that are not skewed. In this case, applying a transformation to reduce skew will improve performance of models.</p>
 <p>Also, skewed data may arise when measuring <em>multiplicative</em> processes. This is very common in physical or biochemical processes. In this case, interpretation of data may be more intiuitive after a transformation.</p>
 <p>We have seen an example of skewed data previously when we looked at departure delays in our flights dataset.</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb334-1" data-line-number="1">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">30</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb337-1" data-line-number="1">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">30</span>)</a></code></pre></div>
 <pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_bin).</code></pre>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-141-1.svg" width="1920" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-141-1.svg" width="1920" /></p>
 <p>Previously, we looked at a way of determining skew for a dataset. Let’s see what that looks like for the <code>dep_delay</code> variable: (see <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/programming.html">dplyr vignette</a> for info on ‘enquo’ and ‘!!’)</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb336-1" data-line-number="1">compute_skew_stat &lt;-<span class="st"> </span><span class="cf">function</span>(df, attribute) {</a>
-<a class="sourceLine" id="cb336-2" data-line-number="2">  attribute &lt;-<span class="st"> </span><span class="kw">enquo</span>(attribute)</a>
-<a class="sourceLine" id="cb336-3" data-line-number="3">  </a>
-<a class="sourceLine" id="cb336-4" data-line-number="4">  df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb336-5" data-line-number="5"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">med_attr=</span><span class="kw">median</span>(<span class="op">!!</span>attribute, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), </a>
-<a class="sourceLine" id="cb336-6" data-line-number="6">              <span class="dt">q1_attr=</span><span class="kw">quantile</span>(<span class="op">!!</span>attribute, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), </a>
-<a class="sourceLine" id="cb336-7" data-line-number="7">              <span class="dt">q3_attr=</span><span class="kw">quantile</span>(<span class="op">!!</span>attribute, <span class="dv">3</span><span class="op">/</span><span class="dv">4</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb336-8" data-line-number="8"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">d1 =</span> med_attr <span class="op">-</span><span class="st"> </span>q1_attr, <span class="dt">d2 =</span> q3_attr <span class="op">-</span><span class="st"> </span>med_attr, <span class="dt">skew_stat =</span> d1 <span class="op">-</span><span class="st"> </span>d2) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb336-9" data-line-number="9"><span class="st">    </span><span class="kw">select</span>(d1, d2, skew_stat)</a>
-<a class="sourceLine" id="cb336-10" data-line-number="10">}</a>
-<a class="sourceLine" id="cb336-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb336-12" data-line-number="12">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compute_skew_stat</span>(dep_delay)</a></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb339-1" data-line-number="1">compute_skew_stat &lt;-<span class="st"> </span><span class="cf">function</span>(df, attribute) {</a>
+<a class="sourceLine" id="cb339-2" data-line-number="2">  attribute &lt;-<span class="st"> </span><span class="kw">enquo</span>(attribute)</a>
+<a class="sourceLine" id="cb339-3" data-line-number="3">  </a>
+<a class="sourceLine" id="cb339-4" data-line-number="4">  df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-5" data-line-number="5"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">med_attr=</span><span class="kw">median</span>(<span class="op">!!</span>attribute, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), </a>
+<a class="sourceLine" id="cb339-6" data-line-number="6">              <span class="dt">q1_attr=</span><span class="kw">quantile</span>(<span class="op">!!</span>attribute, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), </a>
+<a class="sourceLine" id="cb339-7" data-line-number="7">              <span class="dt">q3_attr=</span><span class="kw">quantile</span>(<span class="op">!!</span>attribute, <span class="dv">3</span><span class="op">/</span><span class="dv">4</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-8" data-line-number="8"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">d1 =</span> med_attr <span class="op">-</span><span class="st"> </span>q1_attr, <span class="dt">d2 =</span> q3_attr <span class="op">-</span><span class="st"> </span>med_attr, <span class="dt">skew_stat =</span> d1 <span class="op">-</span><span class="st"> </span>d2) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb339-9" data-line-number="9"><span class="st">    </span><span class="kw">select</span>(d1, d2, skew_stat)</a>
+<a class="sourceLine" id="cb339-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb339-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb339-12" data-line-number="12">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compute_skew_stat</span>(dep_delay)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 3
 ##      d1    d2 skew_stat
 ##   &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
@@ -632,16 +648,16 @@ z_i = \frac{x_i}{\mathrm{sd}(x)}
 </ul></li>
 </ul>
 <p>Here is a signed log transformation of departure delay data:</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb338-1" data-line-number="1">transformed_flights &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb338-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">transformed_dep_delay =</span> <span class="kw">sign</span>(dep_delay) <span class="op">*</span><span class="st"> </span><span class="kw">log2</span>(<span class="kw">abs</span>(dep_delay) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb338-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb338-4" data-line-number="4">transformed_flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb338-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>transformed_dep_delay)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb338-6" data-line-number="6"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb341-1" data-line-number="1">transformed_flights &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb341-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">transformed_dep_delay =</span> <span class="kw">sign</span>(dep_delay) <span class="op">*</span><span class="st"> </span><span class="kw">log2</span>(<span class="kw">abs</span>(dep_delay) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb341-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb341-4" data-line-number="4">transformed_flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb341-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>transformed_dep_delay)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb341-6" data-line-number="6"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_bin).</code></pre>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-143-1.svg" width="672" /></p>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-143-1.svg" width="672" /></p>
 <p>Let’s see if that reduced the skew of the dataset:</p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb340-1" data-line-number="1">transformed_flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compute_skew_stat</span>(transformed_dep_delay)</a></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb343-1" data-line-number="1">transformed_flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compute_skew_stat</span>(transformed_dep_delay)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 3
 ##      d1    d2 skew_stat
 ##   &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
@@ -673,10 +689,11 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
