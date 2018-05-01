@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="Lecture Notes: Introduction to Data Science">
-  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-18">
+<meta name="date" content="2018-05-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,7 +49,7 @@
 
 <script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.0/str_view.js"></script>
+<script src="libs/str_view-binding-1.2.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -456,6 +456,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
 <li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="33" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html"><i class="fa fa-check"></i><b>33</b> Unsupervised Learning: Clustering</a><ul>
+<li class="chapter" data-level="33.1" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#motivating-example"><i class="fa fa-check"></i><b>33.1</b> Motivating Example</a></li>
+<li class="chapter" data-level="33.2" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#some-preliminaries"><i class="fa fa-check"></i><b>33.2</b> Some Preliminaries</a></li>
+<li class="chapter" data-level="33.3" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#cluster-analysis"><i class="fa fa-check"></i><b>33.3</b> Cluster Analysis</a></li>
+<li class="chapter" data-level="33.4" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#dissimilarity-based-clustering"><i class="fa fa-check"></i><b>33.4</b> Dissimilarity-based Clustering</a></li>
+<li class="chapter" data-level="33.5" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#k-means-clustering"><i class="fa fa-check"></i><b>33.5</b> K-means Clustering</a></li>
+<li class="chapter" data-level="33.6" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#choosing-the-number-of-clusters"><i class="fa fa-check"></i><b>33.6</b> Choosing the number of clusters</a></li>
+<li class="chapter" data-level="33.7" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#summary-5"><i class="fa fa-check"></i><b>33.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html"><i class="fa fa-check"></i><b>34</b> Unsupervised Learning: Dimensionality Reduction</a><ul>
+<li class="chapter" data-level="34.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#principal-component-analysis"><i class="fa fa-check"></i><b>34.1</b> Principal Component Analysis</a><ul>
+<li class="chapter" data-level="34.1.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#solving-the-pca"><i class="fa fa-check"></i><b>34.1.1</b> Solving the PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="34.2" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#multidimensional-scaling"><i class="fa fa-check"></i><b>34.2</b> Multidimensional Scaling</a></li>
+<li class="chapter" data-level="34.3" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#summary-6"><i class="fa fa-check"></i><b>34.3</b> Summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -477,11 +493,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">13</span> Two-table operations</h1>
 <p>So far we have looked at data operations defined over single tables and data frames. In this section we look at efficient methods to combine data from multiple tables. The fundamental operation here is the <code>join</code>, which is a workhorse of database system design and impementation. The <code>join</code> operation combines rows from two tables to create a new single table, based on matching criteria specified over attributes of each of the two tables.</p>
 <p>Consider the example of joining the <code>flights</code> and <code>airlines</code> table:</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1"><span class="kw">library</span>(nycflights13)</a>
-<a class="sourceLine" id="cb116-2" data-line-number="2"><span class="kw">data</span>(flights)</a>
-<a class="sourceLine" id="cb116-3" data-line-number="3"><span class="kw">data</span>(airlines)</a></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb119-2" data-line-number="2"><span class="kw">data</span>(flights)</a>
+<a class="sourceLine" id="cb119-3" data-line-number="3"><span class="kw">data</span>(airlines)</a></code></pre></div>
 <p>Let’s take a look at the <code>flights</code> table again:</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1">flights</a></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1">flights</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
@@ -500,7 +516,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <p>And add the <code>airlines</code> table:</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1">airlines</a></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1">airlines</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 2
 ##    carrier name                       
 ##    &lt;chr&gt;   &lt;chr&gt;                      
@@ -527,8 +543,8 @@ Specifically, every row of <code>flights</code> with a specific value for <code>
 <p>In a <code>left join</code>, all observations on left operand (LHS) are retained:</p>
 <p><img src="img/join_lhs.png" /></p>
 <p><img src="img/left_join.png" /></p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb121-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb124-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 20
 ##     year month   day dep_time sched_dep_time dep_delay arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
@@ -553,8 +569,8 @@ Specifically, every row of <code>flights</code> with a specific value for <code>
 <p>All observations on right operand (RHS) are retained:</p>
 <p><img src="img/join_lhs.png" /></p>
 <p><img src="img/right_join.png" /></p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb123-2" data-line-number="2"><span class="st">  </span><span class="kw">right_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb126-2" data-line-number="2"><span class="st">  </span><span class="kw">right_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 20
 ##     year month   day dep_time sched_dep_time dep_delay arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
@@ -579,8 +595,8 @@ Specifically, every row of <code>flights</code> with a specific value for <code>
 <p>Only observations matching on both tables are retained</p>
 <p><img src="img/join_lhs.png" />
 <img src="img/inner_join.png" /></p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb125-2" data-line-number="2"><span class="st">  </span><span class="kw">inner_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb128-2" data-line-number="2"><span class="st">  </span><span class="kw">inner_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 20
 ##     year month   day dep_time sched_dep_time dep_delay arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
@@ -604,8 +620,8 @@ Specifically, every row of <code>flights</code> with a specific value for <code>
 <p>All observations are retained, regardless of matching condition</p>
 <p><img src="img/join_lhs.png" />
 <img src="img/full_join.png" /></p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb127-2" data-line-number="2"><span class="st">  </span><span class="kw">full_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb130-2" data-line-number="2"><span class="st">  </span><span class="kw">full_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 20
 ##     year month   day dep_time sched_dep_time dep_delay arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
@@ -628,21 +644,21 @@ Specifically, every row of <code>flights</code> with a specific value for <code>
 <div id="join-conditions" class="section level2">
 <h2><span class="header-section-number">13.5</span> Join conditions</h2>
 <p>All join operations are based on a matching condition:</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb129-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb132-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <p>specifies to join observations where <code>flights$carrier</code> equals <code>airlines$carrier</code>.</p>
 <p>In this case, where no conditions are specified using the <code>by</code> argument:</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb130-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(airlines)</a></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb133-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(airlines)</a></code></pre></div>
 <p>a <em>natural join</em> is perfomed. In this case all variables with the same name in both tables are used in join condition.</p>
 <p>You can also specify join conditions on arbitrary attributes using the <code>by</code> argument.</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb131-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;carrier&quot;</span> =<span class="st"> &quot;name&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb134-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;carrier&quot;</span> =<span class="st"> &quot;name&quot;</span>))</a></code></pre></div>
 </div>
 <div id="filtering-joins" class="section level2">
 <h2><span class="header-section-number">13.6</span> Filtering Joins</h2>
 <p>We’ve just seen <em>mutating joins</em> that create new tables. <em>Filtering joins</em> use join conditions to filter a specific table.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anti_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anti_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 0 x 19
 ## # ... with 19 variables: year &lt;int&gt;, month &lt;int&gt;, day &lt;int&gt;,
 ## #   dep_time &lt;int&gt;, sched_dep_time &lt;int&gt;, dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;,
@@ -666,24 +682,24 @@ Specifically, every row of <code>flights</code> with a specific value for <code>
 <ul>
 <li>Examples:</li>
 </ul>
-<div class="sourceCode" id="cb134"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb134-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span>, me.name <span class="kw">as</span> producerName </a>
-<a class="sourceLine" id="cb134-2" data-line-number="2"><span class="kw">from</span> movies m <span class="kw">join</span> movieexec me</a>
-<a class="sourceLine" id="cb134-3" data-line-number="3"><span class="kw">where</span> m.producer = me.id;</a></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb137-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span>, me.name <span class="kw">as</span> producerName </a>
+<a class="sourceLine" id="cb137-2" data-line-number="2"><span class="kw">from</span> movies m <span class="kw">join</span> movieexec me</a>
+<a class="sourceLine" id="cb137-3" data-line-number="3"><span class="kw">where</span> m.producer = me.id;</a></code></pre></div>
 <ul>
 <li>Consider the query:</li>
 </ul>
-<div class="sourceCode" id="cb135"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb135-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span>, producer, <span class="fu">count</span>(starName) </a>
-<a class="sourceLine" id="cb135-2" data-line-number="2"><span class="kw">from</span> movies <span class="kw">join</span> starsIn</a>
-<a class="sourceLine" id="cb135-3" data-line-number="3"><span class="kw">where</span> title = starsIn.movieTitle <span class="kw">and</span> <span class="dt">year</span> = starsIn.movieYear</a>
-<a class="sourceLine" id="cb135-4" data-line-number="4"><span class="kw">group</span> <span class="kw">by</span> title, <span class="dt">year</span>, producer</a></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb138-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span>, producer, <span class="fu">count</span>(starName) </a>
+<a class="sourceLine" id="cb138-2" data-line-number="2"><span class="kw">from</span> movies <span class="kw">join</span> starsIn</a>
+<a class="sourceLine" id="cb138-3" data-line-number="3"><span class="kw">where</span> title = starsIn.movieTitle <span class="kw">and</span> <span class="dt">year</span> = starsIn.movieYear</a>
+<a class="sourceLine" id="cb138-4" data-line-number="4"><span class="kw">group</span> <span class="kw">by</span> title, <span class="dt">year</span>, producer</a></code></pre></div>
 <ul>
 <li>What about movies with no stars ?</li>
 <li>Need to use <strong>outer joins</strong></li>
 </ul>
-<div class="sourceCode" id="cb136"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb136-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span>, producer, <span class="fu">count</span>(starName) </a>
-<a class="sourceLine" id="cb136-2" data-line-number="2"><span class="kw">from</span> movies <span class="kw">left</span> <span class="kw">outer</span> <span class="kw">join</span> starsIn</a>
-<a class="sourceLine" id="cb136-3" data-line-number="3">  <span class="kw">on</span> title = starsIn.movieTitle <span class="kw">and</span> <span class="dt">year</span> = starsIn.movieYear</a>
-<a class="sourceLine" id="cb136-4" data-line-number="4"><span class="kw">group</span> <span class="kw">by</span> title, <span class="dt">year</span>, producer</a></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span>, producer, <span class="fu">count</span>(starName) </a>
+<a class="sourceLine" id="cb139-2" data-line-number="2"><span class="kw">from</span> movies <span class="kw">left</span> <span class="kw">outer</span> <span class="kw">join</span> starsIn</a>
+<a class="sourceLine" id="cb139-3" data-line-number="3">  <span class="kw">on</span> title = starsIn.movieTitle <span class="kw">and</span> <span class="dt">year</span> = starsIn.movieYear</a>
+<a class="sourceLine" id="cb139-4" data-line-number="4"><span class="kw">group</span> <span class="kw">by</span> title, <span class="dt">year</span>, producer</a></code></pre></div>
 <p>As we saw before, all tuples from ‘movies’ that have no matches in starsIn are included with NULLs (in <code>dplyr</code> this was <code>NA</code>).
 So, if a tuple <code>(m1, 1990)</code> has no match in <code>starsIn</code>, we get <code>(m1, 1990, NULL)</code> in the result and the <code>count(starName)</code> works correctly then. Note however that <code>count(*)</code> would not work correctly (NULLs can have unintuitive behavior)</p>
 <p>In most systems <code>JOIN</code> corresponds to an <em>inner join</em>, and include <code>LEFT JOIN</code> and <code>RIGHT JOIN</code> as well.</p>
@@ -714,10 +730,11 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
