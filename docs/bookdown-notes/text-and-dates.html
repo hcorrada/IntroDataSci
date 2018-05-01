@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="Lecture Notes: Introduction to Data Science">
-  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-18">
+<meta name="date" content="2018-05-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,7 +49,7 @@
 
 <script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.0/str_view.js"></script>
+<script src="libs/str_view-binding-1.2.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -456,6 +456,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
 <li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="33" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html"><i class="fa fa-check"></i><b>33</b> Unsupervised Learning: Clustering</a><ul>
+<li class="chapter" data-level="33.1" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#motivating-example"><i class="fa fa-check"></i><b>33.1</b> Motivating Example</a></li>
+<li class="chapter" data-level="33.2" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#some-preliminaries"><i class="fa fa-check"></i><b>33.2</b> Some Preliminaries</a></li>
+<li class="chapter" data-level="33.3" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#cluster-analysis"><i class="fa fa-check"></i><b>33.3</b> Cluster Analysis</a></li>
+<li class="chapter" data-level="33.4" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#dissimilarity-based-clustering"><i class="fa fa-check"></i><b>33.4</b> Dissimilarity-based Clustering</a></li>
+<li class="chapter" data-level="33.5" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#k-means-clustering"><i class="fa fa-check"></i><b>33.5</b> K-means Clustering</a></li>
+<li class="chapter" data-level="33.6" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#choosing-the-number-of-clusters"><i class="fa fa-check"></i><b>33.6</b> Choosing the number of clusters</a></li>
+<li class="chapter" data-level="33.7" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#summary-5"><i class="fa fa-check"></i><b>33.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html"><i class="fa fa-check"></i><b>34</b> Unsupervised Learning: Dimensionality Reduction</a><ul>
+<li class="chapter" data-level="34.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#principal-component-analysis"><i class="fa fa-check"></i><b>34.1</b> Principal Component Analysis</a><ul>
+<li class="chapter" data-level="34.1.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#solving-the-pca"><i class="fa fa-check"></i><b>34.1.1</b> Solving the PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="34.2" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#multidimensional-scaling"><i class="fa fa-check"></i><b>34.2</b> Multidimensional Scaling</a></li>
+<li class="chapter" data-level="34.3" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#summary-6"><i class="fa fa-check"></i><b>34.3</b> Summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -482,66 +498,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="string-operations" class="section level3">
 <h3><span class="header-section-number">18.1.1</span> String operations</h3>
 <p>The <code>stringr</code> package contains a number of useful, commonly used string manipulation operations.</p>
-<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb223-2" data-line-number="2"><span class="kw">library</span>(stringr)</a>
-<a class="sourceLine" id="cb223-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb223-4" data-line-number="4">short_string &lt;-<span class="st"> &quot;I love Spring&quot;</span></a>
-<a class="sourceLine" id="cb223-5" data-line-number="5">long_string &lt;-<span class="st"> &quot;There&#39;s is nothing I love more than 320 in the Spring&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb226-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb226-2" data-line-number="2"><span class="kw">library</span>(stringr)</a>
+<a class="sourceLine" id="cb226-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb226-4" data-line-number="4">short_string &lt;-<span class="st"> &quot;I love Spring&quot;</span></a>
+<a class="sourceLine" id="cb226-5" data-line-number="5">long_string &lt;-<span class="st"> &quot;There&#39;s is nothing I love more than 320 in the Spring&quot;</span></a></code></pre></div>
 <p>Here are a few common ones:</p>
 <ul>
 <li>string length: <code>str_len</code></li>
 </ul>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb224-1" data-line-number="1"><span class="kw">str_length</span>(<span class="kw">c</span>(short_string, long_string))</a></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb227-1" data-line-number="1"><span class="kw">str_length</span>(<span class="kw">c</span>(short_string, long_string))</a></code></pre></div>
 <pre><code>## [1] 13 53</code></pre>
 <ul>
 <li>combining strings: <code>str_c</code></li>
 </ul>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb226-1" data-line-number="1"><span class="kw">str_c</span>(short_string, long_string, <span class="dt">sep=</span><span class="st">&quot;. &quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb229-1" data-line-number="1"><span class="kw">str_c</span>(short_string, long_string, <span class="dt">sep=</span><span class="st">&quot;. &quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;I love Spring. There&#39;s is nothing I love more than 320 in the Spring&quot;</code></pre>
 <ul>
 <li>subsetting strings: <code>str_sub</code></li>
 </ul>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb228-1" data-line-number="1"><span class="kw">str_sub</span>(<span class="kw">c</span>(short_string, long_string), <span class="dv">2</span>, <span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb231-1" data-line-number="1"><span class="kw">str_sub</span>(<span class="kw">c</span>(short_string, long_string), <span class="dv">2</span>, <span class="dv">5</span>)</a></code></pre></div>
 <pre><code>## [1] &quot; lov&quot; &quot;here&quot;</code></pre>
 <ul>
 <li>trim strings: <code>str_trim</code></li>
 </ul>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb230-1" data-line-number="1"><span class="kw">str_trim</span>(<span class="st">&quot;    I am padded    &quot;</span>, <span class="dt">side=</span><span class="st">&quot;both&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" data-line-number="1"><span class="kw">str_trim</span>(<span class="st">&quot;    I am padded    &quot;</span>, <span class="dt">side=</span><span class="st">&quot;both&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;I am padded&quot;</code></pre>
 </div>
 <div id="regular-expressions" class="section level3">
 <h3><span class="header-section-number">18.1.2</span> Regular expressions</h3>
 <p>By far, the most powerful tools for extracting and cleaning text data are regular expressions. The <code>stringr</code> package provides a great number of tools based on regular expression matching.</p>
 <p>First, some basics</p>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb232-1" data-line-number="1">strs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>)</a>
-<a class="sourceLine" id="cb232-2" data-line-number="2"><span class="kw">str_view</span>(strs, <span class="st">&quot;an&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-a04de86cd89346aa3f48" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a04de86cd89346aa3f48">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb235-1" data-line-number="1">strs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;pear&quot;</span>)</a>
+<a class="sourceLine" id="cb235-2" data-line-number="2"><span class="kw">str_view</span>(strs, <span class="st">&quot;an&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-16289e07be4556a6b1af" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-16289e07be4556a6b1af">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ul>
 <li>Match any character: <code>.</code></li>
 <li>Match the ‘dot’ character: <code>\\.</code></li>
 </ul>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb233-1" data-line-number="1"><span class="kw">str_view</span>(strs, <span class="st">&quot;.a.&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-7f1c4ed4a98d7b8db80c" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7f1c4ed4a98d7b8db80c">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>p<span class='match'>ear<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb234-1" data-line-number="1"><span class="kw">str_view</span>(<span class="kw">c</span>(strs, <span class="st">&quot;a.c&quot;</span>), <span class="st">&quot;a</span><span class="ch">\\</span><span class="st">.c&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-540414f3b73e34203d90" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-540414f3b73e34203d90">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb236-1" data-line-number="1"><span class="kw">str_view</span>(strs, <span class="st">&quot;.a.&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-5d15804ddaa8048b4633" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5d15804ddaa8048b4633">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>p<span class='match'>ear<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb237-1" data-line-number="1"><span class="kw">str_view</span>(<span class="kw">c</span>(strs, <span class="st">&quot;a.c&quot;</span>), <span class="st">&quot;a</span><span class="ch">\\</span><span class="st">.c&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-a0583894f6bfaeb13ff7" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a0583894f6bfaeb13ff7">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ul>
 <li>Anchor start (<code>^</code>), end (<code>$</code>)</li>
 </ul>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb235-1" data-line-number="1"><span class="kw">str_view</span>(strs, <span class="st">&quot;^a&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-3769b39cb9ca54b860af" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3769b39cb9ca54b860af">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>pple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb236-1" data-line-number="1"><span class="kw">str_view</span>(strs, <span class="st">&quot;a$&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-d53926a63af85b8aff80" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d53926a63af85b8aff80">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb237-1" data-line-number="1"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;apple pie&quot;</span>, <span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple cake&quot;</span>), <span class="st">&quot;apple&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-9733bec2114bc96d8c48" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9733bec2114bc96d8c48">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span> pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li><span class='match'>apple<\/span> cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" data-line-number="1"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;apple pie&quot;</span>, <span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple cake&quot;</span>), <span class="st">&quot;^apple$&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-de1c1265e10147c6387f" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-de1c1265e10147c6387f">{"x":{"html":"<ul>\n  <li>apple pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>apple cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" data-line-number="1"><span class="kw">str_view</span>(strs, <span class="st">&quot;^a&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-0061573d2b8f892676ba" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0061573d2b8f892676ba">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>pple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb239-1" data-line-number="1"><span class="kw">str_view</span>(strs, <span class="st">&quot;a$&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-d2acf7869d927fffcd60" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d2acf7869d927fffcd60">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb240-1" data-line-number="1"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;apple pie&quot;</span>, <span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple cake&quot;</span>), <span class="st">&quot;apple&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-47c6b027a9eb36a2a37c" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-47c6b027a9eb36a2a37c">{"x":{"html":"<ul>\n  <li><span class='match'>apple<\/span> pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li><span class='match'>apple<\/span> cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb241-1" data-line-number="1"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;apple pie&quot;</span>, <span class="st">&quot;apple&quot;</span>, <span class="st">&quot;apple cake&quot;</span>), <span class="st">&quot;^apple$&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-30d1423e6d759d9580f3" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-30d1423e6d759d9580f3">{"x":{"html":"<ul>\n  <li>apple pie<\/li>\n  <li><span class='match'>apple<\/span><\/li>\n  <li>apple cake<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ul>
 <li><p>Character classes and alternatives</p></li>
 <li><code>\d</code>: match any digit</li>
@@ -551,86 +567,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><code>|</code>: match any of one or more patterns</p></li>
 </ul>
 <p>Match vowels or digits</p>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb239-1" data-line-number="1"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;t867nine&quot;</span>, <span class="st">&quot;gray9&quot;</span>), <span class="st">&quot;[aeiou]|[0-9]&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-ce742360b26788fe7335" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ce742360b26788fe7335">{"x":{"html":"<ul>\n  <li>t<span class='match'>8<\/span>67nine<\/li>\n  <li>gr<span class='match'>a<\/span>y9<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb242-1" data-line-number="1"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;t867nine&quot;</span>, <span class="st">&quot;gray9&quot;</span>), <span class="st">&quot;[aeiou]|[0-9]&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-a82ad8025c92fd6b5189" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a82ad8025c92fd6b5189">{"x":{"html":"<ul>\n  <li>t<span class='match'>8<\/span>67nine<\/li>\n  <li>gr<span class='match'>a<\/span>y9<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ul>
 <li><p>Repetition</p></li>
 <li><code>?</code>: zero or one</li>
 <li><code>+</code>: one or more</li>
 <li><p><code>*</code>: zero or more</p></li>
 </ul>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb240-1" data-line-number="1"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;color&quot;</span>, <span class="st">&quot;colour&quot;</span>), <span class="st">&quot;colou?r&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-e615306ad2a2fbcc54ff" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e615306ad2a2fbcc54ff">{"x":{"html":"<ul>\n  <li><span class='match'>color<\/span><\/li>\n  <li><span class='match'>colour<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb243-1" data-line-number="1"><span class="kw">str_view</span>(<span class="kw">c</span>(<span class="st">&quot;color&quot;</span>, <span class="st">&quot;colour&quot;</span>), <span class="st">&quot;colou?r&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-3aaa292308f419e0bd82" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3aaa292308f419e0bd82">{"x":{"html":"<ul>\n  <li><span class='match'>color<\/span><\/li>\n  <li><span class='match'>colour<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ul>
 <li>Grouping and backreferences</li>
 </ul>
 <p>Parentheses define groups, which can be referenced using <code>\1</code>, <code>\2</code>, etc.</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb241-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;banana&quot;</span>, <span class="st">&quot;coconut&quot;</span>, <span class="st">&quot;cucumber&quot;</span>, <span class="st">&quot;jujube&quot;</span>, <span class="st">&quot;papaya&quot;</span>, <span class="st">&quot;salal berry&quot;</span>)</a>
-<a class="sourceLine" id="cb241-2" data-line-number="2"><span class="kw">str_view</span>(fruit, <span class="st">&quot;(..)</span><span class="ch">\\</span><span class="st">1&quot;</span>)</a></code></pre></div>
-<div id="htmlwidget-550c7d430ae9bef822d6" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-550c7d430ae9bef822d6">{"x":{"html":"<ul>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n  <li><span class='match'>coco<\/span>nut<\/li>\n  <li><span class='match'>cucu<\/span>mber<\/li>\n  <li><span class='match'>juju<\/span>be<\/li>\n  <li><span class='match'>papa<\/span>ya<\/li>\n  <li>s<span class='match'>alal<\/span> berry<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb244-1" data-line-number="1">fruit &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;banana&quot;</span>, <span class="st">&quot;coconut&quot;</span>, <span class="st">&quot;cucumber&quot;</span>, <span class="st">&quot;jujube&quot;</span>, <span class="st">&quot;papaya&quot;</span>, <span class="st">&quot;salal berry&quot;</span>)</a>
+<a class="sourceLine" id="cb244-2" data-line-number="2"><span class="kw">str_view</span>(fruit, <span class="st">&quot;(..)</span><span class="ch">\\</span><span class="st">1&quot;</span>)</a></code></pre></div>
+<div id="htmlwidget-5f341d22d7b03105d5de" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5f341d22d7b03105d5de">{"x":{"html":"<ul>\n  <li>b<span class='match'>anan<\/span>a<\/li>\n  <li><span class='match'>coco<\/span>nut<\/li>\n  <li><span class='match'>cucu<\/span>mber<\/li>\n  <li><span class='match'>juju<\/span>be<\/li>\n  <li><span class='match'>papa<\/span>ya<\/li>\n  <li>s<span class='match'>alal<\/span> berry<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="tools-using-regular-expressions" class="section level3">
 <h3><span class="header-section-number">18.1.3</span> Tools using regular expressions</h3>
 <ul>
 <li>Determine which strings match a pattern: <code>str_detect</code>: given a vector of strings, return <code>TRUE</code> for those that match a regular expression, <code>FALSE</code> otherwise</li>
 </ul>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb242-1" data-line-number="1"><span class="kw">data</span>(words)</a>
-<a class="sourceLine" id="cb242-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb242-3" data-line-number="3"><span class="kw">print</span>(<span class="kw">head</span>(words))</a></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb245-1" data-line-number="1"><span class="kw">data</span>(words)</a>
+<a class="sourceLine" id="cb245-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb245-3" data-line-number="3"><span class="kw">print</span>(<span class="kw">head</span>(words))</a></code></pre></div>
 <pre><code>## [1] &quot;a&quot;        &quot;able&quot;     &quot;about&quot;    &quot;absolute&quot; &quot;accept&quot;   &quot;account&quot;</code></pre>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb244-1" data-line-number="1"><span class="kw">data_frame</span>(<span class="dt">word=</span>words, <span class="dt">result=</span><span class="kw">str_detect</span>(words, <span class="st">&quot;^[aeiou]&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">30</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb247-1" data-line-number="1"><span class="kw">data_frame</span>(<span class="dt">word=</span>words, <span class="dt">result=</span><span class="kw">str_detect</span>(words, <span class="st">&quot;^[aeiou]&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dv">30</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 30 x 2
 ##    word     result
 ##    &lt;chr&gt;    &lt;lgl&gt; 
-##  1 period   F     
-##  2 face     F     
-##  3 train    F     
-##  4 identify T     
-##  5 sudden   F     
-##  6 now      F     
-##  7 engine   T     
-##  8 problem  F     
-##  9 doubt    F     
-## 10 enter    T     
+##  1 believe  F     
+##  2 clean    F     
+##  3 pass     F     
+##  4 almost   T     
+##  5 science  F     
+##  6 employ   T     
+##  7 foot     F     
+##  8 possible F     
+##  9 raise    F     
+## 10 quality  F     
 ## # ... with 20 more rows</code></pre>
 <p>Similarly, <code>str_count</code> returns the number of matches in a string instead of just <code>TRUE</code> or <code>FALSE</code></p>
 <ul>
 <li>Filter string vectors to include only those that match a regular expression</li>
 </ul>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb246-1" data-line-number="1"><span class="kw">data</span>(sentences)</a>
-<a class="sourceLine" id="cb246-2" data-line-number="2"><span class="kw">print</span>(<span class="kw">head</span>(sentences))</a></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb249-1" data-line-number="1"><span class="kw">data</span>(sentences)</a>
+<a class="sourceLine" id="cb249-2" data-line-number="2"><span class="kw">print</span>(<span class="kw">head</span>(sentences))</a></code></pre></div>
 <pre><code>## [1] &quot;The birch canoe slid on the smooth planks.&quot; 
 ## [2] &quot;Glue the sheet to the dark blue background.&quot;
 ## [3] &quot;It&#39;s easy to tell the depth of a well.&quot;     
 ## [4] &quot;These days a chicken leg is a rare dish.&quot;   
 ## [5] &quot;Rice is often served in round bowls.&quot;       
 ## [6] &quot;The juice of lemons makes fine punch.&quot;</code></pre>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb248-1" data-line-number="1">colors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;purple&quot;</span>)</a>
-<a class="sourceLine" id="cb248-2" data-line-number="2">colors_re &lt;-<span class="st"> </span><span class="kw">str_c</span>(colors, <span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>)</a>
-<a class="sourceLine" id="cb248-3" data-line-number="3"><span class="kw">print</span>(colors_re)</a></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" data-line-number="1">colors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;purple&quot;</span>)</a>
+<a class="sourceLine" id="cb251-2" data-line-number="2">colors_re &lt;-<span class="st"> </span><span class="kw">str_c</span>(colors, <span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>)</a>
+<a class="sourceLine" id="cb251-3" data-line-number="3"><span class="kw">print</span>(colors_re)</a></code></pre></div>
 <pre><code>## [1] &quot;red|orange|yellow|green|blue|purple&quot;</code></pre>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb250-1" data-line-number="1">sentences_with_color &lt;-<span class="st"> </span><span class="kw">str_subset</span>(sentences, colors_re) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb250-2" data-line-number="2"><span class="kw">str_view_all</span>(sentences_with_color, colors_re)</a></code></pre></div>
-<div id="htmlwidget-969b26bfcb7ea072e567" style="width:960px;height:auto;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-969b26bfcb7ea072e567">{"x":{"html":"<ul>\n  <li>Glue the sheet to the dark <span class='match'>blue<\/span> background.<\/li>\n  <li>Two <span class='match'>blue<\/span> fish swam in the tank.<\/li>\n  <li>The colt rea<span class='match'>red<\/span> and threw the tall rider.<\/li>\n  <li>The wide road shimme<span class='match'>red<\/span> in the hot sun.<\/li>\n  <li>See the cat glaring at the sca<span class='match'>red<\/span> mouse.<\/li>\n  <li>A wisp of cloud hung in the <span class='match'>blue<\/span> air.<\/li>\n  <li>Leaves turn brown and <span class='match'>yellow<\/span> in the fall.<\/li>\n  <li>He orde<span class='match'>red<\/span> peach pie with ice cream.<\/li>\n  <li>Pure b<span class='match'>red<\/span> poodles have curls.<\/li>\n  <li>The spot on the blotter was made by <span class='match'>green<\/span> ink.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb253-1" data-line-number="1">sentences_with_color &lt;-<span class="st"> </span><span class="kw">str_subset</span>(sentences, colors_re) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb253-2" data-line-number="2"><span class="kw">str_view_all</span>(sentences_with_color, colors_re)</a></code></pre></div>
+<div id="htmlwidget-9afd6de346c1b8c56628" style="width:960px;height:auto;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9afd6de346c1b8c56628">{"x":{"html":"<ul>\n  <li>Glue the sheet to the dark <span class='match'>blue<\/span> background.<\/li>\n  <li>Two <span class='match'>blue<\/span> fish swam in the tank.<\/li>\n  <li>The colt rea<span class='match'>red<\/span> and threw the tall rider.<\/li>\n  <li>The wide road shimme<span class='match'>red<\/span> in the hot sun.<\/li>\n  <li>See the cat glaring at the sca<span class='match'>red<\/span> mouse.<\/li>\n  <li>A wisp of cloud hung in the <span class='match'>blue<\/span> air.<\/li>\n  <li>Leaves turn brown and <span class='match'>yellow<\/span> in the fall.<\/li>\n  <li>He orde<span class='match'>red<\/span> peach pie with ice cream.<\/li>\n  <li>Pure b<span class='match'>red<\/span> poodles have curls.<\/li>\n  <li>The spot on the blotter was made by <span class='match'>green<\/span> ink.<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 <ul>
 <li>Extracting matches: <code>str_extract</code>, <code>str_extract_all</code></li>
 </ul>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb251-1" data-line-number="1"><span class="kw">str_extract</span>(sentences_with_color, colors_re)</a></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb254-1" data-line-number="1"><span class="kw">str_extract</span>(sentences_with_color, colors_re)</a></code></pre></div>
 <pre><code>##  [1] &quot;blue&quot;   &quot;blue&quot;   &quot;red&quot;    &quot;red&quot;    &quot;red&quot;    &quot;blue&quot;   &quot;yellow&quot;
 ##  [8] &quot;red&quot;    &quot;red&quot;    &quot;green&quot;</code></pre>
 <ul>
 <li>Grouped matches: <code>str_match</code></li>
 </ul>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb253-1" data-line-number="1">noun_re &lt;-<span class="st"> &quot;(a|the) ([^ ]+)&quot;</span></a>
-<a class="sourceLine" id="cb253-2" data-line-number="2">noun_matches &lt;-<span class="st"> </span>sentences <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb253-3" data-line-number="3"><span class="st">  </span><span class="kw">str_subset</span>(noun_re) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb253-4" data-line-number="4"><span class="st">  </span><span class="kw">str_match</span>(noun_re) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb253-5" data-line-number="5"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb253-6" data-line-number="6">noun_matches</a></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb256-1" data-line-number="1">noun_re &lt;-<span class="st"> &quot;(a|the) ([^ ]+)&quot;</span></a>
+<a class="sourceLine" id="cb256-2" data-line-number="2">noun_matches &lt;-<span class="st"> </span>sentences <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb256-3" data-line-number="3"><span class="st">  </span><span class="kw">str_subset</span>(noun_re) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb256-4" data-line-number="4"><span class="st">  </span><span class="kw">str_match</span>(noun_re) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb256-5" data-line-number="5"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb256-6" data-line-number="6">noun_matches</a></code></pre></div>
 <pre><code>##       [,1]         [,2]  [,3]     
 ##  [1,] &quot;the smooth&quot; &quot;the&quot; &quot;smooth&quot; 
 ##  [2,] &quot;the sheet&quot;  &quot;the&quot; &quot;sheet&quot;  
@@ -643,15 +659,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [9,] &quot;the woman&quot;  &quot;the&quot; &quot;woman&quot;  
 ## [10,] &quot;a helps&quot;    &quot;a&quot;   &quot;helps&quot;</code></pre>
 <p>The result is a string matrix, with one row for each string in the input vector. The first column includes the complete match to the regular expression (just like <code>str_extract</code>), the remaining columns has the matches for the groups defined in the pattern. To extract the first group matches one would index one of the columns. For example, the matches for the second group are</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb255-1" data-line-number="1">noun_matches[,<span class="dv">3</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb258-1" data-line-number="1">noun_matches[,<span class="dv">3</span>]</a></code></pre></div>
 <pre><code>##  [1] &quot;smooth&quot;  &quot;sheet&quot;   &quot;depth&quot;   &quot;chicken&quot; &quot;parked&quot;  &quot;sun&quot;     &quot;huge&quot;   
 ##  [8] &quot;ball&quot;    &quot;woman&quot;   &quot;helps&quot;</code></pre>
 <ul>
 <li>Splitting strings: <code>str_split</code> split strings in a vector based on a match. For instance, to split sentences into words:</li>
 </ul>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb257-1" data-line-number="1">sentences <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb257-2" data-line-number="2"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb257-3" data-line-number="3"><span class="st">  </span><span class="kw">str_split</span>(<span class="st">&quot; &quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb260-1" data-line-number="1">sentences <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb260-2" data-line-number="2"><span class="st">  </span><span class="kw">head</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb260-3" data-line-number="3"><span class="st">  </span><span class="kw">str_split</span>(<span class="st">&quot; &quot;</span>)</a></code></pre></div>
 <pre><code>## [[1]]
 ## [1] &quot;The&quot;     &quot;birch&quot;   &quot;canoe&quot;   &quot;slid&quot;    &quot;on&quot;      &quot;the&quot;     &quot;smooth&quot; 
 ## [8] &quot;planks.&quot;
@@ -681,16 +697,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>In terms of the representation models we have used so far, we can think of <em>documents as entities</em>, described by attributes based on words, or <em>words as entitites</em>, described by attributes based on documents. To <em>tidy</em> text data, we tend to create <strong>one-token-per-row</strong> data frames that list the instances of <em>terms</em> in <em>documents</em> in a dataset</p>
 <p>Here’s a simple example using Jane Austen text</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb259-1" data-line-number="1"><span class="kw">library</span>(janeaustenr)</a>
-<a class="sourceLine" id="cb259-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb259-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb259-4" data-line-number="4">original_books &lt;-<span class="st"> </span><span class="kw">austen_books</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb259-5" data-line-number="5"><span class="st">  </span><span class="kw">group_by</span>(book) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb259-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">linenumber =</span> <span class="kw">row_number</span>(),</a>
-<a class="sourceLine" id="cb259-7" data-line-number="7">         <span class="dt">chapter =</span> <span class="kw">cumsum</span>(<span class="kw">str_detect</span>(text, <span class="kw">regex</span>(<span class="st">&quot;^chapter [</span><span class="ch">\\</span><span class="st">divxlc]&quot;</span>, <span class="dt">ignore_case=</span><span class="ot">TRUE</span>)))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb259-8" data-line-number="8"><span class="st">  </span><span class="kw">ungroup</span>()</a>
-<a class="sourceLine" id="cb259-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb259-10" data-line-number="10">original_books</a></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb262-1" data-line-number="1"><span class="kw">library</span>(janeaustenr)</a>
+<a class="sourceLine" id="cb262-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb262-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb262-4" data-line-number="4">original_books &lt;-<span class="st"> </span><span class="kw">austen_books</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb262-5" data-line-number="5"><span class="st">  </span><span class="kw">group_by</span>(book) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb262-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">linenumber =</span> <span class="kw">row_number</span>(),</a>
+<a class="sourceLine" id="cb262-7" data-line-number="7">         <span class="dt">chapter =</span> <span class="kw">cumsum</span>(<span class="kw">str_detect</span>(text, <span class="kw">regex</span>(<span class="st">&quot;^chapter [</span><span class="ch">\\</span><span class="st">divxlc]&quot;</span>, <span class="dt">ignore_case=</span><span class="ot">TRUE</span>)))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb262-8" data-line-number="8"><span class="st">  </span><span class="kw">ungroup</span>()</a>
+<a class="sourceLine" id="cb262-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb262-10" data-line-number="10">original_books</a></code></pre></div>
 <pre><code>## # A tibble: 73,422 x 4
 ##    text                  book                linenumber chapter
 ##    &lt;chr&gt;                 &lt;fct&gt;                    &lt;int&gt;   &lt;int&gt;
@@ -706,11 +722,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 CHAPTER 1             Sense &amp; Sensibility         10       1
 ## # ... with 73,412 more rows</code></pre>
 <p>Let’s re-structure it as a <strong>one-token-per-row</strong> column using the <code>unnest_tokens</code> function in the <code>tidytext</code> package</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb261-1" data-line-number="1"><span class="kw">library</span>(tidytext)</a>
-<a class="sourceLine" id="cb261-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb261-3" data-line-number="3">tidy_books &lt;-<span class="st"> </span>original_books <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb261-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest_tokens</span>(word, text)</a>
-<a class="sourceLine" id="cb261-5" data-line-number="5">tidy_books</a></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb264-1" data-line-number="1"><span class="kw">library</span>(tidytext)</a>
+<a class="sourceLine" id="cb264-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb264-3" data-line-number="3">tidy_books &lt;-<span class="st"> </span>original_books <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb264-4" data-line-number="4"><span class="st">  </span><span class="kw">unnest_tokens</span>(word, text)</a>
+<a class="sourceLine" id="cb264-5" data-line-number="5">tidy_books</a></code></pre></div>
 <pre><code>## # A tibble: 725,055 x 4
 ##    book                linenumber chapter word       
 ##    &lt;fct&gt;                    &lt;int&gt;   &lt;int&gt; &lt;chr&gt;      
@@ -726,12 +742,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 Sense &amp; Sensibility         13       1 the        
 ## # ... with 725,045 more rows</code></pre>
 <p>Let’s remove stop words from the data frame</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb263-1" data-line-number="1"><span class="kw">data</span>(stop_words)</a>
-<a class="sourceLine" id="cb263-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb263-3" data-line-number="3">tidy_books &lt;-<span class="st"> </span>tidy_books <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb263-4" data-line-number="4"><span class="st">  </span><span class="kw">anti_join</span>(stop_words, <span class="dt">by=</span><span class="st">&quot;word&quot;</span>)</a>
-<a class="sourceLine" id="cb263-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb263-6" data-line-number="6">tidy_books</a></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb266-1" data-line-number="1"><span class="kw">data</span>(stop_words)</a>
+<a class="sourceLine" id="cb266-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb266-3" data-line-number="3">tidy_books &lt;-<span class="st"> </span>tidy_books <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb266-4" data-line-number="4"><span class="st">  </span><span class="kw">anti_join</span>(stop_words, <span class="dt">by=</span><span class="st">&quot;word&quot;</span>)</a>
+<a class="sourceLine" id="cb266-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb266-6" data-line-number="6">tidy_books</a></code></pre></div>
 <pre><code>## # A tibble: 217,609 x 4
 ##    book                linenumber chapter word       
 ##    &lt;fct&gt;                    &lt;int&gt;   &lt;int&gt; &lt;chr&gt;      
@@ -747,49 +763,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 Sense &amp; Sensibility         13       1 settled    
 ## # ... with 217,599 more rows</code></pre>
 <p>Now, we can use this dataset to compute attributes for entities of interest. For instance, let’s create a data frame with <em>words</em> as entities, with an attribute containing the number of times the word appears in this corpus</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb265-1" data-line-number="1">frequent_words &lt;-<span class="st"> </span>tidy_books <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb265-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(word, <span class="dt">sort=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb265-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">600</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb268-1" data-line-number="1">frequent_words &lt;-<span class="st"> </span>tidy_books <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb268-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(word, <span class="dt">sort=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb268-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">600</span>)</a></code></pre></div>
 <p>Which can then use like other data frames as we have used previously. For example to plot most frequent words:</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb266-1" data-line-number="1">frequent_words <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb266-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">reorder</span>(word, n)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb266-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>word, <span class="dt">y=</span>n)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb266-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb266-5" data-line-number="5"><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb266-6" data-line-number="6"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="ot">NULL</span>, <span class="dt">y=</span><span class="st">&quot;frequency&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb266-7" data-line-number="7"><span class="st">    </span><span class="kw">coord_flip</span>()</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-93-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb269-1" data-line-number="1">frequent_words <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb269-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">word =</span> <span class="kw">reorder</span>(word, n)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb269-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>word, <span class="dt">y=</span>n)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb269-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb269-5" data-line-number="5"><span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb269-6" data-line-number="6"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="ot">NULL</span>, <span class="dt">y=</span><span class="st">&quot;frequency&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb269-7" data-line-number="7"><span class="st">    </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-93-1.svg" width="672" /></p>
 </div>
 </div>
 <div id="handling-dates" class="section level2">
 <h2><span class="header-section-number">18.2</span> Handling dates</h2>
 <p>The <code>lubridate</code> package provides common operations for parsing and operating on dates and times. See <a href="http://r4ds.had.co.nz/dates-and-times.html" class="uri">http://r4ds.had.co.nz/dates-and-times.html</a> for more information.</p>
 <p>A number of functions for parsing dates in a variety of formats are provided, along with functions to extract specific components from parsed date objects</p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb267-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb267-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb267-3" data-line-number="3">datetime &lt;-<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2016-07-08 12:34:56&quot;</span>)</a>
-<a class="sourceLine" id="cb267-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb267-5" data-line-number="5"><span class="kw">year</span>(datetime)</a></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb270-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb270-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb270-3" data-line-number="3">datetime &lt;-<span class="st"> </span><span class="kw">ymd_hms</span>(<span class="st">&quot;2016-07-08 12:34:56&quot;</span>)</a>
+<a class="sourceLine" id="cb270-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb270-5" data-line-number="5"><span class="kw">year</span>(datetime)</a></code></pre></div>
 <pre><code>## [1] 2016</code></pre>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb269-1" data-line-number="1"><span class="kw">month</span>(datetime)</a></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb272-1" data-line-number="1"><span class="kw">month</span>(datetime)</a></code></pre></div>
 <pre><code>## [1] 7</code></pre>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb271-1" data-line-number="1"><span class="kw">day</span>(datetime)</a></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb274-1" data-line-number="1"><span class="kw">day</span>(datetime)</a></code></pre></div>
 <pre><code>## [1] 8</code></pre>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb273-1" data-line-number="1"><span class="kw">mday</span>(datetime)</a></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb276-1" data-line-number="1"><span class="kw">mday</span>(datetime)</a></code></pre></div>
 <pre><code>## [1] 8</code></pre>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb275-1" data-line-number="1"><span class="kw">yday</span>(datetime)</a></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb278-1" data-line-number="1"><span class="kw">yday</span>(datetime)</a></code></pre></div>
 <pre><code>## [1] 190</code></pre>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb277-1" data-line-number="1"><span class="kw">wday</span>(datetime)</a></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb280-1" data-line-number="1"><span class="kw">wday</span>(datetime)</a></code></pre></div>
 <pre><code>## [1] 6</code></pre>
 <p>They can also return month and day of the week names, abbreviated, as ordered factors</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb279-1" data-line-number="1"><span class="kw">month</span>(datetime, <span class="dt">label=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb282-1" data-line-number="1"><span class="kw">month</span>(datetime, <span class="dt">label=</span><span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] Jul
 ## 12 Levels: Jan &lt; Feb &lt; Mar &lt; Apr &lt; May &lt; Jun &lt; Jul &lt; Aug &lt; Sep &lt; ... &lt; Dec</code></pre>
 <p>We can also create attributes of type <code>datetime</code> from string attributes. Here’s an example using the flights dataset</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb281-1" data-line-number="1">flights_with_dt &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb281-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_dt=</span><span class="kw">make_datetime</span>(year, month, day, dep_time <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span>, dep_time <span class="op">%%</span><span class="st"> </span><span class="dv">100</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb281-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(year, month, day, dep_time, dep_dt)</a>
-<a class="sourceLine" id="cb281-4" data-line-number="4">flights_with_dt</a></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb284-1" data-line-number="1">flights_with_dt &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_dt=</span><span class="kw">make_datetime</span>(year, month, day, dep_time <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span>, dep_time <span class="op">%%</span><span class="st"> </span><span class="dv">100</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb284-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(year, month, day, dep_time, dep_dt)</a>
+<a class="sourceLine" id="cb284-4" data-line-number="4">flights_with_dt</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 5
 ##     year month   day dep_time dep_dt             
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;dttm&gt;             
@@ -805,11 +821,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10  2013     1     1      558 2013-01-01 05:58:00
 ## # ... with 336,766 more rows</code></pre>
 <p>With this attribute in place we can extract day of the week and plot the number of flights per day of the week</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb283-1" data-line-number="1">flights_with_dt <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb283-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">wday=</span><span class="kw">wday</span>(dep_dt, <span class="dt">label=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb283-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>wday)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb283-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_bar</span>()</a></code></pre></div>
-<p><img src="lecture-notes_csmc320_files/figure-html4/unnamed-chunk-97-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb286-1" data-line-number="1">flights_with_dt <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb286-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">wday=</span><span class="kw">wday</span>(dep_dt, <span class="dt">label=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb286-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>wday)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb286-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_bar</span>()</a></code></pre></div>
+<p><img src="lecture-notes_csmc320_files/figure-html/unnamed-chunk-97-1.svg" width="672" /></p>
 
 </div>
 </div>
@@ -837,10 +853,11 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
