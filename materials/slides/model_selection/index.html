@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Model Selection</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2018-05-01" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Model Selection]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+CMSC320: 2018-05-01
+]
+
+.logo[![](img/logo.png)]
+
+---
+
+## Model Selection
+
+
+
+Our goal when we use a learning model like linear or logistic regression, decision trees, etc., is
+to learn a model that can predict outcomes for new unseen data.
+
+---
+
+We should therefore think of model evaluation based on _expected predicted error_: what will the prediction error be for data _outside_ the training data.
+
+--
+
+How then, do we measure our models' ability to predict unseen data, when we only have access to training data?
+
+---
+
+## Cross-validation
+
+The most common method to evaluate model **generalization** performance is _cross-validation_. 
+
+It is used in two essential data analysis phases: _Model Selection_ and _Model Assessment_. 
+
+---
+
+## Cross-validation
+
+### Model Selection
+
+Decide what kind, and how complex of a model we should fit. 
+
+--
+
+Consider a regression example: I will fit a linear regression model, what predictors should be included?, interactions?, data transformations? 
+
+--
+
+Another example is what classification tree depth to use.
+
+--
+
+Which kind of algorithm to use, linear regression vs. decision tree vs. random forest
+
+---
+
+## Cross-validation
+
+### Model Assessment 
+
+Determine how well does our selected model performs as a **general** model. 
+
+--
+
+Ex. I've built a linear regression model with a specific set predictors. How well will it perform on unseen data? 
+
+--
+
+The same question can be asked of a classification tree of specific depth.
+
+---
+
+## Cross-validation
+
+Cross-validation is a _resampling_ method to obtain estimates of **expected prediction error rate** (or any other performance measure on unseen data). 
+
+In some instances, you will have a large predefined test dataset **that you should never use when training**. 
+
+In the absence of access to this kind of dataset, cross validation can be used.
+
+---
+
+## Validation Set
+
+The simplest option to use cross-validation is to create a _validation_ set, where our dataset is **randomly** divided into _training_ and _validation_ sets. 
+
+Then the _validation_ is set aside, and not used at until until we are ready to compute **test error rate** (once, don't go back and check if you can improve it).
+
+![](images/validation.png)
+
+---
+class: split-50
+
+## Validation Set
+
+Let's look at our running example using automobile data, where we want to build a
+regression model to predict miles per gallon given other auto attributes.
+
+.column[A linear regression model was not appropriate for this dataset. Use _polynomial_ regression as an illustrative example.
+]
+
+.column[
+&lt;img src="index_files/figure-html/unnamed-chunk-2-1.png" width="480" /&gt;
+]
+
+---
+
+## Validation Set
+
+For polynomial regression, our regression model (for a single predictor `\(X\)`) is given as a `\(d\)` degree polynomial.
+
+`$$\mathbb{E}[Y|X=x] = \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_d x^d$$`
+
+
+For _model selection_, we want to decide what degree `\(d\)` we should use to model this data. 
+
+---
+class: split-50
+
+## Validation Set
+
+.column[
+Using the _validation set_ method, split our data into a training set, 
+
+fit the regression model with different polynomial degrees `\(d\)` on the training set, 
+
+measure test error on the validation set.
+]
+
+
+
+.column[
+&lt;img src="index_files/figure-html/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+## Resampled validation set
+
+The validation set approach can be prone to sampling issues. 
+
+It can be highly variable as error rate is a random quantity and depends on observations in training and validation sets. 
+
+--
+
+We can improve our estimate of _test error_ by averaging multiple measurements of it (remember the law of large numbers). 
+
+---
+class: split-50
+
+## Resampled validation set
+
+.column[
+Resample validation set 10 times (yielding different validation and training sets) and averaging the resulting test errors.]
+
+
+
+.column[
+&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" width="480" /&gt;
+]
+
+---
+
+## Leave-one-out Cross-Validation
+
+This approach still has some issues. 
+
+Each of the training sets in our validation approach only uses 50% of data to train, which leads to models that may not perform as well as models trained with the full dataset and thus we can overestimate error. 
+
+--
+
+To alleviate this situation, we can extend our approach to the extreme: Make each single training point it's own validation set.
+
+---
+class: split-50
+
+## Leave-one-out Cross-Validation
+
+.column[
+Procedure:  
+For each observation `\(i\)` in data set:  
+  a. Train model on all but `\(i\)`-th observation  
+  b. Predict response for `\(i\)`-th observation  
+  c. Calculate prediction error  
+]
+
+.column[![](images/loocv.png)]
+
+---
+class: split-50
+
+## Leave-one-out Cross-Validation
+
+.column[
+This gives us the following _cross-validation_ estimate of error.
+
+$$
+CV_{(n)} = \frac{1}{n} \sum_i (y_i - \hat{y}_i)^2
+$$
+]
+
+.column[![](images/loocv.png)]
+
+---
+
+## Leave-one-out Cross-Validation
+
+Advantages: 
+
+- use `\(n-1\)` observations to train each model
+- no sampling effects introduced since error is estimated on each sample
+
+--
+
+&lt;!-- something --&gt;
+
+Disadvantages:
+
+- Depending on the models we are trying to fit, it can be very costly to train `\(n-1\)` models. 
+- Error estimate for each model is highly variable (since it comes from a single datapoint).
+
+---
+
+## Leave-one-out Cross-Validation
+
+On our running example
+
+
+
+&lt;img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /&gt;
+
+---
+
+## k-fold Cross-Validation
+
+This discussion leads us to the most commonly used cross-validation approach _k-fold Cross-Validation_.
+
+---
+class: split-50
+
+## k-fold Cross-Validation
+
+.column[
+Procedure:  
+Partition observations randomly into `\(k\)` groups (folds).  
+
+For each of the `\(k\)` groups of observations:
+- Train model on observations in the other `\(k-1\)` folds  
+- Estimate test-set error (e.g., Mean Squared Error) on this fold  
+]
+
+.column[![](images/kfoldcv.png)]
+
+
+---
+class: split-50
+
+## k-fold Cross-Validation
+
+.column[
+Procedure:  
+
+Compute average error across `\(k\)` folds  
+
+`$$CV_{(k)} = \frac{1}{k} \sum_i MSE_i$$`
+
+where `\(MSE_i\)` is mean squared error estimated on the `\(i\)`-th fold
+]
+
+.column[![](images/kfoldcv.png)]
+
+---
+
+## k-fold Cross-Validation
+
+- Fewer models to fit (only `\(k\)` of them)
+- Less variance in each of the computed test error estimates in each fold. 
+
+--
+
+It can be shown that there is a slight bias (over estimating usually) in error estimate obtained from this procedure.
+
+---
+
+## k-fold Cross-Validation
+
+Running Example
+
+
+
+&lt;img src="index_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Cross-Validation in Classification
+
+Each of these procedures can be used for classification as well. 
+
+In this case we would substitute MSE with performance metric of choice. E.g., error rate, accuracy, TPR, FPR, AUROC. 
+
+--
+
+Note however that not all of these work with LOOCV (e.g. AUROC since it can't be defined over single data points).
+
+
+---
+class: split-50
+
+## Comparing models using cross-validation
+
+.column[
+Suppose you want to compare two classification models (logistic regression vs. a decision tree) on the `Default` dataset. We can use Cross-Validation to determine if one model is better than the other, using a `\(t\)`-test for example.
+]
+
+
+
+.column[
+&lt;img src="index_files/figure-html/unnamed-chunk-12-1.png" width="480" /&gt;
+]
+
+---
+## Comparing models using cross-validation
+
+Using hypothesis testing:
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; estimate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; std.error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0267 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0020306 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13.148828 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; methodtree &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0030 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0028717 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.044677 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3099998 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+In this case, we do not observe any significant difference between these two classification methods.
+
+---
+
+## Summary
+
+Model selection and assessment are critical steps of data analysis. 
+
+Resampling methods are general tools used for this purpose. 
+
+k-fold cross-validation can be used to provide larger training sets to algorithms while stabilizing empirical estimates of expected prediction error
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

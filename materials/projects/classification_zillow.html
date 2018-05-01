@@ -309,6 +309,7 @@ $(document).ready(function () {
 </div>
 
 
+<p><strong>Last Update</strong>: 2018-05-01</p>
 <div id="data" class="section level2">
 <h2>Data</h2>
 <p>We will use Mortgage Affordability data from Zillow to experiment with classification algorithms. The data was downloaded from Zillow Research page: <a href="https://www.zillow.com/research/data/" class="uri">https://www.zillow.com/research/data/</a></p>
@@ -383,6 +384,9 @@ outcome_df</code></pre>
 ## # ... with 70 more rows</code></pre>
 <p>Now, you have a dataframe with outcomes (labels) for each county in the dataset.</p>
 <p>The goal is then given predictors <span class="math inline">\(X_i\)</span> for county <span class="math inline">\(i\)</span>, build a classifier for outcome <span class="math inline">\(G_i \in \{\mathtt{up},\mathtt{down}\}\)</span>.</p>
+<p>For your classifiers you should use data up to 2016.</p>
+<pre class="r"><code>predictor_df &lt;- tidy_afford %&gt;%
+  filter(year(time) &lt;= 2016)</code></pre>
 </div>
 <div id="your-project" class="section level2">
 <h2>Your project</h2>
@@ -428,6 +432,91 @@ outcome_df</code></pre>
 <li>Table (result of hypothesis testing difference between algorithms) and AUROC curve plot.</li>
 <li>Interpretation and discussion of your experiment results.</li>
 </ol>
+</div>
+<div id="an-example-classifier" class="section level2">
+<h2>An example classifier</h2>
+<p>Let’s build a Random Forest classifer using quarterly differences after data standardization for years 2014-2016. First, filter to the years of interest and standardize affordability for each region</p>
+<pre class="r"><code>standardized_df &lt;- predictor_df %&gt;%
+  filter(year(time) %in% 2014:2016) %&gt;%
+  group_by(RegionID) %&gt;%
+  mutate(mean_aff = mean(affordability)) %&gt;%
+  mutate(sd_aff = sd(affordability)) %&gt;%
+  mutate(z_aff = (affordability - mean_aff) / sd_aff) %&gt;%
+  ungroup()</code></pre>
+<p>To train our model we need a table with one row per region, and attributes corresponding to differences in quarterly affordability. We will do this in stages, first we turn the tidy dataset into a wide dataset using <code>tidyr::spread</code> then create a dataframe containing the differences we use as features.</p>
+<pre class="r"><code>wide_df &lt;- standardized_df %&gt;%
+  select(RegionID, time, affordability) %&gt;%
+  tidyr::spread(time, affordability)</code></pre>
+<p>Now, we turn this into quarterly differences</p>
+<pre class="r"><code>matrix_1 &lt;- wide_df %&gt;%
+  select(-RegionID) %&gt;%
+  as.matrix() %&gt;%
+  .[,-1]
+
+matrix_2 &lt;- wide_df %&gt;%
+  select(-RegionID) %&gt;%
+  as.matrix() %&gt;%
+  .[,-ncol(.)]
+
+diff_df &lt;- (matrix_1 - matrix_2) %&gt;%
+  magrittr::set_colnames(NULL) %&gt;%
+  as_data_frame() %&gt;%
+  mutate(RegionID = wide_df$RegionID)</code></pre>
+<p>Finally, add the outcome we want to predict from the data frame we created previously.</p>
+<pre class="r"><code>final_df &lt;- diff_df %&gt;%
+  inner_join(outcome_df %&gt;% select(RegionID, Direction), by=&quot;RegionID&quot;) %&gt;%
+  mutate(Direction=factor(Direction, levels=c(&quot;down&quot;, &quot;up&quot;)))
+final_df</code></pre>
+<pre><code>## # A tibble: 80 x 13
+##          V1        V2       V3       V4      V5       V6       V7       V8
+##       &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1 -0.00174 -0.000811 -0.00410 -4.08e-4 0.00441  3.00e-4  9.75e-4 -0.00314
+##  2 -0.00375 -0.000527 -0.00579 -8.73e-4 0.00433 -3.38e-4 -7.90e-4 -0.00520
+##  3 -0.00272 -0.00162  -0.00773 -2.49e-3 0.00416 -1.75e-4 -7.08e-4 -0.00462
+##  4 -0.00118  0.000380 -0.00361  6.87e-4 0.00484  2.62e-4  1.50e-3 -0.00336
+##  5 -0.00173  0.000432 -0.00480  6.99e-4 0.00744 -4.98e-4  1.43e-3 -0.00252
+##  6 -0.00285  0.00137  -0.00425  2.08e-3 0.00598 -3.67e-4  2.67e-3 -0.00349
+##  7 -0.00318 -0.000792 -0.00707 -3.08e-3 0.00343 -1.92e-3  7.81e-4 -0.00568
+##  8 -0.00288  0.00155  -0.00393 -4.82e-4 0.00547  8.59e-5  2.54e-3 -0.00127
+##  9 -0.00381  0.00458  -0.00964  8.43e-4 0.00625  1.66e-3  1.62e-3 -0.00190
+## 10 -0.00422 -0.00220  -0.00465 -7.82e-4 0.00374 -1.87e-3  2.53e-4 -0.00314
+## # ... with 70 more rows, and 5 more variables: V9 &lt;dbl&gt;, V10 &lt;dbl&gt;,
+## #   V11 &lt;dbl&gt;, RegionID &lt;int&gt;, Direction &lt;fct&gt;</code></pre>
+<p>Now split up the data set into training regions and testing regions (using 80/20 random split).</p>
+<pre class="r"><code>set.seed(1234)
+test_random_forest_df &lt;- final_df %&gt;%
+  group_by(Direction) %&gt;%
+  sample_frac(.2) %&gt;%
+  ungroup()
+
+train_random_forest_df &lt;- final_df %&gt;%
+  anti_join(test_random_forest_df, by=&quot;RegionID&quot;)</code></pre>
+<p>Let’s learn the random forest using default parameters.</p>
+<pre class="r"><code>library(randomForest)
+
+rf &lt;- randomForest(Direction~., data=train_random_forest_df %&gt;% select(-RegionID))
+rf</code></pre>
+<pre><code>## 
+## Call:
+##  randomForest(formula = Direction ~ ., data = train_random_forest_df %&gt;%      select(-RegionID)) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 3
+## 
+##         OOB estimate of  error rate: 40.62%
+## Confusion matrix:
+##      down up class.error
+## down    5 18   0.7826087
+## up      8 33   0.1951220</code></pre>
+<p>Now, let’s make predictions on the held out test set</p>
+<pre class="r"><code>test_predictions &lt;- predict(rf, newdata=test_random_forest_df %&gt;% select(-RegionID))</code></pre>
+<p>Make a confusion matrix and calculate error rate.</p>
+<pre class="r"><code>table(pred=test_predictions, observed=test_random_forest_df$Direction)</code></pre>
+<pre><code>##       observed
+## pred   down up
+##   down    3  0
+##   up      3 10</code></pre>
+<p>Error rate is 18.75%</p>
 </div>
 
 

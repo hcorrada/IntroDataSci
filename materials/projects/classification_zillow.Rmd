@@ -8,6 +8,8 @@ output: html_document
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=TRUE)
 ```
 
+**Last Update**: `r Sys.Date()`
+
 ## Data
 
 We will use Mortgage Affordability data from Zillow to experiment with classification algorithms. The data was downloaded from Zillow Research page: https://www.zillow.com/research/data/
@@ -70,6 +72,13 @@ Now, you have a dataframe with outcomes (labels) for each county in the dataset.
 
 The goal is then given predictors $X_i$ for county $i$, build a classifier for outcome $G_i \in \{\mathtt{up},\mathtt{down}\}$.
 
+For your classifiers you should use data up to 2016. 
+
+```{r}
+predictor_df <- tidy_afford %>%
+  filter(year(time) <= 2016)
+```
+
 ## Your project
 
 Your goal for this project is to do an experiment to address a (one, single) technical question about our ability to make this prediction. There is a list of possible questions you may address below. Each of them asks two compare two specific choices in the classification workflow (e.g., two classification algorithms, two feature representations, etc.). You will implement each of the two choices and use 10-fold cross validation (across RegionID's) to compare their relative performance. You will also create an AUROC curve to compare them.
@@ -107,3 +116,91 @@ Prepare an Rmarkdown file which includes:
 3) Code to carry out your cross-validation experiment.
 4) Table (result of hypothesis testing difference between algorithms) and AUROC curve plot.
 5) Interpretation and discussion of your experiment results.
+
+## An example classifier
+
+Let's build a Random Forest classifer using quarterly differences after data standardization for years 2014-2016. First, filter to the years of interest and standardize affordability for each region
+
+```{r}
+standardized_df <- predictor_df %>%
+  filter(year(time) %in% 2014:2016) %>%
+  group_by(RegionID) %>%
+  mutate(mean_aff = mean(affordability)) %>%
+  mutate(sd_aff = sd(affordability)) %>%
+  mutate(z_aff = (affordability - mean_aff) / sd_aff) %>%
+  ungroup()
+```
+
+To train our model we need a table with one row per region, and attributes corresponding to differences in quarterly affordability. We will do this in stages, first we turn the tidy dataset into a wide dataset using `tidyr::spread` then create a dataframe containing the differences we use as features.
+
+```{r}
+wide_df <- standardized_df %>%
+  select(RegionID, time, affordability) %>%
+  tidyr::spread(time, affordability)
+```
+
+Now, we turn this into quarterly differences
+
+```{r}
+matrix_1 <- wide_df %>%
+  select(-RegionID) %>%
+  as.matrix() %>%
+  .[,-1]
+
+matrix_2 <- wide_df %>%
+  select(-RegionID) %>%
+  as.matrix() %>%
+  .[,-ncol(.)]
+
+diff_df <- (matrix_1 - matrix_2) %>%
+  magrittr::set_colnames(NULL) %>%
+  as_data_frame() %>%
+  mutate(RegionID = wide_df$RegionID)
+```
+
+Finally, add the outcome we want to predict from the data frame we created previously.
+
+```{r}
+final_df <- diff_df %>%
+  inner_join(outcome_df %>% select(RegionID, Direction), by="RegionID") %>%
+  mutate(Direction=factor(Direction, levels=c("down", "up")))
+final_df
+```
+
+Now split up the data set into training regions and testing regions (using 80/20 random split).
+
+```{r}
+set.seed(1234)
+test_random_forest_df <- final_df %>%
+  group_by(Direction) %>%
+  sample_frac(.2) %>%
+  ungroup()
+
+train_random_forest_df <- final_df %>%
+  anti_join(test_random_forest_df, by="RegionID")
+```
+
+Let's learn the random forest using default parameters.
+
+```{r}
+library(randomForest)
+
+rf <- randomForest(Direction~., data=train_random_forest_df %>% select(-RegionID))
+rf
+```
+
+Now, let's make predictions on the held out test set
+
+```{r}
+test_predictions <- predict(rf, newdata=test_random_forest_df %>% select(-RegionID))
+```
+
+Make a confusion matrix and calculate error rate.
+
+```{r}
+table(pred=test_predictions, observed=test_random_forest_df$Direction)
+```
+
+Error rate is `r 100 * mean(test_predictions != test_random_forest_df$Direction)`%
+
+
