@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="Lecture Notes: Introduction to Data Science">
-  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
 
   <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-04-18">
+<meta name="date" content="2018-05-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,7 +49,7 @@
 
 <script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.0/str_view.js"></script>
+<script src="libs/str_view-binding-1.2.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -456,6 +456,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
 <li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="33" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html"><i class="fa fa-check"></i><b>33</b> Unsupervised Learning: Clustering</a><ul>
+<li class="chapter" data-level="33.1" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#motivating-example"><i class="fa fa-check"></i><b>33.1</b> Motivating Example</a></li>
+<li class="chapter" data-level="33.2" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#some-preliminaries"><i class="fa fa-check"></i><b>33.2</b> Some Preliminaries</a></li>
+<li class="chapter" data-level="33.3" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#cluster-analysis"><i class="fa fa-check"></i><b>33.3</b> Cluster Analysis</a></li>
+<li class="chapter" data-level="33.4" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#dissimilarity-based-clustering"><i class="fa fa-check"></i><b>33.4</b> Dissimilarity-based Clustering</a></li>
+<li class="chapter" data-level="33.5" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#k-means-clustering"><i class="fa fa-check"></i><b>33.5</b> K-means Clustering</a></li>
+<li class="chapter" data-level="33.6" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#choosing-the-number-of-clusters"><i class="fa fa-check"></i><b>33.6</b> Choosing the number of clusters</a></li>
+<li class="chapter" data-level="33.7" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#summary-5"><i class="fa fa-check"></i><b>33.7</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="34" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html"><i class="fa fa-check"></i><b>34</b> Unsupervised Learning: Dimensionality Reduction</a><ul>
+<li class="chapter" data-level="34.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#principal-component-analysis"><i class="fa fa-check"></i><b>34.1</b> Principal Component Analysis</a><ul>
+<li class="chapter" data-level="34.1.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#solving-the-pca"><i class="fa fa-check"></i><b>34.1.1</b> Solving the PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="34.2" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#multidimensional-scaling"><i class="fa fa-check"></i><b>34.2</b> Multidimensional Scaling</a></li>
+<li class="chapter" data-level="34.3" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#summary-6"><i class="fa fa-check"></i><b>34.3</b> Summary</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -483,7 +499,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In our data set we have a large number of attributes describing each arrest. Now, suppose we only want to study patterns in these arrests based on a smaller number of attributes for purposes of efficiency, since we would operate over less data, or interpretability. In that case we would like to create a data frame that contains only those attributes of interest. We use the <code>select</code> function for this.</p>
 <p><img src="img/select.png" /></p>
 <p>Let’s create a data frame containing only the <code>age</code>, <code>sex</code> and <code>district</code> attributes</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, age, sex, district)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, age, sex, district)</a></code></pre></div>
 <pre><code>## # A tibble: 104,528 x 3
 ##      age sex   district    
 ##    &lt;int&gt; &lt;fct&gt; &lt;chr&gt;       
@@ -505,7 +521,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>As always you can learn more about the function using <code>?select</code></p></li>
 </ol>
 <p>Attribute descriptor arguments can be fairly sophisticated. For example, we can use positive integers to indicate attribute (column) indices:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 104,528 x 3
 ##      arrest race  sex  
 ##       &lt;int&gt; &lt;chr&gt; &lt;fct&gt;
@@ -521,7 +537,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 11127018 B     M    
 ## # ... with 104,518 more rows</code></pre>
 <p>R includes a useful operator to describe ranges. E.g., <code>1:5</code> would be attributes 1 through 5:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 104,528 x 5
 ##      arrest   age race  sex   arrestDate
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;     
@@ -537,7 +553,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 11127018    53 B     M     01/01/2011
 ## # ... with 104,518 more rows</code></pre>
 <p>We can also use other helper functions to create attribute descriptors. For example, to choose all attributes that begin with the letter <code>a</code> we can the <code>starts_with</code> function which uses partial string matching:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, <span class="kw">starts_with</span>(<span class="st">&quot;a&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, <span class="kw">starts_with</span>(<span class="st">&quot;a&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 104,528 x 5
 ##      arrest   age arrestDate arrestTime arrestLocation      
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
@@ -553,7 +569,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 11127018    53 01/01/2011 15&#39;00&quot;     3300 Woodland Ave   
 ## # ... with 104,518 more rows</code></pre>
 <p>We can also use the attribute descriptor arguments to <em>drop</em> attributes. For instance using descriptor <code>-age</code> returns the arrest data frame with all but the <code>age</code> attribute included:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, <span class="op">-</span>age)</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, <span class="op">-</span>age)</a></code></pre></div>
 <pre><code>## # A tibble: 104,528 x 14
 ##    arrest race  sex   arrestDate arrestTime arrestLocation incidentOffense
 ##     &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;          &lt;chr&gt;          
@@ -574,7 +590,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="rename" class="section level3">
 <h3><span class="header-section-number">6.1.2</span> <code>rename</code></h3>
 <p>To improve interpretability during an analysis we may want to rename attributes. We use the <code>rename</code> function for this:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">rename</span>(arrest_tab, <span class="dt">arrest_date=</span>arrestDate)</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">rename</span>(arrest_tab, <span class="dt">arrest_date=</span>arrestDate)</a></code></pre></div>
 <pre><code>## # A tibble: 104,528 x 15
 ##      arrest   age race  sex   arrest_date arrestTime arrestLocation      
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;       &lt;time&gt;     &lt;chr&gt;               
@@ -592,7 +608,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>Like <code>select</code>, the first argument to the function is the data frame we are operating on. The remaining arguemnts specify attributes to rename and the name they will have in the resulting data frame. Note that arguments in this case are <em>named</em> (have the form <code>lhs=rhs</code>). We can have selection <em>and</em> renaming by using named arguments in <code>select</code>:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, age, sex, <span class="dt">arrest_date=</span>arrestDate)</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, age, sex, <span class="dt">arrest_date=</span>arrestDate)</a></code></pre></div>
 <pre><code>## # A tibble: 104,528 x 3
 ##      age sex   arrest_date
 ##    &lt;int&gt; &lt;fct&gt; &lt;chr&gt;      
@@ -618,7 +634,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="slice" class="section level3">
 <h3><span class="header-section-number">6.2.1</span> <code>slice</code></h3>
 <p>We can choose specific entities by their row position. For instance, to choose entities in rows 1,3 and 10, we would use the following:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">slice</span>(arrest_tab, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">10</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">slice</span>(arrest_tab, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">10</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 15
 ##     arrest   age race  sex   arrestDate arrestTime arrestLocation   
 ##      &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
@@ -630,7 +646,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>As before, the first argument is the data frame to operate on. The second argument is a <em>vector</em> of indices. We used the <code>c</code> function (for concatenate) to create a vector of indices.</p>
 <p>We can also use the range operator here:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">slice</span>(arrest_tab, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">slice</span>(arrest_tab, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 15
 ##     arrest   age race  sex   arrestDate arrestTime arrestLocation   
 ##      &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
@@ -643,7 +659,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>To create general sequences of indices we would use the <code>seq</code> function. For example, to select entities in even positions we would use the following:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">slice</span>(arrest_tab, <span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">nrow</span>(arrest_tab), <span class="dt">by=</span><span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">slice</span>(arrest_tab, <span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">nrow</span>(arrest_tab), <span class="dt">by=</span><span class="dv">2</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 52,264 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation     
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;              
@@ -664,7 +680,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="filter" class="section level3">
 <h3><span class="header-section-number">6.2.2</span> <code>filter</code></h3>
 <p>We can also select entities based on attribute properties. For example, to select arrests where age is less than 18 years old, we would use the following:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">filter</span>(arrest_tab, age <span class="op">&lt;</span><span class="st"> </span><span class="dv">18</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">filter</span>(arrest_tab, age <span class="op">&lt;</span><span class="st"> </span><span class="dv">18</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 463 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation   
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;            
@@ -687,7 +703,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>: tests order relationships for ordered data types (not categorical)<br />
 <code>!</code>, <code>&amp;</code>, <code>|</code>: not, and, or, logical operators</p>
 <p>To select arrests with ages between 18 and 25 we can use</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">filter</span>(arrest_tab, age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw">filter</span>(arrest_tab, age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 35,770 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
@@ -705,7 +721,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>The filter function can take multiple logical expressions. In this case they are combined with <code>&amp;</code>. So the above is equivalent to</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">filter</span>(arrest_tab, age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span>, age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="kw">filter</span>(arrest_tab, age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span>, age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 35,770 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
@@ -726,38 +742,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="sample_n-and-sample_frac" class="section level3">
 <h3><span class="header-section-number">6.2.3</span> <code>sample_n</code> and <code>sample_frac</code></h3>
 <p>Frequently we will want to choose entities from a data frame at random. The <code>sample_n</code> function selects a specific number of entities at random:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">sample_n</span>(arrest_tab, <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">sample_n</span>(arrest_tab, <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 10 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation 
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;          
-##  1 12580848    19 B     M     11/01/2012 11:55      600 Winston Ave
-##  2 12598406    47 B     M     12/05/2012 15:00      3500 Berwyn Ave
-##  3 11153117    19 B     M     02/15/2011 15:45      &lt;NA&gt;           
-##  4 11210186    27 B     M     05/04/2011 15:00      &lt;NA&gt;           
-##  5 12445383    45 B     M     03/22/2012 03:55      &lt;NA&gt;           
-##  6 11363489    30 B     M     11/07/2011 15:10      &lt;NA&gt;           
-##  7 12518300    64 W     F     07/23/2012 13:30      &lt;NA&gt;           
-##  8 12398444    38 B     M     01/05/2012 18:10      900 W North Ave
-##  9 11228057    54 W     M     05/27/2011 08:20      0 E Eutaw St   
-## 10 11233492    53 W     M     06/03/2011 17:00      0 S Kresson St 
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation        
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                 
+##  1 11173320    18 B     M     03/17/2011 09:40      1200 N Luzerne St     
+##  2 12422568    23 B     M     02/13/2012 19:45      200 N Belnord Ave     
+##  3 11336281    49 W     M     10/01/2011 17:45      200 Denier Pl         
+##  4       NA    17 B     M     11/03/2012 09:00      &lt;NA&gt;                  
+##  5 12466910    55 B     M     04/26/2012 12:15      1200 N Broadway St    
+##  6 12527924    43 B     M     08/07/2012 11:30      1600 North Ave        
+##  7 11173326    47 B     F     03/17/2011 10:10      4000 Nw Northern Pkwy…
+##  8 11255030    41 B     M     06/28/2011 12:00      3000 Oakley Ave       
+##  9 12439898    30 B     M     03/13/2012 18:45      200 N Conkling St     
+## 10 12573632    22 B     M     10/18/2012 13:00      2300 Ocala Ave        
 ## # ... with 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
 <p>The <code>sample_frac</code> function selects a fraction of entitites at random:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="kw">sample_frac</span>(arrest_tab, <span class="fl">.1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">sample_frac</span>(arrest_tab, <span class="fl">.1</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 10,453 x 15
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
-##  1 11180053    42 I     M     03/25/2011 22:25      4800 Eastern Ave    
-##  2 12609198    19 B     M     12/27/2012 21:30      1200 W Pratt St     
-##  3 11176462    20 B     F     03/22/2011 02:00      200 S Athol Ave     
-##  4 12483875    28 B     M     05/23/2012 11:45      2500 Mosher St      
-##  5 12589999    26 B     M     11/19/2012 21:30      4800 Bel Air Rd     
-##  6 11380459    20 B     M     12/03/2011 23:00      1700 E Coldspring Ln
-##  7 11226859    19 B     M     05/25/2011 22:30      1700 Hartsdale Rd   
-##  8 12607148    34 W     F     12/21/2012 09:20      3400 Garrison Blvd  
-##  9 11221323    46 W     M     05/19/2011 04:30      &lt;NA&gt;                
-## 10 11177702    42 B     M     03/23/2011 11:28      &lt;NA&gt;                
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation       
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                
+##  1 12465884    41 B     M     04/25/2012 07:20      &lt;NA&gt;                 
+##  2 11307118    34 B     M     08/26/2011 22:15      &lt;NA&gt;                 
+##  3       NA    23 B     F     09/10/2012 15:00      2300 Blk Annapolis Rd
+##  4 11264237    22 B     M     07/08/2011 16:00      &lt;NA&gt;                 
+##  5 12505057    32 B     M     06/28/2012 12:30      2700 Kinsey Ave      
+##  6 11229916    26 B     F     05/31/2011 08:40      2300 Sherwood Ave    
+##  7 12471138    43 B     M     05/02/2012 19:30      1800 Mount St        
+##  8 12489416    35 B     M     06/02/2012 20:45      900 N Augusta Ave    
+##  9 11335471    22 B     M     09/30/2011 10:45      400 N Bouldin St     
+## 10 11271634    51 B     M     07/15/2011 19:30      &lt;NA&gt;                 
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -767,21 +783,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">6.3</span> Pipelines of operations</h2>
 <p>All of the functions implementing our first set of operations have the same argument/value structure. They take a data frame as a first argument and return a data frame. We refer to this as the <em>data–&gt;transform–&gt;data</em> pattern. This is the core a lot of what we will do in class as part of data analyses. Specifically, we will combine operations into <em>pipelines</em> that manipulate data frames.</p>
 <p>The <code>dplyr</code> package introduces <em>syntactic sugar</em> to make this pattern explicit. For instance, we can rewrite the <code>sample_frac</code> example using the “pipe” operator <code>%&gt;%</code>:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">arrest_tab <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb57-2" data-line-number="2"><span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1">arrest_tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb60-2" data-line-number="2"><span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 10,453 x 15
 ##      arrest   age race  sex   arrestDate arrestTime arrestLocation     
 ##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;              
-##  1 11135539    21 B     M     01/18/2011 13:30      3200 Tioga Pkwy    
-##  2 11329390    18 B     M     09/23/2011 00:00      3500 Pulaski St    
-##  3 11302763    55 B     M     08/22/2011 09:15      1300 Carey St      
-##  4 11264323    45 B     M     07/08/2011 19:55      4600 Harford Rd    
-##  5 11315592    22 B     F     09/07/2011 12:00      3600 Garrison Blvd 
-##  6 12472724    23 B     M     05/04/2012 23:30      700 W North Ave    
-##  7 12499287    41 B     M     06/19/2012 14:45      200 N. Highland Ave
-##  8 12565877    34 B     M     10/05/2012 22:20      3100 Erdman Ave    
-##  9 11143432    34 B     M     02/01/2011 20:00      &lt;NA&gt;               
-## 10 12509245    38 B     M     07/07/2012 04:19      2200 Koko Ln       
+##  1 12490480    21 B     M     06/04/2012 22:50      2000 Robb St       
+##  2 11201424    21 B     M     04/24/2011 23:50      3700 Cottage Ave   
+##  3 12545381    58 B     M     09/04/2012 09:15      &lt;NA&gt;               
+##  4 11395005    19 B     M     12/29/2011 18:00      &lt;NA&gt;               
+##  5 12506050    41 B     F     06/29/2012 23:11      3400 Ravenwood Ave 
+##  6 11370279    18 B     M     11/16/2011 16:15      &lt;NA&gt;               
+##  7 11354294    47 B     M     10/25/2011 12:49      2500 N Maryland Ave
+##  8 12515496    26 B     M     07/18/2012 17:00      &lt;NA&gt;               
+##  9 12534458    24 B     M     08/17/2012 05:00      &lt;NA&gt;               
+## 10 11335206    20 B     M     09/30/2011 02:00      2800 Harford Rd    
 ## # ... with 10,443 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;</code></pre>
@@ -793,24 +809,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>samples 50% of those arrests at random</li>
 </ol>
 <p>We will assign the result to variable <code>analysis_tab</code></p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">analysis_tab &lt;-<span class="st"> </span>arrest_tab <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb59-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span>, age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb59-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(sex, district, <span class="dt">arrest_date=</span>arrestDate) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb59-4" data-line-number="4"><span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb59-5" data-line-number="5">analysis_tab</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1">analysis_tab &lt;-<span class="st"> </span>arrest_tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span>, age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb62-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(sex, district, <span class="dt">arrest_date=</span>arrestDate) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb62-4" data-line-number="4"><span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb62-5" data-line-number="5">analysis_tab</a></code></pre></div>
 <pre><code>## # A tibble: 17,885 x 3
 ##    sex   district     arrest_date
 ##    &lt;fct&gt; &lt;chr&gt;        &lt;chr&gt;      
-##  1 M     &lt;NA&gt;         08/26/2011 
-##  2 F     WESTERN      04/21/2011 
-##  3 M     CENTRAL      10/14/2011 
-##  4 M     WESTERN      06/26/2012 
-##  5 F     &lt;NA&gt;         12/15/2011 
-##  6 M     NORTHWESTERN 05/19/2011 
-##  7 M     SOUTHEASTERN 09/15/2011 
-##  8 M     &lt;NA&gt;         03/09/2011 
-##  9 F     &lt;NA&gt;         05/03/2011 
-## 10 M     &lt;NA&gt;         08/15/2012 
+##  1 M     NORTHEASTERN 08/21/2012 
+##  2 M     NORTHEASTERN 07/11/2011 
+##  3 M     NORTHEASTERN 07/12/2011 
+##  4 M     &lt;NA&gt;         06/12/2012 
+##  5 M     NORTHWESTERN 10/12/2012 
+##  6 M     EASTERN      09/27/2012 
+##  7 F     &lt;NA&gt;         03/09/2012 
+##  8 M     &lt;NA&gt;         05/25/2011 
+##  9 M     &lt;NA&gt;         04/04/2011 
+## 10 M     &lt;NA&gt;         11/08/2011 
 ## # ... with 17,875 more rows</code></pre>
 
 </div>
@@ -839,10 +855,11 @@ gitbook.start({
 "facebook": false,
 "twitter": false,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
