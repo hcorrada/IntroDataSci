@@ -135,8 +135,8 @@ To train our model we need a table with one row per region, and attributes corre
 
 ```{r}
 wide_df <- standardized_df %>%
-  select(RegionID, time, affordability) %>%
-  tidyr::spread(time, affordability)
+  select(RegionID, time, z_aff) %>%
+  tidyr::spread(time, z_aff)
 ```
 
 Now, we turn this into quarterly differences
