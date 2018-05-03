@@ -375,10 +375,6 @@ date = "5/1"
 title = "Unsupervised Learning: Clustering"
 notes = "bookdown-notes/unsupervised-learning-clustering.html"
 
-[[day26.covers]]
-title = "Unsupervised Learning: Dimensionality Reduction"
-notes = "bookdown-notes/unsupervised-learning-dimensionality-reduction.html"
-
 [day26.class_notes]
 link = "cmsc320_class-notes_20180501.pdf"
 
@@ -386,13 +382,12 @@ link = "cmsc320_class-notes_20180501.pdf"
 date = "5/3"
 
 [[day27.covers]]
-title = "Design principles for data visualization"
-
-[[day27.covers]]
-title = "Introduction to interactive data visualization"
+title = "Unsupervised Learning: Dimensionality Reduction"
+notes = "bookdown-notes/unsupervised-learning-dimensionality-reduction.html"
 
 [[day27.covers]]
 title = "Writing about data, analysis and inferences"
+notes = "slides/cmsc320_presentation.pdf"
 
 [day27a]
 date = "5/4"
@@ -405,10 +400,16 @@ link = "projects/project3/"
 date = "5/8"
 
 [[day28.covers]]
-title = "Open topic: COMING SOON"
+title = "Design principles for data visualization"
+
+[[day28.covers]]
+title = "Introduction to interactive data visualization"
 
 [day29]
 date = "5/10"
+
+[[day29.covers]]
+title = "The Keras way of learning"
 
 [[day29.covers]]
 title = "Course wrapup and perspective"
