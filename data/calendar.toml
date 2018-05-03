@@ -362,6 +362,9 @@ notes = "bookdown-notes/linear-models-for-classification.html"
 title = "Model evaluation using resampling"
 notes = "bookdown-notes/model-selection.html"
 
+[day25.class_notes]
+link = "cmsc320_class-notes_20180426.pdf"
+
 # [[day24.covers]]
 # title = "Project 3 Discussion: matrix representation of learning problems, maximum likelihood and logistic regression"
 
@@ -375,6 +378,9 @@ notes = "bookdown-notes/unsupervised-learning-clustering.html"
 [[day26.covers]]
 title = "Unsupervised Learning: Dimensionality Reduction"
 notes = "bookdown-notes/unsupervised-learning-dimensionality-reduction.html"
+
+[day26.class_notes]
+link = "cmsc320_class-notes_20180501.pdf"
 
 [day27]
 date = "5/3"
