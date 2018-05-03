@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Communicating Results of Data Analysis</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2018-05-03" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+class: title-slide, center, middle
+count: false
+
+
+
+.banner[![](img/epiviz.png)]
+
+.title[Communicating Results of Data Analysis]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+CMSC320: 2018-05-03
+]
+
+.logo[![](img/logo.png)]
+
+---
+
+## For Today
+
+
+Data Analysis Deliverables:
+  - Written analyses
+  - R packages
+
+---
+layout: true
+
+## Written analyses
+
+---
+
+Components:
+
+1. Title
+2. Introduction and motivation
+3. Description of dataset
+4. Description of statistical and machine learning models used (Methods)
+5. Results (including measures of uncertainty)
+6. Conclusions (including potential problems)
+7. References
+
+.source[https://leanpub.com/datastyle]
+
+---
+
+### Introduction and Motivation
+
+Always lead with the question (task) you are addressing.
+
+E.g.: "Can we use tweets about stocks to predict stock prices?"
+Not: "Can we use the Random Forest algorithm to learn a classifier that predicts stock prices"
+
+E.g: "What are good predictors of student performance?"
+Not: "Can we use linear regression to predict student performance"
+
+---
+
+### Description of dataset
+
+Size: entities and attributes  
+Important: describe what you did to 
+
+1) obtain,  
+2) tidy the dataset.
+
+---
+
+### Description of data analysis methods
+
+Be specific, use equations when appropriate:
+
+$$
+W = a + b H + e
+$$
+
+where `\(W\)` is _weight_, `\(H\)` is _height_ and `\(e\)` is an error term.
+
+When appropriate mention distributional assumptions on `\(e\)`.
+
+---
+
+### Description of data analysis methods
+
+When using ML methods, describe:
+  - preprocessing (e.g., feature selection, transformations)  
+  - algorithm choice (why is it appropriate)  
+  - model selection and assessment (e.g., which classification metric and why)
+  
+---
+
+### Results
+
+- Report estimates in the appropriate units
+- Report estimates with uncertainty
+
+We saw confidence intervals on our previous lectures with specific advise regarding their presentation. (_Note_: this also applies to prediction metrics)
+
+---
+
+### Results
+
+**Important**: Summarize importance of estimate (i.e., refer to the question you originally posed in introduction)
+
+_Why does this estimate address your question?_
+
+---
+
+### End matter
+
+- Include potential problems with the analysis you carried out.
+- Include references to the analysis methods used.
+
+---
+layout: true
+
+## Graphics
+
+---
+
+Karl Broman's presentation on effective graphics: http://tinyurl.com/graphs2017
+
+---
+
+A few other notes on style:
+- Make titles legible
+- Annotate in plot if possible (see example data analysis early in semester)
+- Include units in axis titles when appropriate
+  - E.g., not appropriate in PC scatterplot
+
+---
+layout: true
+
+## R packages
+
+Case study: suppose you used data to create a classifier for diagnostic purposes. How do you share?
+
+R packages is a reproducible, high-visibility way of publishing these types of results
+
+---
+
+- Consistent organization
+- Standardized deployment
+
+---
+
+Hadley's presentation on R packages
+
+[http://www.slideshare.net/hadley/r-packages](http://www.slideshare.net/hadley/r-packages)
+
+[The book](http://r-pkgs.had.co.nz/)
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
