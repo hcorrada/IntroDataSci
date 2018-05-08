@@ -385,10 +385,6 @@ date = "5/3"
 title = "Unsupervised Learning: Dimensionality Reduction"
 notes = "bookdown-notes/unsupervised-learning-dimensionality-reduction.html"
 
-[[day27.covers]]
-title = "Writing about data, analysis and inferences"
-notes = "slides/cmsc320_presentation.pdf"
-
 [day27a]
 date = "5/4"
 
@@ -400,6 +396,10 @@ link = "projects/project3/"
 date = "5/8"
 
 [[day28.covers]]
+title = "Writing about data, analysis and inferences"
+notes = "slides/cmsc320_presentation.pdf"
+
+[[day28.covers]]
 title = "Design principles for data visualization"
 
 [[day28.covers]]
@@ -409,10 +409,14 @@ title = "Introduction to interactive data visualization"
 date = "5/10"
 
 [[day29.covers]]
-title = "The Keras way of learning"
+title = "The Keras way to (deep) learn"
 
 [[day29.covers]]
 title = "Course wrapup and perspective"
+
+[[day29.workdue]]
+title = "Project 4: Interactive data maps"
+link = "projects/Project4/"
 
 [day30]
 date = "5/18"
