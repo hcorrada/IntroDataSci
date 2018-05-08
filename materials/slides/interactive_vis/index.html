@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Interactive Visualization</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2018-05-08" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+class: title-slide, center, middle
+count: false
+
+
+
+.banner[![](img/epiviz.png)]
+
+.title[Interactive Visualization]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+CMSC320: 2018-05-08
+]
+
+.logo[![](img/logo.png)]
+
+---
+
+## Why Interactivity?
+
+_Reduce data dimension_: allow user to explore large datasets by quickly switching between dimensions
+
+_Overview first, zoom and filter, details on demand_: Provide big picture, let the user explore details as they desire
+
+_Linked views for high dimensions_: There is a limit to the number of aesthetic mappings in a single graphic, make multiple graphics but link data objects between them
+
+---
+
+## Examples 
+
+_Politics_: [http://www.nytimes.com/interactive/2012/11/02/us/politics/paths-to-the-white-house.html?_r=0](http://www.nytimes.com/interactive/2012/11/02/us/politics/paths-to-the-white-house.html?_r=0)  
+
+_Movies_: [http://www.nytimes.com/interactive/2013/02/20/movies/among-the-oscar-contenders-a-host-of-connections.html](http://www.nytimes.com/interactive/2013/02/20/movies/among-the-oscar-contenders-a-host-of-connections.html)
+
+_Sports_: https://projects.fivethirtyeight.com/2018-march-madness-predictions/
+
+---
+
+## Web-based interactive visualization
+
+Take advantage of HTML document description and the [Document Object Model](http://www.w3.org/DOM/) interface to _bind_ data to page elements.
+
+- [Shiny](http://shiny.rstudio.com): bind data to controls
+- [Data-driven Documents (d3.js)](http://d3js.org): bind data to svg elements directly
+
+---
+
+## HTML and DOM
+
+Web pages are structured using Hypertext Markup Language
+
+
+```html
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Page Title&lt;/h1&gt;
+    &lt;p&gt;This is a really interesting paragraph.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
+
+Basic idea is to only specify _content_ and _structure_ but not specify directly _how_ to render pages.
+
+---
+
+## HTML and DOM
+
+Web pages are structured using Hypertext Markup Language
+
+
+```html
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Page Title&lt;/h1&gt;
+    &lt;p&gt;This is a really interesting paragraph.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
+
+Structure is provided by page _elements._
+An important element we'll see later is the arbitrary grouping/containment element `div`.
+
+---
+
+## HTML and DOM
+
+Web pages are structured using Hypertext Markup Language
+
+
+```html
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Page Title&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Page Title&lt;/h1&gt;
+    &lt;p&gt;This is a really interesting paragraph.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
+
+The hierarchical structure of elements in a document are defined by the _Document Object Model_ (DOM).
+
+---
+
+## CSS
+
+Cascading Style Sheets are used to style elements in the DOM.
+
+```
+body {
+  background-color: white;
+  color: black;
+}
+```
+
+---
+
+## CSS
+
+In general:
+
+```
+selectorA,
+selectorB,
+selectorC {
+  property1: value;
+  property2: value;
+  property3: value;
+}
+```
+
+---
+
+## SVG
+
+Scalable Vector Graphics (SVG) is special element used to create graphics with text.
+
+```
+&lt;svg width="50" height="50"&gt;
+  &lt;circle cx="25" cy="25" r="22" fill="blue" stroke="gray" stroke-width="2"/&gt;
+&lt;/svg&gt;
+```
+---
+
+## SVG
+
+Elements have _geometric_ attributes and _style_ attributes.
+
+```
+&lt;circle cx="250" cy="25" r="25"/&gt;
+```
+
+`cx`: x-coordinate of circle center  
+`cy`: y-coordinate of circle center  
+`r`: radius of circle
+
+---
+
+## SVG
+
+Elements have _geometric_ attributes and _style_ attributes.
+
+```
+&lt;rect x="0" y="0" width="500" height="50"/&gt;
+```
+
+`x`: x-coordinate of left-top corner  
+`y`: y-coordinate of left-top corner  
+`width`, `height`: width and height of rectangle
+
+---
+
+## SVG
+
+_style_ attributes
+
+```
+&lt;circle cx="25" cy="25" r="22" fill="yellow" stroke="orange" stroke-width="5"/&gt;
+```
+
+can be styled by class as well
+
+```
+svg .pumpkin {
+  fill: yellow;
+  stroke: orange;
+  stroke-width: 5;
+}
+```
+
+```
+&lt;circle cx="25" cy="25" r="22" class="pumpkin"&gt;
+```
+---
+
+## Shiny and D3
+
+Shiny: construct DOM and bind data (variables for example) to elements (a slide control for example) http://shiny.rstudio.com
+
+D3: bind data to SVG element attributes (position, size, color, transparency, etc.) http://d3js.org
+
+---
+
+## Reactivity
+
+Interactivity and binding in Shiny achieved using _reactive programming_. Where objects _react_ to changes in other objects.
+
+![](img/reactive1.png)
+
+---
+
+## Reactivity
+
+Example: 
+
+![](img/reactive2.png)
+
+---
+
+## Reactivity
+
+With intermediate objects:
+
+![](img/reactive3.png)
+
+---
+
+## Reactivity
+
+A standard paradigm for interactive (event-driven) application development
+
+A nice review paper: [http://dl.acm.org/citation.cfm?id=2501666](http://dl.acm.org/citation.cfm?id=2501666)
+
+---
+
+## Binding data to graphical elements
+
+With Shiny we can bind data objects to document elements.  
+More examples: [http://shiny.rstudio.com/gallery/](http://shiny.rstudio.com/gallery/)
+
+We can also bind data directly to _graphical_ elements since using SVG these are also document elements (D3).
+ 
+---
+
+## D3 Tutorial
+
+[Slides](https://docs.google.com/presentation/d/1YgWaiW7dfQ8C3a_LFiIA9heEaKthY27ajNG0uDuvpws/edit#slide=id.g12bafcc19b_0_105)
+
+---
+
+## D3 Alternatives
+
+- If you want to use a toolkit of standard charts based on d3:
+[NVD3](http://nvd3.org/)
+- An alternative declarative library: [Vega](https://trifacta.github.io/vega/)
+
+---
+
+## D3 and R
+
+- We saw previously that D3 can access external data through `json`
+- That's how we can pass data from R to the Javascript browser
+
+---
+
+## D3 and R
+
+
+- [rCharts](http://ramnathv.github.io/rCharts/): Most mature. Provides binding between R and a small set of javascript viz libraries.
+- [ggvis](http://ggvis.rstudio.com/): Uses grammar of graphics like ggplot2, bindings to [Vega](https://trifacta.github.io/vega/) to define JS charts.
+- [htmlwidgets](http://www.htmlwidgets.org/index.html) a formalization of how to bind R to JS libraries. 
+- [Roll your own](https://github.com/jcheng5/shiny-js-examples)
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
