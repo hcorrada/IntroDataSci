@@ -8,9 +8,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-**Posted:** December 7, 2016  
+**Posted:** May 8th, 2018   
 **Last Updated:** `r format(Sys.Date(), "%b %d, %Y")`  
-**Due:** December 12, 2016  
+**Due:** May 10th, 2018   
 
 Use the `leaflet` package and our previously used Baltimore crime dataset
 to make an interactive data map of Baltimore Crime.
@@ -31,11 +31,14 @@ dat <- arrest_tab %>%
   mutate(lat=as.numeric(str_replace(lat, "\\(", ""))) %>%
   mutate(lng=as.numeric(str_replace(lng, "\\)", ""))) %>%
   sample_n(2000)
+dat
 ```
+
+Note the attributes `lat` and `lng` which indicate geographical location as latitude (`lat`) and longitude (`lng`).
 
 2. Use the `leaflet` package to create an interactive map of Baltimore
 
-```{r start_map}
+```{r start_map, warnings=FALSE}
 library(leaflet)
 
 balto_map <- leaflet(dat) %>%
@@ -50,21 +53,16 @@ https://rstudio.github.io/leaflet/
 3. Add graphical elements to display the data. For instance, add circles, with colors indicating sex. Or circles with
 colors indicating race. Or anything else that strikes your fancy.
 
-4. Embed your map in your Rmarkdown file, knit **to HTML** this time (not PDF) and submit to ELMS.
+These will be useful:
+
+- https://rstudio.github.io/leaflet/markers.html
+- https://www.rdocumentation.org/packages/leaflet/versions/1.1.0/topics/addControl
+
+4. Embed your map in your Rmarkdown file, knit **to HTML** this time (not PDF) and submit the HTML file to ELMS.
 
 ## Submission
 
-Prepare and knit an Rmarkdown file that includes: (a) code to carry out eacf of the steps above, (b) output showing the result of your code (in this case the interactive), and (c) a short prose description of your interactive map (i.e., what are you showing with this data and map). Remember, the writeup you are preparing is intended to communicate your data analysis effectively. Thoughtlessly showing large amounts of output in your writeup defeats that purpose.  
-
-Submit to ELMS at https://myelms.umd.edu/courses/1199381/assignments/4270815
-
-### Group work
-
-Working in groups in this project is encouraged but not required. If working on a group: (1) groups can be of 2 or 3 people, (2) **THIS IS DIFFERENT IN THIS PROJECT** a single group member will submit the group's writeup, (3) in all cases, names of peers who worked in the group should be included in the writeup. 
-
-**IMPORTANT INFORMATION**: Please fill this form (COMING SOON)
-
-As with all group work, and reflective of academic ethics code, there is an expectation that all group members will contribute equally in design, implementation and reporting of this work. If any student feels this expectation was not met when working on this project, they should contact the instructor team who will handle the situation as expediently and fairly as possible.
+Prepare and knit an Rmarkdown file that includes: (a) code to carry out each of the steps above, (b) output showing the result of your code (in this case the interactive map), and (c) a short prose description of your interactive map (i.e., what are you showing with this data and map). Remember, the writeup you are preparing is intended to communicate your data analysis effectively. Thoughtlessly showing large amounts of output in your writeup defeats that purpose.  
 
 #### Grading
 
