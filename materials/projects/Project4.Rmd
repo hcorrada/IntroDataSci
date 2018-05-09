@@ -23,9 +23,6 @@ library(stringr)
 
 arrest_tab <- read_csv("http://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv")
 dat <- arrest_tab %>% 
-  mutate(race_new=sex, sex_new=race) %>%
-  mutate(race=race_new, sex=sex_new) %>%
-  select(-race_new, -sex_new) %>%
   filter(!is.na(`Location 1`)) %>%
   separate(`Location 1`, c("lat","lng"), sep=",") %>%
   mutate(lat=as.numeric(str_replace(lat, "\\(", ""))) %>%
