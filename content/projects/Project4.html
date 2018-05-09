@@ -4157,9 +4157,6 @@ library(stringr)
 
 arrest_tab &lt;- read_csv(&quot;http://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv&quot;)
 dat &lt;- arrest_tab %&gt;% 
-  mutate(race_new=sex, sex_new=race) %&gt;%
-  mutate(race=race_new, sex=sex_new) %&gt;%
-  select(-race_new, -sex_new) %&gt;%
   filter(!is.na(`Location 1`)) %&gt;%
   separate(`Location 1`, c(&quot;lat&quot;,&quot;lng&quot;), sep=&quot;,&quot;) %&gt;%
   mutate(lat=as.numeric(str_replace(lat, &quot;\\(&quot;, &quot;&quot;))) %&gt;%
@@ -4167,32 +4164,33 @@ dat &lt;- arrest_tab %&gt;%
   sample_n(2000)
 dat</code></pre>
 <pre><code>## # A tibble: 2,000 x 16
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation      
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;               
-##  1 11388926    51 M     B     12/17/2011 19:10      2400 Winchester St  
-##  2 12525761    21 M     B     08/03/2012 10:55      3900 W Rogers Ave   
-##  3 11351778    21 M     B     10/21/2011 15:40      200 N Belnord Ave   
-##  4 12509828    40 M     W     07/08/2012 23:35      2200 W Patapsco Ave 
-##  5 11227613    22 M     B     05/26/2011 13:30      1300 Fremont Ave    
-##  6 11274379    40 M     B     07/19/2011 11:00      4300 Belair Rd      
-##  7 12490470    21 M     B     06/04/2012 19:58      200 Mallow Hill Rd  
-##  8 11262146    36 M     B     07/06/2011 10:44      1300 E Northern Pkwy
-##  9 12402863    58 M     B     01/12/2012 20:00      1900 W Fredrick Ave 
-## 10 11231432    42 F     B     06/01/2011 18:00      1200 N Luzerne Ave  
+##      arrest   age race  sex   arrestDate arrestTime arrestLocation       
+##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                
+##  1 12576430    18 B     M     10/23/2012 19:00      1100 E Cold Spring Ln
+##  2 12441311    52 B     F     03/15/2012 11:20      100 S Calverton Rd   
+##  3 11161026    19 B     M     03/01/2011 09:30      1800 E Lafayette Ave 
+##  4 12567204    42 W     F     10/09/2012 13:00      1800 Mchenry St      
+##  5 11319690    28 B     M     09/12/2011 22:15      100 N Curley St      
+##  6 11202369    44 B     M     04/25/2011 18:30      2000 Robb St         
+##  7 12497165    49 B     M     06/15/2012 14:30      5100 Park Heights St 
+##  8 11227869    35 B     M     05/26/2011 21:05      3000 W Garriosn Ave  
+##  9 12485022    30 B     M     05/24/2012 18:45      2900 Presstman St    
+## 10 12411841    48 B     M     01/27/2012 10:30      1100 Gilmor St       
 ## # ... with 1,990 more rows, and 9 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
 ## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;</code></pre>
+<p>Note the attributes <code>lat</code> and <code>lng</code> which indicate geographical location as latitude (<code>lat</code>) and longitude (<code>lng</code>).</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Use the <code>leaflet</code> package to create an interactive map of Baltimore</li>
 </ol>
-<pre class="r"><code>library(leaflet)</code></pre>
-<pre><code>## Warning: package 'leaflet' was built under R version 3.4.4</code></pre>
-<pre class="r"><code>balto_map &lt;- leaflet(dat) %&gt;%
+<pre class="r"><code>library(leaflet)
+
+balto_map &lt;- leaflet(dat) %&gt;%
   addTiles() %&gt;%
   setView(lat=39.29, lng=-76.61, zoom=11)
 balto_map</code></pre>
-<div id="htmlwidget-0319828ad3edfcc41160" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0319828ad3edfcc41160">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[39.29,-76.61],11,[]]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d11f223682357ce6d518" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d11f223682357ce6d518">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[39.29,-76.61],11,[]]},"evals":[],"jsHooks":[]}</script>
 <p>You can find more information about leaflet here: <a href="https://rstudio.github.io/leaflet/" class="uri">https://rstudio.github.io/leaflet/</a></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Add graphical elements to display the data. For instance, add circles, with colors indicating sex. Or circles with colors indicating race. Or anything else that strikes your fancy.</li>

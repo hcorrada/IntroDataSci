@@ -35,7 +35,7 @@ Note the attributes `lat` and `lng` which indicate geographical location as lati
 
 2. Use the `leaflet` package to create an interactive map of Baltimore
 
-```{r start_map, warnings=FALSE}
+```{r start_map, warning=FALSE}
 library(leaflet)
 
 balto_map <- leaflet(dat) %>%
