@@ -1,0 +1,110 @@
+---
+title: "Wrapup"
+author: "Héctor Corrada Bravo"
+company: "University of Maryland"
+date: "`r Sys.Date()`"
+css: ["custom.css"]
+output: 
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    includes:
+      after_body: "custom.html"
+    nature:
+      ratio: "16:9"
+---
+class: title-slide, center, middle
+count: false
+
+```{r cowplot_setup, echo=FALSE, message=FALSE}
+library(cowplot)
+```
+
+.banner[![](img/epiviz.png)]
+
+.title[Wrapup: What Next?]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+CMSC320: `r Sys.Date()`
+]
+
+.logo[![](img/logo.png)]
+
+---
+layout: true
+
+## At UMD
+
+---
+
+- Next courses (dive deeper): Machine Learning (422) Databases (424)  
+- Other relevant courses: 
+  - Computational Methods (460, for optimization)
+  - Bioinformatics (423, application of things we saw in class)  
+  - HCI (434, communication and interaction)  
+  
+
+---
+
+There is a Data Science specialization that include these and other courses:
+
+[http://undergrad.cs.umd.edu/degree-requirements-cs-major](http://undergrad.cs.umd.edu/degree-requirements-cs-major)
+
+---
+
+
+Start thinking of research opportunities
+  - If you plan on going to grad school, it makes a big difference in applications
+  - If you don't plan on going to grad school, it gives you experience thinking about data-centric problems and applications  
+  
+For data science, in general, it is important to show qualifaction academically, and productively. 
+
+Have a portfolio! Github can be very useful.
+
+---
+layout: true
+
+## Outside UMD
+
+---
+
+**Get busy!**
+
+- Kaggle competitions: [https://www.kaggle.com/](https://www.kaggle.com/) 
+- Get involved in open source projects. If there was something you wished existed while doing class work, build it!
+- Join the local DS community: [http://www.datacommunitydc.org/](http://www.datacommunitydc.org/)
+
+---
+
+**Learn new things**
+
+- Python has a lot of useful stuff for data science [http://www.amazon.com/Python-Data-Analysis-Wrangling-IPython/dp/1449319793](http://www.amazon.com/Python-Data-Analysis-Wrangling-IPython/dp/1449319793)
+- Tutorials on Kaggle are pretty good, their new kernels_ area is fun to look at: https://www.kaggle.com/kernels
+- Hector's Data Science corner: http://www.hcbravo.org/IntroDataSci/datasci_corner/
+- Many resources available online
+
+---
+
+**Stay informed**
+
+- Lots of interesting articles and posts, from many different perspectives: [https://www.oreilly.com/topics/data](https://www.oreilly.com/topics/data)  
+
+- There's even podcasts!:
+  - [Data Skeptic](http://dataskeptic.com/)
+  - [Data Stories](http://datastori.es/)
+  - [Talking Machines](http://www.thetalkingmachines.com/)
+  - [Not so standard deviations](https://soundcloud.com/nssd-podcast)
+  - [More](http://dataconomy.com/top-10-data-science-and-machine-learning-podcasts/)
+
+---
+
+Remember, Data Science affords opportunities beyond the mathematical and the technical.
+
+These are skills that can make significant impact outside the technical realm: journalism, health, civics, etc.
+
+E.g., https://medium.com/@dpatil
+
+Think about what motivates **you** first, and then figure out how to dive in.
