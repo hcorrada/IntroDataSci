@@ -959,6 +959,15 @@ layout: false
 
 Advanced parallel computation systems and methods are used in order to train these deep networks, with billions of connections.
 
+.center[.image-50[![](images/gpus.jpg)]]
+
+
+---
+
+## Deep Feed-Forward Neural Networks
+
+Advanced parallel computation systems and methods are used in order to train these deep networks, with billions of connections.
+
 The applications we discussed previously build this type of massive deep network.
 
 --
@@ -1213,6 +1222,121 @@ Parameters are shared across a time lag.
 ---
 
 The _long short-term memory_ (LSTM) model is very popular in time series analysis
+
+---
+layout: false
+
+## Example
+
+Learn to add: "55+22=77"
+https://keras.rstudio.com/articles/examples/addition_rnn.html
+
+```{r echo=FALSE}
+library(stringi)
+
+# Function Definitions ----------------------------------------------------
+
+# Creates the char table and sorts them.
+learn_encoding <- function(chars){
+  sort(chars)
+}
+
+# Encode from a character sequence to a one hot integer representation.
+# > encode("22+22", char_table)
+# [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+# 2    0    0    0    0    1    0    0    0    0     0     0     0
+# 2    0    0    0    0    1    0    0    0    0     0     0     0
+# +    0    1    0    0    0    0    0    0    0     0     0     0
+# 2    0    0    0    0    1    0    0    0    0     0     0     0
+# 2    0    0    0    0    1    0    0    0    0     0     0     0
+encode <- function(char, char_table){
+  strsplit(char, "") %>%
+    unlist() %>%
+    sapply(function(x){
+      as.numeric(x == char_table)
+    }) %>% 
+    t()
+}
+
+# Decode the one hot representation/probabilities representation
+# to their character output.
+decode <- function(x, char_table){
+  apply(x,1, function(y){
+    char_table[which.max(y)]
+  }) %>% paste0(collapse = "")
+}
+```
+
+--
+
+Addition encoded as sequence of one-hot vectors:
+```{r echo=FALSE}
+encode("55+22", char_table)
+```
+
+---
+layout: false
+
+## Example
+
+Learn to add: "55+22=77"
+https://keras.rstudio.com/articles/examples/addition_rnn.html
+
+Result encoded as sequence of one-hot vectors
+
+```{r echo=FALSE}
+encode("77", char_table)
+```
+
+--
+This is a **sequence-to-sequence** model. Perfect application for recurrent neural net.
+
+---
+
+## Example
+
+```{r echo=FALSE, size="small"}
+HIDDEN_SIZE <- 128
+BATCH_SIZE <- 128
+LAYERS <- 1
+
+# Initialize sequential model
+model <- keras_model_sequential() 
+
+model %>%
+  # "Encode" the input sequence using an RNN, producing an output of HIDDEN_SIZE.
+  # Note: In a situation where your input sequences have a variable length,
+  # use input_shape=(None, num_feature).
+  layer_lstm(HIDDEN_SIZE, input_shape=c(MAXLEN, length(char_table))) %>%
+  # As the decoder RNN's input, repeatedly provide with the last hidden state of
+  # RNN for each time step. Repeat 'DIGITS + 1' times as that's the maximum
+  # length of output, e.g., when DIGITS=3, max output is 999+999=1998.
+  layer_repeat_vector(DIGITS + 1)
+
+# The decoder RNN could be multiple layers stacked or a single layer.
+# By setting return_sequences to True, return not only the last output but
+# all the outputs so far in the form of (num_samples, timesteps,
+# output_dim). This is necessary as TimeDistributed in the below expects
+# the first dimension to be the timesteps.
+for(i in 1:LAYERS)
+  model %>% layer_lstm(HIDDEN_SIZE, return_sequences = TRUE)
+
+model %>% 
+  # Apply a dense layer to the every temporal slice of an input. For each of step
+  # of the output sequence, decide which character should be chosen.
+  time_distributed(layer_dense(units = length(char_table))) %>%
+  layer_activation("softmax")
+
+# Compiling the model
+model %>% compile(
+  loss = "categorical_crossentropy", 
+  optimizer = "adam", 
+  metrics = "accuracy"
+)
+
+# Get the model summary
+summary(model)
+```
 
 ---
 layout: false

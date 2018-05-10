@@ -861,6 +861,15 @@ layout: false
 
 Advanced parallel computation systems and methods are used in order to train these deep networks, with billions of connections.
 
+.center[.image-50[![](images/gpus.jpg)]]
+
+
+---
+
+## Deep Feed-Forward Neural Networks
+
+Advanced parallel computation systems and methods are used in order to train these deep networks, with billions of connections.
+
 The applications we discussed previously build this type of massive deep network.
 
 --
@@ -1115,6 +1124,74 @@ Parameters are shared across a time lag.
 ---
 
 The _long short-term memory_ (LSTM) model is very popular in time series analysis
+
+---
+layout: false
+
+## Example
+
+Learn to add: "55+22=77"
+https://keras.rstudio.com/articles/examples/addition_rnn.html
+
+
+
+--
+
+Addition encoded as sequence of one-hot vectors:
+
+```
+##   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+## 5    0    0    0    0    0    0    0    1    0     0     0     0
+## 5    0    0    0    0    0    0    0    1    0     0     0     0
+## +    0    1    0    0    0    0    0    0    0     0     0     0
+## 2    0    0    0    0    1    0    0    0    0     0     0     0
+## 2    0    0    0    0    1    0    0    0    0     0     0     0
+```
+
+---
+layout: false
+
+## Example
+
+Learn to add: "55+22=77"
+https://keras.rstudio.com/articles/examples/addition_rnn.html
+
+Result encoded as sequence of one-hot vectors
+
+
+```
+##   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
+## 7    0    0    0    0    0    0    0    0    0     1     0     0
+## 7    0    0    0    0    0    0    0    0    0     1     0     0
+```
+
+--
+This is a **sequence-to-sequence** model. Perfect application for recurrent neural net.
+
+---
+
+## Example
+
+
+```
+## ___________________________________________________________________________
+## Layer (type)                     Output Shape                  Param #     
+## ===========================================================================
+## lstm_17 (LSTM)                   (None, 128)                   72192       
+## ___________________________________________________________________________
+## repeat_vector_9 (RepeatVector)   (None, 3, 128)                0           
+## ___________________________________________________________________________
+## lstm_18 (LSTM)                   (None, 3, 128)                131584      
+## ___________________________________________________________________________
+## time_distributed_9 (TimeDistribu (None, 3, 12)                 1548        
+## ___________________________________________________________________________
+## activation_9 (Activation)        (None, 3, 12)                 0           
+## ===========================================================================
+## Total params: 205,324
+## Trainable params: 205,324
+## Non-trainable params: 0
+## ___________________________________________________________________________
+```
 
 ---
 layout: false
