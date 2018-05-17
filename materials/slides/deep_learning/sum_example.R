@@ -164,13 +164,13 @@ model %>% fit(
   x = x_train, 
   y = y_train, 
   batch_size = BATCH_SIZE, 
-  epochs = 10,
+  epochs = 6,
   validation_data = list(x_val, y_val),
   verbose = 1
 )
 
 # Predict for a new observation
-new_obs <- encode("55+22", char_table) %>%
+new_obs <- encode("66+33", char_table) %>%
   array(dim = c(1,5,12))
 result <- predict(model, new_obs)
 result <- result[1,,]
