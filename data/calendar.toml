@@ -1,5 +1,5 @@
 [day01]
-date = "1/25"
+date = "1/29"
 
 [[day01.covers]]
 title = "What is Data Science, Course Introduction and Logistics"
@@ -14,7 +14,7 @@ title = "Lecture Slides: Introduction and Overview"
 notes = "slides/cmsc320_intro.pdf"
 
 [day02]
-date = "1/30"
+date = "1/31"
 
 [[day02.covers]]
 title = "Preliminaries 1: Setting up"
@@ -36,7 +36,7 @@ link = "cmsc320_class-notes_20180130.pdf"
 # # link = "homeworks/rocker/"
 
 [day03]
-date = "2/1"
+date = "2/5"
 
 [[day03.covers]]
 title = "Preliminaries 2: More data operations"
@@ -54,14 +54,14 @@ notes = "bookdown-notes/brief-introduction-to-rmarkdown.html"
 link = "cmsc320_class-notes_20180201.pdf"
 
 [day04]
-date = "2/6"
+date = "2/7"
 
 [[day04.covers]]
 title = "Best Practices for Data Science Projects"
 notes = "slides/cmsc320_best-practices.pdf"
 
 [day05]
-date = "2/8"
+date = "2/12"
 
 [[day05.covers]]
 title = "Data representation models: The ER model"
@@ -87,7 +87,7 @@ title = "HW1: Datatypes and wrangling"
 link = "homeworks/datatypes_wrangling/"
 
 [day06]
-date = "2/13"
+date = "2/14"
 
 [[day06.covers]]
 title = "Relational data operations: Joins"
@@ -105,7 +105,7 @@ notes = "bookdown-notes/db-parting-shots.html"
 link = "cmsc320_class-notes_20180213.pdf"
 
 [day07]
-date = "2/15"
+date = "2/19"
 
 [[day07.covers]]
 title = "Data acquisition: loading and scraping"
@@ -119,10 +119,7 @@ notes = "classroom-notes/sql_pr.html"
 link = "cmsc320_class-notes_20180213.pdf"
 
 [day08]
-date = "2/20"
-
-[[day08.covers]]
-title = "LECTURE CANCELLED, CAREER FAIR"
+date = "2/21"
 
 [[day08.covers]]
 title = "Common operations for data tidying"
@@ -137,7 +134,7 @@ title = "HW2: ER Model and SQL"
 link = "homeworks/er_sql/"
 
 [day09]
-date = "2/22"
+date = "2/26"
 
 [[day09.covers]]
 title = "Midterm I catch-up and review"
@@ -151,13 +148,13 @@ notes = "misc/wrangling_exercise.html"
 link = "cmsc320_class-notes_20180222.pdf"
 
 [day10]
-date = "2/27"
+date = "2/28"
 
 [[day10.covers]]
 title = "Midterm I"
 
 [day11]
-date = "3/1"
+date = "3/5"
 
 [[day11.covers]]
 title = "Entity Resolution and Record Linkage"
@@ -170,7 +167,7 @@ notes = "bookdown-notes/exploratory-data-analysis-visualization.html"
 link = "cmsc320_class-notes_20180301.pdf"
 
 [day12]
-date = "3/6"
+date = "3/7"
 
 [[day12.covers]]
 title = "Exploratory Data Analysis 2: Summary statistics"
@@ -180,7 +177,7 @@ notes = "bookdown-notes/exploratory-data-analysis-summary-statistics.html"
 link = "cmsc320_class-notes_20180306.pdf"
 
 [day13]
-date = "3/8"
+date = "3/12"
 
 
 [[day13.covers]]
@@ -199,7 +196,7 @@ notes = "bookdown-notes/eda-handling-missing-data.html"
 link = "cmsc320_class-notes_20180308.pdf"
 
 [day14]
-date = "3/13"
+date = "3/14"
 
 [[day14.covers]]
 title = "Univariate distributions and statistics"
@@ -212,14 +209,15 @@ link = "cmsc320_class-notes_20180314.pdf"
 # title = "Project 1: Data scraping and cleaning"
 # link = "projects/Project1/"
 
+# out for enar
 [day15]
-date = "3/15"
+date = "3/26"
 
 [[day15.covers]]
 title = "No lecture: project and HW question"
 
 [day15a]
-date = "3/16"
+date = "3/28"
 
 [[day15a.workdue]]
 title = "Project 1: Data scraping and cleaning"
@@ -230,7 +228,7 @@ title = "Homework 3: Data Transformations"
 link = "homeworks/transformations/"
 
 [day16]
-date = "3/27"
+date = "3/28"
 
 [[day16.covers]]
 title = "Experiment design and hypothesis testing"
@@ -239,8 +237,9 @@ notes = "bookdown-notes/experiment-design-and-hypothesis-testing.html"
 [day16.class_notes]
 link = "cmsc320_class-notes_20180327.pdf"
 
+# out for simons
 [day17]
-date = "3/29"
+date = "4/2"
 
 [[day17.covers]]
 title = "Multivariate probability and statistics"
@@ -250,7 +249,7 @@ notes = "bookdown-notes/multivariate-probability.html"
 link = "cmsc320_class-notes_20180329.pdf"
 
 [day18]
-date = "4/3"
+date = "4/4"
 
 [[day18.covers]]
 title = "Data Analysis with Geometry"
@@ -260,7 +259,7 @@ notes = "bookdown-notes/data-analysis-with-geometry.html"
 link = "cmsc320_class-notes_20180403.pdf"
 
 [day19]
-date = "4/5"
+date = "4/9"
 
 [[day19.covers]]
 title = "Linear models for regression"
@@ -270,14 +269,15 @@ notes = "bookdown-notes/linear-regression.html"
 link = "cmsc320_class-notes_20180405.pdf"
 
 [day19a]
-date = "4/6"
+date = "4/11"
 
 [[day19a.workdue]]
 title = "Project 2: Data wrangling and exploratory analysis"
 link = "projects/project2/"
 
+# out for bio-it
 [day20]
-date = "4/10"
+date = "4/16"
 
 [[day20.covers]]
 title = "Linear models for classification"
@@ -286,8 +286,9 @@ notes = "bookdown-notes/linear-models-for-classification.html"
 [day20.class_notes]
 link = "cmsc320_class-notes_20180410.pdf"
 
+# out for bio-it
 [day21]
-date = "4/12"
+date = "4/18"
 
 [[day21.covers]]
 title = "Solving linear ML problems"
@@ -305,7 +306,7 @@ link = "cmsc320_class-notes_20180412.pdf"
 # link = "projects/Project2/"
 
 [day22]
-date = "4/17"
+date = "4/23"
 
 [[day22.covers]]
 title = "Non-linear models for regression and classification: Trees"
@@ -324,7 +325,7 @@ link = "homeworks/regression/"
 link = "cmsc320_class-notes_20180417.pdf"
 
 [day23]
-date = "4/19"
+date = "4/25"
 
 [[day23.covers]]
 title = "Midterm II catch-up and review"
@@ -342,13 +343,13 @@ notes = "bookdown-notes/solving-linear-ml-problems.html#logistic-regression-1"
 link = "cmsc320_class-notes_20180419.pdf"
 
 [day24]
-date = "4/24"
+date = "4/30"
 
 [[day24.covers]]
 title = "Midterm II"
 
 [day25]
-date = "4/26"
+date = "5/2"
 
 [[day25. covers]]
 title = "Random Forests"
@@ -369,7 +370,7 @@ link = "cmsc320_class-notes_20180426.pdf"
 # title = "Project 3 Discussion: matrix representation of learning problems, maximum likelihood and logistic regression"
 
 [day26]
-date = "5/1"
+date = "5/7"
 
 [[day26.covers]]
 title = "Unsupervised Learning: Clustering"
@@ -379,21 +380,21 @@ notes = "bookdown-notes/unsupervised-learning-clustering.html"
 link = "cmsc320_class-notes_20180501.pdf"
 
 [day27]
-date = "5/3"
+date = "5/9"
 
 [[day27.covers]]
 title = "Unsupervised Learning: Dimensionality Reduction"
 notes = "bookdown-notes/unsupervised-learning-dimensionality-reduction.html"
 
 [day27a]
-date = "5/4"
+date = "5/9"
 
 [[day27a.workdue]]
 title = "Project 3: Regression and Classification"
 link = "projects/project3/"
 
 [day28]
-date = "5/8"
+date = "5/14"
 
 [[day28.covers]]
 title = "Writing about data, analysis and inferences"
@@ -408,7 +409,7 @@ title = "Introduction to interactive data visualization"
 notes = "slides/cmsc320_interactive-vis.pdf"
 
 [day29]
-date = "5/10"
+date = "5/14"
 
 [[day29.covers]]
 title = "The Keras way to (deep) learn"
