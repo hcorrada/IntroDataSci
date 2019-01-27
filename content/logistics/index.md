@@ -8,11 +8,11 @@ This page constiutes the official syllabus for this class.
 ## Course Information
 
 **Introduction to Data Science**  
-**CMSC320 Spring 2018**
+**CMSC320 Spring 2019**
 
 
 *	Lecture Meeting Times    
-    Tuesday and Thursday, 3:30pm-4:45pm, HJ Patterson 0226 
+    Tuesday and Thursday, 3:30pm-4:45pm, ESJ 0224
 
 *	Instructor:  
     [H&eacute;ctor Corrada Bravo](http://www.cbcb.umd.edu/~hcorrada)  
@@ -26,6 +26,7 @@ This page constiutes the official syllabus for this class.
     - For course related questions, use [Piazza]({{< piazzaurl >}}) as indicated below.  
     - For any other communication (e.g., absences accomodations etc.) send message through ELMS.
 *	TAs:
+    - This list needs to be updated  
     - Weijia Xu (Graduate)  
       <weijia.xu.ixia@gmail.com>  
       Office Hours: Tues and Thur 1p-3p AVW 3126  
@@ -107,7 +108,7 @@ libraries, data resources and publishing mechanisms.
   academic integrity policy.  
 * Cell phone usage is **prohibited** during lecture, laptop use will be allowed to the extent that students **demonstrably** use it to follow along an in-class analysis or demonstration.  
 * You can earn full credit for class participation in three ways:   
-    (1) lecture participation, asking questions and answering your peers questions, (this will be impossible to keep track of, so please the two below :-) )   
+    (1) lecture participation, asking questions and answering your peers questions,   
     (2) piazza participation, asking and answering questions on piazza,   
     (3) regular attendance to office hours (there will be sign-in sheets during office hours).   
     To earn full credit you should aim to ask or answer a question at least once every two weeks on lecture or on piazza; or attend office hours at least once a month (this can include just going to my office hours to chat about computer science, data, science, software engineering, etc.).
