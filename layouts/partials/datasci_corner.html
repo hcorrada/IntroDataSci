@@ -5,7 +5,9 @@
         </thead>
         <tbody>
             {{ range .entries }}
+            {{ if (eq .show "") }}
             {{ partial "datasci_corner_entry" . }}
+            {{ end }}
             {{ end }}
         </tbody>
 </table>
