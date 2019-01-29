@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Lecture Notes: Introduction to Data Science</title>
-  <meta name="description" content="Lecture Notes: Introduction to Data Science">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <title>15 Ingesting data | Lecture Notes: Introduction to Data Science</title>
+  <meta name="description" content="15 Ingesting data | Lecture Notes: Introduction to Data Science">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Lecture Notes: Introduction to Data Science" />
+  <meta property="og:title" content="15 Ingesting data | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Lecture Notes: Introduction to Data Science" />
+  <meta name="twitter:title" content="15 Ingesting data | Lecture Notes: Introduction to Data Science" />
   
   
   
@@ -25,17 +25,18 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2018-05-01">
+<meta name="date" content="2019-01-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="db-parting-shots.html">
+<link rel="prev" href="sql-system-constructs.html">
 <link rel="next" href="tidying-data.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -47,9 +48,9 @@
 
 
 
-<script src="libs/htmlwidgets-1.0/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.2.0/str_view.js"></script>
+<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
 
 
 <style type="text/css">
@@ -261,216 +262,211 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.3" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#views"><i class="fa fa-check"></i><b>14.3</b> Views</a></li>
 <li class="chapter" data-level="14.4" data-path="sql-system-constructs.html"><a href="sql-system-constructs.html#nulls"><i class="fa fa-check"></i><b>14.4</b> NULLs</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="db-parting-shots.html"><a href="db-parting-shots.html"><i class="fa fa-check"></i><b>15</b> DB Parting Shots</a><ul>
-<li class="chapter" data-level="15.1" data-path="db-parting-shots.html"><a href="db-parting-shots.html#database-query-optimization"><i class="fa fa-check"></i><b>15.1</b> Database Query Optimization</a></li>
-<li class="chapter" data-level="15.2" data-path="db-parting-shots.html"><a href="db-parting-shots.html#json-data-model"><i class="fa fa-check"></i><b>15.2</b> JSON Data Model</a></li>
+<li class="chapter" data-level="15" data-path="ingesting-data.html"><a href="ingesting-data.html"><i class="fa fa-check"></i><b>15</b> Ingesting data</a><ul>
+<li class="chapter" data-level="15.1" data-path="ingesting-data.html"><a href="ingesting-data.html#structured-ingestion"><i class="fa fa-check"></i><b>15.1</b> Structured ingestion</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="ingesting-data.html"><a href="ingesting-data.html#csv-files-and-similar"><i class="fa fa-check"></i><b>15.1.1</b> CSV files (and similar)</a></li>
+<li class="chapter" data-level="15.1.2" data-path="ingesting-data.html"><a href="ingesting-data.html#excel-spreadsheets"><i class="fa fa-check"></i><b>15.1.2</b> Excel spreadsheets</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="ingesting-data.html"><a href="ingesting-data.html"><i class="fa fa-check"></i><b>16</b> Ingesting data</a><ul>
-<li class="chapter" data-level="16.1" data-path="ingesting-data.html"><a href="ingesting-data.html#structured-ingestion"><i class="fa fa-check"></i><b>16.1</b> Structured ingestion</a><ul>
-<li class="chapter" data-level="16.1.1" data-path="ingesting-data.html"><a href="ingesting-data.html#csv-files-and-similar"><i class="fa fa-check"></i><b>16.1.1</b> CSV files (and similar)</a></li>
-<li class="chapter" data-level="16.1.2" data-path="ingesting-data.html"><a href="ingesting-data.html#excel-spreadsheets"><i class="fa fa-check"></i><b>16.1.2</b> Excel spreadsheets</a></li>
-</ul></li>
-<li class="chapter" data-level="16.2" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping"><i class="fa fa-check"></i><b>16.2</b> Scraping</a><ul>
-<li class="chapter" data-level="16.2.1" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping-from-dirty-html-tables"><i class="fa fa-check"></i><b>16.2.1</b> Scraping from dirty HTML tables</a></li>
+<li class="chapter" data-level="15.2" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping"><i class="fa fa-check"></i><b>15.2</b> Scraping</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="ingesting-data.html"><a href="ingesting-data.html#scraping-from-dirty-html-tables"><i class="fa fa-check"></i><b>15.2.1</b> Scraping from dirty HTML tables</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="tidying-data.html"><a href="tidying-data.html"><i class="fa fa-check"></i><b>17</b> Tidying data</a><ul>
-<li class="chapter" data-level="17.1" data-path="tidying-data.html"><a href="tidying-data.html#tidy-data-1"><i class="fa fa-check"></i><b>17.1</b> Tidy Data</a></li>
-<li class="chapter" data-level="17.2" data-path="tidying-data.html"><a href="tidying-data.html#common-problems-in-messy-data"><i class="fa fa-check"></i><b>17.2</b> Common problems in messy data</a><ul>
-<li class="chapter" data-level="17.2.1" data-path="tidying-data.html"><a href="tidying-data.html#headers-as-values"><i class="fa fa-check"></i><b>17.2.1</b> Headers as values</a></li>
-<li class="chapter" data-level="17.2.2" data-path="tidying-data.html"><a href="tidying-data.html#multiple-variables-in-one-column"><i class="fa fa-check"></i><b>17.2.2</b> Multiple variables in one column</a></li>
-<li class="chapter" data-level="17.2.3" data-path="tidying-data.html"><a href="tidying-data.html#variables-stored-in-both-rows-and-columns"><i class="fa fa-check"></i><b>17.2.3</b> Variables stored in both rows and columns</a></li>
-<li class="chapter" data-level="17.2.4" data-path="tidying-data.html"><a href="tidying-data.html#multiple-types-in-one-table"><i class="fa fa-check"></i><b>17.2.4</b> Multiple types in one table</a></li>
+<li class="chapter" data-level="16" data-path="tidying-data.html"><a href="tidying-data.html"><i class="fa fa-check"></i><b>16</b> Tidying data</a><ul>
+<li class="chapter" data-level="16.1" data-path="tidying-data.html"><a href="tidying-data.html#tidy-data-1"><i class="fa fa-check"></i><b>16.1</b> Tidy Data</a></li>
+<li class="chapter" data-level="16.2" data-path="tidying-data.html"><a href="tidying-data.html#common-problems-in-messy-data"><i class="fa fa-check"></i><b>16.2</b> Common problems in messy data</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="tidying-data.html"><a href="tidying-data.html#headers-as-values"><i class="fa fa-check"></i><b>16.2.1</b> Headers as values</a></li>
+<li class="chapter" data-level="16.2.2" data-path="tidying-data.html"><a href="tidying-data.html#multiple-variables-in-one-column"><i class="fa fa-check"></i><b>16.2.2</b> Multiple variables in one column</a></li>
+<li class="chapter" data-level="16.2.3" data-path="tidying-data.html"><a href="tidying-data.html#variables-stored-in-both-rows-and-columns"><i class="fa fa-check"></i><b>16.2.3</b> Variables stored in both rows and columns</a></li>
+<li class="chapter" data-level="16.2.4" data-path="tidying-data.html"><a href="tidying-data.html#multiple-types-in-one-table"><i class="fa fa-check"></i><b>16.2.4</b> Multiple types in one table</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="text-and-dates.html"><a href="text-and-dates.html"><i class="fa fa-check"></i><b>18</b> Text and Dates</a><ul>
-<li class="chapter" data-level="18.1" data-path="text-and-dates.html"><a href="text-and-dates.html#text"><i class="fa fa-check"></i><b>18.1</b> Text</a><ul>
-<li class="chapter" data-level="18.1.1" data-path="text-and-dates.html"><a href="text-and-dates.html#string-operations"><i class="fa fa-check"></i><b>18.1.1</b> String operations</a></li>
-<li class="chapter" data-level="18.1.2" data-path="text-and-dates.html"><a href="text-and-dates.html#regular-expressions"><i class="fa fa-check"></i><b>18.1.2</b> Regular expressions</a></li>
-<li class="chapter" data-level="18.1.3" data-path="text-and-dates.html"><a href="text-and-dates.html#tools-using-regular-expressions"><i class="fa fa-check"></i><b>18.1.3</b> Tools using regular expressions</a></li>
-<li class="chapter" data-level="18.1.4" data-path="text-and-dates.html"><a href="text-and-dates.html#extracting-attributes-from-text"><i class="fa fa-check"></i><b>18.1.4</b> Extracting attributes from text</a></li>
+<li class="chapter" data-level="17" data-path="text-and-dates.html"><a href="text-and-dates.html"><i class="fa fa-check"></i><b>17</b> Text and Dates</a><ul>
+<li class="chapter" data-level="17.1" data-path="text-and-dates.html"><a href="text-and-dates.html#text"><i class="fa fa-check"></i><b>17.1</b> Text</a><ul>
+<li class="chapter" data-level="17.1.1" data-path="text-and-dates.html"><a href="text-and-dates.html#string-operations"><i class="fa fa-check"></i><b>17.1.1</b> String operations</a></li>
+<li class="chapter" data-level="17.1.2" data-path="text-and-dates.html"><a href="text-and-dates.html#regular-expressions"><i class="fa fa-check"></i><b>17.1.2</b> Regular expressions</a></li>
+<li class="chapter" data-level="17.1.3" data-path="text-and-dates.html"><a href="text-and-dates.html#tools-using-regular-expressions"><i class="fa fa-check"></i><b>17.1.3</b> Tools using regular expressions</a></li>
+<li class="chapter" data-level="17.1.4" data-path="text-and-dates.html"><a href="text-and-dates.html#extracting-attributes-from-text"><i class="fa fa-check"></i><b>17.1.4</b> Extracting attributes from text</a></li>
 </ul></li>
-<li class="chapter" data-level="18.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>18.2</b> Handling dates</a></li>
+<li class="chapter" data-level="17.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>17.2</b> Handling dates</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a></li>
 <li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a></li>
-<li class="chapter" data-level="20" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html"><i class="fa fa-check"></i><b>20</b> Exploratory Data Analysis: Visualization</a><ul>
-<li class="chapter" data-level="20.0.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>20.0.1</b> EDA (Exploratory Data Analysis)</a></li>
-<li class="chapter" data-level="20.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#visualization-of-single-variables"><i class="fa fa-check"></i><b>20.1</b> Visualization of single variables</a><ul>
-<li class="chapter" data-level="20.1.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#visualization-of-pairs-of-variables"><i class="fa fa-check"></i><b>20.1.1</b> Visualization of pairs of variables</a></li>
+<li class="chapter" data-level="18" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html"><i class="fa fa-check"></i><b>18</b> Exploratory Data Analysis: Visualization</a><ul>
+<li class="chapter" data-level="18.0.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>18.0.1</b> EDA (Exploratory Data Analysis)</a></li>
+<li class="chapter" data-level="18.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#visualization-of-single-variables"><i class="fa fa-check"></i><b>18.1</b> Visualization of single variables</a><ul>
+<li class="chapter" data-level="18.1.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#visualization-of-pairs-of-variables"><i class="fa fa-check"></i><b>18.1.1</b> Visualization of pairs of variables</a></li>
 </ul></li>
-<li class="chapter" data-level="20.2" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-with-the-grammar-of-graphics"><i class="fa fa-check"></i><b>20.2</b> EDA with the grammar of graphics</a><ul>
-<li class="chapter" data-level="20.2.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#other-aesthetics"><i class="fa fa-check"></i><b>20.2.1</b> Other aesthetics</a></li>
-<li class="chapter" data-level="20.2.2" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#faceting"><i class="fa fa-check"></i><b>20.2.2</b> Faceting</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="21" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html"><i class="fa fa-check"></i><b>21</b> Exploratory Data Analysis: Summary Statistics</a><ul>
-<li class="chapter" data-level="21.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#range"><i class="fa fa-check"></i><b>21.1</b> Range</a></li>
-<li class="chapter" data-level="21.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#central-tendency"><i class="fa fa-check"></i><b>21.2</b> Central Tendency</a><ul>
-<li class="chapter" data-level="21.2.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#derivation-of-the-mean-as-central-tendency-statistic"><i class="fa fa-check"></i><b>21.2.1</b> Derivation of the mean as central tendency statistic</a></li>
-</ul></li>
-<li class="chapter" data-level="21.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread"><i class="fa fa-check"></i><b>21.3</b> Spread</a><ul>
-<li class="chapter" data-level="21.3.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#variance"><i class="fa fa-check"></i><b>21.3.1</b> Variance</a></li>
-<li class="chapter" data-level="21.3.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread-estimates-using-rank-statistics"><i class="fa fa-check"></i><b>21.3.2</b> Spread estimates using rank statistics</a></li>
-</ul></li>
-<li class="chapter" data-level="21.4" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#outliers"><i class="fa fa-check"></i><b>21.4</b> Outliers</a></li>
-<li class="chapter" data-level="21.5" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#skew"><i class="fa fa-check"></i><b>21.5</b> Skew</a></li>
-<li class="chapter" data-level="21.6" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#covariance-and-correlation"><i class="fa fa-check"></i><b>21.6</b> Covariance and correlation</a></li>
-<li class="chapter" data-level="21.7" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#postscript-finding-maximaminima-using-derivatives"><i class="fa fa-check"></i><b>21.7</b> Postscript: Finding Maxima/Minima using Derivatives</a><ul>
-<li class="chapter" data-level="21.7.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#steps-to-find-maximaminima-of-function-fx"><i class="fa fa-check"></i><b>21.7.1</b> Steps to find Maxima/Minima of function <span class="math inline">\(f(x)\)</span></a></li>
-<li class="chapter" data-level="21.7.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#notes-on-finding-derivatives"><i class="fa fa-check"></i><b>21.7.2</b> Notes on Finding Derivatives</a></li>
-<li class="chapter" data-level="21.7.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#resources"><i class="fa fa-check"></i><b>21.7.3</b> Resources:</a></li>
+<li class="chapter" data-level="18.2" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-with-the-grammar-of-graphics"><i class="fa fa-check"></i><b>18.2</b> EDA with the grammar of graphics</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#other-aesthetics"><i class="fa fa-check"></i><b>18.2.1</b> Other aesthetics</a></li>
+<li class="chapter" data-level="18.2.2" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#faceting"><i class="fa fa-check"></i><b>18.2.2</b> Faceting</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="22" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html"><i class="fa fa-check"></i><b>22</b> EDA: Data Transformations</a><ul>
-<li class="chapter" data-level="22.1" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#centering-and-scaling"><i class="fa fa-check"></i><b>22.1</b> Centering and scaling</a></li>
-<li class="chapter" data-level="22.2" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#treating-categorical-variables-as-numeric"><i class="fa fa-check"></i><b>22.2</b> Treating categorical variables as numeric</a><ul>
-<li class="chapter" data-level="22.2.1" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#discretizing-continuous-values."><i class="fa fa-check"></i><b>22.2.1</b> Discretizing continuous values.</a></li>
+<li class="chapter" data-level="19" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html"><i class="fa fa-check"></i><b>19</b> Exploratory Data Analysis: Summary Statistics</a><ul>
+<li class="chapter" data-level="19.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#range"><i class="fa fa-check"></i><b>19.1</b> Range</a></li>
+<li class="chapter" data-level="19.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#central-tendency"><i class="fa fa-check"></i><b>19.2</b> Central Tendency</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#derivation-of-the-mean-as-central-tendency-statistic"><i class="fa fa-check"></i><b>19.2.1</b> Derivation of the mean as central tendency statistic</a></li>
 </ul></li>
-<li class="chapter" data-level="22.3" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#skewed-data"><i class="fa fa-check"></i><b>22.3</b> Skewed Data</a></li>
+<li class="chapter" data-level="19.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread"><i class="fa fa-check"></i><b>19.3</b> Spread</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#variance"><i class="fa fa-check"></i><b>19.3.1</b> Variance</a></li>
+<li class="chapter" data-level="19.3.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#spread-estimates-using-rank-statistics"><i class="fa fa-check"></i><b>19.3.2</b> Spread estimates using rank statistics</a></li>
 </ul></li>
-<li class="chapter" data-level="23" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html"><i class="fa fa-check"></i><b>23</b> EDA: Handling Missing Data</a><ul>
-<li class="chapter" data-level="23.0.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>23.0.1</b> Dealing with data missing at random</a></li>
+<li class="chapter" data-level="19.4" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#outliers"><i class="fa fa-check"></i><b>19.4</b> Outliers</a></li>
+<li class="chapter" data-level="19.5" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#skew"><i class="fa fa-check"></i><b>19.5</b> Skew</a></li>
+<li class="chapter" data-level="19.6" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#covariance-and-correlation"><i class="fa fa-check"></i><b>19.6</b> Covariance and correlation</a></li>
+<li class="chapter" data-level="19.7" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#postscript-finding-maximaminima-using-derivatives"><i class="fa fa-check"></i><b>19.7</b> Postscript: Finding Maxima/Minima using Derivatives</a><ul>
+<li class="chapter" data-level="19.7.1" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#steps-to-find-maximaminima-of-function-fx"><i class="fa fa-check"></i><b>19.7.1</b> Steps to find Maxima/Minima of function <span class="math inline">\(f(x)\)</span></a></li>
+<li class="chapter" data-level="19.7.2" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#notes-on-finding-derivatives"><i class="fa fa-check"></i><b>19.7.2</b> Notes on Finding Derivatives</a></li>
+<li class="chapter" data-level="19.7.3" data-path="exploratory-data-analysis-summary-statistics.html"><a href="exploratory-data-analysis-summary-statistics.html#resources"><i class="fa fa-check"></i><b>19.7.3</b> Resources:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html"><i class="fa fa-check"></i><b>20</b> EDA: Data Transformations</a><ul>
+<li class="chapter" data-level="20.1" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#centering-and-scaling"><i class="fa fa-check"></i><b>20.1</b> Centering and scaling</a></li>
+<li class="chapter" data-level="20.2" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#treating-categorical-variables-as-numeric"><i class="fa fa-check"></i><b>20.2</b> Treating categorical variables as numeric</a><ul>
+<li class="chapter" data-level="20.2.1" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#discretizing-continuous-values."><i class="fa fa-check"></i><b>20.2.1</b> Discretizing continuous values.</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#skewed-data"><i class="fa fa-check"></i><b>20.3</b> Skewed Data</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html"><i class="fa fa-check"></i><b>21</b> EDA: Handling Missing Data</a><ul>
+<li class="chapter" data-level="21.0.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>21.0.1</b> Dealing with data missing at random</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html"><i class="fa fa-check"></i>(Part) Statistical Learning</a></li>
-<li class="chapter" data-level="24" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html"><i class="fa fa-check"></i><b>24</b> Univariate distributions and statistics</a><ul>
-<li class="chapter" data-level="24.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#variation-randomness-and-stochasticity"><i class="fa fa-check"></i><b>24.1</b> Variation, randomness and stochasticity</a><ul>
-<li class="chapter" data-level="24.1.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#random-variables"><i class="fa fa-check"></i><b>24.1.1</b> Random variables</a></li>
+<li class="chapter" data-level="22" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html"><i class="fa fa-check"></i><b>22</b> Univariate distributions and statistics</a><ul>
+<li class="chapter" data-level="22.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#variation-randomness-and-stochasticity"><i class="fa fa-check"></i><b>22.1</b> Variation, randomness and stochasticity</a><ul>
+<li class="chapter" data-level="22.1.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#random-variables"><i class="fa fa-check"></i><b>22.1.1</b> Random variables</a></li>
 </ul></li>
-<li class="chapter" data-level="24.2" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#discrete-probability-distributions"><i class="fa fa-check"></i><b>24.2</b> (Discrete) Probability distributions</a><ul>
-<li class="chapter" data-level="24.2.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#example-the-oracle-of-tweet"><i class="fa fa-check"></i><b>24.2.1</b> Example The oracle of TWEET</a></li>
+<li class="chapter" data-level="22.2" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#discrete-probability-distributions"><i class="fa fa-check"></i><b>22.2</b> (Discrete) Probability distributions</a><ul>
+<li class="chapter" data-level="22.2.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#example-the-oracle-of-tweet"><i class="fa fa-check"></i><b>22.2.1</b> Example The oracle of TWEET</a></li>
 </ul></li>
-<li class="chapter" data-level="24.3" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#expectation"><i class="fa fa-check"></i><b>24.3</b> Expectation</a></li>
-<li class="chapter" data-level="24.4" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#estimation"><i class="fa fa-check"></i><b>24.4</b> Estimation</a><ul>
-<li class="chapter" data-level="24.4.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#law-of-large-numbers-lln"><i class="fa fa-check"></i><b>24.4.1</b> Law of large numbers (LLN)</a></li>
-<li class="chapter" data-level="24.4.2" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#central-limit-theorem-clt"><i class="fa fa-check"></i><b>24.4.2</b> Central Limit Theorem (CLT)</a></li>
+<li class="chapter" data-level="22.3" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#expectation"><i class="fa fa-check"></i><b>22.3</b> Expectation</a></li>
+<li class="chapter" data-level="22.4" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#estimation"><i class="fa fa-check"></i><b>22.4</b> Estimation</a><ul>
+<li class="chapter" data-level="22.4.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#law-of-large-numbers-lln"><i class="fa fa-check"></i><b>22.4.1</b> Law of large numbers (LLN)</a></li>
+<li class="chapter" data-level="22.4.2" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#central-limit-theorem-clt"><i class="fa fa-check"></i><b>22.4.2</b> Central Limit Theorem (CLT)</a></li>
 </ul></li>
-<li class="chapter" data-level="24.5" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#the-normal-distribution"><i class="fa fa-check"></i><b>24.5</b> The normal distribution</a><ul>
-<li class="chapter" data-level="24.5.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#clt-continued"><i class="fa fa-check"></i><b>24.5.1</b> CLT continued</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="25" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>25</b> Experiment design and hypothesis testing</a><ul>
-<li class="chapter" data-level="25.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#inference"><i class="fa fa-check"></i><b>25.1</b> Inference</a><ul>
-<li class="chapter" data-level="25.1.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>25.1.1</b> Hypothesis testing</a></li>
-</ul></li>
-<li class="chapter" data-level="25.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#ab-testing"><i class="fa fa-check"></i><b>25.2</b> A/B Testing</a></li>
-<li class="chapter" data-level="25.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#summary-1"><i class="fa fa-check"></i><b>25.3</b> Summary</a></li>
-<li class="chapter" data-level="25.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#probability-distributions"><i class="fa fa-check"></i><b>25.4</b> Probability Distributions</a><ul>
-<li class="chapter" data-level="25.4.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#bernoulli"><i class="fa fa-check"></i><b>25.4.1</b> Bernoulli</a></li>
-<li class="chapter" data-level="25.4.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#binomial"><i class="fa fa-check"></i><b>25.4.2</b> Binomial</a></li>
-<li class="chapter" data-level="25.4.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#normal-gaussian-distribution"><i class="fa fa-check"></i><b>25.4.3</b> Normal (Gaussian) distribution</a></li>
-<li class="chapter" data-level="25.4.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#distributions-in-r"><i class="fa fa-check"></i><b>25.4.4</b> Distributions in R</a></li>
+<li class="chapter" data-level="22.5" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#the-normal-distribution"><i class="fa fa-check"></i><b>22.5</b> The normal distribution</a><ul>
+<li class="chapter" data-level="22.5.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#clt-continued"><i class="fa fa-check"></i><b>22.5.1</b> CLT continued</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="26" data-path="multivariate-probability.html"><a href="multivariate-probability.html"><i class="fa fa-check"></i><b>26</b> Multivariate probability</a><ul>
-<li class="chapter" data-level="26.1" data-path="multivariate-probability.html"><a href="multivariate-probability.html#joint-and-conditional-probability"><i class="fa fa-check"></i><b>26.1</b> Joint and conditional probability</a></li>
-<li class="chapter" data-level="26.2" data-path="multivariate-probability.html"><a href="multivariate-probability.html#bayes-rule"><i class="fa fa-check"></i><b>26.2</b> Bayes’ Rule</a></li>
-<li class="chapter" data-level="26.3" data-path="multivariate-probability.html"><a href="multivariate-probability.html#conditional-expectation"><i class="fa fa-check"></i><b>26.3</b> Conditional expectation</a></li>
-<li class="chapter" data-level="26.4" data-path="multivariate-probability.html"><a href="multivariate-probability.html#maximum-likelihood"><i class="fa fa-check"></i><b>26.4</b> Maximum likelihood</a></li>
+<li class="chapter" data-level="23" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>23</b> Experiment design and hypothesis testing</a><ul>
+<li class="chapter" data-level="23.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#inference"><i class="fa fa-check"></i><b>23.1</b> Inference</a><ul>
+<li class="chapter" data-level="23.1.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>23.1.1</b> Hypothesis testing</a></li>
+</ul></li>
+<li class="chapter" data-level="23.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#ab-testing"><i class="fa fa-check"></i><b>23.2</b> A/B Testing</a></li>
+<li class="chapter" data-level="23.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#summary-1"><i class="fa fa-check"></i><b>23.3</b> Summary</a></li>
+<li class="chapter" data-level="23.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#probability-distributions"><i class="fa fa-check"></i><b>23.4</b> Probability Distributions</a><ul>
+<li class="chapter" data-level="23.4.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#bernoulli"><i class="fa fa-check"></i><b>23.4.1</b> Bernoulli</a></li>
+<li class="chapter" data-level="23.4.2" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#binomial"><i class="fa fa-check"></i><b>23.4.2</b> Binomial</a></li>
+<li class="chapter" data-level="23.4.3" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#normal-gaussian-distribution"><i class="fa fa-check"></i><b>23.4.3</b> Normal (Gaussian) distribution</a></li>
+<li class="chapter" data-level="23.4.4" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#distributions-in-r"><i class="fa fa-check"></i><b>23.4.4</b> Distributions in R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="multivariate-probability.html"><a href="multivariate-probability.html"><i class="fa fa-check"></i><b>24</b> Multivariate probability</a><ul>
+<li class="chapter" data-level="24.1" data-path="multivariate-probability.html"><a href="multivariate-probability.html#joint-and-conditional-probability"><i class="fa fa-check"></i><b>24.1</b> Joint and conditional probability</a></li>
+<li class="chapter" data-level="24.2" data-path="multivariate-probability.html"><a href="multivariate-probability.html#bayes-rule"><i class="fa fa-check"></i><b>24.2</b> Bayes’ Rule</a></li>
+<li class="chapter" data-level="24.3" data-path="multivariate-probability.html"><a href="multivariate-probability.html#conditional-expectation"><i class="fa fa-check"></i><b>24.3</b> Conditional expectation</a></li>
+<li class="chapter" data-level="24.4" data-path="multivariate-probability.html"><a href="multivariate-probability.html#maximum-likelihood"><i class="fa fa-check"></i><b>24.4</b> Maximum likelihood</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-machine-learning.html"><a href="part-machine-learning.html"><i class="fa fa-check"></i>(Part) Machine Learning</a></li>
-<li class="chapter" data-level="27" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html"><i class="fa fa-check"></i><b>27</b> Data Analysis with Geometry</a><ul>
-<li class="chapter" data-level="27.1" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#motivating-example-credit-analysis"><i class="fa fa-check"></i><b>27.1</b> Motivating Example: Credit Analysis</a></li>
-<li class="chapter" data-level="27.2" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#from-data-to-feature-vectors"><i class="fa fa-check"></i><b>27.2</b> From data to feature vectors</a></li>
-<li class="chapter" data-level="27.3" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#technical-notation"><i class="fa fa-check"></i><b>27.3</b> Technical notation</a></li>
-<li class="chapter" data-level="27.4" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#geometry-and-distances"><i class="fa fa-check"></i><b>27.4</b> Geometry and Distances</a><ul>
-<li class="chapter" data-level="27.4.1" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#k-nearest-neighbor-classification"><i class="fa fa-check"></i><b>27.4.1</b> K-nearest neighbor classification</a></li>
-<li class="chapter" data-level="27.4.2" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#the-importance-of-transformations"><i class="fa fa-check"></i><b>27.4.2</b> The importance of transformations</a></li>
+<li class="chapter" data-level="25" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html"><i class="fa fa-check"></i><b>25</b> Data Analysis with Geometry</a><ul>
+<li class="chapter" data-level="25.1" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#motivating-example-credit-analysis"><i class="fa fa-check"></i><b>25.1</b> Motivating Example: Credit Analysis</a></li>
+<li class="chapter" data-level="25.2" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#from-data-to-feature-vectors"><i class="fa fa-check"></i><b>25.2</b> From data to feature vectors</a></li>
+<li class="chapter" data-level="25.3" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#technical-notation"><i class="fa fa-check"></i><b>25.3</b> Technical notation</a></li>
+<li class="chapter" data-level="25.4" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#geometry-and-distances"><i class="fa fa-check"></i><b>25.4</b> Geometry and Distances</a><ul>
+<li class="chapter" data-level="25.4.1" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#k-nearest-neighbor-classification"><i class="fa fa-check"></i><b>25.4.1</b> K-nearest neighbor classification</a></li>
+<li class="chapter" data-level="25.4.2" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#the-importance-of-transformations"><i class="fa fa-check"></i><b>25.4.2</b> The importance of transformations</a></li>
 </ul></li>
-<li class="chapter" data-level="27.5" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#quick-vector-algebra-review"><i class="fa fa-check"></i><b>27.5</b> Quick vector algebra review</a><ul>
-<li class="chapter" data-level="27.5.1" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#quiz"><i class="fa fa-check"></i><b>27.5.1</b> Quiz</a></li>
+<li class="chapter" data-level="25.5" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#quick-vector-algebra-review"><i class="fa fa-check"></i><b>25.5</b> Quick vector algebra review</a><ul>
+<li class="chapter" data-level="25.5.1" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#quiz"><i class="fa fa-check"></i><b>25.5.1</b> Quiz</a></li>
 </ul></li>
-<li class="chapter" data-level="27.6" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#the-curse-of-dimensionality"><i class="fa fa-check"></i><b>27.6</b> The curse of dimensionality</a></li>
-<li class="chapter" data-level="27.7" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#summary-2"><i class="fa fa-check"></i><b>27.7</b> Summary</a></li>
+<li class="chapter" data-level="25.6" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#the-curse-of-dimensionality"><i class="fa fa-check"></i><b>25.6</b> The curse of dimensionality</a></li>
+<li class="chapter" data-level="25.7" data-path="data-analysis-with-geometry.html"><a href="data-analysis-with-geometry.html#summary-2"><i class="fa fa-check"></i><b>25.7</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="28" data-path="linear-regression.html"><a href="linear-regression.html"><i class="fa fa-check"></i><b>28</b> Linear Regression</a><ul>
-<li class="chapter" data-level="28.1" data-path="linear-regression.html"><a href="linear-regression.html#simple-regression"><i class="fa fa-check"></i><b>28.1</b> Simple Regression</a></li>
-<li class="chapter" data-level="28.2" data-path="linear-regression.html"><a href="linear-regression.html#inference-1"><i class="fa fa-check"></i><b>28.2</b> Inference</a><ul>
-<li class="chapter" data-level="28.2.1" data-path="linear-regression.html"><a href="linear-regression.html#confidence-interval"><i class="fa fa-check"></i><b>28.2.1</b> Confidence Interval</a></li>
-<li class="chapter" data-level="28.2.2" data-path="linear-regression.html"><a href="linear-regression.html#the-t-statistic-and-the-t-distribution"><i class="fa fa-check"></i><b>28.2.2</b> The <span class="math inline">\(t\)</span>-statistic and the <span class="math inline">\(t\)</span>-distribution</a></li>
-<li class="chapter" data-level="28.2.3" data-path="linear-regression.html"><a href="linear-regression.html#global-fit"><i class="fa fa-check"></i><b>28.2.3</b> Global Fit</a></li>
+<li class="chapter" data-level="26" data-path="linear-regression.html"><a href="linear-regression.html"><i class="fa fa-check"></i><b>26</b> Linear Regression</a><ul>
+<li class="chapter" data-level="26.1" data-path="linear-regression.html"><a href="linear-regression.html#simple-regression"><i class="fa fa-check"></i><b>26.1</b> Simple Regression</a></li>
+<li class="chapter" data-level="26.2" data-path="linear-regression.html"><a href="linear-regression.html#inference-1"><i class="fa fa-check"></i><b>26.2</b> Inference</a><ul>
+<li class="chapter" data-level="26.2.1" data-path="linear-regression.html"><a href="linear-regression.html#confidence-interval"><i class="fa fa-check"></i><b>26.2.1</b> Confidence Interval</a></li>
+<li class="chapter" data-level="26.2.2" data-path="linear-regression.html"><a href="linear-regression.html#the-t-statistic-and-the-t-distribution"><i class="fa fa-check"></i><b>26.2.2</b> The <span class="math inline">\(t\)</span>-statistic and the <span class="math inline">\(t\)</span>-distribution</a></li>
+<li class="chapter" data-level="26.2.3" data-path="linear-regression.html"><a href="linear-regression.html#global-fit"><i class="fa fa-check"></i><b>26.2.3</b> Global Fit</a></li>
 </ul></li>
-<li class="chapter" data-level="28.3" data-path="linear-regression.html"><a href="linear-regression.html#some-important-technicalities"><i class="fa fa-check"></i><b>28.3</b> Some important technicalities</a></li>
-<li class="chapter" data-level="28.4" data-path="linear-regression.html"><a href="linear-regression.html#issues-with-linear-regression"><i class="fa fa-check"></i><b>28.4</b> Issues with linear regression</a><ul>
-<li class="chapter" data-level="28.4.1" data-path="linear-regression.html"><a href="linear-regression.html#non-linearity-of-outcome-predictor-relationship"><i class="fa fa-check"></i><b>28.4.1</b> Non-linearity of outcome-predictor relationship</a></li>
-<li class="chapter" data-level="28.4.2" data-path="linear-regression.html"><a href="linear-regression.html#correlated-error"><i class="fa fa-check"></i><b>28.4.2</b> Correlated Error</a></li>
-<li class="chapter" data-level="28.4.3" data-path="linear-regression.html"><a href="linear-regression.html#non-constant-variance"><i class="fa fa-check"></i><b>28.4.3</b> Non-constant variance</a></li>
+<li class="chapter" data-level="26.3" data-path="linear-regression.html"><a href="linear-regression.html#some-important-technicalities"><i class="fa fa-check"></i><b>26.3</b> Some important technicalities</a></li>
+<li class="chapter" data-level="26.4" data-path="linear-regression.html"><a href="linear-regression.html#issues-with-linear-regression"><i class="fa fa-check"></i><b>26.4</b> Issues with linear regression</a><ul>
+<li class="chapter" data-level="26.4.1" data-path="linear-regression.html"><a href="linear-regression.html#non-linearity-of-outcome-predictor-relationship"><i class="fa fa-check"></i><b>26.4.1</b> Non-linearity of outcome-predictor relationship</a></li>
+<li class="chapter" data-level="26.4.2" data-path="linear-regression.html"><a href="linear-regression.html#correlated-error"><i class="fa fa-check"></i><b>26.4.2</b> Correlated Error</a></li>
+<li class="chapter" data-level="26.4.3" data-path="linear-regression.html"><a href="linear-regression.html#non-constant-variance"><i class="fa fa-check"></i><b>26.4.3</b> Non-constant variance</a></li>
 </ul></li>
-<li class="chapter" data-level="28.5" data-path="linear-regression.html"><a href="linear-regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>28.5</b> Multiple linear regression</a><ul>
-<li class="chapter" data-level="28.5.1" data-path="linear-regression.html"><a href="linear-regression.html#estimation-in-multivariate-regression"><i class="fa fa-check"></i><b>28.5.1</b> Estimation in multivariate regression</a></li>
-<li class="chapter" data-level="28.5.2" data-path="linear-regression.html"><a href="linear-regression.html#example-contd"><i class="fa fa-check"></i><b>28.5.2</b> Example (cont’d)</a></li>
-<li class="chapter" data-level="28.5.3" data-path="linear-regression.html"><a href="linear-regression.html#statistical-statements-contd"><i class="fa fa-check"></i><b>28.5.3</b> Statistical statements (cont’d)</a></li>
-<li class="chapter" data-level="28.5.4" data-path="linear-regression.html"><a href="linear-regression.html#the-f-test"><i class="fa fa-check"></i><b>28.5.4</b> The F-test</a></li>
-<li class="chapter" data-level="28.5.5" data-path="linear-regression.html"><a href="linear-regression.html#categorical-predictors-contd"><i class="fa fa-check"></i><b>28.5.5</b> Categorical predictors (cont’d)</a></li>
+<li class="chapter" data-level="26.5" data-path="linear-regression.html"><a href="linear-regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>26.5</b> Multiple linear regression</a><ul>
+<li class="chapter" data-level="26.5.1" data-path="linear-regression.html"><a href="linear-regression.html#estimation-in-multivariate-regression"><i class="fa fa-check"></i><b>26.5.1</b> Estimation in multivariate regression</a></li>
+<li class="chapter" data-level="26.5.2" data-path="linear-regression.html"><a href="linear-regression.html#example-contd"><i class="fa fa-check"></i><b>26.5.2</b> Example (cont’d)</a></li>
+<li class="chapter" data-level="26.5.3" data-path="linear-regression.html"><a href="linear-regression.html#statistical-statements-contd"><i class="fa fa-check"></i><b>26.5.3</b> Statistical statements (cont’d)</a></li>
+<li class="chapter" data-level="26.5.4" data-path="linear-regression.html"><a href="linear-regression.html#the-f-test"><i class="fa fa-check"></i><b>26.5.4</b> The F-test</a></li>
+<li class="chapter" data-level="26.5.5" data-path="linear-regression.html"><a href="linear-regression.html#categorical-predictors-contd"><i class="fa fa-check"></i><b>26.5.5</b> Categorical predictors (cont’d)</a></li>
 </ul></li>
-<li class="chapter" data-level="28.6" data-path="linear-regression.html"><a href="linear-regression.html#interactions-in-linear-models"><i class="fa fa-check"></i><b>28.6</b> Interactions in linear models</a><ul>
-<li class="chapter" data-level="28.6.1" data-path="linear-regression.html"><a href="linear-regression.html#additional-issues-with-linear-regression"><i class="fa fa-check"></i><b>28.6.1</b> Additional issues with linear regression</a></li>
+<li class="chapter" data-level="26.6" data-path="linear-regression.html"><a href="linear-regression.html#interactions-in-linear-models"><i class="fa fa-check"></i><b>26.6</b> Interactions in linear models</a><ul>
+<li class="chapter" data-level="26.6.1" data-path="linear-regression.html"><a href="linear-regression.html#additional-issues-with-linear-regression"><i class="fa fa-check"></i><b>26.6.1</b> Additional issues with linear regression</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="29" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html"><i class="fa fa-check"></i><b>29</b> Linear models for classification</a><ul>
-<li class="chapter" data-level="29.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#an-example-classification-problem"><i class="fa fa-check"></i><b>29.1</b> An example classification problem</a></li>
-<li class="chapter" data-level="29.2" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#why-not-linear-regression"><i class="fa fa-check"></i><b>29.2</b> Why not linear regression?</a></li>
-<li class="chapter" data-level="29.3" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classification-as-probability-estimation-problem"><i class="fa fa-check"></i><b>29.3</b> Classification as probability estimation problem</a></li>
-<li class="chapter" data-level="29.4" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#logistic-regression"><i class="fa fa-check"></i><b>29.4</b> Logistic regression</a><ul>
-<li class="chapter" data-level="29.4.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#exercises"><i class="fa fa-check"></i><b>29.4.1</b> Exercises</a></li>
-<li class="chapter" data-level="29.4.2" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#making-predictions"><i class="fa fa-check"></i><b>29.4.2</b> Making predictions</a></li>
-<li class="chapter" data-level="29.4.3" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#multiple-logistic-regression"><i class="fa fa-check"></i><b>29.4.3</b> Multiple logistic regression</a></li>
-<li class="chapter" data-level="29.4.4" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#exercise"><i class="fa fa-check"></i><b>29.4.4</b> Exercise</a></li>
+<li class="chapter" data-level="27" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html"><i class="fa fa-check"></i><b>27</b> Linear models for classification</a><ul>
+<li class="chapter" data-level="27.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#an-example-classification-problem"><i class="fa fa-check"></i><b>27.1</b> An example classification problem</a></li>
+<li class="chapter" data-level="27.2" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#why-not-linear-regression"><i class="fa fa-check"></i><b>27.2</b> Why not linear regression?</a></li>
+<li class="chapter" data-level="27.3" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classification-as-probability-estimation-problem"><i class="fa fa-check"></i><b>27.3</b> Classification as probability estimation problem</a></li>
+<li class="chapter" data-level="27.4" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#logistic-regression"><i class="fa fa-check"></i><b>27.4</b> Logistic regression</a><ul>
+<li class="chapter" data-level="27.4.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#exercises"><i class="fa fa-check"></i><b>27.4.1</b> Exercises</a></li>
+<li class="chapter" data-level="27.4.2" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#making-predictions"><i class="fa fa-check"></i><b>27.4.2</b> Making predictions</a></li>
+<li class="chapter" data-level="27.4.3" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#multiple-logistic-regression"><i class="fa fa-check"></i><b>27.4.3</b> Multiple logistic regression</a></li>
+<li class="chapter" data-level="27.4.4" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#exercise"><i class="fa fa-check"></i><b>27.4.4</b> Exercise</a></li>
 </ul></li>
-<li class="chapter" data-level="29.5" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>29.5</b> Linear Discriminant Analysis</a><ul>
-<li class="chapter" data-level="29.5.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#how-to-train-lda"><i class="fa fa-check"></i><b>29.5.1</b> How to train LDA</a></li>
+<li class="chapter" data-level="27.5" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>27.5</b> Linear Discriminant Analysis</a><ul>
+<li class="chapter" data-level="27.5.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#how-to-train-lda"><i class="fa fa-check"></i><b>27.5.1</b> How to train LDA</a></li>
 </ul></li>
-<li class="chapter" data-level="29.6" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classifier-evaluation"><i class="fa fa-check"></i><b>29.6</b> Classifier evaluation</a></li>
-<li class="chapter" data-level="29.7" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#summary-3"><i class="fa fa-check"></i><b>29.7</b> Summary</a></li>
+<li class="chapter" data-level="27.6" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classifier-evaluation"><i class="fa fa-check"></i><b>27.6</b> Classifier evaluation</a></li>
+<li class="chapter" data-level="27.7" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#summary-3"><i class="fa fa-check"></i><b>27.7</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="30" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html"><i class="fa fa-check"></i><b>30</b> Solving linear ML problems</a><ul>
-<li class="chapter" data-level="30.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#case-study"><i class="fa fa-check"></i><b>30.1</b> Case Study</a></li>
-<li class="chapter" data-level="30.2" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#gradient-descent"><i class="fa fa-check"></i><b>30.2</b> Gradient Descent</a><ul>
-<li class="chapter" data-level="30.2.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#logistic-regression-1"><i class="fa fa-check"></i><b>30.2.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="28" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html"><i class="fa fa-check"></i><b>28</b> Solving linear ML problems</a><ul>
+<li class="chapter" data-level="28.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#case-study"><i class="fa fa-check"></i><b>28.1</b> Case Study</a></li>
+<li class="chapter" data-level="28.2" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#gradient-descent"><i class="fa fa-check"></i><b>28.2</b> Gradient Descent</a><ul>
+<li class="chapter" data-level="28.2.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#logistic-regression-1"><i class="fa fa-check"></i><b>28.2.1</b> Logistic Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="30.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>30.3</b> Stochastic gradient descent</a></li>
-<li class="chapter" data-level="30.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>30.4</b> Parallelizing gradient descent</a></li>
+<li class="chapter" data-level="28.3" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#stochastic-gradient-descent"><i class="fa fa-check"></i><b>28.3</b> Stochastic gradient descent</a></li>
+<li class="chapter" data-level="28.4" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#parallelizing-gradient-descent"><i class="fa fa-check"></i><b>28.4</b> Parallelizing gradient descent</a></li>
 </ul></li>
-<li class="chapter" data-level="31" data-path="tree-based-methods.html"><a href="tree-based-methods.html"><i class="fa fa-check"></i><b>31</b> Tree-Based Methods</a><ul>
-<li class="chapter" data-level="31.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-trees"><i class="fa fa-check"></i><b>31.1</b> Regression Trees</a></li>
-<li class="chapter" data-level="31.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#classification-decision-trees"><i class="fa fa-check"></i><b>31.2</b> Classification (Decision) Trees</a></li>
-<li class="chapter" data-level="31.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#specifics-of-the-partitioning-algorithm"><i class="fa fa-check"></i><b>31.3</b> Specifics of the partitioning algorithm</a><ul>
-<li class="chapter" data-level="31.3.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#the-predictor-space"><i class="fa fa-check"></i><b>31.3.1</b> The predictor space</a></li>
-<li class="chapter" data-level="31.3.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#learning-strategy"><i class="fa fa-check"></i><b>31.3.2</b> Learning Strategy</a></li>
-<li class="chapter" data-level="31.3.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-growing"><i class="fa fa-check"></i><b>31.3.3</b> Tree Growing</a></li>
-<li class="chapter" data-level="31.3.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#deviance-as-a-measure-of-impurity"><i class="fa fa-check"></i><b>31.3.4</b> Deviance as a measure of impurity</a></li>
-<li class="chapter" data-level="31.3.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#other-measures-of-impurity"><i class="fa fa-check"></i><b>31.3.5</b> Other measures of impurity</a></li>
-<li class="chapter" data-level="31.3.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-pruning"><i class="fa fa-check"></i><b>31.3.6</b> Tree Pruning</a></li>
+<li class="chapter" data-level="29" data-path="tree-based-methods.html"><a href="tree-based-methods.html"><i class="fa fa-check"></i><b>29</b> Tree-Based Methods</a><ul>
+<li class="chapter" data-level="29.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#regression-trees"><i class="fa fa-check"></i><b>29.1</b> Regression Trees</a></li>
+<li class="chapter" data-level="29.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#classification-decision-trees"><i class="fa fa-check"></i><b>29.2</b> Classification (Decision) Trees</a></li>
+<li class="chapter" data-level="29.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#specifics-of-the-partitioning-algorithm"><i class="fa fa-check"></i><b>29.3</b> Specifics of the partitioning algorithm</a><ul>
+<li class="chapter" data-level="29.3.1" data-path="tree-based-methods.html"><a href="tree-based-methods.html#the-predictor-space"><i class="fa fa-check"></i><b>29.3.1</b> The predictor space</a></li>
+<li class="chapter" data-level="29.3.2" data-path="tree-based-methods.html"><a href="tree-based-methods.html#learning-strategy"><i class="fa fa-check"></i><b>29.3.2</b> Learning Strategy</a></li>
+<li class="chapter" data-level="29.3.3" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-growing"><i class="fa fa-check"></i><b>29.3.3</b> Tree Growing</a></li>
+<li class="chapter" data-level="29.3.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#deviance-as-a-measure-of-impurity"><i class="fa fa-check"></i><b>29.3.4</b> Deviance as a measure of impurity</a></li>
+<li class="chapter" data-level="29.3.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#other-measures-of-impurity"><i class="fa fa-check"></i><b>29.3.5</b> Other measures of impurity</a></li>
+<li class="chapter" data-level="29.3.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-pruning"><i class="fa fa-check"></i><b>29.3.6</b> Tree Pruning</a></li>
 </ul></li>
-<li class="chapter" data-level="31.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#properties-of-tree-method"><i class="fa fa-check"></i><b>31.4</b> Properties of Tree Method</a></li>
-<li class="chapter" data-level="31.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>31.5</b> Random Forests</a></li>
-<li class="chapter" data-level="31.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>31.6</b> Tree-based methods summary</a></li>
+<li class="chapter" data-level="29.4" data-path="tree-based-methods.html"><a href="tree-based-methods.html#properties-of-tree-method"><i class="fa fa-check"></i><b>29.4</b> Properties of Tree Method</a></li>
+<li class="chapter" data-level="29.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>29.5</b> Random Forests</a></li>
+<li class="chapter" data-level="29.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>29.6</b> Tree-based methods summary</a></li>
 </ul></li>
-<li class="chapter" data-level="32" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>32</b> Model Selection</a><ul>
-<li class="chapter" data-level="32.1" data-path="model-selection.html"><a href="model-selection.html#cross-validation"><i class="fa fa-check"></i><b>32.1</b> Cross Validation</a></li>
-<li class="chapter" data-level="32.2" data-path="model-selection.html"><a href="model-selection.html#validation-set"><i class="fa fa-check"></i><b>32.2</b> Validation Set</a></li>
-<li class="chapter" data-level="32.3" data-path="model-selection.html"><a href="model-selection.html#resampled-validation-set"><i class="fa fa-check"></i><b>32.3</b> Resampled validation set</a></li>
-<li class="chapter" data-level="32.4" data-path="model-selection.html"><a href="model-selection.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>32.4</b> Leave-one-out Cross-Validation</a></li>
-<li class="chapter" data-level="32.5" data-path="model-selection.html"><a href="model-selection.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>32.5</b> k-fold Cross-Validation</a></li>
-<li class="chapter" data-level="32.6" data-path="model-selection.html"><a href="model-selection.html#cross-validation-in-classification"><i class="fa fa-check"></i><b>32.6</b> Cross-Validation in Classification</a></li>
-<li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
-<li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
+<li class="chapter" data-level="30" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>30</b> Model Selection</a><ul>
+<li class="chapter" data-level="30.1" data-path="model-selection.html"><a href="model-selection.html#cross-validation"><i class="fa fa-check"></i><b>30.1</b> Cross Validation</a></li>
+<li class="chapter" data-level="30.2" data-path="model-selection.html"><a href="model-selection.html#validation-set"><i class="fa fa-check"></i><b>30.2</b> Validation Set</a></li>
+<li class="chapter" data-level="30.3" data-path="model-selection.html"><a href="model-selection.html#resampled-validation-set"><i class="fa fa-check"></i><b>30.3</b> Resampled validation set</a></li>
+<li class="chapter" data-level="30.4" data-path="model-selection.html"><a href="model-selection.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>30.4</b> Leave-one-out Cross-Validation</a></li>
+<li class="chapter" data-level="30.5" data-path="model-selection.html"><a href="model-selection.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>30.5</b> k-fold Cross-Validation</a></li>
+<li class="chapter" data-level="30.6" data-path="model-selection.html"><a href="model-selection.html#cross-validation-in-classification"><i class="fa fa-check"></i><b>30.6</b> Cross-Validation in Classification</a></li>
+<li class="chapter" data-level="30.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>30.7</b> Comparing models using cross-validation</a></li>
+<li class="chapter" data-level="30.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>30.8</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="33" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html"><i class="fa fa-check"></i><b>33</b> Unsupervised Learning: Clustering</a><ul>
-<li class="chapter" data-level="33.1" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#motivating-example"><i class="fa fa-check"></i><b>33.1</b> Motivating Example</a></li>
-<li class="chapter" data-level="33.2" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#some-preliminaries"><i class="fa fa-check"></i><b>33.2</b> Some Preliminaries</a></li>
-<li class="chapter" data-level="33.3" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#cluster-analysis"><i class="fa fa-check"></i><b>33.3</b> Cluster Analysis</a></li>
-<li class="chapter" data-level="33.4" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#dissimilarity-based-clustering"><i class="fa fa-check"></i><b>33.4</b> Dissimilarity-based Clustering</a></li>
-<li class="chapter" data-level="33.5" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#k-means-clustering"><i class="fa fa-check"></i><b>33.5</b> K-means Clustering</a></li>
-<li class="chapter" data-level="33.6" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#choosing-the-number-of-clusters"><i class="fa fa-check"></i><b>33.6</b> Choosing the number of clusters</a></li>
-<li class="chapter" data-level="33.7" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#summary-5"><i class="fa fa-check"></i><b>33.7</b> Summary</a></li>
+<li class="chapter" data-level="31" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html"><i class="fa fa-check"></i><b>31</b> Unsupervised Learning: Clustering</a><ul>
+<li class="chapter" data-level="31.1" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#motivating-example"><i class="fa fa-check"></i><b>31.1</b> Motivating Example</a></li>
+<li class="chapter" data-level="31.2" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#some-preliminaries"><i class="fa fa-check"></i><b>31.2</b> Some Preliminaries</a></li>
+<li class="chapter" data-level="31.3" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#cluster-analysis"><i class="fa fa-check"></i><b>31.3</b> Cluster Analysis</a></li>
+<li class="chapter" data-level="31.4" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#dissimilarity-based-clustering"><i class="fa fa-check"></i><b>31.4</b> Dissimilarity-based Clustering</a></li>
+<li class="chapter" data-level="31.5" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#k-means-clustering"><i class="fa fa-check"></i><b>31.5</b> K-means Clustering</a></li>
+<li class="chapter" data-level="31.6" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#choosing-the-number-of-clusters"><i class="fa fa-check"></i><b>31.6</b> Choosing the number of clusters</a></li>
+<li class="chapter" data-level="31.7" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#summary-5"><i class="fa fa-check"></i><b>31.7</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="34" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html"><i class="fa fa-check"></i><b>34</b> Unsupervised Learning: Dimensionality Reduction</a><ul>
-<li class="chapter" data-level="34.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#principal-component-analysis"><i class="fa fa-check"></i><b>34.1</b> Principal Component Analysis</a><ul>
-<li class="chapter" data-level="34.1.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#solving-the-pca"><i class="fa fa-check"></i><b>34.1.1</b> Solving the PCA</a></li>
+<li class="chapter" data-level="32" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html"><i class="fa fa-check"></i><b>32</b> Unsupervised Learning: Dimensionality Reduction</a><ul>
+<li class="chapter" data-level="32.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#principal-component-analysis"><i class="fa fa-check"></i><b>32.1</b> Principal Component Analysis</a><ul>
+<li class="chapter" data-level="32.1.1" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#solving-the-pca"><i class="fa fa-check"></i><b>32.1.1</b> Solving the PCA</a></li>
 </ul></li>
-<li class="chapter" data-level="34.2" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#multidimensional-scaling"><i class="fa fa-check"></i><b>34.2</b> Multidimensional Scaling</a></li>
-<li class="chapter" data-level="34.3" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#summary-6"><i class="fa fa-check"></i><b>34.3</b> Summary</a></li>
+<li class="chapter" data-level="32.2" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#multidimensional-scaling"><i class="fa fa-check"></i><b>32.2</b> Multidimensional Scaling</a></li>
+<li class="chapter" data-level="32.3" data-path="unsupervised-learning-dimensionality-reduction.html"><a href="unsupervised-learning-dimensionality-reduction.html#summary-6"><i class="fa fa-check"></i><b>32.3</b> Summary</a></li>
 </ul></li>
 </ul>
 
@@ -490,13 +486,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="ingesting-data" class="section level1">
-<h1><span class="header-section-number">16</span> Ingesting data</h1>
+<h1><span class="header-section-number">15</span> Ingesting data</h1>
 <p>Now that we have a better understanding of data analysis languages with <code>tidyverse</code> and <code>SQL</code>, we turn to the first significant challenge in data analysis, getting data into R in a shape that we can use to start our analysis. We will look at two types of data ingestion: <em>structured ingestion</em>, where we read data that is already structured, like a comma separated value (CSV) file, and <em>scraping</em> where we obtain data from text, usually in websites.</p>
 <p>There is an excellent discussion on data import here: <a href="http://r4ds.had.co.nz/data-import.html" class="uri">http://r4ds.had.co.nz/data-import.html</a></p>
 <div id="structured-ingestion" class="section level2">
-<h2><span class="header-section-number">16.1</span> Structured ingestion</h2>
+<h2><span class="header-section-number">15.1</span> Structured ingestion</h2>
 <div id="csv-files-and-similar" class="section level3">
-<h3><span class="header-section-number">16.1.1</span> CSV files (and similar)</h3>
+<h3><span class="header-section-number">15.1.1</span> CSV files (and similar)</h3>
 <p>We saw in a previous chapter how we can use the <code>read_csv</code> file to read data from a CSV file into a data frame. Comma separated value (CSV) files are structured in a somewhat regular way, so reading into a data frame is straightforward. Each line in the CSV file corresponds to an observation (a row in a data frame). Each line contains values separated by a comma (<code>,</code>), corresponding to the variables of each observation.</p>
 <p>This ideal principle of how a CSV file is constructed is frequently violated by data contained in CSV files. To get a sense of how to deal with these cases look at the documentation of the <code>read_csv</code> function. For instance:</p>
 <ul>
@@ -507,228 +503,206 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>file may contain header information before the actual data so we have to skip some lines when loading the data (<code>skip</code> argument)</p></li>
 </ul>
 <p>You should read the documentation of the <code>read_csv</code> function to appreciate the complexities it can maneuver when reading data from structured text files.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1">?read_csv</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">?read_csv</code></pre>
 <p>When loading a CSV file, we need to determine how to treat values for each attribute in the dataset. When we call <code>read_csv</code>, it guesses as to the best way to parse each attribute (e.g., is it a number, is it a factor, is it free text, how is missing data encoded). The <code>readr</code> package implements a set of core functions <code>parse_*</code> that parses vectors into different data types (e.g., <code>parse_number</code>, <code>parse_datetime</code>, <code>parse_factor</code>). When we call <code>read_csv</code> it will print it’s data types guesses and any problems it encounters.</p>
 <p>The <code>problems</code> function let’s you inspect parsing problems. E.g.,</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">readr_example</span>(<span class="st">&quot;challenge.csv&quot;</span>))</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">readr_example</span>(<span class="st">&quot;challenge.csv&quot;</span>))</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
-##   x = col_integer(),
-##   y = col_character()
+##   x = col_double(),
+##   y = col_logical()
 ## )</code></pre>
-<pre><code>## Warning in rbind(names(probs), probs_f): number of columns of result is not
-## a multiple of vector length (arg 1)</code></pre>
 <pre><code>## Warning: 1000 parsing failures.
-## row # A tibble: 5 x 5 col     row col   expected               actual             file               expected   &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                  &lt;chr&gt;              &lt;chr&gt;              actual 1  1001 x     no trailing characters .23837975086644292 &#39;/Library/Framewo… file 2  1002 x     no trailing characters .41167997173033655 &#39;/Library/Framewo… row 3  1003 x     no trailing characters .7460716762579978  &#39;/Library/Framewo… col 4  1004 x     no trailing characters .723450553836301   &#39;/Library/Framewo… expected 5  1005 x     no trailing characters .614524137461558   &#39;/Library/Framewo…
-## ... ................. ... .......................................................................... ........ .......................................................................... ...... .......................................................................... .... .......................................................................... ... .......................................................................... ... .......................................................................... ........ ..........................................................................
+##  row col           expected     actual                                                                                         file
+## 1001   y 1/0/T/F/TRUE/FALSE 2015-01-16 &#39;/Library/Frameworks/R.framework/Versions/3.5/Resources/library/readr/extdata/challenge.csv&#39;
+## 1002   y 1/0/T/F/TRUE/FALSE 2018-05-18 &#39;/Library/Frameworks/R.framework/Versions/3.5/Resources/library/readr/extdata/challenge.csv&#39;
+## 1003   y 1/0/T/F/TRUE/FALSE 2015-09-05 &#39;/Library/Frameworks/R.framework/Versions/3.5/Resources/library/readr/extdata/challenge.csv&#39;
+## 1004   y 1/0/T/F/TRUE/FALSE 2012-11-28 &#39;/Library/Frameworks/R.framework/Versions/3.5/Resources/library/readr/extdata/challenge.csv&#39;
+## 1005   y 1/0/T/F/TRUE/FALSE 2020-01-13 &#39;/Library/Frameworks/R.framework/Versions/3.5/Resources/library/readr/extdata/challenge.csv&#39;
+## .... ... .................. .......... ............................................................................................
 ## See problems(...) for more details.</code></pre>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="kw">problems</span>(df)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">problems</span>(df)</code></pre>
 <pre><code>## # A tibble: 1,000 x 5
-##      row col   expected               actual             file             
-##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                  &lt;chr&gt;              &lt;chr&gt;            
-##  1  1001 x     no trailing characters .23837975086644292 &#39;/Library/Framew…
-##  2  1002 x     no trailing characters .41167997173033655 &#39;/Library/Framew…
-##  3  1003 x     no trailing characters .7460716762579978  &#39;/Library/Framew…
-##  4  1004 x     no trailing characters .723450553836301   &#39;/Library/Framew…
-##  5  1005 x     no trailing characters .614524137461558   &#39;/Library/Framew…
-##  6  1006 x     no trailing characters .473980569280684   &#39;/Library/Framew…
-##  7  1007 x     no trailing characters .5784610391128808  &#39;/Library/Framew…
-##  8  1008 x     no trailing characters .2415937229525298  &#39;/Library/Framew…
-##  9  1009 x     no trailing characters .11437866208143532 &#39;/Library/Framew…
-## 10  1010 x     no trailing characters .2983446326106787  &#39;/Library/Framew…
-## # ... with 990 more rows</code></pre>
+##      row col   expected      actual   file                                 
+##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;                                
+##  1  1001 y     1/0/T/F/TRUE… 2015-01… &#39;/Library/Frameworks/R.framework/Ver…
+##  2  1002 y     1/0/T/F/TRUE… 2018-05… &#39;/Library/Frameworks/R.framework/Ver…
+##  3  1003 y     1/0/T/F/TRUE… 2015-09… &#39;/Library/Frameworks/R.framework/Ver…
+##  4  1004 y     1/0/T/F/TRUE… 2012-11… &#39;/Library/Frameworks/R.framework/Ver…
+##  5  1005 y     1/0/T/F/TRUE… 2020-01… &#39;/Library/Frameworks/R.framework/Ver…
+##  6  1006 y     1/0/T/F/TRUE… 2016-04… &#39;/Library/Frameworks/R.framework/Ver…
+##  7  1007 y     1/0/T/F/TRUE… 2011-05… &#39;/Library/Frameworks/R.framework/Ver…
+##  8  1008 y     1/0/T/F/TRUE… 2020-07… &#39;/Library/Frameworks/R.framework/Ver…
+##  9  1009 y     1/0/T/F/TRUE… 2011-04… &#39;/Library/Frameworks/R.framework/Ver…
+## 10  1010 y     1/0/T/F/TRUE… 2010-05… &#39;/Library/Frameworks/R.framework/Ver…
+## # … with 990 more rows</code></pre>
 <p>The argument <code>col_types</code> is used to help the parser handle datatypes correctly.</p>
 <p>In class discussion: how to parse <code>readr_example(&quot;challenge.csv&quot;)</code></p>
 <p>Other hints:</p>
 <ul>
 <li>You can read every attribute as character using <code>col_types=cols(.default=col_character())</code>. Combine this with <code>type_convert</code> to parse character attributes into other types:</li>
 </ul>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">readr_example</span>(<span class="st">&quot;challenge.csv&quot;</span>), <span class="dt">col_types=</span><span class="kw">cols</span>(<span class="dt">.default=</span><span class="kw">col_character</span>())) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb166-2" data-line-number="2"><span class="st">  </span><span class="kw">type_convert</span>(<span class="kw">cols</span>(<span class="dt">x=</span><span class="kw">col_double</span>(), <span class="dt">y=</span><span class="kw">col_date</span>()))</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">readr_example</span>(<span class="st">&quot;challenge.csv&quot;</span>), <span class="dt">col_types=</span><span class="kw">cols</span>(<span class="dt">.default=</span><span class="kw">col_character</span>())) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">type_convert</span>(<span class="kw">cols</span>(<span class="dt">x=</span><span class="kw">col_double</span>(), <span class="dt">y=</span><span class="kw">col_date</span>()))</code></pre>
 <ul>
 <li>If nothing else works, you can read file lines using <code>read_lines</code> and then parse lines using string processing operations (which we will see shortly).</li>
 </ul>
 </div>
 <div id="excel-spreadsheets" class="section level3">
-<h3><span class="header-section-number">16.1.2</span> Excel spreadsheets</h3>
+<h3><span class="header-section-number">15.1.2</span> Excel spreadsheets</h3>
 <p>Often you will need to ingest data that is stored in an Excel spreadsheet. The <code>readxl</code> package is used to do this. The main function for this package is the <code>read_excel</code> function. It contains similar arguments to the <code>read_csv</code> function we saw above.</p>
 </div>
 </div>
 <div id="scraping" class="section level2">
-<h2><span class="header-section-number">16.2</span> Scraping</h2>
+<h2><span class="header-section-number">15.2</span> Scraping</h2>
 <p>Often, data we want to use is hosted as part of HTML files in webpages. The markup structure of HTML allows to parse data into tables we can use for analysis. Let’s use the Rotten Tomatoes ratings webpage for Diego Luna as an example:</p>
 <p><img src="img/rt_diegoluna.png" /></p>
 <p>We can scrape ratings for his movies from this page. To do this we need to figure out how the HTML page’s markup can help us write R expressions to find this data in the page. Most web browsers have facilities to show page markup. In Google Chrome, you can use <code>View&gt;Developer&gt;Developer Tools</code>, and inspect the page markdown to find where the data is contained. In this example, we see that the data we want is in a <code>&lt;table&gt;</code> element in the page, with id <code>filmographyTbl</code>.</p>
 <p><img src="img/rt_devtools.png" /></p>
 <p>Now that we have that information, we can use the <code>rvest</code> package to scrape this data:</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="kw">library</span>(rvest)</a>
-<a class="sourceLine" id="cb167-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb167-3" data-line-number="3">url &lt;-<span class="st"> &quot;https://www.rottentomatoes.com/celebrity/diego_luna&quot;</span></a>
-<a class="sourceLine" id="cb167-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb167-5" data-line-number="5">dl_tab &lt;-<span class="st"> </span>url <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb167-6" data-line-number="6"><span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb167-7" data-line-number="7"><span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;#filmographyTbl&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb167-8" data-line-number="8"><span class="st">  </span><span class="kw">html_table</span>()</a>
-<a class="sourceLine" id="cb167-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb167-10" data-line-number="10"><span class="kw">head</span>(dl_tab)</a></code></pre></div>
-<pre><code>##   RATING                        TITLE
-## 1     5%                   Flatliners
-## 2    85% Rogue One: A Star Wars Story
-## 3    88%                 Blood Father
-## 4    62%            Mr. Pig (Sr. Pig)
-## 5    82%             The Book of Life
-## 6    39%                 Cesar Chavez
-##                                                                                                                                                                                                                                                                                                     CREDIT
-## 1                                                                                                                                                                                                                                                                                                      Ray
-## 2                                                                                                                                                                                                                                                                                    Captain Cassian Andor
-## 3                                                                                                                                                                                                                                                                                                    Jonah
-## 4 Producer\n                                                \n                                    \n                                            Screenwriter\n                                                \n                                    \n                                            Director
-## 5                                                                                                                                                                                                                                                                                                   Manolo
-## 6                                                                                                                                                   Producer\n                                                \n                                    \n                                            Director
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
+
+url &lt;-<span class="st"> &quot;https://www.rottentomatoes.com/celebrity/diego_luna&quot;</span>
+
+dl_tab &lt;-<span class="st"> </span>url <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">read_html</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;#filmographyTbl&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">html_table</span>()
+
+<span class="kw">head</span>(dl_tab)</code></pre>
+<pre><code>##         RATING                        TITLE                CREDIT
+## 1 No Score Yet           Berlin, I Love You            Drag Queen
+## 2          95%   If Beale Street Could Talk             Pedrocito
+## 3 No Score Yet             Crow: The Legend                  Moth
+## 4           4%                   Flatliners                   Ray
+## 5          84% Rogue One: A Star Wars Story Captain Cassian Andor
+## 6          89%                 Blood Father                 Jonah
 ##   BOX OFFICE YEAR
-## 1     $16.9M 2017
-## 2    $532.2M 2016
-## 3          — 2016
-## 4          — 2016
-## 5          — 2014
-## 6      $5.6M 2014</code></pre>
+## 1          — 2019
+## 2          — 2019
+## 3          — 2018
+## 4     $16.9M 2017
+## 5    $532.2M 2016
+## 6          — 2016</code></pre>
 <p>The main two functions we used here are <code>html_node</code> and <code>html_table</code>. <code>html_node</code> finds elements in the HTML page according to some selection criteria. Since we want the element with <code>id=filmographyTbl</code> we use the <code>#</code> selection operation since that corresponds to selection by id. Once the desired element in the page is selected, we can use the <code>html_table</code> function to parse the element’s text into a data frame.</p>
 <p>The argument to the <code>html_node</code> function uses CSS selector syntax: <a href="https://www.w3.org/TR/CSS2/selector.html" class="uri">https://www.w3.org/TR/CSS2/selector.html</a></p>
 <p><strong>On your own:</strong> If you wanted to extract the TV filmography from the page, how would you change this call?</p>
 <div id="scraping-from-dirty-html-tables" class="section level3">
-<h3><span class="header-section-number">16.2.1</span> Scraping from dirty HTML tables</h3>
+<h3><span class="header-section-number">15.2.1</span> Scraping from dirty HTML tables</h3>
 <p>We saw above how to extract data from HTML tables. But what if the data we want to extract is not cleanly formatted as a HTML table, or is spread over multiple html pages?</p>
 <p>Let’s look at an example where we scrape titles and artists from billboard #1 songs: <a href="https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_2017" class="uri">https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_2017</a></p>
 <p>Let’s start by reading the HTML markup and finding the document node that contains the table we want to scrape</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1"><span class="kw">library</span>(rvest)</a>
-<a class="sourceLine" id="cb169-2" data-line-number="2">url &lt;-<span class="st"> &quot;https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_2017&quot;</span></a>
-<a class="sourceLine" id="cb169-3" data-line-number="3">singles_tab_node &lt;-<span class="st"> </span><span class="kw">read_html</span>(url) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb169-4" data-line-number="4"><span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;.plainrowheaders&quot;</span>)</a>
-<a class="sourceLine" id="cb169-5" data-line-number="5">singles_tab_node</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
+url &lt;-<span class="st"> &quot;https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_2017&quot;</span>
+singles_tab_node &lt;-<span class="st"> </span><span class="kw">read_html</span>(url) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">html_node</span>(<span class="st">&quot;.plainrowheaders&quot;</span>)
+singles_tab_node</code></pre>
 <pre><code>## {xml_node}
 ## &lt;table class=&quot;wikitable plainrowheaders&quot; style=&quot;text-align: center&quot;&gt;
-##  [1] &lt;tr&gt;\n&lt;th&gt;Issue date&lt;/th&gt;\n&lt;th&gt;Song&lt;/th&gt;\n&lt;th&gt;Artist(s)&lt;/th&gt;\n&lt;th&gt;R ...
-##  [2] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;January 7&lt;/th&gt;\n&lt;td&gt;&quot;&lt;a href=&quot;/wiki/Starboy_( ...
-##  [3] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;January 14&lt;/th&gt;\n&lt;td&gt;&quot;&lt;a href=&quot;/wiki/Black_Be ...
-##  [4] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;January 21&lt;/th&gt;\n&lt;td&gt;&quot;&lt;a href=&quot;/wiki/Bad_and_ ...
-##  [5] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;January 28&lt;/th&gt;\n&lt;td bgcolor=&quot;#FFFF99&quot;&gt;&quot;&lt;a hr ...
-##  [6] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;February 4&lt;/th&gt;\n&lt;td rowspan=&quot;2&quot;&gt;&quot;Bad and Bou ...
-##  [7] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;February 11&lt;/th&gt;\n&lt;td&gt;&lt;sup id=&quot;cite_ref-7&quot; cl ...
-##  [8] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;February 18&lt;/th&gt;\n&lt;td bgcolor=&quot;#FFFF99&quot; rowsp ...
-##  [9] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;February 25&lt;/th&gt;\n&lt;td&gt;&lt;sup id=&quot;cite_ref-9&quot; cl ...
-## [10] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;March 4&lt;/th&gt;\n&lt;td&gt;&lt;sup id=&quot;cite_ref-10&quot; class ...
-## [11] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;March 11&lt;/th&gt;\n&lt;td&gt;&lt;sup id=&quot;cite_ref-11&quot; clas ...
-## [12] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;March 18&lt;/th&gt;\n&lt;td&gt;&lt;sup id=&quot;cite_ref-12&quot; clas ...
-## [13] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;March 25&lt;/th&gt;\n&lt;td&gt;&lt;sup id=&quot;cite_ref-13&quot; clas ...
-## [14] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;April 1&lt;/th&gt;\n&lt;td&gt;&lt;sup id=&quot;cite_ref-14&quot; class ...
-## [15] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;April 8&lt;/th&gt;\n&lt;td&gt;&lt;sup id=&quot;cite_ref-15&quot; class ...
-## [16] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;April 15&lt;/th&gt;\n&lt;td&gt;&lt;sup id=&quot;cite_ref-16&quot; clas ...
-## [17] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;April 22&lt;/th&gt;\n&lt;td&gt;&lt;sup id=&quot;cite_ref-17&quot; clas ...
-## [18] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;April 29&lt;/th&gt;\n&lt;td&gt;&lt;sup id=&quot;cite_ref-18&quot; clas ...
-## [19] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;May 6&lt;/th&gt;\n&lt;td&gt;&quot;&lt;a href=&quot;/wiki/Humble_(song) ...
-## [20] &lt;tr&gt;\n&lt;th scope=&quot;row&quot;&gt;May 13&lt;/th&gt;\n&lt;td&gt;&quot;&lt;a href=&quot;/wiki/That%27s_Wha ...
-## ...</code></pre>
+## [1] &lt;tbody&gt;\n&lt;tr&gt;\n&lt;th&gt;Issue date\n&lt;/th&gt;\n&lt;th&gt;Song\n&lt;/th&gt;\n&lt;th&gt;Artist(s) ...</code></pre>
 <p>Since the rows of the table are not cleanly aligned, we need to extract each attribute separately. Let’s start with the dates in the first column. Since we noticed that the nodes containing dates have attribute <code>scope</code> we use the attribute CSS selector <code>[scope]</code>.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1">dates &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;[scope]&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
-<a class="sourceLine" id="cb171-2" data-line-number="2">dates <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
-<pre><code>## [1] &quot;January 7&quot;   &quot;January 14&quot;  &quot;January 21&quot;  &quot;January 28&quot;  &quot;February 4&quot; 
-## [6] &quot;February 11&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">dates &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;[scope]&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()
+dates <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre>
+<pre><code>## [1] &quot;January 7\n&quot;   &quot;January 14\n&quot;  &quot;January 21\n&quot;  &quot;January 28\n&quot; 
+## [5] &quot;February 4\n&quot;  &quot;February 11\n&quot;</code></pre>
 <p>Next, we extract song titles, first we grab the <code>tr</code> (table row) nodes and extract from each the first <code>td</code> node using the <code>td:first-of-type</code> CSS selector. Notice that this gets us the header row which we remove using the <code>magrittr::extract</code> function.
 The title nodes also tell us how many rows this spans, which we grab from the <code>rowspan</code> attribute.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1">title_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:first-of-type&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb173-2" data-line-number="2">song_titles &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
-<a class="sourceLine" id="cb173-3" data-line-number="3">title_spans &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_attr</span>(<span class="st">&quot;rowspan&quot;</span>)</a>
-<a class="sourceLine" id="cb173-4" data-line-number="4"><span class="kw">cbind</span>(song_titles, title_spans) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a></code></pre></div>
-<pre><code>##       song_titles          title_spans
-##  [1,] &quot;\&quot;Starboy\&quot;&quot;        NA         
-##  [2,] &quot;\&quot;Black Beatles\&quot;&quot;  NA         
-##  [3,] &quot;\&quot;Bad and Boujee\&quot;&quot; NA         
-##  [4,] &quot;\&quot;Shape of You\&quot; &quot;  NA         
-##  [5,] &quot;\&quot;Bad and Boujee\&quot;&quot; &quot;2&quot;        
-##  [6,] &quot;[7]&quot;                NA         
-##  [7,] &quot;\&quot;Shape of You\&quot; &quot;  &quot;11&quot;       
-##  [8,] &quot;[9]&quot;                NA         
-##  [9,] &quot;[10]&quot;               NA         
-## [10,] &quot;[11]&quot;               NA</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">title_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:first-of-type&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)
+song_titles &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()
+title_spans &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_attr</span>(<span class="st">&quot;rowspan&quot;</span>)
+<span class="kw">cbind</span>(song_titles, title_spans) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</code></pre>
+<pre><code>##       song_titles            title_spans
+##  [1,] &quot;\&quot;Starboy\&quot;\n&quot;        NA         
+##  [2,] &quot;\&quot;Black Beatles\&quot;\n&quot;  NA         
+##  [3,] &quot;\&quot;Bad and Boujee\&quot;\n&quot; NA         
+##  [4,] &quot;\&quot;Shape of You\&quot; &quot;    NA         
+##  [5,] &quot;\&quot;Bad and Boujee\&quot;\n&quot; &quot;2&quot;        
+##  [6,] &quot;[7]&quot;                  NA         
+##  [7,] &quot;\&quot;Shape of You\&quot; &quot;    &quot;11&quot;       
+##  [8,] &quot;[9]&quot;                  NA         
+##  [9,] &quot;[10]&quot;                 NA         
+## [10,] &quot;[11]&quot;                 NA</code></pre>
 <p>To get artist names we get the second data element (<code>td</code>) of each row using the <code>td:nth-of-type(2)</code> CSS selector (again removing the first entry in result coming from the header row)</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1">artist_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:nth-of-type(2)&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb175-2" data-line-number="2">artists &lt;-<span class="st">  </span>artist_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
-<a class="sourceLine" id="cb175-3" data-line-number="3">artists <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</a></code></pre></div>
-<pre><code>##  [1] &quot;The Weeknd featuring Daft Punk&quot;   
-##  [2] &quot;Rae Sremmurd featuring Gucci Mane&quot;
-##  [3] &quot;Migos featuring Lil Uzi Vert&quot;     
-##  [4] &quot;Ed Sheeran&quot;                       
-##  [5] &quot;Migos featuring Lil Uzi Vert&quot;     
-##  [6] NA                                 
-##  [7] &quot;Ed Sheeran&quot;                       
-##  [8] NA                                 
-##  [9] NA                                 
+<pre class="sourceCode r"><code class="sourceCode r">artist_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:nth-of-type(2)&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)
+artists &lt;-<span class="st">  </span>artist_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()
+artists <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">10</span>)</code></pre>
+<pre><code>##  [1] &quot;The Weeknd featuring Daft Punk\n&quot;   
+##  [2] &quot;Rae Sremmurd featuring Gucci Mane\n&quot;
+##  [3] &quot;Migos featuring Lil Uzi Vert\n&quot;     
+##  [4] &quot;Ed Sheeran\n&quot;                       
+##  [5] &quot;Migos featuring Lil Uzi Vert\n&quot;     
+##  [6] NA                                   
+##  [7] &quot;Ed Sheeran\n&quot;                       
+##  [8] NA                                   
+##  [9] NA                                   
 ## [10] NA</code></pre>
 <p>Now that we’ve extracted each attribute separately we can combine them into a single data frame</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1">billboard_df &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">month_day=</span>dates, <span class="dt">year=</span><span class="st">&quot;2017&quot;</span>, <span class="dt">song_title_raw=</span>song_titles, <span class="dt">title_span=</span>title_spans,</a>
-<a class="sourceLine" id="cb177-2" data-line-number="2">                           <span class="dt">artist_raw=</span>artists)</a>
-<a class="sourceLine" id="cb177-3" data-line-number="3">billboard_df</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">billboard_df &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">month_day=</span>dates, <span class="dt">year=</span><span class="st">&quot;2017&quot;</span>, <span class="dt">song_title_raw=</span>song_titles, <span class="dt">title_span=</span>title_spans,
+                           <span class="dt">artist_raw=</span>artists)</code></pre>
+<pre><code>## Warning: `data_frame()` is deprecated, use `tibble()`.
+## This warning is displayed once per session.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">billboard_df</code></pre>
 <pre><code>## # A tibble: 52 x 5
-##    month_day   year  song_title_raw       title_span artist_raw           
-##    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;      &lt;chr&gt;                
-##  1 January 7   2017  &quot;\&quot;Starboy\&quot;&quot;        &lt;NA&gt;       The Weeknd featuring…
-##  2 January 14  2017  &quot;\&quot;Black Beatles\&quot;&quot;  &lt;NA&gt;       Rae Sremmurd featuri…
-##  3 January 21  2017  &quot;\&quot;Bad and Boujee\&quot;&quot; &lt;NA&gt;       Migos featuring Lil …
-##  4 January 28  2017  &quot;\&quot;Shape of You\&quot; &quot;  &lt;NA&gt;       Ed Sheeran           
-##  5 February 4  2017  &quot;\&quot;Bad and Boujee\&quot;&quot; 2          Migos featuring Lil …
-##  6 February 11 2017  [7]                  &lt;NA&gt;       &lt;NA&gt;                 
-##  7 February 18 2017  &quot;\&quot;Shape of You\&quot; &quot;  11         Ed Sheeran           
-##  8 February 25 2017  [9]                  &lt;NA&gt;       &lt;NA&gt;                 
-##  9 March 4     2017  [10]                 &lt;NA&gt;       &lt;NA&gt;                 
-## 10 March 11    2017  [11]                 &lt;NA&gt;       &lt;NA&gt;                 
-## # ... with 42 more rows</code></pre>
+##    month_day    year  song_title_raw     title_span artist_raw             
+##    &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt;                  
+##  1 &quot;January 7\… 2017  &quot;\&quot;Starboy\&quot;\n&quot;    &lt;NA&gt;       &quot;The Weeknd featuring …
+##  2 &quot;January 14… 2017  &quot;\&quot;Black Beatles\… &lt;NA&gt;       &quot;Rae Sremmurd featurin…
+##  3 &quot;January 21… 2017  &quot;\&quot;Bad and Boujee… &lt;NA&gt;       &quot;Migos featuring Lil U…
+##  4 &quot;January 28… 2017  &quot;\&quot;Shape of You\&quot;… &lt;NA&gt;       &quot;Ed Sheeran\n&quot;         
+##  5 &quot;February 4… 2017  &quot;\&quot;Bad and Boujee… 2          &quot;Migos featuring Lil U…
+##  6 &quot;February 1… 2017  [7]                &lt;NA&gt;       &lt;NA&gt;                   
+##  7 &quot;February 1… 2017  &quot;\&quot;Shape of You\&quot;… 11         &quot;Ed Sheeran\n&quot;         
+##  8 &quot;February 2… 2017  [9]                &lt;NA&gt;       &lt;NA&gt;                   
+##  9 &quot;March 4\n&quot;  2017  [10]               &lt;NA&gt;       &lt;NA&gt;                   
+## 10 &quot;March 11\n&quot; 2017  [11]               &lt;NA&gt;       &lt;NA&gt;                   
+## # … with 42 more rows</code></pre>
 <p>This is by no means a clean data frame yet, but we will discuss how to clean up data like this in later lectures.
 We can now abstract these operations into a function that scrapes the same data for other years.</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1">scrape_billboard &lt;-<span class="st"> </span><span class="cf">function</span>(year, <span class="dt">baseurl=</span><span class="st">&quot;https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_&quot;</span>) {</a>
-<a class="sourceLine" id="cb179-2" data-line-number="2">  url &lt;-<span class="st"> </span><span class="kw">paste0</span>(baseurl, year)</a>
-<a class="sourceLine" id="cb179-3" data-line-number="3">  <span class="co"># find table node</span></a>
-<a class="sourceLine" id="cb179-4" data-line-number="4">  singles_tab_node &lt;-<span class="st"> </span><span class="kw">read_html</span>(url) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb179-5" data-line-number="5"><span class="st">    </span><span class="kw">html_node</span>(<span class="st">&quot;.plainrowheaders&quot;</span>) </a>
-<a class="sourceLine" id="cb179-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb179-7" data-line-number="7">  <span class="co"># extract dates</span></a>
-<a class="sourceLine" id="cb179-8" data-line-number="8">  dates &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;[scope]&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
-<a class="sourceLine" id="cb179-9" data-line-number="9">  </a>
-<a class="sourceLine" id="cb179-10" data-line-number="10">  <span class="co"># extract titles and spans</span></a>
-<a class="sourceLine" id="cb179-11" data-line-number="11">  title_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:first-of-type&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb179-12" data-line-number="12">  song_titles &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
-<a class="sourceLine" id="cb179-13" data-line-number="13">  title_spans &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_attr</span>(<span class="st">&quot;rowspan&quot;</span>)</a>
-<a class="sourceLine" id="cb179-14" data-line-number="14">  </a>
-<a class="sourceLine" id="cb179-15" data-line-number="15">  <span class="co"># extract artists</span></a>
-<a class="sourceLine" id="cb179-16" data-line-number="16">  artist_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:nth-of-type(2)&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb179-17" data-line-number="17">  artists &lt;-<span class="st">  </span>artist_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</a>
-<a class="sourceLine" id="cb179-18" data-line-number="18">  </a>
-<a class="sourceLine" id="cb179-19" data-line-number="19">  <span class="co"># make data frame</span></a>
-<a class="sourceLine" id="cb179-20" data-line-number="20">  <span class="kw">data_frame</span>(<span class="dt">month_day=</span>dates, <span class="dt">year=</span>year, <span class="dt">song_title_raw=</span>song_titles, <span class="dt">title_span=</span>title_spans,</a>
-<a class="sourceLine" id="cb179-21" data-line-number="21">                           <span class="dt">artist_raw=</span>artists)</a>
-<a class="sourceLine" id="cb179-22" data-line-number="22">}</a>
-<a class="sourceLine" id="cb179-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb179-24" data-line-number="24"><span class="kw">scrape_billboard</span>(<span class="st">&quot;2016&quot;</span>)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">scrape_billboard &lt;-<span class="st"> </span><span class="cf">function</span>(year, <span class="dt">baseurl=</span><span class="st">&quot;https://en.wikipedia.org/wiki/List_of_Billboard_Hot_100_number-one_singles_of_&quot;</span>) {
+  url &lt;-<span class="st"> </span><span class="kw">paste0</span>(baseurl, year)
+  <span class="co"># find table node</span>
+  singles_tab_node &lt;-<span class="st"> </span><span class="kw">read_html</span>(url) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">html_node</span>(<span class="st">&quot;.plainrowheaders&quot;</span>) 
+  
+  <span class="co"># extract dates</span>
+  dates &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;[scope]&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()
+  
+  <span class="co"># extract titles and spans</span>
+  title_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:first-of-type&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)
+  song_titles &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()
+  title_spans &lt;-<span class="st"> </span>title_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_attr</span>(<span class="st">&quot;rowspan&quot;</span>)
+  
+  <span class="co"># extract artists</span>
+  artist_nodes &lt;-<span class="st"> </span>singles_tab_node <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;tr&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_node</span>(<span class="st">&quot;td:nth-of-type(2)&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="op">-</span><span class="dv">1</span>)
+  artists &lt;-<span class="st">  </span>artist_nodes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()
+  
+  <span class="co"># make data frame</span>
+  <span class="kw">data_frame</span>(<span class="dt">month_day=</span>dates, <span class="dt">year=</span>year, <span class="dt">song_title_raw=</span>song_titles, <span class="dt">title_span=</span>title_spans,
+                           <span class="dt">artist_raw=</span>artists)
+}
+
+<span class="kw">scrape_billboard</span>(<span class="st">&quot;2016&quot;</span>)</code></pre>
 <pre><code>## # A tibble: 53 x 5
-##    month_day   year  song_title_raw       title_span artist_raw           
-##    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;                &lt;chr&gt;      &lt;chr&gt;                
-##  1 January 2   2016  &quot;\&quot;Hello\&quot;&quot;          3          Adele                
-##  2 January 9   2016  [4]                  &lt;NA&gt;       &lt;NA&gt;                 
-##  3 January 16  2016  [5]                  &lt;NA&gt;       &lt;NA&gt;                 
-##  4 January 23  2016  &quot;\&quot;Sorry\&quot;&quot;          3          Justin Bieber        
-##  5 January 30  2016  [7]                  &lt;NA&gt;       &lt;NA&gt;                 
-##  6 February 6  2016  [8]                  &lt;NA&gt;       &lt;NA&gt;                 
-##  7 February 13 2016  &quot;\&quot;Love Yourself\&quot; &quot; &lt;NA&gt;       [9]                  
-##  8 February 20 2016  &quot;\&quot;Pillowtalk\&quot;&quot;     &lt;NA&gt;       Zayn                 
-##  9 February 27 2016  &quot;\&quot;Love Yourself\&quot; &quot; &lt;NA&gt;       Justin Bieber        
-## 10 March 5     2016  &quot;\&quot;Work\&quot;&quot;           9          Rihanna featuring Dr…
-## # ... with 43 more rows</code></pre>
+##    month_day      year  song_title_raw     title_span artist_raw           
+##    &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt;                
+##  1 &quot;January 2\n&quot;  2016  &quot;\&quot;Hello\&quot;\n&quot;      3          &quot;Adele\n&quot;            
+##  2 &quot;January 9\n&quot;  2016  [4]                &lt;NA&gt;       &lt;NA&gt;                 
+##  3 &quot;January 16\n&quot; 2016  [5]                &lt;NA&gt;       &lt;NA&gt;                 
+##  4 &quot;January 23\n&quot; 2016  &quot;\&quot;Sorry\&quot;\n&quot;      3          &quot;Justin Bieber\n&quot;    
+##  5 &quot;January 30\n&quot; 2016  [7]                &lt;NA&gt;       &lt;NA&gt;                 
+##  6 &quot;February 6\n&quot; 2016  [8]                &lt;NA&gt;       &lt;NA&gt;                 
+##  7 &quot;February 13\… 2016  &quot;\&quot;Love Yourself\… &lt;NA&gt;       [9]                  
+##  8 &quot;February 20\… 2016  &quot;\&quot;Pillowtalk\&quot;\n&quot; &lt;NA&gt;       &quot;Zayn\n&quot;             
+##  9 &quot;February 27\… 2016  &quot;\&quot;Love Yourself\… &lt;NA&gt;       &quot;Justin Bieber\n&quot;    
+## 10 &quot;March 5\n&quot;    2016  &quot;\&quot;Work\&quot;\n&quot;       9          &quot;Rihanna featuring D…
+## # … with 43 more rows</code></pre>
 <p>We can do this for a few years and create a (very dirty) dataset with songs for this current decade:</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1">billboard_tab &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dv">2010</span><span class="op">:</span><span class="dv">2017</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb181-2" data-line-number="2"><span class="st">  </span>purrr<span class="op">::</span><span class="kw">map_df</span>(scrape_billboard)</a>
-<a class="sourceLine" id="cb181-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb181-4" data-line-number="4">billboard_tab <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb181-5" data-line-number="5"><span class="st">  </span><span class="kw">head</span>(<span class="dv">20</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb181-6" data-line-number="6"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</a></code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">billboard_tab &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="dv">2010</span><span class="op">:</span><span class="dv">2017</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>purrr<span class="op">::</span><span class="kw">map_df</span>(scrape_billboard)
+
+billboard_tab <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">20</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</code></pre>
 <table>
 <thead>
 <tr>
@@ -1103,7 +1077,7 @@ NA
           </div>
         </div>
       </div>
-<a href="db-parting-shots.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sql-system-constructs.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="tidying-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -1124,7 +1098,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -1134,6 +1108,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -1152,7 +1130,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

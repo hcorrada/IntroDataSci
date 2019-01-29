@@ -3,6 +3,7 @@ repo: http://github.com/hcorrada/IntroDataSci/
 output_dir: _book
 delete_merged_file: true
 rmd_files: [
+  "index.rmd",
   "01-intro.rmd",
   "02-illustrative_analysis.rmd",
   "03-setting_up.rmd",
