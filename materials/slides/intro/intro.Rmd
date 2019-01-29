@@ -517,7 +517,7 @@ This data includes, for each of the movies Diego Luna has acted in, the rotten t
 For the movie budgets and revenue data we scrape this
 webpage: http://www.the-numbers.com/movie/budgets/all
 
-```{r read_budget, echo=FALSE, cache=TRUE}
+```{r read_budget, eval=FALSE, echo=FALSE, cache=TRUE}
 # scrape the webpage
 budget_url <- "http://www.the-numbers.com/movie/budgets/all"
 budget_html <- read_html(budget_url)
@@ -528,7 +528,7 @@ budget_tab <- budget_html %>%
   as_tibble()
 ```
 
-```{r, echo=FALSE}
+```{r, eval=FALSE, echo=FALSE}
 # clean up the result
 clean_budget_tab <- budget_tab %>%
   # remove all those NA rows
@@ -551,6 +551,18 @@ clean_budget_tab <- budget_tab %>%
   # represent budget and gross in millions
   mutate_at(vars(-1,-2), funs(. / 1e6))
 ```
+
+<!--
+(Note 01.2018: after the initial version of this analysis,
+this website added pagination to this URL. We will be using the
+CSV file scraped originally in Summer 2017 for this analysis and leave the issue of dealing with pagination as an exercise.)
+-->
+
+```{r read_budget_csv, echo=FALSE, cache=TRUE}
+budget_filename <- "data/movie_budgets.csv"
+clean_budget_tab <- read_csv(budget_filename)
+```
+
 
 This is part of what we have for that table after scraping and cleaning up:
 
