@@ -6,11 +6,11 @@ Earlier we made the distinction that SQL is a _declarative_ language rather than
 
 Consider a database where we have two tables `Batting` and `Master` and we want to evaluate this query: that _what is the maximum batting "average" for a player from the state of California_?
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 db <- DBI::dbConnect(RSQLite::SQLite(), "data/lahman2016.sqlite")
 ```
 
-```{sql, connection=db}
+```{sql, eval=FALSE}
 select max(1.0 * b.H / b.AB) as best_ba
 from Batting as b join Master as m on b.playerId = m.playerId
 where b.AB >= 100 and m.birthState = "CA"

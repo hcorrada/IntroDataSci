@@ -267,7 +267,7 @@ We can also create attributes of type `datetime` from string attributes. Here's 
 ```{r}
 flights_with_dt <- flights %>%
   mutate(dep_dt=make_datetime(year, month, day, dep_time %/% 100, dep_time %% 100)) %>%
-  select(year, month, day, dep_time, dep_dt)
+  dplyr::select(year, month, day, dep_time, dep_dt)
 flights_with_dt
 ```
 

@@ -424,11 +424,11 @@ notes = "slides/cmsc320_wrapup.pdf"
 #link = "projects/project4/"
 
 [day30]
-date = "5/18"
+date = "5/22"
 
-#[[day30.workdue]]
-#title = "Final Project (due 12:30pm)"
-#link = "projects/final_project/"
+[[day30.workdue]]
+title = "Final Project (due 12:30pm)"
+link = "projects/final_project/"
 
 # [day29]
 # date = "12/2"
