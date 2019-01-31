@@ -12,7 +12,7 @@ This page constiutes the official syllabus for this class.
 
 
 *	Lecture Meeting Times    
-    Tuesday and Thursday, 3:30pm-4:45pm, ESJ 0224
+    Tuesday and Thursday, 3:30pm-4:45pm, 
 
 *	Instructor:  
     [H&eacute;ctor Corrada Bravo](http://www.cbcb.umd.edu/~hcorrada)  
@@ -25,35 +25,27 @@ This page constiutes the official syllabus for this class.
 * Communication:  
     - For course related questions, use [Piazza]({{< piazzaurl >}}) as indicated below.  
     - For any other communication (e.g., absences accomodations etc.) send message through ELMS.
-*	TAs:
-    - This list needs to be updated  
-    - Weijia Xu (Graduate)  
-      <weijia.xu.ixia@gmail.com>  
-      Office Hours: Tues and Thur 1p-3p AVW 3126  
-    - Yi Mao (Graduate)  
-      <maoyi16@gmail.com>  
-      Office Hours: Mon and Wed 2p-4p AVW 1120  
-    - Suraj Nair (Graduate)   
-      <srnair@cs.umd.edu>  
-      Office Hours: Tues and Thur 11a-1p AVW 3126  
-    - Yang Jiao (Graduate)   
-      <jiaoyang.tju@gmail.com>  
-      Office Hours: Friday 11a-3p AVW 1120  
-    - Ashley Chang (Undergraduate)   
-      <ashleyyc@gmail.com>  
-      Office Hours: Tues and Thur 11a-1p AVW 1120  
-    - Brad Chessin (Undergraduate)  
-      <bchessin@terpmail.umd.edu>  
-      Office Hours: Wed 11:45a-1:45p, Thur 9a-11a AVW 1120  
-    - Joseph Nyangwechi (Undergraduate)  
-      <josephocharo7@gmail.com>  
-      Office Hours: Mon and Wed 11a-1p AVW 1120  
-    - Brian Gottfried  
-      <bkgott@terpmail.umd.edu>  
-      Office Hours: Mon and Wed 9a-11a AVW 1120  
 
-We will use the class Piazza site [{{< piazzaurl >}}]({{< piazzaurl >}}) for questions, dicussion and announcements. Assignments and grades for the class will be posted to the class ELMS site: [{{< elmurl >}}]({{< elmurl >}}).
+We will use the class Piazza site [{{< piazzaurl >}}]({{< piazzaurl >}}) for questions, dicussion and announcements. Assignments and grades for the class will be posted to the class ELMS site: [{{< elmurl >}}]({{< elmurl >}}**.
 In case of an extended emergency closure, announcements on policy and procedures will be posted to Piazza.
+
+## TAs and Office Hours Schedule
+
+**Office hour schedule will be posted soon**
+
+- Eleftheria Briakou  
+- Victoria Cepeda  
+- Ashley Chang  
+- Yuexi Chen  
+- William Gomolka  
+- Ahmed Ghoneim  
+- Weiyi Jiang  
+- Harihara Subrahmaniam Muralidharan  
+- Yanchao Sun  
+- Yifan Yang  
+- Christopher Yue  
+
+
 
 ## Textbook and Resources:
 
@@ -108,7 +100,7 @@ libraries, data resources and publishing mechanisms.
   academic integrity policy.  
 * Cell phone usage is **prohibited** during lecture, laptop use will be allowed to the extent that students **demonstrably** use it to follow along an in-class analysis or demonstration.  
 * You can earn full credit for class participation in three ways:   
-    (1) lecture participation, asking questions and answering your peers questions,   
+    (1) lecture participation, asking questions and answering your peers questions, (this will be impossible to keep track of, so please the two below :-) )   
     (2) piazza participation, asking and answering questions on piazza,   
     (3) regular attendance to office hours (there will be sign-in sheets during office hours).   
     To earn full credit you should aim to ask or answer a question at least once every two weeks on lecture or on piazza; or attend office hours at least once a month (this can include just going to my office hours to chat about computer science, data, science, software engineering, etc.).
