@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-01-29">
+<meta name="date" content="2019-01-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -596,7 +596,7 @@ phats_<span class="dv">100</span> &lt;-<span class="st"> </span><span class="kw"
 
 <span class="co"># now let&#39;s plot a histogram of the </span>
 <span class="kw">hist</span>(phats_<span class="dv">100</span>, <span class="dt">xlab=</span><span class="kw">expression</span>(<span class="kw">hat</span>(p)), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>), <span class="dt">main=</span><span class="st">&quot;Distribution of p estimates from 100 tweets&quot;</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-148-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-149-1.svg" width="672" /></p>
 <p>What does this say about our estimates of the proportion of bot-generated tweets if we use 100 tweets in our sample?</p>
 <p>Now what if instead of sampling <span class="math inline">\(n=100\)</span> tweets we used other sample sizes?</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))
@@ -623,7 +623,7 @@ phats_<span class="dv">5000</span> &lt;-<span class="st"> </span><span class="kw
 <span class="co"># what about 10000 tweets</span>
 phats_<span class="dv">10000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10000</span>))
 <span class="kw">hist</span>(phats_<span class="dv">10000</span>, <span class="dt">main=</span><span class="st">&quot;10000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-149-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-150-1.svg" width="672" /></p>
 <p>We can make a couple of observations:</p>
 <ol style="list-style-type: decimal">
 <li>The distribution of estimate <span class="math inline">\(\hat{p}\)</span> is <em>centered</em> at <span class="math inline">\(p=.7\)</span>, our unknown <em>population</em> proportion, and<br />
@@ -686,7 +686,7 @@ density_values_<span class="dv">3</span> &lt;-<span class="st"> </span><span cla
 <span class="kw">lines</span>(yrange, density_values_<span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)
 <span class="kw">lines</span>(yrange, density_values_<span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;orange&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;mean 60, sd 2&quot;</span>, <span class="st">&quot;mean 50, sd 2&quot;</span>, <span class="st">&quot;mean 60, sd 6&quot;</span>), <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;orange&quot;</span>), <span class="dt">lwd=</span><span class="dv">2</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-150-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-151-1.svg" width="672" /></p>
 <p>Like the discrete case, probability density functions for continuous random variables need to satisfy certain conditions:</p>
 <ol style="list-style-type: lower-alpha">
 <li><span class="math inline">\(p(Y=y) \geq 0\)</span> for all values <span class="math inline">\(Y \in (-\infty,\infty)\)</span>, and<br />
@@ -760,7 +760,7 @@ phats_<span class="dv">5000</span> &lt;-<span class="st"> </span><span class="kw
 phats_<span class="dv">10000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10000</span>))
 <span class="kw">hist</span>(phats_<span class="dv">10000</span>, <span class="dt">main=</span><span class="st">&quot;10000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
 <span class="kw">draw_normal_density</span>(<span class="dv">10000</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-151-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-152-1.svg" width="672" /></p>
 <p>Here we see the three main points of the LLN and CLT:</p>
 <ol style="list-style-type: decimal">
 <li>the normal density is centered around <span class="math inline">\(\mu=.7\)</span>,<br />

@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-01-29">
+<meta name="date" content="2019-01-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -496,6 +496,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="getting-data" class="section level2">
 <h2><span class="header-section-number">5.2</span> Getting data</h2>
 <p>We’ve prepared the data previously into a comma-separated value file (<code>.csv</code> file): each line contains attribute values (separated by commas) describing arrests in the City of Baltimore. The <code>read_csv</code> command is part of the <code>readr</code> R package and allows you to read a dataset stored in a csv file. This function is extremely versatile, and you can read more about it by using the standard help system in R: <code>?read_csv</code>. The result of running calling this function is the data itself, so, by running the function in the console, the result of the function is printed.</p>
+<p><strong>Note:</strong> To download this dataset to follow along you can use the following code:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">dir.exists</span>(<span class="st">&quot;data&quot;</span>)) <span class="kw">dir.create</span>(<span class="st">&quot;data&quot;</span>)
+
+<span class="kw">download.file</span>(<span class="st">&quot;https://github.com/hcorrada/IntroDataSci/raw/master/materials/lecture-notes/data/BPD_Arrests.csv&quot;</span>, <span class="dt">destfile=</span><span class="st">&quot;data/BPD_Arrests.csv&quot;</span>)</code></pre>
 <p>To make use of this dataset we want to assign the result of calling <code>read_csv</code> (i.e., the dataset) to a variable:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 arrest_tab &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/BPD_Arrests.csv&quot;</span>)
@@ -632,10 +636,12 @@ The possible values a <em>factor</em> can take are called <em>levels</em>:</p>
 <p>These are attributes that can take any value in a continuous set. For example, a person’s height, in say inches, can take any number (within the range of human heights). Here is another dataset we can use to look at this datatype. In this case, entities are cars and we look at continuous numeric attributes <code>speed</code> and <code>stopping distance</code>:</p>
 <p><img src="lecture-notes_cmsc320_files/figure-html/f04_cars_plot-1.svg" width="672" /></p>
 <p>The distinction between continuous and discrete is a bit tricky since measurements that have finite precision are, in a sense, discrete. Remember, however, that continuity is not a property of the specific dataset you have in hand, but rather of the process you are measuring. The number of arrests in a neighborhood cannot, in principle, be fractional, regardless of the precision at which we measure this. If we had the appropriate tool, we could measure a person’s height with infinite precision. This distinction is very important when we build statistical models of datasets for analysis. For now, think of discrete data as the result of counting, and continuous data the result of some physical measurement.</p>
+<p>Here’s a question: is <code>age</code> in our dataset a continuous or discrete numeric value?</p>
 </div>
 <div id="other-examples" class="section level2">
 <h2><span class="header-section-number">5.7</span> Other examples</h2>
 <p>Consider a dataset of images like the super-famous <a href="https://www.kaggle.com/c/digit-recognizer">MNIST dataset of handwritten digits</a>. This dataset contains images of handwritten digits. So each image is an <em>entity</em>. Each image has a <em>label</em> attribute which states which of the digits 0,1,…9 is represented by the image. What type of data is this (categorical, continuous numeric, or discrete numeric)?</p>
+<p><img src="img/mnist_example.png" /></p>
 <p>Now, each image is represented by grayscale values in a 28x28 grid. That’s 784 attributes, one for each square in the grid, containing a grayscale value. Now what type of data are these other 784 attributes?</p>
 </div>
 <div id="other-important-datatypes" class="section level2">

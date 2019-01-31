@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-01-29">
+<meta name="date" content="2019-01-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -505,11 +505,11 @@ x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1
 y &lt;-<span class="st"> </span>x <span class="op">*</span><span class="st"> </span>true_beta <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="dv">10</span>))
 <span class="kw">plot</span>(x,y,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">cex=</span><span class="fl">1.4</span>,<span class="dt">main=</span><span class="st">&quot;Simulated Data&quot;</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>, <span class="dt">cex.main=</span><span class="dv">2</span>)
 <span class="kw">abline</span>(<span class="dt">a=</span><span class="dv">0</span>, <span class="dt">b=</span>true_beta, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span> <span class="dv">2</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-211-1.svg" width="1440" /></p>
-<p>Our goal is then to find the value of <span class="math inline">\(\beta_1\)</span> that minimizes mean squared error. This corresponds to finding one of these many possible lines:</p>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-212-1.svg" width="1440" /></p>
-<p>Each of which has a specific error for this dataset:</p>
+<p>Our goal is then to find the value of <span class="math inline">\(\beta_1\)</span> that minimizes mean squared error. This corresponds to finding one of these many possible lines:</p>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-213-1.svg" width="1440" /></p>
+<p>Each of which has a specific error for this dataset:</p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-214-1.svg" width="1440" /></p>
 <p>Insights:</p>
 <ol style="list-style-type: decimal">
 <li><p>As we saw before in class, loss is minimized when the derivative of the loss function is 0</p></li>
@@ -522,7 +522,7 @@ y &lt;-<span class="st"> </span>x <span class="op">*</span><span class="st"> </s
 {} = \sum_{i=1}^n (y_i - \beta_1 x_i) (-x_i)
 \]</span></p>
 <p>and plot it for our case study data:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-214-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-215-1.svg" width="1440" /></p>
 </div>
 <div id="gradient-descent" class="section level2">
 <h2><span class="header-section-number">28.2</span> Gradient Descent</h2>
@@ -591,7 +591,7 @@ gradient_descent &lt;-<span class="st"> </span><span class="cf">function</span>(
   beta_<span class="dv">1</span>
 }</code></pre>
 <p>Let’s run this algorithm and track what it does:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-216-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-217-1.svg" width="1440" /></p>
 <pre><code>## it:  0  beta:  0 loss:  405.87  alpha:  0.001 
 ## it:  1  beta:  16.11 loss:  2004.46  alpha:  0.001 
 ## it:  2  beta:  -19.85 loss:  9969.82  alpha:  0.001 
@@ -784,7 +784,7 @@ stochastic_gradient_descent &lt;-<span class="st"> </span><span class="cf">funct
   beta_<span class="dv">1</span>
 }</code></pre>
 <p>Let’s run this and see what it does:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-218-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-219-1.svg" width="1440" /></p>
 <pre><code>## it:  0  beta:  0 loss:  405.87  alpha:  0.001 
 ## it:  1  beta:  4.81 loss:  4.97  alpha:  0.001 
 ## it:  2  beta:  4.99 loss:  4.5  alpha:  0.001 
