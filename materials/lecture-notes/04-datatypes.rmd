@@ -170,11 +170,15 @@ cars %>%
 #plot(cars$speed, cars$dist, pch=19, xlab="speed (mph)", #ylab="stopping distance (ft)")
 ```
 
-The distinction between continuous and discrete is a bit tricky since measurements that have finite precision are, in a sense, discrete. Remember, however, that continuity is not a property of the specific dataset you have in hand, but rather of the process you are measuring. The number of arrests in a neighborhood cannot, in principle, be fractional, regardless of the precision at which we measure this. If we had the appropriate tool, we could measure a person's height with infinite precision. This distinction is very important when we build statistical models of datasets for analysis. For now, think of discrete data as the result of counting, and continuous data the result of some physical measurement.
+The distinction between continuous and discrete is a bit tricky since measurements that have finite precision are, in a sense, discrete. Remember, however, that continuity is not a property of the specific dataset you have in hand, but rather of the process you are measuring. The number of arrests in a neighborhood cannot, in principle, be fractional, regardless of the precision at which we measure this. If we had the appropriate tool, we could measure a person's height with infinite precision. This distinction is very important when we build statistical models of datasets for analysis. For now, think of discrete data as the result of counting, and continuous data the result of some physical measurement. 
+
+Here's a question: is `age` in our dataset a continuous or discrete numeric value?
 
 ## Other examples
 
 Consider a dataset of images like the super-famous [MNIST dataset of handwritten digits](https://www.kaggle.com/c/digit-recognizer). This dataset contains images of handwritten digits. So each image is an _entity_. Each image has a _label_ attribute which states which of the digits 0,1,...9 is represented by the image. What type of data is this (categorical, continuous numeric, or discrete numeric)? 
+
+![](img/mnist_example.png)
 
 Now, each image is represented by grayscale values in a 28x28 grid. That's 784 attributes, one for each square in the grid, containing a grayscale value. Now what type of data are these other 784 attributes?
 

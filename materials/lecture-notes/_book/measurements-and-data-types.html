@@ -630,10 +630,12 @@ The possible values a <em>factor</em> can take are called <em>levels</em>:</p>
 <p>These are attributes that can take any value in a continuous set. For example, a person’s height, in say inches, can take any number (within the range of human heights). Here is another dataset we can use to look at this datatype. In this case, entities are cars and we look at continuous numeric attributes <code>speed</code> and <code>stopping distance</code>:</p>
 <p><img src="lecture-notes_cmsc320_files/figure-html/f04_cars_plot-1.svg" width="672" /></p>
 <p>The distinction between continuous and discrete is a bit tricky since measurements that have finite precision are, in a sense, discrete. Remember, however, that continuity is not a property of the specific dataset you have in hand, but rather of the process you are measuring. The number of arrests in a neighborhood cannot, in principle, be fractional, regardless of the precision at which we measure this. If we had the appropriate tool, we could measure a person’s height with infinite precision. This distinction is very important when we build statistical models of datasets for analysis. For now, think of discrete data as the result of counting, and continuous data the result of some physical measurement.</p>
+<p>Here’s a question: is <code>age</code> in our dataset a continuous or discrete numeric value?</p>
 </div>
 <div id="other-examples" class="section level2">
 <h2><span class="header-section-number">5.7</span> Other examples</h2>
 <p>Consider a dataset of images like the super-famous <a href="https://www.kaggle.com/c/digit-recognizer">MNIST dataset of handwritten digits</a>. This dataset contains images of handwritten digits. So each image is an <em>entity</em>. Each image has a <em>label</em> attribute which states which of the digits 0,1,…9 is represented by the image. What type of data is this (categorical, continuous numeric, or discrete numeric)?</p>
+<p><img src="img/mnist_example.png" /></p>
 <p>Now, each image is represented by grayscale values in a 28x28 grid. That’s 784 attributes, one for each square in the grid, containing a grayscale value. Now what type of data are these other 784 attributes?</p>
 </div>
 <div id="other-important-datatypes" class="section level2">
