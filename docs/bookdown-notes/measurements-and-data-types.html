@@ -200,6 +200,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.7" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#other-examples"><i class="fa fa-check"></i><b>5.7</b> Other examples</a></li>
 <li class="chapter" data-level="5.8" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#other-important-datatypes"><i class="fa fa-check"></i><b>5.8</b> Other important datatypes</a></li>
 <li class="chapter" data-level="5.9" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#units"><i class="fa fa-check"></i><b>5.9</b> Units</a></li>
+<li class="chapter" data-level="5.10" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html#quick-questions"><i class="fa fa-check"></i><b>5.10</b> Quick questions</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html"><i class="fa fa-check"></i><b>6</b> Principles: Basic Operations</a><ul>
 <li class="chapter" data-level="6.1" data-path="principles-basic-operations.html"><a href="principles-basic-operations.html#operations-that-select-attributes"><i class="fa fa-check"></i><b>6.1</b> Operations that select attributes</a><ul>
@@ -499,7 +500,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Note:</strong> To download this dataset to follow along you can use the following code:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">dir.exists</span>(<span class="st">&quot;data&quot;</span>)) <span class="kw">dir.create</span>(<span class="st">&quot;data&quot;</span>)
 
-<span class="kw">download.file</span>(<span class="st">&quot;https://github.com/hcorrada/IntroDataSci/raw/master/materials/lecture-notes/data/BPD_Arrests.csv&quot;</span>, <span class="dt">destfile=</span><span class="st">&quot;data/BPD_Arrests.csv&quot;</span>)</code></pre>
+<span class="kw">download.file</span>(<span class="st">&quot;https://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv&quot;</span>, <span class="dt">destfile=</span><span class="st">&quot;data/BPD_Arrests.csv&quot;</span>)</code></pre>
 <p>To make use of this dataset we want to assign the result of calling <code>read_csv</code> (i.e., the dataset) to a variable:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 arrest_tab &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/BPD_Arrests.csv&quot;</span>)
@@ -658,6 +659,15 @@ The possible values a <em>factor</em> can take are called <em>levels</em>:</p>
 <h2><span class="header-section-number">5.9</span> Units</h2>
 <p>Something that we tend to forget but is <strong>extremely</strong> important for the modeling and interpretation of data is that attributes are for the most part <em>measurements</em> and that they have <em>units</em>. For example, age of a person can be measured in different units: <em>years</em>, <em>months</em>, etc. These can be converted to one another, but nonetheless in a given dataset, that <em>attribute</em> or measurement will be recorded in some specific units. Similar arguments go for distances and times, for example. In other cases, we may have unitless measurements (we will see later an example of this when we do <em>dimensionality reduction</em>). In these cases, it is worth thinking about <em>why</em> your measurements are unit-less.</p>
 <p>When performing analyses that try to summarize the effect of some measurement or attribute on another, units matter a lot! We will see the importance of this in our <em>regression</em> section. For now, make sure you make a mental note of units for each measurement you come across. This will force you to think about where and how your data was obtained, which will become very important when modeling and interpreting the results of these models.</p>
+</div>
+<div id="quick-questions" class="section level2">
+<h2><span class="header-section-number">5.10</span> Quick questions</h2>
+<ol style="list-style-type: decimal">
+<li><p>True or False. In a <em>rectangular dataset</em> rows correspond to attributes describing an entity.</p></li>
+<li><p>True or False. In a <em>rectangular dataset</em> rows correspond to entities, the units of observation we are interested in analyzing</p></li>
+</ol>
+<p>Suppose I have collected a dataset of sales of handheld devices around the world with attributes
+<code>country</code>, <code>date</code>, <code>device model</code>, <code>total sales</code>. Specify the data type for each of these attributes.</p>
 
 </div>
 </div>
