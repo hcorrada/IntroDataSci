@@ -18,6 +18,14 @@ The repository for this particular data is here. [https://data.baltimorecity.gov
 
 We've prepared the data previously into a comma-separated value file (`.csv` file): each line contains attribute values (separated by commas) describing arrests in the City of Baltimore. The `read_csv` command is part of the `readr` R package and allows you to read a dataset stored in a csv file. This function is extremely versatile, and you can read more about it by using the standard help system in R: `?read_csv`. The result of running calling this function is the data itself, so, by running the function in the console, the result of the function is printed. 
 
+**Note:** To download this dataset to follow along you can use the following code:
+
+```{r, eval=FALSE}
+if (!dir.exists("data")) dir.create("data")
+
+download.file("https://github.com/hcorrada/IntroDataSci/raw/master/materials/lecture-notes/data/BPD_Arrests.csv", destfile="data/BPD_Arrests.csv")
+```
+
 To make use of this dataset we want to assign the result of calling `read_csv` (i.e., the dataset) to a variable:
 
 ```{r vars1, message=FALSE}
