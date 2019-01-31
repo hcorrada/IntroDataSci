@@ -23,7 +23,7 @@ We've prepared the data previously into a comma-separated value file (`.csv` fil
 ```{r, eval=FALSE}
 if (!dir.exists("data")) dir.create("data")
 
-download.file("https://github.com/hcorrada/IntroDataSci/raw/master/materials/lecture-notes/data/BPD_Arrests.csv", destfile="data/BPD_Arrests.csv")
+download.file("https://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv", destfile="data/BPD_Arrests.csv")
 ```
 
 To make use of this dataset we want to assign the result of calling `read_csv` (i.e., the dataset) to a variable:
@@ -195,4 +195,14 @@ The three datatypes we saw above encompass a fairly large swath of data you will
 Something that we tend to forget but is **extremely** important for the modeling and interpretation of data is that attributes are for the most part _measurements_ and that they have _units_. For example, age of a person can be measured in different units: _years_, _months_, etc. These can be converted to one another, but nonetheless in a given dataset, that _attribute_ or measurement will be recorded in some specific units. Similar arguments go for distances and times, for example. In other cases, we may have unitless measurements (we will see later an example of this when we do _dimensionality reduction_). In these cases, it is worth thinking about _why_ your measurements are unit-less.
 
 When performing analyses that try to summarize the effect of some measurement or attribute on another, units matter a lot! We will see the importance of this in our _regression_ section. For now, make sure you make a mental note of units for each measurement you come across. This will force you to think about where and how your data was obtained, which will become very important when modeling and interpreting the results of these models. 
+
+## Quick questions
+
+1) True or False. In a _rectangular dataset_ rows correspond to attributes describing an entity.
+
+2) True or False. In a _rectangular dataset_ rows correspond to entities, the units of observation we are interested in analyzing
+
+Suppose I have collected a dataset of sales of handheld devices around the world with attributes
+`country`, `date`, `device model`, `total sales`. Specify the data type for each of these attributes.
+
 
