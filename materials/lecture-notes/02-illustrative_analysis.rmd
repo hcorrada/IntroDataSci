@@ -233,7 +233,8 @@ scrape_rt <- function(actor, base_url="https://www.rottentomatoes.com/celebrity/
   html <- read_html(url) 
     
   html %>%
-    html_nodes("#filmographyTbl") %>%
+    html_nodes("#filmography") %>%
+    html_node("table") %>%
     html_table() %>%
     magrittr::extract2(1) %>%
     as_tibble()

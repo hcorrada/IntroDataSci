@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-01-29">
+<meta name="date" content="2019-01-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -491,20 +491,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="regression-trees" class="section level2">
 <h2><span class="header-section-number">29.1</span> Regression Trees</h2>
 <p>Consider a task where we are trying to predict a car’s fuel consumption in miles per gallon based on the car’s weight. A linear model in this case is not a good fit.</p>
-<pre><code>## 
-## Attaching package: &#39;ISLR&#39;</code></pre>
-<pre><code>## The following object is masked _by_ &#39;.GlobalEnv&#39;:
-## 
-##     Auto</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-220-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-221-1.svg" width="672" /></p>
 <p>Let’s take a look at what a regression tree estimates in this case.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tree)
 tree &lt;-<span class="st"> </span><span class="kw">tree</span>(mpg<span class="op">~</span>weight, <span class="dt">data=</span>Auto)
 <span class="kw">plot</span>(tree)
 <span class="kw">text</span>(tree, <span class="dt">pretty=</span><span class="dv">0</span>, <span class="dt">cex=</span><span class="fl">1.3</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-221-1.svg" width="672" /></p>
-<p>The decision trees partitions the <code>weight</code> predictor into regions based on its value. We can show this graphically as below. The idea behind the regression tree is that outcome <span class="math inline">\(Y\)</span> (<code>mpg</code> in this case) is estimated (or predicted) to be it’s mean <em>within each of the data partitions</em>. Think of it as the conditional mean of <span class="math inline">\(Y\)</span> where conditioning is given by this region partitioning.</p>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-222-1.svg" width="672" /></p>
+<p>The decision trees partitions the <code>weight</code> predictor into regions based on its value. We can show this graphically as below. The idea behind the regression tree is that outcome <span class="math inline">\(Y\)</span> (<code>mpg</code> in this case) is estimated (or predicted) to be it’s mean <em>within each of the data partitions</em>. Think of it as the conditional mean of <span class="math inline">\(Y\)</span> where conditioning is given by this region partitioning.</p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-223-1.svg" width="672" /></p>
 <p>Regression and decision trees operate by prediction an outcome variable <span class="math inline">\(Y\)</span> by partitioning feature (predictor) space.</p>
 <p>The regression tree model then:</p>
 <ol style="list-style-type: decimal">
@@ -527,24 +522,24 @@ R_1(j,s) = \{X|X_j &lt; s\} \mathrm{ and } R_2(j,s) \{X|X_j \geq s\}
 <p>This is then applied recursively to regions <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span>. Within each region a prediction is made using <span class="math inline">\(\hat{y}_{R_j}\)</span> which is the mean of the response <span class="math inline">\(Y\)</span> of observations in <span class="math inline">\(R_j\)</span>.</p>
 <p><img src="img/8.3.png" /></p>
 <p>Consider building a model that used both <code>horsepower</code> and <code>weight</code>. In this plot the value of the response <span class="math inline">\(Y\)</span> is indicated by the size of the point.</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-223-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-224-1.svg" width="672" /></p>
 <p>This is what a decision tree would look like for these two predictors:</p>
 <pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">tree</span>(mpg<span class="op">~</span>horsepower<span class="op">+</span>weight, <span class="dt">data=</span>Auto)
 <span class="kw">plot</span>(tree)
 <span class="kw">text</span>(tree, <span class="dt">pretty=</span><span class="dv">0</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-224-1.svg" width="672" /></p>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-225-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-226-1.svg" width="672" /></p>
 </div>
 <div id="classification-decision-trees" class="section level2">
 <h2><span class="header-section-number">29.2</span> Classification (Decision) Trees</h2>
 <p>Classification, or decision trees, are used in classification problems, where the outcome is categorical. The same partitioning principle holds, but now, each region predicts the majority class for training observations within region.</p>
 <p>The recursive partitioning method requires a score function to choose predictors (and values) to partition with. In classification we could use a naive approach of looking for partitions that minimize training error. However, better performing approaches use more sophisticated metrics, which we will see shortly.</p>
 <p>Let’s look at how a classification tree performs on a credit card default dataset.</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-227-1.png" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-228-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">default_tree &lt;-<span class="st"> </span><span class="kw">tree</span>(default<span class="op">~</span>student<span class="op">+</span>balance<span class="op">+</span>income, <span class="dt">data=</span>Default)
 <span class="kw">plot</span>(default_tree)
 <span class="kw">text</span>(default_tree, <span class="dt">pretty=</span><span class="dv">0</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-228-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-229-1.svg" width="672" /></p>
 </div>
 <div id="specifics-of-the-partitioning-algorithm" class="section level2">
 <h2><span class="header-section-number">29.3</span> Specifics of the partitioning algorithm</h2>
@@ -669,22 +664,13 @@ train_indices &lt;-<span class="st"> </span><span class="kw">sample</span>(<span
 train_set &lt;-<span class="st"> </span>Auto[train_indices,]
 test_set &lt;-<span class="st"> </span>Auto[<span class="op">-</span>train_indices,]
 
-<span class="kw">library</span>(randomForest)</code></pre>
-<pre><code>## randomForest 4.6-14</code></pre>
-<pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
-<pre><code>## 
-## Attaching package: &#39;randomForest&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     combine</code></pre>
-<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     margin</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">auto_rf &lt;-<span class="st"> </span><span class="kw">randomForest</span>(mpg<span class="op">~</span>cylinders<span class="op">+</span>displacement<span class="op">+</span>horsepower<span class="op">+</span>weight<span class="op">+</span>acceleration<span class="op">+</span>year<span class="op">+</span>origin, <span class="dt">importance=</span><span class="ot">TRUE</span>, <span class="dt">mtry=</span><span class="dv">3</span>, <span class="dt">data=</span>train_set)</code></pre>
+<span class="kw">library</span>(randomForest)
+
+auto_rf &lt;-<span class="st"> </span><span class="kw">randomForest</span>(mpg<span class="op">~</span>cylinders<span class="op">+</span>displacement<span class="op">+</span>horsepower<span class="op">+</span>weight<span class="op">+</span>acceleration<span class="op">+</span>year<span class="op">+</span>origin, <span class="dt">importance=</span><span class="ot">TRUE</span>, <span class="dt">mtry=</span><span class="dv">3</span>, <span class="dt">data=</span>train_set)</code></pre>
 <p>Let’s plot the predicted miles per gallon given by a random forest compared to the observed miiles per gallon in the training dataset.</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-230-1.svg" width="672" /></p>
-<p>Now let’s look at the same plot on a <em>testing</em> dataset.</p>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-231-1.svg" width="672" /></p>
+<p>Now let’s look at the same plot on a <em>testing</em> dataset.</p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-232-1.svg" width="672" /></p>
 <p>A disadvantage of random forests is that we lose interpretability. However, we can use the fact that a bootstrap sample was used to construct trees to measure <em>variable importance</em> from the random forest.</p>
 <p>Here is a table of <em>variable importance</em> for the random forest we just constructed.</p>
 <pre class="sourceCode r"><code class="sourceCode r">variable_importance &lt;-<span class="st"> </span><span class="kw">importance</span>(auto_rf)
@@ -731,7 +717,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">he
 </tbody>
 </table>
 <p>And a barplot of the same data.</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-233-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-234-1.svg" width="672" /></p>
 </div>
 <div id="tree-based-methods-summary" class="section level2">
 <h2><span class="header-section-number">29.6</span> Tree-based methods summary</h2>

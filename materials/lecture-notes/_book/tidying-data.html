@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-01-29">
+<meta name="date" content="2019-01-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -832,7 +832,7 @@ tidy_billboard</code></pre>
 <p>We have a lot of repeated information in many of these rows (the artist, track name, year, title and date entered). The problem is that this table contains information about both tracks and rank in billboard. That’s two different kinds of observations that should belong in two different tables in a tidy dataset.</p>
 <p>Let’s make a song table that only includes information about songs:</p>
 <pre class="sourceCode r"><code class="sourceCode r">song &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">unique</span>()
 song</code></pre>
 <pre><code>## # A tibble: 317 x 5
@@ -852,7 +852,7 @@ song</code></pre>
 <p>The <code>unique</code> function removes any duplicate rows in a table. That’s how we have a single row for each song.</p>
 <p>Next, we would like to remove all the song information from the rank table. But we need to do it in a way that still remembers which song each ranking observation corresponds to. To do that, let’s first give each song an identifier that we can use to link songs and rankings. So, we can produce the final version of our song table like this:</p>
 <pre class="sourceCode r"><code class="sourceCode r">song &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">unique</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">song_id =</span> <span class="kw">row_number</span>())
 song</code></pre>
@@ -891,7 +891,7 @@ song</code></pre>
 <p>That adds the <code>song_id</code> variable to the <code>tidy_billboard</code> table. So now we can remove the song information and only keep ranking information and the <code>song_id</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">rank &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">left_join</span>(song, <span class="kw">c</span>(<span class="st">&quot;artist&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;track&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;date.entered&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(song_id, week, rank)
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(song_id, week, rank)
 rank</code></pre>
 <pre><code>## # A tibble: 5,307 x 3
 ##    song_id week   rank

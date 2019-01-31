@@ -1,5 +1,10 @@
 # Tidying data
 
+```{r setup_ch16, echo=FALSE, message=FALSE}
+library(tidyverse)
+select <- dplyr::select
+```
+
 This section is concerned with common problems in data preparation, namely use cases commonly found in raw datasets that need to be addressed to turn messy data into tidy data. These would be operations that you would perform on data obtained as a csv file from a collaborator or data repository, or as the result of scraping data from webpages or other sources. We derive many of our ideas from the paper [Tidy Data](http://www.jstatsoft.org/v59/i10/paper) by Hadley Wickham. Associated with that paper we will use two very powerful R libraries `tidyr` and `dplyr` which are extremely useful in writing scripts for data cleaning, preparation and summarization. A basic design principle behind these libraries is trying to effectively and efficiently capture very common use cases and operations performed in data cleaning. The paper frames these use cases and operations which are them implemented in software.
 
 ## Tidy Data
@@ -149,7 +154,7 @@ Let's make a song table that only includes information about songs:
 
 ```{r}
 song <- tidy_billboard %>%
-  select(artist, track, year, time, date.entered) %>%
+  dplyr::select(artist, track, year, time, date.entered) %>%
   unique()
 song
 ```
@@ -160,7 +165,7 @@ Next, we would like to remove all the song information from the rank table. But 
 
 ```{r}
 song <- tidy_billboard %>%
-  select(artist, track, year, time, date.entered) %>% 
+  dplyr::select(artist, track, year, time, date.entered) %>% 
   unique() %>%
   mutate(song_id = row_number())
 song
@@ -180,7 +185,7 @@ That adds the `song_id` variable to the `tidy_billboard` table. So now we can re
 ```{r}
 rank <- tidy_billboard %>%
   left_join(song, c("artist", "year", "track", "time", "date.entered")) %>%
-  select(song_id, week, rank)
+  dplyr::select(song_id, week, rank)
 rank
 ```
 

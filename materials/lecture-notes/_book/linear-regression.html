@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-01-29">
+<meta name="date" content="2019-01-31">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -531,7 +531,7 @@ Auto <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">theme_minimal</span>()</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-160-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-161-1.svg" width="672" /></p>
 <p>In R, linear models are built using the <code>lm</code> function</p>
 <pre class="sourceCode r"><code class="sourceCode r">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span>weight, <span class="dt">data=</span>Auto)
 auto_fit</code></pre>
@@ -674,7 +674,7 @@ augmented_auto <span class="op">%&gt;%</span><span class="st"> </span><span clas
 <span class="st">    </span><span class="kw">geom_smooth</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;fitted&quot;</span>, <span class="dt">y=</span><span class="st">&quot;residual&quot;</span>)</code></pre>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-167-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-168-1.svg" width="672" /></p>
 </div>
 <div id="correlated-error" class="section level3">
 <h3><span class="header-section-number">26.4.2</span> Correlated Error</h3>
@@ -1216,7 +1216,7 @@ of the regression line is <span class="math inline">\(\beta_0 + \beta_2\)</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>weight, <span class="dt">y=</span>mpg, <span class="dt">color=</span>origin)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-182-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-183-1.svg" width="672" /></p>
 <p>The intercept of the three lines seem to be different, but the slope of <code>origin == 3</code> looks different (decreases faster) than the slopes of <code>origin == 1</code> and <code>origin == 2</code> that look very similar to each other.</p>
 <p>Let’s fit the model and see how much statistical confidence we can give to those observations:</p>
 <pre class="sourceCode r"><code class="sourceCode r">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span>weight<span class="op">*</span>origin, <span class="dt">data=</span>Auto)
@@ -1283,7 +1283,7 @@ auto_fit_stats <span class="op">%&gt;%</span><span class="st"> </span>knitr<span
 <span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>.fitted, <span class="dt">y=</span>.resid)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_point</span>()</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-184-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-185-1.svg" width="672" /></p>
 <p>The fact that residuals are not centered around zero suggests that a linear fit does not work well in this case.</p>
 <div id="additional-issues-with-linear-regression" class="section level3">
 <h3><span class="header-section-number">26.6.1</span> Additional issues with linear regression</h3>
