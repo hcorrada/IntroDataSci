@@ -2,6 +2,9 @@
 date = "1/29"
 
 [[day01.covers]]
+title = "LECTURE CANCELLED DUE TO WEATHER"
+
+[[day01.covers]]
 title = "What is Data Science, Course Introduction and Logistics"
 notes = "bookdown-notes/introduction-and-overview.html"
 
@@ -28,8 +31,8 @@ notes = "bookdown-notes/measurements-and-data-types.html"
 title = "Preliminaries 2: Basic data operations"
 notes = "bookdown-notes/principles-basic-operations.html"
 
-#[day02.class_notes]
-#link = "cmsc320_class-notes_20180130.pdf"
+[day02.class_notes]
+link = "cmsc320_class-notes_20180130.pdf"
 
 # [[day02.prep]]
 # title = "Setting up R"
