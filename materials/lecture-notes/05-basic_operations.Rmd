@@ -175,6 +175,11 @@ analysis_tab
 ```
 
 
+**Exercise**: Create a pipeline that:
+
+1) filters dataset to arrests from the "SOUTHERN" district occurring before "12:00" (`arrestTime`)
+2) selects attributes, `sex`, `age`
+3) samples 10 entities at random
 
 
 

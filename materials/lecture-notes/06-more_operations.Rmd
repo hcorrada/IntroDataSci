@@ -108,6 +108,11 @@ arrest_tab %>%
   summarize(mean_age=mean(age))
 ```
 
+**Exercise**: Write a data operation pipeline that
+
+1) filters records to the southern district and ages between 18 and 25
+2) computes mean arrest age for each sex
+
 ## Vectors
 
 We briefly saw previously operators to create vectors in R. For instance, we can use `seq` to create a vector that consists of a sequence of integers:
@@ -198,7 +203,9 @@ summarize_district <- function(df) {
 }
 ```
 
-You can include multiple expressions in the function definition (with the brackts `[]`). Notice there is no `return` statement in this function. When a function is called, it returns the value of the last expression in the function definition. In this example, it would be the data frame we get from applying the pipeline of operations. 
+You can include multiple expressions in the function definition (inside brackets `{}`). Notice there is no `return` statement in this function. When a function is called, it returns the value of the last expression in the function definition. In this example, it would be the data frame we get from applying the pipeline of operations. 
 
 You can find more information about vectors, functions and other programming matters we might run into in class in Chapters 17-21 of [R for Data Science](http://r4ds.had.co.nz/program-intro.html)
 
+**Exercise** Abstract the pipeline you wrote in the previous unit into a function that works for arbitrary districts. 
+The function should take arguments `df` and `district`.
