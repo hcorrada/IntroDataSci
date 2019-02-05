@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-01-31">
+<meta name="date" content="2019-02-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -681,6 +681,11 @@ more attributes. The <code>group_by</code> function in essence annotates the row
 ## 18 WESTERN      M         37.3
 ## 19 &lt;NA&gt;         F         34.7
 ## 20 &lt;NA&gt;         M         35.5</code></pre>
+<p><strong>Exercise</strong>: Write a data operation pipeline that</p>
+<ol style="list-style-type: decimal">
+<li>filters records to the southern district and ages between 18 and 25</li>
+<li>computes mean arrest age for each sex</li>
+</ol>
 </div>
 <div id="vectors" class="section level2">
 <h2><span class="header-section-number">7.5</span> Vectors</h2>
@@ -736,8 +741,10 @@ age_vec[<span class="dv">1</span><span class="op">:</span><span class="dv">10</s
 <span class="st">    </span><span class="kw">group_by</span>(district, sex) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_age=</span><span class="kw">mean</span>(age))
 }</code></pre>
-<p>You can include multiple expressions in the function definition (with the brackts <code>[]</code>). Notice there is no <code>return</code> statement in this function. When a function is called, it returns the value of the last expression in the function definition. In this example, it would be the data frame we get from applying the pipeline of operations.</p>
+<p>You can include multiple expressions in the function definition (inside brackets <code>{}</code>). Notice there is no <code>return</code> statement in this function. When a function is called, it returns the value of the last expression in the function definition. In this example, it would be the data frame we get from applying the pipeline of operations.</p>
 <p>You can find more information about vectors, functions and other programming matters we might run into in class in Chapters 17-21 of <a href="http://r4ds.had.co.nz/program-intro.html">R for Data Science</a></p>
+<p><strong>Exercise</strong> Abstract the pipeline you wrote in the previous unit into a function that works for arbitrary districts.
+The function should take arguments <code>df</code> and <code>district</code>.</p>
 
 </div>
 </div>
