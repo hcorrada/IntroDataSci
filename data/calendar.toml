@@ -53,8 +53,8 @@ notes = "bookdown-notes/basic-plotting-with-ggplot.html"
 title = "Introduction to literate programming: Rmarkdown"
 notes = "bookdown-notes/brief-introduction-to-rmarkdown.html"
 
-#[day03.class_notes]
-#link = "cmsc320_class-notes_20180201.pdf"
+[day03.class_notes]
+link = "cmsc320_class-notes_20180201.pdf"
 
 [day04]
 date = "2/7"
@@ -67,52 +67,57 @@ notes = "slides/cmsc320_best-practices.pdf"
 date = "2/12"
 
 [[day05.covers]]
-title = "Data representation models: The ER model"
-notes = "bookdown-notes/tidy-data-i-the-er-model.html"
+title = "Data acquisition: loading and scraping"
+notes = "bookdown-notes/ingesting-data.html"
 
 [[day05.covers]]
-title = "SQL I: Single-table Queries"
-notes = "bookdown-notes/sql-i-single-table-queries.html"
+title = "Data cleaning: handling text and dates"
+notes = "bookdown-notes/text-and-dates.html"
 
-[[day05.covers]]
-title = "SQL examples with baseball (Rmarkdown file)"
-notes = "classroom-notes/sql_baseball.Rmd"
-
-[[day05.covers]]
-title = "SQL examples with baseball (rendered HTML file)"
-notes = "classroom-notes/sql_baseball.html"
 
 #[day05.class_notes]
 #link = "cmsc320_class-notes_20180208.pdf"
 
-#[[day05.workdue]]
-#title = "HW1: Datatypes and wrangling"
-#link = "homeworks/datatypes_wrangling/"
+[[day05.workdue]]
+title = "HW1: Datatypes and wrangling"
+link = "homeworks/datatypes_wrangling/"
 
 [day06]
 date = "2/14"
 
 [[day06.covers]]
-title = "Relational data operations: Joins"
-notes = "bookdown-notes/two-table-operations.html"
+title = "Data representation models: The ER model"
+notes = "bookdown-notes/tidy-data-i-the-er-model.html"
 
 [[day06.covers]]
-title = "More SQL: data defintion, consistency and other constructs"
-notes = "bookdown-notes/sql-system-constructs.html"
+title = "SQL I: Single-table Queries"
+notes = "bookdown-notes/sql-i-single-table-queries.html"
 
 [[day06.covers]]
-title = "DB parting shots: query optimization and the JSON data model"
-notes = "bookdown-notes/db-parting-shots.html"
+title = "SQL examples with baseball (Rmarkdown file)"
+notes = "classroom-notes/sql_baseball.Rmd"
 
+[[day06.covers]]
+title = "SQL examples with baseball (rendered HTML file)"
+notes = "classroom-notes/sql_baseball.html"
 #[day06.class_notes]
 #link = "cmsc320_class-notes_20180213.pdf"
 
 [day07]
 date = "2/19"
 
+
 [[day07.covers]]
-title = "Data acquisition: loading and scraping"
-notes = "bookdown-notes/ingesting-data.html"
+title = "Relational data operations: Joins"
+notes = "bookdown-notes/two-table-operations.html"
+
+[[day07.covers]]
+title = "More SQL: data defintion, consistency and other constructs"
+notes = "bookdown-notes/sql-system-constructs.html"
+
+[[day07.covers]]
+title = "DB parting shots: query optimization and the JSON data model"
+notes = "bookdown-notes/db-parting-shots.html"
 
 [[day07.covers]]
 title = "Notebook: Building a complex SQL query"
@@ -128,9 +133,8 @@ date = "2/21"
 title = "Common operations for data tidying"
 notes = "bookdown-notes/tidying-data.html"
 
-[[day08.covers]]
-title = "Data cleaning: handling text and dates"
-notes = "bookdown-notes/text-and-dates.html"
+[[day11.covers]]
+title = "Entity Resolution and Record Linkage"
 
 #[[day08.workdue]]
 #title = "HW2: ER Model and SQL"
@@ -158,9 +162,6 @@ title = "Midterm I"
 
 [day11]
 date = "3/5"
-
-[[day11.covers]]
-title = "Entity Resolution and Record Linkage"
 
 [[day11.covers]]
 title = "Exploratory Data Analysis 1: Visualization"
