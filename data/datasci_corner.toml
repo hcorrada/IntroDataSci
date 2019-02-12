@@ -49,11 +49,6 @@ description = "The 2nd generation p-value"
 link = "http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0188299"
 
 [[entries]]
-date = "4/5"
-description = "Example wrangling with R and Python"
-link = "https://www.superdatascience.com/wrangling-data-r-python/"
-
-[[entries]]
 date = "4/3"
 description = "Mobility charts from The Upshot @ NYTimes"
 link = "https://www.nytimes.com/interactive/2018/03/27/upshot/make-your-own-mobility-animation.html?rref=collection%2Fsectioncollection%2Fupshot&action=click&contentCollection=upshot&region=rank&module=package&version=highlights&contentPlacement=7&pgtype=sectionfront"
@@ -122,6 +117,12 @@ link = "https://www.theverge.com/2017/11/1/16589246/machine-learning-data-scienc
 date = "2/8"
 description = "Uber Engineering Blogpost on their Data Science Workbench"
 link = "https://eng.uber.com/dsw/"
+
+[[entries]]
+date = "2/12"
+description = "Example wrangling with R and Python"
+link = "https://www.superdatascience.com/wrangling-data-r-python/"
+show = ""
 
 [[entries]]
 date = "2/7"
