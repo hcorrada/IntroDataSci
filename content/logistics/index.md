@@ -37,20 +37,18 @@ Location is AVW 1120 unless noted otherwise
 |----------------------|-----------|------------|----------|----------|---|
 | Victoria Cepeda      | Monday    |       9:00 |    11:00 |          |   |
 | Yanchao Sun          | Monday    |      10:00 |    12:00 |          |   |
-| Weiyi Jiang          | Monday    |      11:00 |    12:00 |          |   |
+| Weiyi Jiang          | Monday    |      11:00 |    1:00 |          |   |
 | Yifan Yang           | Monday    |      12:00 |    13:30 |          |   |
 | Harihara Muralidharan| Monday    |      13:00 |    15:00 |   |   |
 | Ahmed Ghoneim        | Monday    |      16:45 |    20:45 |  |   |
 | William Gomolka      | Tuesday   |       9:00 |    11:00 |          |   |
-| Weiyi Jiang          | Tuesday   |      11:00 |    12:00 |          |   |
 | Harihara Muralidharan| Tuesday   |      13:00 |    15:00 |   |   |
 | Eleftheria Briakou   | Wednesday |       9:00 |    11:00 |          |   |
 | Yifan Yang           | Wednesday |      11:00 |    13:30 |          |   |
-| Weiyi Jiang          | Wednesday |      11:00 |    12:00 |          |   |
+| Weiyi Jiang          | Wednesday |      11:00 |    1:00 |          |   |
 | Eleftheria Briakou   | Wednesday |      12:30 |    14:30 |          |   |
 | Christopher Yue      | Wednesday |      17:00 |    21:00 |          |   |
 | Ashley Chang         | Thursday  |       9:00 |    11:00 |          |   |
-| Weiyi Jiang          | Thursday |      11:00 |    12:00 |          |   |
 | William Gomolka      | Thursday  |      13:00 |    15:00 |          |   |
 | Victoria Cepeda      | Friday    |       9:00 |    11:00 |          |   |
 | Hector Corrada Bravo | Friday    |      13:00 |    14:00 | AVW 3223 |   |
