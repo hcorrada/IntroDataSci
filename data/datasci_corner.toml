@@ -39,11 +39,6 @@ description = "The ML algorithms used in self driving cars"
 link = "https://www.kdnuggets.com/2017/06/machine-learning-algorithms-used-self-driving-cars.html"
 
 [[entries]]
-date = "4/18"
-description = "The Julia programming language"
-link = "https://julialang.org/"
-
-[[entries]]
 date = "4/12"
 description = "The 2nd generation p-value"
 link = "http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0188299"
@@ -117,6 +112,12 @@ link = "https://www.theverge.com/2017/11/1/16589246/machine-learning-data-scienc
 date = "2/8"
 description = "Uber Engineering Blogpost on their Data Science Workbench"
 link = "https://eng.uber.com/dsw/"
+
+[[entries]]
+date = "2/19"
+description = "The Julia programming language"
+link = "https://julialang.org/"
+show = ""
 
 [[entries]]
 date = "2/12"
