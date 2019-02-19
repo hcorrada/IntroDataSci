@@ -85,19 +85,19 @@ link = "homeworks/datatypes_wrangling/"
 [day06]
 date = "2/14"
 
-[[day06.covers]]
+[[day07.covers]]
 title = "Data representation models: The ER model"
 notes = "bookdown-notes/tidy-data-i-the-er-model.html"
 
-[[day06.covers]]
+[[day07.covers]]
 title = "SQL I: Single-table Queries"
 notes = "bookdown-notes/sql-i-single-table-queries.html"
 
-[[day06.covers]]
+[[day07.covers]]
 title = "SQL examples with baseball (Rmarkdown file)"
 notes = "classroom-notes/sql_baseball.Rmd"
 
-[[day06.covers]]
+[[day07.covers]]
 title = "SQL examples with baseball (rendered HTML file)"
 notes = "classroom-notes/sql_baseball.html"
 #[day06.class_notes]
@@ -111,15 +111,15 @@ date = "2/19"
 title = "Relational data operations: Joins"
 notes = "bookdown-notes/two-table-operations.html"
 
-[[day07.covers]]
+[[day08.covers]]
 title = "More SQL: data defintion, consistency and other constructs"
 notes = "bookdown-notes/sql-system-constructs.html"
 
-[[day07.covers]]
+[[day08.covers]]
 title = "DB parting shots: query optimization and the JSON data model"
 notes = "bookdown-notes/db-parting-shots.html"
 
-[[day07.covers]]
+[[day08.covers]]
 title = "Notebook: Building a complex SQL query"
 notes = "classroom-notes/sql_pr.html"
 
@@ -133,12 +133,14 @@ date = "2/21"
 title = "Common operations for data tidying"
 notes = "bookdown-notes/tidying-data.html"
 
-[[day11.covers]]
+[[day08.covers]]
 title = "Entity Resolution and Record Linkage"
 
-#[[day08.workdue]]
-#title = "HW2: ER Model and SQL"
-#link = "homeworks/er_sql/"
+[day08a]
+date = "2/25"
+[[day08a.workdue]]
+title = "HW2: ER Model and SQL"
+link = "homeworks/er_sql/"
 
 [day09]
 date = "2/26"
@@ -180,6 +182,13 @@ notes = "bookdown-notes/exploratory-data-analysis-summary-statistics.html"
 #[day12.class_notes]
 #link = "cmsc320_class-notes_20180306.pdf"
 
+[day12a]
+date = "3/8"
+
+[[day12a.workdue]]
+title = "Project 1: Data scraping and cleaning"
+link = "projects/Project1/"
+
 [day13]
 date = "3/12"
 
@@ -208,10 +217,6 @@ notes = "bookdown-notes/univariate-distributions-and-statistics.html"
 
 #[day14.class_notes]
 #link = "cmsc320_class-notes_20180314.pdf"
-
-# [[day13.workdue]]
-# title = "Project 1: Data scraping and cleaning"
-# link = "projects/Project1/"
 
 # out for enar
 [day15]
