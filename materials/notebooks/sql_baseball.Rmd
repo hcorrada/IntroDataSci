@@ -1,9 +1,9 @@
 ---
 title: "SQL Examples with Baseball"
 output:
-  html_document:
-    df_print: paged
   html_notebook:
+    df_print: paged
+  html_document:
     df_print: paged
 editor_options:
   chunk_output_type: inline
@@ -12,6 +12,10 @@ editor_options:
 Here we show SQL constructs using the Lahman baseball dataset (downloaded from https://github.com/jknecht/baseball-archive-sqlite). We also show how to use a SQL database inside Rmarkdown.
 
 First, we create a connection to the database. In this case, we are using a `SQLite` database. A good system to prototype database designs. To make the most of a database system, one would use some of the more powerful products: Oracle, Microsoft SQLServer, MySQL (MariaDB), PostgreSQL or other. In all cases, the way to create a connection to the server from Rmarkdown is the same.
+
+```{r setup}
+library(tidyverse)
+```
 
 ```{r setup_db}
 library(DBI)
@@ -79,6 +83,9 @@ WHERE b.AB > 0 AND
 GROUP BY b.teamId, b.yearId
 ORDER BY AVE_BP DESC
 ```
+
+For reference, this is how we would do this using 
+the `dplyr` operations we learned about previously.
 
 ```{r, eval=FALSE}
 Batting %>%
