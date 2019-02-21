@@ -89,15 +89,15 @@ date = "2/14"
 title = "Data representation models: The ER model"
 notes = "bookdown-notes/tidy-data-i-the-er-model.html"
 
-[[day07.covers]]
+[[day08.covers]]
 title = "SQL I: Single-table Queries"
 notes = "bookdown-notes/sql-i-single-table-queries.html"
 
-[[day07.covers]]
+[[day08.covers]]
 title = "SQL examples with baseball (Rmarkdown file)"
 notes = "classroom-notes/sql_baseball.Rmd"
 
-[[day07.covers]]
+[[day08.covers]]
 title = "SQL examples with baseball (rendered HTML file)"
 notes = "classroom-notes/sql_baseball.html"
 #[day06.class_notes]
@@ -107,15 +107,15 @@ notes = "classroom-notes/sql_baseball.html"
 date = "2/19"
 
 
-[[day07.covers]]
+[[day08.covers]]
 title = "Relational data operations: Joins"
 notes = "bookdown-notes/two-table-operations.html"
 
-[[day08.covers]]
+[[day09.covers]]
 title = "More SQL: data defintion, consistency and other constructs"
 notes = "bookdown-notes/sql-system-constructs.html"
 
-[[day08.covers]]
+[[day09.covers]]
 title = "DB parting shots: query optimization and the JSON data model"
 notes = "bookdown-notes/db-parting-shots.html"
 
@@ -129,11 +129,11 @@ notes = "classroom-notes/sql_pr.html"
 [day08]
 date = "2/21"
 
-[[day08.covers]]
+[[day09.covers]]
 title = "Common operations for data tidying"
 notes = "bookdown-notes/tidying-data.html"
 
-[[day08.covers]]
+[[day09.covers]]
 title = "Entity Resolution and Record Linkage"
 
 [day08a]
@@ -145,13 +145,17 @@ link = "homeworks/er_sql/"
 [day09]
 date = "2/26"
 
-[[day09.covers]]
+[[day10.covers]]
 title = "Midterm I catch-up and review"
 notes = "misc/midtermI_review.pdf"
 
-[[day09.covers]]
+[[day10.covers]]
 title = "Wrangling exercise"
 notes = "misc/wrangling_exercise.html"
+
+[[day10.covers]]
+title = "Iteration over rows in two data frames"
+notes = "misc/two_tables_example.html"
 
 #[day09.class_notes]
 #link = "cmsc320_class-notes_20180222.pdf"
@@ -159,7 +163,7 @@ notes = "misc/wrangling_exercise.html"
 [day10]
 date = "2/28"
 
-[[day10.covers]]
+[[day12.covers]]
 title = "Midterm I"
 
 [day11]
@@ -175,27 +179,23 @@ notes = "bookdown-notes/exploratory-data-analysis-visualization.html"
 [day12]
 date = "3/7"
 
-[[day12.covers]]
+[[day11.covers]]
 title = "Exploratory Data Analysis 2: Summary statistics"
 notes = "bookdown-notes/exploratory-data-analysis-summary-statistics.html"
 
 #[day12.class_notes]
 #link = "cmsc320_class-notes_20180306.pdf"
 
-[day12a]
-date = "3/8"
+[day13a]
+date = "3/13"
 
-[[day12a.workdue]]
+[[day13a.workdue]]
 title = "Project 1: Data scraping and cleaning"
 link = "projects/Project1/"
 
 [day13]
 date = "3/12"
 
-
-[[day13.covers]]
-title = "Iteration over rows in two data frames"
-notes = "misc/two_tables_example.html"
 
 [[day13.covers]]
 title="Data transformations"
