@@ -130,11 +130,11 @@ notes = "classroom-notes/sql_pr.html"
 date = "2/21"
 
 [[day09.covers]]
-title = "Common operations for data tidying"
-notes = "bookdown-notes/tidying-data.html"
+title = "Entity Resolution and Record Linkage"
 
 [[day09.covers]]
-title = "Entity Resolution and Record Linkage"
+title = "Common operations for data tidying"
+notes = "bookdown-notes/tidying-data.html"
 
 [day08a]
 date = "2/25"
@@ -153,7 +153,7 @@ notes = "misc/midtermI_review.pdf"
 title = "Wrangling exercise"
 notes = "misc/wrangling_exercise.html"
 
-[[day10.covers]]
+[[day11.covers]]
 title = "Iteration over rows in two data frames"
 notes = "misc/two_tables_example.html"
 
