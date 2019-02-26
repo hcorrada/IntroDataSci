@@ -3,7 +3,7 @@ date: 2016-08-29T08:54:44-04:00
 title: CMSC320 Projects
 ---
 
-1. [Data scraping and cleaning](project1/) Due March 8, 2019  
+1. [Data scraping and cleaning](project1/) Due March 13, 2019  
 
 <!-- 
 2. [Data wrangling and EDA](project2/) Due April 6, 2018   
