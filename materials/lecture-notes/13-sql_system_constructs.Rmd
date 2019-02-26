@@ -1,6 +1,6 @@
 # SQL System Constructs
 
-Database management systems are software applications designed for very efficient manipulation of data targeting a relatively small number of operations. Since they are also defined to operate over a fairly restrictive data model, they are extremely useful in situations where data consistency and safety are required. Here are some examples of capabilities found in DBMS that help in that regard:
+Database management systems are software applications designed for very efficient manipulation of data that target a relatively small number of operations. Since they are also defined to operate over a fairly restrictive data model, they are extremely useful in situations where data consistency and safety are required. Here are some examples of capabilities found in DBMS that help in that regard:
 
 - Transactions
     - A transaction is a sequence of queries and update statements executed as a single unit

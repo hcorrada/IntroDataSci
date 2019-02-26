@@ -6,11 +6,11 @@ Earlier we made the distinction that SQL is a _declarative_ language rather than
 
 Consider a database where we have two tables `Batting` and `Master` and we want to evaluate this query: that _what is the maximum batting "average" for a player from the state of California_?
 
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=FALSE}
 db <- DBI::dbConnect(RSQLite::SQLite(), "data/lahman2016.sqlite")
 ```
 
-```{sql, eval=FALSE}
+```{sql, connection=db, eval=FALSE}
 select max(1.0 * b.H / b.AB) as best_ba
 from Batting as b join Master as m on b.playerId = m.playerId
 where b.AB >= 100 and m.birthState = "CA"
@@ -48,9 +48,69 @@ Batting %>%
 
 They both give the same result of course, but which one should be more efficient?
 
-In SQL we only write the one query describing our desired result, with the _procedural_ versions with `dplyr` we need to think which of the two versions is more efficient.
+Let's think about this with a very simple _cost_ model of how efficient each of these two procedural versions will be. The costliest operation here is the join between two tables. Let's take the simplest algorithm we can to compute the join `T1 %>% inner_join(T2, by="A")` where `T1` and `T2` are the tables to join and `A` the attribute we are using to join the two tables.
 
-Database systems use _query optimization_ to decide how to evaluate query efficiently. The goal of query optimization is to decide the most efficient query _plan_ to use to evaluate a query out of the many possible candidate plans it could use. It needs to solve two problems: search the space of possible plans, approximate the _cost_ of evaluating a specific plan. Let's ignore the first, and discuss briefly the second.
+```{r, echo=FALSE, out.width='50%'}
+knitr::include_graphics("img/inner_join_alg.png")
+```
+
+What is the cost of this algorithm? $|T1| \times |T2|$. For the rest of the operations, let's assume we perform this with a single pass through the table. For example, we assume that `filter(T)` has cost $|T|$. 
+
+Under these assumptions, let's write out the cost of each of the two pipelines we wrote above. 
+
+```{r, eval=FALSE}
+Batting %>%
+  inner_join(Master, by="playerID") %>% # cost: |Batting| x |Master|
+  filter(AB >= 100, birthState == "CA") %>% # cost: |R1|
+  mutate(AB=1.0 * H / AB) %>% # cost: |R|
+  summarize(max(AB)) # cost: |R|
+```
+
+So, cost here is $|\mathrm{Batting}|\times|\mathrm{Master}| + |R1| + 2|R|$ where $R1$ is the table resulting from the inner join between `Batting` and `Master` and $R$ is $R$ filtered to rows with `AB >=100 & birthState == "CA"`. We can compute this:
+
+```{r}
+batting_size <- nrow(Batting)
+master_size <- nrow(Master)
+
+r1 <- Batting %>% inner_join(Master, by="playerID")
+r1_size <- nrow(r1)
+
+r <- filter(r1, AB>=100, birthState == "CA")
+r_size <- nrow(r)
+
+total_cost_v1 <- batting_size * master_size + r1_size + 2*r_size
+total_cost_v1
+```
+
+Now, let's look at the second version. 
+
+```{r, eval=FALSE}
+Batting %>%
+  filter(AB >= 100) %>% # cost: |Batting|
+  inner_join(
+    Master %>% filter(birthState == "CA") # cost: |Master|
+  ) %>% # cost: |B1| x |M1|
+  mutate(AB = 1.0 * H / AB) %>% # cost |R|
+  summarize(max(AB)) # cost |R|
+```
+
+So, cost here is $|\mathrm{Batting}| \times |\mathrm{Master}| + |B1|\times|M1|+2|R|$ where $B1$ is the `Batting` table filtered to include only rows with `AB >= 100`, and $M2$ is the `Master` table filtered to include  
+`birthState == "CA"`. Let's compute this:
+
+```{r}
+b1 <- filter(Batting, AB>=100)
+b1_size <- nrow(b1)
+
+m1 <- filter(Master, birthState == "CA")
+m1_size <- nrow(m1)
+
+total_cost_v2 <- batting_size + master_size + b1_size * m1_size + 2*r_size
+total_cost_v2
+```
+
+In this case, the procedural version that joins tables before filtering is `r format(total_cost_v1 / total_cost_v2, digits=1)` times costlier. When using SQL in a database system we only write the one query describing our desired result, with the _procedural_ versions with `dplyr` we need to think which of the two versions is more efficient.
+
+Database systems use _query optimization_ to decide how to evaluate queries efficiently. The goal of query optimization is to decide the most efficient query _plan_ to use to evaluate a query out of the many possible candidate plans it could use. It needs to solve two problems: search the space of possible plans, approximate the _cost_ of evaluating a specific plan. Let's ignore the first, and discuss briefly the second.
 
 We should think of the two procedural versions above as two candidate plans that the DB system _could_ use to evaluate the query. Query optimzation _approximates_ what it would cost to evaluate each of the two plans and decides to use the most efficient plan. 
 
