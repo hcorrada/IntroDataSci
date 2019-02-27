@@ -93,7 +93,8 @@ The result of this step should be a data_frame with the first few rows as:
 ### Step 3. Scrape the NASA data (15 pts)
 
 Next you need to scrape the data in http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html ([also available here](/misc/waves_type2.html))
-to get additional data about these solar flares. This table format is described here: http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.html, and here:
+to get additional data about these solar flares. This table format is described here:
+https://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2_description.htm, and here:
 
 #### NASA data description
 
