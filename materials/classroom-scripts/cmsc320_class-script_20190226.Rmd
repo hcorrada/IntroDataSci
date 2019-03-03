@@ -1,0 +1,60 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r}
+db <- DBI::dbConnect(RSQLite::SQLite(), "data/lahman2016.sqlite")
+```
+
+```{sql, connection=db}
+with 
+  good_players(playerID, total_hits, total_hrs) as (
+    select playerID, sum(H) as total_hits, sum(HR) as total_hrs
+    from Batting
+    group by playerID
+    having total_hits >= 3000 or total_hrs >= 500
+  ),
+  players_in_hof(playerID) as (
+    select distinct playerID
+    from HallOfFame
+    where inducted="Y"
+  ) 
+select m.nameFirst, m.nameLast, total_hits, total_hrs
+from good_players as g join Master as m on g.playerID = m.playerID
+where g.playerID not in players_in_hof
+
+```
+
+
+# players with AB >= 100 from CA, what is their maximum batting average
+# declarative
+```{sql, connection=db}
+select max(1.0 * b.H / b.AB) as best_ba
+from Batting as b join Master as m on b.playerId = m.playerId
+where b.AB >= 100 and m.birthState = "CA"
+```
+
+
+
+# procedural representation
+```{r}
+library(Lahman)
+
+Batting %>%
+  inner_join(Master, by="playerID") %>% # |Batting| x |Master|
+  filter(AB >= 100, birthState == "CA") %>% # |Batting|
+  mutate(BA = 1.0 * H / AB) %>% # |B1|
+  summarize(max(BA)) # |B1|
+```
+
+
+```{r}
+Batting %>%
+  filter(AB >= 100) %>% # |Batting|
+  inner_join(Master %>% filter(birthState == "CA"), by="playerID") %>% # |Master| + |B1| x |M1|
+  mutate(BA = 1.0 * H / AB) %>% # |B1|
+  summarize(max(BA)) # |B1|
+```
