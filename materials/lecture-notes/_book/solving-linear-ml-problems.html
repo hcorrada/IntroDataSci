@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-02-26">
+<meta name="date" content="2019-03-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -294,7 +294,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="18.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>18.2</b> Handling dates</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a></li>
+<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a><ul>
+<li class="chapter" data-level="19.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#problem-definition"><i class="fa fa-check"></i><b>19.1</b> Problem Definition</a></li>
+<li class="chapter" data-level="19.2" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#one-approach-similarity-function"><i class="fa fa-check"></i><b>19.2</b> One approach: similarity function</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#example-attribute-functions"><i class="fa fa-check"></i><b>19.2.1</b> Example attribute functions</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#solving-the-resolution-problem"><i class="fa fa-check"></i><b>19.3</b> Solving the resolution problem</a></li>
+<li class="chapter" data-level="19.4" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#discussion"><i class="fa fa-check"></i><b>19.4</b> Discussion</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a></li>
 <li class="chapter" data-level="20" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html"><i class="fa fa-check"></i><b>20</b> Exploratory Data Analysis: Visualization</a><ul>
 <li class="chapter" data-level="20.0.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>20.0.1</b> EDA (Exploratory Data Analysis)</a></li>
@@ -511,11 +518,11 @@ x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1
 y &lt;-<span class="st"> </span>x <span class="op">*</span><span class="st"> </span>true_beta <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="dv">10</span>))
 <span class="kw">plot</span>(x,y,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">cex=</span><span class="fl">1.4</span>,<span class="dt">main=</span><span class="st">&quot;Simulated Data&quot;</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>, <span class="dt">cex.main=</span><span class="dv">2</span>)
 <span class="kw">abline</span>(<span class="dt">a=</span><span class="dv">0</span>, <span class="dt">b=</span>true_beta, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span> <span class="dv">2</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-223-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-222-1.svg" width="1440" /></p>
 <p>Our goal is then to find the value of <span class="math inline">\(\beta_1\)</span> that minimizes mean squared error. This corresponds to finding one of these many possible lines:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-224-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-223-1.svg" width="1440" /></p>
 <p>Each of which has a specific error for this dataset:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-225-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-224-1.svg" width="1440" /></p>
 <p>Insights:</p>
 <ol style="list-style-type: decimal">
 <li><p>As we saw before in class, loss is minimized when the derivative of the loss function is 0</p></li>
@@ -528,7 +535,7 @@ y &lt;-<span class="st"> </span>x <span class="op">*</span><span class="st"> </s
 {} = \sum_{i=1}^n (y_i - \beta_1 x_i) (-x_i)
 \]</span></p>
 <p>and plot it for our case study data:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-226-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-225-1.svg" width="1440" /></p>
 </div>
 <div id="gradient-descent" class="section level2">
 <h2><span class="header-section-number">30.2</span> Gradient Descent</h2>
@@ -597,7 +604,7 @@ gradient_descent &lt;-<span class="st"> </span><span class="cf">function</span>(
   beta_<span class="dv">1</span>
 }</code></pre>
 <p>Let’s run this algorithm and track what it does:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-228-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-227-1.svg" width="1440" /></p>
 <pre><code>## it:  0  beta:  0 loss:  405.87  alpha:  0.001 
 ## it:  1  beta:  16.11 loss:  2004.46  alpha:  0.001 
 ## it:  2  beta:  -19.85 loss:  9969.82  alpha:  0.001 
@@ -790,7 +797,7 @@ stochastic_gradient_descent &lt;-<span class="st"> </span><span class="cf">funct
   beta_<span class="dv">1</span>
 }</code></pre>
 <p>Let’s run this and see what it does:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-230-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-229-1.svg" width="1440" /></p>
 <pre><code>## it:  0  beta:  0 loss:  405.87  alpha:  0.001 
 ## it:  1  beta:  4.81 loss:  4.97  alpha:  0.001 
 ## it:  2  beta:  4.99 loss:  4.5  alpha:  0.001 

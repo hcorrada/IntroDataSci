@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-02-26">
+<meta name="date" content="2019-03-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -294,7 +294,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="18.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>18.2</b> Handling dates</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a></li>
+<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a><ul>
+<li class="chapter" data-level="19.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#problem-definition"><i class="fa fa-check"></i><b>19.1</b> Problem Definition</a></li>
+<li class="chapter" data-level="19.2" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#one-approach-similarity-function"><i class="fa fa-check"></i><b>19.2</b> One approach: similarity function</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#example-attribute-functions"><i class="fa fa-check"></i><b>19.2.1</b> Example attribute functions</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#solving-the-resolution-problem"><i class="fa fa-check"></i><b>19.3</b> Solving the resolution problem</a></li>
+<li class="chapter" data-level="19.4" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#discussion"><i class="fa fa-check"></i><b>19.4</b> Discussion</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a></li>
 <li class="chapter" data-level="20" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html"><i class="fa fa-check"></i><b>20</b> Exploratory Data Analysis: Visualization</a><ul>
 <li class="chapter" data-level="20.0.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>20.0.1</b> EDA (Exploratory Data Analysis)</a></li>
@@ -501,37 +508,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Even trickier, suppose there is a row <code>&lt;John, Katz&gt;</code> in the first, and row <code>&lt;Johnathan, Kats&gt;</code> in the second?</p></li>
 </ul>
 <p>These are examples of a general problem referred to as <strong>Entity Resolution</strong> and <strong>Record Linkage</strong>. We can define the general problem as follows:</p>
-<p><strong>Given</strong>: Entity sets <span class="math inline">\(E1\)</span> and <span class="math inline">\(E2\)</span>,</p>
-<p><strong>Find</strong>: Linked entities <span class="math inline">\((e1,e2)\)</span> with <span class="math inline">\(e1 \in E1\)</span> and <span class="math inline">\(e2 \in E2\)</span>.</p>
-<p>One general strategy to solve this problem is to define a <em>similarity</em> function between entities <span class="math inline">\(e1\)</span> and <span class="math inline">\(e2\)</span> and link entities with high similarity.</p>
-<p>A common way of defining this <em>similarity</em> function <span class="math inline">\(s(e1,e2)\)</span> is to define it as an <em>additive</em> function over some set of shared attributes <span class="math inline">\(A\)</span>:</p>
+<div id="problem-definition" class="section level2">
+<h2><span class="header-section-number">19.1</span> Problem Definition</h2>
+<p><strong>Given</strong>: Entity sets <span class="math inline">\(E_1\)</span> and <span class="math inline">\(E_2\)</span>,</p>
+<p><strong>Find</strong>: Linked entities <span class="math inline">\((e_1,e_2)\)</span> with <span class="math inline">\(e_1 \in E_1\)</span> and <span class="math inline">\(e_2 \in E_2\)</span>.</p>
+<p>One general strategy to solve this problem is to define a <em>similarity</em> function between entities <span class="math inline">\(e_1\)</span> and <span class="math inline">\(e_2\)</span> and link entities with high similarity.</p>
+</div>
+<div id="one-approach-similarity-function" class="section level2">
+<h2><span class="header-section-number">19.2</span> One approach: similarity function</h2>
+<p>A common way of defining this <em>similarity</em> function <span class="math inline">\(s(e_1,e_2)\)</span> is to define it as an <em>additive</em> function over some set of shared attributes <span class="math inline">\(A\)</span>:</p>
 <p><span class="math display">\[
-s(e1,e2) = \sum_{j \in A} s_j(e1[j], e2[j])
+s(e_1,e_2) = \sum_{j \in A} s_j(e_1[j], e_2[j])
 \]</span></p>
 <p>with <span class="math inline">\(s_j\)</span> a similarity function defined for <em>each</em> attribute <span class="math inline">\(j\)</span>, itself depending on the <em>type</em> of attribute <span class="math inline">\(j\)</span>. Here are some examples:</p>
+<div id="example-attribute-functions" class="section level3">
+<h3><span class="header-section-number">19.2.1</span> Example attribute functions</h3>
 <p><strong>Categorical attribute</strong>: Here we can specify <span class="math inline">\(s_j\)</span> to state that pairs of entities with the same value are more similar to each other than pairs of entities with different values. E.g.,</p>
 <p><span class="math display">\[
-s_j(e1[j],e2[j]) =
+s_j(e_1[j],e_2[j]) =
 \begin{cases}
-1 &amp; \mathrm{ if } \; e1[j] == e2[j] \\
+1 &amp; \mathrm{ if } \; e_1[j] == e_2[j] \\
 0 &amp; \mathrm { o.w. }
 \end{cases}
 \]</span></p>
-<p><strong>Categorical attribute</strong>: Here we can specify <span class="math inline">\(s_j\)</span> to state that pairs of entities with values that are <em>close</em> to each other are more similar than pairs of entities with values that are <em>farther</em> to each other. Note that to specify <em>close</em> or <em>far</em> we need to introduce some notion of <em>distance</em>. We can use Euclidean distance for example,</p>
+<p><strong>Continuous attribute</strong>: Here we can specify <span class="math inline">\(s_j\)</span> to state that pairs of entities with values that are <em>close</em> to each other are more similar than pairs of entities with values that are <em>farther</em> to each other. Note that to specify <em>close</em> or <em>far</em> we need to introduce some notion of <em>distance</em>. We can use Euclidean distance for example,</p>
 <p><span class="math display">\[
-d_j(e1[j],e2[j]) = (e1[j] - e2[j])^2 \\
-s_j(e1[j],e2[j]) = e^{-d_j(e1[j],e2[j])}
+d_j(e_1[j],e_2[j]) = (e_1[j] - e_2[j])^2 \\
+s_j(e_1[j],e_2[j]) = e^{-d_j(e_1[j],e_2[j])}
 \]</span>
 <strong>Text attributes</strong>: Here we can use a similar idea but based on edit distance between strings rather than Euclidean distance. Note, however, that often we can use domain knowledge to specify similarity. For example, the fact that <code>John</code> and <code>Johnathan</code> are similar requires domain knowledge of common usage of English names.</p>
-<p>Equipped with a similarity function <span class="math inline">\(s(e1,e2)\)</span>, we now need a rule to match entities we think are linked. This depends on assumptions we make about the dataset, similar to assumptions we made when performing joins.</p>
-<p>For instance, suppose we assume that we want to link every entity <span class="math inline">\(e1 \in E1\)</span> to some entity <span class="math inline">\(e2 \in E2\)</span>, allowing one-to-many linking. In this case, we can match <span class="math inline">\((e1,e2)\)</span> where</p>
+</div>
+</div>
+<div id="solving-the-resolution-problem" class="section level2">
+<h2><span class="header-section-number">19.3</span> Solving the resolution problem</h2>
+<p>Equipped with a similarity function <span class="math inline">\(s(e_1,e_2)\)</span>, we now need a rule to match entities we think are linked. This depends on assumptions we make about the dataset, similar to assumptions we made when performing joins.</p>
+<p>For instance, suppose we assume that we want to link every entity <span class="math inline">\(e_1 \in E_1\)</span> to some entity <span class="math inline">\(e_2 \in E_2\)</span>, allowing one-to-many linking. In this case, we can match <span class="math inline">\((e_1,e_2)\)</span> where</p>
 <p><span class="math display">\[
-e2 = \arg \max_{E2} s(e1,e2)
+e_2 = \arg \max_{e \in E_2} s(e_1,e)
 \]</span></p>
-<p>That is, the entity in <span class="math inline">\(E2\)</span> with highest similarity in <span class="math inline">\(E1\)</span>.</p>
-<p>In another case, suppose we want to link every entity <span class="math inline">\(e1 \in E2\)</span>, but in a one-to-one matching? Then we have a harder computational problem. In fact, this is an instance of the <em>maximum bipartite matching problem</em>, and would look at network flow algorithms to solve.</p>
+<p>That is, the entity in <span class="math inline">\(E_2\)</span> with highest similarity in <span class="math inline">\(E_1\)</span>.</p>
+<p>In another case, suppose we want to link every entity <span class="math inline">\(e_1 \in E_1\)</span>, but in a one-to-one matching with entities in <span class="math inline">\(E_2\)</span>. Then we have a harder computational problem. In fact, this is an instance of the <em>maximum bipartite matching problem</em>, and would look at network flow algorithms to solve.</p>
+</div>
+<div id="discussion" class="section level2">
+<h2><span class="header-section-number">19.4</span> Discussion</h2>
 <p>The procedure outlined above is an excellent first attempt to solve the Entity Resolution problem. This is a classical problem in Data Science for which a variety of approaches and methods are in use.</p>
 
+</div>
 </div>
             </section>
 

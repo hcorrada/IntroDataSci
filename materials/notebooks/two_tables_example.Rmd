@@ -46,7 +46,7 @@ df2
 
 ## Similarity functions
 
-We will define a similarity function between rows of the two dataframes. For dates we will compute the absolute difference in days between dates. For numeric values we also calculate the absolute difference. In both cases we use transformation $\exp{-d}$ to turn difference $d$ into a similarity. For the categorical attribute, we set similarity equal to 10 if values are equal, and 0 otherwise.
+We will define a similarity function between rows of the two dataframes. For dates we will compute the squared difference in days between dates. For numeric values we also calculate the squared difference $d$. In both cases we use transformation $\exp{-d}$ to turn difference $d$ into a similarity. For the categorical attribute, we set similarity equal to 10 if values are equal, and 0 otherwise.
 
 ```{r}
 diff_to_similarity <- function(d) {
@@ -54,7 +54,7 @@ diff_to_similarity <- function(d) {
 }
 
 date_similarity <- function(d1, d2) {
-  d <- abs(as.integer(d1 - d2))
+  d <- (as.integer(d1 - d2))^2
   diff_to_similarity(d)
 }
 
@@ -63,7 +63,7 @@ cat_similarity <- function(v1, v2) {
 }
 
 num_similarity <- function(v1, v2) {
-  d <- abs(v1 - v2)
+  d <- (v1 - v2)^2
   diff_to_similarity(d)
 }
 ```
@@ -92,7 +92,7 @@ We can then use this similarity matrix as needed. To turn this into a tidy data 
 ```{r}
 sim_matrix %>%
   magrittr::set_colnames(seq(1,ncol(.))) %>%
-  as_data_frame() %>%
+  as_tibble() %>%
   rowid_to_column("df1_id") %>%
   tidyr::gather(df2_id, similarity, -df1_id) %>%
   mutate(df2_id = as.integer(df2_id))

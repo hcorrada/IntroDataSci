@@ -16,48 +16,58 @@ Here are some examples:
 
 These are examples of a general problem referred to as **Entity Resolution** and **Record Linkage**. We can define the general problem as follows:
 
-**Given**: Entity sets $E1$ and $E2$,  
+## Problem Definition
 
-**Find**: Linked entities $(e1,e2)$ with $e1 \in E1$ and $e2 \in E2$.
+**Given**: Entity sets $E_1$ and $E_2$,  
 
-One general strategy to solve this problem is to define a _similarity_ function between entities $e1$ and $e2$ and link entities with high similarity. 
+**Find**: Linked entities $(e_1,e_2)$ with $e_1 \in E_1$ and $e_2 \in E_2$.
 
-A common way of defining this _similarity_ function $s(e1,e2)$ is to define it as an _additive_ function over some set of shared attributes $A$:
+One general strategy to solve this problem is to define a _similarity_ function between entities $e_1$ and $e_2$ and link entities with high similarity. 
+
+## One approach: similarity function
+
+A common way of defining this _similarity_ function $s(e_1,e_2)$ is to define it as an _additive_ function over some set of shared attributes $A$:
 
 $$
-s(e1,e2) = \sum_{j \in A} s_j(e1[j], e2[j])
+s(e_1,e_2) = \sum_{j \in A} s_j(e_1[j], e_2[j])
 $$
 
 with $s_j$ a similarity function defined for _each_ attribute $j$, itself depending on the _type_ of attribute $j$. Here are some examples:
 
+### Example attribute functions
+
 **Categorical attribute**: Here we can specify $s_j$ to state that pairs of entities with the same value are more similar to each other than pairs of entities with different values. E.g.,
 
 $$
-s_j(e1[j],e2[j]) =
+s_j(e_1[j],e_2[j]) =
 \begin{cases}
-1 & \mathrm{ if } \; e1[j] == e2[j] \\
+1 & \mathrm{ if } \; e_1[j] == e_2[j] \\
 0 & \mathrm { o.w. }
 \end{cases}
 $$
 
-**Categorical attribute**: Here we can specify $s_j$ to state that pairs of entities with values that are _close_ to each other are more similar than pairs of entities with values that are _farther_ to each other. Note that to specify _close_ or _far_ we need to introduce some notion of _distance_. We can use Euclidean distance for example,
+**Continuous attribute**: Here we can specify $s_j$ to state that pairs of entities with values that are _close_ to each other are more similar than pairs of entities with values that are _farther_ to each other. Note that to specify _close_ or _far_ we need to introduce some notion of _distance_. We can use Euclidean distance for example,
 
 $$
-d_j(e1[j],e2[j]) = (e1[j] - e2[j])^2 \\
-s_j(e1[j],e2[j]) = e^{-d_j(e1[j],e2[j])}
+d_j(e_1[j],e_2[j]) = (e_1[j] - e_2[j])^2 \\
+s_j(e_1[j],e_2[j]) = e^{-d_j(e_1[j],e_2[j])}
 $$
 **Text attributes**: Here we can use a similar idea but based on edit distance between strings rather than Euclidean distance. Note, however, that often we can use domain knowledge to specify similarity. For example, the fact that `John` and `Johnathan` are similar requires domain knowledge of common usage of English names.
 
-Equipped with a similarity function $s(e1,e2)$, we now need a rule to match entities we think are linked. This depends on assumptions we make about the dataset, similar to assumptions we made when performing joins. 
+## Solving the resolution problem
 
-For instance, suppose we assume that we want to link every entity $e1 \in E1$ to some entity $e2 \in E2$, allowing one-to-many linking. In this case, we can match $(e1,e2)$ where 
+Equipped with a similarity function $s(e_1,e_2)$, we now need a rule to match entities we think are linked. This depends on assumptions we make about the dataset, similar to assumptions we made when performing joins. 
+
+For instance, suppose we assume that we want to link every entity $e_1 \in E_1$ to some entity $e_2 \in E_2$, allowing one-to-many linking. In this case, we can match $(e_1,e_2)$ where 
 
 $$
-e2 = \arg \max_{E2} s(e1,e2)
+e_2 = \arg \max_{e \in E_2} s(e_1,e)
 $$
 
-That is, the entity in $E2$ with highest similarity in $E1$. 
+That is, the entity in $E_2$ with highest similarity in $E_1$. 
 
-In another case, suppose we want to link every entity $e1 \in E2$, but in a one-to-one matching? Then we have a harder computational problem. In fact, this is an instance of the _maximum bipartite matching problem_, and would look at network flow algorithms to solve.
+In another case, suppose we want to link every entity $e_1 \in E_1$, but in a one-to-one matching with entities in $E_2$. Then we have a harder computational problem. In fact, this is an instance of the _maximum bipartite matching problem_, and would look at network flow algorithms to solve.
+
+## Discussion
 
 The procedure outlined above is an excellent first attempt to solve the Entity Resolution problem. This is a classical problem in Data Science for which a variety of approaches and methods are in use. 

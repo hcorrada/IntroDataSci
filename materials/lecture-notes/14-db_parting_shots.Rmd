@@ -10,7 +10,7 @@ Consider a database where we have two tables `Batting` and `Master` and we want 
 db <- DBI::dbConnect(RSQLite::SQLite(), "data/lahman2016.sqlite")
 ```
 
-```{sql, eval=FALSE}
+```sql
 select max(1.0 * b.H / b.AB) as best_ba
 from Batting as b join Master as m on b.playerId = m.playerId
 where b.AB >= 100 and m.birthState = "CA"

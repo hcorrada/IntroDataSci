@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-02-26">
+<meta name="date" content="2019-03-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -294,7 +294,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="18.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>18.2</b> Handling dates</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a></li>
+<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a><ul>
+<li class="chapter" data-level="19.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#problem-definition"><i class="fa fa-check"></i><b>19.1</b> Problem Definition</a></li>
+<li class="chapter" data-level="19.2" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#one-approach-similarity-function"><i class="fa fa-check"></i><b>19.2</b> One approach: similarity function</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#example-attribute-functions"><i class="fa fa-check"></i><b>19.2.1</b> Example attribute functions</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#solving-the-resolution-problem"><i class="fa fa-check"></i><b>19.3</b> Solving the resolution problem</a></li>
+<li class="chapter" data-level="19.4" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#discussion"><i class="fa fa-check"></i><b>19.4</b> Discussion</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a></li>
 <li class="chapter" data-level="20" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html"><i class="fa fa-check"></i><b>20</b> Exploratory Data Analysis: Visualization</a><ul>
 <li class="chapter" data-level="20.0.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>20.0.1</b> EDA (Exploratory Data Analysis)</a></li>
@@ -602,7 +609,7 @@ phats_<span class="dv">100</span> &lt;-<span class="st"> </span><span class="kw"
 
 <span class="co"># now let&#39;s plot a histogram of the </span>
 <span class="kw">hist</span>(phats_<span class="dv">100</span>, <span class="dt">xlab=</span><span class="kw">expression</span>(<span class="kw">hat</span>(p)), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>), <span class="dt">main=</span><span class="st">&quot;Distribution of p estimates from 100 tweets&quot;</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-160-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-159-1.svg" width="672" /></p>
 <p>What does this say about our estimates of the proportion of bot-generated tweets if we use 100 tweets in our sample?</p>
 <p>Now what if instead of sampling <span class="math inline">\(n=100\)</span> tweets we used other sample sizes?</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))
@@ -629,7 +636,7 @@ phats_<span class="dv">5000</span> &lt;-<span class="st"> </span><span class="kw
 <span class="co"># what about 10000 tweets</span>
 phats_<span class="dv">10000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10000</span>))
 <span class="kw">hist</span>(phats_<span class="dv">10000</span>, <span class="dt">main=</span><span class="st">&quot;10000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-161-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-160-1.svg" width="672" /></p>
 <p>We can make a couple of observations:</p>
 <ol style="list-style-type: decimal">
 <li>The distribution of estimate <span class="math inline">\(\hat{p}\)</span> is <em>centered</em> at <span class="math inline">\(p=.7\)</span>, our unknown <em>population</em> proportion, and<br />
@@ -692,7 +699,7 @@ density_values_<span class="dv">3</span> &lt;-<span class="st"> </span><span cla
 <span class="kw">lines</span>(yrange, density_values_<span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)
 <span class="kw">lines</span>(yrange, density_values_<span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;orange&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;mean 60, sd 2&quot;</span>, <span class="st">&quot;mean 50, sd 2&quot;</span>, <span class="st">&quot;mean 60, sd 6&quot;</span>), <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;orange&quot;</span>), <span class="dt">lwd=</span><span class="dv">2</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-162-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-161-1.svg" width="672" /></p>
 <p>Like the discrete case, probability density functions for continuous random variables need to satisfy certain conditions:</p>
 <ol style="list-style-type: lower-alpha">
 <li><span class="math inline">\(p(Y=y) \geq 0\)</span> for all values <span class="math inline">\(Y \in (-\infty,\infty)\)</span>, and<br />
@@ -766,7 +773,7 @@ phats_<span class="dv">5000</span> &lt;-<span class="st"> </span><span class="kw
 phats_<span class="dv">10000</span> &lt;-<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">get_estimate</span>(<span class="dv">10000</span>))
 <span class="kw">hist</span>(phats_<span class="dv">10000</span>, <span class="dt">main=</span><span class="st">&quot;10000 tweets&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;p hat&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>), <span class="dt">probability=</span><span class="ot">TRUE</span>)
 <span class="kw">draw_normal_density</span>(<span class="dv">10000</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-163-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-162-1.svg" width="672" /></p>
 <p>Here we see the three main points of the LLN and CLT:</p>
 <ol style="list-style-type: decimal">
 <li>the normal density is centered around <span class="math inline">\(\mu=.7\)</span>,<br />
