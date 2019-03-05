@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-02-26">
+<meta name="date" content="2019-03-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -294,7 +294,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="18.2" data-path="text-and-dates.html"><a href="text-and-dates.html#handling-dates"><i class="fa fa-check"></i><b>18.2</b> Handling dates</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a></li>
+<li class="chapter" data-level="19" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html"><i class="fa fa-check"></i><b>19</b> Entity Resolution and Record Linkage</a><ul>
+<li class="chapter" data-level="19.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#problem-definition"><i class="fa fa-check"></i><b>19.1</b> Problem Definition</a></li>
+<li class="chapter" data-level="19.2" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#one-approach-similarity-function"><i class="fa fa-check"></i><b>19.2</b> One approach: similarity function</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#example-attribute-functions"><i class="fa fa-check"></i><b>19.2.1</b> Example attribute functions</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#solving-the-resolution-problem"><i class="fa fa-check"></i><b>19.3</b> Solving the resolution problem</a></li>
+<li class="chapter" data-level="19.4" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#discussion"><i class="fa fa-check"></i><b>19.4</b> Discussion</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a></li>
 <li class="chapter" data-level="20" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html"><i class="fa fa-check"></i><b>20</b> Exploratory Data Analysis: Visualization</a><ul>
 <li class="chapter" data-level="20.0.1" data-path="exploratory-data-analysis-visualization.html"><a href="exploratory-data-analysis-visualization.html#eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>20.0.1</b> EDA (Exploratory Data Analysis)</a></li>
@@ -508,7 +515,7 @@ diamonds <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">scaled_depth =</span> (depth <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(depth)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(depth)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>scaled_depth)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span>.<span class="dv">5</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-140-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-139-1.svg" width="672" /></p>
 <p>Question: what is the mean of <span class="math inline">\(z\)</span>? What is it’s standard deviation? Another name for this transformation is to <em>standardize</em> a variable.</p>
 <p>One useful result of applying this transformation to variables in a dataset is that all variables are in the same, and thus comparable units.</p>
 <p>On occasion, you will have use to apply transformations that only <em>center</em> (but not scale) data:</p>
@@ -604,14 +611,14 @@ Wage <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_discrete =</span> <span class="kw">cut</span>(dep_delay, <span class="dt">breaks=</span><span class="dv">100</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay_discrete)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>()</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-144-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-143-1.svg" width="672" /></p>
 <p>The second approach uses <strong>equal-sized</strong> bins, where the range is divided into bins <em>based</em> on data distribution</p>
 <pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_discrete =</span> <span class="kw">cut</span>(dep_delay, 
           <span class="dt">breaks=</span><span class="kw">quantile</span>(dep_delay, <span class="dt">probs=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">11</span>), <span class="dt">na.rm=</span><span class="ot">TRUE</span>))) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay_discrete)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>()</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-145-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-144-1.svg" width="672" /></p>
 <p>In both cases, the <code>cut</code> function is used to apply discretization, with the <code>breaks</code> argument determining which method is applied. In the first example, <code>breaks=100</code> specifies that 100 bins of equal-length are to be used. In the second example, the <code>quantile</code> function is used to define 10 equal-sized bins.</p>
 </div>
 </div>
@@ -622,7 +629,7 @@ Wage <span class="op">%&gt;%</span>
 <p>We have seen an example of skewed data previously when we looked at departure delays in our flights dataset.</p>
 <pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">30</span>)</code></pre>
 <pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_bin).</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-147-1.svg" width="1920" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-146-1.svg" width="1920" /></p>
 <p>Previously, we looked at a way of determining skew for a dataset. Let’s see what that looks like for the <code>dep_delay</code> variable: (see <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/programming.html">dplyr vignette</a> for info on ‘enquo’ and ‘!!’)</p>
 <pre class="sourceCode r"><code class="sourceCode r">compute_skew_stat &lt;-<span class="st"> </span><span class="cf">function</span>(df, attribute) {
   attribute &lt;-<span class="st"> </span><span class="kw">enquo</span>(attribute)
@@ -657,7 +664,7 @@ transformed_flights <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>transformed_dep_delay)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">1</span>)</code></pre>
 <pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_bin).</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-149-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-148-1.svg" width="672" /></p>
 <p>Let’s see if that reduced the skew of the dataset:</p>
 <pre class="sourceCode r"><code class="sourceCode r">transformed_flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compute_skew_stat</span>(transformed_dep_delay)</code></pre>
 <pre><code>## # A tibble: 1 x 3
