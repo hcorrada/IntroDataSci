@@ -56,9 +56,17 @@ $$
 
 ## Solving the resolution problem
 
-Equipped with a similarity function $s(e_1,e_2)$, we now need a rule to match entities we think are linked. This depends on assumptions we make about the dataset, similar to assumptions we made when performing joins. 
+Equipped with a similarity function $s(e_1,e_2)$, we now need a rule to match entities we think are linked. This depends on assumptions we make about the dataset, similar to assumptions we made when performing joins. In general, we model the entity resolution problem as an _optimization_ problem, where we have an _objective function_ (based on similarity) that we want to maximize over possible sets $V$ of _valid_ pairs $(e_1,e_2)$, where set $V$ constraints pairs based on problem-specific assumptions.
 
-For instance, suppose we assume that we want to link every entity $e_1 \in E_1$ to some entity $e_2 \in E_2$, allowing one-to-many linking. In this case, we can match $(e_1,e_2)$ where 
+Thus, in general, we want to solve the problem
+
+$$
+$R$ = \arg \max_{V} \sum_{(e_1,e_2) \in V} s(e_1,e_2) 
+$$
+
+### One-to-many resolutions
+
+Suppose we first constrain sets $V$ to represent one-to-many resolutions. That is, suppose we assume that we want to link every entity $e_1 \in E_1$ to some entity $e_2 \in E_2$, allowing one-to-many linking. Thus, entities in $e_1$ can only appear once in pairs in $V$, but entities $e_2$ may appear more than once. In this case, we can match $(e_1,e_2)$ where 
 
 $$
 e_2 = \arg \max_{e \in E_2} s(e_1,e)
@@ -66,7 +74,13 @@ $$
 
 That is, the entity in $E_2$ with highest similarity in $E_1$. 
 
-In another case, suppose we want to link every entity $e_1 \in E_1$, but in a one-to-one matching with entities in $E_2$. Then we have a harder computational problem. In fact, this is an instance of the _maximum bipartite matching problem_, and would look at network flow algorithms to solve.
+### One-to-one resolutions
+
+Suppose we constrain sets $V$ to those that represent one-to-one resolutions. That is, suppose we want to link every entity $e_1 \in E_1$, but in a one-to-one matching with entities in $E_2$. Thus if $(e_1,e_2) \in V$ then $e_1$ and $e_2$ appear in only one pair in $V$. In this case, we have a harder computational problem. In fact, this is an instance of the _maximum bipartite matching problem_, and would look at network flow algorithms to solve.
+
+### Other constraints
+
+We can add additional constraints to $V$ to represent other information we have about the task. A common one would be to only allow pairs $(e_1,e_2) \in V$ to have similarity above some threshold $t$. I.e., $(e_1, e_2) \in V$ only if $s(e_1,e_2) \geq t$.
 
 ## Discussion
 
