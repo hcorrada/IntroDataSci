@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-03-05">
+<meta name="date" content="2019-03-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -299,7 +299,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="19.2" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#one-approach-similarity-function"><i class="fa fa-check"></i><b>19.2</b> One approach: similarity function</a><ul>
 <li class="chapter" data-level="19.2.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#example-attribute-functions"><i class="fa fa-check"></i><b>19.2.1</b> Example attribute functions</a></li>
 </ul></li>
-<li class="chapter" data-level="19.3" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#solving-the-resolution-problem"><i class="fa fa-check"></i><b>19.3</b> Solving the resolution problem</a></li>
+<li class="chapter" data-level="19.3" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#solving-the-resolution-problem"><i class="fa fa-check"></i><b>19.3</b> Solving the resolution problem</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#one-to-many-resolutions"><i class="fa fa-check"></i><b>19.3.1</b> One-to-many resolutions</a></li>
+<li class="chapter" data-level="19.3.2" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#one-to-one-resolutions"><i class="fa fa-check"></i><b>19.3.2</b> One-to-one resolutions</a></li>
+<li class="chapter" data-level="19.3.3" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#other-constraints"><i class="fa fa-check"></i><b>19.3.3</b> Other constraints</a></li>
+</ul></li>
 <li class="chapter" data-level="19.4" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#discussion"><i class="fa fa-check"></i><b>19.4</b> Discussion</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-exploratory-data-analysis.html"><a href="part-exploratory-data-analysis.html"><i class="fa fa-check"></i>(Part) Exploratory Data Analysis</a></li>
@@ -541,13 +545,27 @@ s_j(e_1[j],e_2[j]) = e^{-d_j(e_1[j],e_2[j])}
 </div>
 <div id="solving-the-resolution-problem" class="section level2">
 <h2><span class="header-section-number">19.3</span> Solving the resolution problem</h2>
-<p>Equipped with a similarity function <span class="math inline">\(s(e_1,e_2)\)</span>, we now need a rule to match entities we think are linked. This depends on assumptions we make about the dataset, similar to assumptions we made when performing joins.</p>
-<p>For instance, suppose we assume that we want to link every entity <span class="math inline">\(e_1 \in E_1\)</span> to some entity <span class="math inline">\(e_2 \in E_2\)</span>, allowing one-to-many linking. In this case, we can match <span class="math inline">\((e_1,e_2)\)</span> where</p>
+<p>Equipped with a similarity function <span class="math inline">\(s(e_1,e_2)\)</span>, we now need a rule to match entities we think are linked. This depends on assumptions we make about the dataset, similar to assumptions we made when performing joins. In general, we model the entity resolution problem as an <em>optimization</em> problem, where we have an <em>objective function</em> (based on similarity) that we want to maximize over possible sets <span class="math inline">\(V\)</span> of <em>valid</em> pairs <span class="math inline">\((e_1,e_2)\)</span>, where set <span class="math inline">\(V\)</span> constraints pairs based on problem-specific assumptions.</p>
+<p>Thus, in general, we want to solve the problem</p>
+<p><span class="math display">\[
+$R$ = \arg \max_{V} \sum_{(e_1,e_2) \in V} s(e_1,e_2) 
+\]</span></p>
+<div id="one-to-many-resolutions" class="section level3">
+<h3><span class="header-section-number">19.3.1</span> One-to-many resolutions</h3>
+<p>Suppose we first constrain sets <span class="math inline">\(V\)</span> to represent one-to-many resolutions. That is, suppose we assume that we want to link every entity <span class="math inline">\(e_1 \in E_1\)</span> to some entity <span class="math inline">\(e_2 \in E_2\)</span>, allowing one-to-many linking. Thus, entities in <span class="math inline">\(e_1\)</span> can only appear once in pairs in <span class="math inline">\(V\)</span>, but entities <span class="math inline">\(e_2\)</span> may appear more than once. In this case, we can match <span class="math inline">\((e_1,e_2)\)</span> where</p>
 <p><span class="math display">\[
 e_2 = \arg \max_{e \in E_2} s(e_1,e)
 \]</span></p>
 <p>That is, the entity in <span class="math inline">\(E_2\)</span> with highest similarity in <span class="math inline">\(E_1\)</span>.</p>
-<p>In another case, suppose we want to link every entity <span class="math inline">\(e_1 \in E_1\)</span>, but in a one-to-one matching with entities in <span class="math inline">\(E_2\)</span>. Then we have a harder computational problem. In fact, this is an instance of the <em>maximum bipartite matching problem</em>, and would look at network flow algorithms to solve.</p>
+</div>
+<div id="one-to-one-resolutions" class="section level3">
+<h3><span class="header-section-number">19.3.2</span> One-to-one resolutions</h3>
+<p>Suppose we constrain sets <span class="math inline">\(V\)</span> to those that represent one-to-one resolutions. That is, suppose we want to link every entity <span class="math inline">\(e_1 \in E_1\)</span>, but in a one-to-one matching with entities in <span class="math inline">\(E_2\)</span>. Thus if <span class="math inline">\((e_1,e_2) \in V\)</span> then <span class="math inline">\(e_1\)</span> and <span class="math inline">\(e_2\)</span> appear in only one pair in <span class="math inline">\(V\)</span>. In this case, we have a harder computational problem. In fact, this is an instance of the <em>maximum bipartite matching problem</em>, and would look at network flow algorithms to solve.</p>
+</div>
+<div id="other-constraints" class="section level3">
+<h3><span class="header-section-number">19.3.3</span> Other constraints</h3>
+<p>We can add additional constraints to <span class="math inline">\(V\)</span> to represent other information we have about the task. A common one would be to only allow pairs <span class="math inline">\((e_1,e_2) \in V\)</span> to have similarity above some threshold <span class="math inline">\(t\)</span>. I.e., <span class="math inline">\((e_1, e_2) \in V\)</span> only if <span class="math inline">\(s(e_1,e_2) \geq t\)</span>.</p>
+</div>
 </div>
 <div id="discussion" class="section level2">
 <h2><span class="header-section-number">19.4</span> Discussion</h2>
