@@ -129,11 +129,11 @@ notes = "classroom-notes/sql_pr.html"
 [day08]
 date = "2/21"
 
-[[day09.covers]]
+[[day11.covers]]
 title = "Entity Resolution and Record Linkage"
 notes = "bookdown-notes/entity-resolution-and-record-linkage.html"
 
-[[day09.covers]]
+[[day11.covers]]
 title = "Common operations for data tidying"
 notes = "bookdown-notes/tidying-data.html"
 
@@ -170,7 +170,7 @@ title = "Midterm I"
 [day11]
 date = "3/5"
 
-[[day11.covers]]
+[[day14.covers]]
 title = "Exploratory Data Analysis 1: Visualization"
 notes = "bookdown-notes/exploratory-data-analysis-visualization.html"
 
@@ -180,7 +180,7 @@ notes = "bookdown-notes/exploratory-data-analysis-visualization.html"
 [day12]
 date = "3/7"
 
-[[day11.covers]]
+[[day14.covers]]
 title = "Exploratory Data Analysis 2: Summary statistics"
 notes = "bookdown-notes/exploratory-data-analysis-summary-statistics.html"
 
@@ -197,12 +197,18 @@ link = "projects/Project1/"
 [day13]
 date = "3/12"
 
+[[day13.covers]]
+title = "Project questions (3:30-3:55)"
 
 [[day13.covers]]
+title = "Data Science Day: David Donoho Keynote Talk (ESJ 0202)"
+notes = "https://datascienceday.math.umd.edu/home/agenda"
+
+[[day14.covers]]
 title="Data transformations"
 notes = "bookdown-notes/eda-data-transformations.html"
 
-[[day13.covers]]
+[[day15.covers]]
 title = "Handling missing data"
 notes = "bookdown-notes/eda-handling-missing-data.html"
 
@@ -212,19 +218,15 @@ notes = "bookdown-notes/eda-handling-missing-data.html"
 [day14]
 date = "3/14"
 
-[[day14.covers]]
+[[day15.covers]]
 title = "Univariate distributions and statistics"
 notes = "bookdown-notes/univariate-distributions-and-statistics.html"
 
 #[day14.class_notes]
 #link = "cmsc320_class-notes_20180314.pdf"
 
-# out for enar
 [day15]
 date = "3/26"
-
-[[day15.covers]]
-title = "No lecture: project and HW question"
 
 #[day15a]
 #date = "3/28"
@@ -278,8 +280,8 @@ notes = "bookdown-notes/linear-regression.html"
 #[day19.class_notes]
 #link = "cmsc320_class-notes_20180405.pdf"
 
-#[day19a]
-#date = "4/11"
+[day19a]
+date = "4/11"
 
 #[[day19a.workdue]]
 #title = "Project 2: Data wrangling and exploratory analysis"
@@ -289,7 +291,7 @@ notes = "bookdown-notes/linear-regression.html"
 [day20]
 date = "4/16"
 
-[[day20.covers]]
+[[day19a.covers]]
 title = "Linear models for classification"
 notes = "bookdown-notes/linear-models-for-classification.html"
 
@@ -300,9 +302,12 @@ notes = "bookdown-notes/linear-models-for-classification.html"
 [day21]
 date = "4/18"
 
-[[day21.covers]]
+[[day20.covers]]
 title = "Solving linear ML problems"
 notes = "bookdown-notes/solving-linear-ml-problems.html"
+
+[[day21.covers]]
+title = "TBD"
 
 #[[day21.workdue]]
 #title = "Homework 4: A/B Testing"
