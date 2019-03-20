@@ -270,6 +270,13 @@ notes = "bookdown-notes/data-analysis-with-geometry.html"
 #[day18.class_notes]
 #link = "cmsc320_class-notes_20180403.pdf"
 
+[day18a]
+date = "4/5"
+
+[[day18a.workdue]]
+title = "Project 2: Data Wrangling and EDA" 
+link = "projects/project2/"
+
 [day19]
 date = "4/9"
 
