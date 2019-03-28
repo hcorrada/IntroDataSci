@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-03-06">
+<meta name="date" content="2019-03-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -343,7 +343,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.3" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#skewed-data"><i class="fa fa-check"></i><b>22.3</b> Skewed Data</a></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html"><i class="fa fa-check"></i><b>23</b> EDA: Handling Missing Data</a><ul>
-<li class="chapter" data-level="23.0.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>23.0.1</b> Dealing with data missing at random</a></li>
+<li class="chapter" data-level="23.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>23.1</b> Dealing with data missing at random</a><ul>
+<li class="chapter" data-level="23.1.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#encoding-as-missing"><i class="fa fa-check"></i><b>23.1.1</b> Encoding as missing</a></li>
+<li class="chapter" data-level="23.1.2" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#imputation"><i class="fa fa-check"></i><b>23.1.2</b> Imputation</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html"><i class="fa fa-check"></i>(Part) Statistical Learning</a></li>
 <li class="chapter" data-level="24" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html"><i class="fa fa-check"></i><b>24</b> Univariate distributions and statistics</a><ul>
@@ -361,6 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.5" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#the-normal-distribution"><i class="fa fa-check"></i><b>24.5</b> The normal distribution</a><ul>
 <li class="chapter" data-level="24.5.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#clt-continued"><i class="fa fa-check"></i><b>24.5.1</b> CLT continued</a></li>
 </ul></li>
+<li class="chapter" data-level="24.6" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#the-bootstrap-procedure"><i class="fa fa-check"></i><b>24.6</b> The Bootstrap Procedure</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>25</b> Experiment design and hypothesis testing</a><ul>
 <li class="chapter" data-level="25.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#inference"><i class="fa fa-check"></i><b>25.1</b> Inference</a><ul>
@@ -654,8 +658,8 @@ phats_<span class="dv">10000</span> &lt;-<span class="st"> </span><span class="k
 <p><span class="math display">\[
 \frac{1}{n} \sum_i X_i \to \mu
 \]</span></p>
-<p><em>tends</em> to the population mean (under some assumptions beyond the scope of this class). regardless of the distribution of the <span class="math inline">\(X_i\)</span>.</p>
-<p>An implication of this is that using the sample mean is the right thing to estimate parameters by matching their expected value!</p>
+<p><em>tends</em> to the population mean (under some assumptions beyond the scope of this class) regardless of the distribution of the <span class="math inline">\(X_i\)</span>.</p>
+<p>An implication of this is that using the sample mean is the right procedure to use to estimate parameters by matching their expected value!</p>
 </div>
 <div id="central-limit-theorem-clt" class="section level3">
 <h3><span class="header-section-number">24.4.2</span> Central Limit Theorem (CLT)</h3>
@@ -786,8 +790,83 @@ phats_<span class="dv">10000</span> &lt;-<span class="st"> </span><span class="k
 </li>
 <li>the standard error goes to 0 as <span class="math inline">\(n\)</span> increases.</li>
 </ol>
-
 </div>
+</div>
+<div id="the-bootstrap-procedure" class="section level2">
+<h2><span class="header-section-number">24.6</span> The Bootstrap Procedure</h2>
+<p>What if the conditions that we used for the CLT don’t hold? For instance, samples <span class="math inline">\(X_i\)</span> may not be independent. What can we do then, how can we say something about the precision of sample mean estimate <span class="math inline">\(Y\)</span>?</p>
+<p>A super useful procedure to use in this case is the bootstrap. It is based on using <em>randomization</em> to simulate the stochasticity resulting from the population sampling procedure we are trying to capture in our analysis.</p>
+<p>The main idea is the following: given observations <span class="math inline">\(x_1,\ldots,x_n\)</span> and the estimate <span class="math inline">\(y=\frac{1}{n}\sum_{i=1}^n x_i\)</span>, what can we say about the standard error of <span class="math inline">\(y\)</span>?</p>
+<p>There are two challenges here: 1) our estimation procedure is deterministic, that is, if I compute the sample mean of a specific dataset, I will always get the same answer; and 2) we should retain whatever properties of estimate <span class="math inline">\(y\)</span> result from obtaining it from <span class="math inline">\(n\)</span> samples.</p>
+<p>The bootstrap is a randomization procedure that measures the variance of estimate <span class="math inline">\(y\)</span>, thus using randomization to address challenge (1), but doing so with randomized samples of size <span class="math inline">\(n\)</span>, addressing challenge (2).</p>
+<p>The procedure goes as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>Generate <span class="math inline">\(B\)</span> random datasets by sampling <em>with replacement</em> from dataset <span class="math inline">\(x_1,\ldots,x_n\)</span>. Denote randomized dataset <span class="math inline">\(b\)</span> as <span class="math inline">\(x_{1b},\ldots,x_{nb}\)</span>.</p></li>
+<li><p>Construct estimates from <em>each</em> dataset, <span class="math inline">\(y_b = \frac{1}{n}\sum_i x_{ib}\)</span></p></li>
+<li><p>Computer center (mean) and spread (variance) of estimates <span class="math inline">\(y_b\)</span></p></li>
+</ol>
+<p>Let’s see how this works on tweet oracle example</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remember our dataset is in variable x</span>
+
+<span class="co"># this is how we get one bootstrap replicate</span>
+<span class="co"># sample n observations from dataset x _with replacement_</span>
+xb &lt;-<span class="st"> </span><span class="kw">sample</span>(x, <span class="kw">length</span>(x), <span class="dt">replace=</span><span class="ot">TRUE</span>)
+
+<span class="co"># let&#39;s do B=100 bootstrap randomizations using the </span>
+<span class="co"># replicate function (it just replicates the given expression</span>
+<span class="co"># however many times it is directed to do so)</span>
+B &lt;-<span class="st"> </span><span class="dv">200</span>
+xb &lt;-<span class="st"> </span><span class="kw">replicate</span>(B, <span class="kw">sample</span>(x,<span class="kw">length</span>(x), <span class="dt">replace=</span><span class="ot">TRUE</span>))
+
+<span class="co"># xb is a matrix with 100 rows (the original length of dataset) and</span>
+<span class="co"># 200 columns (the number of replicates)</span>
+
+<span class="co"># now let&#39;s compute the bootstrap estimates y</span>
+yb &lt;-<span class="st"> </span><span class="kw">colMeans</span>(xb)
+
+<span class="co"># and make a histogram of the bootstrap estimates</span>
+<span class="kw">hist</span>(yb, <span class="dt">probability=</span><span class="ot">TRUE</span>, <span class="dt">main=</span><span class="st">&quot;Histogram of bootstrap estimates&quot;</span>,
+     <span class="dt">xlab=</span><span class="st">&quot;Bootsrap Estimates&quot;</span>,<span class="dt">xlim=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>))
+<span class="kw">abline</span>(<span class="dt">v=</span>p, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)
+<span class="kw">draw_normal_density</span>(<span class="dv">100</span>)</code></pre>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-163-1.svg" width="672" /></p>
+<p>Now, let’s a case where we don’t expect the normal approximation to work so well by adding dependence between samples. Let’s make a new ORACLE of tweet where the probability of a tweet being bot-generated depends on the previous tweet:</p>
+<pre class="sourceCode r"><code class="sourceCode r">next_tweet &lt;-<span class="st"> </span><span class="cf">function</span>(previous_tweet) {
+  <span class="co"># with probability .3 is the same as the previous tweet</span>
+  <span class="co"># otherwise, it&#39;s independent</span>
+  <span class="kw">ifelse</span>(<span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.2</span>, 
+         previous_tweet, 
+         <span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p)))
+}
+
+create_dependent_dataset &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">n=</span><span class="dv">100</span>) {
+  x &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;integer&quot;</span>, n)
+  x[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p))
+  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>n) {
+    x[i] =<span class="st"> </span><span class="kw">next_tweet</span>(x[i<span class="dv">-1</span>])
+  }
+  x
+}
+
+dependent_x &lt;-<span class="st"> </span><span class="kw">create_dependent_dataset</span>(<span class="dv">100</span>)
+
+<span class="co"># Now let&#39;s do the same bootstrap procedure in this case</span>
+xb &lt;-<span class="st"> </span><span class="kw">replicate</span>(B, <span class="kw">sample</span>(dependent_x,<span class="kw">length</span>(dependent_x), <span class="dt">replace=</span><span class="ot">TRUE</span>))
+
+<span class="co"># xb is a matrix with 100 rows (the original length of dataset) and</span>
+<span class="co"># 200 columns (the number of replicates)</span>
+
+<span class="co"># now let&#39;s compute the bootstrap estimates y</span>
+yb &lt;-<span class="st"> </span><span class="kw">colMeans</span>(xb)
+
+<span class="co"># and make a histogram of the bootstrap estimates</span>
+<span class="kw">hist</span>(yb, <span class="dt">probability=</span><span class="ot">TRUE</span>, <span class="dt">main=</span><span class="st">&quot;Histogram of bootstrap estimates&quot;</span>,
+     <span class="dt">xlab=</span><span class="st">&quot;Bootsrap Estimates&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>))
+<span class="kw">abline</span>(<span class="dt">v=</span>p, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)
+<span class="kw">draw_normal_density</span>(<span class="dv">100</span>)</code></pre>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-164-1.svg" width="672" /></p>
+<p>Here, an analysis based on the classical CLT would not be appropriate, but the bootstrap analysis gives some information about the variability of our estimates.</p>
+
 </div>
 </div>
             </section>
