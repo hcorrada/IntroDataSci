@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-03-06">
+<meta name="date" content="2019-03-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -343,7 +343,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.3" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#skewed-data"><i class="fa fa-check"></i><b>22.3</b> Skewed Data</a></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html"><i class="fa fa-check"></i><b>23</b> EDA: Handling Missing Data</a><ul>
-<li class="chapter" data-level="23.0.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>23.0.1</b> Dealing with data missing at random</a></li>
+<li class="chapter" data-level="23.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>23.1</b> Dealing with data missing at random</a><ul>
+<li class="chapter" data-level="23.1.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#encoding-as-missing"><i class="fa fa-check"></i><b>23.1.1</b> Encoding as missing</a></li>
+<li class="chapter" data-level="23.1.2" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#imputation"><i class="fa fa-check"></i><b>23.1.2</b> Imputation</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html"><i class="fa fa-check"></i>(Part) Statistical Learning</a></li>
 <li class="chapter" data-level="24" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html"><i class="fa fa-check"></i><b>24</b> Univariate distributions and statistics</a><ul>
@@ -361,6 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.5" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#the-normal-distribution"><i class="fa fa-check"></i><b>24.5</b> The normal distribution</a><ul>
 <li class="chapter" data-level="24.5.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#clt-continued"><i class="fa fa-check"></i><b>24.5.1</b> CLT continued</a></li>
 </ul></li>
+<li class="chapter" data-level="24.6" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#the-bootstrap-procedure"><i class="fa fa-check"></i><b>24.6</b> The Bootstrap Procedure</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>25</b> Experiment design and hypothesis testing</a><ul>
 <li class="chapter" data-level="25.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#inference"><i class="fa fa-check"></i><b>25.1</b> Inference</a><ul>
@@ -546,7 +550,7 @@ tidy_weather</code></pre>
 <p>In general, the central question with missing data is: Should we remove observations with missing values, or should we <em>impute</em> missing values? This also relates to the difference between values that are missing <em>at random</em> vs. values that are missing <em>systematically</em>. In the weather example above, the first case (of failed measurements) could be thought of as missing <em>at random</em>, and the second case as missing <em>systematically</em>.</p>
 <p>Data that is missing systematically can significantly bias an analysis. For example:
 Suppose we want to predict how sick someone is from test result. If doctors do not carry out the test because a patient is too sick, then the fact test is missing is a great predictor of how sick the patient is.</p>
-<p>So in general, the <strong>first step</strong> when dealing with missing data is to understand <em>why</em> and <em>how</em> data may be missing. I.e., talk to collaborator, or person who created the dataset. Once you know that, if a relatively small fraction of observations contain have missing values, then it may be safe to remove observations.</p>
+<p>So in general, the <strong>first step</strong> when dealing with missing data is to understand <em>why</em> and <em>how</em> data may be missing. I.e., talk to collaborator, or person who created the dataset. Once you know that data is not missing systematically and a relatively small fraction of observations contain have missing values, then it may be safe to remove observations.</p>
 <pre class="sourceCode r"><code class="sourceCode r">tidy_weather_nomissing &lt;-<span class="st"> </span>tidy_weather <span class="op">%&gt;%</span>
 <span class="st">  </span>tidyr<span class="op">::</span><span class="kw">drop_na</span>(tmax, tmin)
 tidy_weather_nomissing</code></pre>
@@ -564,9 +568,11 @@ tidy_weather_nomissing</code></pre>
 ##  9 MX17004  2010     4 d27    36.3  16.7
 ## 10 MX17004  2010     5 d27    33.2  18.2
 ## # … with 23 more rows</code></pre>
-<div id="dealing-with-data-missing-at-random" class="section level3">
-<h3><span class="header-section-number">23.0.1</span> Dealing with data missing at random</h3>
-<p>In the case of categorical variables, a useful approach is to encode missing as a new category and include that in subsequent modeling.</p>
+<div id="dealing-with-data-missing-at-random" class="section level2">
+<h2><span class="header-section-number">23.1</span> Dealing with data missing at random</h2>
+<div id="encoding-as-missing" class="section level3">
+<h3><span class="header-section-number">23.1.1</span> Encoding as missing</h3>
+<p>In the case of categorical attributes, a useful approach is to encode the fact that a value is missing as a new category and include that in subsequent modeling.</p>
 <pre class="sourceCode r"><code class="sourceCode r">tb &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;tb.csv&quot;</span>))
 tidy_tb &lt;-<span class="st"> </span>tb <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">gather</span>(demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)  <span class="op">%&gt;%</span>
@@ -588,6 +594,9 @@ tidy_tb <span class="op">%&gt;%</span>
 ##  9 AD     1998 m     04       NA
 ## 10 AD     1999 m     04       NA
 ## # … with 115,370 more rows</code></pre>
+</div>
+<div id="imputation" class="section level3">
+<h3><span class="header-section-number">23.1.2</span> Imputation</h3>
 <p>In the case of numeric values, we can use a simple method for imputation where we
 replace missing values for a variable with, for instance, the mean of non-missing values</p>
 <pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
@@ -658,6 +667,7 @@ variable stating if numeric missing value was imputed</p>
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, dep_delay_missing &lt;lgl&gt;</code></pre>
 <p>In both of these cases note that imputing missing values has two effects. First, the central tendency of data is retained, for example, if we impute missing data using the mean of a numeric variable, the mean after imputation will not change. This is a good reason to impute based on estimates of central tendency. However, the <em>spread</em> of the data will change. After imputation, the spread of the data will be smaller relative to spread if we ignore missing values. This could be problematic as underestimating the spread of data can yield over-confident inferences in downstream analysis. We will not address these issues directly in later chapters, but you should be aware of this.</p>
 
+</div>
 </div>
 </div>
             </section>

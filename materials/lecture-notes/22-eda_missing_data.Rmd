@@ -33,7 +33,7 @@ Data that is missing systematically can significantly bias an analysis. For exam
 Suppose we want to predict how sick someone is from test result. If doctors do not carry out the test because a patient is too sick, then the fact test is missing is a great predictor of how sick the patient is.
 
 
-So in general, the **first step** when dealing with missing data is to understand *why* and *how* data may be missing. I.e., talk to collaborator, or person who created the dataset. Once you know that, if a relatively small fraction of observations contain have missing values, then it may be safe to remove observations.
+So in general, the **first step** when dealing with missing data is to understand *why* and *how* data may be missing. I.e., talk to collaborator, or person who created the dataset. Once you know that data is not missing systematically and a relatively small fraction of observations contain have missing values, then it may be safe to remove observations.
 
 ```{r}
 tidy_weather_nomissing <- tidy_weather %>%
@@ -41,9 +41,11 @@ tidy_weather_nomissing <- tidy_weather %>%
 tidy_weather_nomissing
 ```
 
-### Dealing with data missing at random
+## Dealing with data missing at random
 
-In the case of categorical variables, a useful approach is to encode missing as a new category and include that in subsequent modeling.
+### Encoding as missing
+
+In the case of categorical attributes, a useful approach is to encode the fact that a value is missing as a new category and include that in subsequent modeling.
 
 ```{r, message=FALSE}
 tb <- read_csv(file.path("data", "tb.csv"))
@@ -54,6 +56,8 @@ tidy_tb <- tb %>%
 tidy_tb %>%
   tidyr::replace_na(list(iso2="missing"))
 ```
+
+### Imputation
 
 In the case of numeric values, we can use a simple method for imputation where we
 replace missing values for a variable with, for instance, the mean of non-missing values

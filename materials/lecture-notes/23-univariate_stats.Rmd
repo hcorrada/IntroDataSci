@@ -191,9 +191,9 @@ $$
 \frac{1}{n} \sum_i X_i \to \mu
 $$
 
-_tends_ to the population mean (under some assumptions beyond the scope of this class). regardless of the distribution of the $X_i$.
+_tends_ to the population mean (under some assumptions beyond the scope of this class) regardless of the distribution of the $X_i$.
 
-An implication of this is that using the sample mean is the right thing to estimate parameters by matching their expected value! 
+An implication of this is that using the sample mean is the right procedure to use to estimate parameters by matching their expected value! 
 
 
 ### Central Limit Theorem (CLT)
@@ -344,4 +344,92 @@ Here we see the three main points of the LLN and CLT:
 (1) the normal density is centered around $\mu=.7$,  
 (2) the normal approximation gets better as $n$ increases, and  
 (3) the standard error goes to 0 as $n$ increases.
+
+## The Bootstrap Procedure
+
+What if the conditions that we used for the CLT don't hold? For instance, samples $X_i$ may not be independent. What can we do then, how can we say something about the precision of sample mean estimate $Y$?
+
+A super useful procedure to use in this case is the bootstrap. It is based on using _randomization_ to simulate the stochasticity resulting from the population sampling procedure we are trying to capture in our analysis.
+
+The main idea is the following: given observations $x_1,\ldots,x_n$ and the estimate $y=\frac{1}{n}\sum_{i=1}^n x_i$, what can we say about the standard error of $y$?
+
+There are two challenges here: 1) our estimation procedure is deterministic, that is, if I compute the sample mean of a specific dataset, I will always get the same answer; and 2) we should retain whatever properties of estimate $y$ result from obtaining it from $n$ samples.
+
+The bootstrap is a randomization procedure that measures the variance of estimate $y$, thus using randomization to address challenge (1), but doing so with randomized samples of size $n$, addressing challenge (2).
+
+The procedure goes as follows:
+
+1. Generate $B$ random datasets by sampling _with replacement_ from dataset $x_1,\ldots,x_n$. Denote randomized dataset $b$ as $x_{1b},\ldots,x_{nb}$.
+
+2. Construct estimates from _each_ dataset, $y_b = \frac{1}{n}\sum_i x_{ib}$
+
+3. Computer center (mean) and spread (variance) of estimates $y_b$
+
+Let's see how this works on tweet oracle example
+
+```{r}
+# remember our dataset is in variable x
+
+# this is how we get one bootstrap replicate
+# sample n observations from dataset x _with replacement_
+xb <- sample(x, length(x), replace=TRUE)
+
+# let's do B=100 bootstrap randomizations using the 
+# replicate function (it just replicates the given expression
+# however many times it is directed to do so)
+B <- 200
+xb <- replicate(B, sample(x,length(x), replace=TRUE))
+
+# xb is a matrix with 100 rows (the original length of dataset) and
+# 200 columns (the number of replicates)
+
+# now let's compute the bootstrap estimates y
+yb <- colMeans(xb)
+
+# and make a histogram of the bootstrap estimates
+hist(yb, probability=TRUE, main="Histogram of bootstrap estimates",
+     xlab="Bootsrap Estimates",xlim=c(0.5,1))
+abline(v=p, col="blue")
+draw_normal_density(100)
+```
+
+Now, let's a case where we don't expect the normal approximation to work so well by adding dependence between samples. Let's make a new ORACLE of tweet where the probability of a tweet being bot-generated depends on the previous tweet:
+
+```{r}
+next_tweet <- function(previous_tweet) {
+  # with probability .3 is the same as the previous tweet
+  # otherwise, it's independent
+  ifelse(runif(1) < 0.2, 
+         previous_tweet, 
+         sample(c(0,1), size=1, prob=c(1-p,p)))
+}
+
+create_dependent_dataset <- function(n=100) {
+  x <- vector("integer", n)
+  x[1] <- sample(c(0,1), size=1, prob=c(1-p,p))
+  for (i in 2:n) {
+    x[i] = next_tweet(x[i-1])
+  }
+  x
+}
+
+dependent_x <- create_dependent_dataset(100)
+
+# Now let's do the same bootstrap procedure in this case
+xb <- replicate(B, sample(dependent_x,length(dependent_x), replace=TRUE))
+
+# xb is a matrix with 100 rows (the original length of dataset) and
+# 200 columns (the number of replicates)
+
+# now let's compute the bootstrap estimates y
+yb <- colMeans(xb)
+
+# and make a histogram of the bootstrap estimates
+hist(yb, probability=TRUE, main="Histogram of bootstrap estimates",
+     xlab="Bootsrap Estimates", xlim=c(0.5,1))
+abline(v=p, col="blue")
+draw_normal_density(100)
+```
+
+Here, an analysis based on the classical CLT would not be appropriate, but the bootstrap analysis gives some information about the variability of our estimates.
 
