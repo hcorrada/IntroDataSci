@@ -5,7 +5,7 @@ date: "2018-03-12"
 
 An exercise on the effect of transformations on summary statistics.
 
-**DUE**: Friday March 16, 11:59pm
+**DUE**: Monday April 1st, 11:59pm
 
 <!--more-->
 

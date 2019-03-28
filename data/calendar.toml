@@ -228,16 +228,16 @@ notes = "bookdown-notes/univariate-distributions-and-statistics.html"
 [day15]
 date = "3/26"
 
-#[day15a]
-#date = "3/28"
+[day16a]
+date = "4/1"
 
 #[[day15a.workdue]]
 #title = "Project 1: Data scraping and cleaning"
 #link = "projects/project1/"
 
-#[[day15a.workdue]]
-#title = "Homework 3: Data Transformations"
-#link = "homeworks/transformations/"
+[[day16a.workdue]]
+title = "Homework 3: Data Transformations"
+link = "homeworks/transformations/"
 
 [day16]
 date = "3/28"
@@ -289,10 +289,6 @@ notes = "bookdown-notes/linear-regression.html"
 
 [day19a]
 date = "4/11"
-
-#[[day19a.workdue]]
-#title = "Project 2: Data wrangling and exploratory analysis"
-#link = "projects/project2/"
 
 # out for bio-it
 [day20]
