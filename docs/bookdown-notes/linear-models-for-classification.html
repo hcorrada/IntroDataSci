@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-03-06">
+<meta name="date" content="2019-03-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -343,7 +343,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.3" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#skewed-data"><i class="fa fa-check"></i><b>22.3</b> Skewed Data</a></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html"><i class="fa fa-check"></i><b>23</b> EDA: Handling Missing Data</a><ul>
-<li class="chapter" data-level="23.0.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>23.0.1</b> Dealing with data missing at random</a></li>
+<li class="chapter" data-level="23.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>23.1</b> Dealing with data missing at random</a><ul>
+<li class="chapter" data-level="23.1.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#encoding-as-missing"><i class="fa fa-check"></i><b>23.1.1</b> Encoding as missing</a></li>
+<li class="chapter" data-level="23.1.2" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#imputation"><i class="fa fa-check"></i><b>23.1.2</b> Imputation</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html"><i class="fa fa-check"></i>(Part) Statistical Learning</a></li>
 <li class="chapter" data-level="24" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html"><i class="fa fa-check"></i><b>24</b> Univariate distributions and statistics</a><ul>
@@ -361,6 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.5" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#the-normal-distribution"><i class="fa fa-check"></i><b>24.5</b> The normal distribution</a><ul>
 <li class="chapter" data-level="24.5.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#clt-continued"><i class="fa fa-check"></i><b>24.5.1</b> CLT continued</a></li>
 </ul></li>
+<li class="chapter" data-level="24.6" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#the-bootstrap-procedure"><i class="fa fa-check"></i><b>24.6</b> The Bootstrap Procedure</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>25</b> Experiment design and hypothesis testing</a><ul>
 <li class="chapter" data-level="25.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#inference"><i class="fa fa-check"></i><b>25.1</b> Inference</a><ul>
@@ -537,7 +541,7 @@ Y =
 <div id="classification-as-probability-estimation-problem" class="section level2">
 <h2><span class="header-section-number">29.3</span> Classification as probability estimation problem</h2>
 <p>This observation motivates how we will address the classification problem in general. Instead of modeling classes 0 or 1 directly, we will model the conditional class probability <span class="math inline">\(p(Y=1|X=x)\)</span>, and classify based on this probability. In general, classification approaches use <em>discriminant</em> (think of <em>scoring</em>) functions to do classification. <em>Logistic regression</em> is <strong>one</strong> way of estimating the class probability <span class="math inline">\(p(Y=1|X=x)\)</span> (also denoted <span class="math inline">\(p(x)\)</span>)</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-197-1.svg" width="960" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-199-1.svg" width="960" /></p>
 </div>
 <div id="logistic-regression" class="section level2">
 <h2><span class="header-section-number">29.4</span> Logistic regression</h2>
@@ -553,7 +557,7 @@ Y =
 <li><p>Suppose an individual has a 16% chance of defaulting on their credit card payment. What are the odds that she will default?</p></li>
 <li><p>On average, what fraction of people with an odds of 0.37 of defaulting on their credit card payment will in fact default?</p></li>
 </ol>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-198-1.svg" width="960" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-200-1.svg" width="960" /></p>
 <p>Here is how we compute a logistic regression model in R</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ISLR)
 <span class="kw">library</span>(dplyr)
@@ -736,8 +740,8 @@ fit2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tid
 </tr>
 </tbody>
 </table>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-203-1.svg" width="672" /></p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-204-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-205-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-206-1.svg" width="672" /></p>
 </div>
 <div id="exercise" class="section level3">
 <h3><span class="header-section-number">29.4.4</span> Exercise</h3>
@@ -753,7 +757,7 @@ fit2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tid
 <div id="linear-discriminant-analysis" class="section level2">
 <h2><span class="header-section-number">29.5</span> Linear Discriminant Analysis</h2>
 <p>Linear Discriminant Analysis (LDA) is a different linear method to estimate a probability model used for classification. Recall that we want to partition data based on <strong>class probability</strong>: e.g., <em>find the <span class="math inline">\(\mathbf{X}\)</span> for which</em> <span class="math inline">\(P(\mathrm{default=Yes}|X) &gt; P(\mathrm{default=No}|X)\)</span>. In logistic regression, <strong>we made no assumption about <span class="math inline">\(\mathbf{X}\)</span></strong>. In other cases, we <strong>can</strong> make assumptions about <span class="math inline">\(\mathbf{X}\)</span> that improve prediction performance (if assumptions hold, obviously)</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-206-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-208-1.svg" width="1440" /></p>
 <p>This suggests we can model <code>balance</code> for each of the classes with a normal distribution. WARNING, BIG ASSUMPTION: We will assume <code>balance</code> has the same <em>variance</em> for both classes (this is what makes LDA linear).
 So, we estimate average <code>balance</code> for people who <em>do not</em> default:</p>
 <p><span class="math display">\[
@@ -855,7 +859,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(lda_stats)</code></
 <pre class="sourceCode r"><code class="sourceCode r">test_balance &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">3000</span>, <span class="dt">len=</span><span class="dv">100</span>)
 <span class="kw">plot</span>(test_balance, <span class="kw">lda_log_ratio</span>(test_balance, lda_stats),
      <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Balance&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Log Probability Ratio&quot;</span>, <span class="dt">cex=</span><span class="fl">1.4</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-212-1.svg" width="1152" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-214-1.svg" width="1152" /></p>
 </div>
 </div>
 <div id="classifier-evaluation" class="section level2">
@@ -954,21 +958,21 @@ of <strong>FPR</strong> (1-Specificity, clients we lose because we think they wi
 P(Y=\mathtt{Yes}|X) &gt; 0.5
 \]</span></p>
 <p>What would happen if we use <span class="math inline">\(P(Y=\mathtt{Yes}|X) &gt; 0.2\)</span>?</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-214-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-216-1.svg" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ROCR)
 pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(lda_pred<span class="op">$</span>posterior[,<span class="st">&quot;Yes&quot;</span>], Default<span class="op">$</span>default)
 
 <span class="kw">layout</span>(<span class="kw">cbind</span>(<span class="dv">1</span>,<span class="dv">2</span>))
 <span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>))
 <span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;fpr&quot;</span>))</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-215-1.svg" width="1152" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-217-1.svg" width="1152" /></p>
 <p>A way of describing the TPR and FPR tradeoff is by using the <strong>ROC curve</strong> (Receiver Operating Characteristic)
 and the <strong>AUROC</strong> (area under the ROC)</p>
 <pre class="sourceCode r"><code class="sourceCode r">auc &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)<span class="op">@</span>y.values)
 <span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>), 
      <span class="dt">main=</span><span class="kw">paste</span>(<span class="st">&quot;LDA AUROC=&quot;</span>, <span class="kw">round</span>(auc, <span class="dv">2</span>)), 
      <span class="dt">lwd=</span><span class="fl">1.4</span>, <span class="dt">cex.lab=</span><span class="fl">1.7</span>, <span class="dt">cex.main=</span><span class="fl">1.5</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-216-1.svg" width="1152" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-218-1.svg" width="1152" /></p>
 <p>Consider comparing an LDA model using all predictors in the dataset.</p>
 <pre class="sourceCode r"><code class="sourceCode r">full_lda &lt;-<span class="st"> </span><span class="kw">lda</span>(default<span class="op">~</span>., <span class="dt">data=</span>Default)
 full_lda_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(full_lda, Default)
@@ -994,7 +998,7 @@ roc_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_objs,
 <span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, 
        <span class="dt">legend=</span><span class="kw">paste</span>(<span class="kw">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="kw">names</span>(pred_list)), <span class="st">&quot;AUROC=&quot;</span>,<span class="kw">round</span>(aucs, <span class="dv">2</span>)), 
        <span class="dt">col=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-219-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-221-1.svg" width="672" /></p>
 <p>Another metric that is frequently used to understand classification errors and tradeoffs is the precision-recall curve:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caTools)
 pr_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_objs, 
@@ -1007,7 +1011,7 @@ pr_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_objs,
 <span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, 
        <span class="dt">legend=</span><span class="kw">paste</span>(<span class="kw">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="kw">names</span>(pred_list))),
       <span class="dt">col=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-220-1.svg" width="960" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-222-1.svg" width="960" /></p>
 </div>
 <div id="summary-3" class="section level2">
 <h2><span class="header-section-number">29.7</span> Summary</h2>

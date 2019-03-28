@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-03-06">
+<meta name="date" content="2019-03-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -343,7 +343,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.3" data-path="eda-data-transformations.html"><a href="eda-data-transformations.html#skewed-data"><i class="fa fa-check"></i><b>22.3</b> Skewed Data</a></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html"><i class="fa fa-check"></i><b>23</b> EDA: Handling Missing Data</a><ul>
-<li class="chapter" data-level="23.0.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>23.0.1</b> Dealing with data missing at random</a></li>
+<li class="chapter" data-level="23.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#dealing-with-data-missing-at-random"><i class="fa fa-check"></i><b>23.1</b> Dealing with data missing at random</a><ul>
+<li class="chapter" data-level="23.1.1" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#encoding-as-missing"><i class="fa fa-check"></i><b>23.1.1</b> Encoding as missing</a></li>
+<li class="chapter" data-level="23.1.2" data-path="eda-handling-missing-data.html"><a href="eda-handling-missing-data.html#imputation"><i class="fa fa-check"></i><b>23.1.2</b> Imputation</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-statistical-learning.html"><a href="part-statistical-learning.html"><i class="fa fa-check"></i>(Part) Statistical Learning</a></li>
 <li class="chapter" data-level="24" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html"><i class="fa fa-check"></i><b>24</b> Univariate distributions and statistics</a><ul>
@@ -361,6 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.5" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#the-normal-distribution"><i class="fa fa-check"></i><b>24.5</b> The normal distribution</a><ul>
 <li class="chapter" data-level="24.5.1" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#clt-continued"><i class="fa fa-check"></i><b>24.5.1</b> CLT continued</a></li>
 </ul></li>
+<li class="chapter" data-level="24.6" data-path="univariate-distributions-and-statistics.html"><a href="univariate-distributions-and-statistics.html#the-bootstrap-procedure"><i class="fa fa-check"></i><b>24.6</b> The Bootstrap Procedure</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>25</b> Experiment design and hypothesis testing</a><ul>
 <li class="chapter" data-level="25.1" data-path="experiment-design-and-hypothesis-testing.html"><a href="experiment-design-and-hypothesis-testing.html#inference"><i class="fa fa-check"></i><b>25.1</b> Inference</a><ul>
@@ -522,11 +526,11 @@ x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1
 y &lt;-<span class="st"> </span>x <span class="op">*</span><span class="st"> </span>true_beta <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="dv">10</span>))
 <span class="kw">plot</span>(x,y,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">cex=</span><span class="fl">1.4</span>,<span class="dt">main=</span><span class="st">&quot;Simulated Data&quot;</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>, <span class="dt">cex.main=</span><span class="dv">2</span>)
 <span class="kw">abline</span>(<span class="dt">a=</span><span class="dv">0</span>, <span class="dt">b=</span>true_beta, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span> <span class="dv">2</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-222-1.svg" width="1440" /></p>
-<p>Our goal is then to find the value of <span class="math inline">\(\beta_1\)</span> that minimizes mean squared error. This corresponds to finding one of these many possible lines:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-223-1.svg" width="1440" /></p>
-<p>Each of which has a specific error for this dataset:</p>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-224-1.svg" width="1440" /></p>
+<p>Our goal is then to find the value of <span class="math inline">\(\beta_1\)</span> that minimizes mean squared error. This corresponds to finding one of these many possible lines:</p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-225-1.svg" width="1440" /></p>
+<p>Each of which has a specific error for this dataset:</p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-226-1.svg" width="1440" /></p>
 <p>Insights:</p>
 <ol style="list-style-type: decimal">
 <li><p>As we saw before in class, loss is minimized when the derivative of the loss function is 0</p></li>
@@ -539,7 +543,7 @@ y &lt;-<span class="st"> </span>x <span class="op">*</span><span class="st"> </s
 {} = \sum_{i=1}^n (y_i - \beta_1 x_i) (-x_i)
 \]</span></p>
 <p>and plot it for our case study data:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-225-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-227-1.svg" width="1440" /></p>
 </div>
 <div id="gradient-descent" class="section level2">
 <h2><span class="header-section-number">30.2</span> Gradient Descent</h2>
@@ -608,7 +612,7 @@ gradient_descent &lt;-<span class="st"> </span><span class="cf">function</span>(
   beta_<span class="dv">1</span>
 }</code></pre>
 <p>Let’s run this algorithm and track what it does:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-227-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-229-1.svg" width="1440" /></p>
 <pre><code>## it:  0  beta:  0 loss:  405.87  alpha:  0.001 
 ## it:  1  beta:  16.11 loss:  2004.46  alpha:  0.001 
 ## it:  2  beta:  -19.85 loss:  9969.82  alpha:  0.001 
@@ -801,7 +805,7 @@ stochastic_gradient_descent &lt;-<span class="st"> </span><span class="cf">funct
   beta_<span class="dv">1</span>
 }</code></pre>
 <p>Let’s run this and see what it does:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-229-1.svg" width="1440" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-231-1.svg" width="1440" /></p>
 <pre><code>## it:  0  beta:  0 loss:  405.87  alpha:  0.001 
 ## it:  1  beta:  4.81 loss:  4.97  alpha:  0.001 
 ## it:  2  beta:  4.99 loss:  4.5  alpha:  0.001 
