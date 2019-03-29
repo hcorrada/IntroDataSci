@@ -64,9 +64,9 @@ $$
 $R$ = \arg \max_{V} \sum_{(e_1,e_2) \in V} s(e_1,e_2) 
 $$
 
-### One-to-many resolutions
+### Many-to-one resolutions
 
-Suppose we first constrain sets $V$ to represent one-to-many resolutions. That is, suppose we assume that we want to link every entity $e_1 \in E_1$ to some entity $e_2 \in E_2$, allowing one-to-many linking. Thus, entities in $e_1$ can only appear once in pairs in $V$, but entities $e_2$ may appear more than once. In this case, we can match $(e_1,e_2)$ where 
+Suppose we first constrain sets $V$ to represent many-to-one resolutions. That is, suppose we assume that we want to link every entity $e_1 \in E_1$ to some entity $e_2 \in E_2$, allowing many-to-one linking. Thus, entities in $e_1$ can only appear once in pairs in $V$, but entities $e_2$ may appear more than once. In this case, we can match $(e_1,e_2)$ where 
 
 $$
 e_2 = \arg \max_{e \in E_2} s(e_1,e)
