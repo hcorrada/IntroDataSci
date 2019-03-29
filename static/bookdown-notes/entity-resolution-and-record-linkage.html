@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-03-28">
+<meta name="date" content="2019-03-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -300,7 +300,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="19.2.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#example-attribute-functions"><i class="fa fa-check"></i><b>19.2.1</b> Example attribute functions</a></li>
 </ul></li>
 <li class="chapter" data-level="19.3" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#solving-the-resolution-problem"><i class="fa fa-check"></i><b>19.3</b> Solving the resolution problem</a><ul>
-<li class="chapter" data-level="19.3.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#one-to-many-resolutions"><i class="fa fa-check"></i><b>19.3.1</b> One-to-many resolutions</a></li>
+<li class="chapter" data-level="19.3.1" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#many-to-one-resolutions"><i class="fa fa-check"></i><b>19.3.1</b> Many-to-one resolutions</a></li>
 <li class="chapter" data-level="19.3.2" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#one-to-one-resolutions"><i class="fa fa-check"></i><b>19.3.2</b> One-to-one resolutions</a></li>
 <li class="chapter" data-level="19.3.3" data-path="entity-resolution-and-record-linkage.html"><a href="entity-resolution-and-record-linkage.html#other-constraints"><i class="fa fa-check"></i><b>19.3.3</b> Other constraints</a></li>
 </ul></li>
@@ -554,9 +554,9 @@ s_j(e_1[j],e_2[j]) = e^{-d_j(e_1[j],e_2[j])}
 <p><span class="math display">\[
 $R$ = \arg \max_{V} \sum_{(e_1,e_2) \in V} s(e_1,e_2) 
 \]</span></p>
-<div id="one-to-many-resolutions" class="section level3">
-<h3><span class="header-section-number">19.3.1</span> One-to-many resolutions</h3>
-<p>Suppose we first constrain sets <span class="math inline">\(V\)</span> to represent one-to-many resolutions. That is, suppose we assume that we want to link every entity <span class="math inline">\(e_1 \in E_1\)</span> to some entity <span class="math inline">\(e_2 \in E_2\)</span>, allowing one-to-many linking. Thus, entities in <span class="math inline">\(e_1\)</span> can only appear once in pairs in <span class="math inline">\(V\)</span>, but entities <span class="math inline">\(e_2\)</span> may appear more than once. In this case, we can match <span class="math inline">\((e_1,e_2)\)</span> where</p>
+<div id="many-to-one-resolutions" class="section level3">
+<h3><span class="header-section-number">19.3.1</span> Many-to-one resolutions</h3>
+<p>Suppose we first constrain sets <span class="math inline">\(V\)</span> to represent many-to-one resolutions. That is, suppose we assume that we want to link every entity <span class="math inline">\(e_1 \in E_1\)</span> to some entity <span class="math inline">\(e_2 \in E_2\)</span>, allowing many-to-one linking. Thus, entities in <span class="math inline">\(e_1\)</span> can only appear once in pairs in <span class="math inline">\(V\)</span>, but entities <span class="math inline">\(e_2\)</span> may appear more than once. In this case, we can match <span class="math inline">\((e_1,e_2)\)</span> where</p>
 <p><span class="math display">\[
 e_2 = \arg \max_{e \in E_2} s(e_1,e)
 \]</span></p>
