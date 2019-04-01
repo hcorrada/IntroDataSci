@@ -204,11 +204,11 @@ title = "Project questions (3:30-3:55)"
 title = "Data Science Day: David Donoho Keynote Talk (ESJ 0202)"
 notes = "https://datascienceday.math.umd.edu/home/agenda"
 
-[[day14.covers]]
+[[day15.covers]]
 title="Data transformations"
 notes = "bookdown-notes/eda-data-transformations.html"
 
-[[day15.covers]]
+[[day16.covers]]
 title = "Handling missing data"
 notes = "bookdown-notes/eda-handling-missing-data.html"
 
@@ -218,7 +218,7 @@ notes = "bookdown-notes/eda-handling-missing-data.html"
 [day14]
 date = "3/14"
 
-[[day15.covers]]
+[[day18.covers]]
 title = "Univariate distributions and statistics"
 notes = "bookdown-notes/univariate-distributions-and-statistics.html"
 
@@ -242,7 +242,7 @@ link = "homeworks/transformations/"
 [day16]
 date = "3/28"
 
-[[day16.covers]]
+[[day18.covers]]
 title = "Experiment design and hypothesis testing"
 notes = "bookdown-notes/experiment-design-and-hypothesis-testing.html"
 
@@ -254,6 +254,9 @@ notes = "bookdown-notes/experiment-design-and-hypothesis-testing.html"
 date = "4/2"
 
 [[day17.covers]]
+title = "Guest Lecture: What is big data and big data systems with examples from AWS. Prem Saggar, Chief Data Scientist, Defense Intelligence Agency"
+
+[[day19.covers]]
 title = "Multivariate probability and statistics"
 notes = "bookdown-notes/multivariate-probability.html"
 
@@ -263,7 +266,7 @@ notes = "bookdown-notes/multivariate-probability.html"
 [day18]
 date = "4/4"
 
-[[day18.covers]]
+[[day19.covers]]
 title = "Data Analysis with Geometry"
 notes = "bookdown-notes/data-analysis-with-geometry.html"
 
@@ -280,7 +283,7 @@ link = "projects/project2/"
 [day19]
 date = "4/9"
 
-[[day19.covers]]
+[[day19a.covers]]
 title = "Linear models for regression"
 notes = "bookdown-notes/linear-regression.html"
 
@@ -290,11 +293,10 @@ notes = "bookdown-notes/linear-regression.html"
 [day19a]
 date = "4/11"
 
-# out for bio-it
 [day20]
 date = "4/16"
 
-[[day19a.covers]]
+[[day20.covers]]
 title = "Linear models for classification"
 notes = "bookdown-notes/linear-models-for-classification.html"
 
@@ -305,12 +307,9 @@ notes = "bookdown-notes/linear-models-for-classification.html"
 [day21]
 date = "4/18"
 
-[[day20.covers]]
+[[day21.covers]]
 title = "Solving linear ML problems"
 notes = "bookdown-notes/solving-linear-ml-problems.html"
-
-[[day21.covers]]
-title = "TBD"
 
 #[[day21.workdue]]
 #title = "Homework 4: A/B Testing"
