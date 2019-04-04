@@ -14,7 +14,7 @@ type: index
     Center for Bioinformatics and Computational Biology  
     Department of Computer Science  
     <hcorrada@umiacs.umd.edu>  
-    Office: [3114F Biomolecular Sciences Building](https://www.cbcb.umd.edu/about-us/directions)  
+    Office: 3226 Iribe Center for Computer Science and Engineering 
 
 *	Lecture Meeting Times    
     Tuesday and Thursday 3:30-4:45pm <a href="https://esj.umd.edu">ESJ 0224</a>

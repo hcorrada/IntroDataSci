@@ -19,9 +19,9 @@ This page constiutes the official syllabus for this class.
     Center for Bioinformatics and Computational Biology  
     Department of Computer Science  
     <hcorrada@umiacs.umd.edu>  
-    Office: 3114F Biomolecular Sciences Building  
+    Office: 3226 Iribe Center for Computer Science and Engineering
     Phone Number: 301-405-2481  
-    **Office Hours:** Friday 1:00pm-2:00pm AVW 3223 (but check Piazza) and by appointment
+    **Office Hours:** Friday 1:00pm-2:00pm and by appointment
 * Communication:  
     - For course related questions, use [Piazza]({{< piazzaurl >}}) as indicated below.  
     - For any other communication (e.g., absences accomodations etc.) send message through ELMS.
