@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-03-29">
+<meta name="date" content="2019-04-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -745,7 +745,7 @@ p(Z=z) = \frac{1}{\sqrt{2\pi}} \mathrm{exp} \left\{ -\frac{1}{2} z^2 \right\}
 
 <span class="co"># let&#39;s write a function that adds a normal density</span>
 <span class="co"># plot for a given sample size</span>
-draw_normal_density &lt;-<span class="st"> </span><span class="cf">function</span>(n) {
+draw_normal_density &lt;-<span class="st"> </span><span class="cf">function</span>(n,<span class="dt">p=</span>.<span class="dv">7</span>) {
   se &lt;-<span class="st"> </span><span class="kw">sqrt</span>(p<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p))<span class="op">/</span><span class="kw">sqrt</span>(n)
   f &lt;-<span class="st"> </span><span class="kw">dnorm</span>(<span class="kw">seq</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">1000</span>), <span class="dt">mean=</span>p, <span class="dt">sd=</span>se)
   <span class="kw">lines</span>(<span class="kw">seq</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">1000</span>), f, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="fl">1.6</span>)
@@ -830,28 +830,17 @@ yb &lt;-<span class="st"> </span><span class="kw">colMeans</span>(xb)
 <span class="kw">abline</span>(<span class="dt">v=</span>p, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)
 <span class="kw">draw_normal_density</span>(<span class="dv">100</span>)</code></pre>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-163-1.svg" width="672" /></p>
-<p>Now, let’s a case where we don’t expect the normal approximation to work so well by adding dependence between samples. Let’s make a new ORACLE of tweet where the probability of a tweet being bot-generated depends on the previous tweet:</p>
-<pre class="sourceCode r"><code class="sourceCode r">next_tweet &lt;-<span class="st"> </span><span class="cf">function</span>(previous_tweet) {
-  <span class="co"># with probability .3 is the same as the previous tweet</span>
-  <span class="co"># otherwise, it&#39;s independent</span>
-  <span class="kw">ifelse</span>(<span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.2</span>, 
-         previous_tweet, 
-         <span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p)))
+<p>Now, let’s a case where we don’t expect the normal approximation to not work so well by making samples not identically distributed. Let’s make a new ORACLE of tweet where the probability of a tweet being bot-generated can be one of two values (.7 and .4):</p>
+<pre class="sourceCode r"><code class="sourceCode r">create_mixture_dataset &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">n=</span><span class="dv">100</span>,<span class="dt">p=</span><span class="kw">c</span>(.<span class="dv">7</span>,.<span class="dv">4</span>)) {
+  tweets1 &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span>n, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p[<span class="dv">1</span>],p[<span class="dv">1</span>]), <span class="dt">replace=</span><span class="ot">TRUE</span>)
+  tweets2 &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span>n, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p[<span class="dv">2</span>],p[<span class="dv">2</span>]),<span class="dt">replace=</span><span class="ot">TRUE</span>)
+  <span class="kw">ifelse</span>(<span class="kw">runif</span>(n)<span class="op">&lt;=</span>.<span class="dv">5</span>, tweets1, tweets2)
 }
 
-create_dependent_dataset &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">n=</span><span class="dv">100</span>) {
-  x &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="st">&quot;integer&quot;</span>, n)
-  x[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p))
-  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>n) {
-    x[i] =<span class="st"> </span><span class="kw">next_tweet</span>(x[i<span class="dv">-1</span>])
-  }
-  x
-}
-
-dependent_x &lt;-<span class="st"> </span><span class="kw">create_dependent_dataset</span>(<span class="dv">100</span>)
+mixture_x &lt;-<span class="st"> </span><span class="kw">create_mixture_dataset</span>(<span class="dv">100</span>)
 
 <span class="co"># Now let&#39;s do the same bootstrap procedure in this case</span>
-xb &lt;-<span class="st"> </span><span class="kw">replicate</span>(B, <span class="kw">sample</span>(dependent_x,<span class="kw">length</span>(dependent_x), <span class="dt">replace=</span><span class="ot">TRUE</span>))
+xb &lt;-<span class="st"> </span><span class="kw">replicate</span>(B, <span class="kw">sample</span>(mixture_x,<span class="kw">length</span>(mixture_x), <span class="dt">replace=</span><span class="ot">TRUE</span>))
 
 <span class="co"># xb is a matrix with 100 rows (the original length of dataset) and</span>
 <span class="co"># 200 columns (the number of replicates)</span>
@@ -861,9 +850,15 @@ yb &lt;-<span class="st"> </span><span class="kw">colMeans</span>(xb)
 
 <span class="co"># and make a histogram of the bootstrap estimates</span>
 <span class="kw">hist</span>(yb, <span class="dt">probability=</span><span class="ot">TRUE</span>, <span class="dt">main=</span><span class="st">&quot;Histogram of bootstrap estimates&quot;</span>,
-     <span class="dt">xlab=</span><span class="st">&quot;Bootsrap Estimates&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>))
-<span class="kw">abline</span>(<span class="dt">v=</span>p, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)
-<span class="kw">draw_normal_density</span>(<span class="dv">100</span>)</code></pre>
+     <span class="dt">xlab=</span><span class="st">&quot;Bootsrap Estimates&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))
+
+draw_normal_density &lt;-<span class="st"> </span><span class="cf">function</span>(n,<span class="dt">p=</span>.<span class="dv">7</span>) {
+  se &lt;-<span class="st"> </span><span class="kw">sqrt</span>(p<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>p))<span class="op">/</span><span class="kw">sqrt</span>(n)
+  f &lt;-<span class="st"> </span><span class="kw">dnorm</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">1000</span>), <span class="dt">mean=</span>p, <span class="dt">sd=</span>se)
+  <span class="kw">lines</span>(<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">1000</span>), f, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span><span class="fl">1.6</span>)
+}
+  
+<span class="kw">draw_normal_density</span>(<span class="dv">100</span>, <span class="kw">mean</span>(mixture_x))</code></pre>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-164-1.svg" width="672" /></p>
 <p>Here, an analysis based on the classical CLT would not be appropriate, but the bootstrap analysis gives some information about the variability of our estimates.</p>
 
