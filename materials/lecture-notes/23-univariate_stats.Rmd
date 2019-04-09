@@ -300,7 +300,7 @@ Let's redo our simulated replications of our tweet samples to illustrate the CLT
 
 # let's write a function that adds a normal density
 # plot for a given sample size
-draw_normal_density <- function(n) {
+draw_normal_density <- function(n,p=.7) {
   se <- sqrt(p*(1-p))/sqrt(n)
   f <- dnorm(seq(0.5,1,len=1000), mean=p, sd=se)
   lines(seq(0.5,1,len=1000), f, col="red", lwd=1.6)
@@ -393,30 +393,19 @@ abline(v=p, col="blue")
 draw_normal_density(100)
 ```
 
-Now, let's a case where we don't expect the normal approximation to work so well by adding dependence between samples. Let's make a new ORACLE of tweet where the probability of a tweet being bot-generated depends on the previous tweet:
+Now, let's a case where we don't expect the normal approximation to not work so well by making  samples not identically distributed. Let's make a new ORACLE of tweet where the probability of a tweet being bot-generated can be one of two values (.7 and .4):
 
 ```{r}
-next_tweet <- function(previous_tweet) {
-  # with probability .3 is the same as the previous tweet
-  # otherwise, it's independent
-  ifelse(runif(1) < 0.2, 
-         previous_tweet, 
-         sample(c(0,1), size=1, prob=c(1-p,p)))
+create_mixture_dataset <- function(n=100,p=c(.7,.4)) {
+  tweets1 <- sample(c(0,1), size=n, prob=c(1-p[1],p[1]), replace=TRUE)
+  tweets2 <- sample(c(0,1), size=n, prob=c(1-p[2],p[2]),replace=TRUE)
+  ifelse(runif(n)<=.5, tweets1, tweets2)
 }
 
-create_dependent_dataset <- function(n=100) {
-  x <- vector("integer", n)
-  x[1] <- sample(c(0,1), size=1, prob=c(1-p,p))
-  for (i in 2:n) {
-    x[i] = next_tweet(x[i-1])
-  }
-  x
-}
-
-dependent_x <- create_dependent_dataset(100)
+mixture_x <- create_mixture_dataset(100)
 
 # Now let's do the same bootstrap procedure in this case
-xb <- replicate(B, sample(dependent_x,length(dependent_x), replace=TRUE))
+xb <- replicate(B, sample(mixture_x,length(mixture_x), replace=TRUE))
 
 # xb is a matrix with 100 rows (the original length of dataset) and
 # 200 columns (the number of replicates)
@@ -426,10 +415,16 @@ yb <- colMeans(xb)
 
 # and make a histogram of the bootstrap estimates
 hist(yb, probability=TRUE, main="Histogram of bootstrap estimates",
-     xlab="Bootsrap Estimates", xlim=c(0.5,1))
-abline(v=p, col="blue")
-draw_normal_density(100)
+     xlab="Bootsrap Estimates", xlim=c(0,1))
+
+draw_normal_density <- function(n,p=.7) {
+  se <- sqrt(p*(1-p))/sqrt(n)
+  f <- dnorm(seq(0,1,len=1000), mean=p, sd=se)
+  lines(seq(0,1,len=1000), f, col="red", lwd=1.6)
+}
+  
+draw_normal_density(100, mean(mixture_x))
 ```
 
-Here, an analysis based on the classical CLT would not be appropriate, but the bootstrap analysis gives some information about the variability of our estimates.
+Here, an analysis based on the classical CLT would not be appropriate, but the bootstrap analysis gives some information about the variability of our estimates. 
 
