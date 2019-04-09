@@ -9,6 +9,6 @@ title: CMSC320 Projects
 <!--
 3. [Regression and classification](project3/) Due May 4, 2018  
 4. [Interactive data visualization and mapping](project4/) Due May 10, 2018
-
-[Final Project:](final_project/) Due May 18, 2018 12:30pm
 -->
+
+[Final Project:](final_project/) Due May 22, 2019 12:30pm
