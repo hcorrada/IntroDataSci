@@ -44,10 +44,10 @@ Based on this approximation, compute $p(\overline{X} > \hat{p}_B)$. Use the R fu
 
 (e) What if you had observed the same $\hat{p}_B=0.6$ but with $n=100$ samples. Should you reject the null hypothesis in this case? Why?
 
-(f) What is the _smallest_ value $\hat{p}_B$ you should reject the null hypothesis with $n=100$. Use the `qnorm` function for this. Denote this _smallest_ value as 
+(f) What is the _smallest_ value $\hat{p}_B$ you would reject the null hypothesis with $n=100$. Use the `qnorm` function for this. Denote this _smallest_ value as 
 $q_B$. 
 
-(g) Based on (f), the smallest detectable improvement for $p_A=0.5$ with $n=100$ is then $q_B - p_A$. What is the smallest detectable improvement in your experiment?
+(g) Based on (f), the smallest detectable improvement for $p_A=0.5$ with $n=100$ is then $q_B - p_A$. What is the smallest detectable improvement in your experiment (that is, with $n=50$)?
 
 ## Part 2: Compare to known click rate ($p_A=0.75$)
 
@@ -69,7 +69,7 @@ probability in this case is different since $p_A = 0.75$.
 (e) What is the _smallest_ value $\hat{p}_B$ you should reject the null hypothesis with $n=100$. Use the `qnorm` function for this. Denote this _smallest_ value as 
 $q_B$. 
 
-(f) Based on (e), the smallest detectable improvement for $p_A=0.75$ with $n=100$ is then $q_B - p_A$. What is the smallest detectable improvement in your experiment?
+(f) Based on (e), the smallest detectable improvement for $p_A=0.75$ with $n=100$ is then $q_B - p_A$. What is the smallest detectable improvement in your experiment ($n=50$)?
 
 ## Part 3
 
@@ -90,8 +90,7 @@ You did this for $n=100$ customers and recorded the following data:
 The null hypothesis we want to test in this case is that $p_B - p_A \leq 0$. That is, that the new design _does not_ improve the click rate. How can we use what we know about the CLT in this case?
 
 What we will do is treat estimates using sample means $\hat{p_A}=\overline{X}_A$ and $\hat{p}_B=\overline{X}_B$ as random variables and define a new random variable $Y=\overline{X}_B - \overline{X}_A$ corresponding to the _difference in click rates_ $p_B - p_A$. 
-With that, we derive $EY$ and $\mathrm{Var}(Y)$ under the null hypothesis that $p_B - p_A = 0$ (there is a technical reason why this assumption and the assumption 
-that $p_B - p_A \leq 0$ are equivalent but we will not discuss it).
+With that, we derive $EY$ and $\mathrm{Var}(Y)$ under the null hypothesis that $p_B - p_A = 0$.
 
 (a) Derive expressions for $\mathrm{E} Y$ and $\mathrm{Var}(Y)$ under the null hypothesis in terms of $p_A=p_B=p$. You will need to use the properties of
 expectations and variances described below. Here, I give you the derivation for $\mathrm{E} Y$, you need to do the same for $\mathrm{Var}(Y)$.

@@ -5,7 +5,7 @@ date: "2018-03-12"
 
 An exercise on statistical inference for A/B testing.
 
-**DUE**: Tuesday April 10, 11:59pm
+**DUE**: Tuesday April 16, 11:59pm
 
 <!--more-->
 
