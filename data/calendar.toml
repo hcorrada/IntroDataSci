@@ -311,9 +311,9 @@ date = "4/18"
 title = "Solving linear ML problems"
 notes = "bookdown-notes/solving-linear-ml-problems.html"
 
-#[[day21.workdue]]
-#title = "Homework 4: A/B Testing"
-#link = "homeworks/ab_testing/"
+[[day20.workdue]]
+title = "Homework 4: A/B Testing"
+link = "homeworks/ab_testing/"
 
 #[day21.class_notes]
 #link = "cmsc320_class-notes_20180412.pdf"
@@ -333,10 +333,12 @@ notes = "bookdown-notes/tree-based-methods.html"
 #title = "Non-linear models for regression and classification: K-Nearest Neighbors"
 # notes = "lecture-note/svms/"
 
+[day21a]
+date = "4/19"
 
-#[[day22.workdue]]
-#title = "Homework 5: Regression Interpretation"
-#link = "homeworks/regression/"
+[[day21a.workdue]]
+title = "Homework 5: Regression Interpretation"
+link = "homeworks/regression/"
 
 #[day22.class_notes]
 #link = "cmsc320_class-notes_20180417.pdf"
