@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-04-09">
+<meta name="date" content="2019-04-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -565,9 +565,11 @@ y &lt;-<span class="st"> </span>x <span class="op">*</span><span class="st"> </s
 gradient_descent &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">tol=</span><span class="fl">1e-6</span>, <span class="dt">maxit=</span><span class="dv">50</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>) {
   <span class="co"># initialize estimate</span>
   beta_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="dv">0</span>; old_beta_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="ot">Inf</span>; i &lt;-<span class="st"> </span><span class="dv">0</span>; beta_keep &lt;-<span class="st"> </span><span class="ot">NA</span>
+  beta_trace &lt;-<span class="st"> </span>beta_<span class="dv">1</span>
   
   <span class="co"># compute loss at first estimate</span>
   loss &lt;-<span class="st"> </span><span class="kw">compute_loss</span>(beta_<span class="dv">1</span>, x, y); loss_keep &lt;-<span class="st"> </span><span class="ot">NA</span>
+  loss_trace &lt;-<span class="st"> </span>loss
   
   <span class="co"># starting step size</span>
   alpha &lt;-<span class="st"> </span><span class="fl">1e-3</span>
@@ -580,7 +582,9 @@ gradient_descent &lt;-<span class="st"> </span><span class="cf">function</span>(
     
     <span class="co"># this piece of code just adds steps to an existing plot</span>
     <span class="cf">if</span> (plot <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(beta_keep) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(loss_keep)) {
-      <span class="kw">suppressWarnings</span>(<span class="kw">arrows</span>(beta_keep, loss_keep, beta_<span class="dv">1</span>, loss, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>))
+      <span class="co">#suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col=&quot;blue&quot;))</span>
+      beta_trace &lt;-<span class="st"> </span><span class="kw">c</span>(beta_trace, beta_<span class="dv">1</span>)
+      loss_trace &lt;-<span class="st"> </span><span class="kw">c</span>(loss_trace, loss)
     }
     
     <span class="co"># store the last estimate for plotting</span>
@@ -608,24 +612,14 @@ gradient_descent &lt;-<span class="st"> </span><span class="cf">function</span>(
   }
   <span class="cf">if</span> (plot) {
     <span class="kw">suppressWarnings</span>(<span class="kw">arrows</span>(beta_keep, loss_keep, beta_<span class="dv">1</span>, loss, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>))
+    beta_trace &lt;-<span class="st"> </span><span class="kw">c</span>(beta_trace, beta_<span class="dv">1</span>)
+    loss_trace &lt;-<span class="st"> </span><span class="kw">c</span>(loss_trace, loss)
+    <span class="kw">return</span>(<span class="kw">list</span>(beta_<span class="dv">1</span>, beta_trace, loss_trace))
   }
   beta_<span class="dv">1</span>
 }</code></pre>
 <p>Let’s run this algorithm and track what it does:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-229-1.svg" width="1440" /></p>
-<pre><code>## it:  0  beta:  0 loss:  405.87  alpha:  0.001 
-## it:  1  beta:  16.11 loss:  2004.46  alpha:  0.001 
-## it:  2  beta:  -19.85 loss:  9969.82  alpha:  0.001 
-## it:  3  beta:  60.41 loss:  49659.42  alpha:  5e-04 
-## it:  4  beta:  -29.17 loss:  18852.85  alpha:  5e-04 
-## it:  5  beta:  26.02 loss:  7159.08  alpha:  5e-04 
-## it:  6  beta:  -7.98 loss:  2720.28  alpha:  0.00025 
-## it:  7  beta:  2.5 loss:  104.56  alpha:  0.00025 
-## it:  8  beta:  4.51 loss:  8.19  alpha:  0.00025 
-## it:  9  beta:  4.89 loss:  4.64  alpha:  0.000125 
-## it:  10  beta:  4.93 loss:  4.55  alpha:  0.000125 
-## it:  11  beta:  4.95 loss:  4.52  alpha:  0.000125 
-## it:  12  beta:  4.96 loss:  4.51  alpha:  6.2e-05</code></pre>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-230-.gif" width="672" /></p>
 <p>This algorithm is referred to as “Batch” gradient descent, since we take a step (update <span class="math inline">\(\beta_1\)</span>) by calculating derivative with respect to <em>all</em> <span class="math inline">\(n\)</span> observations in our dataset. For clarity, let’s write out the update equation again:</p>
 <p><span class="math display">\[
 \beta_1 = \beta_1 + \alpha \sum_{i=1}^n (y_i - f(x_i, \beta_1)) x_i
@@ -744,72 +738,8 @@ p(\mathbf{\beta};\mathbf{x}_i) \mathbf{x}_i \\
 </ul></li>
 </ul>
 <p>This is a full implementation of stochastic gradient descent for our example dataset:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Implementation of stochastic gradient descent for least squares regression</span>
-<span class="co"># for a single predictor (x)</span>
-<span class="co">#</span>
-<span class="co"># There is some code here that is only used to generate illustrative plots</span>
-stochastic_gradient_descent &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">tol=</span><span class="fl">1e-6</span>, <span class="dt">maxit=</span><span class="dv">50</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>) {
-  n &lt;-<span class="st"> </span><span class="kw">length</span>(y)
-  
-  <span class="co"># initialize estimate</span>
-  beta_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="dv">0</span>; i &lt;-<span class="st"> </span><span class="dv">0</span>; beta_keep &lt;-<span class="st"> </span><span class="ot">NA</span>
-  
-  <span class="co"># compute loss at first estimate</span>
-  loss &lt;-<span class="st"> </span><span class="kw">compute_loss</span>(beta_<span class="dv">1</span>, x, y); loss_keep &lt;-<span class="st"> </span><span class="ot">NA</span>
-  
-  <span class="co"># initial step size</span>
-  alpha &lt;-<span class="st"> </span><span class="fl">1e-3</span>
-  difference &lt;-<span class="st"> </span><span class="ot">Inf</span>
-  
-  <span class="co"># check for convergence</span>
-  <span class="co"># (in practice a max number of iterations is used)</span>
-  <span class="cf">while</span> ((difference <span class="op">&gt;</span><span class="st"> </span>tol) <span class="op">&amp;&amp;</span><span class="st"> </span>(i <span class="op">&lt;</span><span class="st"> </span>maxit)) {
-    <span class="kw">cat</span>(<span class="st">&quot;it: &quot;</span>, i, <span class="st">&quot; beta: &quot;</span>, <span class="kw">round</span>(beta_<span class="dv">1</span>, <span class="dv">2</span>), <span class="st">&quot;loss: &quot;</span>, <span class="kw">round</span>(loss, <span class="dv">2</span>), <span class="st">&quot; alpha: &quot;</span>, <span class="kw">round</span>(alpha, <span class="dv">6</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
-    
-    <span class="co"># store last estimate to check convergence</span>
-    old_beta_<span class="dv">1</span> &lt;-<span class="st"> </span>beta_<span class="dv">1</span>
-    
-    <span class="co"># iterate over observations</span>
-    <span class="cf">for</span> (j <span class="cf">in</span> <span class="kw">seq</span>(<span class="dv">1</span>,n)) {
-      
-      <span class="co"># add step to plot</span>
-      <span class="cf">if</span> (plot <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(beta_keep) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(loss_keep)) {
-        <span class="kw">suppressWarnings</span>(<span class="kw">arrows</span>(beta_keep, loss_keep, beta_<span class="dv">1</span>, loss, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>))
-      }
-      
-      <span class="co"># store last estimate and loss for plotting</span>
-      beta_keep &lt;-<span class="st"> </span>beta_<span class="dv">1</span>; loss_keep &lt;-<span class="st"> </span>loss;
-      
-      <span class="co"># update estimate with j-th observation</span>
-      f &lt;-<span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x[j]
-      resid &lt;-<span class="st"> </span>y[j] <span class="op">-</span><span class="st"> </span>f      
-      beta_<span class="dv">1</span> &lt;-<span class="st"> </span>beta_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span>resid <span class="op">*</span><span class="st"> </span>x[j]
-      
-      <span class="co"># compute loss with new estimate</span>
-      loss &lt;-<span class="st"> </span><span class="kw">compute_loss</span>(beta_<span class="dv">1</span>, x, y)
-    }
-    
-    <span class="co"># check difference between current and old estimate</span>
-    <span class="co"># to check convergence</span>
-    difference &lt;-<span class="st"> </span>(beta_<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>old_beta_<span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>old_beta_<span class="dv">1</span><span class="op">^</span><span class="dv">2</span>
-    i &lt;-<span class="st"> </span>i<span class="op">+</span><span class="dv">1</span>
-    
-    <span class="co"># update step size</span>
-    <span class="cf">if</span> ((i <span class="op">%%</span><span class="st"> </span><span class="dv">5</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) alpha &lt;-<span class="st"> </span>alpha <span class="op">/</span><span class="st"> </span><span class="dv">2</span>
-  }
-  
-  <span class="cf">if</span> (plot) {
-    <span class="kw">suppressWarnings</span>(<span class="kw">arrows</span>(beta_keep, loss_keep, beta_<span class="dv">1</span>, loss, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>))
-  }
-  
-  beta_<span class="dv">1</span>
-}</code></pre>
 <p>Let’s run this and see what it does:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-231-1.svg" width="1440" /></p>
-<pre><code>## it:  0  beta:  0 loss:  405.87  alpha:  0.001 
-## it:  1  beta:  4.81 loss:  4.97  alpha:  0.001 
-## it:  2  beta:  4.99 loss:  4.5  alpha:  0.001 
-## it:  3  beta:  4.99 loss:  4.5  alpha:  0.001</code></pre>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-234-.gif" width="672" /></p>
 <p>The stochastic gradient descent algorithm can easily adapt to <em>data streams</em> where we receive observations one at a time and <em>assume</em> they are not stored. This setting falls in the general category of <em>online</em> learning.</p>
 </div>
 <div id="parallelizing-gradient-descent" class="section level2">
