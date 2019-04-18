@@ -61,7 +61,7 @@ default_mat <- Default %>%
   as.matrix()
 
 default_mat %>%
-  as_data_frame() %>%
+  as_tibble() %>%
   group_by(default) %>%
   sample_n(3) %>%
   ungroup() %>%
