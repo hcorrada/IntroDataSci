@@ -69,3 +69,9 @@ would people actually read through the entire thing?
 The project is listed as 10% of the course grade in the syllabus. However, if you do exceptionally well in the final project
 (at least 55 of 60 points), we will count your final project as 20% of the grade (all other grades are downgraded uniformly) 
 if that results in a better final course grade.
+
+## Group Work
+
+Final projects can be prepared in groups of at most three members. On ELMS, each individual in a group will be asked to submit 
+the link to the github page hosting their project, plus a statement about group composition and contributions. Further instructions
+will be available on the ELMS submission page.
