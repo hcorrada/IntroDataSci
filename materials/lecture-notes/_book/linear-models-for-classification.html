@@ -25,7 +25,7 @@
 <meta name="author" content="Héctor Corrada Bravo">
 
 
-<meta name="date" content="2019-04-18">
+<meta name="date" content="2019-04-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -598,11 +598,11 @@ default_fit <span class="op">%&gt;%</span><span class="st"> </span>
 </table>
 <p>Interpretation of logistic regression models is slightly different than the linear regression model we looked at. In this case, the <strong>odds</strong> that a person defaults increase by <span class="math inline">\(e^{0.05} \approx 1.051\)</span> for every dollar in their account balance. As before, the <strong>accuracy</strong> of <span class="math inline">\(\hat{\beta}_1\)</span> as an estimate of the <strong>population</strong> parameter is given its standard error. We can again construct a confidence interval for this estimate as we’ve done before.</p>
 <p>As before, we can do hypothesis testing of a relationship between account balance and the probability of default. In this case, we use a <span class="math inline">\(Z\)</span>-statistic <span class="math inline">\(\frac{\hat{\beta}_1}{\mathrm{SE}(\hat{\beta}_1)}\)</span> which plays the role of the t-statistic in linear regression: a scaled measure of our estimate (signal / noise). As before, the P-value is the probability of seeing a Z-value as large (e.g., 24.95) under the null hypothesis that <strong>there is no relationship between balance and the probability of defaulting</strong>, i.e., <span class="math inline">\(\beta_1=0\)</span> in the population.</p>
-<p>In accordance to the “inverse problem” view we’ve been developing in class, we require an algorithm required to <em>estimate</em> parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> according to a data fit criterion. In logistic regression we use the <strong>Bernoulli</strong> probability model we saw previously (think of flipping a coin weighted by <span class="math inline">\(p(x)\)</span>), and <em>estimate</em> parameters to <strong>maximize</strong> the <em>likelihood</em> of the observed training data under this coin flipping (binomial) model. I.e.: solve the following optimization problem</p>
+<p>In accordance to the “inverse problem” view we’ve been developing in class, we require an algorithm required to <em>estimate</em> parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> according to a data fit criterion. In logistic regression we use the <strong>Bernoulli</strong> probability model we saw previously (think of flipping a coin weighted by <span class="math inline">\(p(x)\)</span>), and <em>estimate</em> parameters to <strong>maximize</strong> the <em>likelihood</em> of the observed training data under this coin flipping (binomial) model. Usually, we do this by <em>minimizing</em> the negative of the log likelihood of the model. I.e.: solve the following optimization problem</p>
 <p><span class="math display">\[
-\max_{\beta_0, \beta_1} \sum_{i:\, y_i=1} log(p(x_i)) + \sum_{i: y_i=0} log(1-p(x_i))
+\min_{\beta_0, \beta_1} \sum_{i:\, y_i=1} -y_i f(x_i) + \log (1+e^{f(x_i)})
 \]</span></p>
-<p>This is a non-linear (but convex) optimization problem. You can learn algorithms to solve it in “Computational Methods” class (CMSC 460)</p>
+<p>where <span class="math inline">\(f(x_i) = \beta_0 + \beta_1 x_i\)</span>. This is a non-linear (but convex) optimization problem. We will see later how to use gradient descent to find these parameters. You can learn more about algorithms to solve it in “Computational Methods” class (CMSC 460)</p>
 </div>
 <div id="making-predictions" class="section level3">
 <h3><span class="header-section-number">29.4.2</span> Making predictions</h3>

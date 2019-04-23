@@ -184,13 +184,13 @@ Interpretation of logistic regression models is slightly different than the line
 
 As before, we can do hypothesis testing of a relationship between account balance and the probability of default. In this case, we use a $Z$-statistic $\frac{\hat{\beta}_1}{\mathrm{SE}(\hat{\beta}_1)}$ which plays the role of the t-statistic in linear regression: a scaled measure of our estimate (signal / noise). As before, the P-value is the probability of seeing a Z-value as large (e.g., 24.95) under the null hypothesis that **there is no relationship between balance and the probability of defaulting**, i.e., $\beta_1=0$ in the population.
  
-In accordance to the "inverse problem" view we've been developing in class, we require an algorithm required to _estimate_ parameters $\beta_0$ and $\beta_1$ according to a data fit criterion. In logistic regression we use the **Bernoulli** probability model we saw previously (think of flipping a coin weighted by $p(x)$), and _estimate_ parameters to **maximize** the _likelihood_ of the observed training data under this coin flipping (binomial) model. I.e.: solve the following optimization problem
+In accordance to the "inverse problem" view we've been developing in class, we require an algorithm required to _estimate_ parameters $\beta_0$ and $\beta_1$ according to a data fit criterion. In logistic regression we use the **Bernoulli** probability model we saw previously (think of flipping a coin weighted by $p(x)$), and _estimate_ parameters to **maximize** the _likelihood_ of the observed training data under this coin flipping (binomial) model. Usually, we do this by _minimizing_ the negative of the log likelihood of the model. I.e.: solve the following optimization problem
 
 $$
-\max_{\beta_0, \beta_1} \sum_{i:\, y_i=1} log(p(x_i)) + \sum_{i: y_i=0} log(1-p(x_i))
+\min_{\beta_0, \beta_1} \sum_{i:\, y_i=1} -y_i f(x_i) + \log (1+e^{f(x_i)})
 $$
 
-This is a non-linear (but convex) optimization problem. You can learn algorithms to solve it in "Computational Methods" class (CMSC 460)
+where $f(x_i) = \beta_0 + \beta_1 x_i$. This is a non-linear (but convex) optimization problem. We will see later how to use gradient descent to find these parameters. You can learn more about algorithms to solve it in "Computational Methods" class (CMSC 460)
 
 ### Making predictions
 
