@@ -283,7 +283,7 @@ link = "projects/project2/"
 [day19]
 date = "4/9"
 
-[[day19a.covers]]
+[[day20.covers]]
 title = "Linear models for regression"
 notes = "bookdown-notes/linear-regression.html"
 
@@ -296,7 +296,7 @@ date = "4/11"
 [day20]
 date = "4/16"
 
-[[day20.covers]]
+[[day22.covers]]
 title = "Linear models for classification"
 notes = "bookdown-notes/linear-models-for-classification.html"
 
@@ -325,7 +325,7 @@ link = "homeworks/ab_testing/"
 [day22]
 date = "4/23"
 
-[[day22.covers]]
+[[day25.covers]]
 title = "Non-linear models for regression and classification: Trees"
 notes = "bookdown-notes/tree-based-methods.html"
 
@@ -374,9 +374,9 @@ date = "5/2"
 title = "Random Forests"
 notes = "bookdown-notes/tree-based-methods.html"
 
-[[day25.covers]]
-title = "Classification Metrics"
-notes = "bookdown-notes/linear-models-for-classification.html"
+#[[day25.covers]]
+#title = "Classification Metrics"
+#notes = "bookdown-notes/linear-models-for-classification.html"
 
 [[day25.covers]]
 title = "Model evaluation using resampling"

@@ -39,7 +39,7 @@ file and an HTML export of that Rmarkdown file.
 
 The deliverable to the CMSC320 staff will then be a single URL pointing to this publicly hosted
 GitHubs Pages-backed website. It is due by the CMSC320 university-wide prescheduled
-date of 12:30pm on Friday, May 18th. We will not (cannot) accept late
+date of 12:30pm on Friday, May 22nd. We will not (cannot) accept late
 assignments.
 
 ## Grading
