@@ -91,26 +91,11 @@ This document describes material that will be fair game in the midterm exam. Eac
 - What is the False positive rate? True positive rate?
 - Gradient descent for logistic regression
 
-### Level 2 (not covered)
+### Level 2 
 
 - Understanding classification as a probability estimation problem.
 - What are precision and recall?
 - How do you construct an Receiver Operator Curve (ROC) using True Positive and False positive rates?
-
-## Tree-based methods
-
-### Level 1
-
-- What is a regression tree?
-- What is a classification (decision) tree?
-- Do tree-based methods learn linear or non-linear functions between predictors and outputs?
-- How to use recursive partitioning to build a regression tree
-
-### Level 2 (not covered)
-
-- What does it mean to "prune" a decision tree, why is that a good idea?
-- What is the random forest method? What is it's relationship to regression and decision trees.
-- How can we measure "variable importance" using the random forest algorithm.
 
 # Midterm Structure
 
