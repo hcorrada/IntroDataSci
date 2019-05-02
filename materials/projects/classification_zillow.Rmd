@@ -1,5 +1,5 @@
 ---
-title:  "Project 3 (part 2): Classification"
+title:  "Bonus Project: Classification"
 author: "CMSC320"
 output: html_document
 ---
@@ -54,7 +54,7 @@ The prediction task we are going to answer is:
 
 > Can we predict if mortgage affordability will increase or decrease a year from now"
 
-Specifically, we will do this for the last observation in the dataset (quarter 4 (Q4) of 2017). To create the outcome we will predict we will compare affordability for Q4 of 2017 and to Q4 of 2016 and label it as `up` or `down` depending on the sign of the this difference. Let's create the outcome we want to predict (again, copy this bit of code to your submission):
+Specifically, we will do this for quarter 4 (Q4) of 2017. To create the outcome we will predict we will compare affordability for Q4 of 2017 to Q4 of 2016 and label it as `up` or `down` depending on the sign of the this difference. Let's create the outcome we want to predict (again, copy this bit of code to your submission):
 
 ```{r}
 outcome_df <- tidy_afford %>%
@@ -114,7 +114,8 @@ Prepare an Rmarkdown file which includes:
 1) Code to prepare data (copied from chunks above)
 2) Discussion of the question you have chosen to address including discussion of other choices you have made (e.g., feature representation, classification algorithm) to carry out your experiment.
 3) Code to carry out your cross-validation experiment.
-4) Table (result of hypothesis testing difference between algorithms) and AUROC curve plot.
+4) Table (result of hypothesis testing difference between algorithms) and plot comparing AUROCs
+5) ROC curves for both experimental settings.
 5) Interpretation and discussion of your experiment results.
 
 ## An example classifier
@@ -167,13 +168,13 @@ final_df <- diff_df %>%
 final_df
 ```
 
-Now split up the data set into training regions and testing regions (using 80/20 random split).
+For illustration, split up the data set into training regions and testing regions (using 50/50 random split).
 
 ```{r}
 set.seed(1234)
 test_random_forest_df <- final_df %>%
   group_by(Direction) %>%
-  sample_frac(.2) %>%
+  sample_frac(.5) %>%
   ungroup()
 
 train_random_forest_df <- final_df %>%
@@ -183,128 +184,124 @@ train_random_forest_df <- final_df %>%
 Let's learn the random forest using default parameters.
 
 ```{r}
-library(randomForest)
+library(caret)
 
-rf <- randomForest(Direction~., data=train_random_forest_df %>% select(-RegionID))
-rf
+rf_fit <- train(Direction~.,
+                data = train_random_forest_df %>%
+                  select(-RegionID),
+                method="rf",
+                trControl=trainControl(method="none"))
+rf_fit
 ```
 
 Now, let's make predictions on the held out test set
 
 ```{r}
-test_predictions <- predict(rf, newdata=test_random_forest_df %>% select(-RegionID))
+test_predictions <- predict(rf_fit,                      newdata = test_random_forest_df %>%
+                              select(-RegionID))
 ```
 
 Make a confusion matrix and calculate error rate.
 
 ```{r}
-table(pred=test_predictions, observed=test_random_forest_df$Direction)
+table(pred=test_predictions,
+      observed=test_random_forest_df$Direction)
 ```
 
 Error rate is `r 100 * mean(test_predictions != test_random_forest_df$Direction)`%
 
-## Cross-validation
+## An example experiment 
 
-Now, same example, but looking at 5-fold cross-validation to compare a random forest with 500 trees, with a random forest with 10 trees. Since this is a smallish dataset, I am using 5-fold cross validation to make the validation sets have more examples and therefore more reliable performance estimates.
-
-First, we create data frame to contain the results of the experiment. That is, for each observation (region) in the training set (rows) we will have attributes for predictions (as continuous values) for both random forests, the observed labels ('up' or 'down') and index of the cross-validation fold in which the observation was used as a test example. We will then use this data frame to compute error rates, do a hypothesis test for differences in error and to create an ROC curve.
+Using this classifier we show an example experiment comparing random forests with different number of predictors. We will use but 5-fold cross-validation to compare a random forest with 500 trees, with a random forest with 10 trees. Since this is a smallish dataset, I am using 5-fold cross validation to make the validation sets have more examples and therefore more reliable performance estimates.
 
 We use the `caret::createFolds` function to create a stratified 5-fold cross-validation partition.
 The result is a list of length 5, containing the indices of the examples used for validation in each of the cross-validation folds.
 
-We pipe the result to the `purrr::imap` function which applies to each list (and it's index) a function that (a) splits the data into train and test sets, (b) fits the two random forests, and (c) creates a data frame with the values we need.
-
-The result of `purrr::imap` is a _list_ of data frames, so we pipe it to `purrr::reduce` to create a single data frame.
+We use the `train` function in the `caret` package to organize our model training. It takes
+a `trControl` argument which sets up how to score models. Here we tell it to use 5-fold cross validation and measure sensitivity and specificity as performance metrics (`twoClassSummary`). We also tell it to
+`savePredictions` so we can make ROC plots later on. Other parameters needed by the `randomForest` function are passed through the `train` function.
 
 ```{r}
 set.seed(1234)
 
-library(caret)
 # create the cross-validation partition
-result_df <- createFolds(final_df$Direction, k=5) %>%
-  # fit models and gather results
-  purrr::imap(function(test_indices, fold_number) {
-    # split into train and test for the fold
-    train_df <- final_df %>%
-      select(-RegionID) %>%
-      slice(-test_indices)
+cv_partition <- createFolds(final_df$Direction,
+                            k=5)
 
-    test_df <- final_df %>%
-      select(-RegionID) %>%
-      slice(test_indices)
-  
-    # fit the two models
-    rf1 <- randomForest(Direction~., data=train_df, ntree=500)
-    rf2 <- randomForest(Direction~., data=train_df, ntree=10)
-    
-    # gather results
-    test_df %>%
-      select(observed_label = Direction) %>%
-      mutate(fold=fold_number) %>%
-      mutate(prob_positive_rf1 = predict(rf1, newdata=test_df, type="prob")[,"up"]) %>%
-      # add predicted labels for rf1 using a 0.5 probability cutoff
-      mutate(predicted_label_rf1 = ifelse(prob_positive_rf1 > 0.5, "up", "down")) %>%
-      mutate(prob_positive_rf2 = predict(rf2, newdata=test_df, type="prob")[, "up"]) %>%
-      # add predicted labels for rf2 using a 0.5 probability cutoff
-      mutate(predicted_label_rf2 = ifelse(prob_positive_rf2 > 0.5, "up", "down"))
-}) %>%
-  # combine the five result data frames into one
-  purrr::reduce(bind_rows)
-result_df
+fit_control <- trainControl( ## 5-fold CV
+  method = "cv",
+  number = 5,
+  index = cv_partition,
+  summaryFunction=twoClassSummary,
+  classProbs=TRUE,
+  savePredictions=TRUE)
+
+big_rf_fit <- train(Direction~.,
+                    data=final_df,
+                    method = "rf",
+                    ntree = 500,
+                    trControl = fit_control,
+                    metric="ROC")
+                    
+
+small_rf_fit <- train(Direction~.,
+                      data = final_df,
+                      method = "rf",
+                      ntree = 10,
+                      trControl = fit_control,
+                      metric="ROC")
+
+
+show(big_rf_fit)
+small_rf_fit
 ```
 
-Now let's compute error rates for each model on each fold, and do a test for differences in error rate 
+Now let's compare models based on 5-CV area under the ROC curve (AUROC). For that purpose we use the `resamples` function in `caret`, which organizes the estimated AUROC values from each fold.
 
 ```{r}
-result_df %>%
-  mutate(error_rf1 = observed_label != predicted_label_rf1,
-         error_rf2 = observed_label != predicted_label_rf2) %>%
-  group_by(fold) %>%
-  summarize(big_rf = mean(error_rf1), small_rf = mean(error_rf2)) %>%
-  tidyr::gather(model, error, -fold) %>%
-  lm(error~model, data=.) %>%
-  broom::tidy()
+model_comparison <- resamples(list(small = small_rf_fit,
+                              big=big_rf_fit))
+ggplot(model_comparison) +
+  labs(title="ROC comparision", x="Model", y="ROC")
 ```
 
-Now, let's make an ROC curve. When making ROC curves based on a cross-validation experiment, we need to aggregate across the five folds in some way. The `ROCR` package provides facilities to do this in the `plot` function. See comments in code below to see how aggregation is done. For this to work properly the `ROCR::prediction` function takes _lists_ of predictions and labels instead of vectors to create ROC curves and compute AUROC. We use the `split` function to create these lists.
+We can test for differences using linear regression.
 
 ```{r}
-library(ROCR)
+library(broom)
 
-# create a list of true observed labels 
-labels <- split(result_df$observed_label, result_df$fold)
+comparison_df <- model_comparison %>%
+  as_tibble() %>%
+  gather("model", "roc", -Resample) %>%
+  mutate(model=factor(model, levels=c("small","big"))) 
 
-# now create a list of predictions for the first RF and pass it to the ROCR::prediction function
-predictions_rf1 <- split(result_df$prob_positive_rf1, result_df$fold) %>% prediction(labels)
-
-# do the same for the second RF
-predictions_rf2 <- split(result_df$prob_positive_rf2, result_df$fold) %>% prediction(labels)
-
-# compute average AUC for the first RF
-mean_auc_rf1 <- predictions_rf1 %>%
-  performance(measure="auc") %>%
-  # I know, this line is ugly, but that's how it is
-  slot("y.values") %>% unlist() %>% 
-  mean()
-
-# compute average AUC for the second RF
-mean_auc_rf2 <- predictions_rf2 %>%
-  performance(measure="auc") %>%
-  slot("y.values") %>% unlist() %>% 
-  mean()
-
-# plot the ROC curve for the first RF
-predictions_rf1 %>%
-  performance(measure="tpr", x.measure="fpr") %>%
-  plot(avg="threshold", col="orange", lwd=2)
-
-# plot the ROC curve for the second RF
-predictions_rf2 %>%
-  performance(measure="tpr", x.measure="fpr") %>%
-  plot(avg="threshold", col="blue", lwd=2, add=TRUE)
-
-# add a legend to the plot
-legend("bottomright",
-       legend=paste(c("big", "small"), "rf, AUC:", round(c(mean_auc_rf1, mean_auc_rf2), digits=3)),
-       col=c("orange", "blue"))
+comparison_df %>%
+  lm(roc~model,data=.) %>%
+  tidy() %>%
+  knitr::kable()
 ```
+
+We see that there is a small increase in average AUROC for the big model but it is not a statistically significant difference.
+
+Finally, let's make ROC curves of both models. 
+
+```{r, warning=FALSE}
+library(plotROC)
+
+roc_df <-
+  big_rf_fit$pred %>%
+    filter(mtry == 2) %>%
+    mutate(model = "big") %>%
+    bind_rows(small_rf_fit$pred %>% 
+                filter(mtry == 2) %>%
+                mutate(model = "small"))
+
+roc_df %>%
+  ggplot(aes(m=up,
+             d=factor(obs, levels=c("down","up")),
+             color=model)) +
+    geom_roc(n.cuts=0) +
+    coord_equal() +
+    style_roc() 
+```
+
