@@ -1,17 +1,13 @@
 ---
 date: 2016-11-22T13:04:21-05:00
-title: "Project 3: Regression and Classification"
+title: "Bonus Project: classification"
 ---
 
-POSTED: April 18, 2019  
+POSTED: May 1, 2019  
 LAST UPDATE: May 1, 2019  
-DUE: May 6, 2019  
+DUE: May 14, 2019  
 
-This project has (now) one part:
-
-  a. [Regression](gapminder/)  
-
-Follow instructions on the linked page to complete your project.
+An experiment on classification. [Instructions here](classification_zillow/)
 
 ## Submission
 

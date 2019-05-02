@@ -5,10 +5,9 @@ title: CMSC320 Projects
 
 1. [Data scraping and cleaning](project1/) Due March 13, 2019  
 2. [Data wrangling and EDA](project2/) Due April 5, 2019   
-3. [Regression and classification](project3/) Due May 6, 2019  
+3. [Regression](project3/) Due May 6, 2019  
+4. [Interactive data visualization and mapping](project4/) Due May 14, 2019
 
-<!--
-4. [Interactive data visualization and mapping](project4/) Due May 10, 2018
--->
+[Bonus Project:](bonus_project) Due May 14, 2019
 
 [Final Project:](final_project/) Due May 22, 2019 12:30pm
