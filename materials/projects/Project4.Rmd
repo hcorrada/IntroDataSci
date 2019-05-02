@@ -8,9 +8,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-**Posted:** May 8th, 2018   
+**Posted:** May 2nd, 2019   
 **Last Updated:** `r format(Sys.Date(), "%b %d, %Y")`  
-**Due:** May 10th, 2018   
+**Due:** May 14th, 2019   
 
 Use the `leaflet` package and our previously used Baltimore crime dataset
 to make an interactive data map of Baltimore Crime.

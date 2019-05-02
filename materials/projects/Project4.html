@@ -775,7 +775,10 @@ color: #d14;
         }
 
         if (binding.resize) {
-          var lastSize = {};
+          var lastSize = {
+            w: sizeObj ? sizeObj.getWidth() : el.offsetWidth,
+            h: sizeObj ? sizeObj.getHeight() : el.offsetHeight
+          };
           var resizeHandler = function(e) {
             var size = {
               w: sizeObj ? sizeObj.getWidth() : el.offsetWidth,
@@ -1387,6 +1390,10 @@ pointer-events: all;
 
 cursor: pointer;
 }
+
+.leaflet-map-pane {
+z-index: auto;
+}
 </style>
 <script>(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
@@ -1724,11 +1731,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // data URIs for the default marker, and let any others be loaded via CDN.
 if (typeof _leaflet2.default.Icon.Default.imagePath === "undefined") {
   // if in a local file, support http
-  if (window.location.protocol === "file:") {
-    _leaflet2.default.Icon.Default.imagePath = "http://cdn.leafletjs.com/leaflet/v1.3.1/images/";
-  } else {
-    // otherwise use same protocol
-    _leaflet2.default.Icon.Default.imagePath = "//cdn.leafletjs.com/leaflet/v1.3.1/images/";
+  switch (window.location.protocol) {
+    case "http:":
+      // don't force http site to be done with https
+      _leaflet2.default.Icon.Default.imagePath = "http://cdn.leafletjs.com/leaflet/v1.3.1/images/";
+      break;
+    default:
+      // file
+      // https
+      // otherwise use https as it works on files and https
+      _leaflet2.default.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.3.1/dist/images/";
+      break;
   }
   // don't know how to make this dataURI work since
   //  will be appended to Defaul.imagePath above
@@ -2104,10 +2117,18 @@ _htmlwidgets2.default.widget({
           methods.fitBounds.apply(map, data.fitBounds);
         }
         if (data.flyTo) {
+          if (!explicitView && !map.leafletr.hasRendered) {
+            // must be done to give a initial starting point
+            map.fitWorld();
+          }
           explicitView = true;
           map.flyTo.apply(map, data.flyTo);
         }
         if (data.flyToBounds) {
+          if (!explicitView && !map.leafletr.hasRendered) {
+            // must be done to give a initial starting point
+            map.fitWorld();
+          }
           explicitView = true;
           methods.flyToBounds.apply(map, data.flyToBounds);
         }
@@ -2663,10 +2684,18 @@ function mouseHandler(mapId, layerId, group, eventName, extraInfo) {
   return function (e) {
     if (!_htmlwidgets2.default.shinyMode) return;
 
+    var latLng = e.target.getLatLng ? e.target.getLatLng() : e.latlng;
+    if (latLng) {
+      // retrieve only lat, lon values to remove prototype
+      //   and extra parameters added by 3rd party modules
+      // these objects are for json serialization, not javascript
+      var latLngVal = _leaflet2.default.latLng(latLng); // make sure it has consistent shape
+      latLng = { lat: latLngVal.lat, lng: latLngVal.lng };
+    }
     var eventInfo = _jquery2.default.extend({
       id: layerId,
       ".nonce": Math.random() // force reactivity
-    }, group !== null ? { group: group } : null, e.target.getLatLng ? e.target.getLatLng() : e.latlng, extraInfo);
+    }, group !== null ? { group: group } : null, latLng, extraInfo);
 
     _shiny2.default.onInputChange(mapId + "_" + eventName, eventInfo);
   };
@@ -3448,7 +3477,7 @@ methods.addScaleBar = function (options) {
 
 methods.removeScaleBar = function () {
   if (this.currentScaleBar) {
-    this.currentScaleBar.removeFrom(this);
+    this.currentScaleBar.remove();
     this.currentScaleBar = null;
   }
 };
@@ -3891,6 +3920,11 @@ methods.removeSelect = function () {
   }
 };
 
+methods.createMapPane = function (name, zIndex) {
+  this.createPane(name);
+  this.getPane(name).style.zIndex = zIndex;
+};
+
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./cluster-layer-store":1,"./crs_utils":3,"./dataframe":4,"./global/htmlwidgets":8,"./global/jquery":9,"./global/leaflet":10,"./global/shiny":12,"./mipmapper":16,"./util":17}],16:[function(require,module,exports){
@@ -4091,9 +4125,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type="text/css">
 .main-container {
@@ -4112,25 +4144,98 @@ img {
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
 
 
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
 });
 </script>
 
 <!-- code folding -->
 
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -4140,14 +4245,14 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Project 4: Interactive Data Maps</h1>
-<h4 class="author"><em>CMSC320</em></h4>
+<h4 class="author">CMSC320</h4>
 
 </div>
 
 
-<p><strong>Posted:</strong> May 8th, 2018<br />
-<strong>Last Updated:</strong> May 08, 2018<br />
-<strong>Due:</strong> May 10th, 2018</p>
+<p><strong>Posted:</strong> May 2nd, 2019<br />
+<strong>Last Updated:</strong> May 02, 2019<br />
+<strong>Due:</strong> May 14th, 2019</p>
 <p>Use the <code>leaflet</code> package and our previously used Baltimore crime dataset to make an interactive data map of Baltimore Crime.</p>
 <ol style="list-style-type: decimal">
 <li>Use this piece of code to download and prepare data for use in project</li>
@@ -4164,21 +4269,21 @@ dat &lt;- arrest_tab %&gt;%
   sample_n(2000)
 dat</code></pre>
 <pre><code>## # A tibble: 2,000 x 16
-##      arrest   age race  sex   arrestDate arrestTime arrestLocation       
-##       &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;                
-##  1 12576430    18 B     M     10/23/2012 19:00      1100 E Cold Spring Ln
-##  2 12441311    52 B     F     03/15/2012 11:20      100 S Calverton Rd   
-##  3 11161026    19 B     M     03/01/2011 09:30      1800 E Lafayette Ave 
-##  4 12567204    42 W     F     10/09/2012 13:00      1800 Mchenry St      
-##  5 11319690    28 B     M     09/12/2011 22:15      100 N Curley St      
-##  6 11202369    44 B     M     04/25/2011 18:30      2000 Robb St         
-##  7 12497165    49 B     M     06/15/2012 14:30      5100 Park Heights St 
-##  8 11227869    35 B     M     05/26/2011 21:05      3000 W Garriosn Ave  
-##  9 12485022    30 B     M     05/24/2012 18:45      2900 Presstman St    
-## 10 12411841    48 B     M     01/27/2012 10:30      1100 Gilmor St       
-## # ... with 1,990 more rows, and 9 more variables: incidentOffense &lt;chr&gt;,
+##    arrest   age race  sex   arrestDate arrestTime arrestLocation
+##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;         
+##  1 1.13e7    34 B     M     07/26/2011 20:00      4200 The Alam…
+##  2 1.25e7    18 B     M     04/06/2012 21:30      2700 W Coldsp…
+##  3 1.26e7    18 B     M     10/06/2012 22:40      1400 E Coldsp…
+##  4 1.26e7    29 B     M     09/22/2012 07:20      1600 Smallwoo…
+##  5 1.13e7    18 B     M     08/10/2011 18:50      2300 Eutaw Pl 
+##  6 1.11e7    24 B     M     01/10/2011 14:22      0 W Baltimore…
+##  7 1.24e7    49 B     M     02/10/2012 11:05      2400 E Presto…
+##  8 1.25e7    42 B     F     08/04/2012 12:44      1200 Kitmore …
+##  9 1.26e7    24 B     F     09/27/2012 11:00      2400 Wilkins …
+## 10 1.14e7    20 B     M     12/03/2011 20:01      5800 Radecke …
+## # … with 1,990 more rows, and 9 more variables: incidentOffense &lt;chr&gt;,
 ## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;int&gt;, neighborhood &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;</code></pre>
+## #   district &lt;chr&gt;, post &lt;dbl&gt;, neighborhood &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;</code></pre>
 <p>Note the attributes <code>lat</code> and <code>lng</code> which indicate geographical location as latitude (<code>lat</code>) and longitude (<code>lng</code>).</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Use the <code>leaflet</code> package to create an interactive map of Baltimore</li>
@@ -4189,8 +4294,8 @@ balto_map &lt;- leaflet(dat) %&gt;%
   addTiles() %&gt;%
   setView(lat=39.29, lng=-76.61, zoom=11)
 balto_map</code></pre>
-<div id="htmlwidget-d11f223682357ce6d518" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d11f223682357ce6d518">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[39.29,-76.61],11,[]]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b95e16a1bc9cd2554ea2" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b95e16a1bc9cd2554ea2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[39.29,-76.61],11,[]]},"evals":[],"jsHooks":[]}</script>
 <p>You can find more information about leaflet here: <a href="https://rstudio.github.io/leaflet/" class="uri">https://rstudio.github.io/leaflet/</a></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Add graphical elements to display the data. For instance, add circles, with colors indicating sex. Or circles with colors indicating race. Or anything else that strikes your fancy.</li>
