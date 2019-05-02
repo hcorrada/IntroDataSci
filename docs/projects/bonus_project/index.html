@@ -9,18 +9,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
-    <title>Homework 1: Datatypes and Wrangling - CMSC320 Introduction to Data Science</title>
+    <title>Bonus Project: classification - CMSC320 Introduction to Data Science</title>
     <meta name="generator" content="Hugo 0.24" />
 
     
     <meta name="description" content="Data Science course at the University of Maryland Department of Computer Science">
     
-    <link rel="canonical" href="http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/">
+    <link rel="canonical" href="http://www.hcbravo.org/IntroDataSci/projects/bonus_project/">
     
     <meta name="author" content="Héctor Corrada Bravo">
     
 
-    <meta property="og:url" content="http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/">
+    <meta property="og:url" content="http://www.hcbravo.org/IntroDataSci/projects/bonus_project/">
     <meta property="og:title" content="CMSC320 Introduction to Data Science">
     <meta property="og:image" content="http://www.hcbravo.org/IntroDataSci/images/logo.png">
     <meta name="apple-mobile-web-app-title" content="CMSC320 Introduction to Data Science">
@@ -97,7 +97,7 @@
     </div>
     <div class="stretch">
       <div class="title">
-        Homework 1: Datatypes and Wrangling
+        Bonus Project: classification
       </div>
     </div>
 
@@ -330,51 +330,22 @@
 
 	<article class="article">
 		<div class="wrapper">
-			<h1>Homework 1: Datatypes and Wrangling </h1>
+			<h1>Bonus Project: classification </h1>
 
-			<p>In this assignment, you will explore and exercise your knowledge of data types, data operations and data plotting.</p>
+			
 
-<p><strong>DUE</strong>: Tuesday Feb. 12, 11:59pm</p>
+<p>POSTED: May 1, 2019<br />
+LAST UPDATE: May 1, 2019<br />
+DUE: May 14, 2019</p>
 
-<p></p>
+<p>An experiment on classification. <a href="classification_zillow/">Instructions here</a></p>
 
-<h2 id="data-types">Data types</h2>
+<h2 id="submission">Submission</h2>
 
-<p>Choose a dataset from those linked on the <a href="http://www.hcbravo.org/IntroDataSci/resources/">class resources page</a> or found anywhere online.
-The only requirement is that this dataset is downloadable as a CSV (comma separated value) file.
-Answer the following questions:</p>
+<p>Prepare and knit a single Rmarkdown file that includes submission information described above.</p>
 
-<p>1) Provide a URL to the dataset.<br />
-2) Explain why you chose this dataset.<br />
-3) What are the entities in this dataset? How many are there in this dataset?<br />
-4) How many attributes are there in this dataset?<br />
-5) What is the datatype of each attribute (categorical (ordered or unordered), numeric (discrete or continuous), datetime, geolocation, other)?
-Write a short sentence stating how you determined the type of each attribute.
-Do this for at least 5 attributes, if your dataset contains more than 10 attributes choose 10 of them to describe.<br />
-6) Write R code that loads the dataset using function <code>read_csv</code>. Were you able to load the data successfully? If no, why not?<br />
-If yes, show the first 10 rows of the dataset.</p>
+<p>All axes in plots should be labeled in an informative manner. Your answers to any question that refers to a plot should include both (a) a text description of your plot, and (b) a sentence or two of interpretation as it relates to the question asked.</p>
 
-<h2 id="wrangling">Wrangling</h2>
-
-<p>Write an operation pipeline including at minimum three of the operations we have learned in class: <a href="http://www.hcbravo.org/IntroDataSci/bookdown-notes/principles-basic-operations.html">Notes Section 6</a> and <a href="http://www.hcbravo.org/IntroDataSci/bookdown-notes/principles-more-operations.html">Notes Section 7</a>. One of the operations should be a <code>group_by</code> and <code>summarize</code>.
-If you were able to successfully load your dataset above, you can write the operation pipeline to analyze your dataset. Otherwise, write a pipeline using the <code>flights</code> dataset included in package <code>nycflights13</code>.</p>
-
-<p>1) Write text to describe the pipeline you are writing and why is it useful as an analysis of the dataset.<br />
-2) Provide R code executing the pipeline and displaying at most the first 10 rows of the result.</p>
-
-<p><strong>Hint</strong>: In the <code>flights</code> dataset you could create a pipeline to make a data frame that lists, in increasing order, the average total delay for each carrier on flights departing from JFK, where total delay is the sum of departure and arrival delays.</p>
-
-<h2 id="plotting">Plotting</h2>
-
-<p>Make one plot using <code>ggplot</code> of the result of the pipeline you created above. Refer to <a href="http://www.hcbravo.org/IntroDataSci/bookdown-notes/basic-plotting-with-ggplot.html">Notes Section 8</a> to see some examples.</p>
-
-<p>1) Write text describing what you are plotting<br />
-2) Provide R code to create the plot and show the resulting plot</p>
-
-<h2 id="submitting">Submitting</h2>
-
-<p>Download the Rmarkdown file here: <a href="http://www.hcbravo.org/IntroDataSci/misc/hw1_datatypes_wrangling.Rmd">HW1 Rmarkdown shell</a> and fill in with your answers. Knit as PDF (or HTML and then print to PDF) and submit to ELMS.
-You can see an example submission here: <a href="http://www.hcbravo.org/IntroDataSci/misc/hw1_datatypes_wrangling_sample.Rmd">HW1 Rmarkdown submission example</a> <a href="http://www.hcbravo.org/IntroDataSci/misc/hw1_datatypes_wrangling_sample.pdf">HW1 PDF submission example</a></p>
 
 			<aside class="copyright" role="note">
 				
@@ -392,7 +363,7 @@ You can see an example submission here: <a href="http://www.hcbravo.org/IntroDat
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
   
-      <a href="http://www.hcbravo.org/IntroDataSci/homeworks/er_sql/" title="Homework 2: ER Model and SQL">
+      <a href="http://www.hcbravo.org/IntroDataSci/homeworks/datatypes_wrangling/" title="Homework 1: Datatypes and Wrangling">
         <span class="direction">
           Previous
         </span>
@@ -402,7 +373,7 @@ You can see an example submission here: <a href="http://www.hcbravo.org/IntroDat
           </div>
           <div class="stretch">
             <div class="title">
-              Homework 2: ER Model and SQL
+              Homework 1: Datatypes and Wrangling
             </div>
           </div>
         </div>
@@ -412,14 +383,14 @@ You can see an example submission here: <a href="http://www.hcbravo.org/IntroDat
 
   <div class="next">
   
-      <a href="http://www.hcbravo.org/IntroDataSci/projects/bonus_project/" title="Bonus Project: classification">
+      <a href="http://www.hcbravo.org/IntroDataSci/projects/project3/" title="Project 3: Regression and Classification">
         <span class="direction">
           Next
         </span>
         <div class="page">
           <div class="stretch">
             <div class="title">
-              Bonus Project: classification
+              Project 3: Regression and Classification
             </div>
           </div>
           <div class="button button-next" role="button" aria-label="Next">
