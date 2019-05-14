@@ -4,8 +4,8 @@ title: "Bonus Project: classification"
 ---
 
 POSTED: May 1, 2019  
-LAST UPDATE: May 1, 2019  
-DUE: May 14, 2019  
+LAST UPDATE: May 14, 2019  
+DUE: May 17, 2019  
 
 An experiment on classification. [Instructions here](classification_zillow/)
 

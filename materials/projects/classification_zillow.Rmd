@@ -231,7 +231,7 @@ cv_partition <- createFolds(final_df$Direction,
 fit_control <- trainControl( ## 5-fold CV
   method = "cv",
   number = 5,
-  index = cv_partition,
+  indexOut = cv_partition,
   summaryFunction=twoClassSummary,
   classProbs=TRUE,
   savePredictions=TRUE)
@@ -258,7 +258,7 @@ small_rf_fit
 
 Now let's compare models based on 5-CV area under the ROC curve (AUROC). For that purpose we use the `resamples` function in `caret`, which organizes the estimated AUROC values from each fold.
 
-```{r}
+```{r, cache=FALSE}
 model_comparison <- resamples(list(small = small_rf_fit,
                               big=big_rf_fit))
 ggplot(model_comparison) +

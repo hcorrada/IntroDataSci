@@ -8,6 +8,6 @@ title: CMSC320 Projects
 3. [Regression](project3/) Due May 6, 2019  
 4. [Interactive data visualization and mapping](project4/) Due May 14, 2019
 
-[Bonus Project:](bonus_project) Due May 14, 2019
+[Bonus Project:](bonus_project) Due May 17, 2019
 
 [Final Project:](final_project/) Due May 22, 2019 12:30pm
