@@ -1232,6 +1232,7 @@ Learn to add: "55+22=77"
 https://keras.rstudio.com/articles/examples/addition_rnn.html
 
 ```{r echo=FALSE}
+library(keras)
 library(stringi)
 
 # Function Definitions ----------------------------------------------------
@@ -1271,6 +1272,8 @@ decode <- function(x, char_table){
 
 Addition encoded as sequence of one-hot vectors:
 ```{r echo=FALSE}
+charset <- c(0:9, "+", " ")
+char_table <- learn_encoding(charset)
 encode("55+22", char_table)
 ```
 
@@ -1299,6 +1302,10 @@ This is a **sequence-to-sequence** model. Perfect application for recurrent neur
 HIDDEN_SIZE <- 128
 BATCH_SIZE <- 128
 LAYERS <- 1
+
+DIGITS <- 2
+MAXLEN <- DIGITS + 1 + DIGITS
+TRAINING_SIZE <- 50000
 
 # Initialize sequential model
 model <- keras_model_sequential() 

@@ -164,7 +164,7 @@ model %>% fit(
   x = x_train, 
   y = y_train, 
   batch_size = BATCH_SIZE, 
-  epochs = 6,
+  epochs = 1,
   validation_data = list(x_val, y_val),
   verbose = 1
 )
