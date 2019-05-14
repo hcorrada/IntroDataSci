@@ -438,9 +438,16 @@ notes = "slides/cmsc320_deeplearn.pdf"
 title = "Course wrapup and perspective"
 notes = "slides/cmsc320_wrapup.pdf"
 
-#[[day29.workdue]]
-#title = "Project 4: Interactive data maps"
-#link = "projects/project4/"
+[[day28.workdue]]
+title = "Project 4: Interactive data maps"
+link = "projects/project4/"
+
+[day29]
+date = "5/17"
+
+[[day29.workdue]]
+title = "Bonus Project: Classification"
+link = "projects/bonus_project/"
 
 [day30]
 date = "5/22"
