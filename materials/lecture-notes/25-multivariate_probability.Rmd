@@ -12,7 +12,7 @@ where random variables $X$ and $Y$ can take values from domains $\mathcal{D}_X$ 
 1. $p(X=x,Y=y)\geq 0$ for all combination of values $x$ and $y$, and  
 2. $\sum_{(x,y) \in \mathcal{D}_X \times \mathcal{D}_Y} p(X=x,Y=y) = 1$
 
-We can also talk about _conditional probability_ where we look at the probability of a tweet being bot-generated or not, _conditioned_ on wheter it has lots of retweets or not:
+We can also talk about _conditional probability_ where we look at the probability of a tweet being bot-generated or not, _conditioned_ on wether it has lots of retweets or not:
 
 $$
 p(X=x | Y=y)
@@ -32,11 +32,11 @@ $$
 
 Here we use the important concept of _marginalization_, which follows from the properties of joint probability distribution we saw above: $\sum_{x \in \mathcal{D}_X} p(X=x, Y=y) = p(Y=y)$.
 
-This also lets us talk about _conditional independence_: if the probabilty of a tweet being bot-generated _does not_ depend on a tweet having lots of retweets, that is $p(X=x) = p(X=x|Y=y)$ for all $y$, then we say $X$ is _conditionally independent_ of $Y$. 
+This also lets us talk about _independence_: if the probabilty of a tweet being bot-generated _does not_ depend on a tweet having lots of retweets, that is $p(X=x) = p(X=x|Y=y)$ for all $y$, then we say $X$ is _independent_ of $Y$. 
 
-Consider the tweet diagram above, is $X$ conditionally independent of $Y$? What would the diagram look like if $X$ was conditionally independent of $Y$?
+Consider the tweet diagram above, is $X$ independent of $Y$? What would the diagram look like if $X$ was independent of $Y$?
 
-One more note, you can also see that for conditionally independent variables, the joint probability has an easy form $p(X=x,Y=y)=p(X=x)p(Y=y)$, which generalizes to more than two independent random variables.
+One more note, you can also see that for independent variables, the joint probability has an easy form $p(X=x,Y=y)=p(X=x)p(Y=y)$, which generalizes to more than two independent random variables.
 
 ## Bayes' Rule
 
