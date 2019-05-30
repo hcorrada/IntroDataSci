@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>26 Multivariate probability | Lecture Notes: Introduction to Data Science</title>
-  <meta name="description" content="26 Multivariate probability | Lecture Notes: Introduction to Data Science">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="26 Multivariate probability | Lecture Notes: Introduction to Data Science" />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
 
   <meta property="og:title" content="26 Multivariate probability | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -22,14 +21,14 @@
   
   
 
-<meta name="author" content="Héctor Corrada Bravo">
+<meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2019-04-23">
+<meta name="date" content="2019-05-30" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 <link rel="prev" href="experiment-design-and-hypothesis-testing.html">
@@ -519,7 +518,7 @@ where random variables <span class="math inline">\(X\)</span> and <span class="m
 </li>
 <li><span class="math inline">\(\sum_{(x,y) \in \mathcal{D}_X \times \mathcal{D}_Y} p(X=x,Y=y) = 1\)</span></li>
 </ol>
-<p>We can also talk about <em>conditional probability</em> where we look at the probability of a tweet being bot-generated or not, <em>conditioned</em> on wheter it has lots of retweets or not:</p>
+<p>We can also talk about <em>conditional probability</em> where we look at the probability of a tweet being bot-generated or not, <em>conditioned</em> on wether it has lots of retweets or not:</p>
 <p><span class="math display">\[
 p(X=x | Y=y)
 \]</span></p>
@@ -532,9 +531,9 @@ p(X=x | Y=y)
 p(X=x | Y=y) = \frac{p(X=x,Y=y)}{p(Y=y)}
 \]</span></p>
 <p>Here we use the important concept of <em>marginalization</em>, which follows from the properties of joint probability distribution we saw above: <span class="math inline">\(\sum_{x \in \mathcal{D}_X} p(X=x, Y=y) = p(Y=y)\)</span>.</p>
-<p>This also lets us talk about <em>conditional independence</em>: if the probabilty of a tweet being bot-generated <em>does not</em> depend on a tweet having lots of retweets, that is <span class="math inline">\(p(X=x) = p(X=x|Y=y)\)</span> for all <span class="math inline">\(y\)</span>, then we say <span class="math inline">\(X\)</span> is <em>conditionally independent</em> of <span class="math inline">\(Y\)</span>.</p>
-<p>Consider the tweet diagram above, is <span class="math inline">\(X\)</span> conditionally independent of <span class="math inline">\(Y\)</span>? What would the diagram look like if <span class="math inline">\(X\)</span> was conditionally independent of <span class="math inline">\(Y\)</span>?</p>
-<p>One more note, you can also see that for conditionally independent variables, the joint probability has an easy form <span class="math inline">\(p(X=x,Y=y)=p(X=x)p(Y=y)\)</span>, which generalizes to more than two independent random variables.</p>
+<p>This also lets us talk about <em>independence</em>: if the probabilty of a tweet being bot-generated <em>does not</em> depend on a tweet having lots of retweets, that is <span class="math inline">\(p(X=x) = p(X=x|Y=y)\)</span> for all <span class="math inline">\(y\)</span>, then we say <span class="math inline">\(X\)</span> is <em>independent</em> of <span class="math inline">\(Y\)</span>.</p>
+<p>Consider the tweet diagram above, is <span class="math inline">\(X\)</span> independent of <span class="math inline">\(Y\)</span>? What would the diagram look like if <span class="math inline">\(X\)</span> was independent of <span class="math inline">\(Y\)</span>?</p>
+<p>One more note, you can also see that for independent variables, the joint probability has an easy form <span class="math inline">\(p(X=x,Y=y)=p(X=x)p(Y=y)\)</span>, which generalizes to more than two independent random variables.</p>
 </div>
 <div id="bayes-rule" class="section level2">
 <h2><span class="header-section-number">26.2</span> Bayes’ Rule</h2>
