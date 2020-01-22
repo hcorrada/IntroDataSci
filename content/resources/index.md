@@ -14,6 +14,24 @@ title: CMSC320 Resources
 * R/Matlab references: [A short R guide for Matlab users.](http://mathesaurus.sourceforge.net/octave-r.html) [A longer one.](http://cran.r-project.org/doc/contrib/Hiebeler-matlabR.pdf)  
 * R/Python references: [A short R guide for Python users.](http://mathesaurus.sourceforge.net/r-numpy.html)  
 
+## Python
+
+We will be using [Python](http://www.python.org/) for all programming projects. Here are some resources
+to get you started:
+
+*	[Python Tutorial](http://docs.python.org/tutorial/)  
+*	[Python Docs](http://docs.python.org/index.html)  
+* [DataCamp Intro to Python](https://www.datacamp.com/courses/intro-to-python-for-data-science)
+*   [Jupyter notebooks](http://jupyter.org/)
+* [Google Colab notebooks](http://colab.research.google.com)
+* [Short python tutorial by Hal Daume](http://www.umiacs.umd.edu/~hal/courses/2011F_ML/p0/) 
+* [scikit-learn](https://scikit-learn.org/stable/index.html)
+*	[Numpy Tutorial (tentative)](http://scipy.org/Tentative_NumPy_Tutorial)  
+*	[Numpy User's Guide](http://docs.scipy.org/doc/numpy/user/)  
+*	[Scipy docs](http://docs.scipy.org/doc/)  
+* [Keras documentation](https://keras.io/)  
+* [Tensorflow documentation](https://www.tensorflow.org/tutorials/)
+
 ## Other Resources
 
 [Rstudio](http://rstudio.org) has made some very nice cheatsheets for

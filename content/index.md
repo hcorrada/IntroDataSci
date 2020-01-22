@@ -7,7 +7,7 @@ type: index
 ## Course Information
 
 **CMSC320: Introduction to Data Science**  
-**Spring 2019**
+**Spring 2020**
 
 *	Instructor:  
     [H&eacute;ctor Corrada Bravo](http://www.cbcb.umd.edu/~hcorrada)  
@@ -17,7 +17,7 @@ type: index
     Office: 3226 Iribe Center for Computer Science and Engineering 
 
 *	Lecture Meeting Times    
-    Tuesday and Thursday 3:30-4:45pm <a href="https://esj.umd.edu">ESJ 0224</a>
+    Monday and Wednesday 5:00-6:15pm IRB 0324
 
 ## Links
 

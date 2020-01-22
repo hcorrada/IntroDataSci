@@ -8,14 +8,14 @@ This page constiutes the official syllabus for this class.
 ## Course Information
 
 **Introduction to Data Science**  
-**CMSC320 Spring 2019**
+**CMSC320 Spring 2020**
 
 
 *	Lecture Meeting Times    
-    Tuesday and Thursday, 3:30pm-4:45pm, 
+    Monday and Wednesday, 5:00pm-6:15pm, IRB 0324
 
 *	Instructor:  
-    [H&eacute;ctor Corrada Bravo](http://www.cbcb.umd.edu/~hcorrada)  
+    [H&eacute;ctor Corrada Bravo](https://www.hcbravo.org/)  
     Center for Bioinformatics and Computational Biology  
     Department of Computer Science  
     <hcorrada@umiacs.umd.edu>  
@@ -26,34 +26,36 @@ This page constiutes the official syllabus for this class.
     - For course related questions, use [Piazza]({{< piazzaurl >}}) as indicated below.  
     - For any other communication (e.g., absences accomodations etc.) send message through ELMS.
 
-We will use the class Piazza site [{{< piazzaurl >}}]({{< piazzaurl >}}) for questions, dicussion and announcements. Assignments and grades for the class will be posted to the class ELMS site: [{{< elmurl >}}]({{< elmurl >}}**.
+We will use the class Piazza site [{{< piazzaurl >}}]({{< piazzaurl >}}) for questions, dicussion and announcements. Assignments and grades for the class will be posted to the class ELMS site: [{{< elmurl >}}]({{< elmurl >}}).
 In case of an extended emergency closure, announcements on policy and procedures will be posted to Piazza.
 
 ## TAs and Office Hours Schedule
 
-Location is AVW 1120 unless noted otherwise
+**TBD**
 
-| Instructor           | Day       | Start Time | End Time | Location |   |
-|----------------------|-----------|------------|----------|----------|---|
-| Victoria Cepeda      | Monday    |       9:00 |    11:00 |          |   |
-| Yanchao Sun          | Monday    |      10:00 |    12:00 |          |   |
-| Weiyi Jiang          | Monday    |      11:00 |    1:00 |          |   |
-| Yifan Yang           | Monday    |      12:00 |    13:30 |          |   |
-| Harihara Muralidharan| Monday    |      13:00 |    15:00 |   |   |
-| Ahmed Ghoneim        | Monday    |      16:45 |    20:45 |  |   |
-| William Gomolka      | Tuesday   |       9:00 |    11:00 |          |   |
-| Harihara Muralidharan| Tuesday   |      13:00 |    15:00 |   |   |
-| Eleftheria Briakou   | Wednesday |       9:00 |    11:00 |          |   |
-| Yifan Yang           | Wednesday |      11:00 |    13:30 |          |   |
-| Weiyi Jiang          | Wednesday |      11:00 |    1:00 |          |   |
-| Eleftheria Briakou   | Wednesday |      12:30 |    14:30 |          |   |
-| Christopher Yue      | Wednesday |      17:00 |    21:00 |          |   |
-| Ashley Chang         | Thursday  |       9:00 |    11:00 |          |   |
-| William Gomolka      | Thursday  |      13:00 |    15:00 |          |   |
-| Victoria Cepeda      | Friday    |       9:00 |    11:00 |          |   |
-| Hector Corrada Bravo | Friday    |      13:00 |    14:00 | AVW 3223 |   |
-| Tracy Chen           | Friday    |      13:00 |    17:00 | |   |
-| Yanchao Sun          | Friday    |      14:00 |    16:00 |          |   |
+<!-- Location is AVW 1120 unless noted otherwise -->
+
+<!-- | Instructor           | Day       | Start Time | End Time | Location |   | -->
+<!-- |----------------------|-----------|------------|----------|----------|---| -->
+<!-- | Victoria Cepeda      | Monday    |       9:00 |    11:00 |          |   | -->
+<!-- | Yanchao Sun          | Monday    |      10:00 |    12:00 |          |   | -->
+<!-- | Weiyi Jiang          | Monday    |      11:00 |    1:00 |          |   | -->
+<!-- | Yifan Yang           | Monday    |      12:00 |    13:30 |          |   | -->
+<!-- | Harihara Muralidharan| Monday    |      13:00 |    15:00 |   |   | -->
+<!-- | Ahmed Ghoneim        | Monday    |      16:45 |    20:45 |  |   | -->
+<!-- | William Gomolka      | Tuesday   |       9:00 |    11:00 |          |   | -->
+<!-- | Harihara Muralidharan| Tuesday   |      13:00 |    15:00 |   |   | -->
+<!-- | Eleftheria Briakou   | Wednesday |       9:00 |    11:00 |          |   | -->
+<!-- | Yifan Yang           | Wednesday |      11:00 |    13:30 |          |   | -->
+<!-- | Weiyi Jiang          | Wednesday |      11:00 |    1:00 |          |   | -->
+<!-- | Eleftheria Briakou   | Wednesday |      12:30 |    14:30 |          |   | -->
+<!-- | Christopher Yue      | Wednesday |      17:00 |    21:00 |          |   | -->
+<!-- | Ashley Chang         | Thursday  |       9:00 |    11:00 |          |   | -->
+<!-- | William Gomolka      | Thursday  |      13:00 |    15:00 |          |   | -->
+<!-- | Victoria Cepeda      | Friday    |       9:00 |    11:00 |          |   | -->
+<!-- | Hector Corrada Bravo | Friday    |      13:00 |    14:00 | AVW 3223 |   | -->
+<!-- | Tracy Chen           | Friday    |      13:00 |    17:00 | |   | -->
+<!-- | Yanchao Sun          | Friday    |      14:00 |    16:00 |          |   | -->
 
 ## Textbook and Resources:
 
