@@ -5,7 +5,7 @@ date: "2018-03-12"
 
 An exercise on intepreting regression estimates.
 
-**DUE**: Tuesday April 17, 11:59pm
+**DUE**: Friday April 19, 11:59pm
 
 <!--more-->
 

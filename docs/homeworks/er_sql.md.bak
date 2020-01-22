@@ -5,7 +5,7 @@ date: "2018-02-20"
 
 Practice making an ER diagram and writing SQL queries.
 
-**DUE**: Tuesday Feb. 20, 11:59pm
+**DUE**: Monday Feb. 25, 11:59pm
 
 <!--more-->
 

@@ -6,7 +6,7 @@ date: "2018-02-08"
 
 In this assignment, you will explore and exercise your knowledge of data types, data operations and data plotting.
 
-**DUE**: Thursday Feb. 8, 11:59pm
+**DUE**: Tuesday Feb. 12, 11:59pm
 
 <!--more-->
 
@@ -28,7 +28,7 @@ If yes, show the first 10 rows of the dataset.
 
 ## Wrangling
 
-Write an operation pipeline including at minimum three of the operations we have learned in class: [Notes Section 6](/bookdown-notes/principles-basic-operations.html) and [Notes Section 7](/bookdown-notes/principles-more-operations.html).
+Write an operation pipeline including at minimum three of the operations we have learned in class: [Notes Section 6](/bookdown-notes/principles-basic-operations.html) and [Notes Section 7](/bookdown-notes/principles-more-operations.html). One of the operations should be a `group_by` and `summarize`.
 If you were able to successfully load your dataset above, you can write the operation pipeline to analyze your dataset. Otherwise, write a pipeline using the `flights` dataset included in package `nycflights13`.
 
 1) Write text to describe the pipeline you are writing and why is it useful as an analysis of the dataset.  
