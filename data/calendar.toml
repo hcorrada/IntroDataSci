@@ -1,8 +1,5 @@
 [day01]
-date = "1/29"
-
-[[day01.covers]]
-title = "LECTURE CANCELLED DUE TO WEATHER"
+date = "1/27"
 
 [[day01.covers]]
 title = "What is Data Science, Course Introduction and Logistics"
@@ -17,7 +14,7 @@ title = "Lecture Slides: Introduction and Overview"
 notes = "slides/cmsc320_intro.pdf"
 
 [day02]
-date = "1/31"
+date = "1/29"
 
 [[day02.covers]]
 title = "Preliminaries 1: Setting up"
@@ -31,15 +28,15 @@ notes = "bookdown-notes/measurements-and-data-types.html"
 title = "Preliminaries 2: Basic data operations"
 notes = "bookdown-notes/principles-basic-operations.html"
 
-[day02.class_notes]
-link = "cmsc320_class-notes_20180130.pdf"
+# [day02.class_notes]
+# link = "cmsc320_class-notes_20180130.pdf"
 
 # [[day02.prep]]
 # title = "Setting up R"
 # # link = "homeworks/rocker/"
 
 [day03]
-date = "2/5"
+date = "2/3"
 
 [[day03.covers]]
 title = "Preliminaries 2: More data operations"
@@ -50,21 +47,21 @@ title = "Basic data plotting"
 notes = "bookdown-notes/basic-plotting-with-ggplot.html"
 
 [[day03.covers]]
-title = "Introduction to literate programming: Rmarkdown"
+title = "Introduction to literate programming: Notebooks"
 notes = "bookdown-notes/brief-introduction-to-rmarkdown.html"
 
 [day03.class_notes]
 link = "cmsc320_class-notes_20180201.pdf"
 
 [day04]
-date = "2/7"
+date = "2/5"
 
 [[day04.covers]]
 title = "Best Practices for Data Science Projects"
-notes = "slides/cmsc320_best-practices.pdf"
+# notes = "slides/cmsc320_best-practices.pdf"
 
 [day05]
-date = "2/12"
+date = "2/10"
 
 [[day05.covers]]
 title = "Data acquisition: loading and scraping"
@@ -78,99 +75,103 @@ notes = "bookdown-notes/text-and-dates.html"
 #[day05.class_notes]
 #link = "cmsc320_class-notes_20180208.pdf"
 
-[[day05.workdue]]
-title = "HW1: Datatypes and wrangling"
-link = "homeworks/datatypes_wrangling/"
+# [[day05.workdue]]
+# title = "HW1: Datatypes and wrangling"
+# link = "homeworks/datatypes_wrangling/"
 
 [day06]
-date = "2/14"
+date = "2/12"
 
-[[day07.covers]]
+[[day06.covers]]
 title = "Data representation models: The ER model"
 notes = "bookdown-notes/tidy-data-i-the-er-model.html"
 
-[[day08.covers]]
+[[day06.covers]]
 title = "SQL I: Single-table Queries"
 notes = "bookdown-notes/sql-i-single-table-queries.html"
 
-[[day08.covers]]
-title = "SQL examples with baseball (Rmarkdown file)"
-notes = "classroom-notes/sql_baseball.Rmd"
+# [[day08.covers]]
+# title = "SQL examples with baseball (Rmarkdown file)"
+# notes = "classroom-notes/sql_baseball.Rmd"
 
-[[day08.covers]]
-title = "SQL examples with baseball (rendered HTML file)"
-notes = "classroom-notes/sql_baseball.html"
+# [[day08.covers]]
+# title = "SQL examples with baseball (rendered HTML file)"
+# notes = "classroom-notes/sql_baseball.html"
 #[day06.class_notes]
 #link = "cmsc320_class-notes_20180213.pdf"
 
 [day07]
-date = "2/19"
+date = "2/17"
 
 
-[[day08.covers]]
+[[day07.covers]]
 title = "Relational data operations: Joins"
 notes = "bookdown-notes/two-table-operations.html"
 
-[[day09.covers]]
-title = "More SQL: data defintion, consistency and other constructs"
-notes = "bookdown-notes/sql-system-constructs.html"
+# [[day07.covers]]
+# title = "More SQL: data defintion, consistency and other constructs"
+# notes = "bookdown-notes/sql-system-constructs.html"
 
-[[day09.covers]]
+[[day07.covers]]
 title = "DB parting shots: query optimization and the JSON data model"
 notes = "bookdown-notes/db-parting-shots.html"
 
-[[day08.covers]]
-title = "Notebook: Building a complex SQL query"
-notes = "classroom-notes/sql_pr.html"
+# [[day08.covers]]
+# title = "Notebook: Building a complex SQL query"
+# notes = "classroom-notes/sql_pr.html"
 
 #[day07.class_notes]
 #link = "cmsc320_class-notes_20180213.pdf"
 
 [day08]
-date = "2/21"
+date = "2/19"
 
-[[day11.covers]]
+[[day08.covers]]
 title = "Entity Resolution and Record Linkage"
 notes = "bookdown-notes/entity-resolution-and-record-linkage.html"
 
-[[day11.covers]]
+[[day08.covers]]
 title = "Common operations for data tidying"
 notes = "bookdown-notes/tidying-data.html"
 
 [day08a]
-date = "2/25"
-[[day08a.workdue]]
-title = "HW2: ER Model and SQL"
-link = "homeworks/er_sql/"
+date = "2/24"
+
+[[day08a.covers]]
+title = "Representing and operating on network data"
+
+# [[day08a.workdue]]
+# title = "HW2: ER Model and SQL"
+# link = "homeworks/er_sql/"
 
 [day09]
 date = "2/26"
 
-[[day10.covers]]
+[[day09.covers]]
 title = "Midterm I catch-up and review"
-notes = "misc/midtermI_review.pdf"
+# notes = "misc/midtermI_review.pdf"
 
-[[day10.covers]]
-title = "Wrangling exercise"
-notes = "misc/wrangling_exercise.html"
+# [[day10.covers]]
+# title = "Wrangling exercise"
+# notes = "misc/wrangling_exercise.html"
 
-[[day11.covers]]
-title = "Iteration over rows in two data frames"
-notes = "misc/two_tables_example.html"
+# [[day11.covers]]
+# title = "Iteration over rows in two data frames"
+# notes = "misc/two_tables_example.html"
 
 #[day09.class_notes]
 #link = "cmsc320_class-notes_20180222.pdf"
 
 [day10]
-date = "2/28"
+date = "3/2"
 
-[[day12.covers]]
+[[day10.covers]]
 title = "Midterm I"
 
 [day11]
-date = "3/5"
+date = "3/4"
 
-[[day14.covers]]
+[[day11.covers]]
 title = "Exploratory Data Analysis 1: Visualization"
 notes = "bookdown-notes/exploratory-data-analysis-visualization.html"
 
@@ -178,142 +179,159 @@ notes = "bookdown-notes/exploratory-data-analysis-visualization.html"
 #link = "cmsc320_class-notes_20180301.pdf"
 
 [day12]
-date = "3/7"
+date = "3/9"
 
-[[day14.covers]]
+[[day12.covers]]
 title = "Exploratory Data Analysis 2: Summary statistics"
 notes = "bookdown-notes/exploratory-data-analysis-summary-statistics.html"
 
 #[day12.class_notes]
 #link = "cmsc320_class-notes_20180306.pdf"
 
-[day14a]
-date = "3/15"
+# [day14a]
+# date = "3/15"
 
-[[day14a.workdue]]
-title = "Project 1: Data scraping and cleaning"
-link = "projects/Project1/"
+# [[day14a.workdue]]
+# title = "Project 1: Data scraping and cleaning"
+# link = "projects/Project1/"
 
 [day13]
-date = "3/12"
+date = "3/11"
+
+# [[day13.covers]]
+# title = "Project questions (3:30-3:55)"
+
+# [[day13.covers]]
+# title = "Data Science Day: David Donoho Keynote Talk (ESJ 0202)"
+# notes = "https://datascienceday.math.umd.edu/home/agenda"
 
 [[day13.covers]]
-title = "Project questions (3:30-3:55)"
-
-[[day13.covers]]
-title = "Data Science Day: David Donoho Keynote Talk (ESJ 0202)"
-notes = "https://datascienceday.math.umd.edu/home/agenda"
-
-[[day15.covers]]
 title="Data transformations"
 notes = "bookdown-notes/eda-data-transformations.html"
 
-[[day16.covers]]
-title = "Handling missing data"
-notes = "bookdown-notes/eda-handling-missing-data.html"
 
 #[day13.class_notes]
 #link = "cmsc320_class-notes_20180308.pdf"
 
-[day14]
-date = "3/14"
+[day13a]
+date = "3/16"
 
-[[day18.covers]]
-title = "Univariate distributions and statistics"
-notes = "bookdown-notes/univariate-distributions-and-statistics.html"
+[[day13a.covers]]
+title = "SPRING BREAK"
+
+[day13b]
+date = "3/18"
+
+[[day13b.covers]]
+title = "SPRING BREAK"
+
+
+[day14]
+date = "3/23"
+
+[[day14.covers]]
+title = "Handling missing data"
+notes = "bookdown-notes/eda-handling-missing-data.html"
+
 
 #[day14.class_notes]
 #link = "cmsc320_class-notes_20180314.pdf"
 
 [day15]
-date = "3/26"
+date = "3/25"
 
-[day16a]
-date = "4/1"
+[[day15.covers]]
+title = "Univariate distributions and statistics"
+notes = "bookdown-notes/univariate-distributions-and-statistics.html"
 
-#[[day15a.workdue]]
-#title = "Project 1: Data scraping and cleaning"
-#link = "projects/project1/"
-
-[[day16a.workdue]]
-title = "Homework 3: Data Transformations"
-link = "homeworks/transformations/"
-
-[day16]
-date = "3/28"
-
-[[day19.covers]]
+[[day15.covers]]
 title = "Experiment design and hypothesis testing"
 notes = "bookdown-notes/experiment-design-and-hypothesis-testing.html"
+
+# [day16a]
+# date = "4/1"
+
+# #[[day15a.workdue]]
+# #title = "Project 1: Data scraping and cleaning"
+# #link = "projects/project1/"
+
+# [[day16a.workdue]]
+# title = "Homework 3: Data Transformations"
+# link = "homeworks/transformations/"
+
+[day16]
+date = "3/30"
+
+[[day16.covers]]
+title = "Multivariate probability and statistics"
+notes = "bookdown-notes/multivariate-probability.html"
+
+[[day16.covers]]
+title = "Data Analysis with Geometry"
+notes = "bookdown-notes/data-analysis-with-geometry.html"
 
 #[day16.class_notes]
 #link = "cmsc320_class-notes_20180327.pdf"
 
 # out for simons
 [day17]
-date = "4/2"
+date = "4/1"
 
 [[day17.covers]]
-title = "Guest Lecture: What is big data and big data systems with examples from AWS. Prem Saggar, Chief Data Scientist, Defense Intelligence Agency"
-
-[[day19a.covers]]
-title = "Multivariate probability and statistics"
-notes = "bookdown-notes/multivariate-probability.html"
+title = "Linear models for regression"
+notes = "bookdown-notes/linear-regression.html"
 
 #[day17.class_notes]
 #link = "cmsc320_class-notes_20180329.pdf"
 
 [day18]
-date = "4/4"
+date = "4/6"
 
-[[day19a.covers]]
-title = "Data Analysis with Geometry"
-notes = "bookdown-notes/data-analysis-with-geometry.html"
+[[day18.covers]]
+title = "Linear models for classification"
+notes = "bookdown-notes/linear-models-for-classification.html"
 
 #[day18.class_notes]
 #link = "cmsc320_class-notes_20180403.pdf"
 
-[day18a]
-date = "4/5"
+# [day18a]
+# date = "4/5"
 
-[[day18a.workdue]]
-title = "Project 2: Data Wrangling and EDA" 
-link = "projects/project2/"
+# [[day18a.workdue]]
+# title = "Project 2: Data Wrangling and EDA" 
+# link = "projects/project2/"
 
 [day19]
-date = "4/9"
+date = "4/8"
 
-[[day20.covers]]
-title = "Linear models for regression"
-notes = "bookdown-notes/linear-regression.html"
+[[day19.covers]]
+title = "Solving linear ML problems"
+notes = "bookdown-notes/solving-linear-ml-problems.html"
 
 #[day19.class_notes]
 #link = "cmsc320_class-notes_20180405.pdf"
 
-[day19a]
-date = "4/11"
-
 [day20]
-date = "4/16"
+date = "4/13"
 
-[[day22.covers]]
-title = "Linear models for classification"
-notes = "bookdown-notes/linear-models-for-classification.html"
+[[day20.covers]]
+title = "Non-linear models for regression and classification: Trees"
+notes = "bookdown-notes/tree-based-methods.html"
 
 #[day20.class_notes]
 #link = "cmsc320_class-notes_20180410.pdf"
 
-# out for bio-it
+# out for daghstul
 [day21]
-date = "4/18"
+date = "4/15"
 
 [[day21.covers]]
-title = "Solving linear ML problems"
-notes = "bookdown-notes/solving-linear-ml-problems.html"
+title = "Midterm II catch-up and review"
+notes = "misc/midtermII_review.pdf"
 
-[[day20.workdue]]
-title = "Homework 4: A/B Testing"
-link = "homeworks/ab_testing/"
+# [[day20.workdue]]
+# title = "Homework 4: A/B Testing"
+# link = "homeworks/ab_testing/"
 
 #[day21.class_notes]
 #link = "cmsc320_class-notes_20180412.pdf"
@@ -323,64 +341,61 @@ link = "homeworks/ab_testing/"
 # link = "projects/Project2/"
 
 [day22]
-date = "4/23"
+date = "4/20"
 
-[[day25.covers]]
-title = "Non-linear models for regression and classification: Trees"
-notes = "bookdown-notes/tree-based-methods.html"
+[[day22.covers]]
+title = "Midterm II"
 
-#[[day22.covers]]
-#title = "Non-linear models for regression and classification: K-Nearest Neighbors"
-# notes = "lecture-note/svms/"
+# [[day22.covers]]
+# title = "In class exercise: classification"
+# notes = "misc/prediction_metrics.pdf"
 
-[day21a]
-date = "4/19"
+# [[day22.covers]]
+# title = "In class discussion: gradient descent for logistic regression"
+# notes = "bookdown-notes/solving-linear-ml-problems.html#logistic-regression-1"
 
-[[day21a.workdue]]
-title = "Homework 5: Regression Interpretation"
-link = "homeworks/regression/"
+#[day23.class_notes]
+#link = "cmsc320_class-notes_20180419.pdf"
+
+
+# [day21a]
+# date = "4/19"
+
+# [[day21a.workdue]]
+# title = "Homework 5: Regression Interpretation"
+# link = "homeworks/regression/"
 
 #[day22.class_notes]
 #link = "cmsc320_class-notes_20180417.pdf"
 
 [day23]
-date = "4/25"
+date = "4/22"
 
-[[day23.covers]]
-title = "Midterm II catch-up and review"
-notes = "misc/midtermII_review.pdf"
-
-[[day23.covers]]
-title = "In class exercise: classification"
-notes = "misc/prediction_metrics.pdf"
-
-[[day23.covers]]
-title = "In class discussion: gradient descent for logistic regression"
-notes = "bookdown-notes/solving-linear-ml-problems.html#logistic-regression-1"
-
-#[day23.class_notes]
-#link = "cmsc320_class-notes_20180419.pdf"
-
-[day24]
-date = "4/30"
-
-[[day24.covers]]
-title = "Midterm II"
-
-[day25]
-date = "5/2"
-
-[[day25. covers]]
+[[day23. covers]]
 title = "Random Forests"
 notes = "bookdown-notes/tree-based-methods.html"
 
-#[[day25.covers]]
-#title = "Classification Metrics"
-#notes = "bookdown-notes/linear-models-for-classification.html"
+# [[day22.covers]]
+# title = "Non-linear models for regression and classification: K-Nearest Neighbors"
+# notes = "lecture-note/svms/"
 
-[[day26.covers]]
+[day24]
+date = "4/27"
+
+[[day24.covers]]
+title = "Classification Metrics"
+notes = "bookdown-notes/linear-models-for-classification.html"
+
+[[day24.covers]]
 title = "Model evaluation using resampling"
 notes = "bookdown-notes/model-selection.html"
+
+[day25]
+date = "4/29"
+
+[[day25.covers]]
+title = "Unsupervised Learning: Clustering"
+notes = "bookdown-notes/unsupervised-learning-clustering.html"
 
 #[day25.class_notes]
 #link = "cmsc320_class-notes_20180426.pdf"
@@ -388,32 +403,22 @@ notes = "bookdown-notes/model-selection.html"
 # [[day24.covers]]
 # title = "Project 3 Discussion: matrix representation of learning problems, maximum likelihood and logistic regression"
 
-[day25a]
-date = "5/6"
+# [day25a]
+# date = "5/6"
 
-[[day25a.workdue]]
-title = "Project 3: Regression and Classification"
-link = "projects/project3/"
+# [[day25a.workdue]]
+# title = "Project 3: Regression and Classification"
+# link = "projects/project3/"
 
 [day26]
-date = "5/7"
+date = "5/4"
 
 [[day26.covers]]
-title = "Unsupervised Learning: Clustering"
-notes = "bookdown-notes/unsupervised-learning-clustering.html"
-
-#[day26.class_notes]
-#link = "cmsc320_class-notes_20180501.pdf"
+title = "Unsupervised Learning: Dimensionality Reduction"
+notes = "bookdown-notes/unsupervised-learning-dimensionality-reduction.html"
 
 [day27]
-date = "5/9"
-
-[[day27.covers]]
-#title = "Unsupervised Learning: Dimensionality Reduction"
-#notes = "bookdown-notes/unsupervised-learning-dimensionality-reduction.html"
-
-[day28]
-date = "5/14"
+date = "5/6"
 
 [[day27.covers]]
 title = "Writing about data, analysis and inferences"
@@ -427,8 +432,11 @@ notes = "slides/cmsc320_presentation.pdf"
 title = "Introduction to interactive data visualization"
 notes = "slides/cmsc320_interactive-vis.pdf"
 
-#[day29]
-#date = "5/14"
+#[day26.class_notes]
+#link = "cmsc320_class-notes_20180501.pdf"
+
+[day28]
+date = "5/11"
 
 [[day28.covers]]
 title = "The Keras way to (deep) learn"
@@ -438,23 +446,29 @@ notes = "slides/cmsc320_deeplearn.pdf"
 title = "Course wrapup and perspective"
 notes = "slides/cmsc320_wrapup.pdf"
 
-[[day28.workdue]]
-title = "Project 4: Interactive data maps"
-link = "projects/project4/"
+# [day28]
+# date = "5/14"
 
-[day29]
-date = "5/17"
+#[day29]
+#date = "5/14"
 
-[[day29.workdue]]
-title = "Bonus Project: Classification"
-link = "projects/bonus_project/"
+# [[day28.workdue]]
+# title = "Project 4: Interactive data maps"
+# link = "projects/project4/"
 
-[day30]
-date = "5/22"
+# [day29]
+# date = "5/17"
 
-[[day30.workdue]]
-title = "Final Project (due 12:30pm)"
-link = "projects/final_project/"
+# [[day29.workdue]]
+# title = "Bonus Project: Classification"
+# link = "projects/bonus_project/"
+
+# [day30]
+# date = "5/22"
+
+# [[day30.workdue]]
+# title = "Final Project (due 12:30pm)"
+# link = "projects/final_project/"
 
 # [day29]
 # date = "12/2"
