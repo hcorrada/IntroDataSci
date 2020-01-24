@@ -16,9 +16,6 @@ title: CMSC320 Resources
 
 ## Python
 
-We will be using [Python](http://www.python.org/) for all programming projects. Here are some resources
-to get you started:
-
 *	[Python Tutorial](http://docs.python.org/tutorial/)  
 *	[Python Docs](http://docs.python.org/index.html)  
 * [DataCamp Intro to Python](https://www.datacamp.com/courses/intro-to-python-for-data-science)
