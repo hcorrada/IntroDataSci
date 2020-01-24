@@ -41,8 +41,8 @@ ignorefiles = [ "lecture-note/.*" ]
     	code = "Roboto Mono"
 
  [params.links]
-      elms = "https://umd.instructure.com/courses/1257097"
-      piazza = "https://piazza.com/class/jrgmq242247377"
+      elms = "https://umd.instructure.com/courses/1275267"
+      piazza = "https://piazza.com/class/k5skcnj3ofj4so"
 
 [social]
 	twitter = "hcorrada"
@@ -54,8 +54,8 @@ ignorefiles = [ "lecture-note/.*" ]
   weight = 5
 
 [[menu.main]]
-	name   = "Logistics"
-	url    = "logistics/"
+	name   = "Syllabus"
+	url    = "syllabus/"
 	weight = 10
 
 [[menu.main]]
