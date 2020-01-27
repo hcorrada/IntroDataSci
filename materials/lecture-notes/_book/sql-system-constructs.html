@@ -184,6 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.11" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.1.11</b> R packages</a></li>
 <li class="chapter" data-level="4.1.12" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.1.12</b> Additional R resources</a></li>
 <li class="chapter" data-level="4.1.13" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.1.13</b> Literate Programming</a></li>
+<li class="chapter" data-level="4.1.14" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#course-packages"><i class="fa fa-check"></i><b>4.1.14</b> Course packages</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#pythonjupyter"><i class="fa fa-check"></i><b>4.2</b> Python/Jupyter</a></li>
 </ul></li>
@@ -533,28 +534,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="sql-as-a-data-definition-language" class="section level2">
 <h2><span class="header-section-number">14.1</span> SQL as a Data Definition Language</h2>
 <p>The Structured Query Language (SQL) is both a <em>Data Definition Language</em> and a <em>Data Manipulation Language</em></p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb135-1" data-line-number="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span> &lt;name&gt; ( &lt;field&gt; &lt;domain&gt;, ... )</a>
-<a class="sourceLine" id="cb135-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb135-3" data-line-number="3"><span class="kw">INSERT</span> <span class="kw">INTO</span> &lt;name&gt; (&lt;field names&gt;) <span class="kw">VALUES</span> (&lt;field values&gt;)</a>
-<a class="sourceLine" id="cb135-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb135-5" data-line-number="5"><span class="kw">DELETE</span> <span class="kw">FROM</span> &lt;name&gt; <span class="kw">WHERE</span> &lt;condition&gt;</a>
-<a class="sourceLine" id="cb135-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb135-7" data-line-number="7"><span class="kw">UPDATE</span> &lt;name&gt; <span class="kw">SET</span> &lt;field name&gt; = &lt;value&gt; <span class="kw">WHERE</span> &lt;condition&gt;</a>
-<a class="sourceLine" id="cb135-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb135-9" data-line-number="9"><span class="kw">SELECT</span> &lt;fields&gt; <span class="kw">FROM</span> &lt;name&gt; <span class="kw">WHERE</span> &lt;condition&gt;</a></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb136-1" data-line-number="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span> &lt;name&gt; ( &lt;field&gt; &lt;domain&gt;, ... )</a>
+<a class="sourceLine" id="cb136-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb136-3" data-line-number="3"><span class="kw">INSERT</span> <span class="kw">INTO</span> &lt;name&gt; (&lt;field names&gt;) <span class="kw">VALUES</span> (&lt;field values&gt;)</a>
+<a class="sourceLine" id="cb136-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb136-5" data-line-number="5"><span class="kw">DELETE</span> <span class="kw">FROM</span> &lt;name&gt; <span class="kw">WHERE</span> &lt;condition&gt;</a>
+<a class="sourceLine" id="cb136-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb136-7" data-line-number="7"><span class="kw">UPDATE</span> &lt;name&gt; <span class="kw">SET</span> &lt;field name&gt; = &lt;value&gt; <span class="kw">WHERE</span> &lt;condition&gt;</a>
+<a class="sourceLine" id="cb136-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb136-9" data-line-number="9"><span class="kw">SELECT</span> &lt;fields&gt; <span class="kw">FROM</span> &lt;name&gt; <span class="kw">WHERE</span> &lt;condition&gt;</a></code></pre></div>
 <p>We can create tables and specify primary key attributes which enforce integrity constraints at the system level</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb136-1" data-line-number="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span> customer (</a>
-<a class="sourceLine" id="cb136-2" data-line-number="2">  ssn <span class="dt">CHAR</span>(<span class="dv">9</span>) <span class="kw">PRIMARY</span> <span class="kw">KEY</span>, </a>
-<a class="sourceLine" id="cb136-3" data-line-number="3">  cname <span class="dt">CHAR</span>(<span class="dv">15</span>), address <span class="dt">CHAR</span>(<span class="dv">30</span>), city <span class="dt">CHAR</span>(<span class="dv">10</span>), </a>
-<a class="sourceLine" id="cb136-4" data-line-number="4">  <span class="kw">UNIQUE</span> (cname, address, city)); </a></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb137-1" data-line-number="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span> customer (</a>
+<a class="sourceLine" id="cb137-2" data-line-number="2">  ssn <span class="dt">CHAR</span>(<span class="dv">9</span>) <span class="kw">PRIMARY</span> <span class="kw">KEY</span>, </a>
+<a class="sourceLine" id="cb137-3" data-line-number="3">  cname <span class="dt">CHAR</span>(<span class="dv">15</span>), address <span class="dt">CHAR</span>(<span class="dv">30</span>), city <span class="dt">CHAR</span>(<span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb137-4" data-line-number="4">  <span class="kw">UNIQUE</span> (cname, address, city)); </a></code></pre></div>
 <p>Attribute constraints: Constraints on the values of attributes</p>
 <p><code>bname char(15) not null</code></p>
 <p><code>balance int not null, check (balance &gt;= 0)</code></p>
 <ul>
 <li>Referential integrity: prevent dangling tuples</li>
 </ul>
-<div class="sourceCode" id="cb137"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb137-1" data-line-number="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span>  branch(bname <span class="dt">CHAR</span>(<span class="dv">15</span>) <span class="kw">PRIMARY</span> <span class="kw">KEY</span>, ...);</a>
-<a class="sourceLine" id="cb137-2" data-line-number="2"><span class="kw">CREATE</span> <span class="kw">TABLE</span> loan(..., <span class="kw">FOREIGN</span> <span class="kw">KEY</span> bname <span class="kw">REFERENCES</span> branch);</a></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb138-1" data-line-number="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span>  branch(bname <span class="dt">CHAR</span>(<span class="dv">15</span>) <span class="kw">PRIMARY</span> <span class="kw">KEY</span>, ...);</a>
+<a class="sourceLine" id="cb138-2" data-line-number="2"><span class="kw">CREATE</span> <span class="kw">TABLE</span> loan(..., <span class="kw">FOREIGN</span> <span class="kw">KEY</span> bname <span class="kw">REFERENCES</span> branch);</a></code></pre></div>
 <ul>
 <li><p>Can tell the system what to do if a referenced tuple is being deleted</p></li>
 <li>Global Constraints
@@ -562,60 +563,60 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Single-table</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb138"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb138-1" data-line-number="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span> branch (...,</a>
-<a class="sourceLine" id="cb138-2" data-line-number="2">  bcity  <span class="dt">CHAR</span>(<span class="dv">15</span>), </a>
-<a class="sourceLine" id="cb138-3" data-line-number="3">  assets <span class="dt">INT</span>, </a>
-<a class="sourceLine" id="cb138-4" data-line-number="4">  <span class="kw">CHECK</span> (<span class="kw">NOT</span>(bcity = ‘Bkln’) <span class="kw">OR</span> assets &gt; 5M))</a></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span> branch (...,</a>
+<a class="sourceLine" id="cb139-2" data-line-number="2">  bcity  <span class="dt">CHAR</span>(<span class="dv">15</span>), </a>
+<a class="sourceLine" id="cb139-3" data-line-number="3">  assets <span class="dt">INT</span>, </a>
+<a class="sourceLine" id="cb139-4" data-line-number="4">  <span class="kw">CHECK</span> (<span class="kw">NOT</span>(bcity = ‘Bkln’) <span class="kw">OR</span> assets &gt; 5M))</a></code></pre></div>
 <ul>
 <li>Multi-table</li>
 </ul>
-<div class="sourceCode" id="cb139"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="kw">CREATE</span> <span class="kw">ASSERTION</span> loan-constraint</a>
-<a class="sourceLine" id="cb139-2" data-line-number="2">  <span class="kw">CHECK</span> (<span class="kw">NOT</span> <span class="kw">EXISTS</span> (</a>
-<a class="sourceLine" id="cb139-3" data-line-number="3">    <span class="kw">SELECT</span>   * </a>
-<a class="sourceLine" id="cb139-4" data-line-number="4">    <span class="kw">FROM</span> loan <span class="kw">AS</span> L</a>
-<a class="sourceLine" id="cb139-5" data-line-number="5">    <span class="kw">WHERE</span>  <span class="kw">NOT</span> <span class="kw">EXISTS</span>(</a>
-<a class="sourceLine" id="cb139-6" data-line-number="6">      <span class="kw">SELECT</span>   *</a>
-<a class="sourceLine" id="cb139-7" data-line-number="7">      <span class="kw">FROM</span> borrower B, depositor D, <span class="kw">account</span> A</a>
-<a class="sourceLine" id="cb139-8" data-line-number="8">      <span class="kw">WHERE</span> B.cname = D.cname  <span class="kw">AND</span></a>
-<a class="sourceLine" id="cb139-9" data-line-number="9">        D.acct_no = A.acct_no  <span class="kw">AND</span></a>
-<a class="sourceLine" id="cb139-10" data-line-number="10">        L.lno  = B.lno)))</a></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb140-1" data-line-number="1"><span class="kw">CREATE</span> <span class="kw">ASSERTION</span> loan-constraint</a>
+<a class="sourceLine" id="cb140-2" data-line-number="2">  <span class="kw">CHECK</span> (<span class="kw">NOT</span> <span class="kw">EXISTS</span> (</a>
+<a class="sourceLine" id="cb140-3" data-line-number="3">    <span class="kw">SELECT</span>   * </a>
+<a class="sourceLine" id="cb140-4" data-line-number="4">    <span class="kw">FROM</span> loan <span class="kw">AS</span> L</a>
+<a class="sourceLine" id="cb140-5" data-line-number="5">    <span class="kw">WHERE</span>  <span class="kw">NOT</span> <span class="kw">EXISTS</span>(</a>
+<a class="sourceLine" id="cb140-6" data-line-number="6">      <span class="kw">SELECT</span>   *</a>
+<a class="sourceLine" id="cb140-7" data-line-number="7">      <span class="kw">FROM</span> borrower B, depositor D, <span class="kw">account</span> A</a>
+<a class="sourceLine" id="cb140-8" data-line-number="8">      <span class="kw">WHERE</span> B.cname = D.cname  <span class="kw">AND</span></a>
+<a class="sourceLine" id="cb140-9" data-line-number="9">        D.acct_no = A.acct_no  <span class="kw">AND</span></a>
+<a class="sourceLine" id="cb140-10" data-line-number="10">        L.lno  = B.lno)))</a></code></pre></div>
 </div>
 <div id="set-operations-and-comparisons" class="section level2">
 <h2><span class="header-section-number">14.2</span> Set Operations and Comparisons</h2>
 <ul>
 <li>Set operations</li>
 </ul>
-<div class="sourceCode" id="cb140"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb140-1" data-line-number="1"><span class="kw">select</span> name </a>
-<a class="sourceLine" id="cb140-2" data-line-number="2"><span class="kw">from</span> movieExec</a>
-<a class="sourceLine" id="cb140-3" data-line-number="3">union/intersect/minus</a>
-<a class="sourceLine" id="cb140-4" data-line-number="4"><span class="kw">select</span> name </a>
-<a class="sourceLine" id="cb140-5" data-line-number="5"><span class="kw">from</span> movieStar</a></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb141-1" data-line-number="1"><span class="kw">select</span> name </a>
+<a class="sourceLine" id="cb141-2" data-line-number="2"><span class="kw">from</span> movieExec</a>
+<a class="sourceLine" id="cb141-3" data-line-number="3">union/intersect/minus</a>
+<a class="sourceLine" id="cb141-4" data-line-number="4"><span class="kw">select</span> name </a>
+<a class="sourceLine" id="cb141-5" data-line-number="5"><span class="kw">from</span> movieStar</a></code></pre></div>
 <ul>
 <li>Set Comparisons</li>
 </ul>
-<div class="sourceCode" id="cb141"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb141-1" data-line-number="1"><span class="kw">select</span> *</a>
-<a class="sourceLine" id="cb141-2" data-line-number="2"><span class="kw">from</span> movies</a>
-<a class="sourceLine" id="cb141-3" data-line-number="3"><span class="kw">where</span> <span class="dt">year</span> <span class="kw">in</span> [<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>];</a>
-<a class="sourceLine" id="cb141-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb141-5" data-line-number="5"><span class="kw">select</span> *</a>
-<a class="sourceLine" id="cb141-6" data-line-number="6"><span class="kw">from</span> movies</a>
-<a class="sourceLine" id="cb141-7" data-line-number="7"><span class="kw">where</span> <span class="dt">year</span> <span class="kw">not</span> <span class="kw">in</span> (</a>
-<a class="sourceLine" id="cb141-8" data-line-number="8">  <span class="kw">select</span> <span class="fu">extract</span>(<span class="dt">year</span> <span class="kw">from</span> birthdate) </a>
-<a class="sourceLine" id="cb141-9" data-line-number="9">  <span class="kw">from</span> MovieStar</a>
-<a class="sourceLine" id="cb141-10" data-line-number="10">);</a></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="kw">select</span> *</a>
+<a class="sourceLine" id="cb142-2" data-line-number="2"><span class="kw">from</span> movies</a>
+<a class="sourceLine" id="cb142-3" data-line-number="3"><span class="kw">where</span> <span class="dt">year</span> <span class="kw">in</span> [<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>];</a>
+<a class="sourceLine" id="cb142-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb142-5" data-line-number="5"><span class="kw">select</span> *</a>
+<a class="sourceLine" id="cb142-6" data-line-number="6"><span class="kw">from</span> movies</a>
+<a class="sourceLine" id="cb142-7" data-line-number="7"><span class="kw">where</span> <span class="dt">year</span> <span class="kw">not</span> <span class="kw">in</span> (</a>
+<a class="sourceLine" id="cb142-8" data-line-number="8">  <span class="kw">select</span> <span class="fu">extract</span>(<span class="dt">year</span> <span class="kw">from</span> birthdate) </a>
+<a class="sourceLine" id="cb142-9" data-line-number="9">  <span class="kw">from</span> MovieStar</a>
+<a class="sourceLine" id="cb142-10" data-line-number="10">);</a></code></pre></div>
 </div>
 <div id="views" class="section level2">
 <h2><span class="header-section-number">14.3</span> Views</h2>
-<div class="sourceCode" id="cb142"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="kw">create</span> <span class="kw">view</span> DisneyMovies</a>
-<a class="sourceLine" id="cb142-2" data-line-number="2"><span class="kw">select</span> *</a>
-<a class="sourceLine" id="cb142-3" data-line-number="3"><span class="kw">from</span> movie m</a>
-<a class="sourceLine" id="cb142-4" data-line-number="4"><span class="kw">where</span> m.studioname = <span class="st">&#39;disney&#39;</span>;</a></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw">create</span> <span class="kw">view</span> DisneyMovies</a>
+<a class="sourceLine" id="cb143-2" data-line-number="2"><span class="kw">select</span> *</a>
+<a class="sourceLine" id="cb143-3" data-line-number="3"><span class="kw">from</span> movie m</a>
+<a class="sourceLine" id="cb143-4" data-line-number="4"><span class="kw">where</span> m.studioname = <span class="st">&#39;disney&#39;</span>;</a></code></pre></div>
 <p>Can use it in any place where a tablename is used. Views are used quite extensively to: (1) simplify queries, (2) hide data (by giving users access only to specific views). Views may be <em>materialized</em> or not.</p>
 </div>
 <div id="nulls" class="section level2">
 <h2><span class="header-section-number">14.4</span> NULLs</h2>
 <p>Value of any attribute can be NULL if value is unknown, or it is not applicable, or hidden, etc. It can lead to counterintuitive behavior. For example, the following query does not return movies where <code>length = NULL</code></p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw">select</span> * <span class="kw">from</span> movies <span class="kw">where</span> <span class="fu">length</span> &gt;= <span class="dv">120</span> <span class="kw">or</span> <span class="fu">length</span> &lt;= <span class="dv">120</span>`</a></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="kw">select</span> * <span class="kw">from</span> movies <span class="kw">where</span> <span class="fu">length</span> &gt;= <span class="dv">120</span> <span class="kw">or</span> <span class="fu">length</span> &lt;= <span class="dv">120</span>`</a></code></pre></div>
 <p>Aggregate operations can be especially tricky when NULLs are present.</p>
 
 </div>

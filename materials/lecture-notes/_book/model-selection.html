@@ -184,6 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.11" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.1.11</b> R packages</a></li>
 <li class="chapter" data-level="4.1.12" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.1.12</b> Additional R resources</a></li>
 <li class="chapter" data-level="4.1.13" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.1.13</b> Literate Programming</a></li>
+<li class="chapter" data-level="4.1.14" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#course-packages"><i class="fa fa-check"></i><b>4.1.14</b> Course packages</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#pythonjupyter"><i class="fa fa-check"></i><b>4.2</b> Python/Jupyter</a></li>
 </ul></li>
@@ -527,34 +528,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s look at our running example using automobile data, where we want to build a
 regression model capable of predicting miles per gallon given other auto attributes.
 We saw in previous lectures that a linear regression model was not appropriate for this dataset. So instead we will use <em>polynomial</em> regression as an illustrative example.</p>
-<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb449-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb449-2" data-line-number="2"><span class="kw">library</span>(ISLR)</a>
-<a class="sourceLine" id="cb449-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb449-4" data-line-number="4"><span class="kw">data</span>(Auto)</a>
-<a class="sourceLine" id="cb449-5" data-line-number="5"><span class="kw">ggplot</span>(Auto, <span class="kw">aes</span>(<span class="dt">x=</span>horsepower, <span class="dt">y=</span>mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb450-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb450-2" data-line-number="2"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb450-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb450-4" data-line-number="4"><span class="kw">data</span>(Auto)</a>
+<a class="sourceLine" id="cb450-5" data-line-number="5"><span class="kw">ggplot</span>(Auto, <span class="kw">aes</span>(<span class="dt">x=</span>horsepower, <span class="dt">y=</span>mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>()</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-247-1.svg" width="672" /></p>
 <p>In this case our regression model (for a single predictor <span class="math inline">\(x\)</span>) is given as a <span class="math inline">\(d\)</span> degree polynomial.</p>
 <p><span class="math display">\[
 \mathbb{E}[Y|X=x] = \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_d x^d
 \]</span></p>
 <p>In the <em>Model Selection</em> case, we want to decide what degree <span class="math inline">\(d\)</span> we should use to model this data. Using the <em>validation set</em> method, we split our data into a training set, fit the regression model with different polynomial degrees <span class="math inline">\(d\)</span> on the training set, and measure test error on the validation set.</p>
-<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb450-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1234</span>)</a>
-<a class="sourceLine" id="cb450-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb450-3" data-line-number="3">in_validation &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(Auto), <span class="kw">nrow</span>(Auto)<span class="op">/</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb450-4" data-line-number="4">validation_set &lt;-<span class="st"> </span>Auto[in_validation,]</a>
-<a class="sourceLine" id="cb450-5" data-line-number="5">training_set &lt;-<span class="st"> </span>Auto[<span class="op">-</span>in_validation,]</a>
-<a class="sourceLine" id="cb450-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb450-7" data-line-number="7"><span class="kw">library</span>(broom)</a>
-<a class="sourceLine" id="cb450-8" data-line-number="8"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb450-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb450-10" data-line-number="10">degrees &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb450-11" data-line-number="11">error_rates &lt;-<span class="st"> </span><span class="kw">sapply</span>(degrees, <span class="cf">function</span>(deg) {</a>
-<a class="sourceLine" id="cb450-12" data-line-number="12">  fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span><span class="kw">poly</span>(horsepower, <span class="dt">degree=</span>deg), <span class="dt">data=</span>training_set)</a>
-<a class="sourceLine" id="cb450-13" data-line-number="13">  predicted &lt;-<span class="st"> </span><span class="kw">predict</span>(fit, <span class="dt">newdata=</span>validation_set)</a>
-<a class="sourceLine" id="cb450-14" data-line-number="14">  <span class="kw">mean</span>((validation_set<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span>predicted)<span class="op">^</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb450-15" data-line-number="15">})</a>
-<a class="sourceLine" id="cb450-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb450-17" data-line-number="17"><span class="kw">plot</span>(degrees, error_rates, <span class="dt">type=</span><span class="st">&quot;b&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Polynomial Degree&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Mean Squared Error&quot;</span>, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">lwd=</span><span class="fl">1.4</span>, <span class="dt">cex=</span><span class="fl">1.4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb451-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1234</span>)</a>
+<a class="sourceLine" id="cb451-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb451-3" data-line-number="3">in_validation &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(Auto), <span class="kw">nrow</span>(Auto)<span class="op">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb451-4" data-line-number="4">validation_set &lt;-<span class="st"> </span>Auto[in_validation,]</a>
+<a class="sourceLine" id="cb451-5" data-line-number="5">training_set &lt;-<span class="st"> </span>Auto[<span class="op">-</span>in_validation,]</a>
+<a class="sourceLine" id="cb451-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb451-7" data-line-number="7"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb451-8" data-line-number="8"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb451-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb451-10" data-line-number="10">degrees &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb451-11" data-line-number="11">error_rates &lt;-<span class="st"> </span><span class="kw">sapply</span>(degrees, <span class="cf">function</span>(deg) {</a>
+<a class="sourceLine" id="cb451-12" data-line-number="12">  fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span><span class="kw">poly</span>(horsepower, <span class="dt">degree=</span>deg), <span class="dt">data=</span>training_set)</a>
+<a class="sourceLine" id="cb451-13" data-line-number="13">  predicted &lt;-<span class="st"> </span><span class="kw">predict</span>(fit, <span class="dt">newdata=</span>validation_set)</a>
+<a class="sourceLine" id="cb451-14" data-line-number="14">  <span class="kw">mean</span>((validation_set<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span>predicted)<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb451-15" data-line-number="15">})</a>
+<a class="sourceLine" id="cb451-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb451-17" data-line-number="17"><span class="kw">plot</span>(degrees, error_rates, <span class="dt">type=</span><span class="st">&quot;b&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Polynomial Degree&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Mean Squared Error&quot;</span>, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">lwd=</span><span class="fl">1.4</span>, <span class="dt">cex=</span><span class="fl">1.4</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-248-1.svg" width="672" /></p>
 </div>
 <div id="resampled-validation-set" class="section level2">
@@ -604,42 +605,42 @@ CV_{(k)} = \frac{1}{k} \sum_i MSE_i
 <div id="comparing-models-using-cross-validation" class="section level2">
 <h2><span class="header-section-number">32.7</span> Comparing models using cross-validation</h2>
 <p>Suppose you want to compare two classification models (logistic regression vs. a decision tree) on the <code>Default</code> dataset. We can use Cross-Validation to determine if one model is better than the other, using a paired <span class="math inline">\(t\)</span>-test for example.</p>
-<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb451-1" data-line-number="1"><span class="kw">library</span>(ISLR)</a>
-<a class="sourceLine" id="cb451-2" data-line-number="2"><span class="kw">library</span>(cvTools)</a>
-<a class="sourceLine" id="cb451-3" data-line-number="3"><span class="kw">library</span>(tree)</a>
-<a class="sourceLine" id="cb451-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb451-5" data-line-number="5"><span class="kw">data</span>(Default)</a>
-<a class="sourceLine" id="cb451-6" data-line-number="6">fold_indices &lt;-<span class="st"> </span><span class="kw">cvFolds</span>(<span class="dt">n=</span><span class="kw">nrow</span>(Default), <span class="dt">K=</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb451-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb451-8" data-line-number="8">error_rates &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="cf">function</span>(fold_index) {</a>
-<a class="sourceLine" id="cb451-9" data-line-number="9">  test_indices &lt;-<span class="st"> </span><span class="kw">which</span>(fold_indices<span class="op">$</span>which <span class="op">==</span><span class="st"> </span>fold_index)</a>
-<a class="sourceLine" id="cb451-10" data-line-number="10">  test_set &lt;-<span class="st"> </span>Default[test_indices,]</a>
-<a class="sourceLine" id="cb451-11" data-line-number="11">  train_set &lt;-<span class="st"> </span>Default[<span class="op">-</span>test_indices,]</a>
-<a class="sourceLine" id="cb451-12" data-line-number="12">  </a>
-<a class="sourceLine" id="cb451-13" data-line-number="13">  logis_fit &lt;-<span class="st"> </span><span class="kw">glm</span>(default<span class="op">~</span>., <span class="dt">data=</span>train_set, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</a>
-<a class="sourceLine" id="cb451-14" data-line-number="14">  logis_pred &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(logis_fit, <span class="dt">newdata=</span>test_set, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)</a>
-<a class="sourceLine" id="cb451-15" data-line-number="15">  logis_error &lt;-<span class="st"> </span><span class="kw">mean</span>(test_set<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>logis_pred)</a>
-<a class="sourceLine" id="cb451-16" data-line-number="16">  </a>
-<a class="sourceLine" id="cb451-17" data-line-number="17">  tree_fit &lt;-<span class="st"> </span><span class="kw">tree</span>(default<span class="op">~</span>., <span class="dt">data=</span>train_set)</a>
-<a class="sourceLine" id="cb451-18" data-line-number="18">  pruned_tree &lt;-<span class="st"> </span><span class="kw">prune.tree</span>(tree_fit, <span class="dt">best=</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb451-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb451-20" data-line-number="20">  tree_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(pruned_tree, <span class="dt">newdata=</span>test_set, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)</a>
-<a class="sourceLine" id="cb451-21" data-line-number="21">  tree_error &lt;-<span class="st"> </span><span class="kw">mean</span>(test_set<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>tree_pred)</a>
-<a class="sourceLine" id="cb451-22" data-line-number="22">  <span class="kw">c</span>(logis_error, tree_error)</a>
-<a class="sourceLine" id="cb451-23" data-line-number="23">  })</a>
-<a class="sourceLine" id="cb451-24" data-line-number="24"><span class="kw">rownames</span>(error_rates) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;logis&quot;</span>, <span class="st">&quot;tree&quot;</span>)</a>
-<a class="sourceLine" id="cb451-25" data-line-number="25">error_rates &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(error_rates))</a>
-<a class="sourceLine" id="cb451-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb451-27" data-line-number="27"><span class="kw">library</span>(tidyr)</a>
-<a class="sourceLine" id="cb451-28" data-line-number="28"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb451-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb451-30" data-line-number="30">error_rates &lt;-<span class="st"> </span>error_rates <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb451-31" data-line-number="31"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fold=</span><span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb451-32" data-line-number="32"><span class="st">  </span><span class="kw">gather</span>(method,error,<span class="op">-</span>fold)</a>
-<a class="sourceLine" id="cb451-33" data-line-number="33"></a>
-<a class="sourceLine" id="cb451-34" data-line-number="34">error_rates <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb451-35" data-line-number="35"><span class="st">  </span><span class="kw">head</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb451-36" data-line-number="36"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb452-1" data-line-number="1"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb452-2" data-line-number="2"><span class="kw">library</span>(cvTools)</a>
+<a class="sourceLine" id="cb452-3" data-line-number="3"><span class="kw">library</span>(tree)</a>
+<a class="sourceLine" id="cb452-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb452-5" data-line-number="5"><span class="kw">data</span>(Default)</a>
+<a class="sourceLine" id="cb452-6" data-line-number="6">fold_indices &lt;-<span class="st"> </span><span class="kw">cvFolds</span>(<span class="dt">n=</span><span class="kw">nrow</span>(Default), <span class="dt">K=</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb452-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb452-8" data-line-number="8">error_rates &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="cf">function</span>(fold_index) {</a>
+<a class="sourceLine" id="cb452-9" data-line-number="9">  test_indices &lt;-<span class="st"> </span><span class="kw">which</span>(fold_indices<span class="op">$</span>which <span class="op">==</span><span class="st"> </span>fold_index)</a>
+<a class="sourceLine" id="cb452-10" data-line-number="10">  test_set &lt;-<span class="st"> </span>Default[test_indices,]</a>
+<a class="sourceLine" id="cb452-11" data-line-number="11">  train_set &lt;-<span class="st"> </span>Default[<span class="op">-</span>test_indices,]</a>
+<a class="sourceLine" id="cb452-12" data-line-number="12">  </a>
+<a class="sourceLine" id="cb452-13" data-line-number="13">  logis_fit &lt;-<span class="st"> </span><span class="kw">glm</span>(default<span class="op">~</span>., <span class="dt">data=</span>train_set, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</a>
+<a class="sourceLine" id="cb452-14" data-line-number="14">  logis_pred &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(logis_fit, <span class="dt">newdata=</span>test_set, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)</a>
+<a class="sourceLine" id="cb452-15" data-line-number="15">  logis_error &lt;-<span class="st"> </span><span class="kw">mean</span>(test_set<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>logis_pred)</a>
+<a class="sourceLine" id="cb452-16" data-line-number="16">  </a>
+<a class="sourceLine" id="cb452-17" data-line-number="17">  tree_fit &lt;-<span class="st"> </span><span class="kw">tree</span>(default<span class="op">~</span>., <span class="dt">data=</span>train_set)</a>
+<a class="sourceLine" id="cb452-18" data-line-number="18">  pruned_tree &lt;-<span class="st"> </span><span class="kw">prune.tree</span>(tree_fit, <span class="dt">best=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb452-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb452-20" data-line-number="20">  tree_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(pruned_tree, <span class="dt">newdata=</span>test_set, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)</a>
+<a class="sourceLine" id="cb452-21" data-line-number="21">  tree_error &lt;-<span class="st"> </span><span class="kw">mean</span>(test_set<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>tree_pred)</a>
+<a class="sourceLine" id="cb452-22" data-line-number="22">  <span class="kw">c</span>(logis_error, tree_error)</a>
+<a class="sourceLine" id="cb452-23" data-line-number="23">  })</a>
+<a class="sourceLine" id="cb452-24" data-line-number="24"><span class="kw">rownames</span>(error_rates) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;logis&quot;</span>, <span class="st">&quot;tree&quot;</span>)</a>
+<a class="sourceLine" id="cb452-25" data-line-number="25">error_rates &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(error_rates))</a>
+<a class="sourceLine" id="cb452-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb452-27" data-line-number="27"><span class="kw">library</span>(tidyr)</a>
+<a class="sourceLine" id="cb452-28" data-line-number="28"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb452-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb452-30" data-line-number="30">error_rates &lt;-<span class="st"> </span>error_rates <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-31" data-line-number="31"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fold=</span><span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-32" data-line-number="32"><span class="st">  </span><span class="kw">gather</span>(method,error,<span class="op">-</span>fold)</a>
+<a class="sourceLine" id="cb452-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb452-34" data-line-number="34">error_rates <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-35" data-line-number="35"><span class="st">  </span><span class="kw">head</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-36" data-line-number="36"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -723,11 +724,11 @@ logis
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb452-1" data-line-number="1"><span class="kw">dotplot</span>(error<span class="op">~</span>method, <span class="dt">data=</span>error_rates, <span class="dt">ylab=</span><span class="st">&quot;Mean Prediction Error&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb453-1" data-line-number="1"><span class="kw">dotplot</span>(error<span class="op">~</span>method, <span class="dt">data=</span>error_rates, <span class="dt">ylab=</span><span class="st">&quot;Mean Prediction Error&quot;</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-255-1.svg" width="672" /></p>
-<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb453-1" data-line-number="1"><span class="kw">lm</span>(error<span class="op">~</span>method, <span class="dt">data=</span>error_rates) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb453-2" data-line-number="2"><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb453-3" data-line-number="3"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb454-1" data-line-number="1"><span class="kw">lm</span>(error<span class="op">~</span>method, <span class="dt">data=</span>error_rates) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb454-2" data-line-number="2"><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb454-3" data-line-number="3"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
