@@ -46,7 +46,7 @@ legend("bottom", legend=paste("beta=", seq(-6,6,len=5)), lwd=2, lty=2, cex=1.5)
 
 Each of which has a specific error for this dataset:
 
-```{r, echo=FALSE, cache=FALSE, fig.height=10, fig.width=15}
+```{r, echo=FALSE, fig.height=10, fig.width=15}
 n <- length(y)
 compute_loss <- function(beta, x, y) {
   0.5 * mean((y-x*beta)^2)
@@ -110,11 +110,9 @@ This is a full implementation of this algorithm in R:
 gradient_descent <- function(x, y, tol=1e-6, maxit=50, plot=FALSE) {
   # initialize estimate
   beta_1 <- 0; old_beta_1 <- Inf; i <- 0; beta_keep <- NA
-  beta_trace <- beta_1
   
   # compute loss at first estimate
   loss <- compute_loss(beta_1, x, y); loss_keep <- NA
-  loss_trace <- loss
   
   # starting step size
   alpha <- 1e-3
@@ -127,9 +125,7 @@ gradient_descent <- function(x, y, tol=1e-6, maxit=50, plot=FALSE) {
     
     # this piece of code just adds steps to an existing plot
     if (plot && !is.na(beta_keep) && !is.na(loss_keep)) {
-      #suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
-      beta_trace <- c(beta_trace, beta_1)
-      loss_trace <- c(loss_trace, loss)
+      suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
     }
     
     # store the last estimate for plotting
@@ -157,40 +153,15 @@ gradient_descent <- function(x, y, tol=1e-6, maxit=50, plot=FALSE) {
   }
   if (plot) {
     suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
-    beta_trace <- c(beta_trace, beta_1)
-    loss_trace <- c(loss_trace, loss)
-    return(list(beta_1, beta_trace, loss_trace))
   }
   beta_1
 }
 ```
 
+
 Let's run this algorithm and track what it does:
 
-```{r, echo=FALSE, cache=TRUE, results='hide'}
-res <- gradient_descent(x, y, plot=TRUE)
-```
-
-```{r, echo=FALSE, warning=FALSE, cache=FALSE, dev='png', animation.hook='gifski'}
-yloss <- sapply(beta, compute_loss, x=x, y=y)
-beta_trace <- res[[2]]
-loss_trace <- res[[3]]
-
-plot_trace <- function(beta, yloss, beta_trace, loss_trace) {
-  narrows <- length(beta_trace)
-
-  for (i in seq(2,narrows)) {
-    plot(beta, yloss, type="l", lwd=2, ylab=expression(L(w)),cex.lab=1.5,xlab=expression(w), xlim=c(-20,20),
-     main="Gradient Descent")
-  
-    suppressWarnings(arrows(beta_trace[1:(i-1)], loss_trace[1:(i-1)], beta_trace[2:i], loss_trace[2:i], lty=2, col="blue"))
-  }
-}
-
-plot_trace(beta, yloss, beta_trace, loss_trace)
-```
-
-```{r, eval=FALSE, echo=FALSE, fig.width=15, fig.height=10, cache=FALSE}
+```{r, echo=FALSE, fig.width=15, fig.height=10, cache=FALSE}
 plot(beta, sapply(beta, compute_loss, x=x, y=y), type="l", lwd=2, ylab=expression(L(beta[1])),cex.lab=1.5,xlab=expression(beta[1]), xlim=c(-20,20), main="Gradient Descent")
 
 estimate <- gradient_descent(x, y, plot=TRUE)
@@ -338,7 +309,7 @@ Note the nice similarity to the gradient for linear regression. It multiplies ea
 
 This is a full implementation of stochastic gradient descent for our example dataset:
 
-```{r, echo=FALSE}
+```{r}
 # Implementation of stochastic gradient descent for least squares regression
 # for a single predictor (x)
 #
@@ -348,11 +319,9 @@ stochastic_gradient_descent <- function(x, y, tol=1e-6, maxit=50, plot=FALSE) {
   
   # initialize estimate
   beta_1 <- 0; i <- 0; beta_keep <- NA
-  beta_trace <- beta_1
   
   # compute loss at first estimate
   loss <- compute_loss(beta_1, x, y); loss_keep <- NA
-  loss_trace <- loss
   
   # initial step size
   alpha <- 1e-3
@@ -371,9 +340,7 @@ stochastic_gradient_descent <- function(x, y, tol=1e-6, maxit=50, plot=FALSE) {
       
       # add step to plot
       if (plot && !is.na(beta_keep) && !is.na(loss_keep)) {
-        #suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
-        beta_trace <- c(beta_trace, beta_1)
-        loss_trace <- c(loss_trace, loss)
+        suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
       }
       
       # store last estimate and loss for plotting
@@ -398,10 +365,7 @@ stochastic_gradient_descent <- function(x, y, tol=1e-6, maxit=50, plot=FALSE) {
   }
   
   if (plot) {
-    #suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
-    beta_trace <- c(beta_trace, beta_1)
-    loss_trace <- c(loss_trace, loss)
-    return(list(beta_1,beta_trace,loss_trace))
+    suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col="blue"))
   }
   
   beta_1
@@ -411,18 +375,10 @@ stochastic_gradient_descent <- function(x, y, tol=1e-6, maxit=50, plot=FALSE) {
 
 Let's run this and see what it does:
 
-```{r, echo=FALSE, cache=TRUE, results='hide'}
-res2 <- stochastic_gradient_descent(x, y, plot=TRUE)
+```{r, echo=FALSE, fig.width=15, fig.height=10, cache=FALSE}
+plot(beta, sapply(beta, compute_loss, x=x, y=y), type="l", lwd=2, ylab=expression(L(beta[1])),cex.lab=1.5,xlab=expression(beta[1]), xlim=c(-20,20), main="Stochastic Gradient Descent")
+estimate <- stochastic_gradient_descent(x, y, plot=TRUE)
 ```
-
-```{r, echo=FALSE, warning=FALSE, dev='png', cache=FALSE, animation.hook='gifski'}
-yloss <- sapply(beta, compute_loss, x=x, y=y)
-beta_trace <- res2[[2]]
-loss_trace <- res2[[3]]
-
-plot_trace(beta, yloss, beta_trace, loss_trace)
-```
-
 
 The stochastic gradient descent algorithm can easily adapt to _data streams_ where we receive observations one at a time and _assume_ they are not stored. This setting falls in the general category of _online_ learning.
 

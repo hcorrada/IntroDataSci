@@ -22,6 +22,8 @@ For this analysis we need to get the movies Diego Luna was in, along with their 
 library(tidyverse)
 library(rvest)
 library(stringr)
+
+select <- dplyr::select
 ```
 
 ```{r read_dl, echo=FALSE, cache=TRUE, message=FALSE}
@@ -34,21 +36,22 @@ base_url <- "https://www.rottentomatoes.com/celebrity/"
 dl_url <- paste0(base_url, "diego_luna")
 dl_html <- read_html(dl_url) 
 dl_tab <-  dl_html %>%
-  html_node("#filmographyTbl") %>%
+  html_node(".celebrity-filmography") %>%
+  html_node("table") %>%
   html_table() %>%
   as_tibble()
 
 # clean it up
 clean_dl_tab <- dl_tab %>% 
   # make sure the movie is rated
-  filter(RATING != "No Score Yet") %>% 
+  filter(Rating != "No Score Yet") %>% 
   
   # make the rating look numeric
-  mutate(RATING = str_replace(RATING, "%", "")) %>%
+  mutate(Rating = str_replace(Rating, "%", "")) %>%
   
   # remove producer and director credits
-  filter(!str_detect(CREDIT, "Prod") &
-         !str_detect(CREDIT, "Dir")) %>%
+  filter(!str_detect(Credit, "Prod") &
+         !str_detect(Credit, "Dir")) %>%
   
   # convert to proper types
   readr::type_convert()
@@ -87,7 +90,7 @@ This data is for `r nrow(clean_budget_tab)` movies, including its release date, 
 
 One thing we might want to check is if the budget and gross entries in this table are inflation adjusted or not. To do this, we can make a plot of domestic gross, which we are using for the subsequent analyses.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(lubridate)
 
 clean_budget_tab %>%
@@ -107,7 +110,7 @@ Next, we combine the datasets we obtained to get closer to the data we need to m
 ```{r, echo=FALSE}
 joined_tab <- clean_dl_tab %>%
   # join the two tables together
-  inner_join(clean_budget_tab, by=c(TITLE="movie")) 
+  inner_join(clean_budget_tab, by=c(Title="movie")) 
 ```
 
 We combine the two datasets using the movie title, so
@@ -125,8 +128,8 @@ Now that we have the data we need, we can make a plot:
 joined_tab %>%
   ggplot() +
     theme_bw() +
-    aes(x=RATING, y=domestic_gross) +
-    geom_point() +
+    aes(x=Rating, y=domestic_gross) +
+    geom_point(size=1.3) +
     labs(title="Diego Luna's movies",
          x="Rotten Tomato Rating",
          y="Domestic gross (Millions)")
@@ -143,7 +146,7 @@ library(class)
 library(broom)
 
 kmeans_result <- joined_tab %>%
-  select(RATING, domestic_gross) %>%
+  select(Rating, domestic_gross) %>%
   kmeans(centers=3) 
 
 clustered_tab <- kmeans_result %>%
@@ -160,7 +163,7 @@ Let's see how the movies are grouped:
 
 ```{r, echo=FALSE}
 clustered_tab %>%
-  select(TITLE, RATING, domestic_gross, cluster) %>%
+  select(Title, Rating, domestic_gross, cluster) %>%
   arrange(cluster) %>%
   knitr::kable()
 ```
@@ -173,7 +176,7 @@ indicate each movie's cluster assignment given by the k-means algorithm.
 ```{r, echo=FALSE}
 final_plot <- clustered_tab %>%
   ggplot() +
-    aes(x=RATING, y=domestic_gross, color=cluster) +
+    aes(x=Rating, y=domestic_gross, color=cluster) +
     geom_point(size=2.3) +
     theme_bw() +
     labs(title="Diego Luna's movies",
@@ -189,7 +192,7 @@ To make the plot and clustering more interpretable, let's annotate the graph wit
 ```{r, echo=FALSE, message=FALSE}
 # join the extended movie table with the centers table
 annot_tab <- clustered_tab %>%
-  select(title=TITLE, rating=RATING, domestic_gross, cluster) %>%
+  select(title=Title, rating=Rating, domestic_gross, cluster) %>%
   left_join(select(kmeans_centers, x1, x2, cluster), by="cluster") %>%
   
   # calculate the distance of each movie to its center
@@ -233,17 +236,16 @@ scrape_rt <- function(actor, base_url="https://www.rottentomatoes.com/celebrity/
   html <- read_html(url) 
     
   html %>%
-    html_nodes("#filmography") %>%
-    html_node("table") %>%
-    html_table() %>%
-    magrittr::extract2(1) %>%
-    as_tibble()
+   html_node(".celebrity-filmography") %>%
+   html_node("table") %>%
+   html_table() %>%
+   as_tibble()
 }
 ```
 
 Let's test it with Gael García Bernal:
 
-```{r scrape_ggb, cache=FALSE, echo=FALSE}
+```{r scrape_ggb, cache=TRUE, echo=FALSE}
 ggb_tab <- scrape_rt("gael_garcia_bernal")
 ```
 
@@ -259,14 +261,14 @@ Good start. We can then write functions for each of the steps we did with Diego 
 cleanup_rt_tab <- function(data) {
  data  %>% 
   # make sure the movie is rated
-  filter(RATING != "No Score Yet") %>% 
+  filter(Rating != "No Score Yet") %>% 
   
   # make the rating look numeric
-  mutate(RATING = str_replace(RATING, "%", "")) %>%
+  mutate(Rating = str_replace(Rating, "%", "")) %>%
   
   # remove producer and director credits
-  filter(!str_detect(CREDIT, "Prod") &
-         !str_detect(CREDIT, "Dir")) %>%
+  filter(!str_detect(Credit, "Prod") &
+         !str_detect(Credit, "Dir")) %>%
   
   # convert to proper types
   readr::type_convert()
@@ -277,7 +279,7 @@ cleanup_rt_tab <- function(data) {
 join_budget <- function(data) {
   data %>%
   # join the two tables together
-  inner_join(clean_budget_tab, by=c(TITLE="movie")) 
+  inner_join(clean_budget_tab, by=c(Title="movie")) 
 }
 ```
 
@@ -292,7 +294,7 @@ ggb_tab %>%
 ```{r, echo=FALSE}
 cluster_movies <- function(data, k=3) {
   data <- data %>%
-    select(rating=RATING, title=TITLE, domestic_gross)
+    select(rating=Rating, title=Title, domestic_gross)
   
   kmeans_result <-  data %>%
     select(rating, domestic_gross) %>%

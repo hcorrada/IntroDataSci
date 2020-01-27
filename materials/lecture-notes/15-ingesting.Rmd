@@ -75,7 +75,8 @@ url <- "https://www.rottentomatoes.com/celebrity/diego_luna"
 
 dl_tab <- url %>%
   read_html() %>%
-  html_node("#filmographyTbl") %>%
+  html_node(".celebrity-filmography") %>%
+  html_node("table") %>%
   html_table()
 
 head(dl_tab)

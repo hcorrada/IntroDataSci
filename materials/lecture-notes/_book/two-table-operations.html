@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>13 Two-table operations | Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="13 Two-table operations | Lecture Notes: Introduction to Data Science" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="13 Two-table operations | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2019-05-30" />
+<meta name="date" content="2020-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="sql-i-single-table-queries.html">
-<link rel="next" href="sql-system-constructs.html">
+<link rel="prev" href="sql-i-single-table-queries.html"/>
+<link rel="next" href="sql-system-constructs.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,18 +48,19 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -68,13 +70,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -509,30 +509,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">13</span> Two-table operations</h1>
 <p>So far we have looked at data operations defined over single tables and data frames. In this section we look at efficient methods to combine data from multiple tables. The fundamental operation here is the <code>join</code>, which is a workhorse of database system design and impementation. The <code>join</code> operation combines rows from two tables to create a new single table, based on matching criteria specified over attributes of each of the two tables.</p>
 <p>Consider the example of joining the <code>flights</code> and <code>airlines</code> table:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nycflights13)
-<span class="kw">data</span>(flights)
-<span class="kw">data</span>(airlines)</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb114-2" data-line-number="2"><span class="kw">data</span>(flights)</a>
+<a class="sourceLine" id="cb114-3" data-line-number="3"><span class="kw">data</span>(airlines)</a></code></pre></div>
 <p>Let’s take a look at the <code>flights</code> table again:</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1">flights</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 19
-##     year month   day dep_time sched_dep_time dep_delay arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1  2013     1     1      517            515         2      830
-##  2  2013     1     1      533            529         4      850
-##  3  2013     1     1      542            540         2      923
-##  4  2013     1     1      544            545        -1     1004
-##  5  2013     1     1      554            600        -6      812
-##  6  2013     1     1      554            558        -4      740
-##  7  2013     1     1      555            600        -5      913
-##  8  2013     1     1      557            600        -3      709
-##  9  2013     1     1      557            600        -3      838
-## 10  2013     1     1      558            600        -2      753
-## # … with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+##     year month   day dep_time sched_dep_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013     1     1      517            515
+##  2  2013     1     1      533            529
+##  3  2013     1     1      542            540
+##  4  2013     1     1      544            545
+##  5  2013     1     1      554            600
+##  6  2013     1     1      554            558
+##  7  2013     1     1      555            600
+##  8  2013     1     1      557            600
+##  9  2013     1     1      557            600
+## 10  2013     1     1      558            600
+## # … with 336,766 more rows, and 14 more
+## #   variables: dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;,
+## #   sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;</code></pre>
 <p>And add the <code>airlines</code> table:</p>
-<pre class="sourceCode r"><code class="sourceCode r">airlines</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1">airlines</a></code></pre></div>
 <pre><code>## # A tibble: 16 x 2
 ##    carrier name                       
 ##    &lt;chr&gt;   &lt;chr&gt;                      
@@ -559,25 +562,28 @@ Specifically, every row of <code>flights</code> with a specific value for <code>
 <p>In a <code>left join</code>, all observations on left operand (LHS) are retained:</p>
 <p><img src="img/join_lhs.png" /></p>
 <p><img src="img/left_join.png" /></p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb119-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 20
-##     year month   day dep_time sched_dep_time dep_delay arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1  2013     1     1      517            515         2      830
-##  2  2013     1     1      533            529         4      850
-##  3  2013     1     1      542            540         2      923
-##  4  2013     1     1      544            545        -1     1004
-##  5  2013     1     1      554            600        -6      812
-##  6  2013     1     1      554            558        -4      740
-##  7  2013     1     1      555            600        -5      913
-##  8  2013     1     1      557            600        -3      709
-##  9  2013     1     1      557            600        -3      838
-## 10  2013     1     1      558            600        -2      753
-## # … with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
+##     year month   day dep_time sched_dep_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013     1     1      517            515
+##  2  2013     1     1      533            529
+##  3  2013     1     1      542            540
+##  4  2013     1     1      544            545
+##  5  2013     1     1      554            600
+##  6  2013     1     1      554            558
+##  7  2013     1     1      555            600
+##  8  2013     1     1      557            600
+##  9  2013     1     1      557            600
+## 10  2013     1     1      558            600
+## # … with 336,766 more rows, and 15 more
+## #   variables: dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;,
+## #   sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
 <p>RHS variables for LHS observations with no matching RHS observations are coded as <code>NA</code>.</p>
 </div>
 <div id="right-join" class="section level2">
@@ -585,25 +591,28 @@ Specifically, every row of <code>flights</code> with a specific value for <code>
 <p>All observations on right operand (RHS) are retained:</p>
 <p><img src="img/join_lhs.png" /></p>
 <p><img src="img/right_join.png" /></p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">right_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb121-2" data-line-number="2"><span class="st">  </span><span class="kw">right_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 20
-##     year month   day dep_time sched_dep_time dep_delay arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1  2013     1     1      810            810         0     1048
-##  2  2013     1     1     1451           1500        -9     1634
-##  3  2013     1     1     1452           1455        -3     1637
-##  4  2013     1     1     1454           1500        -6     1635
-##  5  2013     1     1     1507           1515        -8     1651
-##  6  2013     1     1     1530           1530         0     1650
-##  7  2013     1     1     1546           1540         6     1753
-##  8  2013     1     1     1550           1550         0     1844
-##  9  2013     1     1     1552           1600        -8     1749
-## 10  2013     1     1     1554           1600        -6     1701
-## # … with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
+##     year month   day dep_time sched_dep_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013     1     1      810            810
+##  2  2013     1     1     1451           1500
+##  3  2013     1     1     1452           1455
+##  4  2013     1     1     1454           1500
+##  5  2013     1     1     1507           1515
+##  6  2013     1     1     1530           1530
+##  7  2013     1     1     1546           1540
+##  8  2013     1     1     1550           1550
+##  9  2013     1     1     1552           1600
+## 10  2013     1     1     1554           1600
+## # … with 336,766 more rows, and 15 more
+## #   variables: dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;,
+## #   sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
 <p>LHS variables for RHS observations with no matching LHS observations are coded as <code>NA</code>.</p>
 </div>
 <div id="inner-join" class="section level2">
@@ -611,76 +620,85 @@ Specifically, every row of <code>flights</code> with a specific value for <code>
 <p>Only observations matching on both tables are retained</p>
 <p><img src="img/join_lhs.png" />
 <img src="img/inner_join.png" /></p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">inner_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb123-2" data-line-number="2"><span class="st">  </span><span class="kw">inner_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 20
-##     year month   day dep_time sched_dep_time dep_delay arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1  2013     1     1      517            515         2      830
-##  2  2013     1     1      533            529         4      850
-##  3  2013     1     1      542            540         2      923
-##  4  2013     1     1      544            545        -1     1004
-##  5  2013     1     1      554            600        -6      812
-##  6  2013     1     1      554            558        -4      740
-##  7  2013     1     1      555            600        -5      913
-##  8  2013     1     1      557            600        -3      709
-##  9  2013     1     1      557            600        -3      838
-## 10  2013     1     1      558            600        -2      753
-## # … with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
+##     year month   day dep_time sched_dep_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013     1     1      517            515
+##  2  2013     1     1      533            529
+##  3  2013     1     1      542            540
+##  4  2013     1     1      544            545
+##  5  2013     1     1      554            600
+##  6  2013     1     1      554            558
+##  7  2013     1     1      555            600
+##  8  2013     1     1      557            600
+##  9  2013     1     1      557            600
+## 10  2013     1     1      558            600
+## # … with 336,766 more rows, and 15 more
+## #   variables: dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;,
+## #   sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
 </div>
 <div id="full-join" class="section level2">
 <h2><span class="header-section-number">13.4</span> Full Join</h2>
 <p>All observations are retained, regardless of matching condition</p>
 <p><img src="img/join_lhs.png" />
 <img src="img/full_join.png" /></p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">full_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb125-2" data-line-number="2"><span class="st">  </span><span class="kw">full_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 20
-##     year month   day dep_time sched_dep_time dep_delay arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1  2013     1     1      517            515         2      830
-##  2  2013     1     1      533            529         4      850
-##  3  2013     1     1      542            540         2      923
-##  4  2013     1     1      544            545        -1     1004
-##  5  2013     1     1      554            600        -6      812
-##  6  2013     1     1      554            558        -4      740
-##  7  2013     1     1      555            600        -5      913
-##  8  2013     1     1      557            600        -3      709
-##  9  2013     1     1      557            600        -3      838
-## 10  2013     1     1      558            600        -2      753
-## # … with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
+##     year month   day dep_time sched_dep_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013     1     1      517            515
+##  2  2013     1     1      533            529
+##  3  2013     1     1      542            540
+##  4  2013     1     1      544            545
+##  5  2013     1     1      554            600
+##  6  2013     1     1      554            558
+##  7  2013     1     1      555            600
+##  8  2013     1     1      557            600
+##  9  2013     1     1      557            600
+## 10  2013     1     1      558            600
+## # … with 336,766 more rows, and 15 more
+## #   variables: dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;,
+## #   sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;, name &lt;chr&gt;</code></pre>
 <p>All values coded as <code>NA</code> for non-matching observations as appropriate.</p>
 </div>
 <div id="join-conditions" class="section level2">
 <h2><span class="header-section-number">13.5</span> Join conditions</h2>
 <p>All join operations are based on a matching condition:</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb127-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <p>specifies to join observations where <code>flights$carrier</code> equals <code>airlines$carrier</code>.</p>
 <p>In this case, where no conditions are specified using the <code>by</code> argument:</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(airlines)</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb128-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(airlines)</a></code></pre></div>
 <p>a <em>natural join</em> is perfomed. In this case all variables with the same name in both tables are used in join condition.</p>
 <p>You can also specify join conditions on arbitrary attributes using the <code>by</code> argument.</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;carrier&quot;</span> =<span class="st"> &quot;name&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb129-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(airlines, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;carrier&quot;</span> =<span class="st"> &quot;name&quot;</span>))</a></code></pre></div>
 </div>
 <div id="filtering-joins" class="section level2">
 <h2><span class="header-section-number">13.6</span> Filtering Joins</h2>
 <p>We’ve just seen <em>mutating joins</em> that create new tables. <em>Filtering joins</em> use join conditions to filter a specific table.</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anti_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">anti_join</span>(airlines, <span class="dt">by=</span><span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 0 x 19
-## # … with 19 variables: year &lt;int&gt;, month &lt;int&gt;, day &lt;int&gt;, dep_time &lt;int&gt;,
-## #   sched_dep_time &lt;int&gt;, dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;,
-## #   sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;,
-## #   tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
-## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+## # … with 19 variables: year &lt;int&gt;, month &lt;int&gt;,
+## #   day &lt;int&gt;, dep_time &lt;int&gt;,
+## #   sched_dep_time &lt;int&gt;, dep_delay &lt;dbl&gt;,
+## #   arr_time &lt;int&gt;, sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,
+## #   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;,
+## #   dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+## #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <p>Filters the <code>flights</code> table to only include flights from airlines that
 <em>are not</em> included in the <code>airlines</code> table.</p>
 </div>
@@ -698,24 +716,24 @@ Specifically, every row of <code>flights</code> with a specific value for <code>
 <ul>
 <li>Examples:</li>
 </ul>
-<pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>, me.name <span class="kw">as</span> producerName 
-<span class="kw">from</span> movies m <span class="kw">join</span> movieexec me
-<span class="kw">where</span> m.producer = me.id;</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb132-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span>, me.name <span class="kw">as</span> producerName </a>
+<a class="sourceLine" id="cb132-2" data-line-number="2"><span class="kw">from</span> movies m <span class="kw">join</span> movieexec me</a>
+<a class="sourceLine" id="cb132-3" data-line-number="3"><span class="kw">where</span> m.producer = me.id;</a></code></pre></div>
 <ul>
 <li>Consider the query:</li>
 </ul>
-<pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>, producer, <span class="fu">count</span>(starName) 
-<span class="kw">from</span> movies <span class="kw">join</span> starsIn
-<span class="kw">where</span> title = starsIn.movieTitle <span class="kw">and</span> <span class="dt">year</span> = starsIn.movieYear
-<span class="kw">group</span> <span class="kw">by</span> title, <span class="dt">year</span>, producer</code></pre>
+<div class="sourceCode" id="cb133"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb133-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span>, producer, <span class="fu">count</span>(starName) </a>
+<a class="sourceLine" id="cb133-2" data-line-number="2"><span class="kw">from</span> movies <span class="kw">join</span> starsIn</a>
+<a class="sourceLine" id="cb133-3" data-line-number="3"><span class="kw">where</span> title = starsIn.movieTitle <span class="kw">and</span> <span class="dt">year</span> = starsIn.movieYear</a>
+<a class="sourceLine" id="cb133-4" data-line-number="4"><span class="kw">group</span> <span class="kw">by</span> title, <span class="dt">year</span>, producer</a></code></pre></div>
 <ul>
 <li>What about movies with no stars ?</li>
 <li>Need to use <strong>outer joins</strong></li>
 </ul>
-<pre class="sourceCode sql"><code class="sourceCode sql"><span class="kw">select</span> title, <span class="dt">year</span>, producer, <span class="fu">count</span>(starName) 
-<span class="kw">from</span> movies <span class="kw">left</span> <span class="kw">outer</span> <span class="kw">join</span> starsIn
-  <span class="kw">on</span> title = starsIn.movieTitle <span class="kw">and</span> <span class="dt">year</span> = starsIn.movieYear
-<span class="kw">group</span> <span class="kw">by</span> title, <span class="dt">year</span>, producer</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb134-1" data-line-number="1"><span class="kw">select</span> title, <span class="dt">year</span>, producer, <span class="fu">count</span>(starName) </a>
+<a class="sourceLine" id="cb134-2" data-line-number="2"><span class="kw">from</span> movies <span class="kw">left</span> <span class="kw">outer</span> <span class="kw">join</span> starsIn</a>
+<a class="sourceLine" id="cb134-3" data-line-number="3">  <span class="kw">on</span> title = starsIn.movieTitle <span class="kw">and</span> <span class="dt">year</span> = starsIn.movieYear</a>
+<a class="sourceLine" id="cb134-4" data-line-number="4"><span class="kw">group</span> <span class="kw">by</span> title, <span class="dt">year</span>, producer</a></code></pre></div>
 <p>As we saw before, all tuples from ‘movies’ that have no matches in starsIn are included with NULLs (in <code>dplyr</code> this was <code>NA</code>).
 So, if a tuple <code>(m1, 1990)</code> has no match in <code>starsIn</code>, we get <code>(m1, 1990, NULL)</code> in the result and the <code>count(starName)</code> works correctly then. Note however that <code>count(*)</code> would not work correctly (NULLs can have unintuitive behavior)</p>
 <p>In most systems <code>JOIN</code> corresponds to an <em>inner join</em>, and include <code>LEFT JOIN</code> and <code>RIGHT JOIN</code> as well.</p>
@@ -733,11 +751,13 @@ So, if a tuple <code>(m1, 1990)</code> has no match in <code>starsIn</code>, we 
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -745,12 +765,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -762,6 +781,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -781,8 +804,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

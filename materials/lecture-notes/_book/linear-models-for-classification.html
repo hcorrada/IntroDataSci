@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>29 Linear models for classification | Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="29 Linear models for classification | Lecture Notes: Introduction to Data Science" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="29 Linear models for classification | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2019-05-30" />
+<meta name="date" content="2020-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="linear-regression.html">
-<link rel="next" href="solving-linear-ml-problems.html">
+<link rel="prev" href="linear-regression.html"/>
+<link rel="next" href="solving-linear-ml-problems.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,18 +48,19 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -68,13 +70,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -558,16 +558,16 @@ Y =
 </ol>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-200-1.svg" width="960" /></p>
 <p>Here is how we compute a logistic regression model in R</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ISLR)
-<span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(broom)
-<span class="kw">library</span>(ggplot2)
-
-<span class="kw">data</span>(Default)
-default_fit &lt;-<span class="st"> </span><span class="kw">glm</span>(default <span class="op">~</span><span class="st"> </span>balance, <span class="dt">data=</span>Default, <span class="dt">family=</span>binomial)
-default_fit <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits=</span><span class="dv">4</span>)</code></pre>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb408-1" data-line-number="1"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb408-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb408-3" data-line-number="3"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb408-4" data-line-number="4"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb408-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb408-6" data-line-number="6"><span class="kw">data</span>(Default)</a>
+<a class="sourceLine" id="cb408-7" data-line-number="7">default_fit &lt;-<span class="st"> </span><span class="kw">glm</span>(default <span class="op">~</span><span class="st"> </span>balance, <span class="dt">data=</span>Default, <span class="dt">family=</span>binomial)</a>
+<a class="sourceLine" id="cb408-8" data-line-number="8">default_fit <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb408-9" data-line-number="9"><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb408-10" data-line-number="10"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits=</span><span class="dv">4</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -618,10 +618,10 @@ default_fit <span class="op">%&gt;%</span><span class="st"> </span>
 <p><span class="math display">\[
 \log \frac{p(\mathbf{x})}{1-p(\mathbf{x})} = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p
 \]</span></p>
-<pre class="sourceCode r"><code class="sourceCode r">fit &lt;-<span class="st"> </span><span class="kw">glm</span>(default <span class="op">~</span><span class="st"> </span>balance <span class="op">+</span><span class="st"> </span>income <span class="op">+</span><span class="st"> </span>student, <span class="dt">data=</span>Default, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)
-fit <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits=</span><span class="dv">4</span>)</code></pre>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb409-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw">glm</span>(default <span class="op">~</span><span class="st"> </span>balance <span class="op">+</span><span class="st"> </span>income <span class="op">+</span><span class="st"> </span>student, <span class="dt">data=</span>Default, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</a>
+<a class="sourceLine" id="cb409-2" data-line-number="2">fit <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb409-3" data-line-number="3"><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb409-4" data-line-number="4"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits=</span><span class="dv">4</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -664,9 +664,9 @@ fit <span class="op">%&gt;%</span><span class="st"> </span>
 </tbody>
 </table>
 <p>As in multiple linear regression it is essential to avoid <strong>confounding!</strong>. Consider an example of single logistic regression of default vs. student status:</p>
-<pre class="sourceCode r"><code class="sourceCode r">fit1 &lt;-<span class="st"> </span><span class="kw">glm</span>(default <span class="op">~</span><span class="st"> </span>student, <span class="dt">data=</span>Default, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)
-fit1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits=</span><span class="dv">4</span>)</code></pre>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb410-1" data-line-number="1">fit1 &lt;-<span class="st"> </span><span class="kw">glm</span>(default <span class="op">~</span><span class="st"> </span>student, <span class="dt">data=</span>Default, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</a>
+<a class="sourceLine" id="cb410-2" data-line-number="2">fit1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb410-3" data-line-number="3"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits=</span><span class="dv">4</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -695,9 +695,9 @@ fit1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tid
 </tbody>
 </table>
 <p>and a multiple logistic regression:</p>
-<pre class="sourceCode r"><code class="sourceCode r">fit2 &lt;-<span class="st"> </span><span class="kw">glm</span>(default <span class="op">~</span><span class="st"> </span>balance <span class="op">+</span><span class="st"> </span>income <span class="op">+</span><span class="st"> </span>student, <span class="dt">data=</span>Default, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)
-fit2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits=</span><span class="dv">4</span>)</code></pre>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb411-1" data-line-number="1">fit2 &lt;-<span class="st"> </span><span class="kw">glm</span>(default <span class="op">~</span><span class="st"> </span>balance <span class="op">+</span><span class="st"> </span>income <span class="op">+</span><span class="st"> </span>student, <span class="dt">data=</span>Default, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</a>
+<a class="sourceLine" id="cb411-2" data-line-number="2">fit2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb411-3" data-line-number="3"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">digits=</span><span class="dv">4</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -791,22 +791,22 @@ P(Y=k|X) = \frac{f_k(x) \pi_k}{\sum_l f_l(x) \pi_l}
 <div id="how-to-train-lda" class="section level3">
 <h3><span class="header-section-number">29.5.1</span> How to train LDA</h3>
 <p>Compute class means and squared error based on class mean</p>
-<pre class="sourceCode r"><code class="sourceCode r">lda_stats &lt;-<span class="st"> </span>Default <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(default) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">class_mean=</span><span class="kw">mean</span>(balance),
-         <span class="dt">squared_error=</span>(balance<span class="op">-</span>class_mean)<span class="op">^</span><span class="dv">2</span>) </code></pre>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb414-1" data-line-number="1">lda_stats &lt;-<span class="st"> </span>Default <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb414-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(default) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb414-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">class_mean=</span><span class="kw">mean</span>(balance),</a>
+<a class="sourceLine" id="cb414-4" data-line-number="4">         <span class="dt">squared_error=</span>(balance<span class="op">-</span>class_mean)<span class="op">^</span><span class="dv">2</span>) </a></code></pre></div>
 <p>Compute class sizes and sum of squared errors</p>
-<pre class="sourceCode r"><code class="sourceCode r">lda_stats &lt;-<span class="st"> </span>lda_stats <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">class_mean=</span><span class="kw">first</span>(class_mean),
-            <span class="dt">class_size=</span><span class="kw">n</span>(),
-            <span class="dt">sum_squares=</span><span class="kw">sum</span>(squared_error))</code></pre>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb415-1" data-line-number="1">lda_stats &lt;-<span class="st"> </span>lda_stats <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb415-2" data-line-number="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">class_mean=</span><span class="kw">first</span>(class_mean),</a>
+<a class="sourceLine" id="cb415-3" data-line-number="3">            <span class="dt">class_size=</span><span class="kw">n</span>(),</a>
+<a class="sourceLine" id="cb415-4" data-line-number="4">            <span class="dt">sum_squares=</span><span class="kw">sum</span>(squared_error))</a></code></pre></div>
 <p>Compute class prior and variance (note same variance for both classes)</p>
-<pre class="sourceCode r"><code class="sourceCode r">lda_stats &lt;-<span class="st"> </span>lda_stats <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">class_prior=</span>class_size<span class="op">/</span><span class="kw">sum</span>(class_size),
-         <span class="dt">sigma2=</span><span class="kw">sum</span>(sum_squares) <span class="op">/</span><span class="st"> </span>(<span class="kw">sum</span>(class_size) <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(default, class_mean, class_prior, sigma2)
-
-knitr<span class="op">::</span><span class="kw">kable</span>(lda_stats)</code></pre>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb416-1" data-line-number="1">lda_stats &lt;-<span class="st"> </span>lda_stats <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb416-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">class_prior=</span>class_size<span class="op">/</span><span class="kw">sum</span>(class_size),</a>
+<a class="sourceLine" id="cb416-3" data-line-number="3">         <span class="dt">sigma2=</span><span class="kw">sum</span>(sum_squares) <span class="op">/</span><span class="st"> </span>(<span class="kw">sum</span>(class_size) <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb416-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(default, class_mean, class_prior, sigma2)</a>
+<a class="sourceLine" id="cb416-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb416-6" data-line-number="6">knitr<span class="op">::</span><span class="kw">kable</span>(lda_stats)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -838,45 +838,45 @@ knitr<span class="op">::</span><span class="kw">kable</span>(lda_stats)</code></
 \log f_1(x) + \log \pi_1 &gt; \log f_0(x) + \log \pi_0
 \]</span></p>
 <p>This turns out to be a linear function of <span class="math inline">\(x\)</span>!</p>
-<pre class="sourceCode r"><code class="sourceCode r">lda_log_ratio &lt;-<span class="st"> </span><span class="cf">function</span>(balance, lda_stats) {
-  n &lt;-<span class="st"> </span><span class="kw">length</span>(balance)
-  
-  <span class="co"># subtract class mean</span>
-  centered_balance &lt;-<span class="st"> </span><span class="kw">rep</span>(balance, <span class="dv">2</span>) <span class="op">-</span><span class="st"> </span><span class="kw">rep</span>(lda_stats<span class="op">$</span>class_mean, <span class="dt">each=</span>n)
-  
-  <span class="co"># scale by standard deviation</span>
-  scaled_balance &lt;-<span class="st"> </span>centered_balance <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(lda_stats<span class="op">$</span>sigma2[<span class="dv">1</span>])
-  
-  <span class="co"># compute log normal density and add log class prior</span>
-  lprobs &lt;-<span class="st"> </span><span class="kw">dnorm</span>(scaled_balance, <span class="dt">log=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">rep</span>(lda_stats<span class="op">$</span>class_prior, <span class="dt">each=</span>n))
-  
-  <span class="co"># compute log ratio of class probabilities</span>
-  lprobs &lt;-<span class="st"> </span><span class="kw">matrix</span>(lprobs, <span class="dt">nc=</span><span class="dv">2</span>)
-  <span class="kw">colnames</span>(lprobs) &lt;-<span class="st"> </span>lda_stats<span class="op">$</span>default
-  lprobs[,<span class="st">&quot;Yes&quot;</span>] <span class="op">-</span><span class="st"> </span>lprobs[,<span class="st">&quot;No&quot;</span>]
-}</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">test_balance &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">3000</span>, <span class="dt">len=</span><span class="dv">100</span>)
-<span class="kw">plot</span>(test_balance, <span class="kw">lda_log_ratio</span>(test_balance, lda_stats),
-     <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Balance&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Log Probability Ratio&quot;</span>, <span class="dt">cex=</span><span class="fl">1.4</span>)</code></pre>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb417-1" data-line-number="1">lda_log_ratio &lt;-<span class="st"> </span><span class="cf">function</span>(balance, lda_stats) {</a>
+<a class="sourceLine" id="cb417-2" data-line-number="2">  n &lt;-<span class="st"> </span><span class="kw">length</span>(balance)</a>
+<a class="sourceLine" id="cb417-3" data-line-number="3">  </a>
+<a class="sourceLine" id="cb417-4" data-line-number="4">  <span class="co"># subtract class mean</span></a>
+<a class="sourceLine" id="cb417-5" data-line-number="5">  centered_balance &lt;-<span class="st"> </span><span class="kw">rep</span>(balance, <span class="dv">2</span>) <span class="op">-</span><span class="st"> </span><span class="kw">rep</span>(lda_stats<span class="op">$</span>class_mean, <span class="dt">each=</span>n)</a>
+<a class="sourceLine" id="cb417-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb417-7" data-line-number="7">  <span class="co"># scale by standard deviation</span></a>
+<a class="sourceLine" id="cb417-8" data-line-number="8">  scaled_balance &lt;-<span class="st"> </span>centered_balance <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(lda_stats<span class="op">$</span>sigma2[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb417-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb417-10" data-line-number="10">  <span class="co"># compute log normal density and add log class prior</span></a>
+<a class="sourceLine" id="cb417-11" data-line-number="11">  lprobs &lt;-<span class="st"> </span><span class="kw">dnorm</span>(scaled_balance, <span class="dt">log=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">rep</span>(lda_stats<span class="op">$</span>class_prior, <span class="dt">each=</span>n))</a>
+<a class="sourceLine" id="cb417-12" data-line-number="12">  </a>
+<a class="sourceLine" id="cb417-13" data-line-number="13">  <span class="co"># compute log ratio of class probabilities</span></a>
+<a class="sourceLine" id="cb417-14" data-line-number="14">  lprobs &lt;-<span class="st"> </span><span class="kw">matrix</span>(lprobs, <span class="dt">nc=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb417-15" data-line-number="15">  <span class="kw">colnames</span>(lprobs) &lt;-<span class="st"> </span>lda_stats<span class="op">$</span>default</a>
+<a class="sourceLine" id="cb417-16" data-line-number="16">  lprobs[,<span class="st">&quot;Yes&quot;</span>] <span class="op">-</span><span class="st"> </span>lprobs[,<span class="st">&quot;No&quot;</span>]</a>
+<a class="sourceLine" id="cb417-17" data-line-number="17">}</a></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb418-1" data-line-number="1">test_balance &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">3000</span>, <span class="dt">len=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb418-2" data-line-number="2"><span class="kw">plot</span>(test_balance, <span class="kw">lda_log_ratio</span>(test_balance, lda_stats),</a>
+<a class="sourceLine" id="cb418-3" data-line-number="3">     <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Balance&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Log Probability Ratio&quot;</span>, <span class="dt">cex=</span><span class="fl">1.4</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-214-1.svg" width="1152" /></p>
 </div>
 </div>
 <div id="classifier-evaluation" class="section level2">
 <h2><span class="header-section-number">29.6</span> Classifier evaluation</h2>
 <p>How do we determine how well classifiers are performing? One way is to compute the <em>error rate</em> of the classifier, the percent of mistakes it makes when predicting class</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
-lda_fit &lt;-<span class="st"> </span><span class="kw">lda</span>(default <span class="op">~</span><span class="st"> </span>balance, <span class="dt">data=</span>Default)
-lda_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(lda_fit, <span class="dt">data=</span>Default)
-<span class="kw">print</span>(<span class="kw">table</span>(<span class="dt">predicted=</span>lda_pred<span class="op">$</span>class, <span class="dt">observed=</span>Default<span class="op">$</span>default))</code></pre>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb419-1" data-line-number="1"><span class="kw">library</span>(MASS)</a>
+<a class="sourceLine" id="cb419-2" data-line-number="2">lda_fit &lt;-<span class="st"> </span><span class="kw">lda</span>(default <span class="op">~</span><span class="st"> </span>balance, <span class="dt">data=</span>Default)</a>
+<a class="sourceLine" id="cb419-3" data-line-number="3">lda_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(lda_fit, <span class="dt">data=</span>Default)</a>
+<a class="sourceLine" id="cb419-4" data-line-number="4"><span class="kw">print</span>(<span class="kw">table</span>(<span class="dt">predicted=</span>lda_pred<span class="op">$</span>class, <span class="dt">observed=</span>Default<span class="op">$</span>default))</a></code></pre></div>
 <pre><code>##          observed
 ## predicted   No  Yes
 ##       No  9643  257
 ##       Yes   24   76</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># error rate</span>
-<span class="kw">mean</span>(Default<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>lda_pred<span class="op">$</span>class) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></code></pre>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb421-1" data-line-number="1"><span class="co"># error rate</span></a>
+<a class="sourceLine" id="cb421-2" data-line-number="2"><span class="kw">mean</span>(Default<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>lda_pred<span class="op">$</span>class) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a></code></pre></div>
 <pre><code>## [1] 2.81</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># dummy error rate</span>
-<span class="kw">mean</span>(Default<span class="op">$</span>default <span class="op">!=</span><span class="st"> &quot;No&quot;</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></code></pre>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb423-1" data-line-number="1"><span class="co"># dummy error rate</span></a>
+<a class="sourceLine" id="cb423-2" data-line-number="2"><span class="kw">mean</span>(Default<span class="op">$</span>default <span class="op">!=</span><span class="st"> &quot;No&quot;</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a></code></pre></div>
 <pre><code>## [1] 3.33</code></pre>
 <p>In this case, it would seem that LDA performs well. But in fact, we can get similar error rate
 by always predicting “no default”. We can see from this table that LDA errors are not symmetric. It’s most common error is that <em>it misses true defaults</em>.</p>
@@ -958,58 +958,58 @@ P(Y=\mathtt{Yes}|X) &gt; 0.5
 \]</span></p>
 <p>What would happen if we use <span class="math inline">\(P(Y=\mathtt{Yes}|X) &gt; 0.2\)</span>?</p>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-216-1.svg" width="672" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ROCR)
-pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(lda_pred<span class="op">$</span>posterior[,<span class="st">&quot;Yes&quot;</span>], Default<span class="op">$</span>default)
-
-<span class="kw">layout</span>(<span class="kw">cbind</span>(<span class="dv">1</span>,<span class="dv">2</span>))
-<span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>))
-<span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;fpr&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb425-1" data-line-number="1"><span class="kw">library</span>(ROCR)</a>
+<a class="sourceLine" id="cb425-2" data-line-number="2">pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(lda_pred<span class="op">$</span>posterior[,<span class="st">&quot;Yes&quot;</span>], Default<span class="op">$</span>default)</a>
+<a class="sourceLine" id="cb425-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb425-4" data-line-number="4"><span class="kw">layout</span>(<span class="kw">cbind</span>(<span class="dv">1</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb425-5" data-line-number="5"><span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>))</a>
+<a class="sourceLine" id="cb425-6" data-line-number="6"><span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;fpr&quot;</span>))</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-217-1.svg" width="1152" /></p>
 <p>A way of describing the TPR and FPR tradeoff is by using the <strong>ROC curve</strong> (Receiver Operating Characteristic)
 and the <strong>AUROC</strong> (area under the ROC)</p>
-<pre class="sourceCode r"><code class="sourceCode r">auc &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)<span class="op">@</span>y.values)
-<span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>), 
-     <span class="dt">main=</span><span class="kw">paste</span>(<span class="st">&quot;LDA AUROC=&quot;</span>, <span class="kw">round</span>(auc, <span class="dv">2</span>)), 
-     <span class="dt">lwd=</span><span class="fl">1.4</span>, <span class="dt">cex.lab=</span><span class="fl">1.7</span>, <span class="dt">cex.main=</span><span class="fl">1.5</span>)</code></pre>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb426-1" data-line-number="1">auc &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)<span class="op">@</span>y.values)</a>
+<a class="sourceLine" id="cb426-2" data-line-number="2"><span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>), </a>
+<a class="sourceLine" id="cb426-3" data-line-number="3">     <span class="dt">main=</span><span class="kw">paste</span>(<span class="st">&quot;LDA AUROC=&quot;</span>, <span class="kw">round</span>(auc, <span class="dv">2</span>)), </a>
+<a class="sourceLine" id="cb426-4" data-line-number="4">     <span class="dt">lwd=</span><span class="fl">1.4</span>, <span class="dt">cex.lab=</span><span class="fl">1.7</span>, <span class="dt">cex.main=</span><span class="fl">1.5</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-218-1.svg" width="1152" /></p>
 <p>Consider comparing an LDA model using all predictors in the dataset.</p>
-<pre class="sourceCode r"><code class="sourceCode r">full_lda &lt;-<span class="st"> </span><span class="kw">lda</span>(default<span class="op">~</span>., <span class="dt">data=</span>Default)
-full_lda_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(full_lda, Default)
-
-pred_list &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">balance_lda =</span> lda_pred<span class="op">$</span>posterior[,<span class="st">&quot;Yes&quot;</span>],
-  <span class="dt">full_lda =</span> full_lda_preds<span class="op">$</span>posterior[,<span class="st">&quot;Yes&quot;</span>],
-  <span class="dt">dummy =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">nrow</span>(Default)))
-
-pred_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_list,
-  prediction, Default<span class="op">$</span>default)
-
-aucs &lt;-<span class="st"> </span><span class="kw">sapply</span>(pred_objs, 
-  <span class="cf">function</span>(x) <span class="kw">unlist</span>(
-    <span class="kw">performance</span>(x, <span class="st">&quot;auc&quot;</span>)<span class="op">@</span>y.values))
-
-roc_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_objs, 
-  performance, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="dt">along=</span>roc_objs)) {
-  <span class="kw">plot</span>(roc_objs[[i]], <span class="dt">add =</span> i <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">col=</span>i, 
-       <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>)
-}
-<span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, 
-       <span class="dt">legend=</span><span class="kw">paste</span>(<span class="kw">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="kw">names</span>(pred_list)), <span class="st">&quot;AUROC=&quot;</span>,<span class="kw">round</span>(aucs, <span class="dv">2</span>)), 
-       <span class="dt">col=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb427-1" data-line-number="1">full_lda &lt;-<span class="st"> </span><span class="kw">lda</span>(default<span class="op">~</span>., <span class="dt">data=</span>Default)</a>
+<a class="sourceLine" id="cb427-2" data-line-number="2">full_lda_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(full_lda, Default)</a>
+<a class="sourceLine" id="cb427-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb427-4" data-line-number="4">pred_list &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb427-5" data-line-number="5">  <span class="dt">balance_lda =</span> lda_pred<span class="op">$</span>posterior[,<span class="st">&quot;Yes&quot;</span>],</a>
+<a class="sourceLine" id="cb427-6" data-line-number="6">  <span class="dt">full_lda =</span> full_lda_preds<span class="op">$</span>posterior[,<span class="st">&quot;Yes&quot;</span>],</a>
+<a class="sourceLine" id="cb427-7" data-line-number="7">  <span class="dt">dummy =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">nrow</span>(Default)))</a>
+<a class="sourceLine" id="cb427-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb427-9" data-line-number="9">pred_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_list,</a>
+<a class="sourceLine" id="cb427-10" data-line-number="10">  prediction, Default<span class="op">$</span>default)</a>
+<a class="sourceLine" id="cb427-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb427-12" data-line-number="12">aucs &lt;-<span class="st"> </span><span class="kw">sapply</span>(pred_objs, </a>
+<a class="sourceLine" id="cb427-13" data-line-number="13">  <span class="cf">function</span>(x) <span class="kw">unlist</span>(</a>
+<a class="sourceLine" id="cb427-14" data-line-number="14">    <span class="kw">performance</span>(x, <span class="st">&quot;auc&quot;</span>)<span class="op">@</span>y.values))</a>
+<a class="sourceLine" id="cb427-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb427-16" data-line-number="16">roc_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_objs, </a>
+<a class="sourceLine" id="cb427-17" data-line-number="17">  performance, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb428-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="dt">along=</span>roc_objs)) {</a>
+<a class="sourceLine" id="cb428-2" data-line-number="2">  <span class="kw">plot</span>(roc_objs[[i]], <span class="dt">add =</span> i <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">col=</span>i, </a>
+<a class="sourceLine" id="cb428-3" data-line-number="3">       <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>)</a>
+<a class="sourceLine" id="cb428-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb428-5" data-line-number="5"><span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, </a>
+<a class="sourceLine" id="cb428-6" data-line-number="6">       <span class="dt">legend=</span><span class="kw">paste</span>(<span class="kw">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="kw">names</span>(pred_list)), <span class="st">&quot;AUROC=&quot;</span>,<span class="kw">round</span>(aucs, <span class="dv">2</span>)), </a>
+<a class="sourceLine" id="cb428-7" data-line-number="7">       <span class="dt">col=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-221-1.svg" width="672" /></p>
 <p>Another metric that is frequently used to understand classification errors and tradeoffs is the precision-recall curve:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(caTools)
-pr_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_objs, 
-  performance, <span class="st">&quot;prec&quot;</span>, <span class="st">&quot;rec&quot;</span>)
-
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="dt">along=</span>pr_objs)) {
-  <span class="kw">plot</span>(pr_objs[[i]], <span class="dt">add =</span> i <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">col=</span>i, 
-       <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>)
-}
-<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, 
-       <span class="dt">legend=</span><span class="kw">paste</span>(<span class="kw">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="kw">names</span>(pred_list))),
-      <span class="dt">col=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</code></pre>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb429-1" data-line-number="1"><span class="kw">library</span>(caTools)</a>
+<a class="sourceLine" id="cb429-2" data-line-number="2">pr_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_objs, </a>
+<a class="sourceLine" id="cb429-3" data-line-number="3">  performance, <span class="st">&quot;prec&quot;</span>, <span class="st">&quot;rec&quot;</span>)</a>
+<a class="sourceLine" id="cb429-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb429-5" data-line-number="5"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="dt">along=</span>pr_objs)) {</a>
+<a class="sourceLine" id="cb429-6" data-line-number="6">  <span class="kw">plot</span>(pr_objs[[i]], <span class="dt">add =</span> i <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">col=</span>i, </a>
+<a class="sourceLine" id="cb429-7" data-line-number="7">       <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>)</a>
+<a class="sourceLine" id="cb429-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb429-9" data-line-number="9"><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, </a>
+<a class="sourceLine" id="cb429-10" data-line-number="10">       <span class="dt">legend=</span><span class="kw">paste</span>(<span class="kw">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="kw">names</span>(pred_list))),</a>
+<a class="sourceLine" id="cb429-11" data-line-number="11">      <span class="dt">col=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-222-1.svg" width="960" /></p>
 </div>
 <div id="summary-3" class="section level2">
@@ -1030,11 +1030,13 @@ pr_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_objs,
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -1042,12 +1044,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -1059,6 +1060,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -1078,8 +1083,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>17 Tidying data | Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="17 Tidying data | Lecture Notes: Introduction to Data Science" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="17 Tidying data | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2019-05-30" />
+<meta name="date" content="2020-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="ingesting-data.html">
-<link rel="next" href="text-and-dates.html">
+<link rel="prev" href="ingesting-data.html"/>
+<link rel="next" href="text-and-dates.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,18 +48,19 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -68,13 +70,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -519,21 +519,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Each type of entity (observational unit) forms a table</li>
 </ol>
 <p>Here is an example of a tidy dataset:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nycflights13)
-<span class="kw">head</span>(flights)</code></pre>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb184-2" data-line-number="2"><span class="kw">head</span>(flights)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 19
-##    year month   day dep_time sched_dep_time dep_delay arr_time
-##   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-## 1  2013     1     1      517            515         2      830
-## 2  2013     1     1      533            529         4      850
-## 3  2013     1     1      542            540         2      923
-## 4  2013     1     1      544            545        -1     1004
-## 5  2013     1     1      554            600        -6      812
-## 6  2013     1     1      554            558        -4      740
-## # … with 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
-## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
-## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
-## #   time_hour &lt;dttm&gt;</code></pre>
+##    year month   day dep_time sched_dep_time
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;
+## 1  2013     1     1      517            515
+## 2  2013     1     1      533            529
+## 3  2013     1     1      542            540
+## 4  2013     1     1      544            545
+## 5  2013     1     1      554            600
+## 6  2013     1     1      554            558
+## # … with 14 more variables: dep_delay &lt;dbl&gt;,
+## #   arr_time &lt;int&gt;, sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,
+## #   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;,
+## #   dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;,
+## #   hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
 <p>it has one observation per row, a single variable per column. Notice only information about flights are included here (e.g., no airport information other than the name) in these observations.</p>
 </div>
 <div id="common-problems-in-messy-data" class="section level2">
@@ -551,13 +553,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Single observational unit stored in multiple tables (join)</li>
 </ul>
 <p>We are using data from Hadley’s paper found in <a href="https://github.com/hadley/tidyr">github</a>. It’s included directory <code>data</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r">data_dir &lt;-<span class="st"> &quot;data&quot;</span></code></pre>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1">data_dir &lt;-<span class="st"> &quot;data&quot;</span></a></code></pre></div>
 <div id="headers-as-values" class="section level3">
 <h3><span class="header-section-number">17.2.1</span> Headers as values</h3>
 <p>The first problem we’ll see is the case where a table header contains values.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-
-pew &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;pew.csv&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb187-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb187-3" data-line-number="3">pew &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;pew.csv&quot;</span>))</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   religion = col_character(),
@@ -572,33 +574,35 @@ pew &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="
 ##   `&gt;150k` = col_double(),
 ##   `Don&#39;t know/refused` = col_double()
 ## )</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">pew</code></pre>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1">pew</a></code></pre></div>
 <pre><code>## # A tibble: 18 x 11
-##    religion `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k`
-##    &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-##  1 Agnostic      27        34        60        81        76       137
-##  2 Atheist       12        27        37        52        35        70
-##  3 Buddhist      27        21        30        34        33        58
-##  4 Catholic     418       617       732       670       638      1116
-##  5 Don’t k…      15        14        15        11        10        35
-##  6 Evangel…     575       869      1064       982       881      1486
-##  7 Hindu          1         9         7         9        11        34
-##  8 Histori…     228       244       236       238       197       223
-##  9 Jehovah…      20        27        24        24        21        30
-## 10 Jewish        19        19        25        25        30        95
-## 11 Mainlin…     289       495       619       655       651      1107
-## 12 Mormon        29        40        48        51        56       112
-## 13 Muslim         6         7         9        10         9        23
-## 14 Orthodox      13        17        23        32        32        47
-## 15 Other C…       9         7        11        13        13        14
-## 16 Other F…      20        33        40        46        49        63
-## 17 Other W…       5         2         3         4         2         7
-## 18 Unaffil…     217       299       374       365       341       528
-## # … with 4 more variables: `$75-100k` &lt;dbl&gt;, `$100-150k` &lt;dbl&gt;,
-## #   `&gt;150k` &lt;dbl&gt;, `Don&#39;t know/refused` &lt;dbl&gt;</code></pre>
+##    religion `&lt;$10k` `$10-20k` `$20-30k` `$30-40k`
+##    &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Agnostic      27        34        60        81
+##  2 Atheist       12        27        37        52
+##  3 Buddhist      27        21        30        34
+##  4 Catholic     418       617       732       670
+##  5 Don’t k…      15        14        15        11
+##  6 Evangel…     575       869      1064       982
+##  7 Hindu          1         9         7         9
+##  8 Histori…     228       244       236       238
+##  9 Jehovah…      20        27        24        24
+## 10 Jewish        19        19        25        25
+## 11 Mainlin…     289       495       619       655
+## 12 Mormon        29        40        48        51
+## 13 Muslim         6         7         9        10
+## 14 Orthodox      13        17        23        32
+## 15 Other C…       9         7        11        13
+## 16 Other F…      20        33        40        46
+## 17 Other W…       5         2         3         4
+## 18 Unaffil…     217       299       374       365
+## # … with 6 more variables: `$40-50k` &lt;dbl&gt;,
+## #   `$50-75k` &lt;dbl&gt;, `$75-100k` &lt;dbl&gt;,
+## #   `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;, `Don&#39;t
+## #   know/refused` &lt;dbl&gt;</code></pre>
 <p>This table has the number of survey respondents of a specific religion that report their income within some range. A tidy version of this table would consider the <em>variables</em> of each observation to be <code>religion, income, frequency</code> where <code>frequency</code> has the number of respondents for each religion and income range. The function to use in the <code>tidyr</code> package is <code>gather</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r">tidy_pew &lt;-<span class="st"> </span><span class="kw">gather</span>(pew, income, frequency, <span class="op">-</span>religion)
-tidy_pew</code></pre>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb191-1" data-line-number="1">tidy_pew &lt;-<span class="st"> </span><span class="kw">gather</span>(pew, income, frequency, <span class="op">-</span>religion)</a>
+<a class="sourceLine" id="cb191-2" data-line-number="2">tidy_pew</a></code></pre></div>
 <pre><code>## # A tibble: 180 x 3
 ##    religion                income frequency
 ##    &lt;chr&gt;                   &lt;chr&gt;      &lt;dbl&gt;
@@ -615,7 +619,7 @@ tidy_pew</code></pre>
 ## # … with 170 more rows</code></pre>
 <p>This says: gather all the columns from the <code>pew</code> (except <code>religion</code>) into key-value columns <code>income</code> and <code>frequency</code>. This table is much easier to use in other analyses.</p>
 <p>Another example: this table has a row for each song appearing in the billboard top 100. It contains track information, and the date it entered the top 100. It then shows the rank in each of the next 76 weeks.</p>
-<pre class="sourceCode r"><code class="sourceCode r">billboard &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;billboard.csv&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb193-1" data-line-number="1">billboard &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;billboard.csv&quot;</span>))</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_double(),
@@ -636,70 +640,84 @@ tidy_pew</code></pre>
 ##   wk76 = col_logical()
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">billboard</code></pre>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" data-line-number="1">billboard</a></code></pre></div>
 <pre><code>## # A tibble: 317 x 81
-##     year artist track time  date.entered   wk1   wk2   wk3   wk4   wk5
-##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;tim&gt; &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1  2000 2 Pac  Baby… 04:22 2000-02-26      87    82    72    77    87
-##  2  2000 2Ge+h… The … 03:15 2000-09-02      91    87    92    NA    NA
-##  3  2000 3 Doo… Kryp… 03:53 2000-04-08      81    70    68    67    66
-##  4  2000 3 Doo… Loser 04:24 2000-10-21      76    76    72    69    67
-##  5  2000 504 B… Wobb… 03:35 2000-04-15      57    34    25    17    17
-##  6  2000 98^0   Give… 03:24 2000-08-19      51    39    34    26    26
-##  7  2000 A*Tee… Danc… 03:44 2000-07-08      97    97    96    95   100
-##  8  2000 Aaliy… I Do… 04:15 2000-01-29      84    62    51    41    38
-##  9  2000 Aaliy… Try … 04:03 2000-03-18      59    53    38    28    21
-## 10  2000 Adams… Open… 05:30 2000-08-26      76    76    74    69    68
-## # … with 307 more rows, and 71 more variables: wk6 &lt;dbl&gt;, wk7 &lt;dbl&gt;,
-## #   wk8 &lt;dbl&gt;, wk9 &lt;dbl&gt;, wk10 &lt;dbl&gt;, wk11 &lt;dbl&gt;, wk12 &lt;dbl&gt;, wk13 &lt;dbl&gt;,
-## #   wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;, wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;, wk18 &lt;dbl&gt;,
-## #   wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, wk22 &lt;dbl&gt;, wk23 &lt;dbl&gt;,
-## #   wk24 &lt;dbl&gt;, wk25 &lt;dbl&gt;, wk26 &lt;dbl&gt;, wk27 &lt;dbl&gt;, wk28 &lt;dbl&gt;,
-## #   wk29 &lt;dbl&gt;, wk30 &lt;dbl&gt;, wk31 &lt;dbl&gt;, wk32 &lt;dbl&gt;, wk33 &lt;dbl&gt;,
-## #   wk34 &lt;dbl&gt;, wk35 &lt;dbl&gt;, wk36 &lt;dbl&gt;, wk37 &lt;dbl&gt;, wk38 &lt;dbl&gt;,
-## #   wk39 &lt;dbl&gt;, wk40 &lt;dbl&gt;, wk41 &lt;dbl&gt;, wk42 &lt;dbl&gt;, wk43 &lt;dbl&gt;,
-## #   wk44 &lt;dbl&gt;, wk45 &lt;dbl&gt;, wk46 &lt;dbl&gt;, wk47 &lt;dbl&gt;, wk48 &lt;dbl&gt;,
-## #   wk49 &lt;dbl&gt;, wk50 &lt;dbl&gt;, wk51 &lt;dbl&gt;, wk52 &lt;dbl&gt;, wk53 &lt;dbl&gt;,
-## #   wk54 &lt;dbl&gt;, wk55 &lt;dbl&gt;, wk56 &lt;dbl&gt;, wk57 &lt;dbl&gt;, wk58 &lt;dbl&gt;,
-## #   wk59 &lt;dbl&gt;, wk60 &lt;dbl&gt;, wk61 &lt;dbl&gt;, wk62 &lt;dbl&gt;, wk63 &lt;dbl&gt;,
-## #   wk64 &lt;dbl&gt;, wk65 &lt;dbl&gt;, wk66 &lt;lgl&gt;, wk67 &lt;lgl&gt;, wk68 &lt;lgl&gt;,
-## #   wk69 &lt;lgl&gt;, wk70 &lt;lgl&gt;, wk71 &lt;lgl&gt;, wk72 &lt;lgl&gt;, wk73 &lt;lgl&gt;,
-## #   wk74 &lt;lgl&gt;, wk75 &lt;lgl&gt;, wk76 &lt;lgl&gt;</code></pre>
+##     year artist track time  date.entered   wk1
+##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;tim&gt; &lt;date&gt;       &lt;dbl&gt;
+##  1  2000 2 Pac  Baby… 04:22 2000-02-26      87
+##  2  2000 2Ge+h… The … 03:15 2000-09-02      91
+##  3  2000 3 Doo… Kryp… 03:53 2000-04-08      81
+##  4  2000 3 Doo… Loser 04:24 2000-10-21      76
+##  5  2000 504 B… Wobb… 03:35 2000-04-15      57
+##  6  2000 98^0   Give… 03:24 2000-08-19      51
+##  7  2000 A*Tee… Danc… 03:44 2000-07-08      97
+##  8  2000 Aaliy… I Do… 04:15 2000-01-29      84
+##  9  2000 Aaliy… Try … 04:03 2000-03-18      59
+## 10  2000 Adams… Open… 05:30 2000-08-26      76
+## # … with 307 more rows, and 75 more variables:
+## #   wk2 &lt;dbl&gt;, wk3 &lt;dbl&gt;, wk4 &lt;dbl&gt;, wk5 &lt;dbl&gt;,
+## #   wk6 &lt;dbl&gt;, wk7 &lt;dbl&gt;, wk8 &lt;dbl&gt;, wk9 &lt;dbl&gt;,
+## #   wk10 &lt;dbl&gt;, wk11 &lt;dbl&gt;, wk12 &lt;dbl&gt;,
+## #   wk13 &lt;dbl&gt;, wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;,
+## #   wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;, wk18 &lt;dbl&gt;,
+## #   wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;,
+## #   wk22 &lt;dbl&gt;, wk23 &lt;dbl&gt;, wk24 &lt;dbl&gt;,
+## #   wk25 &lt;dbl&gt;, wk26 &lt;dbl&gt;, wk27 &lt;dbl&gt;,
+## #   wk28 &lt;dbl&gt;, wk29 &lt;dbl&gt;, wk30 &lt;dbl&gt;,
+## #   wk31 &lt;dbl&gt;, wk32 &lt;dbl&gt;, wk33 &lt;dbl&gt;,
+## #   wk34 &lt;dbl&gt;, wk35 &lt;dbl&gt;, wk36 &lt;dbl&gt;,
+## #   wk37 &lt;dbl&gt;, wk38 &lt;dbl&gt;, wk39 &lt;dbl&gt;,
+## #   wk40 &lt;dbl&gt;, wk41 &lt;dbl&gt;, wk42 &lt;dbl&gt;,
+## #   wk43 &lt;dbl&gt;, wk44 &lt;dbl&gt;, wk45 &lt;dbl&gt;,
+## #   wk46 &lt;dbl&gt;, wk47 &lt;dbl&gt;, wk48 &lt;dbl&gt;,
+## #   wk49 &lt;dbl&gt;, wk50 &lt;dbl&gt;, wk51 &lt;dbl&gt;,
+## #   wk52 &lt;dbl&gt;, wk53 &lt;dbl&gt;, wk54 &lt;dbl&gt;,
+## #   wk55 &lt;dbl&gt;, wk56 &lt;dbl&gt;, wk57 &lt;dbl&gt;,
+## #   wk58 &lt;dbl&gt;, wk59 &lt;dbl&gt;, wk60 &lt;dbl&gt;,
+## #   wk61 &lt;dbl&gt;, wk62 &lt;dbl&gt;, wk63 &lt;dbl&gt;,
+## #   wk64 &lt;dbl&gt;, wk65 &lt;dbl&gt;, wk66 &lt;lgl&gt;,
+## #   wk67 &lt;lgl&gt;, wk68 &lt;lgl&gt;, wk69 &lt;lgl&gt;,
+## #   wk70 &lt;lgl&gt;, wk71 &lt;lgl&gt;, wk72 &lt;lgl&gt;,
+## #   wk73 &lt;lgl&gt;, wk74 &lt;lgl&gt;, wk75 &lt;lgl&gt;,
+## #   wk76 &lt;lgl&gt;</code></pre>
 <p>Challenge:
 This dataset has values as column names. Which column names are values? How do we tidy this dataset?</p>
 </div>
 <div id="multiple-variables-in-one-column" class="section level3">
 <h3><span class="header-section-number">17.2.2</span> Multiple variables in one column</h3>
 <p>The next problem we’ll see is the case when we see multiple variables in a single column. Consider the following dataset of tuberculosis cases:</p>
-<pre class="sourceCode r"><code class="sourceCode r">tb &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;tb.csv&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" data-line-number="1">tb &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;tb.csv&quot;</span>))</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_double(),
 ##   iso2 = col_character()
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">tb</code></pre>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" data-line-number="1">tb</a></code></pre></div>
 <pre><code>## # A tibble: 5,769 x 22
-##    iso2   year   m04  m514  m014 m1524 m2534 m3544 m4554 m5564   m65    mu
-##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 AD     1989    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-##  2 AD     1990    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-##  3 AD     1991    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-##  4 AD     1992    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-##  5 AD     1993    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-##  6 AD     1994    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-##  7 AD     1996    NA    NA     0     0     0     4     1     0     0    NA
-##  8 AD     1997    NA    NA     0     0     1     2     2     1     6    NA
-##  9 AD     1998    NA    NA     0     0     0     1     0     0     0    NA
-## 10 AD     1999    NA    NA     0     0     0     1     1     0     0    NA
-## # … with 5,759 more rows, and 10 more variables: f04 &lt;dbl&gt;, f514 &lt;dbl&gt;,
-## #   f014 &lt;dbl&gt;, f1524 &lt;dbl&gt;, f2534 &lt;dbl&gt;, f3544 &lt;dbl&gt;, f4554 &lt;dbl&gt;,
-## #   f5564 &lt;dbl&gt;, f65 &lt;dbl&gt;, fu &lt;dbl&gt;</code></pre>
+##    iso2   year   m04  m514  m014 m1524 m2534
+##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 AD     1989    NA    NA    NA    NA    NA
+##  2 AD     1990    NA    NA    NA    NA    NA
+##  3 AD     1991    NA    NA    NA    NA    NA
+##  4 AD     1992    NA    NA    NA    NA    NA
+##  5 AD     1993    NA    NA    NA    NA    NA
+##  6 AD     1994    NA    NA    NA    NA    NA
+##  7 AD     1996    NA    NA     0     0     0
+##  8 AD     1997    NA    NA     0     0     1
+##  9 AD     1998    NA    NA     0     0     0
+## 10 AD     1999    NA    NA     0     0     0
+## # … with 5,759 more rows, and 15 more variables:
+## #   m3544 &lt;dbl&gt;, m4554 &lt;dbl&gt;, m5564 &lt;dbl&gt;,
+## #   m65 &lt;dbl&gt;, mu &lt;dbl&gt;, f04 &lt;dbl&gt;, f514 &lt;dbl&gt;,
+## #   f014 &lt;dbl&gt;, f1524 &lt;dbl&gt;, f2534 &lt;dbl&gt;,
+## #   f3544 &lt;dbl&gt;, f4554 &lt;dbl&gt;, f5564 &lt;dbl&gt;,
+## #   f65 &lt;dbl&gt;, fu &lt;dbl&gt;</code></pre>
 <p>This table has a row for each year and strain of tuberculosis (given by the first two columns). The remaining columns state the number of cases for a given demographic. For example, <code>m1524</code> corresponds to males between 15 and 24 years old, and <code>f1524</code> are females age 15-24. As you can see each of these columns has two variables: <code>sex</code> and <code>age</code>.</p>
 <p>Challenge: what else is untidy about this dataset?</p>
 <p>So, we have to do two operations to tidy this table, first we need to use <code>gather</code> the tabulation columns into a <code>demo</code> and <code>n</code> columns (for demographic and number of cases):</p>
-<pre class="sourceCode r"><code class="sourceCode r">tidy_tb &lt;-<span class="st"> </span><span class="kw">gather</span>(tb, demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)
-tidy_tb</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb203-1" data-line-number="1">tidy_tb &lt;-<span class="st"> </span><span class="kw">gather</span>(tb, demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)</a>
+<a class="sourceLine" id="cb203-2" data-line-number="2">tidy_tb</a></code></pre></div>
 <pre><code>## # A tibble: 115,380 x 4
 ##    iso2   year demo      n
 ##    &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
@@ -715,8 +733,8 @@ tidy_tb</code></pre>
 ## 10 AD     1999 m04      NA
 ## # … with 115,370 more rows</code></pre>
 <p>Next, we need to <code>separate</code> the values in the <code>demo</code> column into two variables <code>sex</code> and <code>age</code></p>
-<pre class="sourceCode r"><code class="sourceCode r">tidy_tb &lt;-<span class="st"> </span><span class="kw">separate</span>(tidy_tb, demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)
-tidy_tb</code></pre>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb205-1" data-line-number="1">tidy_tb &lt;-<span class="st"> </span><span class="kw">separate</span>(tidy_tb, demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb205-2" data-line-number="2">tidy_tb</a></code></pre></div>
 <pre><code>## # A tibble: 115,380 x 5
 ##    iso2   year sex   age       n
 ##    &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
@@ -733,10 +751,10 @@ tidy_tb</code></pre>
 ## # … with 115,370 more rows</code></pre>
 <p>This calls the <code>separate</code> function on table <code>tidy_db</code>, separating the <code>demo</code> variable into variables <code>sex</code> and <code>age</code> by separating each value after the first character (that’s the <code>sep</code> argument).</p>
 <p>We can put these two commands together in a pipeline:</p>
-<pre class="sourceCode r"><code class="sourceCode r">tidy_tb &lt;-<span class="st"> </span>tb <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">gather</span>(demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)  <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">separate</span>(demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)
-tidy_tb</code></pre>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" data-line-number="1">tidy_tb &lt;-<span class="st"> </span>tb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb207-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)  <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb207-3" data-line-number="3"><span class="st">  </span><span class="kw">separate</span>(demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb207-4" data-line-number="4">tidy_tb</a></code></pre></div>
 <pre><code>## # A tibble: 115,380 x 5
 ##    iso2   year sex   age       n
 ##    &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
@@ -755,7 +773,7 @@ tidy_tb</code></pre>
 <div id="variables-stored-in-both-rows-and-columns" class="section level3">
 <h3><span class="header-section-number">17.2.3</span> Variables stored in both rows and columns</h3>
 <p>This is the messiest, commonly found type of data. Let’s take a look at an example, this is daily weather data from for one weather station in Mexico in 2010.</p>
-<pre class="sourceCode r"><code class="sourceCode r">weather &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;weather.csv&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" data-line-number="1">weather &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(data_dir, <span class="st">&quot;weather.csv&quot;</span>))</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_double(),
@@ -771,30 +789,33 @@ tidy_tb</code></pre>
 ##   d24 = col_logical()
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">weather</code></pre>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" data-line-number="1">weather</a></code></pre></div>
 <pre><code>## # A tibble: 22 x 35
-##    id     year month element    d1    d2    d3    d4    d5    d6    d7
-##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 MX17…  2010     1 tmax       NA  NA    NA      NA  NA      NA    NA
-##  2 MX17…  2010     1 tmin       NA  NA    NA      NA  NA      NA    NA
-##  3 MX17…  2010     2 tmax       NA  27.3  24.1    NA  NA      NA    NA
-##  4 MX17…  2010     2 tmin       NA  14.4  14.4    NA  NA      NA    NA
-##  5 MX17…  2010     3 tmax       NA  NA    NA      NA  32.1    NA    NA
-##  6 MX17…  2010     3 tmin       NA  NA    NA      NA  14.2    NA    NA
-##  7 MX17…  2010     4 tmax       NA  NA    NA      NA  NA      NA    NA
-##  8 MX17…  2010     4 tmin       NA  NA    NA      NA  NA      NA    NA
-##  9 MX17…  2010     5 tmax       NA  NA    NA      NA  NA      NA    NA
-## 10 MX17…  2010     5 tmin       NA  NA    NA      NA  NA      NA    NA
-## # … with 12 more rows, and 24 more variables: d8 &lt;dbl&gt;, d9 &lt;lgl&gt;,
-## #   d10 &lt;dbl&gt;, d11 &lt;dbl&gt;, d12 &lt;lgl&gt;, d13 &lt;dbl&gt;, d14 &lt;dbl&gt;, d15 &lt;dbl&gt;,
-## #   d16 &lt;dbl&gt;, d17 &lt;dbl&gt;, d18 &lt;lgl&gt;, d19 &lt;lgl&gt;, d20 &lt;lgl&gt;, d21 &lt;lgl&gt;,
-## #   d22 &lt;lgl&gt;, d23 &lt;dbl&gt;, d24 &lt;lgl&gt;, d25 &lt;dbl&gt;, d26 &lt;dbl&gt;, d27 &lt;dbl&gt;,
+##    id       year month element    d1    d2    d3
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 MX17004  2010     1 tmax       NA  NA    NA  
+##  2 MX17004  2010     1 tmin       NA  NA    NA  
+##  3 MX17004  2010     2 tmax       NA  27.3  24.1
+##  4 MX17004  2010     2 tmin       NA  14.4  14.4
+##  5 MX17004  2010     3 tmax       NA  NA    NA  
+##  6 MX17004  2010     3 tmin       NA  NA    NA  
+##  7 MX17004  2010     4 tmax       NA  NA    NA  
+##  8 MX17004  2010     4 tmin       NA  NA    NA  
+##  9 MX17004  2010     5 tmax       NA  NA    NA  
+## 10 MX17004  2010     5 tmin       NA  NA    NA  
+## # … with 12 more rows, and 28 more variables:
+## #   d4 &lt;dbl&gt;, d5 &lt;dbl&gt;, d6 &lt;dbl&gt;, d7 &lt;dbl&gt;,
+## #   d8 &lt;dbl&gt;, d9 &lt;lgl&gt;, d10 &lt;dbl&gt;, d11 &lt;dbl&gt;,
+## #   d12 &lt;lgl&gt;, d13 &lt;dbl&gt;, d14 &lt;dbl&gt;, d15 &lt;dbl&gt;,
+## #   d16 &lt;dbl&gt;, d17 &lt;dbl&gt;, d18 &lt;lgl&gt;, d19 &lt;lgl&gt;,
+## #   d20 &lt;lgl&gt;, d21 &lt;lgl&gt;, d22 &lt;lgl&gt;, d23 &lt;dbl&gt;,
+## #   d24 &lt;lgl&gt;, d25 &lt;dbl&gt;, d26 &lt;dbl&gt;, d27 &lt;dbl&gt;,
 ## #   d28 &lt;dbl&gt;, d29 &lt;dbl&gt;, d30 &lt;dbl&gt;, d31 &lt;dbl&gt;</code></pre>
 <p>So, we have two rows for each month, one with maximum daily temperature, one with minimum daily temperature, the columns starting with <code>d</code> correspond to the day in the where the measurements were made.</p>
 <p>Challenge: How would a tidy version of this data look like?</p>
-<pre class="sourceCode r"><code class="sourceCode r">weather <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(day, value, d1<span class="op">:</span>d31, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(element, value)</code></pre>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb214-1" data-line-number="1">weather <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb214-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(day, value, d1<span class="op">:</span>d31, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb214-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(element, value)</a></code></pre></div>
 <pre><code>## # A tibble: 33 x 6
 ##    id       year month day    tmax  tmin
 ##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -814,105 +835,108 @@ tidy_tb</code></pre>
 <div id="multiple-types-in-one-table" class="section level3">
 <h3><span class="header-section-number">17.2.4</span> Multiple types in one table</h3>
 <p>Remember that an important aspect of tidy data is that it contains exactly one kind of observation in a single table. Let’s see the billboard example again after the <code>gather</code> operation we did before:</p>
-<pre class="sourceCode r"><code class="sourceCode r">tidy_billboard &lt;-<span class="st"> </span>billboard <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(week, rank, wk1<span class="op">:</span>wk76, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)
-tidy_billboard</code></pre>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb216-1" data-line-number="1">tidy_billboard &lt;-<span class="st"> </span>billboard <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb216-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(week, rank, wk1<span class="op">:</span>wk76, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb216-3" data-line-number="3">tidy_billboard</a></code></pre></div>
 <pre><code>## # A tibble: 5,307 x 7
-##     year artist        track                 time  date.entered week   rank
-##    &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;                 &lt;tim&gt; &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;
-##  1  2000 2 Pac         Baby Don&#39;t Cry (Keep… 04:22 2000-02-26   wk1      87
-##  2  2000 2Ge+her       The Hardest Part Of … 03:15 2000-09-02   wk1      91
-##  3  2000 3 Doors Down  Kryptonite            03:53 2000-04-08   wk1      81
-##  4  2000 3 Doors Down  Loser                 04:24 2000-10-21   wk1      76
-##  5  2000 504 Boyz      Wobble Wobble         03:35 2000-04-15   wk1      57
-##  6  2000 98^0          Give Me Just One Nig… 03:24 2000-08-19   wk1      51
-##  7  2000 A*Teens       Dancing Queen         03:44 2000-07-08   wk1      97
-##  8  2000 Aaliyah       I Don&#39;t Wanna         04:15 2000-01-29   wk1      84
-##  9  2000 Aaliyah       Try Again             04:03 2000-03-18   wk1      59
-## 10  2000 Adams, Yolan… Open My Heart         05:30 2000-08-26   wk1      76
-## # … with 5,297 more rows</code></pre>
+##     year artist track time  date.entered week 
+##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;tim&gt; &lt;date&gt;       &lt;chr&gt;
+##  1  2000 2 Pac  Baby… 04:22 2000-02-26   wk1  
+##  2  2000 2Ge+h… The … 03:15 2000-09-02   wk1  
+##  3  2000 3 Doo… Kryp… 03:53 2000-04-08   wk1  
+##  4  2000 3 Doo… Loser 04:24 2000-10-21   wk1  
+##  5  2000 504 B… Wobb… 03:35 2000-04-15   wk1  
+##  6  2000 98^0   Give… 03:24 2000-08-19   wk1  
+##  7  2000 A*Tee… Danc… 03:44 2000-07-08   wk1  
+##  8  2000 Aaliy… I Do… 04:15 2000-01-29   wk1  
+##  9  2000 Aaliy… Try … 04:03 2000-03-18   wk1  
+## 10  2000 Adams… Open… 05:30 2000-08-26   wk1  
+## # … with 5,297 more rows, and 1 more variable:
+## #   rank &lt;dbl&gt;</code></pre>
 <p>Let’s sort this table by track to see a problem with this table:</p>
-<pre class="sourceCode r"><code class="sourceCode r">tidy_billboard &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">arrange</span>(track)
-tidy_billboard</code></pre>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb218-1" data-line-number="1">tidy_billboard &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb218-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(track)</a>
+<a class="sourceLine" id="cb218-3" data-line-number="3">tidy_billboard</a></code></pre></div>
 <pre><code>## # A tibble: 5,307 x 7
-##     year artist track                   time   date.entered week   rank
-##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;time&gt; &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;
-##  1  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk1     100
-##  2  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk2      99
-##  3  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk3      96
-##  4  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk4      76
-##  5  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk5      55
-##  6  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk6      37
-##  7  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk7      24
-##  8  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk8      24
-##  9  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk9      30
-## 10  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk10     36
-## # … with 5,297 more rows</code></pre>
+##     year artist track time  date.entered week 
+##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;tim&gt; &lt;date&gt;       &lt;chr&gt;
+##  1  2000 Nelly  (Hot… 04:17 2000-04-29   wk1  
+##  2  2000 Nelly  (Hot… 04:17 2000-04-29   wk2  
+##  3  2000 Nelly  (Hot… 04:17 2000-04-29   wk3  
+##  4  2000 Nelly  (Hot… 04:17 2000-04-29   wk4  
+##  5  2000 Nelly  (Hot… 04:17 2000-04-29   wk5  
+##  6  2000 Nelly  (Hot… 04:17 2000-04-29   wk6  
+##  7  2000 Nelly  (Hot… 04:17 2000-04-29   wk7  
+##  8  2000 Nelly  (Hot… 04:17 2000-04-29   wk8  
+##  9  2000 Nelly  (Hot… 04:17 2000-04-29   wk9  
+## 10  2000 Nelly  (Hot… 04:17 2000-04-29   wk10 
+## # … with 5,297 more rows, and 1 more variable:
+## #   rank &lt;dbl&gt;</code></pre>
 <p>We have a lot of repeated information in many of these rows (the artist, track name, year, title and date entered). The problem is that this table contains information about both tracks and rank in billboard. That’s two different kinds of observations that should belong in two different tables in a tidy dataset.</p>
 <p>Let’s make a song table that only includes information about songs:</p>
-<pre class="sourceCode r"><code class="sourceCode r">song &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">unique</span>()
-song</code></pre>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb220-1" data-line-number="1">song &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb220-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb220-3" data-line-number="3"><span class="st">  </span><span class="kw">unique</span>()</a>
+<a class="sourceLine" id="cb220-4" data-line-number="4">song</a></code></pre></div>
 <pre><code>## # A tibble: 317 x 5
-##    artist        track                    year time   date.entered
-##    &lt;chr&gt;         &lt;chr&gt;                   &lt;dbl&gt; &lt;time&gt; &lt;date&gt;      
-##  1 Nelly         (Hot S**t) Country G...  2000 04:17  2000-04-29  
-##  2 Nu Flavor     3 Little Words           2000 03:54  2000-06-03  
-##  3 Jean, Wyclef  911                      2000 04:00  2000-10-07  
-##  4 Brock, Chad   A Country Boy Can Su...  2000 03:54  2000-01-01  
-##  5 Clark, Terri  A Little Gasoline        2000 03:07  2000-12-16  
-##  6 Son By Four   A Puro Dolor (Purest...  2000 03:30  2000-04-08  
-##  7 Carter, Aaron Aaron&#39;s Party (Come ...  2000 03:23  2000-08-26  
-##  8 Nine Days     Absolutely (Story Of...  2000 03:09  2000-05-06  
-##  9 De La Soul    All Good?                2000 05:02  2000-12-23  
-## 10 Blink-182     All The Small Things     2000 02:52  1999-12-04  
+##    artist    track        year time  date.entered
+##    &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;tim&gt; &lt;date&gt;      
+##  1 Nelly     (Hot S**t)…  2000 04:17 2000-04-29  
+##  2 Nu Flavor 3 Little W…  2000 03:54 2000-06-03  
+##  3 Jean, Wy… 911          2000 04:00 2000-10-07  
+##  4 Brock, C… A Country …  2000 03:54 2000-01-01  
+##  5 Clark, T… A Little G…  2000 03:07 2000-12-16  
+##  6 Son By F… A Puro Dol…  2000 03:30 2000-04-08  
+##  7 Carter, … Aaron&#39;s Pa…  2000 03:23 2000-08-26  
+##  8 Nine Days Absolutely…  2000 03:09 2000-05-06  
+##  9 De La So… All Good?    2000 05:02 2000-12-23  
+## 10 Blink-182 All The Sm…  2000 02:52 1999-12-04  
 ## # … with 307 more rows</code></pre>
 <p>The <code>unique</code> function removes any duplicate rows in a table. That’s how we have a single row for each song.</p>
 <p>Next, we would like to remove all the song information from the rank table. But we need to do it in a way that still remembers which song each ranking observation corresponds to. To do that, let’s first give each song an identifier that we can use to link songs and rankings. So, we can produce the final version of our song table like this:</p>
-<pre class="sourceCode r"><code class="sourceCode r">song &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">unique</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">song_id =</span> <span class="kw">row_number</span>())
-song</code></pre>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb222-1" data-line-number="1">song &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb222-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(artist, track, year, time, date.entered) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb222-3" data-line-number="3"><span class="st">  </span><span class="kw">unique</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb222-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">song_id =</span> <span class="kw">row_number</span>())</a>
+<a class="sourceLine" id="cb222-5" data-line-number="5">song</a></code></pre></div>
 <pre><code>## # A tibble: 317 x 6
-##    artist        track                    year time   date.entered song_id
-##    &lt;chr&gt;         &lt;chr&gt;                   &lt;dbl&gt; &lt;time&gt; &lt;date&gt;         &lt;int&gt;
-##  1 Nelly         (Hot S**t) Country G...  2000 04:17  2000-04-29         1
-##  2 Nu Flavor     3 Little Words           2000 03:54  2000-06-03         2
-##  3 Jean, Wyclef  911                      2000 04:00  2000-10-07         3
-##  4 Brock, Chad   A Country Boy Can Su...  2000 03:54  2000-01-01         4
-##  5 Clark, Terri  A Little Gasoline        2000 03:07  2000-12-16         5
-##  6 Son By Four   A Puro Dolor (Purest...  2000 03:30  2000-04-08         6
-##  7 Carter, Aaron Aaron&#39;s Party (Come ...  2000 03:23  2000-08-26         7
-##  8 Nine Days     Absolutely (Story Of...  2000 03:09  2000-05-06         8
-##  9 De La Soul    All Good?                2000 05:02  2000-12-23         9
-## 10 Blink-182     All The Small Things     2000 02:52  1999-12-04        10
+##    artist  track  year time  date.entered song_id
+##    &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;tim&gt; &lt;date&gt;         &lt;int&gt;
+##  1 Nelly   (Hot…  2000 04:17 2000-04-29         1
+##  2 Nu Fla… 3 Li…  2000 03:54 2000-06-03         2
+##  3 Jean, … 911    2000 04:00 2000-10-07         3
+##  4 Brock,… A Co…  2000 03:54 2000-01-01         4
+##  5 Clark,… A Li…  2000 03:07 2000-12-16         5
+##  6 Son By… A Pu…  2000 03:30 2000-04-08         6
+##  7 Carter… Aaro…  2000 03:23 2000-08-26         7
+##  8 Nine D… Abso…  2000 03:09 2000-05-06         8
+##  9 De La … All …  2000 05:02 2000-12-23         9
+## 10 Blink-… All …  2000 02:52 1999-12-04        10
 ## # … with 307 more rows</code></pre>
 <p>The <code>mutate</code> function adds a new column to the table, in this case with column name <code>song_id</code> and value the row number the song appears in the table (from the <code>row_number</code> column).</p>
 <p>Now we can make a rank table, we combine the tidy billboard table with our new song table using a <code>join</code> (we’ll learn all about joins later). It checks the values on each row of the billboard table and looks for rows in the song table that have the exact same values, and makes a new row that combines the information from both tables.</p>
-<pre class="sourceCode r"><code class="sourceCode r">tidy_billboard <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(song, <span class="kw">c</span>(<span class="st">&quot;artist&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;track&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;date.entered&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb224-1" data-line-number="1">tidy_billboard <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb224-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(song, <span class="kw">c</span>(<span class="st">&quot;artist&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;track&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;date.entered&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 5,307 x 8
-##     year artist track                time  date.entered week   rank song_id
-##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;                &lt;tim&gt; &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;   &lt;int&gt;
-##  1  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk1     100       1
-##  2  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk2      99       1
-##  3  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk3      96       1
-##  4  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk4      76       1
-##  5  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk5      55       1
-##  6  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk6      37       1
-##  7  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk7      24       1
-##  8  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk8      24       1
-##  9  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk9      30       1
-## 10  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk10     36       1
-## # … with 5,297 more rows</code></pre>
+##     year artist track time  date.entered week 
+##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; &lt;tim&gt; &lt;date&gt;       &lt;chr&gt;
+##  1  2000 Nelly  (Hot… 04:17 2000-04-29   wk1  
+##  2  2000 Nelly  (Hot… 04:17 2000-04-29   wk2  
+##  3  2000 Nelly  (Hot… 04:17 2000-04-29   wk3  
+##  4  2000 Nelly  (Hot… 04:17 2000-04-29   wk4  
+##  5  2000 Nelly  (Hot… 04:17 2000-04-29   wk5  
+##  6  2000 Nelly  (Hot… 04:17 2000-04-29   wk6  
+##  7  2000 Nelly  (Hot… 04:17 2000-04-29   wk7  
+##  8  2000 Nelly  (Hot… 04:17 2000-04-29   wk8  
+##  9  2000 Nelly  (Hot… 04:17 2000-04-29   wk9  
+## 10  2000 Nelly  (Hot… 04:17 2000-04-29   wk10 
+## # … with 5,297 more rows, and 2 more variables:
+## #   rank &lt;dbl&gt;, song_id &lt;int&gt;</code></pre>
 <p>That adds the <code>song_id</code> variable to the <code>tidy_billboard</code> table. So now we can remove the song information and only keep ranking information and the <code>song_id</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">rank &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">left_join</span>(song, <span class="kw">c</span>(<span class="st">&quot;artist&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;track&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;date.entered&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(song_id, week, rank)
-rank</code></pre>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb226-1" data-line-number="1">rank &lt;-<span class="st"> </span>tidy_billboard <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb226-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(song, <span class="kw">c</span>(<span class="st">&quot;artist&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;track&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;date.entered&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb226-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(song_id, week, rank)</a>
+<a class="sourceLine" id="cb226-4" data-line-number="4">rank</a></code></pre></div>
 <pre><code>## # A tibble: 5,307 x 3
 ##    song_id week   rank
 ##      &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
@@ -954,11 +978,13 @@ Let’s do a little better job at tidying the billboard dataset:</p>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -966,12 +992,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -983,6 +1008,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -1002,8 +1031,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

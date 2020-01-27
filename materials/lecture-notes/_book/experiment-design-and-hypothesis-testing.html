@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>25 Experiment design and hypothesis testing | Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="25 Experiment design and hypothesis testing | Lecture Notes: Introduction to Data Science" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="25 Experiment design and hypothesis testing | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2019-05-30" />
+<meta name="date" content="2020-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="univariate-distributions-and-statistics.html">
-<link rel="next" href="multivariate-probability.html">
+<link rel="prev" href="univariate-distributions-and-statistics.html"/>
+<link rel="next" href="multivariate-probability.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,18 +48,19 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -68,13 +70,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -523,19 +523,19 @@ So, the lower value of the interval will be one where the normal probability dis
 \]</span></p>
 <p>The upper value of the interval is computed with probability <span class="math inline">\(1-(.05/2)\)</span>, which by the symmetry of the normal distribution is given by <span class="math inline">\(\hat{p}_{+} = \hat{p} + -\mathtt{qnorm}(.05/2,0, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}})\)</span>.</p>
 <p>Let’s see how these intervals look for our twitter bot example:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-
-get_estimate &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">p=</span><span class="fl">0.7</span>) <span class="kw">mean</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span>n, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p)))
-
-<span class="kw">set.seed</span>(<span class="dv">1</span>)
-<span class="co"># let&#39;s construct confidence intervals for samples of size n=10,100,500,1000,10000</span>
-tab &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sample_size=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">500</span>,<span class="dv">1000</span>,<span class="dv">10000</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">phat =</span> <span class="kw">sapply</span>(sample_size,get_estimate)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">se =</span> <span class="kw">sqrt</span>(phat<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>phat)) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lower =</span> phat <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">upper =</span> phat <span class="op">+</span><span class="st"> </span><span class="op">-</span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se))
-
-knitr<span class="op">::</span><span class="kw">kable</span>(tab)</code></pre>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb366-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb366-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb366-3" data-line-number="3">get_estimate &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">p=</span><span class="fl">0.7</span>) <span class="kw">mean</span>(<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">size=</span>n, <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">prob=</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">-</span>p,p)))</a>
+<a class="sourceLine" id="cb366-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb366-5" data-line-number="5"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb366-6" data-line-number="6"><span class="co"># let&#39;s construct confidence intervals for samples of size n=10,100,500,1000,10000</span></a>
+<a class="sourceLine" id="cb366-7" data-line-number="7">tab &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sample_size=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">100</span>,<span class="dv">500</span>,<span class="dv">1000</span>,<span class="dv">10000</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb366-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">phat =</span> <span class="kw">sapply</span>(sample_size,get_estimate)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb366-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">se =</span> <span class="kw">sqrt</span>(phat<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>phat)) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb366-10" data-line-number="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lower =</span> phat <span class="op">+</span><span class="st"> </span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb366-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">upper =</span> phat <span class="op">+</span><span class="st"> </span><span class="op">-</span><span class="kw">qnorm</span>(.<span class="dv">05</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">sd=</span>se))</a>
+<a class="sourceLine" id="cb366-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb366-13" data-line-number="13">knitr<span class="op">::</span><span class="kw">kable</span>(tab)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -599,9 +599,9 @@ H_1: \, &amp; p &gt; .5 &amp; \textrm{(alternative)}
 <p><img src="img/testing.png" /></p>
 <p>This 95% rejection threshold is conservative, but somewhat arbitrary. So we use one more metric, <span class="math inline">\(P(|Y| \geq \hat{p})\)</span> (the infamous p-value) to say: we could reject this hypothesis for all thresholds greater than this p-value.</p>
 <p>Let’s see how testing the hypothesis <span class="math inline">\(p &gt; .5\)</span> would look like for our tweet example</p>
-<pre class="sourceCode r"><code class="sourceCode r">tab &lt;-<span class="st"> </span>tab <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p_value =</span> <span class="dv">1</span><span class="op">-</span><span class="kw">pnorm</span>(phat, <span class="dt">mean=</span>.<span class="dv">5</span>, <span class="dt">sd=</span>se))
-knitr<span class="op">::</span><span class="kw">kable</span>(tab)</code></pre>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb367-1" data-line-number="1">tab &lt;-<span class="st"> </span>tab <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb367-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p_value =</span> <span class="dv">1</span><span class="op">-</span><span class="kw">pnorm</span>(phat, <span class="dt">mean=</span>.<span class="dv">5</span>, <span class="dt">sd=</span>se))</a>
+<a class="sourceLine" id="cb367-3" data-line-number="3">knitr<span class="op">::</span><span class="kw">kable</span>(tab)</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -707,7 +707,7 @@ Parameters: mean <span class="math inline">\(\mu\)</span>, standard deviation <s
 Expected Value: <span class="math inline">\(\mathbb{E} X = \mu\)</span><br />
 Variance: <span class="math inline">\(\mathrm{var}(X) = \sigma^2\)</span></p>
 <p>The probability density function was given above.</p>
-<p>A useful reference for probability distributions can be found here: <a href="https://blog.cloudera.com/blog/2015/12/common-probability-distributions-the-data-scientists-crib-sheet/" class="uri">https://blog.cloudera.com/blog/2015/12/common-probability-distributions-the-data-scientists-crib-sheet/</a></p>
+<p>A useful reference for probability distributions can be found here: <a href="https://blog.cloudera.com/blog/2015/12/common-probability-distributions-the-data-scientists-crib-sheet/">https://blog.cloudera.com/blog/2015/12/common-probability-distributions-the-data-scientists-crib-sheet/</a></p>
 </div>
 <div id="distributions-in-r" class="section level3">
 <h3><span class="header-section-number">25.4.4</span> Distributions in R</h3>
@@ -739,19 +739,19 @@ Variance: <span class="math inline">\(\mathrm{var}(X) = \sigma^2\)</span></p>
 </tbody>
 </table>
 <p>For example, to use these for the Binomial distribution:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using n=10, p=.3</span>
-
-<span class="co"># compute probability mass function value for k=4 successess</span>
-<span class="kw">dbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)
-
-<span class="co"># compute cumulative probability function for k=4 successess</span>
-<span class="kw">pbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)
-
-<span class="co"># compute the number of success corresponding to the .80th quantile</span>
-<span class="kw">qbinom</span>(.<span class="dv">8</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)
-
-<span class="co"># generate a random value k</span>
-<span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</code></pre>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb368-1" data-line-number="1"><span class="co"># using n=10, p=.3</span></a>
+<a class="sourceLine" id="cb368-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb368-3" data-line-number="3"><span class="co"># compute probability mass function value for k=4 successess</span></a>
+<a class="sourceLine" id="cb368-4" data-line-number="4"><span class="kw">dbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb368-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb368-6" data-line-number="6"><span class="co"># compute cumulative probability function for k=4 successess</span></a>
+<a class="sourceLine" id="cb368-7" data-line-number="7"><span class="kw">pbinom</span>(<span class="dv">4</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb368-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb368-9" data-line-number="9"><span class="co"># compute the number of success corresponding to the .80th quantile</span></a>
+<a class="sourceLine" id="cb368-10" data-line-number="10"><span class="kw">qbinom</span>(.<span class="dv">8</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb368-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb368-12" data-line-number="12"><span class="co"># generate a random value k</span></a>
+<a class="sourceLine" id="cb368-13" data-line-number="13"><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dt">n=</span><span class="dv">10</span>, <span class="dt">p=</span>.<span class="dv">3</span>)</a></code></pre></div>
 
 </div>
 </div>
@@ -767,11 +767,13 @@ Variance: <span class="math inline">\(\mathrm{var}(X) = \sigma^2\)</span></p>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -779,12 +781,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -796,6 +797,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -815,8 +820,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
