@@ -6,6 +6,7 @@ date: "`r Sys.Date()`"
 css: ["custom.css"]
 output:
   xaringan::moon_reader:
+    chakra: libs/remark-0.14.0.min.js
     lib_dir: libs
     seal: false
     includes: 
@@ -54,7 +55,7 @@ Data science encapsulates the interdisciplinary activities required to create da
 
 ### Data
 
-Measureable units of information gathered or captured from activity of people, places and things.
+Observable units of information measured or captured from activity of people, places and things.
 
 --
 
@@ -174,7 +175,66 @@ Issues of privacy are equally important.
 ---
 class: split-50
 
-## Data Science in Society
+## Data Science in Society: Machine Learning
+
+.column[
+Self driving cars make use of ML models for sensor processing. 
+]
+
+.column[
+.image-50[.center[![](img/tesla.jpeg)]]
+]
+
+---
+class: split-50
+
+## Data Science in Society: Machine Learning
+
+.column[
+Image recognition software uses ML to identify individuals in photos. 
+]
+
+.column[
+.image-50[![](img/face_recognition.jpeg)]
+]
+
+---
+class: split-50
+
+## Data Science in Society: Machine Learning
+
+.column[
+ML models have been applied to medical imaging to yield expert-level prognosis. 
+]
+
+.column[
+.image-50[![](img/pathology.png)]
+]
+
+---
+## Data Science in Society: Data Journalism
+
+[http:://fivethirtyeight.com](http:://fivethirtyeight.com)
+
+```{r five38, echo=FALSE}
+knitr::include_url("http://fivethirtyeight.com/")
+```
+
+---
+
+## Data Science in Society: Data Journalism
+
+[http://www.nytimes.com/section/upshot](http://www.nytimes.com/section/upshot)
+
+```{r upshot, echo=FALSE}
+knitr::include_url("http://www.nytimes.com/section/upshot"
+)
+```
+
+---
+class: split-50
+
+## Data Science in Society: Business
 
 .column[
 .center[.image-70[![](img/moneyball1.png)]]
@@ -189,7 +249,7 @@ class: split-50
 ---
 class: split-50
 
-## Data Science in Society
+## Data Science in Society: Business
 
 .column[
 In the early 2000's the Oakland A's were winning as much as teams with much bigger payrolls by evaluating players using data differently than other teams.
@@ -199,33 +259,10 @@ In the early 2000's the Oakland A's were winning as much as teams with much bigg
 .image-50[![](img/moneyball3.png)]
 ]
 
----
-## Data Science in Society
-
-### Data Journalism
-
-[http:://fivethirtyeight.com](http:://fivethirtyeight.com)
-
-```{r five38, echo=FALSE}
-knitr::include_url("http://fivethirtyeight.com/")
-```
-
----
-
-## Data Science in Society
-
-### Data Journalism
-
-[http://www.nytimes.com/section/upshot](http://www.nytimes.com/section/upshot)
-
-```{r upshot, echo=FALSE}
-knitr::include_url("http://www.nytimes.com/section/upshot"
-)
-```
 
 ---
 layout: true
-## Data Science in Society
+## Data Science in Society: Entertainment
 
 ---
 
@@ -272,54 +309,16 @@ The top teams were showing improvement over 5%.
 .image-60[![Netflix Challenge 3 week leaderboard](img/netflix1.png)
 ]]
 
----
-class: split-50
-
-## Machine Learning
-
-.column[
-Self driving cars make use of ML models for sensor processing. 
-]
-
-.column[
-.image-50[.center[![](img/tesla.jpeg)]]
-]
-
----
-class: split-50
-
-## Machine Learning
-
-.column[
-Image recognition software uses ML to identify individuals in photos. 
-]
-
-.column[
-.image-50[![](img/face_recognition.jpeg)]
-]
-
----
-class: split-50
-
-## Machine Learning
-
-.column[
-ML models have been applied to medical imaging to yield expert-level prognosis. 
-]
-
-.column[
-.image-50[![](img/pathology.png)]
-]
 
 ---
 layout: false
 
 ## Course organization
 
-This course will cover basics of how to represent, model and communicate about data and data analyses using the R environment for Data Science
+This course will cover basics of how to represent, model and communicate about data and data analyses using the R and/or Python environments for Data Science
 
 --
-- Area 0: tools and skills  
+- Area 0: Tools and skills  
 
 --
 - Area 1: Data types and operations
@@ -468,13 +467,15 @@ I'd like to do a similar analysis. Let's do this in order:
 
 For this analysis we need to get the movies Diego Luna was in, along with their Rotten Tomatoes ratings. For that we scrape this webpage: https://www.rottentomatoes.com/celebrity/diego_luna.
 
-```{r, echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE,cache=FALSE}
 library(tidyverse)
+library(readr)
 library(rvest)
 library(stringr)
+library(broom)
 ```
 
-```{r read_dl, echo=FALSE, cache=TRUE, message=FALSE}
+```{r read_dl, echo=FALSE, cache=FALSE, message=FALSE}
 # URL base for search
 base_url <- "https://www.rottentomatoes.com/celebrity/"
 
@@ -484,23 +485,19 @@ base_url <- "https://www.rottentomatoes.com/celebrity/"
 dl_url <- paste0(base_url, "diego_luna")
 dl_html <- read_html(dl_url) 
 dl_tab <-  dl_html %>%
-  html_node("#filmographyTbl") %>%
+  html_node(".celebrity-filmography") %>%
+  html_node("table") %>%
   html_table() %>%
   as_tibble()
+```
 
+```{r clean_dl, echo=FALSE, cache=FALSE, message=FALSE}
 # clean it up
 clean_dl_tab <- dl_tab %>% 
-  # make sure the movie is rated
-  filter(RATING != "No Score Yet") %>% 
-  
-  # make the rating look numeric
-  mutate(RATING = str_replace(RATING, "%", "")) %>%
-  
-  # remove producer and director credits
-  filter(!str_detect(CREDIT, "Prod") &
-         !str_detect(CREDIT, "Dir")) %>%
-  
-  # convert to proper types
+  dplyr::filter(Rating != "No Score Yet") %>% 
+  mutate(Rating = str_replace(Rating, "%", "")) %>%
+  dplyr::filter(!str_detect(Credit, "Prod") &
+         !str_detect(Credit, "Dir")) %>%
   readr::type_convert()
 ```
 
@@ -558,7 +555,7 @@ this website added pagination to this URL. We will be using the
 CSV file scraped originally in Summer 2017 for this analysis and leave the issue of dealing with pagination as an exercise.)
 -->
 
-```{r read_budget_csv, echo=FALSE, cache=TRUE}
+```{r read_budget_csv, message=FALSE, echo=FALSE, cache=TRUE}
 budget_filename <- "data/movie_budgets.csv"
 clean_budget_tab <- read_csv(budget_filename)
 ```
@@ -587,7 +584,7 @@ One thing we might want to check is if the budget and gross entries in this tabl
 ]
 
 .column[
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, out.width="50%",fig.align="center"}
 library(lubridate)
 
 clean_budget_tab %>%
@@ -608,7 +605,7 @@ Next, we combine the datasets we obtained to get closer to the data we need to m
 ```{r, echo=FALSE}
 joined_tab <- clean_dl_tab %>%
   # join the two tables together
-  inner_join(clean_budget_tab, by=c(TITLE="movie")) 
+  inner_join(clean_budget_tab, by=c(Title="movie")) 
 ```
 
 We combine the two datasets using the movie title, so
@@ -626,7 +623,7 @@ joined_tab %>% knitr::kable("html")
 joined_tab %>%
   ggplot() +
     theme_bw() +
-    aes(x=RATING, y=domestic_gross) +
+    aes(x=Rating, y=domestic_gross) +
     geom_point(size=3) +
     labs(title="Diego Luna's movies",
          x="Rotten Tomato Rating",
@@ -644,7 +641,7 @@ library(class)
 library(broom)
 
 kmeans_result <- joined_tab %>%
-  select(RATING, domestic_gross) %>%
+  select(Rating, domestic_gross) %>%
   kmeans(centers=3) 
 
 clustered_tab <- kmeans_result %>%
@@ -660,7 +657,7 @@ kmeans_centers <- kmeans_result %>%
 
 ```{r, echo=FALSE}
 clustered_tab %>%
-  select(TITLE, RATING, domestic_gross, cluster) %>%
+  select(Title, Rating, domestic_gross, cluster) %>%
   arrange(cluster) %>%
   knitr::kable("html")
 ```
@@ -672,7 +669,7 @@ clustered_tab %>%
 ```{r, echo=FALSE, fig.align="center"}
 final_plot <- clustered_tab %>%
   ggplot() +
-    aes(x=RATING, y=domestic_gross, color=cluster) +
+    aes(x=Rating, y=domestic_gross, color=cluster) +
     geom_point(size=3.4) +
     theme_bw() +
     labs(title="Diego Luna's movies",
@@ -696,7 +693,7 @@ To make the plot and clustering more interpretable, let's annotate the graph wit
 ```{r, echo=FALSE, message=FALSE}
 # join the extended movie table with the centers table
 annot_tab <- clustered_tab %>%
-  select(title=TITLE, rating=RATING, domestic_gross, cluster) %>%
+  select(title=Title, rating=Rating, domestic_gross, cluster) %>%
   left_join(select(kmeans_centers, x1, x2, cluster)) %>%
   
   # calculate the distance of each movie to its center
@@ -726,9 +723,7 @@ final_plot +
 
 While not a tremendous success, we decide we want to carry on with this analysis. We would like to do this for other actors' movies. 
 
-One of the big advantages of using R is that we can write a piece of code that takes an actor's name as input, and reproduces the steps of this analysis for that actor.
-
-We call these _functions_, we'll see them and use them a lot in this course. 
+One of the big advantages of using R and Python is that we can write a piece of code as functions that takes an actor's name as input, and reproduces the steps of this analysis for that actor.
 
 ---
 
@@ -750,15 +745,15 @@ With this in mind, we can write functions for each of these steps, and then make
 
 For instance, let's write the scraping function. It will take an actor's name and output the scraped data.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, cache=FALSE}
 scrape_rt <- function(actor, base_url="https://www.rottentomatoes.com/celebrity/") {
   url <- paste0(base_url, actor)
   html <- read_html(url) 
     
   html %>%
-    html_nodes("#filmographyTbl") %>%
+    html_node(".celebrity-filmography") %>%
+    html_node("table") %>%
     html_table() %>%
-    magrittr::extract2(1) %>%
     as_tibble()
 }
 ```
@@ -782,18 +777,18 @@ class: split-40
 .column[
 We can then write functions for each of the steps we did with Diego Luna before.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, cache=FALSE}
 cleanup_rt_tab <- function(data) {
  data  %>% 
   # make sure the movie is rated
-  filter(RATING != "No Score Yet") %>% 
+  dplyr::filter(Rating != "No Score Yet") %>% 
   
   # make the rating look numeric
-  mutate(RATING = str_replace(RATING, "%", "")) %>%
+  mutate(Rating = str_replace(Rating, "%", "")) %>%
   
   # remove producer and director credits
-  filter(!str_detect(CREDIT, "Prod") &
-         !str_detect(CREDIT, "Dir")) %>%
+  dplyr::filter(!str_detect(Rating, "Prod") &
+         !str_detect(Rating, "Dir")) %>%
   
   # convert to proper types
   readr::type_convert()
@@ -804,7 +799,7 @@ cleanup_rt_tab <- function(data) {
 join_budget <- function(data) {
   data %>%
   # join the two tables together
-  inner_join(clean_budget_tab, by=c(TITLE="movie")) 
+  inner_join(clean_budget_tab, by=c(Title="movie")) 
 }
 ```
 
@@ -819,7 +814,7 @@ ggb_tab %>%
 ```{r, echo=FALSE}
 cluster_movies <- function(data, k=3) {
   data <- data %>%
-    select(rating=RATING, title=TITLE, domestic_gross)
+    select(rating=Rating, title=Title, domestic_gross)
   
   kmeans_result <-  data %>%
     select(rating, domestic_gross) %>%
@@ -882,7 +877,7 @@ ggb_tab %>%
   plot_movies("Gael García Bernal")
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, cache=FALSE}
 analyze_actor <- function(actor, k=3, base_url="https://www.rottentomatoes.com/celebrity/") {
   # first let's make the name work with RT
   rt_name <- actor %>%
@@ -909,7 +904,7 @@ analyze_actor("Gael Garcia Bernal")
 ]
 
 .column[
-```{r test_bbg, cache=TRUE, message=FALSE, fig.height=5, echo=FALSE}
+```{r test_bbg, cache=FALSE, message=FALSE, fig.height=5, echo=FALSE}
 analyze_actor("Gael Garcia Bernal")
 ```
 ]

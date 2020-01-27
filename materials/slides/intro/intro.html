@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="" xml:lang="">
   <head>
     <title>Course Introduction and Overview</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="author" content="Héctor Corrada Bravo" />
-    <meta name="date" content="2019-01-29" />
+    <meta name="date" content="2020-01-27" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
@@ -24,7 +24,7 @@ count: false
 
 .other-info[
 University of Maryland, College Park, USA  
-CMSC320: 2019-01-29
+CMSC320: 2020-01-27
 ]
 
 .logo[![](img/logo.png)]
@@ -47,7 +47,7 @@ Data science encapsulates the interdisciplinary activities required to create da
 
 ### Data
 
-Measureable units of information gathered or captured from activity of people, places and things.
+Observable units of information measured or captured from activity of people, places and things.
 
 --
 
@@ -167,7 +167,61 @@ Issues of privacy are equally important.
 ---
 class: split-50
 
-## Data Science in Society
+## Data Science in Society: Machine Learning
+
+.column[
+Self driving cars make use of ML models for sensor processing. 
+]
+
+.column[
+.image-50[.center[![](img/tesla.jpeg)]]
+]
+
+---
+class: split-50
+
+## Data Science in Society: Machine Learning
+
+.column[
+Image recognition software uses ML to identify individuals in photos. 
+]
+
+.column[
+.image-50[![](img/face_recognition.jpeg)]
+]
+
+---
+class: split-50
+
+## Data Science in Society: Machine Learning
+
+.column[
+ML models have been applied to medical imaging to yield expert-level prognosis. 
+]
+
+.column[
+.image-50[![](img/pathology.png)]
+]
+
+---
+## Data Science in Society: Data Journalism
+
+[http:://fivethirtyeight.com](http:://fivethirtyeight.com)
+
+&lt;iframe src="http://fivethirtyeight.com/" width="100%" height="400px"&gt;&lt;/iframe&gt;
+
+---
+
+## Data Science in Society: Data Journalism
+
+[http://www.nytimes.com/section/upshot](http://www.nytimes.com/section/upshot)
+
+&lt;iframe src="http://www.nytimes.com/section/upshot" width="100%" height="400px"&gt;&lt;/iframe&gt;
+
+---
+class: split-50
+
+## Data Science in Society: Business
 
 .column[
 .center[.image-70[![](img/moneyball1.png)]]
@@ -182,7 +236,7 @@ class: split-50
 ---
 class: split-50
 
-## Data Science in Society
+## Data Science in Society: Business
 
 .column[
 In the early 2000's the Oakland A's were winning as much as teams with much bigger payrolls by evaluating players using data differently than other teams.
@@ -192,28 +246,10 @@ In the early 2000's the Oakland A's were winning as much as teams with much bigg
 .image-50[![](img/moneyball3.png)]
 ]
 
----
-## Data Science in Society
-
-### Data Journalism
-
-[http:://fivethirtyeight.com](http:://fivethirtyeight.com)
-
-&lt;iframe src="http://fivethirtyeight.com/" width="100%" height="400px"&gt;&lt;/iframe&gt;
-
----
-
-## Data Science in Society
-
-### Data Journalism
-
-[http://www.nytimes.com/section/upshot](http://www.nytimes.com/section/upshot)
-
-&lt;iframe src="http://www.nytimes.com/section/upshot" width="100%" height="400px"&gt;&lt;/iframe&gt;
 
 ---
 layout: true
-## Data Science in Society
+## Data Science in Society: Entertainment
 
 ---
 
@@ -260,54 +296,16 @@ The top teams were showing improvement over 5%.
 .image-60[![Netflix Challenge 3 week leaderboard](img/netflix1.png)
 ]]
 
----
-class: split-50
-
-## Machine Learning
-
-.column[
-Self driving cars make use of ML models for sensor processing. 
-]
-
-.column[
-.image-50[.center[![](img/tesla.jpeg)]]
-]
-
----
-class: split-50
-
-## Machine Learning
-
-.column[
-Image recognition software uses ML to identify individuals in photos. 
-]
-
-.column[
-.image-50[![](img/face_recognition.jpeg)]
-]
-
----
-class: split-50
-
-## Machine Learning
-
-.column[
-ML models have been applied to medical imaging to yield expert-level prognosis. 
-]
-
-.column[
-.image-50[![](img/pathology.png)]
-]
 
 ---
 layout: false
 
 ## Course organization
 
-This course will cover basics of how to represent, model and communicate about data and data analyses using the R environment for Data Science
+This course will cover basics of how to represent, model and communicate about data and data analyses using the R and/or Python environments for Data Science
 
 --
-- Area 0: tools and skills  
+- Area 0: Tools and skills  
 
 --
 - Area 1: Data types and operations
@@ -460,65 +458,67 @@ For this analysis we need to get the movies Diego Luna was in, along with their 
 
 
 
+
+
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; RATING &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; TITLE &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; CREDIT &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; BOX OFFICE &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; YEAR &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Rating &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Title &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Credit &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; BoxOffice &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Year &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Berlin, I Love You &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Drag Queen &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2019 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 95 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; If Beale Street Could Talk &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Pedrocito &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2019 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 60 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A Rainy Day in New York &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Actor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2019 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Flatliners &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Ray &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $16.9M &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2017 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 84 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 83 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Rogue One: A Star Wars Story &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Captain Cassian Andor &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $532.2M &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2016 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 89 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 88 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Blood Father &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Jonah &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2016 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 81 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 82 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; The Book of Life &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Manolo &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2014 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; I Stay with You (Me quedo contigo) &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Actor &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2014 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 66 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Elysium &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Julio &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2013 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -543,16 +543,6 @@ CSV file scraped originally in Summer 2017 for this analysis and leave the issue
 --&gt;
 
 
-```
-## Parsed with column specification:
-## cols(
-##   release_date = col_date(format = ""),
-##   movie = col_character(),
-##   production_budget = col_double(),
-##   domestic_gross = col_double(),
-##   worldwide_gross = col_double()
-## )
-```
 
 
 This is part of what we have for that table after scraping and cleaning up:
@@ -658,7 +648,7 @@ One thing we might want to check is if the budget and gross entries in this tabl
 ]
 
 .column[
-![](intro_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+&lt;img src="intro_files/figure-html/unnamed-chunk-5-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -675,11 +665,11 @@ that the end result has the information in both tables for each movie.
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; RATING &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; TITLE &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; CREDIT &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; BOX OFFICE &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; YEAR &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Rating &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Title &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Credit &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; BoxOffice &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Year &lt;/th&gt;
    &lt;th style="text-align:left;"&gt; release_date &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; production_budget &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; domestic_gross &lt;/th&gt;
@@ -691,7 +681,7 @@ that the end result has the information in both tables for each movie.
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Flatliners &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Ray &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $16.9M &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2017 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 1990-08-10 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 26.0 &lt;/td&gt;
@@ -699,10 +689,10 @@ that the end result has the information in both tables for each movie.
    &lt;td style="text-align:right;"&gt; 61.30815 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 84 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 83 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Rogue One: A Star Wars Story &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Captain Cassian Andor &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $532.2M &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2016 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2016-12-16 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 200.0 &lt;/td&gt;
@@ -710,10 +700,10 @@ that the end result has the information in both tables for each movie.
    &lt;td style="text-align:right;"&gt; 1050.98849 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 81 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 82 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; The Book of Life &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Manolo &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2014 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2014-10-17 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 50.0 &lt;/td&gt;
@@ -721,10 +711,10 @@ that the end result has the information in both tables for each movie.
    &lt;td style="text-align:right;"&gt; 97.65154 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 66 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 65 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Elysium &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Julio &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $90.9M &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2013 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2013-08-09 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 120.0 &lt;/td&gt;
@@ -732,10 +722,10 @@ that the end result has the information in both tables for each movie.
    &lt;td style="text-align:right;"&gt; 286.19209 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 51 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 52 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Contraband &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Gonzalo &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $66.5M &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2012 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2012-01-13 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 25.0 &lt;/td&gt;
@@ -746,7 +736,7 @@ that the end result has the information in both tables for each movie.
    &lt;td style="text-align:right;"&gt; 93 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Milk &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Jack Lira &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $31.8M &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2008 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2008-11-26 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 20.0 &lt;/td&gt;
@@ -757,7 +747,7 @@ that the end result has the information in both tables for each movie.
    &lt;td style="text-align:right;"&gt; 69 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Criminal &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Rodrigo &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $0.8M &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2004 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2016-04-15 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 31.5 &lt;/td&gt;
@@ -765,10 +755,10 @@ that the end result has the information in both tables for each movie.
    &lt;td style="text-align:right;"&gt; 38.77126 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; The Terminal &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Enrique Cruz &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $77.1M &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2004 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2004-06-18 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 75.0 &lt;/td&gt;
@@ -779,7 +769,7 @@ that the end result has the information in both tables for each movie.
    &lt;td style="text-align:right;"&gt; 79 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Open Range &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Button &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $58.3M &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2003 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2003-08-15 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 26.0 &lt;/td&gt;
@@ -790,7 +780,7 @@ that the end result has the information in both tables for each movie.
    &lt;td style="text-align:right;"&gt; 75 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Frida &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Alejandro Gomez &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; $25.7M &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2002 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2002-10-25 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 12.0 &lt;/td&gt;
@@ -821,8 +811,8 @@ Use a clustering algorithm to partition Diego Luna's movies based on rating and 
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; TITLE &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; RATING &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Title &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Rating &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; domestic_gross &lt;/th&gt;
    &lt;th style="text-align:left;"&gt; cluster &lt;/th&gt;
   &lt;/tr&gt;
@@ -830,7 +820,7 @@ Use a clustering algorithm to partition Diego Luna's movies based on rating and 
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Rogue One: A Star Wars Story &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 84 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 83 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 532.17732 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
   &lt;/tr&gt;
@@ -842,25 +832,25 @@ Use a clustering algorithm to partition Diego Luna's movies based on rating and 
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Elysium &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 66 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 65 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 93.05012 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; Contraband &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 51 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 52 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 66.52800 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; The Terminal &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 77.07396 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; The Book of Life &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 81 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 82 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 50.15154 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
   &lt;/tr&gt;
@@ -923,9 +913,7 @@ To make the plot and clustering more interpretable, let's annotate the graph wit
 
 While not a tremendous success, we decide we want to carry on with this analysis. We would like to do this for other actors' movies. 
 
-One of the big advantages of using R is that we can write a piece of code that takes an actor's name as input, and reproduces the steps of this analysis for that actor.
-
-We call these _functions_, we'll see them and use them a lot in this course. 
+One of the big advantages of using R and Python is that we can write a piece of code as functions that takes an actor's name as input, and reproduces the steps of this analysis for that actor.
 
 ---
 
@@ -956,34 +944,34 @@ Let's test it with Gael García Bernal:
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; RATING &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; TITLE &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; CREDIT &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; BOX OFFICE &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; YEAR &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Rating &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Title &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Credit &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; BoxOffice &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Year &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; No Score Yet &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Wasp Network &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; It Must Be Heaven &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Actor &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2019 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; 90% &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Museum (Museo) &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Juan Nuñez &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; No Score Yet &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Lorena, Light-Footed Woman (Lorena, la de pies ligeros) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Executive Producer &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2018 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2019 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; 88% &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; The Kindergarten Teacher &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Instructor &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 85% &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ema &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Gastón &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; — &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2018 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2019 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1050,7 +1038,8 @@ In this analysis we saw examples of the common steps and operations in a data an
 
 5) Publishing: we abstracted our analysis into an application that allows us and others to perform this analysis over more datasets and explore the result of modeling using a variety of parameters
     </textarea>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-0.14.0.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
@@ -1060,12 +1049,59 @@ In this analysis we saw examples of the common steps and operations in a data an
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
-})();</script>
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 <script>
 remark.macros['scale'] = function (percentage) {
   var url = this;
@@ -1075,7 +1111,18 @@ remark.macros['scale'] = function (percentage) {
 
 <script>
 (function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];
     if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
@@ -1089,7 +1136,8 @@ remark.macros['scale'] = function (percentage) {
     }
     i++;
   }
-})();
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
