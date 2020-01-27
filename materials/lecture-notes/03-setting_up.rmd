@@ -163,10 +163,21 @@ Resources for learning and reading about R are listed in our [here](http://www.h
 
 One last note before we get started. R has great support for [literate programming](http://en.wikipedia.org/wiki/Literate_programming), where source code that contains both code, the result of evaluating that code, and text explaining that code co-exist in a single document. This is extremely valuable in data analysis, as many choices made by data analysts are worth explaning in text, and interpretation of the results of analyses can co-exist with the computations used in that analysis. This document you are reading contains both text and code. In class, we will use [Rmarkdown](http://rmarkdown.rstudio.com/) for this purpose.
 
+### Course packages
+
+We provide a simple script to install most of the R packages used in this class. Download the script here: 
+
+[http://www.hcbravo.org/IntroDataSci/misc/cmsc320_install_libs.R](http://www.hcbravo.org/IntroDataSci/misc/cmsc320_install_libs.R)
+
+On the command line, or on the Rstudio terminal tab, run the following:
+
+```
+Rscript cmsc320_install_libs.R
+```
 
 ## Python/Jupyter
 
-To use python, we prefer to use [Anaconda](https://www.anaconda.com/) a great platform for package and software management, especially for data science.
+To use python, we recommend to use [Anaconda](https://www.anaconda.com/) a great platform for package and software management, especially for data science.
 
 For the purposes of the class, it is sufficient to download the streamlined `Miniconda` distribution:
 
@@ -174,10 +185,14 @@ https://docs.conda.io/en/latest/miniconda.html
 
 We assume you installed the Python3 version.
 
-To install the tools needed for the course, we have provided an environment file that lists all software we will use. To create an
-Anaconda environment use `conda env create -f <env_file>.yml`
+To install the tools needed for the course, we have provided an environment file that lists all software we will use. Download the file here:
 
-Once installed and loaded (with `conda activate <env>`, we recommend you use jupyter lab for this course. Start it using `jupyter lab`.
+[http://www.hcbravo.org/IntroDataSci/misc/cmsc320_conda.yml](http://www.hcbravo.org/IntroDataSci/misc/cmsc320_conda.yml)
+
+To create an
+Anaconda environment use `conda env create -f=cmsc320_conda.yml -n cmsc320`
+
+Once installed and loaded (with `conda activate cmsc320`, we recommend you use jupyter lab for this course. Start it using `jupyter lab`.
 
 There you can create jupyter notebooks to carry out your work.
 
