@@ -184,6 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.11" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.1.11</b> R packages</a></li>
 <li class="chapter" data-level="4.1.12" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.1.12</b> Additional R resources</a></li>
 <li class="chapter" data-level="4.1.13" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.1.13</b> Literate Programming</a></li>
+<li class="chapter" data-level="4.1.14" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#course-packages"><i class="fa fa-check"></i><b>4.1.14</b> Course packages</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#pythonjupyter"><i class="fa fa-check"></i><b>4.2</b> Python/Jupyter</a></li>
 </ul></li>
@@ -520,13 +521,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.2</span> Getting data</h2>
 <p>We’ve prepared the data previously into a comma-separated value file (<code>.csv</code> file): each line contains attribute values (separated by commas) describing arrests in the City of Baltimore. The <code>read_csv</code> command is part of the <code>readr</code> R package and allows you to read a dataset stored in a csv file. This function is extremely versatile, and you can read more about it by using the standard help system in R: <code>?read_csv</code>. The result of running calling this function is the data itself, so, by running the function in the console, the result of the function is printed.</p>
 <p><strong>Note:</strong> To download this dataset to follow along you can use the following code:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span><span class="kw">dir.exists</span>(<span class="st">&quot;data&quot;</span>)) <span class="kw">dir.create</span>(<span class="st">&quot;data&quot;</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">download.file</span>(<span class="st">&quot;https://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv&quot;</span>, <span class="dt">destfile=</span><span class="st">&quot;data/BPD_Arrests.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span><span class="kw">dir.exists</span>(<span class="st">&quot;data&quot;</span>)) <span class="kw">dir.create</span>(<span class="st">&quot;data&quot;</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">download.file</span>(<span class="st">&quot;https://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv&quot;</span>, <span class="dt">destfile=</span><span class="st">&quot;data/BPD_Arrests.csv&quot;</span>)</a></code></pre></div>
 <p>To make use of this dataset we want to assign the result of calling <code>read_csv</code> (i.e., the dataset) to a variable:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">arrest_tab &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/BPD_Arrests.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">arrest_tab</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">arrest_tab &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/BPD_Arrests.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">arrest_tab</a></code></pre></div>
 <pre><code>## # A tibble: 104,528 x 15
 ##    arrest   age race  sex   arrestDate arrestTime
 ##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;    
@@ -548,21 +549,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location
 ## #   1` &lt;chr&gt;</code></pre>
 <p>Now we can ask what <em>type</em> of value is stored in the <code>arrest_tab</code> variable:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">class</span>(arrest_tab)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">class</span>(arrest_tab)</a></code></pre></div>
 <pre><code>## [1] &quot;spec_tbl_df&quot; &quot;tbl_df&quot;      &quot;tbl&quot;        
 ## [4] &quot;data.frame&quot;</code></pre>
 <p>The <code>data.frame</code> is a workhorse data structure in R. It encapsulates the idea of <em>entities</em> (in rows) and <em>attribute values</em> (in columns). We call these <em>rectangular datasets</em>. The other types <code>tbl_df</code> and <code>tbl</code> are added by <code>tidyverse</code> for improved functionality.</p>
 <p>We can ask other features of this dataset:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># This is a comment in R, by the way</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co"># How many rows (entities) does this dataset contain?</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw">nrow</span>(arrest_tab)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># This is a comment in R, by the way</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co"># How many rows (entities) does this dataset contain?</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="kw">nrow</span>(arrest_tab)</a></code></pre></div>
 <pre><code>## [1] 104528</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># How many columns (attributes)?</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">ncol</span>(arrest_tab)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># How many columns (attributes)?</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw">ncol</span>(arrest_tab)</a></code></pre></div>
 <pre><code>## [1] 15</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># What are the names of those columns?</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">colnames</span>(arrest_tab)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># What are the names of those columns?</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw">colnames</span>(arrest_tab)</a></code></pre></div>
 <pre><code>##  [1] &quot;arrest&quot;            &quot;age&quot;              
 ##  [3] &quot;race&quot;              &quot;sex&quot;              
 ##  [5] &quot;arrestDate&quot;        &quot;arrestTime&quot;       
@@ -619,7 +620,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="categorical-attributes" class="section level2">
 <h2><span class="header-section-number">5.4</span> Categorical attributes</h2>
 <p>A categorical attribute for a given entity can take only one of a finite set of examples. For example, the <code>sex</code> variable can only have value <code>M</code>, <code>F</code>, or `` (we’ll talk about missing data later in the semester).</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">table</span>(arrest_tab<span class="op">$</span>sex)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">table</span>(arrest_tab<span class="op">$</span>sex)</a></code></pre></div>
 <pre><code>## 
 ##     F     M 
 ## 19431 85095</code></pre>
@@ -628,19 +629,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="factors-in-r" class="section level3">
 <h3><span class="header-section-number">5.4.1</span> Factors in R</h3>
 <p>We said that R is designed for data analysis. My favorite example of how that manifests itself is the <code>factor</code> datatype. If you look at your dataset now, <code>arrest_tab$sex</code> is a vector of strings:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">class</span>(arrest_tab<span class="op">$</span>sex)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">class</span>(arrest_tab<span class="op">$</span>sex)</a></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">summary</span>(arrest_tab<span class="op">$</span>sex)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">summary</span>(arrest_tab<span class="op">$</span>sex)</a></code></pre></div>
 <pre><code>##    Length     Class      Mode 
 ##    104528 character character</code></pre>
 <p>However, as a measurement, or attribute, it should only take one of two values (or three depending on how you record missing, unknown or unspecified). So, in R, that categorical data type is called a <em>factor</em>. Notice what the <code>summary</code> function does after turning the <code>sex</code> attribute into a <em>factor</em>:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">arrest_tab<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">factor</span>(arrest_tab<span class="op">$</span>sex)</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw">summary</span>(arrest_tab<span class="op">$</span>sex)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">arrest_tab<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">factor</span>(arrest_tab<span class="op">$</span>sex)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw">summary</span>(arrest_tab<span class="op">$</span>sex)</a></code></pre></div>
 <pre><code>##     F     M  NA&#39;s 
 ## 19431 85095     2</code></pre>
 <p>This distinction shows up in many other places where functions have different behavior when called on different types of values.
 The possible values a <em>factor</em> can take are called <em>levels</em>:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">levels</span>(arrest_tab<span class="op">$</span>sex)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">levels</span>(arrest_tab<span class="op">$</span>sex)</a></code></pre></div>
 <pre><code>## [1] &quot;F&quot; &quot;M&quot;</code></pre>
 <p>Exercise: you should transform the <code>race</code> attribute into a factor as well. How many levels does it have?</p>
 </div>
