@@ -184,6 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.11" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.1.11</b> R packages</a></li>
 <li class="chapter" data-level="4.1.12" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.1.12</b> Additional R resources</a></li>
 <li class="chapter" data-level="4.1.13" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.1.13</b> Literate Programming</a></li>
+<li class="chapter" data-level="4.1.14" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#course-packages"><i class="fa fa-check"></i><b>4.1.14</b> Course packages</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#pythonjupyter"><i class="fa fa-check"></i><b>4.2</b> Python/Jupyter</a></li>
 </ul></li>
@@ -612,16 +613,25 @@ we will use in the course.</p>
 <h3><span class="header-section-number">4.1.13</span> Literate Programming</h3>
 <p>One last note before we get started. R has great support for <a href="http://en.wikipedia.org/wiki/Literate_programming">literate programming</a>, where source code that contains both code, the result of evaluating that code, and text explaining that code co-exist in a single document. This is extremely valuable in data analysis, as many choices made by data analysts are worth explaning in text, and interpretation of the results of analyses can co-exist with the computations used in that analysis. This document you are reading contains both text and code. In class, we will use <a href="http://rmarkdown.rstudio.com/">Rmarkdown</a> for this purpose.</p>
 </div>
+<div id="course-packages" class="section level3">
+<h3><span class="header-section-number">4.1.14</span> Course packages</h3>
+<p>We provide a simple script to install most of the R packages used in this class. Download the script here:</p>
+<p><a href="http://www.hcbravo.org/IntroDataSci/misc/cmsc320_install_libs.R" class="uri">http://www.hcbravo.org/IntroDataSci/misc/cmsc320_install_libs.R</a></p>
+<p>On the command line, or on the Rstudio terminal tab, run the following:</p>
+<pre><code>Rscript cmsc320_install_libs.R</code></pre>
+</div>
 </div>
 <div id="pythonjupyter" class="section level2">
 <h2><span class="header-section-number">4.2</span> Python/Jupyter</h2>
-<p>To use python, we prefer to use <a href="https://www.anaconda.com/">Anaconda</a> a great platform for package and software management, especially for data science.</p>
+<p>To use python, we recommend to use <a href="https://www.anaconda.com/">Anaconda</a> a great platform for package and software management, especially for data science.</p>
 <p>For the purposes of the class, it is sufficient to download the streamlined <code>Miniconda</code> distribution:</p>
 <p><a href="https://docs.conda.io/en/latest/miniconda.html" class="uri">https://docs.conda.io/en/latest/miniconda.html</a></p>
 <p>We assume you installed the Python3 version.</p>
-<p>To install the tools needed for the course, we have provided an environment file that lists all software we will use. To create an
-Anaconda environment use <code>conda env create -f &lt;env_file&gt;.yml</code></p>
-<p>Once installed and loaded (with <code>conda activate &lt;env&gt;</code>, we recommend you use jupyter lab for this course. Start it using <code>jupyter lab</code>.</p>
+<p>To install the tools needed for the course, we have provided an environment file that lists all software we will use. Download the file here:</p>
+<p><a href="http://www.hcbravo.org/IntroDataSci/misc/cmsc320_conda.yml" class="uri">http://www.hcbravo.org/IntroDataSci/misc/cmsc320_conda.yml</a></p>
+<p>To create an
+Anaconda environment use <code>conda env create -f=cmsc320_conda.yml -n cmsc320</code></p>
+<p>Once installed and loaded (with <code>conda activate cmsc320</code>, we recommend you use jupyter lab for this course. Start it using <code>jupyter lab</code>.</p>
 <p>There you can create jupyter notebooks to carry out your work.</p>
 <p>Final note: most of the support for the libraries included in the <code>tidyverse</code> is
 given by the <code>pandas</code> python package:</p>
