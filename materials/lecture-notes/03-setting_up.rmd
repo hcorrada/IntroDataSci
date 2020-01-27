@@ -1,21 +1,22 @@
-# Setting up the R Data Science Toolbox
+# Setting up the Data Science Toolbox
 
+## R/Rstudio
 Here we setup R, RStudio and anything else
 we will use in the course.
 
-## Some history
+### Some history
 
 R is an offspring of S, a language created in AT&T Labs by John Chambers (now at Stanford) and others in 1976 with the goal of creating an environment for statistical computing and data analysis. The standard for the language in current use was settled in 1998. That same year, "S" won the ACM Software System award, awarded to software systems "that have a lasting influence, reflected in contributions to concepts, in commercial acceptance, or both".
 
 In 1991, Robert Gentleman and Ross Ihaka created R to provide an open source implementation of the S language and environment. They also redesigned the language to enforce lexical scoping rules. It has been maintained by the R core group since 1997, and in 2015 an R consortium, including Microsoft, Google, and others, was created.
 
-Along with Python it is one of the most popular environments for data analysis (e.g., figure below from [KDNuggets 2017 software survey](https://www.kdnuggets.com/2017/05/poll-analytics-data-science-machine-learning-software-leaders.html)
+Along with Python it is one of the most popular environments for data analysis (e.g., figure below from [KDNuggets 2018 software survey](https://www.kdnuggets.com/2018/05/poll-tools-analytics-data-science-machine-learning-results.html)
 
-![](img/kdnuggets-2017.jpg)
+![](img/kdnuggets-2018.jpg)
 
 We use R for this class because we find that besides it being a state-of-the-art data analysis environment, it provides a clean end-to-end platform for teaching material across the data management-modeling-communication spectrum that we study in class. However, be aware that as you move on in the Data Science field you most likely will need to add Python to your toolbelt.
 
-## Setting up R
+### Setting up R
 
 R is a free, open source, environment for data analysis. It is available as a free binary download for Mac, Linux and Windows. For the more adventorous, it can also be compiled from source. To install R in your computer go to
 https://cran.r-project.org/index.html and download and install the appropriate binary file.
@@ -24,13 +25,13 @@ https://cran.r-project.org/index.html and download and install the appropriate b
 
 This will install the base R system: the R programming language, a few packages for common data analyses and a development environment. 
 
-## Setting up Rstudio
+### Setting up Rstudio
 
 We will actually use Rstudio to interact with R. Rstudio is a very powerful application to make data analysis with R easier to do. To install go to https://www.rstudio.com/products/rstudio/download/ and download the appropriate version of Rstudio.
 
 ![](img/rstudio.png)
 
-## A first look at Rstudio
+### A first look at Rstudio
 
 Let's take a first look at Rstudio. The first thing you will notice is that Rstudio is divided into panes. Let's take a look first at the *Console*.
 
@@ -136,7 +137,7 @@ Rstudio includes a Files viewer that you can use to find and load files. You can
 
 ![](img/rstudio_files.png)
 
-## R packages
+### R packages
 
 Another of R's advantages for data analysis is that it has attracted a large number of extremely useful additions provided by users worldwide. These are housed in [CRAN](https://cran.r-project.org/web/packages/index.html).
 
@@ -154,14 +155,39 @@ In Rstudio, you can use the _Packages_ tab:
 
 **On your own:** Install the following additional packages which we will use later on: `rvest`, `stringr`, `nycflights13` and `broom`.
 
-## Additional R resources
+### Additional R resources
 
 Resources for learning and reading about R are listed in our [here](http://www.hcbravo.org/IntroDataScience/resources/). Of note are the [swirl project](http://swirlstats.com/) and DataCamp's [introduction to R] course.
 
-## Literate Programming
+### Literate Programming
 
 One last note before we get started. R has great support for [literate programming](http://en.wikipedia.org/wiki/Literate_programming), where source code that contains both code, the result of evaluating that code, and text explaining that code co-exist in a single document. This is extremely valuable in data analysis, as many choices made by data analysts are worth explaning in text, and interpretation of the results of analyses can co-exist with the computations used in that analysis. This document you are reading contains both text and code. In class, we will use [Rmarkdown](http://rmarkdown.rstudio.com/) for this purpose.
 
-## Finishing your setup
 
-Complete your exit ticket as instructed.
+## Python/Jupyter
+
+To use python, we prefer to use [Anaconda](https://www.anaconda.com/) a great platform for package and software management, especially for data science.
+
+For the purposes of the class, it is sufficient to download the streamlined `Miniconda` distribution:
+
+https://docs.conda.io/en/latest/miniconda.html
+
+We assume you installed the Python3 version.
+
+To install the tools needed for the course, we have provided an environment file that lists all software we will use. To create an
+Anaconda environment use `conda env create -f <env_file>.yml`
+
+Once installed and loaded (with `conda activate <env>`, we recommend you use jupyter lab for this course. Start it using `jupyter lab`.
+
+There you can create jupyter notebooks to carry out your work.
+
+Final note: most of the support for the libraries included in the `tidyverse` is
+given by the `pandas` python package:
+
+https://pandas.pydata.org/
+
+We are using the tidyverse's `ggplot2` package for plotting. There is a `plotnine` python package available that supports most of the same functionality. It is included in
+the environment we have provided.
+
+
+
