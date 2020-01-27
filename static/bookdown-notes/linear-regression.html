@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>28 Linear Regression | Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="28 Linear Regression | Lecture Notes: Introduction to Data Science" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="28 Linear Regression | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2019-05-30" />
+<meta name="date" content="2020-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="data-analysis-with-geometry.html">
-<link rel="next" href="linear-models-for-classification.html">
+<link rel="prev" href="data-analysis-with-geometry.html"/>
+<link rel="next" href="linear-models-for-classification.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,9 +48,11 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -58,7 +61,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -541,20 +543,20 @@ Y = \beta_0 + \beta_1 X
 \end{aligned}
 \]</span></p>
 <p>Let’s take a look at some data. Here is data measuring characteristics of cars, including horsepower, weight, displacement, miles per gallon. Let’s see how well a linear model captures the relationship between miles per gallon and weight</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ISLR)
-<span class="kw">library</span>(tidyverse)
-
-<span class="kw">data</span>(Auto)
-
-Auto <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>weight, <span class="dt">y=</span>mpg)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">theme_minimal</span>()</code></pre>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb370-1" data-line-number="1"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb370-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb370-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb370-4" data-line-number="4"><span class="kw">data</span>(Auto)</a>
+<a class="sourceLine" id="cb370-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb370-6" data-line-number="6">Auto <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb370-7" data-line-number="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>weight, <span class="dt">y=</span>mpg)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb370-8" data-line-number="8"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb370-9" data-line-number="9"><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb370-10" data-line-number="10"><span class="st">    </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-173-1.svg" width="672" /></p>
 <p>In R, linear models are built using the <code>lm</code> function</p>
-<pre class="sourceCode r"><code class="sourceCode r">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span>weight, <span class="dt">data=</span>Auto)
-auto_fit</code></pre>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb371-1" data-line-number="1">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span>weight, <span class="dt">data=</span>Auto)</a>
+<a class="sourceLine" id="cb371-2" data-line-number="2">auto_fit</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ weight, data = Auto)
@@ -579,20 +581,20 @@ auto_fit</code></pre>
 \beta_1 = \hat{\beta}_1 \pm 1.95 \times \mathrm{se}(\hat{beta}_1)
 \]</span></p>
 <p>Note, <span class="math inline">\(\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i\)</span>. Going back to our example:</p>
-<pre class="sourceCode r"><code class="sourceCode r">auto_fit_stats &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(term, estimate, std.error)
-auto_fit_stats</code></pre>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb373-1" data-line-number="1">auto_fit_stats &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb373-2" data-line-number="2"><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb373-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(term, estimate, std.error)</a>
+<a class="sourceLine" id="cb373-4" data-line-number="4">auto_fit_stats</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
-##   term         estimate std.error
-##   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;
-## 1 (Intercept)  46.2      0.799   
-## 2 weight       -0.00765  0.000258</code></pre>
+##   term        estimate std.error
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept) 46.2      0.799   
+## 2 weight      -0.00765  0.000258</code></pre>
 <p>This <code>tidy</code> function is defined by the <code>broom</code> package, which is very handy to manipulate the result of learning models in a consistent manner. The <code>select</code> call removes some extra information that we will discuss shortly.</p>
-<pre class="sourceCode r"><code class="sourceCode r">confidence_interval_offset &lt;-<span class="st"> </span><span class="fl">1.95</span> <span class="op">*</span><span class="st"> </span>auto_fit_stats<span class="op">$</span>std.error[<span class="dv">2</span>]
-confidence_interval &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">c</span>(auto_fit_stats<span class="op">$</span>estimate[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>confidence_interval_offset,
-                               auto_fit_stats<span class="op">$</span>estimate[<span class="dv">2</span>],
-                               auto_fit_stats<span class="op">$</span>estimate[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>confidence_interval_offset), <span class="dv">4</span>)</code></pre>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb375-1" data-line-number="1">confidence_interval_offset &lt;-<span class="st"> </span><span class="fl">1.95</span> <span class="op">*</span><span class="st"> </span>auto_fit_stats<span class="op">$</span>std.error[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb375-2" data-line-number="2">confidence_interval &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">c</span>(auto_fit_stats<span class="op">$</span>estimate[<span class="dv">2</span>] <span class="op">-</span><span class="st"> </span>confidence_interval_offset,</a>
+<a class="sourceLine" id="cb375-3" data-line-number="3">                               auto_fit_stats<span class="op">$</span>estimate[<span class="dv">2</span>],</a>
+<a class="sourceLine" id="cb375-4" data-line-number="4">                               auto_fit_stats<span class="op">$</span>estimate[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>confidence_interval_offset), <span class="dv">4</span>)</a></code></pre></div>
 <p>Given the confidence interval, we would say, “on average, a car runs <span class="math inline">\(_{-0.0082} -0.0076_{-0.0071}\)</span> <em>miles per gallon</em> fewer per pound of weight.</p>
 </div>
 <div id="the-t-statistic-and-the-t-distribution" class="section level3">
@@ -605,14 +607,14 @@ confidence_interval &lt;-<span class="st"> </span><span class="kw">round</span>(
 \]</span></p>
 <p>You can think of this as a <em>signal-to-noise</em> ratio, or a standardizing transformation on the estimated parameter. Under the null hypothesis, the <span class="math inline">\(t\)</span>-statistic is well approximated by a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-2\)</span> <em>degrees of freedom</em> (we will get back to <em>degrees of freedom</em> shortly). Like other distributions, you can compute with the <span class="math inline">\(t\)</span>-distribution using the <code>p,d,q,r</code>-family of functions, e.g., <code>pt</code> is the cumulative probability distribution function.</p>
 <p>In our example, we get a <span class="math inline">\(t\)</span> statistic and P-value as follows:</p>
-<pre class="sourceCode r"><code class="sourceCode r">auto_fit_stats &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">tidy</span>()
-auto_fit_stats</code></pre>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb376-1" data-line-number="1">auto_fit_stats &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb376-2" data-line-number="2"><span class="st">  </span><span class="kw">tidy</span>()</a>
+<a class="sourceLine" id="cb376-3" data-line-number="3">auto_fit_stats</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 5
-##   term         estimate std.error statistic   p.value
-##   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1 (Intercept)  46.2      0.799         57.9 1.62e-193
-## 2 weight       -0.00765  0.000258     -29.6 6.02e-102</code></pre>
+##   term     estimate std.error statistic   p.value
+##   &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Interc… 46.2      0.799         57.9 1.62e-193
+## 2 weight   -0.00765  0.000258     -29.6 6.02e-102</code></pre>
 <p>We would say: “We found a statistically significant relationship between weight and miles per gallon. On average, a car runs <span class="math inline">\(_{-0.0082} -0.0076_{-0.0071}\)</span> <em>miles per gallon</em> fewer per pound of weight (<span class="math inline">\(t\)</span>=-29.65, <span class="math inline">\(p\)</span>-value&lt;6.015296110^{-102}$).”</p>
 </div>
 <div id="global-fit" class="section level3">
@@ -632,9 +634,9 @@ RSS = \sum_i (y_i - \hat{y}_i)^2
 R^2 = \frac{\mathrm{TSS}-\mathrm{RSS}}{\mathrm{TSS}} = 1 - \frac{\mathrm{RSS}}{\mathrm{TSS}}
 \]</span></p>
 <p>These types of global statistics for the linear model can be obtained using the <code>glance</code> function in the <code>broom</code> package. In our example</p>
-<pre class="sourceCode r"><code class="sourceCode r">auto_fit <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(r.squared, sigma, statistic, df, p.value)</code></pre>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb378-1" data-line-number="1">auto_fit <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb378-2" data-line-number="2"><span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb378-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(r.squared, sigma, statistic, df, p.value)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 5
 ##   r.squared sigma statistic    df   p.value
 ##       &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt;
@@ -674,25 +676,27 @@ x_i = \left\{
 <h3><span class="header-section-number">28.4.1</span> Non-linearity of outcome-predictor relationship</h3>
 <p>What if the underlying relationship is not linear? We will see later that we can capture non-linear relationships between variables, but for now, let’s concentrate on detecting if a linear relationship is a good approximation. We can use exploratory visual analysis to do this for now by plotting residuals <span class="math inline">\((y_i - \hat{y}_i)^2\)</span> as a function of the fitted values <span class="math inline">\(\hat{y}_i\)</span>.</p>
 <p>The <code>broom</code> package uses the <code>augment</code> function to help with this task. It augments the input data used to learn the linear model with information of the fitted model for each observation</p>
-<pre class="sourceCode r"><code class="sourceCode r">augmented_auto &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">augment</span>()
-augmented_auto <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb380-1" data-line-number="1">augmented_auto &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb380-2" data-line-number="2"><span class="st">  </span><span class="kw">augment</span>()</a>
+<a class="sourceLine" id="cb380-3" data-line-number="3">augmented_auto <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 10
-##   .rownames   mpg weight .fitted .se.fit .resid    .hat .sigma .cooksd
-##   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-## 1 1            18   3504    19.4   0.258  -1.42 0.00353   4.34 1.91e-4
-## 2 2            15   3693    18.0   0.286  -2.97 0.00437   4.34 1.04e-3
-## 3 3            18   3436    19.9   0.249  -1.94 0.00330   4.34 3.33e-4
-## 4 4            16   3433    20.0   0.248  -3.96 0.00329   4.33 1.38e-3
-## 5 5            17   3449    19.8   0.250  -2.84 0.00334   4.34 7.23e-4
-## 6 6            15   4341    13.0   0.414   1.98 0.00914   4.34 9.73e-4
-## # … with 1 more variable: .std.resid &lt;dbl&gt;</code></pre>
+##   .rownames   mpg weight .fitted .se.fit .resid
+##   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+## 1 1            18   3504    19.4   0.258  -1.42
+## 2 2            15   3693    18.0   0.286  -2.97
+## 3 3            18   3436    19.9   0.249  -1.94
+## 4 4            16   3433    20.0   0.248  -3.96
+## 5 5            17   3449    19.8   0.250  -2.84
+## 6 6            15   4341    13.0   0.414   1.98
+## # … with 4 more variables: .hat &lt;dbl&gt;,
+## #   .sigma &lt;dbl&gt;, .cooksd &lt;dbl&gt;,
+## #   .std.resid &lt;dbl&gt;</code></pre>
 <p>With that we can make the plot we need to check for possible non-linearity</p>
-<pre class="sourceCode r"><code class="sourceCode r">augmented_auto <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>.fitted,<span class="dt">y=</span>.resid)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_smooth</span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;fitted&quot;</span>, <span class="dt">y=</span><span class="st">&quot;residual&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb382-1" data-line-number="1">augmented_auto <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb382-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>.fitted,<span class="dt">y=</span>.resid)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb382-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb382-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_smooth</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb382-5" data-line-number="5"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;fitted&quot;</span>, <span class="dt">y=</span><span class="st">&quot;residual&quot;</span>)</a></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-180-1.svg" width="672" /></p>
 </div>
@@ -735,26 +739,26 @@ RSS &amp; = \frac{1}{2} \sum_{i=1}^n (y_i - \hat{y}_i)^2 \\
 <div id="example-contd" class="section level3">
 <h3><span class="header-section-number">28.5.2</span> Example (cont’d)</h3>
 <p>Continuing with our Auto example, we can build a model for miles per gallon using multiple predictors:</p>
-<pre class="sourceCode r"><code class="sourceCode r">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span><span class="dv">1</span><span class="op">+</span>weight<span class="op">+</span>cylinders<span class="op">+</span>horsepower<span class="op">+</span>displacement<span class="op">+</span>year, <span class="dt">data=</span>Auto)
-auto_fit</code></pre>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb384-1" data-line-number="1">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span><span class="dv">1</span><span class="op">+</span>weight<span class="op">+</span>cylinders<span class="op">+</span>horsepower<span class="op">+</span>displacement<span class="op">+</span>year, <span class="dt">data=</span>Auto)</a>
+<a class="sourceLine" id="cb384-2" data-line-number="2">auto_fit</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ 1 + weight + cylinders + horsepower + displacement + 
 ##     year, data = Auto)
 ## 
 ## Coefficients:
-##  (Intercept)        weight     cylinders    horsepower  displacement  
-##   -12.779493     -0.006524     -0.343690     -0.007715      0.006996  
-##         year  
-##     0.749924</code></pre>
+##  (Intercept)        weight     cylinders  
+##   -12.779493     -0.006524     -0.343690  
+##   horsepower  displacement          year  
+##    -0.007715      0.006996      0.749924</code></pre>
 <p>From this model we can make the statement: “Holding everything else constant, cars run 0.76 miles per gallon more each year on average”.</p>
 </div>
 <div id="statistical-statements-contd" class="section level3">
 <h3><span class="header-section-number">28.5.3</span> Statistical statements (cont’d)</h3>
 <p>Like simple linear regression, we can construct confidence intervals, and test a null hypothesis of no relationship (<span class="math inline">\(\beta_j=0\)</span>) for the parameter corresponding to each predictor. This is again nicely managed by the <code>broom</code> package:</p>
-<pre class="sourceCode r"><code class="sourceCode r">auto_fit_stats &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">tidy</span>()
-auto_fit_stats <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb386-1" data-line-number="1">auto_fit_stats &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb386-2" data-line-number="2"><span class="st">  </span><span class="kw">tidy</span>()</a>
+<a class="sourceLine" id="cb386-3" data-line-number="3">auto_fit_stats <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -822,10 +826,10 @@ auto_fit_stats <span class="op">%&gt;%</span><span class="st"> </span>knitr<span
 \]</span></p>
 <p>If this statistic is greater (enough) than 1, then we reject hypothesis that there is no relationship between response and predictors.</p>
 <p>Back to our example, we use the <code>glance</code> function to compute this type of summary:</p>
-<pre class="sourceCode r"><code class="sourceCode r">auto_fit <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(r.squared, sigma, statistic, df, p.value) <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb387-1" data-line-number="1">auto_fit <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb387-2" data-line-number="2"><span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb387-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(r.squared, sigma, statistic, df, p.value) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb387-4" data-line-number="4"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -869,9 +873,9 @@ p.value
 <p>In comparison with the linear model only using <code>weight</code>, this multivariate model explains <em>more of the variance</em> of <code>mpg</code>, but using more predictors. This is where the notion of <em>degrees of freedom</em> comes in: we now have a model with expanded <em>representational</em> ability.</p>
 <p>However, the bigger the model, we are conditioning more and more, and intuitively, given a fixed dataset, have fewer data points to estimate conditional expectation for each value of the predictors. That means, that are estimated conditional expectation is less <em>precise</em>.</p>
 <p>To capture this phenomenon, we want statistics that tradeoff how well the model fits the data, and the “complexity” of the model. Now, we can look at the full output of the <code>glance</code> function:</p>
-<pre class="sourceCode r"><code class="sourceCode r">auto_fit <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb388-1" data-line-number="1">auto_fit <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb388-2" data-line-number="2"><span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb388-3" data-line-number="3"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -949,9 +953,9 @@ df.residual
 </tbody>
 </table>
 <p>Columns <code>AIC</code> and <code>BIC</code> display statistics that penalize model fit with model size. The smaller this value, the better. Let’s now compare a model only using <code>weight</code>, a model only using <code>weight</code> and <code>year</code> and the full multiple regression model we saw before.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg<span class="op">~</span>weight, <span class="dt">data=</span>Auto) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb389-1" data-line-number="1"><span class="kw">lm</span>(mpg<span class="op">~</span>weight, <span class="dt">data=</span>Auto) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb389-2" data-line-number="2"><span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb389-3" data-line-number="3"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1028,9 +1032,9 @@ df.residual
 </tr>
 </tbody>
 </table>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg<span class="op">~</span>weight<span class="op">+</span>year, <span class="dt">data=</span>Auto) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb390-1" data-line-number="1"><span class="kw">lm</span>(mpg<span class="op">~</span>weight<span class="op">+</span>year, <span class="dt">data=</span>Auto) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb390-2" data-line-number="2"><span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb390-3" data-line-number="3"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -1112,9 +1116,9 @@ df.residual
 <div id="categorical-predictors-contd" class="section level3">
 <h3><span class="header-section-number">28.5.5</span> Categorical predictors (cont’d)</h3>
 <p>We saw transformations for categorical predictors with only two values, and deferred our discussion of categorical predictors with more than two values. In our example we have the <code>origin</code> predictor, corresponding to where the car was manufactured, which has multiple values</p>
-<pre class="sourceCode r"><code class="sourceCode r">Auto &lt;-<span class="st"> </span>Auto <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">origin=</span><span class="kw">factor</span>(origin))
-<span class="kw">levels</span>(Auto<span class="op">$</span>origin)</code></pre>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb391-1" data-line-number="1">Auto &lt;-<span class="st"> </span>Auto <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb391-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">origin=</span><span class="kw">factor</span>(origin))</a>
+<a class="sourceLine" id="cb391-3" data-line-number="3"><span class="kw">levels</span>(Auto<span class="op">$</span>origin)</a></code></pre></div>
 <pre><code>## [1] &quot;1&quot; &quot;2&quot; &quot;3&quot;</code></pre>
 <p>As before, we can only use numerical predictors in linear regression models. The most common way of doing this is to create new dummy predictors to <em>encode</em> the value of the categorical predictor. Let’s take a categorical variable <code>major</code> that can take values <code>CS</code>, <code>MATH</code>, <code>BUS</code>. We can encode these values using variables <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span></p>
 <p><span class="math display">\[
@@ -1145,12 +1149,12 @@ How can we calculate the average difference in salary between MATH and BUS major
 <span class="math inline">\(\beta_1 - \beta_2\)</span>.</p>
 <p>The <code>lm</code> function in R does this transformation by default when a variable has class <code>factor</code>.
 We can see what the underlying numerical predictors look like by using the <code>model_matrix</code> function and passing it the model formula we build:</p>
-<pre class="sourceCode r"><code class="sourceCode r">extended_df &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>origin, <span class="dt">data=</span>Auto) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">origin =</span> Auto<span class="op">$</span>origin)
-
-extended_df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb393-1" data-line-number="1">extended_df &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>origin, <span class="dt">data=</span>Auto) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb393-2" data-line-number="2"><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb393-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">origin =</span> Auto<span class="op">$</span>origin)</a>
+<a class="sourceLine" id="cb393-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb393-5" data-line-number="5">extended_df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb393-6" data-line-number="6"><span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code>##   (Intercept) origin2 origin3 origin
 ## 1           1       0       0      1
 ## 2           1       0       0      1
@@ -1158,8 +1162,8 @@ extended_df <span class="op">%&gt;%</span>
 ## 4           1       0       0      1
 ## 5           1       0       0      1
 ## 6           1       0       0      1</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">extended_df <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;2&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb395-1" data-line-number="1">extended_df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb395-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;2&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code>##   (Intercept) origin2 origin3 origin
 ## 1           1       1       0      2
 ## 2           1       1       0      2
@@ -1167,8 +1171,8 @@ extended_df <span class="op">%&gt;%</span>
 ## 4           1       1       0      2
 ## 5           1       1       0      2
 ## 6           1       1       0      2</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">extended_df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;3&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb397-1" data-line-number="1">extended_df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb397-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;3&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code>##   (Intercept) origin2 origin3 origin
 ## 1           1       0       1      3
 ## 2           1       0       1      3
@@ -1190,37 +1194,58 @@ extended_df <span class="op">%&gt;%</span>
 \]</span></p>
 <p>If <span class="math inline">\(\beta_3\)</span> is positive, then the effect of increasing TV advertising money is increased if facebook advertising is also increased.</p>
 <p>When using categorical variables, interactions have an elegant interpretation. Consider our car example, and suppose we build a model with an interaction between <code>weight</code> and <code>origin</code>. Let’s look at what the numerical predictors look like:</p>
-<pre class="sourceCode r"><code class="sourceCode r">extended_df &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>weight<span class="op">+</span>origin<span class="op">+</span>weight<span class="op">:</span>origin, <span class="dt">data=</span>Auto) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">origin =</span> Auto<span class="op">$</span>origin)
-
-extended_df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre>
-<pre><code>##   (Intercept) weight origin2 origin3 weight:origin2 weight:origin3 origin
-## 1           1   3504       0       0              0              0      1
-## 2           1   3693       0       0              0              0      1
-## 3           1   3436       0       0              0              0      1
-## 4           1   3433       0       0              0              0      1
-## 5           1   3449       0       0              0              0      1
-## 6           1   4341       0       0              0              0      1</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">extended_df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;2&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre>
-<pre><code>##   (Intercept) weight origin2 origin3 weight:origin2 weight:origin3 origin
-## 1           1   1835       1       0           1835              0      2
-## 2           1   2672       1       0           2672              0      2
-## 3           1   2430       1       0           2430              0      2
-## 4           1   2375       1       0           2375              0      2
-## 5           1   2234       1       0           2234              0      2
-## 6           1   2123       1       0           2123              0      2</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">extended_df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;3&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</code></pre>
-<pre><code>##   (Intercept) weight origin2 origin3 weight:origin2 weight:origin3 origin
-## 1           1   2372       0       1              0           2372      3
-## 2           1   2130       0       1              0           2130      3
-## 3           1   2130       0       1              0           2130      3
-## 4           1   2228       0       1              0           2228      3
-## 5           1   1773       0       1              0           1773      3
-## 6           1   1613       0       1              0           1613      3</code></pre>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb399-1" data-line-number="1">extended_df &lt;-<span class="st"> </span><span class="kw">model.matrix</span>(<span class="op">~</span>weight<span class="op">+</span>origin<span class="op">+</span>weight<span class="op">:</span>origin, <span class="dt">data=</span>Auto) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb399-2" data-line-number="2"><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb399-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">origin =</span> Auto<span class="op">$</span>origin)</a>
+<a class="sourceLine" id="cb399-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb399-5" data-line-number="5">extended_df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb399-6" data-line-number="6"><span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<pre><code>##   (Intercept) weight origin2 origin3
+## 1           1   3504       0       0
+## 2           1   3693       0       0
+## 3           1   3436       0       0
+## 4           1   3433       0       0
+## 5           1   3449       0       0
+## 6           1   4341       0       0
+##   weight:origin2 weight:origin3 origin
+## 1              0              0      1
+## 2              0              0      1
+## 3              0              0      1
+## 4              0              0      1
+## 5              0              0      1
+## 6              0              0      1</code></pre>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb401-1" data-line-number="1">extended_df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb401-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;2&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<pre><code>##   (Intercept) weight origin2 origin3
+## 1           1   1835       1       0
+## 2           1   2672       1       0
+## 3           1   2430       1       0
+## 4           1   2375       1       0
+## 5           1   2234       1       0
+## 6           1   2123       1       0
+##   weight:origin2 weight:origin3 origin
+## 1           1835              0      2
+## 2           2672              0      2
+## 3           2430              0      2
+## 4           2375              0      2
+## 5           2234              0      2
+## 6           2123              0      2</code></pre>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb403-1" data-line-number="1">extended_df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb403-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(origin <span class="op">==</span><span class="st"> &quot;3&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<pre><code>##   (Intercept) weight origin2 origin3
+## 1           1   2372       0       1
+## 2           1   2130       0       1
+## 3           1   2130       0       1
+## 4           1   2228       0       1
+## 5           1   1773       0       1
+## 6           1   1613       0       1
+##   weight:origin2 weight:origin3 origin
+## 1              0           2372      3
+## 2              0           2130      3
+## 3              0           2130      3
+## 4              0           2228      3
+## 5              0           1773      3
+## 6              0           1613      3</code></pre>
 <p>So what is the expected miles per gallon for a car with <code>origin == 1</code> as a function of weight?</p>
 <p><span class="math display">\[
 \mathtt{mpg} = \beta_0 + \beta_1 \times \mathtt{weight}
@@ -1232,17 +1257,17 @@ extended_df <span class="op">%&gt;%</span>
 <p>Now think of the graphical representation of these lines. For <code>origin == 1</code> the intercept of the regression line is <span class="math inline">\(\beta_0\)</span> and its slope is <span class="math inline">\(\beta_1\)</span>. For <code>origin == 2</code> the intercept
 of the regression line is <span class="math inline">\(\beta_0 + \beta_2\)</span> and its slope is <span class="math inline">\(\beta_1+\beta_4\)</span>.</p>
 <p><code>ggplot</code> does this when we map a factor variable to a aesthetic, say color, and use the <code>geom_smooth</code> method:</p>
-<pre class="sourceCode r"><code class="sourceCode r">Auto <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>weight, <span class="dt">y=</span>mpg, <span class="dt">color=</span>origin)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</code></pre>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb405-1" data-line-number="1">Auto <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb405-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>weight, <span class="dt">y=</span>mpg, <span class="dt">color=</span>origin)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb405-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb405-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-195-1.svg" width="672" /></p>
 <p>The intercept of the three lines seem to be different, but the slope of <code>origin == 3</code> looks different (decreases faster) than the slopes of <code>origin == 1</code> and <code>origin == 2</code> that look very similar to each other.</p>
 <p>Let’s fit the model and see how much statistical confidence we can give to those observations:</p>
-<pre class="sourceCode r"><code class="sourceCode r">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span>weight<span class="op">*</span>origin, <span class="dt">data=</span>Auto)
-auto_fit_stats &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">tidy</span>() 
-auto_fit_stats <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb406-1" data-line-number="1">auto_fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span>weight<span class="op">*</span>origin, <span class="dt">data=</span>Auto)</a>
+<a class="sourceLine" id="cb406-2" data-line-number="2">auto_fit_stats &lt;-<span class="st"> </span>auto_fit <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb406-3" data-line-number="3"><span class="st">  </span><span class="kw">tidy</span>() </a>
+<a class="sourceLine" id="cb406-4" data-line-number="4">auto_fit_stats <span class="op">%&gt;%</span><span class="st"> </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1299,10 +1324,10 @@ auto_fit_stats <span class="op">%&gt;%</span><span class="st"> </span>knitr<span
 </tbody>
 </table>
 <p>So we can say that for <code>origin == 3</code> the relationship between <code>mpg</code> and <code>weight</code> is different but not for the other two values of <code>origin</code>. Now, there is still an issue here because this could be the result of a poor fit from a linear model, it seems none of these lines do a very good job of modeling the data we have. We can again check this for this model:</p>
-<pre class="sourceCode r"><code class="sourceCode r">auto_fit <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>.fitted, <span class="dt">y=</span>.resid)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_point</span>()</code></pre>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb407-1" data-line-number="1">auto_fit <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb407-2" data-line-number="2"><span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb407-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>.fitted, <span class="dt">y=</span>.resid)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb407-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-197-1.svg" width="672" /></p>
 <p>The fact that residuals are not centered around zero suggests that a linear fit does not work well in this case.</p>
 <div id="additional-issues-with-linear-regression" class="section level3">
@@ -1325,11 +1350,13 @@ auto_fit_stats <span class="op">%&gt;%</span><span class="st"> </span>knitr<span
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -1337,12 +1364,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -1354,6 +1380,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -1373,8 +1403,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

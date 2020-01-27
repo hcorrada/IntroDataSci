@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>32 Model Selection | Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="32 Model Selection | Lecture Notes: Introduction to Data Science" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="32 Model Selection | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2019-05-30" />
+<meta name="date" content="2020-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="tree-based-methods.html">
-<link rel="next" href="unsupervised-learning-clustering.html">
+<link rel="prev" href="tree-based-methods.html"/>
+<link rel="next" href="unsupervised-learning-clustering.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,9 +48,11 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -58,7 +61,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -524,40 +526,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s look at our running example using automobile data, where we want to build a
 regression model capable of predicting miles per gallon given other auto attributes.
 We saw in previous lectures that a linear regression model was not appropriate for this dataset. So instead we will use <em>polynomial</em> regression as an illustrative example.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(ISLR)
-
-<span class="kw">data</span>(Auto)
-<span class="kw">ggplot</span>(Auto, <span class="kw">aes</span>(<span class="dt">x=</span>horsepower, <span class="dt">y=</span>mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>()</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-250-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb449-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb449-2" data-line-number="2"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb449-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb449-4" data-line-number="4"><span class="kw">data</span>(Auto)</a>
+<a class="sourceLine" id="cb449-5" data-line-number="5"><span class="kw">ggplot</span>(Auto, <span class="kw">aes</span>(<span class="dt">x=</span>horsepower, <span class="dt">y=</span>mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>()</a></code></pre></div>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-247-1.svg" width="672" /></p>
 <p>In this case our regression model (for a single predictor <span class="math inline">\(x\)</span>) is given as a <span class="math inline">\(d\)</span> degree polynomial.</p>
 <p><span class="math display">\[
 \mathbb{E}[Y|X=x] = \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_d x^d
 \]</span></p>
 <p>In the <em>Model Selection</em> case, we want to decide what degree <span class="math inline">\(d\)</span> we should use to model this data. Using the <em>validation set</em> method, we split our data into a training set, fit the regression model with different polynomial degrees <span class="math inline">\(d\)</span> on the training set, and measure test error on the validation set.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
-
-in_validation &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(Auto), <span class="kw">nrow</span>(Auto)<span class="op">/</span><span class="dv">2</span>)
-validation_set &lt;-<span class="st"> </span>Auto[in_validation,]
-training_set &lt;-<span class="st"> </span>Auto[<span class="op">-</span>in_validation,]
-
-<span class="kw">library</span>(broom)
-<span class="kw">library</span>(dplyr)
-
-degrees &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>)
-error_rates &lt;-<span class="st"> </span><span class="kw">sapply</span>(degrees, <span class="cf">function</span>(deg) {
-  fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span><span class="kw">poly</span>(horsepower, <span class="dt">degree=</span>deg), <span class="dt">data=</span>training_set)
-  predicted &lt;-<span class="st"> </span><span class="kw">predict</span>(fit, <span class="dt">newdata=</span>validation_set)
-  <span class="kw">mean</span>((validation_set<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span>predicted)<span class="op">^</span><span class="dv">2</span>)
-})
-
-<span class="kw">plot</span>(degrees, error_rates, <span class="dt">type=</span><span class="st">&quot;b&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Polynomial Degree&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Mean Squared Error&quot;</span>, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">lwd=</span><span class="fl">1.4</span>, <span class="dt">cex=</span><span class="fl">1.4</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-251-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb450-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1234</span>)</a>
+<a class="sourceLine" id="cb450-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb450-3" data-line-number="3">in_validation &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(Auto), <span class="kw">nrow</span>(Auto)<span class="op">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb450-4" data-line-number="4">validation_set &lt;-<span class="st"> </span>Auto[in_validation,]</a>
+<a class="sourceLine" id="cb450-5" data-line-number="5">training_set &lt;-<span class="st"> </span>Auto[<span class="op">-</span>in_validation,]</a>
+<a class="sourceLine" id="cb450-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb450-7" data-line-number="7"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb450-8" data-line-number="8"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb450-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb450-10" data-line-number="10">degrees &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb450-11" data-line-number="11">error_rates &lt;-<span class="st"> </span><span class="kw">sapply</span>(degrees, <span class="cf">function</span>(deg) {</a>
+<a class="sourceLine" id="cb450-12" data-line-number="12">  fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span><span class="kw">poly</span>(horsepower, <span class="dt">degree=</span>deg), <span class="dt">data=</span>training_set)</a>
+<a class="sourceLine" id="cb450-13" data-line-number="13">  predicted &lt;-<span class="st"> </span><span class="kw">predict</span>(fit, <span class="dt">newdata=</span>validation_set)</a>
+<a class="sourceLine" id="cb450-14" data-line-number="14">  <span class="kw">mean</span>((validation_set<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span>predicted)<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb450-15" data-line-number="15">})</a>
+<a class="sourceLine" id="cb450-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb450-17" data-line-number="17"><span class="kw">plot</span>(degrees, error_rates, <span class="dt">type=</span><span class="st">&quot;b&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Polynomial Degree&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Mean Squared Error&quot;</span>, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">lwd=</span><span class="fl">1.4</span>, <span class="dt">cex=</span><span class="fl">1.4</span>)</a></code></pre></div>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-248-1.svg" width="672" /></p>
 </div>
 <div id="resampled-validation-set" class="section level2">
 <h2><span class="header-section-number">32.3</span> Resampled validation set</h2>
 <p>This approach can be prone to sampling issues. It can be highly variable as error rate is a random quantity and depends on observations in training and validation sets. We can improve our estimate of <em>test error</em> by averaging multiple measurements of it (remember the law of large numbers). We can do so by replicating our validation resampling 10 times (with different validation and training sets) and averaging the resulting test errors.</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-252-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-249-1.svg" width="672" /></p>
 </div>
 <div id="leave-one-out-cross-validation" class="section level2">
 <h2><span class="header-section-number">32.4</span> Leave-one-out Cross-Validation</h2>
@@ -574,7 +576,7 @@ CV_{(n)} = \frac{1}{n} \sum_i (y_i - \hat{y}_i)^2
 <p><img src="img/loocv.png" /></p>
 <p>The advantages of this approach is that now we use <span class="math inline">\(n-1\)</span> observations to train each model and there is no randomness introduced since error is estimated on each sample. However, it has
 disadvantages as well. Depending on the models we are trying to fit, it can be very costly to train <span class="math inline">\(n-1\)</span> models. Also, the error estimate for each model is highly variable (since it comes from a single datapoint).</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-254-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-251-1.svg" width="672" /></p>
 <p>For linear models (and some non-linear models) there is a nice trick that allows one to compute (exactly or approximately) LOOCV from the full data model fit which we will not get into here.</p>
 </div>
 <div id="k-fold-cross-validation" class="section level2">
@@ -592,7 +594,7 @@ CV_{(k)} = \frac{1}{k} \sum_i MSE_i
 \]</span></p>
 <p>where <span class="math inline">\(MSE_i\)</span> is mean squared error estimated on the <span class="math inline">\(i\)</span>-th fold</p>
 <p>In this case, we have fewer models to fit (only <span class="math inline">\(k\)</span> of them), and there is less variance in each of the computed test error estimates in each fold. It can be shown that there is a slight bias (over estimating usually) in error estimate obtained from this procedure.</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-256-1.svg" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-253-1.svg" width="672" /></p>
 </div>
 <div id="cross-validation-in-classification" class="section level2">
 <h2><span class="header-section-number">32.6</span> Cross-Validation in Classification</h2>
@@ -601,42 +603,42 @@ CV_{(k)} = \frac{1}{k} \sum_i MSE_i
 <div id="comparing-models-using-cross-validation" class="section level2">
 <h2><span class="header-section-number">32.7</span> Comparing models using cross-validation</h2>
 <p>Suppose you want to compare two classification models (logistic regression vs. a decision tree) on the <code>Default</code> dataset. We can use Cross-Validation to determine if one model is better than the other, using a paired <span class="math inline">\(t\)</span>-test for example.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ISLR)
-<span class="kw">library</span>(cvTools)
-<span class="kw">library</span>(tree)
-
-<span class="kw">data</span>(Default)
-fold_indices &lt;-<span class="st"> </span><span class="kw">cvFolds</span>(<span class="dt">n=</span><span class="kw">nrow</span>(Default), <span class="dt">K=</span><span class="dv">10</span>)
-
-error_rates &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="cf">function</span>(fold_index) {
-  test_indices &lt;-<span class="st"> </span><span class="kw">which</span>(fold_indices<span class="op">$</span>which <span class="op">==</span><span class="st"> </span>fold_index)
-  test_set &lt;-<span class="st"> </span>Default[test_indices,]
-  train_set &lt;-<span class="st"> </span>Default[<span class="op">-</span>test_indices,]
-  
-  logis_fit &lt;-<span class="st"> </span><span class="kw">glm</span>(default<span class="op">~</span>., <span class="dt">data=</span>train_set, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)
-  logis_pred &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(logis_fit, <span class="dt">newdata=</span>test_set, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)
-  logis_error &lt;-<span class="st"> </span><span class="kw">mean</span>(test_set<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>logis_pred)
-  
-  tree_fit &lt;-<span class="st"> </span><span class="kw">tree</span>(default<span class="op">~</span>., <span class="dt">data=</span>train_set)
-  pruned_tree &lt;-<span class="st"> </span><span class="kw">prune.tree</span>(tree_fit, <span class="dt">best=</span><span class="dv">3</span>)
-
-  tree_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(pruned_tree, <span class="dt">newdata=</span>test_set, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
-  tree_error &lt;-<span class="st"> </span><span class="kw">mean</span>(test_set<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>tree_pred)
-  <span class="kw">c</span>(logis_error, tree_error)
-  })
-<span class="kw">rownames</span>(error_rates) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;logis&quot;</span>, <span class="st">&quot;tree&quot;</span>)
-error_rates &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(error_rates))
-
-<span class="kw">library</span>(tidyr)
-<span class="kw">library</span>(dplyr)
-
-error_rates &lt;-<span class="st"> </span>error_rates <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fold=</span><span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(method,error,<span class="op">-</span>fold)
-
-error_rates <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">head</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb451-1" data-line-number="1"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb451-2" data-line-number="2"><span class="kw">library</span>(cvTools)</a>
+<a class="sourceLine" id="cb451-3" data-line-number="3"><span class="kw">library</span>(tree)</a>
+<a class="sourceLine" id="cb451-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb451-5" data-line-number="5"><span class="kw">data</span>(Default)</a>
+<a class="sourceLine" id="cb451-6" data-line-number="6">fold_indices &lt;-<span class="st"> </span><span class="kw">cvFolds</span>(<span class="dt">n=</span><span class="kw">nrow</span>(Default), <span class="dt">K=</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb451-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb451-8" data-line-number="8">error_rates &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="cf">function</span>(fold_index) {</a>
+<a class="sourceLine" id="cb451-9" data-line-number="9">  test_indices &lt;-<span class="st"> </span><span class="kw">which</span>(fold_indices<span class="op">$</span>which <span class="op">==</span><span class="st"> </span>fold_index)</a>
+<a class="sourceLine" id="cb451-10" data-line-number="10">  test_set &lt;-<span class="st"> </span>Default[test_indices,]</a>
+<a class="sourceLine" id="cb451-11" data-line-number="11">  train_set &lt;-<span class="st"> </span>Default[<span class="op">-</span>test_indices,]</a>
+<a class="sourceLine" id="cb451-12" data-line-number="12">  </a>
+<a class="sourceLine" id="cb451-13" data-line-number="13">  logis_fit &lt;-<span class="st"> </span><span class="kw">glm</span>(default<span class="op">~</span>., <span class="dt">data=</span>train_set, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</a>
+<a class="sourceLine" id="cb451-14" data-line-number="14">  logis_pred &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(logis_fit, <span class="dt">newdata=</span>test_set, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)</a>
+<a class="sourceLine" id="cb451-15" data-line-number="15">  logis_error &lt;-<span class="st"> </span><span class="kw">mean</span>(test_set<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>logis_pred)</a>
+<a class="sourceLine" id="cb451-16" data-line-number="16">  </a>
+<a class="sourceLine" id="cb451-17" data-line-number="17">  tree_fit &lt;-<span class="st"> </span><span class="kw">tree</span>(default<span class="op">~</span>., <span class="dt">data=</span>train_set)</a>
+<a class="sourceLine" id="cb451-18" data-line-number="18">  pruned_tree &lt;-<span class="st"> </span><span class="kw">prune.tree</span>(tree_fit, <span class="dt">best=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb451-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb451-20" data-line-number="20">  tree_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(pruned_tree, <span class="dt">newdata=</span>test_set, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)</a>
+<a class="sourceLine" id="cb451-21" data-line-number="21">  tree_error &lt;-<span class="st"> </span><span class="kw">mean</span>(test_set<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>tree_pred)</a>
+<a class="sourceLine" id="cb451-22" data-line-number="22">  <span class="kw">c</span>(logis_error, tree_error)</a>
+<a class="sourceLine" id="cb451-23" data-line-number="23">  })</a>
+<a class="sourceLine" id="cb451-24" data-line-number="24"><span class="kw">rownames</span>(error_rates) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;logis&quot;</span>, <span class="st">&quot;tree&quot;</span>)</a>
+<a class="sourceLine" id="cb451-25" data-line-number="25">error_rates &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(error_rates))</a>
+<a class="sourceLine" id="cb451-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb451-27" data-line-number="27"><span class="kw">library</span>(tidyr)</a>
+<a class="sourceLine" id="cb451-28" data-line-number="28"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb451-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb451-30" data-line-number="30">error_rates &lt;-<span class="st"> </span>error_rates <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb451-31" data-line-number="31"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fold=</span><span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb451-32" data-line-number="32"><span class="st">  </span><span class="kw">gather</span>(method,error,<span class="op">-</span>fold)</a>
+<a class="sourceLine" id="cb451-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb451-34" data-line-number="34">error_rates <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb451-35" data-line-number="35"><span class="st">  </span><span class="kw">head</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb451-36" data-line-number="36"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -720,11 +722,11 @@ logis
 </tr>
 </tbody>
 </table>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dotplot</span>(error<span class="op">~</span>method, <span class="dt">data=</span>error_rates, <span class="dt">ylab=</span><span class="st">&quot;Mean Prediction Error&quot;</span>)</code></pre>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-258-1.svg" width="672" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(error<span class="op">~</span>method, <span class="dt">data=</span>error_rates) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</code></pre>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb452-1" data-line-number="1"><span class="kw">dotplot</span>(error<span class="op">~</span>method, <span class="dt">data=</span>error_rates, <span class="dt">ylab=</span><span class="st">&quot;Mean Prediction Error&quot;</span>)</a></code></pre></div>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-255-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb453-1" data-line-number="1"><span class="kw">lm</span>(error<span class="op">~</span>method, <span class="dt">data=</span>error_rates) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb453-2" data-line-number="2"><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb453-3" data-line-number="3"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -771,11 +773,13 @@ logis
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -783,12 +787,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -800,6 +803,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -819,8 +826,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
