@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -70,11 +70,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -507,7 +509,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="tidy-data-i-the-er-model" class="section level1">
 <h1><span class="header-section-number">11</span> Tidy Data I: The ER Model</h1>
-<p>Some of this material is based on Amol Deshpande’s material: <a href="https://github.com/umddb/datascience-fall14/blob/master/lecture-notes/models.md">https://github.com/umddb/datascience-fall14/blob/master/lecture-notes/models.md</a></p>
+<p>Some of this material is based on Amol Deshpande’s material: <a href="https://github.com/umddb/datascience-fall14/blob/master/lecture-notes/models.md" class="uri">https://github.com/umddb/datascience-fall14/blob/master/lecture-notes/models.md</a></p>
 <div id="overview" class="section level2">
 <h2><span class="header-section-number">11.1</span> Overview</h2>
 <p>In this section we will discuss principles of preparing and organizing data in a way that is amenable for analysis, both in modeling and visualization. We think of a <em>data model</em> as a collection of concepts that describes how data is represented and accessed. Thinking abstractly of data structure, beyond a specific implementation, makes it easier to share data across programs and systems, and integrate data from different sources.</p>

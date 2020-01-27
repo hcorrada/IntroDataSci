@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -70,11 +70,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -511,7 +513,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="a-data-analysis-to-get-us-going" class="section level2">
 <h2><span class="header-section-number">5.1</span> A data analysis to get us going</h2>
 <p>I’m going to do an analysis of Baltimore crime to guide our discussion of R. We’ll use data downloaded from Baltimore City’s awesome open data site (this was downloaded a couple of years ago so if you download now, you will get different results).</p>
-<p>The repository for this particular data is here. <a href="https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt">https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt</a></p>
+<p>The repository for this particular data is here. <a href="https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt" class="uri">https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt</a></p>
 </div>
 <div id="getting-data" class="section level2">
 <h2><span class="header-section-number">5.2</span> Getting data</h2>

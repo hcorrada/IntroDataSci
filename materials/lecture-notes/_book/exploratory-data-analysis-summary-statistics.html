@@ -58,7 +58,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -70,11 +70,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -517,7 +519,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>We also want to use EDA to understand relationship between pairs of variables, e.g. their correlation or covariance.</p>
 <p>One last note on EDA. John W. Tukey was an exceptional scientist/mathematician, who had profound impact on statistics and Computer Science. A lot of what we cover in EDA is based on his groundbreaking work. I highly recommend you read more about him:
-<a href="https://www.stat.berkeley.edu/~brill/Papers/life.pdf">https://www.stat.berkeley.edu/~brill/Papers/life.pdf</a>.</p>
+<a href="https://www.stat.berkeley.edu/~brill/Papers/life.pdf" class="uri">https://www.stat.berkeley.edu/~brill/Papers/life.pdf</a>.</p>
 <div id="range" class="section level2">
 <h2><span class="header-section-number">21.1</span> Range</h2>
 <p>Part of our goal is to understand how variables are distributed in a given dataset. Note, again, that we are not using <em>distributed</em> in a formal mathematical (or probabilistic) sense. All statements we are making here are based on data at hand, so we could refer to this as the <em>empirical distribution</em> of data. Here, <em>empirical</em> is used in the sense that this is data resulting from an experiment.</p>
@@ -528,7 +530,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb313-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb313-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-120-1.svg" width="672" /></p>
-<p>(Here’s some help interpreting these variables: <a href="https://en.wikipedia.org/wiki/Diamond_(gemstone)#Gemological_characteristics">https://en.wikipedia.org/wiki/Diamond_(gemstone)#Gemological_characteristics</a>).</p>
+<p>(Here’s some help interpreting these variables: <a href="https://en.wikipedia.org/wiki/Diamond_(gemstone)#Gemological_characteristics" class="uri">https://en.wikipedia.org/wiki/Diamond_(gemstone)#Gemological_characteristics</a>).</p>
 <p>Let’s start using some notation to make talking about this a bit more efficient. We assume that we have data across <span class="math inline">\(n\)</span> entitites (or observational units) for <span class="math inline">\(p\)</span> attributes. In this dataset <span class="math inline">\(n=53940\)</span> and <span class="math inline">\(p=10\)</span>. However, let’s consider a single attribute, and denote the data for that attribute (or variable) as <span class="math inline">\(x_1, x_2, \ldots, x_n\)</span>.</p>
 <p>Ok, so what’s the first question we want to ask about how data is distributed? Since we want to understand how data is distributed across a <em>range</em>, we should first define the range.</p>
 <div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb314-1" data-line-number="1">diamonds <span class="op">%&gt;%</span></a>
@@ -807,10 +809,10 @@ cor(x,y) = \frac{cov(x,y)}{sd(x) sd(y)}
 <div id="sum-rule" class="section level4 unnumbered">
 <h4>Sum Rule</h4>
 <p>The derivative of the sum of two functions is the sum of the derivatives of the two functions:</p>
-<p><span class="math display">\[\begin{eqnarray*}
+<span class="math display">\[\begin{eqnarray*}
 \frac{d}{dx}(f(x)+g(x)) = \frac{d}{dx}(f(x)) + \frac{d}{dx}(g(x))
 \end{eqnarray*}\]</span>
-Similarly, the derivative of the difference of two functions is the difference of the derivatives of the two functions.</p>
+<p>Similarly, the derivative of the difference of two functions is the difference of the derivatives of the two functions.</p>
 </div>
 <div id="power-rule" class="section level4 unnumbered">
 <h4>Power Rule</h4>
@@ -834,17 +836,17 @@ Similarly, the derivative of the difference of two functions is the difference o
 <div id="product-rule" class="section level4 unnumbered">
 <h4>Product Rule</h4>
 <p>If we have two functions f(x) and g(x),</p>
-<p><span class="math display">\[\begin{eqnarray*}
+<span class="math display">\[\begin{eqnarray*}
 \frac{d}{dx}(f(x)g(x)) = f(x)\frac{d}{dx}(g(x)) + g(x)\frac{d}{dx}(f(x))
 = f(x)g&#39;(x) + g(x)f&#39;(x)
-\end{eqnarray*}\]</span></p>
+\end{eqnarray*}\]</span>
 </div>
 <div id="quotient-rule" class="section level4 unnumbered">
 <h4>Quotient Rule</h4>
 <p>If we have two functions f(x) and g(x) (<span class="math inline">\(g(x)\neq 0\)</span>),</p>
-<p><span class="math display">\[\begin{eqnarray*}
+<span class="math display">\[\begin{eqnarray*}
 \frac{d}{dx}\frac{f(x)}{g(x)} = \left(\frac{g(x)\frac{d}{dx} (f(x)) - f(x)\frac{d}{dx} (g(x)) }{g(x)^{2}}\right)
-\end{eqnarray*}\]</span></p>
+\end{eqnarray*}\]</span>
 </div>
 </div>
 <div id="resources" class="section level3">
