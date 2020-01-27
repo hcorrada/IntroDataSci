@@ -28,12 +28,12 @@ notes = "bookdown-notes/measurements-and-data-types.html"
 title = "Preliminaries 2: Basic data operations"
 notes = "bookdown-notes/principles-basic-operations.html"
 
+[[day02.covers]]
+title = "Python notebook for data operations"
+notes = "ipynb/data_operations.ipynb"
+
 # [day02.class_notes]
 # link = "cmsc320_class-notes_20180130.pdf"
-
-# [[day02.prep]]
-# title = "Setting up R"
-# # link = "homeworks/rocker/"
 
 [day03]
 date = "2/3"
