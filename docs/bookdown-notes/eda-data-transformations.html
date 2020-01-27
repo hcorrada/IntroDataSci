@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>22 EDA: Data Transformations | Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="22 EDA: Data Transformations | Lecture Notes: Introduction to Data Science" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="22 EDA: Data Transformations | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2019-05-30" />
+<meta name="date" content="2020-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="exploratory-data-analysis-summary-statistics.html">
-<link rel="next" href="eda-handling-missing-data.html">
+<link rel="prev" href="exploratory-data-analysis-summary-statistics.html"/>
+<link rel="next" href="eda-handling-missing-data.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,9 +48,11 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -58,7 +61,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -167,22 +169,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.7" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#making-analyses-accessible"><i class="fa fa-check"></i><b>3.7</b> Making analyses accessible</a></li>
 <li class="chapter" data-level="3.8" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#summary"><i class="fa fa-check"></i><b>3.8</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the R Data Science Toolbox</a><ul>
-<li class="chapter" data-level="4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1</b> Some history</a></li>
-<li class="chapter" data-level="4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.2</b> Setting up R</a></li>
-<li class="chapter" data-level="4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.3</b> Setting up Rstudio</a></li>
-<li class="chapter" data-level="4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.4</b> A first look at Rstudio</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.4.1</b> Interactive Console</a></li>
-<li class="chapter" data-level="4.4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.4.2</b> Data Viewer</a></li>
-<li class="chapter" data-level="4.4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.4.3</b> Names, values and functions</a></li>
-<li class="chapter" data-level="4.4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.4.4</b> Plotting</a></li>
-<li class="chapter" data-level="4.4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.4.5</b> Editor</a></li>
-<li class="chapter" data-level="4.4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.4.6</b> Files viewer</a></li>
+<li class="chapter" data-level="4" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the Data Science Toolbox</a><ul>
+<li class="chapter" data-level="4.1" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#rrstudio"><i class="fa fa-check"></i><b>4.1</b> R/Rstudio</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1.1</b> Some history</a></li>
+<li class="chapter" data-level="4.1.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.1.2</b> Setting up R</a></li>
+<li class="chapter" data-level="4.1.3" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.1.3</b> Setting up Rstudio</a></li>
+<li class="chapter" data-level="4.1.4" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.1.4</b> A first look at Rstudio</a></li>
+<li class="chapter" data-level="4.1.5" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.1.5</b> Interactive Console</a></li>
+<li class="chapter" data-level="4.1.6" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.1.6</b> Data Viewer</a></li>
+<li class="chapter" data-level="4.1.7" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.1.7</b> Names, values and functions</a></li>
+<li class="chapter" data-level="4.1.8" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.1.8</b> Plotting</a></li>
+<li class="chapter" data-level="4.1.9" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.1.9</b> Editor</a></li>
+<li class="chapter" data-level="4.1.10" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.1.10</b> Files viewer</a></li>
+<li class="chapter" data-level="4.1.11" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.1.11</b> R packages</a></li>
+<li class="chapter" data-level="4.1.12" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.1.12</b> Additional R resources</a></li>
+<li class="chapter" data-level="4.1.13" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.1.13</b> Literate Programming</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.5</b> R packages</a></li>
-<li class="chapter" data-level="4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.6</b> Additional R resources</a></li>
-<li class="chapter" data-level="4.7" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.7</b> Literate Programming</a></li>
-<li class="chapter" data-level="4.8" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#finishing-your-setup"><i class="fa fa-check"></i><b>4.8</b> Finishing your setup</a></li>
+<li class="chapter" data-level="4.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#pythonjupyter"><i class="fa fa-check"></i><b>4.2</b> Python/Jupyter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html"><i class="fa fa-check"></i>(Part) Data representation modeling, ingestion and cleaning</a></li>
 <li class="chapter" data-level="5" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html"><i class="fa fa-check"></i><b>5</b> Measurements and Data Types</a><ul>
@@ -515,13 +518,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 z_i = \frac{(x_i - \overline{x})}{\mathrm{sd}(x)}
 \]</span></p>
 <p>where <span class="math inline">\(\overline{x}\)</span> is the mean of data <span class="math inline">\(x\)</span>, and <span class="math inline">\(\mathrm{sd}(x)\)</span> is its standard deviation.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-<span class="kw">data</span>(diamonds)
-
-diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">scaled_depth =</span> (depth <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(depth)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(depth)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>scaled_depth)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span>.<span class="dv">5</span>)</code></pre>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb330-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb330-2" data-line-number="2"><span class="kw">data</span>(diamonds)</a>
+<a class="sourceLine" id="cb330-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb330-4" data-line-number="4">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb330-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">scaled_depth =</span> (depth <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(depth)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(depth)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb330-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>scaled_depth)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb330-7" data-line-number="7"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span>.<span class="dv">5</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-139-1.svg" width="672" /></p>
 <p>Question: what is the mean of <span class="math inline">\(z\)</span>? What is it’s standard deviation? Another name for this transformation is to <em>standardize</em> a variable.</p>
 <p>One useful result of applying this transformation to variables in a dataset is that all variables are in the same, and thus comparable units.</p>
@@ -540,91 +543,112 @@ z_i = \frac{x_i}{\mathrm{sd}(x)}
 <h2><span class="header-section-number">22.2</span> Treating categorical variables as numeric</h2>
 <p>Many modeling algorithms work strictly on numeric measurements. For example, we will see methods to predict some variable given values for other variables such as linear regression or support vector machines, that are strictly defined for numeric measurements. In this case, we would need to transform categorical variables into something that we can treat as numeric. We will see more of this in later sections of the course but let’s see a couple of important guidelines for <em>binary</em> variables (categorical variables that only take two values, e.g., <code>health_insurance</code>).</p>
 <p>One option is to encode one value of the variable as 1 and the other as 0. For instance:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ISLR)
-<span class="kw">library</span>(tidyverse)
-<span class="kw">data</span>(Wage)
-
-Wage <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">numeric_insurace =</span> <span class="kw">ifelse</span>(health_ins <span class="op">==</span><span class="st"> &quot;1. Yes&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">head</span>()</code></pre>
-<pre><code>##   year age           maritl     race       education             region
-## 1 2006  18 1. Never Married 1. White    1. &lt; HS Grad 2. Middle Atlantic
-## 2 2004  24 1. Never Married 1. White 4. College Grad 2. Middle Atlantic
-## 3 2003  45       2. Married 1. White 3. Some College 2. Middle Atlantic
-## 4 2003  43       2. Married 3. Asian 4. College Grad 2. Middle Atlantic
-## 5 2005  50      4. Divorced 1. White      2. HS Grad 2. Middle Atlantic
-## 6 2008  54       2. Married 1. White 4. College Grad 2. Middle Atlantic
-##         jobclass         health health_ins  logwage      wage
-## 1  1. Industrial      1. &lt;=Good      2. No 4.318063  75.04315
-## 2 2. Information 2. &gt;=Very Good      2. No 4.255273  70.47602
-## 3  1. Industrial      1. &lt;=Good     1. Yes 4.875061 130.98218
-## 4 2. Information 2. &gt;=Very Good     1. Yes 5.041393 154.68529
-## 5 2. Information      1. &lt;=Good     1. Yes 4.318063  75.04315
-## 6 2. Information 2. &gt;=Very Good     1. Yes 4.845098 127.11574
-##   numeric_insurace
-## 1                0
-## 2                0
-## 3                1
-## 4                1
-## 5                1
-## 6                1</code></pre>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb331-1" data-line-number="1"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb331-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb331-3" data-line-number="3"><span class="kw">data</span>(Wage)</a>
+<a class="sourceLine" id="cb331-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb331-5" data-line-number="5">Wage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">numeric_insurace =</span> <span class="kw">ifelse</span>(health_ins <span class="op">==</span><span class="st"> &quot;1. Yes&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb331-7" data-line-number="7"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<pre><code>##   year age           maritl     race
+## 1 2006  18 1. Never Married 1. White
+## 2 2004  24 1. Never Married 1. White
+## 3 2003  45       2. Married 1. White
+## 4 2003  43       2. Married 3. Asian
+## 5 2005  50      4. Divorced 1. White
+## 6 2008  54       2. Married 1. White
+##         education             region
+## 1    1. &lt; HS Grad 2. Middle Atlantic
+## 2 4. College Grad 2. Middle Atlantic
+## 3 3. Some College 2. Middle Atlantic
+## 4 4. College Grad 2. Middle Atlantic
+## 5      2. HS Grad 2. Middle Atlantic
+## 6 4. College Grad 2. Middle Atlantic
+##         jobclass         health health_ins
+## 1  1. Industrial      1. &lt;=Good      2. No
+## 2 2. Information 2. &gt;=Very Good      2. No
+## 3  1. Industrial      1. &lt;=Good     1. Yes
+## 4 2. Information 2. &gt;=Very Good     1. Yes
+## 5 2. Information      1. &lt;=Good     1. Yes
+## 6 2. Information 2. &gt;=Very Good     1. Yes
+##    logwage      wage numeric_insurace
+## 1 4.318063  75.04315                0
+## 2 4.255273  70.47602                0
+## 3 4.875061 130.98218                1
+## 4 5.041393 154.68529                1
+## 5 4.318063  75.04315                1
+## 6 4.845098 127.11574                1</code></pre>
 <p>Another option is to encode one value as 1 and the other as -1:</p>
-<pre class="sourceCode r"><code class="sourceCode r">Wage <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">numeric_insurance =</span> <span class="kw">ifelse</span>(health_ins <span class="op">==</span><span class="st"> &quot;1. Yes&quot;</span>, <span class="dv">1</span>, <span class="dv">-1</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">head</span>()</code></pre>
-<pre><code>##   year age           maritl     race       education             region
-## 1 2006  18 1. Never Married 1. White    1. &lt; HS Grad 2. Middle Atlantic
-## 2 2004  24 1. Never Married 1. White 4. College Grad 2. Middle Atlantic
-## 3 2003  45       2. Married 1. White 3. Some College 2. Middle Atlantic
-## 4 2003  43       2. Married 3. Asian 4. College Grad 2. Middle Atlantic
-## 5 2005  50      4. Divorced 1. White      2. HS Grad 2. Middle Atlantic
-## 6 2008  54       2. Married 1. White 4. College Grad 2. Middle Atlantic
-##         jobclass         health health_ins  logwage      wage
-## 1  1. Industrial      1. &lt;=Good      2. No 4.318063  75.04315
-## 2 2. Information 2. &gt;=Very Good      2. No 4.255273  70.47602
-## 3  1. Industrial      1. &lt;=Good     1. Yes 4.875061 130.98218
-## 4 2. Information 2. &gt;=Very Good     1. Yes 5.041393 154.68529
-## 5 2. Information      1. &lt;=Good     1. Yes 4.318063  75.04315
-## 6 2. Information 2. &gt;=Very Good     1. Yes 4.845098 127.11574
-##   numeric_insurance
-## 1                -1
-## 2                -1
-## 3                 1
-## 4                 1
-## 5                 1
-## 6                 1</code></pre>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb333-1" data-line-number="1">Wage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">numeric_insurance =</span> <span class="kw">ifelse</span>(health_ins <span class="op">==</span><span class="st"> &quot;1. Yes&quot;</span>, <span class="dv">1</span>, <span class="dv">-1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb333-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<pre><code>##   year age           maritl     race
+## 1 2006  18 1. Never Married 1. White
+## 2 2004  24 1. Never Married 1. White
+## 3 2003  45       2. Married 1. White
+## 4 2003  43       2. Married 3. Asian
+## 5 2005  50      4. Divorced 1. White
+## 6 2008  54       2. Married 1. White
+##         education             region
+## 1    1. &lt; HS Grad 2. Middle Atlantic
+## 2 4. College Grad 2. Middle Atlantic
+## 3 3. Some College 2. Middle Atlantic
+## 4 4. College Grad 2. Middle Atlantic
+## 5      2. HS Grad 2. Middle Atlantic
+## 6 4. College Grad 2. Middle Atlantic
+##         jobclass         health health_ins
+## 1  1. Industrial      1. &lt;=Good      2. No
+## 2 2. Information 2. &gt;=Very Good      2. No
+## 3  1. Industrial      1. &lt;=Good     1. Yes
+## 4 2. Information 2. &gt;=Very Good     1. Yes
+## 5 2. Information      1. &lt;=Good     1. Yes
+## 6 2. Information 2. &gt;=Very Good     1. Yes
+##    logwage      wage numeric_insurance
+## 1 4.318063  75.04315                -1
+## 2 4.255273  70.47602                -1
+## 3 4.875061 130.98218                 1
+## 4 5.041393 154.68529                 1
+## 5 4.318063  75.04315                 1
+## 6 4.845098 127.11574                 1</code></pre>
 <p>The decision of which of these two transformations to use is based on the method to use or the goal of your analysis. For instance, when predicting someone’s wage based on their health insurance status, the 0/1 encoding let’s us make statements like: “on average, wage increases by $XX if a person has health insurance”. On the other hand, a prediction algorithm called a Support Vector Machine is strictly defined on data coded as 1/-1.</p>
 <p>For categorical attributes with more than two values, we extend this idea and encode <em>each</em> value of the categorical variable as a 0/1 column. You will see this referred to as <em>one-hot-encoding</em>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">Wage <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">race_white =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;1. White&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),
-         <span class="dt">race_black =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;2. Black&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),
-         <span class="dt">race_asian =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;3. Asian&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),
-         <span class="dt">race_other =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;4. Other&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;race&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">head</span>()</code></pre>
-<pre><code>##       race race_white race_black race_asian race_other
-## 1 1. White          1          0          0          0
-## 2 1. White          1          0          0          0
-## 3 1. White          1          0          0          0
-## 4 3. Asian          0          0          1          0
-## 5 1. White          1          0          0          0
-## 6 1. White          1          0          0          0</code></pre>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb335-1" data-line-number="1">Wage <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">race_white =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;1. White&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb335-3" data-line-number="3">         <span class="dt">race_black =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;2. Black&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb335-4" data-line-number="4">         <span class="dt">race_asian =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;3. Asian&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb335-5" data-line-number="5">         <span class="dt">race_other =</span> <span class="kw">ifelse</span>(race <span class="op">==</span><span class="st"> &quot;4. Other&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;race&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb335-7" data-line-number="7"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<pre><code>##       race race_white race_black race_asian
+## 1 1. White          1          0          0
+## 2 1. White          1          0          0
+## 3 1. White          1          0          0
+## 4 3. Asian          0          0          1
+## 5 1. White          1          0          0
+## 6 1. White          1          0          0
+##   race_other
+## 1          0
+## 2          0
+## 3          0
+## 4          0
+## 5          0
+## 6          0</code></pre>
 <p>The builtin function <code>model.matrix</code> does this general transformation. We will see it when we look at statistical and Machine Learning models.</p>
 <div id="discretizing-continuous-values." class="section level3">
 <h3><span class="header-section-number">22.2.1</span> Discretizing continuous values.</h3>
 <p>How about transforming data in the other direction, from continuous to discrete values. This can make it easier to compare differences related to continuous measurements: Do doctors prescribe a certain medication to older kids more often? Is there a difference in wage based on age?</p>
 <p>It is also a useful way of capturing non-linear relationships in data: we will see this in our regression and prediction unit. Two standard methods used for discretization are to use <strong>equal-length</strong> bins, where variable range is divided into bins <em>regardless</em> of the data distribution:</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_discrete =</span> <span class="kw">cut</span>(dep_delay, <span class="dt">breaks=</span><span class="dv">100</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay_discrete)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_bar</span>()</code></pre>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb337-1" data-line-number="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb337-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_discrete =</span> <span class="kw">cut</span>(dep_delay, <span class="dt">breaks=</span><span class="dv">100</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb337-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay_discrete)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb337-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-143-1.svg" width="672" /></p>
 <p>The second approach uses <strong>equal-sized</strong> bins, where the range is divided into bins <em>based</em> on data distribution</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_discrete =</span> <span class="kw">cut</span>(dep_delay, 
-          <span class="dt">breaks=</span><span class="kw">quantile</span>(dep_delay, <span class="dt">probs=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">11</span>), <span class="dt">na.rm=</span><span class="ot">TRUE</span>))) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay_discrete)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_bar</span>()</code></pre>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb338-1" data-line-number="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb338-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_discrete =</span> <span class="kw">cut</span>(dep_delay, </a>
+<a class="sourceLine" id="cb338-3" data-line-number="3">          <span class="dt">breaks=</span><span class="kw">quantile</span>(dep_delay, <span class="dt">probs=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">len=</span><span class="dv">11</span>), <span class="dt">na.rm=</span><span class="ot">TRUE</span>))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb338-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay_discrete)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb338-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-144-1.svg" width="672" /></p>
 <p>In both cases, the <code>cut</code> function is used to apply discretization, with the <code>breaks</code> argument determining which method is applied. In the first example, <code>breaks=100</code> specifies that 100 bins of equal-length are to be used. In the second example, the <code>quantile</code> function is used to define 10 equal-sized bins.</p>
 </div>
@@ -634,22 +658,23 @@ Wage <span class="op">%&gt;%</span>
 <p>In many data analysis, variables will have a <em>skewed</em> distribution over their range. In the last section we saw one way of defining skew using quartiles and median. Variables with skewed distributions can be hard to incorporate into some modeling procedures, especially in the presence of other variables that are not skewed. In this case, applying a transformation to reduce skew will improve performance of models.</p>
 <p>Also, skewed data may arise when measuring <em>multiplicative</em> processes. This is very common in physical or biochemical processes. In this case, interpretation of data may be more intiuitive after a transformation.</p>
 <p>We have seen an example of skewed data previously when we looked at departure delays in our flights dataset.</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">30</span>)</code></pre>
-<pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_bin).</code></pre>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb339-1" data-line-number="1">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>dep_delay)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">30</span>)</a></code></pre></div>
+<pre><code>## Warning: Removed 8255 rows containing non-finite values
+## (stat_bin).</code></pre>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-146-1.svg" width="1920" /></p>
 <p>Previously, we looked at a way of determining skew for a dataset. Let’s see what that looks like for the <code>dep_delay</code> variable: (see <a href="https://cran.r-project.org/web/packages/dplyr/vignettes/programming.html">dplyr vignette</a> for info on ‘enquo’ and ‘!!’)</p>
-<pre class="sourceCode r"><code class="sourceCode r">compute_skew_stat &lt;-<span class="st"> </span><span class="cf">function</span>(df, attribute) {
-  attribute &lt;-<span class="st"> </span><span class="kw">enquo</span>(attribute)
-  
-  df <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">med_attr=</span><span class="kw">median</span>(<span class="op">!!</span>attribute, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
-              <span class="dt">q1_attr=</span><span class="kw">quantile</span>(<span class="op">!!</span>attribute, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
-              <span class="dt">q3_attr=</span><span class="kw">quantile</span>(<span class="op">!!</span>attribute, <span class="dv">3</span><span class="op">/</span><span class="dv">4</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">d1 =</span> med_attr <span class="op">-</span><span class="st"> </span>q1_attr, <span class="dt">d2 =</span> q3_attr <span class="op">-</span><span class="st"> </span>med_attr, <span class="dt">skew_stat =</span> d1 <span class="op">-</span><span class="st"> </span>d2) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">select</span>(d1, d2, skew_stat)
-}
-
-flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compute_skew_stat</span>(dep_delay)</code></pre>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb341-1" data-line-number="1">compute_skew_stat &lt;-<span class="st"> </span><span class="cf">function</span>(df, attribute) {</a>
+<a class="sourceLine" id="cb341-2" data-line-number="2">  attribute &lt;-<span class="st"> </span><span class="kw">enquo</span>(attribute)</a>
+<a class="sourceLine" id="cb341-3" data-line-number="3">  </a>
+<a class="sourceLine" id="cb341-4" data-line-number="4">  df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb341-5" data-line-number="5"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">med_attr=</span><span class="kw">median</span>(<span class="op">!!</span>attribute, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), </a>
+<a class="sourceLine" id="cb341-6" data-line-number="6">              <span class="dt">q1_attr=</span><span class="kw">quantile</span>(<span class="op">!!</span>attribute, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), </a>
+<a class="sourceLine" id="cb341-7" data-line-number="7">              <span class="dt">q3_attr=</span><span class="kw">quantile</span>(<span class="op">!!</span>attribute, <span class="dv">3</span><span class="op">/</span><span class="dv">4</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb341-8" data-line-number="8"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">d1 =</span> med_attr <span class="op">-</span><span class="st"> </span>q1_attr, <span class="dt">d2 =</span> q3_attr <span class="op">-</span><span class="st"> </span>med_attr, <span class="dt">skew_stat =</span> d1 <span class="op">-</span><span class="st"> </span>d2) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb341-9" data-line-number="9"><span class="st">    </span><span class="kw">select</span>(d1, d2, skew_stat)</a>
+<a class="sourceLine" id="cb341-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb341-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb341-12" data-line-number="12">flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compute_skew_stat</span>(dep_delay)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 3
 ##      d1    d2 skew_stat
 ##   &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
@@ -664,16 +689,17 @@ flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">
 </ul></li>
 </ul>
 <p>Here is a signed log transformation of departure delay data:</p>
-<pre class="sourceCode r"><code class="sourceCode r">transformed_flights &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">transformed_dep_delay =</span> <span class="kw">sign</span>(dep_delay) <span class="op">*</span><span class="st"> </span><span class="kw">log2</span>(<span class="kw">abs</span>(dep_delay) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))
-
-transformed_flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>transformed_dep_delay)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">1</span>)</code></pre>
-<pre><code>## Warning: Removed 8255 rows containing non-finite values (stat_bin).</code></pre>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb343-1" data-line-number="1">transformed_flights &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb343-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">transformed_dep_delay =</span> <span class="kw">sign</span>(dep_delay) <span class="op">*</span><span class="st"> </span><span class="kw">log2</span>(<span class="kw">abs</span>(dep_delay) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb343-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb343-4" data-line-number="4">transformed_flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb343-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>transformed_dep_delay)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb343-6" data-line-number="6"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## Warning: Removed 8255 rows containing non-finite values
+## (stat_bin).</code></pre>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-148-1.svg" width="672" /></p>
 <p>Let’s see if that reduced the skew of the dataset:</p>
-<pre class="sourceCode r"><code class="sourceCode r">transformed_flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compute_skew_stat</span>(transformed_dep_delay)</code></pre>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb345-1" data-line-number="1">transformed_flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">compute_skew_stat</span>(transformed_dep_delay)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 3
 ##      d1    d2 skew_stat
 ##   &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
@@ -692,11 +718,13 @@ transformed_flights <span class="op">%&gt;%</span>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -704,12 +732,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -721,6 +748,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -740,8 +771,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>33 Unsupervised Learning: Clustering | Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="33 Unsupervised Learning: Clustering | Lecture Notes: Introduction to Data Science" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="33 Unsupervised Learning: Clustering | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2019-05-30" />
+<meta name="date" content="2020-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="model-selection.html">
-<link rel="next" href="unsupervised-learning-dimensionality-reduction.html">
+<link rel="prev" href="model-selection.html"/>
+<link rel="next" href="unsupervised-learning-dimensionality-reduction.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,9 +48,11 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -58,7 +61,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -167,22 +169,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.7" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#making-analyses-accessible"><i class="fa fa-check"></i><b>3.7</b> Making analyses accessible</a></li>
 <li class="chapter" data-level="3.8" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#summary"><i class="fa fa-check"></i><b>3.8</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the R Data Science Toolbox</a><ul>
-<li class="chapter" data-level="4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1</b> Some history</a></li>
-<li class="chapter" data-level="4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.2</b> Setting up R</a></li>
-<li class="chapter" data-level="4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.3</b> Setting up Rstudio</a></li>
-<li class="chapter" data-level="4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.4</b> A first look at Rstudio</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.4.1</b> Interactive Console</a></li>
-<li class="chapter" data-level="4.4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.4.2</b> Data Viewer</a></li>
-<li class="chapter" data-level="4.4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.4.3</b> Names, values and functions</a></li>
-<li class="chapter" data-level="4.4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.4.4</b> Plotting</a></li>
-<li class="chapter" data-level="4.4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.4.5</b> Editor</a></li>
-<li class="chapter" data-level="4.4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.4.6</b> Files viewer</a></li>
+<li class="chapter" data-level="4" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the Data Science Toolbox</a><ul>
+<li class="chapter" data-level="4.1" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#rrstudio"><i class="fa fa-check"></i><b>4.1</b> R/Rstudio</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1.1</b> Some history</a></li>
+<li class="chapter" data-level="4.1.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.1.2</b> Setting up R</a></li>
+<li class="chapter" data-level="4.1.3" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.1.3</b> Setting up Rstudio</a></li>
+<li class="chapter" data-level="4.1.4" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.1.4</b> A first look at Rstudio</a></li>
+<li class="chapter" data-level="4.1.5" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.1.5</b> Interactive Console</a></li>
+<li class="chapter" data-level="4.1.6" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.1.6</b> Data Viewer</a></li>
+<li class="chapter" data-level="4.1.7" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.1.7</b> Names, values and functions</a></li>
+<li class="chapter" data-level="4.1.8" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.1.8</b> Plotting</a></li>
+<li class="chapter" data-level="4.1.9" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.1.9</b> Editor</a></li>
+<li class="chapter" data-level="4.1.10" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.1.10</b> Files viewer</a></li>
+<li class="chapter" data-level="4.1.11" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.1.11</b> R packages</a></li>
+<li class="chapter" data-level="4.1.12" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.1.12</b> Additional R resources</a></li>
+<li class="chapter" data-level="4.1.13" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.1.13</b> Literate Programming</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.5</b> R packages</a></li>
-<li class="chapter" data-level="4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.6</b> Additional R resources</a></li>
-<li class="chapter" data-level="4.7" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.7</b> Literate Programming</a></li>
-<li class="chapter" data-level="4.8" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#finishing-your-setup"><i class="fa fa-check"></i><b>4.8</b> Finishing your setup</a></li>
+<li class="chapter" data-level="4.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#pythonjupyter"><i class="fa fa-check"></i><b>4.2</b> Python/Jupyter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html"><i class="fa fa-check"></i>(Part) Data representation modeling, ingestion and cleaning</a></li>
 <li class="chapter" data-level="5" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html"><i class="fa fa-check"></i><b>5</b> Measurements and Data Types</a><ul>
@@ -516,41 +519,41 @@ if we want to know if a given <em>predictor</em> is related to <em>response</em>
 <h2><span class="header-section-number">33.1</span> Motivating Example</h2>
 <p>Throughout this unit we will use a time series dataset of mortgage affordability
 as calculated and distributed by Zillow: <a href="https://www.zillow.com/research/data/" class="uri">https://www.zillow.com/research/data/</a>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(readr)
-<span class="kw">library</span>(lubridate)
-
-datadir &lt;-<span class="st"> &quot;data&quot;</span>
-url &lt;-<span class="st"> &quot;http://files.zillowstatic.com/research/public/Affordability_Wide_2017Q4_Public.csv&quot;</span>
-filename &lt;-<span class="st"> </span><span class="kw">basename</span>(url)
-datafile &lt;-<span class="st"> </span><span class="kw">file.path</span>(datadir, filename)
-
-<span class="cf">if</span> (<span class="op">!</span><span class="kw">file.exists</span>(datafile)) {
-  <span class="kw">download.file</span>(url, <span class="kw">file.path</span>(datadir, filename))
-}
-
-afford_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(datafile)</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">tidy_afford &lt;-<span class="st"> </span>afford_data <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(Index <span class="op">==</span><span class="st"> &quot;Mortgage Affordability&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">drop_na</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(RegionID <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(RegionID, <span class="kw">matches</span>(<span class="st">&quot;^[1|2]&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(time, affordability, <span class="kw">matches</span>(<span class="st">&quot;^[1|2]&quot;</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">type_convert</span>(<span class="dt">col_types=</span><span class="kw">cols</span>(<span class="dt">time=</span><span class="kw">col_date</span>(<span class="dt">format=</span><span class="st">&quot;%Y-%m&quot;</span>)))
-
-wide_afford_df &lt;-<span class="st"> </span>tidy_afford <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(RegionID, time, affordability) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(time, affordability)
-
-value_mat &lt;-<span class="st">  </span>wide_afford_df <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>RegionID) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">as.matrix</span>() </code></pre>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb454-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb454-2" data-line-number="2"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb454-3" data-line-number="3"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb454-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb454-5" data-line-number="5">datadir &lt;-<span class="st"> &quot;data&quot;</span></a>
+<a class="sourceLine" id="cb454-6" data-line-number="6">url &lt;-<span class="st"> &quot;http://files.zillowstatic.com/research/public/Affordability_Wide_2017Q4_Public.csv&quot;</span></a>
+<a class="sourceLine" id="cb454-7" data-line-number="7">filename &lt;-<span class="st"> </span><span class="kw">basename</span>(url)</a>
+<a class="sourceLine" id="cb454-8" data-line-number="8">datafile &lt;-<span class="st"> </span><span class="kw">file.path</span>(datadir, filename)</a>
+<a class="sourceLine" id="cb454-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb454-10" data-line-number="10"><span class="cf">if</span> (<span class="op">!</span><span class="kw">file.exists</span>(datafile)) {</a>
+<a class="sourceLine" id="cb454-11" data-line-number="11">  <span class="kw">download.file</span>(url, <span class="kw">file.path</span>(datadir, filename))</a>
+<a class="sourceLine" id="cb454-12" data-line-number="12">}</a>
+<a class="sourceLine" id="cb454-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb454-14" data-line-number="14">afford_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(datafile)</a></code></pre></div>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb455-1" data-line-number="1">tidy_afford &lt;-<span class="st"> </span>afford_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb455-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(Index <span class="op">==</span><span class="st"> &quot;Mortgage Affordability&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb455-3" data-line-number="3"><span class="st">  </span><span class="kw">drop_na</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb455-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(RegionID <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb455-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(RegionID, <span class="kw">matches</span>(<span class="st">&quot;^[1|2]&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb455-6" data-line-number="6"><span class="st">  </span><span class="kw">gather</span>(time, affordability, <span class="kw">matches</span>(<span class="st">&quot;^[1|2]&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb455-7" data-line-number="7"><span class="st">  </span><span class="kw">type_convert</span>(<span class="dt">col_types=</span><span class="kw">cols</span>(<span class="dt">time=</span><span class="kw">col_date</span>(<span class="dt">format=</span><span class="st">&quot;%Y-%m&quot;</span>)))</a>
+<a class="sourceLine" id="cb455-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb455-9" data-line-number="9">wide_afford_df &lt;-<span class="st"> </span>tidy_afford <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb455-10" data-line-number="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(RegionID, time, affordability) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb455-11" data-line-number="11"><span class="st">  </span><span class="kw">spread</span>(time, affordability)</a>
+<a class="sourceLine" id="cb455-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb455-13" data-line-number="13">value_mat &lt;-<span class="st">  </span>wide_afford_df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb455-14" data-line-number="14"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>RegionID) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb455-15" data-line-number="15"><span class="st">  </span><span class="kw">as.matrix</span>() </a></code></pre></div>
 <p>The dataset contains affordability measurements for 81 counties with data from 1979 to 2017. Here we plot the time series of affordability for all counties.</p>
-<pre class="sourceCode r"><code class="sourceCode r">tidy_afford <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time,<span class="dt">y=</span>affordability,<span class="dt">group=</span><span class="kw">factor</span>(RegionID))) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color=</span><span class="st">&quot;GRAY&quot;</span>, <span class="dt">alpha=</span><span class="dv">3</span><span class="op">/</span><span class="dv">4</span>, <span class="dt">size=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;County-Level Mortgage Affordability over Time&quot;</span>,
-          <span class="dt">x=</span><span class="st">&quot;Date&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Mortgage Affordability&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb456-1" data-line-number="1">tidy_afford <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb456-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time,<span class="dt">y=</span>affordability,<span class="dt">group=</span><span class="kw">factor</span>(RegionID))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb456-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color=</span><span class="st">&quot;GRAY&quot;</span>, <span class="dt">alpha=</span><span class="dv">3</span><span class="op">/</span><span class="dv">4</span>, <span class="dt">size=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb456-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;County-Level Mortgage Affordability over Time&quot;</span>,</a>
+<a class="sourceLine" id="cb456-5" data-line-number="5">          <span class="dt">x=</span><span class="st">&quot;Date&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Mortgage Affordability&quot;</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/zillow_plot1-1.svg" width="672" /></p>
 <p>A natural question to ask about this data is, “can we partition counties into groups of counties with similar value trends across time”</p>
 </div>
@@ -568,16 +571,16 @@ value_mat &lt;-<span class="st">  </span>wide_afford_df <span class="op">%&gt;%<
 <h2><span class="header-section-number">33.3</span> Cluster Analysis</h2>
 <p>The high-level goal of cluster analysis is to organize objects (observations) that are <em>similar</em> to each other into groups. We want objects within a group to be more <em>similar</em> to each other than objects in different groups.</p>
 <p>Central to this high-level goal is how to measure the degree of <em>similarity</em> between objects. A clustering method then uses the <em>similarity</em> measure provided to it to group objects into clusters.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(broom)
-<span class="kw">library</span>(stringr)</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">augmented_data <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">y=</span>affordability)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group=</span>RegionID), <span class="dt">color=</span><span class="st">&quot;GRAY&quot;</span>, <span class="dt">alpha=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">size=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>cluster) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">data=</span>kmeans_centers, <span class="dt">color=</span><span class="st">&quot;BLACK&quot;</span>, <span class="dt">alpha=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">size=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">main=</span><span class="st">&quot;Kmeans Clustering (k=9)&quot;</span>,
-       <span class="dt">xlab=</span><span class="st">&quot;Date&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;affordability&quot;</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">45</span>, <span class="dt">hjust=</span><span class="dv">1</span>))</code></pre>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb457-1" data-line-number="1"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb457-2" data-line-number="2"><span class="kw">library</span>(stringr)</a></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb458-1" data-line-number="1">augmented_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb458-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">y=</span>affordability)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb458-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group=</span>RegionID), <span class="dt">color=</span><span class="st">&quot;GRAY&quot;</span>, <span class="dt">alpha=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">size=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb458-4" data-line-number="4"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>cluster) <span class="op">+</span></a>
+<a class="sourceLine" id="cb458-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">data=</span>kmeans_centers, <span class="dt">color=</span><span class="st">&quot;BLACK&quot;</span>, <span class="dt">alpha=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">size=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb458-6" data-line-number="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">main=</span><span class="st">&quot;Kmeans Clustering (k=9)&quot;</span>,</a>
+<a class="sourceLine" id="cb458-7" data-line-number="7">       <span class="dt">xlab=</span><span class="st">&quot;Date&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;affordability&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb458-8" data-line-number="8"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">45</span>, <span class="dt">hjust=</span><span class="dv">1</span>))</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/kmeans_plot-1.svg" width="672" /></p>
 <p>This plot shows the result of the k-means algorithm partitioning the data into 16 clusters. We observe that series within each cluster have similar trends. The darker series within each cluster shows the average time series within the cluster. We also see that some clusters correspond to very similar series suggesting that partitioning the data into fewer clusters would be better.</p>
 </div>
@@ -671,11 +674,13 @@ W(C) = \frac{1}{2}\sum_{k=1}^K N_k \sum_{i:\,C(i)=k} \|x_i - \bar{x}_k\|^2
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -683,12 +688,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -700,6 +704,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -719,8 +727,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

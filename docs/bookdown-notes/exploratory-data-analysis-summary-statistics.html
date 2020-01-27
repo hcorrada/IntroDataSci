@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>21 Exploratory Data Analysis: Summary Statistics | Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="21 Exploratory Data Analysis: Summary Statistics | Lecture Notes: Introduction to Data Science" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="21 Exploratory Data Analysis: Summary Statistics | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2019-05-30" />
+<meta name="date" content="2020-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="exploratory-data-analysis-visualization.html">
-<link rel="next" href="eda-data-transformations.html">
+<link rel="prev" href="exploratory-data-analysis-visualization.html"/>
+<link rel="next" href="eda-data-transformations.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,9 +48,11 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -58,7 +61,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -167,22 +169,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.7" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#making-analyses-accessible"><i class="fa fa-check"></i><b>3.7</b> Making analyses accessible</a></li>
 <li class="chapter" data-level="3.8" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#summary"><i class="fa fa-check"></i><b>3.8</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the R Data Science Toolbox</a><ul>
-<li class="chapter" data-level="4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1</b> Some history</a></li>
-<li class="chapter" data-level="4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.2</b> Setting up R</a></li>
-<li class="chapter" data-level="4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.3</b> Setting up Rstudio</a></li>
-<li class="chapter" data-level="4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.4</b> A first look at Rstudio</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.4.1</b> Interactive Console</a></li>
-<li class="chapter" data-level="4.4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.4.2</b> Data Viewer</a></li>
-<li class="chapter" data-level="4.4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.4.3</b> Names, values and functions</a></li>
-<li class="chapter" data-level="4.4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.4.4</b> Plotting</a></li>
-<li class="chapter" data-level="4.4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.4.5</b> Editor</a></li>
-<li class="chapter" data-level="4.4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.4.6</b> Files viewer</a></li>
+<li class="chapter" data-level="4" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the Data Science Toolbox</a><ul>
+<li class="chapter" data-level="4.1" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#rrstudio"><i class="fa fa-check"></i><b>4.1</b> R/Rstudio</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1.1</b> Some history</a></li>
+<li class="chapter" data-level="4.1.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.1.2</b> Setting up R</a></li>
+<li class="chapter" data-level="4.1.3" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.1.3</b> Setting up Rstudio</a></li>
+<li class="chapter" data-level="4.1.4" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.1.4</b> A first look at Rstudio</a></li>
+<li class="chapter" data-level="4.1.5" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.1.5</b> Interactive Console</a></li>
+<li class="chapter" data-level="4.1.6" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.1.6</b> Data Viewer</a></li>
+<li class="chapter" data-level="4.1.7" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.1.7</b> Names, values and functions</a></li>
+<li class="chapter" data-level="4.1.8" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.1.8</b> Plotting</a></li>
+<li class="chapter" data-level="4.1.9" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.1.9</b> Editor</a></li>
+<li class="chapter" data-level="4.1.10" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.1.10</b> Files viewer</a></li>
+<li class="chapter" data-level="4.1.11" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.1.11</b> R packages</a></li>
+<li class="chapter" data-level="4.1.12" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.1.12</b> Additional R resources</a></li>
+<li class="chapter" data-level="4.1.13" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.1.13</b> Literate Programming</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.5</b> R packages</a></li>
-<li class="chapter" data-level="4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.6</b> Additional R resources</a></li>
-<li class="chapter" data-level="4.7" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.7</b> Literate Programming</a></li>
-<li class="chapter" data-level="4.8" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#finishing-your-setup"><i class="fa fa-check"></i><b>4.8</b> Finishing your setup</a></li>
+<li class="chapter" data-level="4.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#pythonjupyter"><i class="fa fa-check"></i><b>4.2</b> Python/Jupyter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html"><i class="fa fa-check"></i>(Part) Data representation modeling, ingestion and cleaning</a></li>
 <li class="chapter" data-level="5" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html"><i class="fa fa-check"></i><b>5</b> Measurements and Data Types</a><ul>
@@ -522,17 +525,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">21.1</span> Range</h2>
 <p>Part of our goal is to understand how variables are distributed in a given dataset. Note, again, that we are not using <em>distributed</em> in a formal mathematical (or probabilistic) sense. All statements we are making here are based on data at hand, so we could refer to this as the <em>empirical distribution</em> of data. Here, <em>empirical</em> is used in the sense that this is data resulting from an experiment.</p>
 <p>Let’s use a dataset on diamond characteristics as an example.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(diamonds)
-
-diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>)</code></pre>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb313-1" data-line-number="1"><span class="kw">data</span>(diamonds)</a>
+<a class="sourceLine" id="cb313-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb313-3" data-line-number="3">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb313-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb313-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-120-1.svg" width="672" /></p>
 <p>(Here’s some help interpreting these variables: <a href="https://en.wikipedia.org/wiki/Diamond_(gemstone)#Gemological_characteristics" class="uri">https://en.wikipedia.org/wiki/Diamond_(gemstone)#Gemological_characteristics</a>).</p>
 <p>Let’s start using some notation to make talking about this a bit more efficient. We assume that we have data across <span class="math inline">\(n\)</span> entitites (or observational units) for <span class="math inline">\(p\)</span> attributes. In this dataset <span class="math inline">\(n=53940\)</span> and <span class="math inline">\(p=10\)</span>. However, let’s consider a single attribute, and denote the data for that attribute (or variable) as <span class="math inline">\(x_1, x_2, \ldots, x_n\)</span>.</p>
 <p>Ok, so what’s the first question we want to ask about how data is distributed? Since we want to understand how data is distributed across a <em>range</em>, we should first define the range.</p>
-<pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">min_depth =</span> <span class="kw">min</span>(depth), <span class="dt">max_depth =</span> <span class="kw">max</span>(depth))</code></pre>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb314-1" data-line-number="1">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb314-2" data-line-number="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">min_depth =</span> <span class="kw">min</span>(depth), <span class="dt">max_depth =</span> <span class="kw">max</span>(depth))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   min_depth max_depth
 ##       &lt;dbl&gt;     &lt;dbl&gt;
@@ -542,10 +545,10 @@ diamonds <span class="op">%&gt;%</span>
 <div id="central-tendency" class="section level2">
 <h2><span class="header-section-number">21.2</span> Central Tendency</h2>
 <p>Now that we know the range over which data is distributed, we can figure out a first summary of data is distributed across this range. Let’s start with the <em>center</em> of the data: the <em>median</em> is a statistic defined such that half of the data has a smaller value. We can use notation <span class="math inline">\(x_{(n/2)}\)</span> (a rank statistic) to represent the median. Note that we can use an algorithm based on the quicksort partition scheme to compute the median in linear time (on average).</p>
-<pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span><span class="kw">median</span>(depth)), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb316-1" data-line-number="1">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb316-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb316-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb316-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span><span class="kw">median</span>(depth)), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-122-1.svg" width="672" /></p>
 <div id="derivation-of-the-mean-as-central-tendency-statistic" class="section level3">
 <h3><span class="header-section-number">21.2.1</span> Derivation of the mean as central tendency statistic</h3>
@@ -589,8 +592,8 @@ n\mu &amp; = &amp; \sum_{i=1}^n x_i &amp; \Rightarrow \\
 <p>And it serves as an estimate of central tendency of the dataset:</p>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-127-1.svg" width="672" /></p>
 <p>Note that in this dataset the mean and median are not exactly equal, but are very close:</p>
-<pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_depth =</span> <span class="kw">mean</span>(depth), <span class="dt">median_depth =</span> <span class="kw">median</span>(depth))</code></pre>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb317-1" data-line-number="1">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb317-2" data-line-number="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_depth =</span> <span class="kw">mean</span>(depth), <span class="dt">median_depth =</span> <span class="kw">median</span>(depth))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   mean_depth median_depth
 ##        &lt;dbl&gt;        &lt;dbl&gt;
@@ -621,20 +624,20 @@ SAD(m) = \sum_{i=1}^n |x_i - m|.
 \mathrm{sd}(x) = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \overline{x})^2}
 \]</span></p>
 <p>We can also use <em>standard deviations</em> as an interpretable unit of how far a given data point is from the mean:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create a df with standard deviation values to plot</span>
-sds_to_plot &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">6</span>,<span class="dv">6</span>)
-sd_df &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_depth =</span> <span class="kw">mean</span>(depth), <span class="dt">sd_depth =</span> <span class="kw">sd</span>(depth)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">slice</span>(<span class="kw">rep_along</span>(sds_to_plot, <span class="dv">1</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sd_to_plot=</span>sds_to_plot) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sd_val =</span> mean_depth <span class="op">+</span><span class="st"> </span>sd_to_plot <span class="op">*</span><span class="st"> </span>sd_depth)
-
-diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span><span class="kw">mean</span>(depth)), <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="fl">1.5</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> sd_val), <span class="dt">data=</span>sd_df,
-               <span class="dt">linetype=</span><span class="dv">2</span>, <span class="dt">size=</span><span class="fl">1.2</span> <span class="op">-</span><span class="st"> </span><span class="kw">abs</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>, <span class="dt">len=</span><span class="dv">13</span>)))</code></pre>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb319-1" data-line-number="1"><span class="co"># create a df with standard deviation values to plot</span></a>
+<a class="sourceLine" id="cb319-2" data-line-number="2">sds_to_plot &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">6</span>,<span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb319-3" data-line-number="3">sd_df &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb319-4" data-line-number="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_depth =</span> <span class="kw">mean</span>(depth), <span class="dt">sd_depth =</span> <span class="kw">sd</span>(depth)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb319-5" data-line-number="5"><span class="st">  </span><span class="kw">slice</span>(<span class="kw">rep_along</span>(sds_to_plot, <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb319-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sd_to_plot=</span>sds_to_plot) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb319-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sd_val =</span> mean_depth <span class="op">+</span><span class="st"> </span>sd_to_plot <span class="op">*</span><span class="st"> </span>sd_depth)</a>
+<a class="sourceLine" id="cb319-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb319-9" data-line-number="9">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb319-10" data-line-number="10"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb319-11" data-line-number="11"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb319-12" data-line-number="12"><span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span><span class="kw">mean</span>(depth)), <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">size=</span><span class="fl">1.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb319-13" data-line-number="13"><span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> sd_val), <span class="dt">data=</span>sd_df,</a>
+<a class="sourceLine" id="cb319-14" data-line-number="14">               <span class="dt">linetype=</span><span class="dv">2</span>, <span class="dt">size=</span><span class="fl">1.2</span> <span class="op">-</span><span class="st"> </span><span class="kw">abs</span>(<span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>, <span class="dt">len=</span><span class="dv">13</span>)))</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-130-1.svg" width="672" /></p>
 <p>As a rough guide, we can use “standard deviations away from the mean” as a measure of spread as follows:</p>
 <table>
@@ -683,25 +686,25 @@ diamonds <span class="op">%&gt;%</span>
 <div id="spread-estimates-using-rank-statistics" class="section level3">
 <h3><span class="header-section-number">21.3.2</span> Spread estimates using rank statistics</h3>
 <p>Just like we saw how the median is a rank statistic used to describe central tendency, we can also use rank statistics to describe spread. For this we use two more rank statistics: the first and third <em>quartiles</em>, <span class="math inline">\(x_{(n/4)}\)</span> and <span class="math inline">\(x_{(3n/4)}\)</span> respectively:</p>
-<pre class="sourceCode r"><code class="sourceCode r">quartile_df &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">first=</span><span class="kw">quantile</span>(diamonds<span class="op">$</span>depth, <span class="dt">p=</span><span class="dv">1</span><span class="op">/</span><span class="dv">4</span>),
-            <span class="dt">third=</span><span class="kw">quantile</span>(diamonds<span class="op">$</span>depth, <span class="dt">p=</span><span class="dv">3</span><span class="op">/</span><span class="dv">4</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span>tidyr<span class="op">::</span><span class="kw">gather</span>(quartile, value)
-
-diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span><span class="kw">median</span>(depth)), <span class="dt">size=</span><span class="fl">1.3</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span>value), <span class="dt">data=</span>quartile_df, 
-               <span class="dt">size=</span><span class="dv">1</span>,<span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">linetype=</span><span class="dv">2</span>)</code></pre>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb320-1" data-line-number="1">quartile_df &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb320-2" data-line-number="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">first=</span><span class="kw">quantile</span>(diamonds<span class="op">$</span>depth, <span class="dt">p=</span><span class="dv">1</span><span class="op">/</span><span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb320-3" data-line-number="3">            <span class="dt">third=</span><span class="kw">quantile</span>(diamonds<span class="op">$</span>depth, <span class="dt">p=</span><span class="dv">3</span><span class="op">/</span><span class="dv">4</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb320-4" data-line-number="4"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">gather</span>(quartile, value)</a>
+<a class="sourceLine" id="cb320-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb320-6" data-line-number="6">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb320-7" data-line-number="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb320-8" data-line-number="8"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb320-9" data-line-number="9"><span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span><span class="kw">median</span>(depth)), <span class="dt">size=</span><span class="fl">1.3</span>, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb320-10" data-line-number="10"><span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span>value), <span class="dt">data=</span>quartile_df, </a>
+<a class="sourceLine" id="cb320-11" data-line-number="11">               <span class="dt">size=</span><span class="dv">1</span>,<span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">linetype=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-131-1.svg" width="672" /></p>
 <p>Note, the five order statistics we have seen so far: minimum, maximum, median and first and third quartiles are so frequently used that this is exactly what <code>R</code> uses by default as a <code>summary</code> of a numeric vector of data (along with the mean):</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(diamonds<span class="op">$</span>depth)</code></pre>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb321-1" data-line-number="1"><span class="kw">summary</span>(diamonds<span class="op">$</span>depth)</a></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   43.00   61.00   61.80   61.75   62.50   79.00</code></pre>
 <p>This five-number summary are also all of the statistics used to construct a boxplot to summarize data distribution. In particular, the <em>inter-quartile range</em>, which is defined as the difference between the third and first quartile: <span class="math inline">\(\mathrm{IQR}(x) = x_{(3n/4)} - x_{(1n/4)}\)</span> gives a measure of spread. The interpretation here is that half the data is within the IQR around the median.</p>
-<pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">sd_depth =</span> <span class="kw">sd</span>(depth), <span class="dt">iqr_depth =</span> <span class="kw">IQR</span>(depth))</code></pre>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb323-1" data-line-number="1">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb323-2" data-line-number="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">sd_depth =</span> <span class="kw">sd</span>(depth), <span class="dt">iqr_depth =</span> <span class="kw">IQR</span>(depth))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   sd_depth iqr_depth
 ##      &lt;dbl&gt;     &lt;dbl&gt;
@@ -716,16 +719,16 @@ diamonds <span class="op">%&gt;%</span>
 \mathrm{outliers_{sd}}(x) = \{x_j \, | \, |x_j| &gt; \overline{x} + k \times \mathrm{sd}(x) \}
 \]</span>
 where <span class="math inline">\(\overline{x}\)</span> is the sample mean of the data and <span class="math inline">\(\mathrm{sd}(x)\)</span> it’s standard deviation. Multiplier <span class="math inline">\(k\)</span> determines if we are identifying (in Tukey’s nomenclature) <em>outliers</em> or points that are <em>far out</em>. Here is an example usage:</p>
-<pre class="sourceCode r"><code class="sourceCode r">outlier_df &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_depth=</span><span class="kw">mean</span>(depth), <span class="dt">sd_depth=</span><span class="kw">sd</span>(depth)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">slice</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">multiplier =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="fl">-1.5</span>, <span class="fl">1.5</span>, <span class="dv">3</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">outlier_limit =</span> mean_depth <span class="op">+</span><span class="st"> </span>multiplier <span class="op">*</span><span class="st"> </span>sd_depth)
-
-diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span>outlier_limit), <span class="dt">data=</span>outlier_df, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb325-1" data-line-number="1">outlier_df &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb325-2" data-line-number="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_depth=</span><span class="kw">mean</span>(depth), <span class="dt">sd_depth=</span><span class="kw">sd</span>(depth)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb325-3" data-line-number="3"><span class="st">  </span><span class="kw">slice</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb325-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">multiplier =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="fl">-1.5</span>, <span class="fl">1.5</span>, <span class="dv">3</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb325-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">outlier_limit =</span> mean_depth <span class="op">+</span><span class="st"> </span>multiplier <span class="op">*</span><span class="st"> </span>sd_depth)</a>
+<a class="sourceLine" id="cb325-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb325-7" data-line-number="7">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb325-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb325-9" data-line-number="9"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb325-10" data-line-number="10"><span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span>outlier_limit), <span class="dt">data=</span>outlier_df, <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-134-1.svg" width="672" /></p>
 <p>While this method works relatively well in practice, it presents a fundamental problem. Severe outliers can significantly affect spread estimates based on standard deviation. Specifically, spread estimates will be inflated in the presence of severe outliers. To circumvent this problem, we use rank-based estimates of spread to identify outliers as:</p>
 <p><span class="math display">\[
@@ -733,30 +736,30 @@ diamonds <span class="op">%&gt;%</span>
 \]</span>
 This is usually referred to as the <em>Tukey outlier rule</em>, with multiplier <span class="math inline">\(k\)</span> serving the same role as before. We use the IQR here because it is less susceptible to be inflated by severe outliers in the dataset. It also works better for skewed data than the method based on standard deviation.</p>
 <p>Here we demonstrate its use again:</p>
-<pre class="sourceCode r"><code class="sourceCode r">outlier_df &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">q1=</span><span class="kw">quantile</span>(depth, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>), <span class="dt">q3=</span><span class="kw">quantile</span>(depth, <span class="dv">3</span><span class="op">/</span><span class="dv">4</span>), <span class="dt">iqr=</span><span class="kw">IQR</span>(depth)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">slice</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">multiplier =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="dv">3</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lower_outlier_limit =</span> q1 <span class="op">-</span><span class="st"> </span>multiplier <span class="op">*</span><span class="st"> </span>iqr) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">upper_outlier_limit =</span> q3 <span class="op">+</span><span class="st"> </span>multiplier <span class="op">*</span><span class="st"> </span>iqr)
-
-diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span>lower_outlier_limit), <span class="dt">data=</span>outlier_df, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span>upper_outlier_limit), <span class="dt">data=</span>outlier_df, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb326-1" data-line-number="1">outlier_df &lt;-<span class="st"> </span>diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb326-2" data-line-number="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">q1=</span><span class="kw">quantile</span>(depth, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>), <span class="dt">q3=</span><span class="kw">quantile</span>(depth, <span class="dv">3</span><span class="op">/</span><span class="dv">4</span>), <span class="dt">iqr=</span><span class="kw">IQR</span>(depth)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb326-3" data-line-number="3"><span class="st">  </span><span class="kw">slice</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb326-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">multiplier =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="dv">3</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb326-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lower_outlier_limit =</span> q1 <span class="op">-</span><span class="st"> </span>multiplier <span class="op">*</span><span class="st"> </span>iqr) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb326-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">upper_outlier_limit =</span> q3 <span class="op">+</span><span class="st"> </span>multiplier <span class="op">*</span><span class="st"> </span>iqr)</a>
+<a class="sourceLine" id="cb326-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb326-8" data-line-number="8">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb326-9" data-line-number="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>depth)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb326-10" data-line-number="10"><span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">100</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb326-11" data-line-number="11"><span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span>lower_outlier_limit), <span class="dt">data=</span>outlier_df, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb326-12" data-line-number="12"><span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept=</span>upper_outlier_limit), <span class="dt">data=</span>outlier_df, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-135-1.svg" width="672" /></p>
 </div>
 <div id="skew" class="section level2">
 <h2><span class="header-section-number">21.5</span> Skew</h2>
 <p>One last thought. Although there are formal ways of defining this precisely, the five-number summary can be used to understand if data is skewed. How? Consider the differences between the first and third quartiles to the median:</p>
-<pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">med_depth =</span> <span class="kw">median</span>(depth), 
-            <span class="dt">q1_depth =</span> <span class="kw">quantile</span>(depth, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>),
-            <span class="dt">q3_depth =</span> <span class="kw">quantile</span>(depth, <span class="dv">3</span><span class="op">/</span><span class="dv">4</span>)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">d1_depth =</span> med_depth <span class="op">-</span><span class="st"> </span>q1_depth,
-         <span class="dt">d2_depth =</span> q3_depth <span class="op">-</span><span class="st"> </span>med_depth) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(d1_depth, d2_depth)</code></pre>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb327-1" data-line-number="1">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb327-2" data-line-number="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">med_depth =</span> <span class="kw">median</span>(depth), </a>
+<a class="sourceLine" id="cb327-3" data-line-number="3">            <span class="dt">q1_depth =</span> <span class="kw">quantile</span>(depth, <span class="dv">1</span><span class="op">/</span><span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb327-4" data-line-number="4">            <span class="dt">q3_depth =</span> <span class="kw">quantile</span>(depth, <span class="dv">3</span><span class="op">/</span><span class="dv">4</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb327-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">d1_depth =</span> med_depth <span class="op">-</span><span class="st"> </span>q1_depth,</a>
+<a class="sourceLine" id="cb327-6" data-line-number="6">         <span class="dt">d2_depth =</span> q3_depth <span class="op">-</span><span class="st"> </span>med_depth) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb327-7" data-line-number="7"><span class="st">  </span><span class="kw">select</span>(d1_depth, d2_depth)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   d1_depth d2_depth
 ##      &lt;dbl&gt;    &lt;dbl&gt;
@@ -767,11 +770,11 @@ diamonds <span class="op">%&gt;%</span>
 <h2><span class="header-section-number">21.6</span> Covariance and correlation</h2>
 <p>The scatter plot is a visual way of observing relationships between pairs of variables. Like descriptions of distributions of single variables, we would like to construct statistics that summarize the relationship between two variables quantitatively. To do this we will extend our notion of <em>spread</em> (or variation of data around the mean) to the notion of <em>co-variation</em>: do pairs of variables vary around the mean in the same way.</p>
 <p>Consider now data for two variables over the same <span class="math inline">\(n\)</span> entities: <span class="math inline">\((x_1,y_1), (x_2,y_2), \ldots, (x_n,y_n)\)</span>. For example, for each diamond, we have <code>carat</code> and <code>price</code> as two variables:</p>
-<pre class="sourceCode r"><code class="sourceCode r">diamonds <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>carat, <span class="dt">y=</span>price)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(price)), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lty=</span><span class="dv">2</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(carat)), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb329-1" data-line-number="1">diamonds <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb329-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>carat, <span class="dt">y=</span>price)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb329-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb329-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_hline</span>(<span class="kw">aes</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(price)), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lty=</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb329-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(carat)), <span class="dt">color=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">lty=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-137-1.svg" width="672" /></p>
 <p>We want to capture the relationship: does <span class="math inline">\(x_i\)</span> vary in the same direction and scale away from its mean as <span class="math inline">\(y_i\)</span>? This leads to <em>covariance</em></p>
 <p><span class="math display">\[
@@ -869,11 +872,13 @@ cor(x,y) = \frac{cov(x,y)}{sd(x) sd(y)}
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -881,12 +886,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -898,6 +902,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -917,8 +925,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

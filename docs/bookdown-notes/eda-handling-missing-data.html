@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>23 EDA: Handling Missing Data | Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="23 EDA: Handling Missing Data | Lecture Notes: Introduction to Data Science" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="23 EDA: Handling Missing Data | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2019-05-30" />
+<meta name="date" content="2020-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="eda-data-transformations.html">
-<link rel="next" href="part-statistical-learning.html">
+<link rel="prev" href="eda-data-transformations.html"/>
+<link rel="next" href="part-statistical-learning.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,9 +48,11 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -58,7 +61,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -167,22 +169,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.7" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#making-analyses-accessible"><i class="fa fa-check"></i><b>3.7</b> Making analyses accessible</a></li>
 <li class="chapter" data-level="3.8" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#summary"><i class="fa fa-check"></i><b>3.8</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the R Data Science Toolbox</a><ul>
-<li class="chapter" data-level="4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1</b> Some history</a></li>
-<li class="chapter" data-level="4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.2</b> Setting up R</a></li>
-<li class="chapter" data-level="4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.3</b> Setting up Rstudio</a></li>
-<li class="chapter" data-level="4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.4</b> A first look at Rstudio</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.4.1</b> Interactive Console</a></li>
-<li class="chapter" data-level="4.4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.4.2</b> Data Viewer</a></li>
-<li class="chapter" data-level="4.4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.4.3</b> Names, values and functions</a></li>
-<li class="chapter" data-level="4.4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.4.4</b> Plotting</a></li>
-<li class="chapter" data-level="4.4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.4.5</b> Editor</a></li>
-<li class="chapter" data-level="4.4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.4.6</b> Files viewer</a></li>
+<li class="chapter" data-level="4" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the Data Science Toolbox</a><ul>
+<li class="chapter" data-level="4.1" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#rrstudio"><i class="fa fa-check"></i><b>4.1</b> R/Rstudio</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1.1</b> Some history</a></li>
+<li class="chapter" data-level="4.1.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.1.2</b> Setting up R</a></li>
+<li class="chapter" data-level="4.1.3" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.1.3</b> Setting up Rstudio</a></li>
+<li class="chapter" data-level="4.1.4" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.1.4</b> A first look at Rstudio</a></li>
+<li class="chapter" data-level="4.1.5" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.1.5</b> Interactive Console</a></li>
+<li class="chapter" data-level="4.1.6" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.1.6</b> Data Viewer</a></li>
+<li class="chapter" data-level="4.1.7" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.1.7</b> Names, values and functions</a></li>
+<li class="chapter" data-level="4.1.8" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.1.8</b> Plotting</a></li>
+<li class="chapter" data-level="4.1.9" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.1.9</b> Editor</a></li>
+<li class="chapter" data-level="4.1.10" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.1.10</b> Files viewer</a></li>
+<li class="chapter" data-level="4.1.11" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.1.11</b> R packages</a></li>
+<li class="chapter" data-level="4.1.12" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.1.12</b> Additional R resources</a></li>
+<li class="chapter" data-level="4.1.13" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.1.13</b> Literate Programming</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.5</b> R packages</a></li>
-<li class="chapter" data-level="4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.6</b> Additional R resources</a></li>
-<li class="chapter" data-level="4.7" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.7</b> Literate Programming</a></li>
-<li class="chapter" data-level="4.8" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#finishing-your-setup"><i class="fa fa-check"></i><b>4.8</b> Finishing your setup</a></li>
+<li class="chapter" data-level="4.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#pythonjupyter"><i class="fa fa-check"></i><b>4.2</b> Python/Jupyter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html"><i class="fa fa-check"></i>(Part) Data representation modeling, ingestion and cleaning</a></li>
 <li class="chapter" data-level="5" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html"><i class="fa fa-check"></i><b>5</b> Measurements and Data Types</a><ul>
@@ -509,28 +512,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">23</span> EDA: Handling Missing Data</h1>
 <p>We can now move on to a very important aspect of data preparation and transformation: how to deal with missing data? By missing data we mean values that are unrecorded, unknown or unspecified in a dataset. We saw an example of this when we looked at the tidy unit. Here is the tidy weather dataset again:</p>
 <pre><code>## # A tibble: 22 x 35
-##    id     year month element    d1    d2    d3    d4    d5    d6    d7
-##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 MX17…  2010     1 tmax       NA  NA    NA      NA  NA      NA    NA
-##  2 MX17…  2010     1 tmin       NA  NA    NA      NA  NA      NA    NA
-##  3 MX17…  2010     2 tmax       NA  27.3  24.1    NA  NA      NA    NA
-##  4 MX17…  2010     2 tmin       NA  14.4  14.4    NA  NA      NA    NA
-##  5 MX17…  2010     3 tmax       NA  NA    NA      NA  32.1    NA    NA
-##  6 MX17…  2010     3 tmin       NA  NA    NA      NA  14.2    NA    NA
-##  7 MX17…  2010     4 tmax       NA  NA    NA      NA  NA      NA    NA
-##  8 MX17…  2010     4 tmin       NA  NA    NA      NA  NA      NA    NA
-##  9 MX17…  2010     5 tmax       NA  NA    NA      NA  NA      NA    NA
-## 10 MX17…  2010     5 tmin       NA  NA    NA      NA  NA      NA    NA
-## # … with 12 more rows, and 24 more variables: d8 &lt;dbl&gt;, d9 &lt;lgl&gt;,
-## #   d10 &lt;dbl&gt;, d11 &lt;dbl&gt;, d12 &lt;lgl&gt;, d13 &lt;dbl&gt;, d14 &lt;dbl&gt;, d15 &lt;dbl&gt;,
-## #   d16 &lt;dbl&gt;, d17 &lt;dbl&gt;, d18 &lt;lgl&gt;, d19 &lt;lgl&gt;, d20 &lt;lgl&gt;, d21 &lt;lgl&gt;,
-## #   d22 &lt;lgl&gt;, d23 &lt;dbl&gt;, d24 &lt;lgl&gt;, d25 &lt;dbl&gt;, d26 &lt;dbl&gt;, d27 &lt;dbl&gt;,
+##    id       year month element    d1    d2    d3
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 MX17004  2010     1 tmax       NA  NA    NA  
+##  2 MX17004  2010     1 tmin       NA  NA    NA  
+##  3 MX17004  2010     2 tmax       NA  27.3  24.1
+##  4 MX17004  2010     2 tmin       NA  14.4  14.4
+##  5 MX17004  2010     3 tmax       NA  NA    NA  
+##  6 MX17004  2010     3 tmin       NA  NA    NA  
+##  7 MX17004  2010     4 tmax       NA  NA    NA  
+##  8 MX17004  2010     4 tmin       NA  NA    NA  
+##  9 MX17004  2010     5 tmax       NA  NA    NA  
+## 10 MX17004  2010     5 tmin       NA  NA    NA  
+## # … with 12 more rows, and 28 more variables:
+## #   d4 &lt;dbl&gt;, d5 &lt;dbl&gt;, d6 &lt;dbl&gt;, d7 &lt;dbl&gt;,
+## #   d8 &lt;dbl&gt;, d9 &lt;lgl&gt;, d10 &lt;dbl&gt;, d11 &lt;dbl&gt;,
+## #   d12 &lt;lgl&gt;, d13 &lt;dbl&gt;, d14 &lt;dbl&gt;, d15 &lt;dbl&gt;,
+## #   d16 &lt;dbl&gt;, d17 &lt;dbl&gt;, d18 &lt;lgl&gt;, d19 &lt;lgl&gt;,
+## #   d20 &lt;lgl&gt;, d21 &lt;lgl&gt;, d22 &lt;lgl&gt;, d23 &lt;dbl&gt;,
+## #   d24 &lt;lgl&gt;, d25 &lt;dbl&gt;, d26 &lt;dbl&gt;, d27 &lt;dbl&gt;,
 ## #   d28 &lt;dbl&gt;, d29 &lt;dbl&gt;, d30 &lt;dbl&gt;, d31 &lt;dbl&gt;</code></pre>
 <p>And the result of tidying this dataset:</p>
-<pre class="sourceCode r"><code class="sourceCode r">tidy_weather &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(day, temp, d1<span class="op">:</span>d31) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">spread</span>(element, temp)
-tidy_weather</code></pre>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb348-1" data-line-number="1">tidy_weather &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb348-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(day, temp, d1<span class="op">:</span>d31) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb348-3" data-line-number="3"><span class="st">  </span><span class="kw">spread</span>(element, temp)</a>
+<a class="sourceLine" id="cb348-4" data-line-number="4">tidy_weather</a></code></pre></div>
 <pre><code>## # A tibble: 341 x 6
 ##    id       year month day    tmax  tmin
 ##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -550,9 +556,9 @@ tidy_weather</code></pre>
 <p>Data that is missing systematically can significantly bias an analysis. For example:
 Suppose we want to predict how sick someone is from test result. If doctors do not carry out the test because a patient is too sick, then the fact test is missing is a great predictor of how sick the patient is.</p>
 <p>So in general, the <strong>first step</strong> when dealing with missing data is to understand <em>why</em> and <em>how</em> data may be missing. I.e., talk to collaborator, or person who created the dataset. Once you know that data is not missing systematically and a relatively small fraction of observations contain have missing values, then it may be safe to remove observations.</p>
-<pre class="sourceCode r"><code class="sourceCode r">tidy_weather_nomissing &lt;-<span class="st"> </span>tidy_weather <span class="op">%&gt;%</span>
-<span class="st">  </span>tidyr<span class="op">::</span><span class="kw">drop_na</span>(tmax, tmin)
-tidy_weather_nomissing</code></pre>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb350-1" data-line-number="1">tidy_weather_nomissing &lt;-<span class="st"> </span>tidy_weather <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb350-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">drop_na</span>(tmax, tmin)</a>
+<a class="sourceLine" id="cb350-3" data-line-number="3">tidy_weather_nomissing</a></code></pre></div>
 <pre><code>## # A tibble: 33 x 6
 ##    id       year month day    tmax  tmin
 ##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -572,13 +578,13 @@ tidy_weather_nomissing</code></pre>
 <div id="encoding-as-missing" class="section level3">
 <h3><span class="header-section-number">23.1.1</span> Encoding as missing</h3>
 <p>In the case of categorical attributes, a useful approach is to encode the fact that a value is missing as a new category and include that in subsequent modeling.</p>
-<pre class="sourceCode r"><code class="sourceCode r">tb &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;tb.csv&quot;</span>))
-tidy_tb &lt;-<span class="st"> </span>tb <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">gather</span>(demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)  <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">separate</span>(demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)
-
-tidy_tb <span class="op">%&gt;%</span>
-<span class="st">  </span>tidyr<span class="op">::</span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">iso2=</span><span class="st">&quot;missing&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb352-1" data-line-number="1">tb &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="kw">file.path</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;tb.csv&quot;</span>))</a>
+<a class="sourceLine" id="cb352-2" data-line-number="2">tidy_tb &lt;-<span class="st"> </span>tb <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb352-3" data-line-number="3"><span class="st">  </span><span class="kw">gather</span>(demo, n, <span class="op">-</span>iso2, <span class="op">-</span>year)  <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb352-4" data-line-number="4"><span class="st">  </span><span class="kw">separate</span>(demo, <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;age&quot;</span>), <span class="dt">sep=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb352-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb352-6" data-line-number="6">tidy_tb <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb352-7" data-line-number="7"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">iso2=</span><span class="st">&quot;missing&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 115,380 x 5
 ##    iso2   year sex   age       n
 ##    &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
@@ -598,37 +604,40 @@ tidy_tb <span class="op">%&gt;%</span>
 <h3><span class="header-section-number">23.1.2</span> Imputation</h3>
 <p>In the case of numeric values, we can use a simple method for imputation where we
 replace missing values for a variable with, for instance, the mean of non-missing values</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span>tidyr<span class="op">::</span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">dep_delay=</span><span class="kw">mean</span>(.<span class="op">$</span>dep_delay, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)))</code></pre>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb354-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb354-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">dep_delay=</span><span class="kw">mean</span>(.<span class="op">$</span>dep_delay, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)))</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 19
-##     year month   day dep_time sched_dep_time dep_delay arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1  2013     1     1      517            515         2      830
-##  2  2013     1     1      533            529         4      850
-##  3  2013     1     1      542            540         2      923
-##  4  2013     1     1      544            545        -1     1004
-##  5  2013     1     1      554            600        -6      812
-##  6  2013     1     1      554            558        -4      740
-##  7  2013     1     1      555            600        -5      913
-##  8  2013     1     1      557            600        -3      709
-##  9  2013     1     1      557            600        -3      838
-## 10  2013     1     1      558            600        -2      753
-## # … with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+##     year month   day dep_time sched_dep_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013     1     1      517            515
+##  2  2013     1     1      533            529
+##  3  2013     1     1      542            540
+##  4  2013     1     1      544            545
+##  5  2013     1     1      554            600
+##  6  2013     1     1      554            558
+##  7  2013     1     1      555            600
+##  8  2013     1     1      557            600
+##  9  2013     1     1      557            600
+## 10  2013     1     1      558            600
+## # … with 336,766 more rows, and 14 more
+## #   variables: dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;,
+## #   sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;</code></pre>
 <p>A more complex method is to replace missing values for a variable predicting from
 other variables when variables are related (we will see linear regression using the <code>lm</code> and <code>predict</code> functions later on)</p>
-<pre class="sourceCode r"><code class="sourceCode r">dep_delay_fit &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lm</span>(dep_delay<span class="op">~</span>origin, <span class="dt">data=</span>.)
-
-<span class="co"># use average delay conditioned on origin airport</span>
-flights <span class="op">%&gt;%</span>
-<span class="st">  </span>modelr<span class="op">::</span><span class="kw">add_predictions</span>(dep_delay_fit, <span class="dt">var=</span><span class="st">&quot;pred_delay&quot;</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_fixed =</span> 
-           <span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.na</span>(dep_delay), dep_delay, 
-                  pred_delay)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(origin, dest, dep_delay, dep_delay_fixed) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(dep_delay))</code></pre>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb356-1" data-line-number="1">dep_delay_fit &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">lm</span>(dep_delay<span class="op">~</span>origin, <span class="dt">data=</span>.)</a>
+<a class="sourceLine" id="cb356-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb356-3" data-line-number="3"><span class="co"># use average delay conditioned on origin airport</span></a>
+<a class="sourceLine" id="cb356-4" data-line-number="4">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb356-5" data-line-number="5"><span class="st">  </span>modelr<span class="op">::</span><span class="kw">add_predictions</span>(dep_delay_fit, <span class="dt">var=</span><span class="st">&quot;pred_delay&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb356-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_fixed =</span> </a>
+<a class="sourceLine" id="cb356-7" data-line-number="7">           <span class="kw">ifelse</span>(<span class="op">!</span><span class="kw">is.na</span>(dep_delay), dep_delay, </a>
+<a class="sourceLine" id="cb356-8" data-line-number="8">                  pred_delay)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb356-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(origin, dest, dep_delay, dep_delay_fixed) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb356-10" data-line-number="10"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">is.na</span>(dep_delay))</a></code></pre></div>
 <pre><code>## # A tibble: 8,255 x 4
 ##    origin dest  dep_delay dep_delay_fixed
 ##    &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;           &lt;dbl&gt;
@@ -645,25 +654,28 @@ flights <span class="op">%&gt;%</span>
 ## # … with 8,245 more rows</code></pre>
 <p>In either case, a common approach is to add an additional indicator
 variable stating if numeric missing value was imputed</p>
-<pre class="sourceCode r"><code class="sourceCode r">flights <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_missing =</span> <span class="kw">is.na</span>(dep_delay))</code></pre>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb358-1" data-line-number="1">flights <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb358-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dep_delay_missing =</span> <span class="kw">is.na</span>(dep_delay))</a></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 20
-##     year month   day dep_time sched_dep_time dep_delay arr_time
-##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
-##  1  2013     1     1      517            515         2      830
-##  2  2013     1     1      533            529         4      850
-##  3  2013     1     1      542            540         2      923
-##  4  2013     1     1      544            545        -1     1004
-##  5  2013     1     1      554            600        -6      812
-##  6  2013     1     1      554            558        -4      740
-##  7  2013     1     1      555            600        -5      913
-##  8  2013     1     1      557            600        -3      709
-##  9  2013     1     1      557            600        -3      838
-## 10  2013     1     1      558            600        -2      753
-## # … with 336,766 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
-## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
-## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
-## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, dep_delay_missing &lt;lgl&gt;</code></pre>
+##     year month   day dep_time sched_dep_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013     1     1      517            515
+##  2  2013     1     1      533            529
+##  3  2013     1     1      542            540
+##  4  2013     1     1      544            545
+##  5  2013     1     1      554            600
+##  6  2013     1     1      554            558
+##  7  2013     1     1      555            600
+##  8  2013     1     1      557            600
+##  9  2013     1     1      557            600
+## 10  2013     1     1      558            600
+## # … with 336,766 more rows, and 15 more
+## #   variables: dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;,
+## #   sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;, dep_delay_missing &lt;lgl&gt;</code></pre>
 <p>In both of these cases note that imputing missing values has two effects. First, the central tendency of data is retained, for example, if we impute missing data using the mean of a numeric variable, the mean after imputation will not change. This is a good reason to impute based on estimates of central tendency. However, the <em>spread</em> of the data will change. After imputation, the spread of the data will be smaller relative to spread if we ignore missing values. This could be problematic as underestimating the spread of data can yield over-confident inferences in downstream analysis. We will not address these issues directly in later chapters, but you should be aware of this.</p>
 
 </div>
@@ -680,11 +692,13 @@ variable stating if numeric missing value was imputed</p>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -692,12 +706,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -709,6 +722,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -728,8 +745,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

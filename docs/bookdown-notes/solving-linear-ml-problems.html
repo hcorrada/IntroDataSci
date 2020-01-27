@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>30 Solving linear ML problems | Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="30 Solving linear ML problems | Lecture Notes: Introduction to Data Science" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="30 Solving linear ML problems | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2019-05-30" />
+<meta name="date" content="2020-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="linear-models-for-classification.html">
-<link rel="next" href="tree-based-methods.html">
+<link rel="prev" href="linear-models-for-classification.html"/>
+<link rel="next" href="tree-based-methods.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -47,9 +48,11 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
-<script src="libs/str_view-binding-1.3.1/str_view.js"></script>
+<script src="libs/str_view-binding-1.4.0/str_view.js"></script>
 
 
 <style type="text/css">
@@ -58,7 +61,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -167,22 +169,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.7" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#making-analyses-accessible"><i class="fa fa-check"></i><b>3.7</b> Making analyses accessible</a></li>
 <li class="chapter" data-level="3.8" data-path="an-illustrative-analysis.html"><a href="an-illustrative-analysis.html#summary"><i class="fa fa-check"></i><b>3.8</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the R Data Science Toolbox</a><ul>
-<li class="chapter" data-level="4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1</b> Some history</a></li>
-<li class="chapter" data-level="4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.2</b> Setting up R</a></li>
-<li class="chapter" data-level="4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.3</b> Setting up Rstudio</a></li>
-<li class="chapter" data-level="4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.4</b> A first look at Rstudio</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.4.1</b> Interactive Console</a></li>
-<li class="chapter" data-level="4.4.2" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.4.2</b> Data Viewer</a></li>
-<li class="chapter" data-level="4.4.3" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.4.3</b> Names, values and functions</a></li>
-<li class="chapter" data-level="4.4.4" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.4.4</b> Plotting</a></li>
-<li class="chapter" data-level="4.4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.4.5</b> Editor</a></li>
-<li class="chapter" data-level="4.4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.4.6</b> Files viewer</a></li>
+<li class="chapter" data-level="4" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html"><i class="fa fa-check"></i><b>4</b> Setting up the Data Science Toolbox</a><ul>
+<li class="chapter" data-level="4.1" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#rrstudio"><i class="fa fa-check"></i><b>4.1</b> R/Rstudio</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#some-history"><i class="fa fa-check"></i><b>4.1.1</b> Some history</a></li>
+<li class="chapter" data-level="4.1.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#setting-up-r"><i class="fa fa-check"></i><b>4.1.2</b> Setting up R</a></li>
+<li class="chapter" data-level="4.1.3" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#setting-up-rstudio"><i class="fa fa-check"></i><b>4.1.3</b> Setting up Rstudio</a></li>
+<li class="chapter" data-level="4.1.4" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#a-first-look-at-rstudio"><i class="fa fa-check"></i><b>4.1.4</b> A first look at Rstudio</a></li>
+<li class="chapter" data-level="4.1.5" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#interactive-console"><i class="fa fa-check"></i><b>4.1.5</b> Interactive Console</a></li>
+<li class="chapter" data-level="4.1.6" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#data-viewer"><i class="fa fa-check"></i><b>4.1.6</b> Data Viewer</a></li>
+<li class="chapter" data-level="4.1.7" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#names-values-and-functions"><i class="fa fa-check"></i><b>4.1.7</b> Names, values and functions</a></li>
+<li class="chapter" data-level="4.1.8" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#plotting"><i class="fa fa-check"></i><b>4.1.8</b> Plotting</a></li>
+<li class="chapter" data-level="4.1.9" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#editor"><i class="fa fa-check"></i><b>4.1.9</b> Editor</a></li>
+<li class="chapter" data-level="4.1.10" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#files-viewer"><i class="fa fa-check"></i><b>4.1.10</b> Files viewer</a></li>
+<li class="chapter" data-level="4.1.11" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.1.11</b> R packages</a></li>
+<li class="chapter" data-level="4.1.12" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.1.12</b> Additional R resources</a></li>
+<li class="chapter" data-level="4.1.13" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.1.13</b> Literate Programming</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#r-packages"><i class="fa fa-check"></i><b>4.5</b> R packages</a></li>
-<li class="chapter" data-level="4.6" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#additional-r-resources"><i class="fa fa-check"></i><b>4.6</b> Additional R resources</a></li>
-<li class="chapter" data-level="4.7" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#literate-programming"><i class="fa fa-check"></i><b>4.7</b> Literate Programming</a></li>
-<li class="chapter" data-level="4.8" data-path="setting-up-the-r-data-science-toolbox.html"><a href="setting-up-the-r-data-science-toolbox.html#finishing-your-setup"><i class="fa fa-check"></i><b>4.8</b> Finishing your setup</a></li>
+<li class="chapter" data-level="4.2" data-path="setting-up-the-data-science-toolbox.html"><a href="setting-up-the-data-science-toolbox.html#pythonjupyter"><i class="fa fa-check"></i><b>4.2</b> Python/Jupyter</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-data-representation-modeling-ingestion-and-cleaning.html"><a href="part-data-representation-modeling-ingestion-and-cleaning.html"><i class="fa fa-check"></i>(Part) Data representation modeling, ingestion and cleaning</a></li>
 <li class="chapter" data-level="5" data-path="measurements-and-data-types.html"><a href="measurements-and-data-types.html"><i class="fa fa-check"></i><b>5</b> Measurements and Data Types</a><ul>
@@ -519,12 +522,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 \min_{\beta_1} L(\beta_1) = \frac{1}{2} \sum_{i=1}^n (y_i - \beta_1 x_i)^2
 \]</span></p>
 <p>And suppose we want to fit this model to the following (simulated) data:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
-true_beta &lt;-<span class="st"> </span><span class="dv">5</span>
-x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">100</span>, <span class="dv">-10</span>, <span class="dv">10</span>)
-y &lt;-<span class="st"> </span>x <span class="op">*</span><span class="st"> </span>true_beta <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="dv">10</span>))
-<span class="kw">plot</span>(x,y,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">cex=</span><span class="fl">1.4</span>,<span class="dt">main=</span><span class="st">&quot;Simulated Data&quot;</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>, <span class="dt">cex.main=</span><span class="dv">2</span>)
-<span class="kw">abline</span>(<span class="dt">a=</span><span class="dv">0</span>, <span class="dt">b=</span>true_beta, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span> <span class="dv">2</span>)</code></pre>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb430-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1234</span>)</a>
+<a class="sourceLine" id="cb430-2" data-line-number="2">true_beta &lt;-<span class="st"> </span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb430-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">100</span>, <span class="dv">-10</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb430-4" data-line-number="4">y &lt;-<span class="st"> </span>x <span class="op">*</span><span class="st"> </span>true_beta <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb430-5" data-line-number="5"><span class="kw">plot</span>(x,y,<span class="dt">pch=</span><span class="dv">19</span>,<span class="dt">cex=</span><span class="fl">1.4</span>,<span class="dt">main=</span><span class="st">&quot;Simulated Data&quot;</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>, <span class="dt">cex.main=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb430-6" data-line-number="6"><span class="kw">abline</span>(<span class="dt">a=</span><span class="dv">0</span>, <span class="dt">b=</span>true_beta, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lwd=</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-224-1.svg" width="1440" /></p>
 <p>Our goal is then to find the value of <span class="math inline">\(\beta_1\)</span> that minimizes mean squared error. This corresponds to finding one of these many possible lines:</p>
 <p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-225-1.svg" width="1440" /></p>
@@ -557,68 +560,74 @@ y &lt;-<span class="st"> </span>x <span class="op">*</span><span class="st"> </s
 <p>This algorithm is called <strong>gradient descent</strong> in the general case.</p>
 <p>The basic idea is to move the current estimate of <span class="math inline">\(\beta_1\)</span> in the direction that minimizes loss the <em>fastest</em>. Another way of calling this algorithm is <strong>Steepest Descent</strong>.</p>
 <p>This is a full implementation of this algorithm in R:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Implementation of gradient descent for least squares regression</span>
-<span class="co"># for a single predictor (x)</span>
-<span class="co">#</span>
-<span class="co"># There is some code here that is only used to generate illustrative plots and would not be part of real solver</span>
-gradient_descent &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">tol=</span><span class="fl">1e-6</span>, <span class="dt">maxit=</span><span class="dv">50</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>) {
-  <span class="co"># initialize estimate</span>
-  beta_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="dv">0</span>; old_beta_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="ot">Inf</span>; i &lt;-<span class="st"> </span><span class="dv">0</span>; beta_keep &lt;-<span class="st"> </span><span class="ot">NA</span>
-  beta_trace &lt;-<span class="st"> </span>beta_<span class="dv">1</span>
-  
-  <span class="co"># compute loss at first estimate</span>
-  loss &lt;-<span class="st"> </span><span class="kw">compute_loss</span>(beta_<span class="dv">1</span>, x, y); loss_keep &lt;-<span class="st"> </span><span class="ot">NA</span>
-  loss_trace &lt;-<span class="st"> </span>loss
-  
-  <span class="co"># starting step size</span>
-  alpha &lt;-<span class="st"> </span><span class="fl">1e-3</span>
-  difference &lt;-<span class="st"> </span><span class="ot">Inf</span>
-  
-  <span class="co"># check for convergence</span>
-  <span class="co"># (in practice, we do include a limit on the number of iterations)</span>
-  <span class="cf">while</span> ((difference <span class="op">&gt;</span><span class="st"> </span>tol) <span class="op">&amp;&amp;</span><span class="st"> </span>(i <span class="op">&lt;</span><span class="st"> </span>maxit)) {
-    <span class="kw">cat</span>(<span class="st">&quot;it: &quot;</span>, i, <span class="st">&quot; beta: &quot;</span>, <span class="kw">round</span>(beta_<span class="dv">1</span>, <span class="dv">2</span>), <span class="st">&quot;loss: &quot;</span>, <span class="kw">round</span>(loss, <span class="dv">2</span>), <span class="st">&quot; alpha: &quot;</span>, <span class="kw">round</span>(alpha, <span class="dv">6</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)
-    
-    <span class="co"># this piece of code just adds steps to an existing plot</span>
-    <span class="cf">if</span> (plot <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(beta_keep) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(loss_keep)) {
-      <span class="co">#suppressWarnings(arrows(beta_keep, loss_keep, beta_1, loss, lty=2, col=&quot;blue&quot;))</span>
-      beta_trace &lt;-<span class="st"> </span><span class="kw">c</span>(beta_trace, beta_<span class="dv">1</span>)
-      loss_trace &lt;-<span class="st"> </span><span class="kw">c</span>(loss_trace, loss)
-    }
-    
-    <span class="co"># store the last estimate for plotting</span>
-    beta_keep &lt;-<span class="st"> </span>beta_<span class="dv">1</span>; loss_keep &lt;-<span class="st"> </span>loss;
-    
-    <span class="co"># store the last estimate to check convergence</span>
-    old_beta_<span class="dv">1</span> &lt;-<span class="st"> </span>beta_<span class="dv">1</span>
-    
-    <span class="co"># update estimate</span>
-    f &lt;-<span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x
-    resid &lt;-<span class="st"> </span>y <span class="op">-</span><span class="st"> </span>f    
-    beta_<span class="dv">1</span> &lt;-<span class="st"> </span>beta_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(resid <span class="op">*</span><span class="st"> </span>x)
-    
-    <span class="co"># compute difference after taking step</span>
-    <span class="co"># to check convergence</span>
-    difference &lt;-<span class="st"> </span>(beta_<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>old_beta_<span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>(old_beta_<span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span>
-  
-    <span class="co"># compute loss and derivative for updated estimate</span>
-    loss &lt;-<span class="st"> </span><span class="kw">compute_loss</span>(beta_<span class="dv">1</span>, x, y)
-
-    i &lt;-<span class="st"> </span>i<span class="op">+</span><span class="dv">1</span>
-    
-    <span class="co"># shorten the step size</span>
-    <span class="cf">if</span> ((i <span class="op">%%</span><span class="st"> </span><span class="dv">3</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) alpha &lt;-<span class="st"> </span>alpha <span class="op">/</span><span class="st"> </span><span class="dv">2</span>
-  }
-  <span class="cf">if</span> (plot) {
-    <span class="kw">suppressWarnings</span>(<span class="kw">arrows</span>(beta_keep, loss_keep, beta_<span class="dv">1</span>, loss, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>))
-    beta_trace &lt;-<span class="st"> </span><span class="kw">c</span>(beta_trace, beta_<span class="dv">1</span>)
-    loss_trace &lt;-<span class="st"> </span><span class="kw">c</span>(loss_trace, loss)
-    <span class="kw">return</span>(<span class="kw">list</span>(beta_<span class="dv">1</span>, beta_trace, loss_trace))
-  }
-  beta_<span class="dv">1</span>
-}</code></pre>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb431-1" data-line-number="1"><span class="co"># Implementation of gradient descent for least squares regression</span></a>
+<a class="sourceLine" id="cb431-2" data-line-number="2"><span class="co"># for a single predictor (x)</span></a>
+<a class="sourceLine" id="cb431-3" data-line-number="3"><span class="co">#</span></a>
+<a class="sourceLine" id="cb431-4" data-line-number="4"><span class="co"># There is some code here that is only used to generate illustrative plots and would not be part of real solver</span></a>
+<a class="sourceLine" id="cb431-5" data-line-number="5">gradient_descent &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">tol=</span><span class="fl">1e-6</span>, <span class="dt">maxit=</span><span class="dv">50</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>) {</a>
+<a class="sourceLine" id="cb431-6" data-line-number="6">  <span class="co"># initialize estimate</span></a>
+<a class="sourceLine" id="cb431-7" data-line-number="7">  beta_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="dv">0</span>; old_beta_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="ot">Inf</span>; i &lt;-<span class="st"> </span><span class="dv">0</span>; beta_keep &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb431-8" data-line-number="8">  </a>
+<a class="sourceLine" id="cb431-9" data-line-number="9">  <span class="co"># compute loss at first estimate</span></a>
+<a class="sourceLine" id="cb431-10" data-line-number="10">  loss &lt;-<span class="st"> </span><span class="kw">compute_loss</span>(beta_<span class="dv">1</span>, x, y); loss_keep &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb431-11" data-line-number="11">  </a>
+<a class="sourceLine" id="cb431-12" data-line-number="12">  <span class="co"># starting step size</span></a>
+<a class="sourceLine" id="cb431-13" data-line-number="13">  alpha &lt;-<span class="st"> </span><span class="fl">1e-3</span></a>
+<a class="sourceLine" id="cb431-14" data-line-number="14">  difference &lt;-<span class="st"> </span><span class="ot">Inf</span></a>
+<a class="sourceLine" id="cb431-15" data-line-number="15">  </a>
+<a class="sourceLine" id="cb431-16" data-line-number="16">  <span class="co"># check for convergence</span></a>
+<a class="sourceLine" id="cb431-17" data-line-number="17">  <span class="co"># (in practice, we do include a limit on the number of iterations)</span></a>
+<a class="sourceLine" id="cb431-18" data-line-number="18">  <span class="cf">while</span> ((difference <span class="op">&gt;</span><span class="st"> </span>tol) <span class="op">&amp;&amp;</span><span class="st"> </span>(i <span class="op">&lt;</span><span class="st"> </span>maxit)) {</a>
+<a class="sourceLine" id="cb431-19" data-line-number="19">    <span class="kw">cat</span>(<span class="st">&quot;it: &quot;</span>, i, <span class="st">&quot; beta: &quot;</span>, <span class="kw">round</span>(beta_<span class="dv">1</span>, <span class="dv">2</span>), <span class="st">&quot;loss: &quot;</span>, <span class="kw">round</span>(loss, <span class="dv">2</span>), <span class="st">&quot; alpha: &quot;</span>, <span class="kw">round</span>(alpha, <span class="dv">6</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb431-20" data-line-number="20">    </a>
+<a class="sourceLine" id="cb431-21" data-line-number="21">    <span class="co"># this piece of code just adds steps to an existing plot</span></a>
+<a class="sourceLine" id="cb431-22" data-line-number="22">    <span class="cf">if</span> (plot <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(beta_keep) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(loss_keep)) {</a>
+<a class="sourceLine" id="cb431-23" data-line-number="23">      <span class="kw">suppressWarnings</span>(<span class="kw">arrows</span>(beta_keep, loss_keep, beta_<span class="dv">1</span>, loss, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>))</a>
+<a class="sourceLine" id="cb431-24" data-line-number="24">    }</a>
+<a class="sourceLine" id="cb431-25" data-line-number="25">    </a>
+<a class="sourceLine" id="cb431-26" data-line-number="26">    <span class="co"># store the last estimate for plotting</span></a>
+<a class="sourceLine" id="cb431-27" data-line-number="27">    beta_keep &lt;-<span class="st"> </span>beta_<span class="dv">1</span>; loss_keep &lt;-<span class="st"> </span>loss;</a>
+<a class="sourceLine" id="cb431-28" data-line-number="28">    </a>
+<a class="sourceLine" id="cb431-29" data-line-number="29">    <span class="co"># store the last estimate to check convergence</span></a>
+<a class="sourceLine" id="cb431-30" data-line-number="30">    old_beta_<span class="dv">1</span> &lt;-<span class="st"> </span>beta_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb431-31" data-line-number="31">    </a>
+<a class="sourceLine" id="cb431-32" data-line-number="32">    <span class="co"># update estimate</span></a>
+<a class="sourceLine" id="cb431-33" data-line-number="33">    f &lt;-<span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x</a>
+<a class="sourceLine" id="cb431-34" data-line-number="34">    resid &lt;-<span class="st"> </span>y <span class="op">-</span><span class="st"> </span>f    </a>
+<a class="sourceLine" id="cb431-35" data-line-number="35">    beta_<span class="dv">1</span> &lt;-<span class="st"> </span>beta_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>(resid <span class="op">*</span><span class="st"> </span>x)</a>
+<a class="sourceLine" id="cb431-36" data-line-number="36">    </a>
+<a class="sourceLine" id="cb431-37" data-line-number="37">    <span class="co"># compute difference after taking step</span></a>
+<a class="sourceLine" id="cb431-38" data-line-number="38">    <span class="co"># to check convergence</span></a>
+<a class="sourceLine" id="cb431-39" data-line-number="39">    difference &lt;-<span class="st"> </span>(beta_<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>old_beta_<span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>(old_beta_<span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb431-40" data-line-number="40">  </a>
+<a class="sourceLine" id="cb431-41" data-line-number="41">    <span class="co"># compute loss and derivative for updated estimate</span></a>
+<a class="sourceLine" id="cb431-42" data-line-number="42">    loss &lt;-<span class="st"> </span><span class="kw">compute_loss</span>(beta_<span class="dv">1</span>, x, y)</a>
+<a class="sourceLine" id="cb431-43" data-line-number="43"></a>
+<a class="sourceLine" id="cb431-44" data-line-number="44">    i &lt;-<span class="st"> </span>i<span class="op">+</span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb431-45" data-line-number="45">    </a>
+<a class="sourceLine" id="cb431-46" data-line-number="46">    <span class="co"># shorten the step size</span></a>
+<a class="sourceLine" id="cb431-47" data-line-number="47">    <span class="cf">if</span> ((i <span class="op">%%</span><span class="st"> </span><span class="dv">3</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) alpha &lt;-<span class="st"> </span>alpha <span class="op">/</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb431-48" data-line-number="48">  }</a>
+<a class="sourceLine" id="cb431-49" data-line-number="49">  <span class="cf">if</span> (plot) {</a>
+<a class="sourceLine" id="cb431-50" data-line-number="50">    <span class="kw">suppressWarnings</span>(<span class="kw">arrows</span>(beta_keep, loss_keep, beta_<span class="dv">1</span>, loss, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>))</a>
+<a class="sourceLine" id="cb431-51" data-line-number="51">  }</a>
+<a class="sourceLine" id="cb431-52" data-line-number="52">  beta_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb431-53" data-line-number="53">}</a></code></pre></div>
 <p>Let’s run this algorithm and track what it does:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-230-.gif" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-229-1.svg" width="1440" /></p>
+<pre><code>## it:  0  beta:  0 loss:  405.87  alpha:  0.001 
+## it:  1  beta:  16.11 loss:  2004.46  alpha:  0.001 
+## it:  2  beta:  -19.85 loss:  9969.82  alpha:  0.001 
+## it:  3  beta:  60.41 loss:  49659.42  alpha:  5e-04 
+## it:  4  beta:  -29.17 loss:  18852.85  alpha:  5e-04 
+## it:  5  beta:  26.02 loss:  7159.08  alpha:  5e-04 
+## it:  6  beta:  -7.98 loss:  2720.28  alpha:  0.00025 
+## it:  7  beta:  2.5 loss:  104.56  alpha:  0.00025 
+## it:  8  beta:  4.51 loss:  8.19  alpha:  0.00025 
+## it:  9  beta:  4.89 loss:  4.64  alpha:  0.000125 
+## it:  10  beta:  4.93 loss:  4.55  alpha:  0.000125 
+## it:  11  beta:  4.95 loss:  4.52  alpha:  0.000125 
+## it:  12  beta:  4.96 loss:  4.51  alpha:  6.2e-05</code></pre>
 <p>This algorithm is referred to as “Batch” gradient descent, since we take a step (update <span class="math inline">\(\beta_1\)</span>) by calculating derivative with respect to <em>all</em> <span class="math inline">\(n\)</span> observations in our dataset. For clarity, let’s write out the update equation again:</p>
 <p><span class="math display">\[
 \beta_1 = \beta_1 + \alpha \sum_{i=1}^n (y_i - f(x_i, \beta_1)) x_i
@@ -737,8 +746,72 @@ p(\mathbf{\beta};\mathbf{x}_i) \mathbf{x}_i \\
 </ul></li>
 </ul>
 <p>This is a full implementation of stochastic gradient descent for our example dataset:</p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb433-1" data-line-number="1"><span class="co"># Implementation of stochastic gradient descent for least squares regression</span></a>
+<a class="sourceLine" id="cb433-2" data-line-number="2"><span class="co"># for a single predictor (x)</span></a>
+<a class="sourceLine" id="cb433-3" data-line-number="3"><span class="co">#</span></a>
+<a class="sourceLine" id="cb433-4" data-line-number="4"><span class="co"># There is some code here that is only used to generate illustrative plots</span></a>
+<a class="sourceLine" id="cb433-5" data-line-number="5">stochastic_gradient_descent &lt;-<span class="st"> </span><span class="cf">function</span>(x, y, <span class="dt">tol=</span><span class="fl">1e-6</span>, <span class="dt">maxit=</span><span class="dv">50</span>, <span class="dt">plot=</span><span class="ot">FALSE</span>) {</a>
+<a class="sourceLine" id="cb433-6" data-line-number="6">  n &lt;-<span class="st"> </span><span class="kw">length</span>(y)</a>
+<a class="sourceLine" id="cb433-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb433-8" data-line-number="8">  <span class="co"># initialize estimate</span></a>
+<a class="sourceLine" id="cb433-9" data-line-number="9">  beta_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="dv">0</span>; i &lt;-<span class="st"> </span><span class="dv">0</span>; beta_keep &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb433-10" data-line-number="10">  </a>
+<a class="sourceLine" id="cb433-11" data-line-number="11">  <span class="co"># compute loss at first estimate</span></a>
+<a class="sourceLine" id="cb433-12" data-line-number="12">  loss &lt;-<span class="st"> </span><span class="kw">compute_loss</span>(beta_<span class="dv">1</span>, x, y); loss_keep &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb433-13" data-line-number="13">  </a>
+<a class="sourceLine" id="cb433-14" data-line-number="14">  <span class="co"># initial step size</span></a>
+<a class="sourceLine" id="cb433-15" data-line-number="15">  alpha &lt;-<span class="st"> </span><span class="fl">1e-3</span></a>
+<a class="sourceLine" id="cb433-16" data-line-number="16">  difference &lt;-<span class="st"> </span><span class="ot">Inf</span></a>
+<a class="sourceLine" id="cb433-17" data-line-number="17">  </a>
+<a class="sourceLine" id="cb433-18" data-line-number="18">  <span class="co"># check for convergence</span></a>
+<a class="sourceLine" id="cb433-19" data-line-number="19">  <span class="co"># (in practice a max number of iterations is used)</span></a>
+<a class="sourceLine" id="cb433-20" data-line-number="20">  <span class="cf">while</span> ((difference <span class="op">&gt;</span><span class="st"> </span>tol) <span class="op">&amp;&amp;</span><span class="st"> </span>(i <span class="op">&lt;</span><span class="st"> </span>maxit)) {</a>
+<a class="sourceLine" id="cb433-21" data-line-number="21">    <span class="kw">cat</span>(<span class="st">&quot;it: &quot;</span>, i, <span class="st">&quot; beta: &quot;</span>, <span class="kw">round</span>(beta_<span class="dv">1</span>, <span class="dv">2</span>), <span class="st">&quot;loss: &quot;</span>, <span class="kw">round</span>(loss, <span class="dv">2</span>), <span class="st">&quot; alpha: &quot;</span>, <span class="kw">round</span>(alpha, <span class="dv">6</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb433-22" data-line-number="22">    </a>
+<a class="sourceLine" id="cb433-23" data-line-number="23">    <span class="co"># store last estimate to check convergence</span></a>
+<a class="sourceLine" id="cb433-24" data-line-number="24">    old_beta_<span class="dv">1</span> &lt;-<span class="st"> </span>beta_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb433-25" data-line-number="25">    </a>
+<a class="sourceLine" id="cb433-26" data-line-number="26">    <span class="co"># iterate over observations</span></a>
+<a class="sourceLine" id="cb433-27" data-line-number="27">    <span class="cf">for</span> (j <span class="cf">in</span> <span class="kw">seq</span>(<span class="dv">1</span>,n)) {</a>
+<a class="sourceLine" id="cb433-28" data-line-number="28">      </a>
+<a class="sourceLine" id="cb433-29" data-line-number="29">      <span class="co"># add step to plot</span></a>
+<a class="sourceLine" id="cb433-30" data-line-number="30">      <span class="cf">if</span> (plot <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(beta_keep) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(loss_keep)) {</a>
+<a class="sourceLine" id="cb433-31" data-line-number="31">        <span class="kw">suppressWarnings</span>(<span class="kw">arrows</span>(beta_keep, loss_keep, beta_<span class="dv">1</span>, loss, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>))</a>
+<a class="sourceLine" id="cb433-32" data-line-number="32">      }</a>
+<a class="sourceLine" id="cb433-33" data-line-number="33">      </a>
+<a class="sourceLine" id="cb433-34" data-line-number="34">      <span class="co"># store last estimate and loss for plotting</span></a>
+<a class="sourceLine" id="cb433-35" data-line-number="35">      beta_keep &lt;-<span class="st"> </span>beta_<span class="dv">1</span>; loss_keep &lt;-<span class="st"> </span>loss;</a>
+<a class="sourceLine" id="cb433-36" data-line-number="36">      </a>
+<a class="sourceLine" id="cb433-37" data-line-number="37">      <span class="co"># update estimate with j-th observation</span></a>
+<a class="sourceLine" id="cb433-38" data-line-number="38">      f &lt;-<span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x[j]</a>
+<a class="sourceLine" id="cb433-39" data-line-number="39">      resid &lt;-<span class="st"> </span>y[j] <span class="op">-</span><span class="st"> </span>f      </a>
+<a class="sourceLine" id="cb433-40" data-line-number="40">      beta_<span class="dv">1</span> &lt;-<span class="st"> </span>beta_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span>resid <span class="op">*</span><span class="st"> </span>x[j]</a>
+<a class="sourceLine" id="cb433-41" data-line-number="41">      </a>
+<a class="sourceLine" id="cb433-42" data-line-number="42">      <span class="co"># compute loss with new estimate</span></a>
+<a class="sourceLine" id="cb433-43" data-line-number="43">      loss &lt;-<span class="st"> </span><span class="kw">compute_loss</span>(beta_<span class="dv">1</span>, x, y)</a>
+<a class="sourceLine" id="cb433-44" data-line-number="44">    }</a>
+<a class="sourceLine" id="cb433-45" data-line-number="45">    </a>
+<a class="sourceLine" id="cb433-46" data-line-number="46">    <span class="co"># check difference between current and old estimate</span></a>
+<a class="sourceLine" id="cb433-47" data-line-number="47">    <span class="co"># to check convergence</span></a>
+<a class="sourceLine" id="cb433-48" data-line-number="48">    difference &lt;-<span class="st"> </span>(beta_<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>old_beta_<span class="dv">1</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>old_beta_<span class="dv">1</span><span class="op">^</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb433-49" data-line-number="49">    i &lt;-<span class="st"> </span>i<span class="op">+</span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb433-50" data-line-number="50">    </a>
+<a class="sourceLine" id="cb433-51" data-line-number="51">    <span class="co"># update step size</span></a>
+<a class="sourceLine" id="cb433-52" data-line-number="52">    <span class="cf">if</span> ((i <span class="op">%%</span><span class="st"> </span><span class="dv">5</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) alpha &lt;-<span class="st"> </span>alpha <span class="op">/</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb433-53" data-line-number="53">  }</a>
+<a class="sourceLine" id="cb433-54" data-line-number="54">  </a>
+<a class="sourceLine" id="cb433-55" data-line-number="55">  <span class="cf">if</span> (plot) {</a>
+<a class="sourceLine" id="cb433-56" data-line-number="56">    <span class="kw">suppressWarnings</span>(<span class="kw">arrows</span>(beta_keep, loss_keep, beta_<span class="dv">1</span>, loss, <span class="dt">lty=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>))</a>
+<a class="sourceLine" id="cb433-57" data-line-number="57">  }</a>
+<a class="sourceLine" id="cb433-58" data-line-number="58">  </a>
+<a class="sourceLine" id="cb433-59" data-line-number="59">  beta_<span class="dv">1</span></a>
+<a class="sourceLine" id="cb433-60" data-line-number="60">}</a></code></pre></div>
 <p>Let’s run this and see what it does:</p>
-<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-234-.gif" width="672" /></p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-231-1.svg" width="1440" /></p>
+<pre><code>## it:  0  beta:  0 loss:  405.87  alpha:  0.001 
+## it:  1  beta:  4.81 loss:  4.97  alpha:  0.001 
+## it:  2  beta:  4.99 loss:  4.5  alpha:  0.001 
+## it:  3  beta:  4.99 loss:  4.5  alpha:  0.001</code></pre>
 <p>The stochastic gradient descent algorithm can easily adapt to <em>data streams</em> where we receive observations one at a time and <em>assume</em> they are not stored. This setting falls in the general category of <em>online</em> learning.</p>
 </div>
 <div id="parallelizing-gradient-descent" class="section level2">
@@ -785,11 +858,13 @@ p(\mathbf{\beta};\mathbf{x}_i) \mathbf{x}_i \\
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -797,12 +872,11 @@ gitbook.start({
 "github": false,
 "facebook": false,
 "twitter": false,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -814,6 +888,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -833,8 +911,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
