@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Principles</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2020-01-28" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Principles]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+2020-01-28
+]
+
+.logo[![](img/logo.png)]
+
+---
+
+
+
+## Measurements and Data Types
+
+
+
+### A data analysis to get us going
+
+Analysis of Baltimore crime data. 
+
+Downloaded from Baltimore City's awesome open data site (this was downloaded a couple of years ago so if you download now, you will get different results). 
+
+The repository for this particular data is here. [https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt](https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt) 
+
+---
+layout: true
+## Getting data
+
+---
+
+We've prepared the data previously into a comma-separated value file (`.csv` file): 
+
+- each column defines attributes that describe arrests
+
+- each line contains attribute values (separated by commas) describing specific arrests.
+
+---
+
+**Note:** To download this dataset to follow along you can use the following code:
+
+
+```r
+if (!dir.exists("data")) dir.create("data")
+
+download.file("https://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv", destfile="data/BPD_Arrests.csv")
+```
+
+---
+
+To make use of this dataset we want to assign the result of calling `read_csv` (i.e., the dataset) to a variable:
+
+
+```r
+library(tidyverse)
+arrest_tab &lt;- read_csv("data/BPD_Arrests.csv")
+arrest_tab
+```
+
+```
+## # A tibble: 104,528 x 15
+##    arrest   age race  sex   arrestDate arrestTime arrestLocation
+##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;         
+##  1 1.11e7    23 B     M     01/01/2011 00'00"     &lt;NA&gt;          
+##  2 1.11e7    37 B     M     01/01/2011 01'00"     2000 Wilkens …
+##  3 1.11e7    46 B     M     01/01/2011 01'00"     2800 Mayfield…
+##  4 1.11e7    50 B     M     01/01/2011 04'00"     2100 Ashburto…
+##  5 1.11e7    33 B     M     01/01/2011 05'00"     4000 Wilsby A…
+##  6 1.11e7    41 B     M     01/01/2011 05'00"     2900 Spellman…
+##  7 1.11e7    29 B     M     01/01/2011 05'00"     800 N Monroe …
+##  8 1.11e7    20 W     M     01/01/2011 05'00"     5200 Moravia …
+##  9 1.11e7    24 B     M     01/01/2011 07'00"     2400 Gainsdbo…
+## 10 1.11e7    53 B     M     01/01/2011 15'00"     3300 Woodland…
+## # … with 104,518 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
+## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
+## #   district &lt;chr&gt;, post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;
+```
+
+
+
+---
+
+Now we can ask what _type_ of value is stored in the `arrest_tab` variable:
+
+
+```r
+class(arrest_tab)
+```
+
+```
+## [1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame"
+```
+
+---
+
+The `data.frame` is a workhorse data structure in R. It encapsulates the idea of _entities_ (in rows) and _attribute values_ (in columns). 
+We call these _rectangular datasets_. The other types `tbl_df` and `tbl` are added by `tidyverse` for improved functionality.
+
+--
+
+Later, we will see how the `pandas` Python package provides the same semantics.
+
+---
+
+We can ask other features of this dataset:
+
+
+```r
+# This is a comment in R, by the way
+
+# How many rows (entities) does this dataset contain?
+nrow(arrest_tab)
+```
+
+```
+## [1] 104528
+```
+
+```r
+# How many columns (attributes)?
+ncol(arrest_tab)
+```
+
+```
+## [1] 15
+```
+
+```r
+# What are the names of those columns?
+colnames(arrest_tab)
+```
+
+```
+##  [1] "arrest"            "age"               "race"             
+##  [4] "sex"               "arrestDate"        "arrestTime"       
+##  [7] "arrestLocation"    "incidentOffense"   "incidentLocation" 
+## [10] "charge"            "chargeDescription" "district"         
+## [13] "post"              "neighborhood"      "Location 1"
+```
+
+---
+
+Now, in Rstudio you can view the data frame using `View(arrest_tab)`.
+
+---
+layout: true
+exclude: true
+
+## Names, values and functions
+
+---
+exclude: true
+
+Let's review the concepts of names values and functions again. In the console, we've now written a few instructions, e.g. `View(arrest_tab)`. Let's take a closer look at how these instructions are put together.
+
+**_expressions_**: first of all, we call these instructions _expressions_, which are just text that R can evaluate into a value. `View(arrest_tab)` is an expression.
+
+**_values_**: so, what's a value? They are numbers, strings, data frames, etc. This is the data we will be working with. The number `2` is a value. So is the string `"Hector"`. 
+
+So, what value is produced when R evaluates the expression `View(arrest_tab)`? Nothing, which we also treat as a value. That wasn't very interesting, but it does have a side effect: it shows the `arrest_tab` dataset in the Data viewer. 
+
+How about a simpler expression: `arrest_tab`, what value is produced when R evaluates the expression `arrest_tab`? The data.frame containing that data. Try it out in the console.
+
+**_names_**: so if `arrest_tab` isn't a value, what is it? It is a _name_. We use these to refer to values. So, when we write the expression `arrest_tab`, we tell R we want the _value_ referenced by the name `arrest_tab`, that is, the data itself!
+
+![](img/names_values.png)
+
+**_functions_**: Besides numbers, strings, data frames, etc. another important type of value is the _function_. Functions are a series of instructions that take some input value and produce a different value. The name `View` refers to the function that takes a data frame as input, and displays it in the Data viewer. Functions are called using the parentheses we saw before: `View(arrest_tab)`, the parentheses say that you are passing input `arrest_tab` to the function `View`. We'll see later how we can write our own functions.
+
+---
+layout: true
+
+## Entities and attributes
+
+---
+
+We use the term _entities_ to refer to the objects represented in a dataset refers to. 
+
+In our example dataset each arrest is an _entity_. 
+
+--
+
+In a rectangular dataset (a data frame) this corresponds to rows in a table. 
+
+---
+
+A dataset contains _attributes_ for each entity. 
+
+Attributes of each arrest would be: 
+
+the person's _age_, the type of offense, the location, etc. 
+
+--
+
+In a rectangular dataset, this corresponds to the columns in a table.
+
+---
+
+This language of _entities_ and _attributes_ is commonly used in the database literature. 
+
+In statistics you may see _experimental units_ or _samples_ for _entities_ and _covariates_ for _attributes_. 
+
+In other instances _observations_ for _entities_ and _variables_ for _attributes_. 
+
+In Machine Learning you may see _example_ for _entities_ and _features_ for _attributes_. 
+
+For the most part, all of these are exchangable. 
+
+---
+
+This table summarizes the terminology:
+
+| Field | Entities | Attributes |
+|-------|----------|------------|
+| Databases | Entities | Attributes |
+| Machine Learning | Examples | Features |
+| Statistics | Observations/Samples | Variables/Covariates |
+
+---
+layout: false
+
+## Categorical attributes
+
+A categorical attribute for a given entity can take only one of a finite set of examples.
+
+For example, the `sex` variable can only have value `M`, `F`, or \`\` (we'll talk about missing data later in the semester).
+
+---
+layout: true
+
+## Categorical attributes
+
+---
+
+The result of a coin flip is categorical
+
+The outcome of rolling an 8-sided die, is also categorical
+
+Can you think of other examples?
+
+---
+
+Categorical data may be _ordered_ or _unordered_
+
+In our example, all categorical data is unordered.
+
+--
+
+Examples of _ordered categorical data_ are grades in a class, Likert scale categories, e.g., `strongly agree`, `agree`, `neutral`, `disagree`, `strongly disagree`, etc
+
+---
+layout: true
+
+## Discrete numeric attributes
+
+---
+  
+These are attributes that can take specific values from elements of ordered, discrete (possibly infinite) sets. 
+The most common set in this case would be the non-negative positive integers. 
+
+--
+  
+This data is commonly the result of counting processes. In our example dataset, age, measured in years, is a discrete attribute.
+
+---
+  
+Frequently, we obtain datasets as the result of summarizing, or aggregating other underlying data. 
+
+In our case, we could construct a new dataset containing the number of arrests per neighborhood (we will see how to do this later) 
+
+---
+
+
+```
+## # A tibble: 6 x 2
+##   neighborhood      number_of_arrests
+##   &lt;chr&gt;                         &lt;int&gt;
+## 1 Abell                            62
+## 2 Allendale                       297
+## 3 Arcadia                          78
+## 4 Arlington                       694
+## 5 Armistead Gardens               153
+## 6 Ashburton                        78
+```
+
+---
+layout: true
+
+## Discrete Numeric Attributes
+
+---
+
+In this new dataset, the _entities_ are each neighborhood, the `number_of_arrests` attribute is a _discrete numeric_ attribute.
+
+---
+  
+Other examples: 
+  
+- the number of students in a class is discrete, 
+
+- the number of friends for a specific Facebook user. 
+
+Can you think of other examples?
+
+---
+  
+Distinctions between ordered categorical and discrete numerical data: 
+  
+_ordered categorical data do not have magnitude_ 
+
+---
+  
+For instance, is an 'A' in a class twice as good as a 'C'? 
+  
+Is a 'C' twice as good as a 'D'? 
+
+--
+
+Not necessarily. 
+
+Grades don't have an inherent magnitude. 
+
+---
+
+However, if we _encode_ grades as 'F=0,D=1,C=2,B=3,A=4', etc. they do have magnitude. 
+
+In that case, an 'A' _is_ twice as good as a 'C', and a 'C' _is_ twice as good as a 'D'. 
+
+---
+
+In summary, 
+
+if ordered data has magnitude, then _discrete numeric_ 
+
+if not, _ordered categorical_.
+
+---
+layout: true
+
+## Continuous numeric data
+
+---
+
+Attributes that can take any value in a continuous set. 
+
+For example, a person's height, in say inches, can take any number (within the range of human heights). 
+
+---
+class: split-40
+
+.column[
+Different dataset: entities are cars and we look at continuous numeric attributes `speed` and `stopping distance`
+]
+
+.column[
+![](principles_files/figure-html/f04_cars_plot-1.png)&lt;!-- --&gt;
+]
+
+---
+layout: true
+
+## Continuous Numeric Attributes
+
+---
+
+
+The distinction between _continuous_ and _discrete_ can be tricky: 
+  
+measurements that have finite precision are, in a sense, discrete. 
+
+--
+  
+Remember, continuity is _not_ a property of the specific dataset you have in hand, 
+
+It _is_ a property of the process you are measuring. 
+
+---
+  
+The number of arrests in a neighborhood cannot be fractional, regardless of the precision at which we measure this. 
+
+--
+
+On the other hand, if we had the appropriate tool, we could measure a person's height with infinite precision. 
+
+---
+
+This distinction is very important when we build statistical models of datasets for analysis. 
+
+For now, think of discrete data as the result of counting, and continuous data the result of some physical measurement. 
+
+--
+
+Here's a question: is `age` in our dataset a continuous or discrete numeric value?
+
+---
+layout: true
+## Other examples
+
+---
+  
+[MNIST dataset of handwritten digits](https://www.kaggle.com/c/digit-recognizer). 
+
+Each image is an _entity_. 
+
+Each image has a _label_ attribute which states which of the digits 0,1,...9 is represented by the image. 
+
+What type of data is this (categorical, continuous numeric, or discrete numeric)? 
+  
+---
+
+![](img/mnist_example.png)
+
+---
+
+Each image is represented by grayscale values in a 28x28 grid. 
+
+That's 784 attributes, one for each square in the grid, containing a grayscale value. 
+
+What type of data are these other 784 attributes?
+
+---
+layout: true
+
+## Other important datatypes
+
+---
+
+- Text: Arbitrary strings that do not encode a categorical attribute.
+
+- Datetime: Date and time of some event or observation (e.g., `arrestDate`, `arrestTime`) 
+
+- Geolocation: Latitude and Longitude of some event or observation (e.g., `Location.`)  
+
+- Relationships: links between entities, with links having their own attributes (e.g., social network, how long have two people followed each other)
+
+---
+layout: true
+
+## Units
+
+---
+
+Something that we tend to forget but is **extremely** important for the modeling and interpretation of data.
+
+Attributes are _measurements_ and that they have _units_. 
+
+For example, age of a person can be measured in different units: _years_, _months_, etc. 
+
+---
+
+These can be converted to one another, but nonetheless in a given dataset, that _attribute_ or measurement will be recorded in some specific units. 
+
+
+Similar arguments go for distances and times, for example. 
+
+---
+
+In other cases, we may have unitless measurements (we will see later an example of this when we do _dimensionality reduction_). 
+
+In these cases, it is worth thinking about _why_ your measurements are unit-less.
+
+---
+
+When performing analyses that try to summarize the effect of some measurement or attribute on another, units matter a lot! 
+
+We will see the importance of this in our _regression_ section. 
+
+For now, make sure you make a mental note of units for each measurement you come across. 
+
+Important when modeling and interpreting the results of these models.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-0.14.0.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

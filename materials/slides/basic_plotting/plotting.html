@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Plotting</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2019-08-01" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Basic Plotting]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+2019-08-01
+]
+
+.logo[![](img/logo.png)]
+
+---
+
+## Data Visualization 
+
+
+
+
+
+We will spend a good amount of time in the course discussing data visualization. 
+
+It serves many important roles in data analysis. 
+
+We use it to gain understanding of dataset characteristics throughout analyses and it is a key element of communicating insights we have derived from data analyses with our target audience. 
+
+---
+layout: true
+
+## Grammar of Graphics (ggplot)
+
+---
+
+
+In this section, we will introduce basic functionality of the `ggplot` package (available in both R and python) to start our discussion of visualization throughout the course.
+
+The `ggplot` package is designed around the Entity-Attribute data model. 
+
+Also, it can be included as part of data frame operation pipelines. 
+
+---
+class: split-40
+
+.column[
+Let's create a _dot plot_ of the number of arrests per district in our dataset:
+
+
+```r
+arrest_tab %&gt;%
+  group_by(district) %&gt;%
+  summarize(num_arrests=n()) %&gt;%
+  ggplot(mapping=aes(y=district, 
+                     x=num_arrests)) +
+    geom_point()
+```
+]
+
+.column[
+![](plotting_files/figure-html/district_dotplot-1.png)&lt;!-- --&gt;
+]
+
+---
+
+The `ggplot` design is very elegant, takes some thinking to get used to, but is extremely powerful. 
+
+The central premise is to characterize the building pieces behind `ggplot` plots as follows:
+
+1. The **data** that goes into a plot, a data frame of entities and attributes  
+2. The **mapping** between data attributes and graphical (aesthetic) characteristics  
+3. The *geometric* representation of these graphical characteristics
+
+---
+
+So in our example we can fill in these three parts as follows:
+
+1) **Data**: We pass a data frame to the `ggplot` function with the `%&gt;%` operator at the end of the group_by-summarize pipeline.
+
+2) **Mapping**: Here we map the `num_arrests` attribute to the `x` position in the plot and the `district` attribute to the `y` position in the plot. Every `ggplot` will contain one or more `aes` calls. 
+
+3) **Geometry**: Here we choose points as the _geometric_ representations of our chosen graphical characteristics using the `geom_point` function. 
+
+---
+
+In general, the `ggplot` call will have the following structure:
+
+
+```r
+&lt;data_frame&gt; %&gt;%
+  ggplot(mapping=aes(&lt;graphical_characteristic&gt;=&lt;attribute&gt;)) +
+    geom_&lt;representation&gt;()
+```
+
+---
+layout: true
+
+## Plot Construction Details
+
+---
+
+### Mappings
+
+| Argument | Definition |
+|----------|------------|
+| `x` | position along x axis |
+| `y` | position along y axis |
+| `color` | color |
+| `shape` | shape (applicable to e.g., points)
+| `size` | size |
+| `label` | string used as label (applicable to text)
+
+---
+
+### Representations
+
+
+| Function | Representation |
+|----------|----------------|
+| `geom_point` | points |
+| `geom_bar` | rectangles |
+| `geom_text` | strings |
+| `geom_smooth` | smoothed line (advanced) |
+| `geom_hex` | hexagonal binning |
+
+---
+
+We can include multiple geometric representations in a single plot, for example points and text, by adding (`+`) multiple `geom_&lt;representation&gt;` functions. 
+
+Also, we can include mappings inside a `geom_` call to map characteristics to attributes strictly for that specific representation. 
+
+For example `geom_point(mapping=aes(color=&lt;attribute&gt;))` maps color to some attribute only for the point representation specified by that call. Mappings given in the `ggplot` call apply to _all_ representations added to the plot.
+
+---
+layout: true
+
+## Frequently Used Plots
+
+---
+
+We will look comprehensively at data visualization in more detail later in the course, but for now will list a few common plots we use in data analysis and how they are created using `ggplot`. 
+
+Let's switch data frame to the `mpg` dataset for our examples:
+
+
+```r
+mpg
+```
+
+```
+## # A tibble: 234 x 11
+##    manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+##    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 audi         a4      1.8  1999     4 auto… f        18    29 p     comp…
+##  2 audi         a4      1.8  1999     4 manu… f        21    29 p     comp…
+##  3 audi         a4      2    2008     4 manu… f        20    31 p     comp…
+##  4 audi         a4      2    2008     4 auto… f        21    30 p     comp…
+##  5 audi         a4      2.8  1999     6 auto… f        16    26 p     comp…
+##  6 audi         a4      2.8  1999     6 manu… f        18    26 p     comp…
+##  7 audi         a4      3.1  2008     6 auto… f        18    27 p     comp…
+##  8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p     comp…
+##  9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p     comp…
+## 10 audi         a4 q…   2    2008     4 manu… 4        20    28 p     comp…
+## # … with 224 more rows
+```
+
+---
+layout: false
+class: split-50
+
+## Scatter plot
+
+Used to visualize the relationship between two attributes. 
+
+.column[
+
+```r
+mpg %&gt;%
+  ggplot(mapping=aes(x=displ, y=hwy)) +
+    geom_point(mapping=aes(color=cyl))
+```
+]
+
+.column[
+&lt;img src="plotting_files/figure-html/scatter_example-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: split-50
+
+## Bar graph
+
+Used to visualize the relationship between a continuous variable to a categorical (or discrete) attribute
+
+.column[
+
+```r
+mpg %&gt;%
+  group_by(cyl) %&gt;%
+  summarize(mean_mpg=mean(hwy)) %&gt;%
+  ggplot(mapping=aes(x=cyl, y=mean_mpg)) +
+    geom_bar(stat="identity")
+```
+]
+
+.column[
+![](plotting_files/figure-html/bargraph_mpg-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-50
+
+## Histogram
+
+Used to visualize the distribution of the values of a numeric attribute 
+
+.column[
+
+```r
+mpg %&gt;%
+  ggplot(mapping=aes(x=hwy)) +
+    geom_histogram()
+```
+]
+
+.column[
+![](plotting_files/figure-html/hist_mpg-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-50
+
+## Boxplot
+
+Used to visualize the distribution of a numeric attribute based on a categorical attribute
+
+.column[
+
+```r
+mpg %&gt;%
+  ggplot(mapping=aes(x=class, y=hwy)) +
+    geom_boxplot()
+```
+]
+
+
+.column[
+![](plotting_files/figure-html/hist_dot-1.png)&lt;!-- --&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

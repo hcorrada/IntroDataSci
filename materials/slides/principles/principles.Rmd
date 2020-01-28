@@ -1,0 +1,463 @@
+---
+title: "Principles"
+author: "Héctor Corrada Bravo"
+company: "University of Maryland"
+date: "`r Sys.Date()`"
+css: ["custom.css"]
+output:
+  xaringan::moon_reader:
+    chakra: libs/remark-0.14.0.min.js
+    lib_dir: libs
+    seal: false
+    includes: 
+      after_body: "custom.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Principles]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+`r Sys.Date()`
+]
+
+.logo[![](img/logo.png)]
+
+---
+
+```{r setup1, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+## Measurements and Data Types
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+### A data analysis to get us going
+
+Analysis of Baltimore crime data. 
+
+Downloaded from Baltimore City's awesome open data site (this was downloaded a couple of years ago so if you download now, you will get different results). 
+
+The repository for this particular data is here. [https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt](https://data.baltimorecity.gov/Crime/BPD-Arrests/3i3v-ibrt) 
+
+---
+layout: true
+## Getting data
+
+---
+
+We've prepared the data previously into a comma-separated value file (`.csv` file): 
+
+- each column defines attributes that describe arrests
+
+- each line contains attribute values (separated by commas) describing specific arrests.
+
+---
+
+**Note:** To download this dataset to follow along you can use the following code:
+
+```{r, eval=FALSE}
+if (!dir.exists("data")) dir.create("data")
+
+download.file("https://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv", destfile="data/BPD_Arrests.csv")
+```
+
+---
+
+To make use of this dataset we want to assign the result of calling `read_csv` (i.e., the dataset) to a variable:
+
+```{r vars1, message=FALSE}
+library(tidyverse)
+arrest_tab <- read_csv("data/BPD_Arrests.csv")
+arrest_tab
+```
+
+```{r echo=FALSE, eval=FALSE}
+arrest_tab$race <- factor(arrest_tab$race)
+arrest_tab$sex <- factor(arrest_tab$sex)
+arrest_tab$incidentOffense <- factor(arrest_tab$incidentOffense)
+```
+
+---
+
+Now we can ask what _type_ of value is stored in the `arrest_tab` variable:
+
+```{r type}
+class(arrest_tab)
+```
+
+---
+
+The `data.frame` is a workhorse data structure in R. It encapsulates the idea of _entities_ (in rows) and _attribute values_ (in columns). 
+We call these _rectangular datasets_. The other types `tbl_df` and `tbl` are added by `tidyverse` for improved functionality.
+
+--
+
+Later, we will see how the `pandas` Python package provides the same semantics.
+
+---
+
+We can ask other features of this dataset:
+
+```{r questions}
+# This is a comment in R, by the way
+
+# How many rows (entities) does this dataset contain?
+nrow(arrest_tab)
+
+# How many columns (attributes)?
+ncol(arrest_tab)
+
+# What are the names of those columns?
+colnames(arrest_tab)
+```
+
+---
+
+Now, in Rstudio you can view the data frame using `View(arrest_tab)`.
+
+---
+layout: true
+exclude: true
+
+## Names, values and functions
+
+---
+exclude: true
+
+Let's review the concepts of names values and functions again. In the console, we've now written a few instructions, e.g. `View(arrest_tab)`. Let's take a closer look at how these instructions are put together.
+
+**_expressions_**: first of all, we call these instructions _expressions_, which are just text that R can evaluate into a value. `View(arrest_tab)` is an expression.
+
+**_values_**: so, what's a value? They are numbers, strings, data frames, etc. This is the data we will be working with. The number `2` is a value. So is the string `"Hector"`. 
+
+So, what value is produced when R evaluates the expression `View(arrest_tab)`? Nothing, which we also treat as a value. That wasn't very interesting, but it does have a side effect: it shows the `arrest_tab` dataset in the Data viewer. 
+
+How about a simpler expression: `arrest_tab`, what value is produced when R evaluates the expression `arrest_tab`? The data.frame containing that data. Try it out in the console.
+
+**_names_**: so if `arrest_tab` isn't a value, what is it? It is a _name_. We use these to refer to values. So, when we write the expression `arrest_tab`, we tell R we want the _value_ referenced by the name `arrest_tab`, that is, the data itself!
+
+![](img/names_values.png)
+
+**_functions_**: Besides numbers, strings, data frames, etc. another important type of value is the _function_. Functions are a series of instructions that take some input value and produce a different value. The name `View` refers to the function that takes a data frame as input, and displays it in the Data viewer. Functions are called using the parentheses we saw before: `View(arrest_tab)`, the parentheses say that you are passing input `arrest_tab` to the function `View`. We'll see later how we can write our own functions.
+
+---
+layout: true
+
+## Entities and attributes
+
+---
+
+We use the term _entities_ to refer to the objects represented in a dataset refers to. 
+
+In our example dataset each arrest is an _entity_. 
+
+--
+
+In a rectangular dataset (a data frame) this corresponds to rows in a table. 
+
+---
+
+A dataset contains _attributes_ for each entity. 
+
+Attributes of each arrest would be: 
+
+the person's _age_, the type of offense, the location, etc. 
+
+--
+
+In a rectangular dataset, this corresponds to the columns in a table.
+
+---
+
+This language of _entities_ and _attributes_ is commonly used in the database literature. 
+
+In statistics you may see _experimental units_ or _samples_ for _entities_ and _covariates_ for _attributes_. 
+
+In other instances _observations_ for _entities_ and _variables_ for _attributes_. 
+
+In Machine Learning you may see _example_ for _entities_ and _features_ for _attributes_. 
+
+For the most part, all of these are exchangable. 
+
+---
+
+This table summarizes the terminology:
+
+| Field | Entities | Attributes |
+|-------|----------|------------|
+| Databases | Entities | Attributes |
+| Machine Learning | Examples | Features |
+| Statistics | Observations/Samples | Variables/Covariates |
+
+---
+layout: false
+
+## Categorical attributes
+
+A categorical attribute for a given entity can take only one of a finite set of examples.
+
+For example, the `sex` variable can only have value `M`, `F`, or \`\` (we'll talk about missing data later in the semester).
+
+---
+layout: true
+
+## Categorical attributes
+
+---
+
+The result of a coin flip is categorical
+
+The outcome of rolling an 8-sided die, is also categorical
+
+Can you think of other examples?
+
+---
+
+Categorical data may be _ordered_ or _unordered_
+
+In our example, all categorical data is unordered.
+
+--
+
+Examples of _ordered categorical data_ are grades in a class, Likert scale categories, e.g., `strongly agree`, `agree`, `neutral`, `disagree`, `strongly disagree`, etc
+
+---
+layout: true
+
+## Discrete numeric attributes
+
+---
+  
+These are attributes that can take specific values from elements of ordered, discrete (possibly infinite) sets. 
+The most common set in this case would be the non-negative positive integers. 
+
+--
+  
+This data is commonly the result of counting processes. In our example dataset, age, measured in years, is a discrete attribute.
+
+---
+  
+Frequently, we obtain datasets as the result of summarizing, or aggregating other underlying data. 
+
+In our case, we could construct a new dataset containing the number of arrests per neighborhood (we will see how to do this later) 
+
+---
+
+```{r, echo=FALSE}
+library(dplyr)
+arrest_tab %>%
+  group_by(neighborhood) %>%
+  summarize(number_of_arrests=n()) %>%
+  head()
+```
+
+---
+layout: true
+
+## Discrete Numeric Attributes
+
+---
+
+In this new dataset, the _entities_ are each neighborhood, the `number_of_arrests` attribute is a _discrete numeric_ attribute.
+
+---
+  
+Other examples: 
+  
+- the number of students in a class is discrete, 
+
+- the number of friends for a specific Facebook user. 
+
+Can you think of other examples?
+
+---
+  
+Distinctions between ordered categorical and discrete numerical data: 
+  
+_ordered categorical data do not have magnitude_ 
+
+---
+  
+For instance, is an 'A' in a class twice as good as a 'C'? 
+  
+Is a 'C' twice as good as a 'D'? 
+
+--
+
+Not necessarily. 
+
+Grades don't have an inherent magnitude. 
+
+---
+
+However, if we _encode_ grades as 'F=0,D=1,C=2,B=3,A=4', etc. they do have magnitude. 
+
+In that case, an 'A' _is_ twice as good as a 'C', and a 'C' _is_ twice as good as a 'D'. 
+
+---
+
+In summary, 
+
+if ordered data has magnitude, then _discrete numeric_ 
+
+if not, _ordered categorical_.
+
+---
+layout: true
+
+## Continuous numeric data
+
+---
+
+Attributes that can take any value in a continuous set. 
+
+For example, a person's height, in say inches, can take any number (within the range of human heights). 
+
+---
+class: split-40
+
+.column[
+Different dataset: entities are cars and we look at continuous numeric attributes `speed` and `stopping distance`
+]
+
+.column[
+```{r f04_cars_plot, echo=FALSE}
+  data(cars)
+  cars %>%
+    ggplot(aes(x=speed, y=dist)) +
+    geom_point(size=3) +
+    theme_bw() +
+    labs(x="speed (mph)", y="stopping distance (ft)")
+  #plot(cars$speed, cars$dist, pch=19, xlab="speed (mph)", #ylab="stopping distance (ft)")
+```
+]
+
+---
+layout: true
+
+## Continuous Numeric Attributes
+
+---
+
+
+The distinction between _continuous_ and _discrete_ can be tricky: 
+  
+measurements that have finite precision are, in a sense, discrete. 
+
+--
+  
+Remember, continuity is _not_ a property of the specific dataset you have in hand, 
+
+It _is_ a property of the process you are measuring. 
+
+---
+  
+The number of arrests in a neighborhood cannot be fractional, regardless of the precision at which we measure this. 
+
+--
+
+On the other hand, if we had the appropriate tool, we could measure a person's height with infinite precision. 
+
+---
+
+This distinction is very important when we build statistical models of datasets for analysis. 
+
+For now, think of discrete data as the result of counting, and continuous data the result of some physical measurement. 
+
+--
+
+Here's a question: is `age` in our dataset a continuous or discrete numeric value?
+
+---
+layout: true
+## Other examples
+
+---
+  
+[MNIST dataset of handwritten digits](https://www.kaggle.com/c/digit-recognizer). 
+
+Each image is an _entity_. 
+
+Each image has a _label_ attribute which states which of the digits 0,1,...9 is represented by the image. 
+
+What type of data is this (categorical, continuous numeric, or discrete numeric)? 
+  
+---
+
+![](img/mnist_example.png)
+
+---
+
+Each image is represented by grayscale values in a 28x28 grid. 
+
+That's 784 attributes, one for each square in the grid, containing a grayscale value. 
+
+What type of data are these other 784 attributes?
+
+---
+layout: true
+
+## Other important datatypes
+
+---
+
+- Text: Arbitrary strings that do not encode a categorical attribute.
+
+- Datetime: Date and time of some event or observation (e.g., `arrestDate`, `arrestTime`) 
+
+- Geolocation: Latitude and Longitude of some event or observation (e.g., `Location.`)  
+
+- Relationships: links between entities, with links having their own attributes (e.g., social network, how long have two people followed each other)
+
+---
+layout: true
+
+## Units
+
+---
+
+Something that we tend to forget but is **extremely** important for the modeling and interpretation of data.
+
+Attributes are _measurements_ and that they have _units_. 
+
+For example, age of a person can be measured in different units: _years_, _months_, etc. 
+
+---
+
+These can be converted to one another, but nonetheless in a given dataset, that _attribute_ or measurement will be recorded in some specific units. 
+
+
+Similar arguments go for distances and times, for example. 
+
+---
+
+In other cases, we may have unitless measurements (we will see later an example of this when we do _dimensionality reduction_). 
+
+In these cases, it is worth thinking about _why_ your measurements are unit-less.
+
+---
+
+When performing analyses that try to summarize the effect of some measurement or attribute on another, units matter a lot! 
+
+We will see the importance of this in our _regression_ section. 
+
+For now, make sure you make a mental note of units for each measurement you come across. 
+
+Important when modeling and interpreting the results of these models. 
+
