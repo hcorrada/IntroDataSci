@@ -52,7 +52,7 @@ You can see an example submission here: [HW1 Rmarkdown submission example](/misc
 
 ### Jupyter Notebook
 
-Download the notebook here: [HW1 ipynb shell](/misc/hw1_datatypes_wrangling.ipynb) and fill in with your answers. Export as PDF (or HTML and then print to PDF) and submit to ELMS. You can see an example submission here: [HW1 ipynb submission example](/misc/hw1_datatypes_wrangling_sample.ipynb) [HW1 ipynb PDF submission example)(/misc/hw1_datatypes_wrangling_ipynb_sample.pdf)
+Download the notebook here: [HW1 ipynb shell](/misc/hw1_datatypes_wrangling.ipynb) and fill in with your answers. Export as PDF (or HTML and then print to PDF) and submit to ELMS. You can see an example submission here: [HW1 ipynb submission example](/misc/hw1_datatypes_wrangling_sample.ipynb) [HW1 ipynb PDF submission example](/misc/hw1_datatypes_wrangling_ipynb_sample.pdf)
 
 
 
