@@ -72,7 +72,7 @@ libraries, data resources and publishing mechanisms.
 | Samuel Dooley        | Thursday  | 07:30      | 09:30    |          | Both     |
 | Gowthami Somepalli   | Thursday  | 14:00      | 18:00    |          |          |
 | Alexander Hoyle      | Friday    | 08:30      | 10:30    |          | Both     |
-| Zinat Tasnim         | Friday    | 10:00      | 12:00    |          | Both     |
+| Zinat Tasnim         | Friday    | 09:00      | 11:00    |          | Both     |
 | Aya Ismail           | Friday    | 12:00      | 14:00    |          | Python   |
 | Hector Corrada Bravo | Friday    | 13:00      | 14:00    | AVW 3223 | Both     |
 | Noor Pratap          | Friday    | 14:00      | 16:00    |          | Both     |
