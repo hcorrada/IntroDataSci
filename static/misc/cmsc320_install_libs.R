@@ -21,5 +21,6 @@ install.packages(c(
 "tidytext",
 "tidyverse",
 "rpart",
-"caret")
+"caret"),
+repos="https://cran.rstudio.com"
 )
