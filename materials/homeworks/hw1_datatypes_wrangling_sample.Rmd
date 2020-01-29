@@ -1,5 +1,5 @@
 ---
-title: 'HW: Datatypes and Wrangling'
+title: 'HW1: Datatypes and Wrangling'
 author: "Hector Corrada Bravo"
 date: "`r Sys.Date()`"
 output:
@@ -58,7 +58,7 @@ arrest_tab %>% slice(1:10)
 
 ## Wrangling
 
-1) My pipeline computes average arrest age (ignoring ages <= 0), for each district and writes them in increasing order
+1) My pipeline computes average arrest age (ignoring ages <= 0), for each district and writes them in increasing order. It would be useful to see which districts tend to arrest younger individuals.
 
 ```{r pipeline}
 mean_ages <- arrest_tab %>%
