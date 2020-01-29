@@ -2,7 +2,7 @@
 
 Now that we have a data frame describing our data, let's learn a few fundamental operations we perform on data frames on almost any analysis. We divide these first set of operations into two groups: operations on _attributes_ and operations on _entitites_. These operations are defined in the `dplyr` package, part of the `tidyverse`, and are described in more detail in the "R for Data Science" textbook available in the course logistics page: http://r4ds.had.co.nz/transform.html.
 
-## Operations that select attributes
+## Operations that subset attributes
 
 ### `select`
 
@@ -75,7 +75,7 @@ Also like `select`, the result of calling `rename` is a data frame. In fact, thi
 
 ment in the function call) and return data frames.
 
-## Operations that select entities
+## Operations that subset entities
 
 Next, we look at operations that select entities from a data frame. We will see a few operations to do this: selecting specific entities (rows) by position, selecting them based on attribute properties, and random sampling.
 

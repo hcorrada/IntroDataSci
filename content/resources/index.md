@@ -46,17 +46,18 @@ datasets, questions and tutorials.
 * [Gapminder](http://www.gapminder.org/data/)
 * [Global Health Observatory](http://www.who.int/gho/database/en/): World Health Organization's data repository.
 * [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/): contains many datasets useful for testing and benchmarking learning algorithms.
-* [StatLib](http://lib.stat.cmu.edu/): Statistical software and
+* [StatLib](http://lib.stat.cmu.edu/datasets/): Statistical software and
 dataset portal maintained by CMU.
-* Another large list of repositories: [http://www.inside-r.org/howto/finding-data-internet](http://www.inside-r.org/howto/finding-data-internet)
 * Yet another list of public datasets:
 [https://github.com/caesar0301/awesome-public-datasets](https://github.com/caesar0301/awesome-public-datasets)
 * And yet another list of public datasets: [http://blog.bigml.com/list-of-public-data-sources-fit-for-machine-learning/#national_governments](http://blog.bigml.com/list-of-public-data-sources-fit-for-machine-learning/#national_governments)
 * [Airbnb data](http://insideairbnb.com/get-the-data.html)  
-* [NYC Taxi ride data](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml)
+* [NYC Taxi ride data](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page) 
 * [Resources for data journalism with R](http://rddj.info)  
 * [Algorithms and datasets for computational social science and digital humanities](http://ropengov.github.io/)  
 * [Open population datasets](https://code.facebook.com/posts/596471193873876/open-population-datasets-and-open-challenges/)
 * [Google BigQuery Public Datasets](https://cloud.google.com/bigquery/public-data/)
 * [AWS Public Datasets](https://aws.amazon.com/public-datasets/)
+* Yelp provides a dataset for use if you give them your email address [here](https://www.yelp.com/dataset/download)  
+
 
