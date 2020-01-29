@@ -6,6 +6,7 @@ date: "`r Sys.Date()`"
 css: ["custom.css"]
 output:
   xaringan::moon_reader:
+    chakra: libs/remark-0.14.0.min.js
     lib_dir: libs
     seal: false
     includes: 
@@ -40,9 +41,6 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(cache=TRUE)
 ```
 
----
-layout: true
-
 ## Principles: Basic Operations
 
 Now that we have a data frame describing our data, let's learn a few fundamental operations we perform on data frames on almost any analysis. 
@@ -52,10 +50,9 @@ We divide these first set of operations into two groups:
 - operations on _attributes_ 
 - operations on _entitites_. 
 
-```{r vars1, message=FALSE, echo=FALSE}
+```{r vars1, message=FALSE, echo=FALSE, result="hide"}
 library(tidyverse)
 arrest_tab <- read_csv("data/BPD_Arrests.csv")
-arrest_tab
 ```
 
 ```{r echo=FALSE, eval=FALSE}
@@ -67,24 +64,24 @@ arrest_tab$incidentOffense <- factor(arrest_tab$incidentOffense)
 ---
 layout: true
 
-## Operations that select attributes
+## Operations that subset attributes
 
 ---
+class: split-60
 
 ### `select`
 
-In our data set we have a large number of attributes describing each arrest. 
-
-We only want to study patterns in these arrests based on a smaller number of attributes.
+.column[
+Suppose we only want to study patterns in these arrests based on a smaller number of attributes.
 
 In that case we would like to create a data frame that contains only those attributes of interest. 
+]
 
-We use the `select` function for this.
-
----
-
-![](img/select.png)
-
+.column[
+```{r select_img, echo=FALSE, fig.align="center", out.width="30%"}
+knitr::include_graphics("img/select.png")
+```
+]
 ---
 
 Let's create a data frame containing only the `age`, `sex` and `district` attributes
@@ -106,21 +103,27 @@ select(arrest_tab, 1:5)
 ---
 layout: true
 
-## Operations that select entities
+## Operations that subset entities
+
 
 ---
-
-![](img/subset.png)
-
----
+class: split-60
 
 ### `slice`
 
+.column[
 We can choose specific entities by their row position. For instance, to choose entities in rows 1,3 and 10, we would use the following:
 
-```{r slice}
+```{r slice, eval=FALSE}
 slice(arrest_tab, c(1, 3, 10))
 ```
+]
+
+.column[
+```{r slice_fig, echo=FALSE, fig.align="center", out.width="40%"}
+knitr::include_graphics("img/subset.png")
+```
+]
 
 ---
 
@@ -158,7 +161,7 @@ filter(arrest_tab, age < 18)
 
 ---
 
-The second argument is an expression that evaluates to a logical value (`TRUE` or `FALSE`), if the expression evaluates to TRUE for a given entity (row) then that entity (row) is part of the resulting data frame. 
+The second argument is an expression that evaluates to a vector of logical values (`TRUE` or `FALSE`), if the expression evaluates to TRUE for a given entity (row) then that entity (row) is part of the resulting data frame. 
 
 ---
 
@@ -203,6 +206,7 @@ sample_frac(arrest_tab, .1)
 ```
 
 ---
+layout: false
 
 ## Pipelines of operations
 
@@ -259,14 +263,12 @@ analysis_tab
 **Exercise**: Create a pipeline that:
 
 1) filters dataset to arrests from the "SOUTHERN" district occurring before "12:00" (`arrestTime`)
+
 2) selects attributes, `sex`, `age`
+
 3) samples 10 entities at random
 
-
-
-
-
-
+---
 
 
 # Principles: More Operations
@@ -278,11 +280,18 @@ library(tidyverse)
 arrest_tab <- read_csv("data/BPD_Arrests.csv")
 ```
 
-In the previous section we introduced our first few operations to manipulate data frames. Next, we learn a few more: sorting, creating new attributes, summarizing and grouping. Finally we will take a short detour through a discussion on vectors. 
+Next, we learn a few more fundamental data operations: sorting, creating new attributes, summarizing and grouping. 
+
+Finally we will take a short detour through a discussion on vectors. 
+
+---
+layout: true
 
 ## Operations that sort entities
 
-The first operation we will look at today is used to sort entities based on their attribute values. As an example, suppose we wanted to find the arrests with the 10 youngest subjects. If we had an operation that re-orders entities based on the value of their `age` attribute, we can then use the `slice` operation we saw before to create a data frame with just the entities of interest
+---
+
+Re-order entities based on the value of their `age` attribute, and then `slice` to create a data frame with just the entities of interest
 
 ```{r arrange_slice}
 arrest_tab %>%
@@ -290,9 +299,9 @@ arrest_tab %>%
   slice(1:10)
 ```
 
-The `arrange` operation sorts entities by increasing value of the attributes passed as arguments. 
+---
 
-The `desc` helper function is used to indicate sorting by decreasing value. For example, to find the arrests with the 10 _oldest_ subjects we would use:
+The `arrange` operation sorts entities by increasing attribute values. Use `desc` helper to sort by decreasing value. E.g., find the arrests with the 10 _oldest_ subjects:
 
 ```{r arrange_desc_slice}
 arrest_tab %>%
@@ -300,11 +309,22 @@ arrest_tab %>%
   slice(1:10)
 ```
 
+---
+layout: true
+
 ## Operations that create new attributes
 
-We will often see that for many analyses, be it for interpretation or for statistical modeling, we will create new attributes based on existing attributes in a dataset. 
+---
 
-![](img/mutate.png)
+We will often see that for many analyses we will create new attributes based on existing attributes in a dataset. 
+
+- This is helpful for interpretation, visualization and/or statistical modeling.
+
+```{r mutate_fig, echo=FALSE, fig.align="center", out.width="50%"}
+knitr::include_graphics("img/mutate.png")
+```
+
+---
 
 Suppose I want to represent age in months rather than years in our dataset. To do so I would multiply 12 to the existing age attribute. The function `mutate` creates new attributes based on the result of a given expression:
 
@@ -314,28 +334,40 @@ arrest_tab %>%
   select(arrest, age, age_months)
 ```
 
-## Operations that summarize attribute values over entities
+---
+layout: true
 
-Once we have a set of entities and attributes in a given data frame, we may need to summarize attribute values over the set of entities in the data frame. It collapses the data frame to a single row containing the desired attribute summaries.
+## Operations that summarize (aggregate) attribute values over entities
 
-![](img/summarize.png)
+---
 
-Continuing with the example we have seen below, we may want to know what the minmum, maximum and average age in the dataset is:
+Collapse a data frame to a single row containing the desired attribute summaries.
+
+```{r summarize_fig, echo=FALSE, fig.align="center", out.width="60%"}
+knitr::include_graphics("img/summarize.png")
+```
+
+
+---
+
+Find minmum, maximum and average age in the dataset:
 
 
 ```{r summarize_mean}
 summarize(arrest_tab, min_age=min(age), mean_age=mean(age), max_age=max(age))
 ```
 
-The `summarize` functions takes a data frame and calls a summary function over attributes of the data frame. Common summary functions to use include:
+---
 
 | Operation(s) | Result |
 |-----------|-------------|
-| `mean`, `median` | average and median attribute value, respectively |
+| `mean`, `median` | average and median attribute value |
 | `sd` | standard deviation of attribute values |
-| `min`, `max` | minimum and maximum attribute values, respectively |
+| `min`, `max` | minimum and maximum attribute values |
 | `n`, `n_distinct` | number of attribute values and number of _distinct_ attribute values |
-| `any`, `all` | for logical attributes (TRUE/FALSE): is `any` attribute value TRUE, or are `all` attribute values TRUE |
+| `any`, `all` | is `any` attribute value TRUE, or are `all` attribute values TRUE |
+
+---
 
 Let's see the number of distinct districts in our dataset:
 
@@ -345,22 +377,47 @@ summarize(arrest_tab, n_distinct(district))
 
 We may also refer to these summarization operation as **aggregation** since we are computing _aggregates_ of attribute values.
 
+---
+layout: true
+
 ## Operations that group entities
 
-Summarization (therefore aggregation) goes hand in hand with data grouping, where summaries are computed _conditioned_ on other attributes. The notion of _conditioning_ is fundamental to data analysis and we will see it very frequently through the course. It is the basis of statistical analysis and Machine Learning models and it is essential in understanding the design of effective visualizations.
+---
 
-![](img/groupby.png)
+Summarization (aggregation) goes hand in hand with data grouping, where summaries are computed _conditioned_ on other attributes. 
+
+The notion of _conditioning_ is fundamental to data analysis and we will see it very frequently through the course. 
+
+It is the basis of statistical analysis and Machine Learning models and it is essential in understanding the design of effective visualizations.
+
+---
 
 The goal is to group entities with the same value of one or
-more attributes. The `group_by` function in essence annotates the rows of a data frame as belonging to a specific group based on the value of some chosen attributes. This call returns a data frame that is grouped by the value of the `district` attribute.
+more attributes. 
+
+The `group_by` function in essence annotates the rows of a data frame as belonging to a specific group based on the value of some chosen attributes. 
+
+```{r groupby_fig, echo=FALSE, fig.align="center", out.width="60%"}
+knitr::include_graphics("img/groupby.png")
+```
+
+---
+
+Group entities by the value of the `district` attribute.
 
 ```{r groupby}
 group_by(arrest_tab, district)
 ```
 
-Subsequent operations are then performed **for each group independently**. For example, when `summarize` is applied to a grouped data frame, summaries are computed for each group of entities, rather than the whole set of entities.
+---
 
-For instance, let's calculate minimum, maximum and average age for each district in our dataset:
+Subsequent operations are then performed **for each group independently**. 
+
+For example, when `summarize` is applied to a grouped data frame, summaries are computed for each group of entities, rather than the whole set of entities.
+
+---
+
+Calculate minimum, maximum and average age for each district:
 
 ```{r groupby_summarize}
 arrest_tab %>%
@@ -368,9 +425,17 @@ arrest_tab %>%
   summarize(min_age=min(age), max_age=max(age), mean_age=mean(age))
 ```
 
-Note that after this operation we have effectively changed the entities represented in the result. The entities in our original dataset are arrests while the entities for the result of the last example are the districts. This is a general property of group_by and summarize: it defines a data set where entities are defined by distinct values of the attributes we use for grouping.
+---
 
-Let's look at another example combining some of the operations we have seen so far. Let's compute the average age for subjects 21 years or older grouped by district and sex:
+`group_by/summarize` defines new entities. 
+
+The entities in our original dataset are arrests. The entities for the result of the last example are the districts. 
+
+This is a general property of group_by and summarize: it defines a data set where entities are defined by distinct values of the attributes we use for grouping.
+
+---
+
+Another example: average age for subjects 21 years or older grouped by district and sex:
 
 ```{r groupby_example}
 arrest_tab %>%
@@ -379,12 +444,19 @@ arrest_tab %>%
   summarize(mean_age=mean(age))
 ```
 
+---
+
 **Exercise**: Write a data operation pipeline that
 
 1) filters records to the southern district and ages between 18 and 25
 2) computes mean arrest age for each sex
 
+---
+layout: true
+
 ## Vectors
+
+---
 
 We briefly saw previously operators to create vectors in R. For instance, we can use `seq` to create a vector that consists of a sequence of integers:
 
@@ -393,17 +465,23 @@ multiples_of_three <- seq(3, 30, by=3)
 multiples_of_three
 ```
 
+---
+
 Let's how this is represented in R (the `str` is very handy to do this type of digging around):
 
 ```{r class_seq, cache=FALSE}
 str(multiples_of_three)
 ```
 
-So, this is a `numeric` vector of length 10. Like many other languages we use square brackets `[]` to index vectors:
+---
+
+Like many other languages we use square brackets `[]` to index vectors:
 
 ```{r indexing}
 multiples_of_three[1]
 ```
+
+---
 
 We can use ranges as before
 
@@ -411,11 +489,15 @@ We can use ranges as before
 multiples_of_three[1:4]
 ```
 
+---
+
 We can use vectors of non-negative integers for indexing:
 
 ```{r index_vec}
 multiples_of_three[c(1,3,5)]
 ```
+
+---
 
 Or even logical vectors:
 
@@ -423,35 +505,62 @@ Or even logical vectors:
 multiples_of_three[c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE)]
 ```
 
-In R, most operations are designed to work with vectors directly (we call that _vectorized_). For example, if I want to add two vectors together I would write: (look no `for` loop!):
+---
+
+In R, most operations are designed to work with vectors directly (we call that _vectorized_). 
+
+For example, if I want to add two vectors together I would write: (look no `for` loop!):
 
 ```{r sum_vec}
 multiples_of_three + multiples_of_three
 ```
 
-This also works for other arithmetic and logical operations (e.g., `-`, `*`, `/`, `&`, `|`). Give them a try!
+This also works for other arithmetic and logical operations (e.g., `-`, `*`, `/`, `&`, `|`). 
 
-In data analysis the _vector_ is probably the most fundamental data type (other than basic numbers, strings, etc.). Why? Consider getting data about one attribute, say height, for a group of people. What do you get? An array of numbers, all in the same unit (say feet, inches or centimeters). How about their name? Then you get an array of strings. Abstractly, we think of vectors as arrays of values, all of the same _class_ or datatype. 
+---
+
+In data analysis the _vector_ is probably the most fundamental data type (other than basic numbers, strings, etc.). 
+
+Why? Consider getting data about one attribute, say height, for a group of people. What do you get? An vector of numbers, all in the same unit (say feet, inches or centimeters). 
+
+How about their name? Then you get a vector of strings. 
+
+Abstractly, we think of vectors as arrays of values, all of the same _class_ or datatype. 
+
+---
+layout: true
 
 ## Attributes as vectors
 
-In fact, in the data frames we have been working on, each column, corresponding to an attribute, is a vector. We use the `pull` function to extract a vector from a data frame. We can then operate index them, or operate on them as vectors
+---
+
+Each column, corresponding to an attribute, is a vector. We use the `pull` function to extract a vector from a data frame. 
+
+We can then operate index them, or operate on them as vectors
 
 ```{r pull_age}
 age_vec <- arrest_tab %>% pull(age)
 age_vec[1:10]
 ```
 
+---
+
+Or, 
+
 ```{r add_age}
 12 * age_vec[1:10]
 ```
 
-We previously saw how the `$` operator serves the same function. 
+---
+
+The `$` operator serves the same function. 
 
 ```{r dollar}
 age_vec <- arrest_tab$age
 age_vec[1:10]
 ```
+
+---
 
 The `pull` function however, can be used as part of a pipeline (using operator `%>%`):
 
@@ -461,9 +570,11 @@ arrest_tab %>%
   mean()
 ```
 
+---
+
 ## Functions
 
-Once we have established useful pipelines for a dataset we will want to abstract them into reusable functions that we can apply in other analyses. To do that we would write our own functions that encapsulate the pipelines we have created. As an example, take a function that executes the age by district/sex summarization we created before:
+How to abstract pipelines?  Factor into reusable functions that we can apply in other analyses. E.g., a function that executes the age by district/sex summarization we created before:
 
 ```{r func_example}
 summarize_district <- function(df) {
@@ -474,9 +585,15 @@ summarize_district <- function(df) {
 }
 ```
 
+---
+
 You can include multiple expressions in the function definition (inside brackets `{}`). Notice there is no `return` statement in this function. When a function is called, it returns the value of the last expression in the function definition. In this example, it would be the data frame we get from applying the pipeline of operations. 
 
+---
+
 You can find more information about vectors, functions and other programming matters we might run into in class in Chapters 17-21 of [R for Data Science](http://r4ds.had.co.nz/program-intro.html)
+
+---
 
 **Exercise** Abstract the pipeline you wrote in the previous unit into a function that works for arbitrary districts. 
 The function should take arguments `df` and `district`.

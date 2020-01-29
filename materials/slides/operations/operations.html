@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Operations</title>
     <meta charset="utf-8" />
     <meta name="author" content="Héctor Corrada Bravo" />
-    <meta name="date" content="2019-08-01" />
+    <meta name="date" content="2020-01-29" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
@@ -24,7 +24,7 @@ count: false
 
 .other-info[
 University of Maryland, College Park, USA  
-2019-08-01
+2020-01-29
 ]
 
 .logo[![](img/logo.png)]
@@ -32,9 +32,6 @@ University of Maryland, College Park, USA
 ---
 
 
-
----
-layout: true
 
 ## Principles: Basic Operations
 
@@ -46,48 +43,28 @@ We divide these first set of operations into two groups:
 - operations on _entitites_. 
 
 
-```
-## # A tibble: 104,528 x 15
-##    arrest   age race  sex   arrestDate arrestTime arrestLocation
-##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;         
-##  1 1.11e7    23 B     M     01/01/2011 00'00"     &lt;NA&gt;          
-##  2 1.11e7    37 B     M     01/01/2011 01'00"     2000 Wilkens …
-##  3 1.11e7    46 B     M     01/01/2011 01'00"     2800 Mayfield…
-##  4 1.11e7    50 B     M     01/01/2011 04'00"     2100 Ashburto…
-##  5 1.11e7    33 B     M     01/01/2011 05'00"     4000 Wilsby A…
-##  6 1.11e7    41 B     M     01/01/2011 05'00"     2900 Spellman…
-##  7 1.11e7    29 B     M     01/01/2011 05'00"     800 N Monroe …
-##  8 1.11e7    20 W     M     01/01/2011 05'00"     5200 Moravia …
-##  9 1.11e7    24 B     M     01/01/2011 07'00"     2400 Gainsdbo…
-## 10 1.11e7    53 B     M     01/01/2011 15'00"     3300 Woodland…
-## # … with 104,518 more rows, and 8 more variables: incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;
-```
 
 
 
 ---
 layout: true
 
-## Operations that select attributes
+## Operations that subset attributes
 
 ---
+class: split-60
 
 ### `select`
 
-In our data set we have a large number of attributes describing each arrest. 
-
-We only want to study patterns in these arrests based on a smaller number of attributes.
+.column[
+Suppose we only want to study patterns in these arrests based on a smaller number of attributes.
 
 In that case we would like to create a data frame that contains only those attributes of interest. 
+]
 
-We use the `select` function for this.
-
----
-
-![](img/select.png)
-
+.column[
+&lt;img src="img/select.png" width="30%" style="display: block; margin: auto;" /&gt;
+]
 ---
 
 Let's create a data frame containing only the `age`, `sex` and `district` attributes
@@ -145,34 +122,26 @@ select(arrest_tab, 1:5)
 ---
 layout: true
 
-## Operations that select entities
+## Operations that subset entities
+
 
 ---
-
-![](img/subset.png)
-
----
+class: split-60
 
 ### `slice`
 
+.column[
 We can choose specific entities by their row position. For instance, to choose entities in rows 1,3 and 10, we would use the following:
 
 
 ```r
 slice(arrest_tab, c(1, 3, 10))
 ```
+]
 
-```
-## # A tibble: 3 x 15
-##   arrest   age race  sex   arrestDate arrestTime arrestLocation
-##    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;         
-## 1 1.11e7    23 B     M     01/01/2011 00'00"     &lt;NA&gt;          
-## 2 1.11e7    46 B     M     01/01/2011 01'00"     2800 Mayfield…
-## 3 1.11e7    53 B     M     01/01/2011 15'00"     3300 Woodland…
-## # … with 8 more variables: incidentOffense &lt;chr&gt;, incidentLocation &lt;chr&gt;,
-## #   charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post &lt;dbl&gt;,
-## #   neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;
-```
+.column[
+&lt;img src="img/subset.png" width="40%" style="display: block; margin: auto;" /&gt;
+]
 
 ---
 
@@ -265,7 +234,7 @@ filter(arrest_tab, age &lt; 18)
 
 ---
 
-The second argument is an expression that evaluates to a logical value (`TRUE` or `FALSE`), if the expression evaluates to TRUE for a given entity (row) then that entity (row) is part of the resulting data frame. 
+The second argument is an expression that evaluates to a vector of logical values (`TRUE` or `FALSE`), if the expression evaluates to TRUE for a given entity (row) then that entity (row) is part of the resulting data frame. 
 
 ---
 
@@ -390,6 +359,7 @@ sample_frac(arrest_tab, .1)
 ```
 
 ---
+layout: false
 
 ## Pipelines of operations
 
@@ -484,25 +454,30 @@ analysis_tab
 **Exercise**: Create a pipeline that:
 
 1) filters dataset to arrests from the "SOUTHERN" district occurring before "12:00" (`arrestTime`)
+
 2) selects attributes, `sex`, `age`
+
 3) samples 10 entities at random
 
-
-
-
-
-
+---
 
 
 # Principles: More Operations
 
 
 
-In the previous section we introduced our first few operations to manipulate data frames. Next, we learn a few more: sorting, creating new attributes, summarizing and grouping. Finally we will take a short detour through a discussion on vectors. 
+Next, we learn a few more fundamental data operations: sorting, creating new attributes, summarizing and grouping. 
+
+Finally we will take a short detour through a discussion on vectors. 
+
+---
+layout: true
 
 ## Operations that sort entities
 
-The first operation we will look at today is used to sort entities based on their attribute values. As an example, suppose we wanted to find the arrests with the 10 youngest subjects. If we had an operation that re-orders entities based on the value of their `age` attribute, we can then use the `slice` operation we saw before to create a data frame with just the entities of interest
+---
+
+Re-order entities based on the value of their `age` attribute, and then `slice` to create a data frame with just the entities of interest
 
 
 ```r
@@ -530,9 +505,9 @@ arrest_tab %&gt;%
 ## #   neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;
 ```
 
-The `arrange` operation sorts entities by increasing value of the attributes passed as arguments. 
+---
 
-The `desc` helper function is used to indicate sorting by decreasing value. For example, to find the arrests with the 10 _oldest_ subjects we would use:
+The `arrange` operation sorts entities by increasing attribute values. Use `desc` helper to sort by decreasing value. E.g., find the arrests with the 10 _oldest_ subjects:
 
 
 ```r
@@ -560,11 +535,20 @@ arrest_tab %&gt;%
 ## #   neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;
 ```
 
+---
+layout: true
+
 ## Operations that create new attributes
 
-We will often see that for many analyses, be it for interpretation or for statistical modeling, we will create new attributes based on existing attributes in a dataset. 
+---
 
-![](img/mutate.png)
+We will often see that for many analyses we will create new attributes based on existing attributes in a dataset. 
+
+- This is helpful for interpretation, visualization and/or statistical modeling.
+
+&lt;img src="img/mutate.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
 
 Suppose I want to represent age in months rather than years in our dataset. To do so I would multiply 12 to the existing age attribute. The function `mutate` creates new attributes based on the result of a given expression:
 
@@ -592,13 +576,21 @@ arrest_tab %&gt;%
 ## # … with 104,518 more rows
 ```
 
-## Operations that summarize attribute values over entities
+---
+layout: true
 
-Once we have a set of entities and attributes in a given data frame, we may need to summarize attribute values over the set of entities in the data frame. It collapses the data frame to a single row containing the desired attribute summaries.
+## Operations that summarize (aggregate) attribute values over entities
 
-![](img/summarize.png)
+---
 
-Continuing with the example we have seen below, we may want to know what the minmum, maximum and average age in the dataset is:
+Collapse a data frame to a single row containing the desired attribute summaries.
+
+&lt;img src="img/summarize.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+Find minmum, maximum and average age in the dataset:
 
 
 
@@ -613,15 +605,17 @@ summarize(arrest_tab, min_age=min(age), mean_age=mean(age), max_age=max(age))
 ## 1       0     33.2      87
 ```
 
-The `summarize` functions takes a data frame and calls a summary function over attributes of the data frame. Common summary functions to use include:
+---
 
 | Operation(s) | Result |
 |-----------|-------------|
-| `mean`, `median` | average and median attribute value, respectively |
+| `mean`, `median` | average and median attribute value |
 | `sd` | standard deviation of attribute values |
-| `min`, `max` | minimum and maximum attribute values, respectively |
+| `min`, `max` | minimum and maximum attribute values |
 | `n`, `n_distinct` | number of attribute values and number of _distinct_ attribute values |
-| `any`, `all` | for logical attributes (TRUE/FALSE): is `any` attribute value TRUE, or are `all` attribute values TRUE |
+| `any`, `all` | is `any` attribute value TRUE, or are `all` attribute values TRUE |
+
+---
 
 Let's see the number of distinct districts in our dataset:
 
@@ -639,14 +633,31 @@ summarize(arrest_tab, n_distinct(district))
 
 We may also refer to these summarization operation as **aggregation** since we are computing _aggregates_ of attribute values.
 
+---
+layout: true
+
 ## Operations that group entities
 
-Summarization (therefore aggregation) goes hand in hand with data grouping, where summaries are computed _conditioned_ on other attributes. The notion of _conditioning_ is fundamental to data analysis and we will see it very frequently through the course. It is the basis of statistical analysis and Machine Learning models and it is essential in understanding the design of effective visualizations.
+---
 
-![](img/groupby.png)
+Summarization (aggregation) goes hand in hand with data grouping, where summaries are computed _conditioned_ on other attributes. 
+
+The notion of _conditioning_ is fundamental to data analysis and we will see it very frequently through the course. 
+
+It is the basis of statistical analysis and Machine Learning models and it is essential in understanding the design of effective visualizations.
+
+---
 
 The goal is to group entities with the same value of one or
-more attributes. The `group_by` function in essence annotates the rows of a data frame as belonging to a specific group based on the value of some chosen attributes. This call returns a data frame that is grouped by the value of the `district` attribute.
+more attributes. 
+
+The `group_by` function in essence annotates the rows of a data frame as belonging to a specific group based on the value of some chosen attributes. 
+
+&lt;img src="img/groupby.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+Group entities by the value of the `district` attribute.
 
 
 ```r
@@ -673,9 +684,15 @@ group_by(arrest_tab, district)
 ## #   district &lt;chr&gt;, post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location 1` &lt;chr&gt;
 ```
 
-Subsequent operations are then performed **for each group independently**. For example, when `summarize` is applied to a grouped data frame, summaries are computed for each group of entities, rather than the whole set of entities.
+---
 
-For instance, let's calculate minimum, maximum and average age for each district in our dataset:
+Subsequent operations are then performed **for each group independently**. 
+
+For example, when `summarize` is applied to a grouped data frame, summaries are computed for each group of entities, rather than the whole set of entities.
+
+---
+
+Calculate minimum, maximum and average age for each district:
 
 
 ```r
@@ -700,9 +717,17 @@ arrest_tab %&gt;%
 ## 10 &lt;NA&gt;               0      87     33.4
 ```
 
-Note that after this operation we have effectively changed the entities represented in the result. The entities in our original dataset are arrests while the entities for the result of the last example are the districts. This is a general property of group_by and summarize: it defines a data set where entities are defined by distinct values of the attributes we use for grouping.
+---
 
-Let's look at another example combining some of the operations we have seen so far. Let's compute the average age for subjects 21 years or older grouped by district and sex:
+`group_by/summarize` defines new entities. 
+
+The entities in our original dataset are arrests. The entities for the result of the last example are the districts. 
+
+This is a general property of group_by and summarize: it defines a data set where entities are defined by distinct values of the attributes we use for grouping.
+
+---
+
+Another example: average age for subjects 21 years or older grouped by district and sex:
 
 
 ```r
@@ -739,12 +764,19 @@ arrest_tab %&gt;%
 ## 20 &lt;NA&gt;         M         35.5
 ```
 
+---
+
 **Exercise**: Write a data operation pipeline that
 
 1) filters records to the southern district and ages between 18 and 25
 2) computes mean arrest age for each sex
 
+---
+layout: true
+
 ## Vectors
+
+---
 
 We briefly saw previously operators to create vectors in R. For instance, we can use `seq` to create a vector that consists of a sequence of integers:
 
@@ -758,6 +790,8 @@ multiples_of_three
 ##  [1]  3  6  9 12 15 18 21 24 27 30
 ```
 
+---
+
 Let's how this is represented in R (the `str` is very handy to do this type of digging around):
 
 
@@ -769,7 +803,9 @@ str(multiples_of_three)
 ##  num [1:10] 3 6 9 12 15 18 21 24 27 30
 ```
 
-So, this is a `numeric` vector of length 10. Like many other languages we use square brackets `[]` to index vectors:
+---
+
+Like many other languages we use square brackets `[]` to index vectors:
 
 
 ```r
@@ -779,6 +815,8 @@ multiples_of_three[1]
 ```
 ## [1] 3
 ```
+
+---
 
 We can use ranges as before
 
@@ -791,6 +829,8 @@ multiples_of_three[1:4]
 ## [1]  3  6  9 12
 ```
 
+---
+
 We can use vectors of non-negative integers for indexing:
 
 
@@ -801,6 +841,8 @@ multiples_of_three[c(1,3,5)]
 ```
 ## [1]  3  9 15
 ```
+
+---
 
 Or even logical vectors:
 
@@ -813,7 +855,11 @@ multiples_of_three[c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE, FALSE, TRUE, F
 ## [1]  3  9 15 21 27
 ```
 
-In R, most operations are designed to work with vectors directly (we call that _vectorized_). For example, if I want to add two vectors together I would write: (look no `for` loop!):
+---
+
+In R, most operations are designed to work with vectors directly (we call that _vectorized_). 
+
+For example, if I want to add two vectors together I would write: (look no `for` loop!):
 
 
 ```r
@@ -824,13 +870,28 @@ multiples_of_three + multiples_of_three
 ##  [1]  6 12 18 24 30 36 42 48 54 60
 ```
 
-This also works for other arithmetic and logical operations (e.g., `-`, `*`, `/`, `&amp;`, `|`). Give them a try!
+This also works for other arithmetic and logical operations (e.g., `-`, `*`, `/`, `&amp;`, `|`). 
 
-In data analysis the _vector_ is probably the most fundamental data type (other than basic numbers, strings, etc.). Why? Consider getting data about one attribute, say height, for a group of people. What do you get? An array of numbers, all in the same unit (say feet, inches or centimeters). How about their name? Then you get an array of strings. Abstractly, we think of vectors as arrays of values, all of the same _class_ or datatype. 
+---
+
+In data analysis the _vector_ is probably the most fundamental data type (other than basic numbers, strings, etc.). 
+
+Why? Consider getting data about one attribute, say height, for a group of people. What do you get? An vector of numbers, all in the same unit (say feet, inches or centimeters). 
+
+How about their name? Then you get a vector of strings. 
+
+Abstractly, we think of vectors as arrays of values, all of the same _class_ or datatype. 
+
+---
+layout: true
 
 ## Attributes as vectors
 
-In fact, in the data frames we have been working on, each column, corresponding to an attribute, is a vector. We use the `pull` function to extract a vector from a data frame. We can then operate index them, or operate on them as vectors
+---
+
+Each column, corresponding to an attribute, is a vector. We use the `pull` function to extract a vector from a data frame. 
+
+We can then operate index them, or operate on them as vectors
 
 
 ```r
@@ -842,6 +903,10 @@ age_vec[1:10]
 ##  [1] 23 37 46 50 33 41 29 20 24 53
 ```
 
+---
+
+Or, 
+
 
 ```r
 12 * age_vec[1:10]
@@ -851,7 +916,9 @@ age_vec[1:10]
 ##  [1] 276 444 552 600 396 492 348 240 288 636
 ```
 
-We previously saw how the `$` operator serves the same function. 
+---
+
+The `$` operator serves the same function. 
 
 
 ```r
@@ -862,6 +929,8 @@ age_vec[1:10]
 ```
 ##  [1] 23 37 46 50 33 41 29 20 24 53
 ```
+
+---
 
 The `pull` function however, can be used as part of a pipeline (using operator `%&gt;%`):
 
@@ -876,9 +945,11 @@ arrest_tab %&gt;%
 ## [1] 33.19639
 ```
 
+---
+
 ## Functions
 
-Once we have established useful pipelines for a dataset we will want to abstract them into reusable functions that we can apply in other analyses. To do that we would write our own functions that encapsulate the pipelines we have created. As an example, take a function that executes the age by district/sex summarization we created before:
+How to abstract pipelines?  Factor into reusable functions that we can apply in other analyses. E.g., a function that executes the age by district/sex summarization we created before:
 
 
 ```r
@@ -890,15 +961,21 @@ summarize_district &lt;- function(df) {
 }
 ```
 
+---
+
 You can include multiple expressions in the function definition (inside brackets `{}`). Notice there is no `return` statement in this function. When a function is called, it returns the value of the last expression in the function definition. In this example, it would be the data frame we get from applying the pipeline of operations. 
 
+---
+
 You can find more information about vectors, functions and other programming matters we might run into in class in Chapters 17-21 of [R for Data Science](http://r4ds.had.co.nz/program-intro.html)
+
+---
 
 **Exercise** Abstract the pipeline you wrote in the previous unit into a function that works for arbitrary districts. 
 The function should take arguments `df` and `district`.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="libs/remark-0.14.0.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,
@@ -943,7 +1020,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 <script>
 remark.macros['scale'] = function (percentage) {
   var url = this;
