@@ -55,31 +55,28 @@ libraries, data resources and publishing mechanisms.
 
 ## TAs and Office Hours Schedule
 
-**TBD**
+**Location is (open area in front of) IRB 4138 unless noted otherwise**
 
-<!-- Location is AVW 1120 unless noted otherwise -->
-
-<!-- | Instructor           | Day       | Start Time | End Time | Location |   | -->
-<!-- |----------------------|-----------|------------|----------|----------|---| -->
-<!-- | Victoria Cepeda      | Monday    |       9:00 |    11:00 |          |   | -->
-<!-- | Yanchao Sun          | Monday    |      10:00 |    12:00 |          |   | -->
-<!-- | Weiyi Jiang          | Monday    |      11:00 |    1:00 |          |   | -->
-<!-- | Yifan Yang           | Monday    |      12:00 |    13:30 |          |   | -->
-<!-- | Harihara Muralidharan| Monday    |      13:00 |    15:00 |   |   | -->
-<!-- | Ahmed Ghoneim        | Monday    |      16:45 |    20:45 |  |   | -->
-<!-- | William Gomolka      | Tuesday   |       9:00 |    11:00 |          |   | -->
-<!-- | Harihara Muralidharan| Tuesday   |      13:00 |    15:00 |   |   | -->
-<!-- | Eleftheria Briakou   | Wednesday |       9:00 |    11:00 |          |   | -->
-<!-- | Yifan Yang           | Wednesday |      11:00 |    13:30 |          |   | -->
-<!-- | Weiyi Jiang          | Wednesday |      11:00 |    1:00 |          |   | -->
-<!-- | Eleftheria Briakou   | Wednesday |      12:30 |    14:30 |          |   | -->
-<!-- | Christopher Yue      | Wednesday |      17:00 |    21:00 |          |   | -->
-<!-- | Ashley Chang         | Thursday  |       9:00 |    11:00 |          |   | -->
-<!-- | William Gomolka      | Thursday  |      13:00 |    15:00 |          |   | -->
-<!-- | Victoria Cepeda      | Friday    |       9:00 |    11:00 |          |   | -->
-<!-- | Hector Corrada Bravo | Friday    |      13:00 |    14:00 | AVW 3223 |   | -->
-<!-- | Tracy Chen           | Friday    |      13:00 |    17:00 | |   | -->
-<!-- | Yanchao Sun          | Friday    |      14:00 |    16:00 |          |   | -->
+| Instructor           | Day       | Start Time | End Time | Location | R/Python |
+|----------------------|-----------|------------|----------|----------|----------|
+| Aya Ismail           | Monday    | 12:00      | 14:00    |          | Python   |
+| Yifan Yang           | Monday    | 13:00      | 15:00    |          | Both     |
+| Victoria Cepeda      | Monday    | 13:00      | 17:00    |          | Both     |
+| Samuel Dooley        | Tuesday   | 07:30      | 09:30    |          | Both     |
+| Alexander Hoyle      | Tuesday   | 09:00      | 11:00    |          | Both     |
+| Victoria Cepeda      | Tuesday   | 09:30      | 11:30    |          | Both     |
+| Mohamed Gunady       | Tuesday   | 13:00      | 15:00    |          | Both     |
+| Yifan Yang           | Tuesday   | 15:00      | 17:00    |          | Both     |
+| Zinat Tasnim         | Wednesday | 10:00      | 12:00    |          | Both     |
+| Noor Pratap          | Wednesday | 15:00      | 17:00    |          | Both     |
+| Samuel Dooley        | Thursday  | 07:30      | 09:30    |          | Both     |
+| Gowthami Somepalli   | Thursday  | 14:00      | 18:00    |          |          |
+| Alexander Hoyle      | Friday    | 08:30      | 10:30    |          | Both     |
+| Zinat Tasnim         | Friday    | 10:00      | 12:00    |          | Both     |
+| Aya Ismail           | Friday    | 12:00      | 14:00    |          | Python   |
+| Hector Corrada Bravo | Friday    | 13:00      | 14:00    | AVW 3223 | Both     |
+| Noor Pratap          | Friday    | 14:00      | 16:00    |          | Both     |
+| Mohamed Gunady       | Friday    | 15:00      | 17:00    |          | Both     |
 
 ## Communication with course staff
 
