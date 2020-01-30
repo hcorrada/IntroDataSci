@@ -70,7 +70,7 @@ libraries, data resources and publishing mechanisms.
 | Zinat Tasnim         | Wednesday | 10:00      | 12:00    |          | Both     |
 | Noor Pratap          | Wednesday | 15:00      | 17:00    |          | Both     |
 | Samuel Dooley        | Thursday  | 07:30      | 09:30    |          | Both     |
-| Gowthami Somepalli   | Thursday  | 14:00      | 18:00    |          |          |
+| Gowthami Somepalli   | Thursday  | 14:00      | 18:00    |          | Python   |
 | Alexander Hoyle      | Friday    | 08:30      | 10:30    |          | Both     |
 | Zinat Tasnim         | Friday    | 09:00      | 11:00    |          | Both     |
 | Aya Ismail           | Friday    | 12:00      | 14:00    |          | Python   |
