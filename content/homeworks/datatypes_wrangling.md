@@ -6,7 +6,7 @@ date: "2018-02-08"
 
 In this assignment, you will explore and exercise your knowledge of data types, data operations and data plotting.
 
-**DUE**: Friday Feb. 8, 11:59pm
+**DUE**: Friday Feb. 7, 11:59pm
 
 <!--more-->
 
