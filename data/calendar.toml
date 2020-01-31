@@ -51,15 +51,23 @@ title = "Preliminaries 2: More data operations"
 notes = "bookdown-notes/principles-more-operations.html"
 
 [[day03.covers]]
+title = "Lecture Notes: More data operations"
+notes = "slides/cmsc320_operations.pdf"
+
+[[day03.covers]]
 title = "Basic data plotting"
 notes = "bookdown-notes/basic-plotting-with-ggplot.html"
+
+[[day03.covers]]
+title = "Lecture Notes: Basic data plotting"
+notes = "slides/cmsc320_basic-plotting.html"
 
 [[day03.covers]]
 title = "Introduction to literate programming: Notebooks"
 notes = "bookdown-notes/brief-introduction-to-rmarkdown.html"
 
-[day03.class_notes]
-link = "cmsc320_class-notes_20180201.pdf"
+# [day03.class_notes]
+# link = "cmsc320_class-notes_20180201.pdf"
 
 [day04]
 date = "2/5"
