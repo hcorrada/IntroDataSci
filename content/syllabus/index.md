@@ -67,7 +67,9 @@ libraries, data resources and publishing mechanisms.
 | Victoria Cepeda      | Tuesday   | 09:30      | 11:30    |          | Both     |
 | Mohamed Gunady       | Tuesday   | 13:00      | 15:00    |          | Both     |
 | Yifan Yang           | Tuesday   | 15:00      | 17:00    |          | Both     |
+| Theresa Choi         | Tuesday   | 17:00      | 18:00    |          | Both     |
 | Zinat Tasnim         | Wednesday | 10:00      | 12:00    |          | Both     |
+| Theresa Choi         | Wednesday | 10:00      | 13:00    |          | Both     |
 | Noor Pratap          | Wednesday | 15:00      | 17:00    |          | Both     |
 | Samuel Dooley        | Thursday  | 07:30      | 09:30    |          | Both     |
 | Gowthami Somepalli   | Thursday  | 14:00      | 18:00    |          | Python   |
