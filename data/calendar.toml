@@ -73,8 +73,12 @@ notes = "bookdown-notes/brief-introduction-to-rmarkdown.html"
 date = "2/5"
 
 [[day04.covers]]
-title = "Guest Lecture (John Dickerson): Best Practices for Data Science Projects"
-# notes = "slides/cmsc320_best-practices.pdf"
+title = "Guest Lecture (John Dickerson): Best Practices for Data Science Projects [slides in pdf]"
+notes = "slides/cmsc320_s2020_dickerson_guest_lecture.pdf"
+
+[[day04.covers]]
+title = "Guest lecture slidedeck in pptx"
+notes = "slides/cmsc320_s2020_dickerson_guest_lecture.pptx"
 
 [day05]
 date = "2/10"
