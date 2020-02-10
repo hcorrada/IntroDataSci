@@ -1,0 +1,247 @@
+---
+title: "Principles"
+author: "Héctor Corrada Bravo"
+company: "University of Maryland"
+date: "`r Sys.Date()`"
+css: ["custom.css"]
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    includes: 
+      after_body: "custom.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Principles]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+`r Sys.Date()`
+]
+
+.logo[![](img/logo.png)]
+
+---
+layout: true
+
+## Tidying data
+
+---
+
+```{r setup_ch16, echo=FALSE, message=FALSE, cache=FALSE}
+library(tidyverse)
+select <- dplyr::select
+data_dir <- "data/vignettes"
+knitr::opts_chunk$set(cache=TRUE, message=FALSE)
+```
+
+- Common problems in data preparation:
+
+- Use cases commonly found in raw datasets that need to be addressed to turn messy data into tidy data. 
+
+- We derive many of our ideas from the paper [Tidy Data](http://www.jstatsoft.org/v59/i10/paper) by Hadley Wickham. 
+
+---
+
+Here we assume we are working with a data model based on rectangular data structures where
+
+1. Each attribute (or variable) forms a column
+2. Each entity (or observation) forms a row  
+3. Each type of entity (observational unit) forms a table  
+
+---
+
+Here is an example of a tidy dataset: 
+
+```{r}
+library(nycflights13)
+head(flights)
+```
+
+---
+layout: true
+
+## Common problems in messy data
+
+---
+
+The set of common operations we will study are based on these common problems found in datasets. 
+
+- Column headers are values, not variable names (gather)  
+- Multiple variables stored in one column (split)  
+- Variables stored in both rows and column (rotate)  
+- Multiple types of observational units are stored in the same table (normalize)  
+
+---
+
+### Headers as values
+
+The first problem we'll see is the case where a table header contains values. 
+
+```{r, echo=FALSE}
+library(tidyverse)
+
+pew <- read_csv(file.path(data_dir, "pew.csv"))
+pew
+```
+
+---
+
+A tidy version of this table would consider the *variables* of each observation to be `religion, income, frequency` where `frequency` has the number of respondents for each religion and income range. 
+
+---
+
+The function to use in the `tidyr` package is `gather`:
+
+```{r}
+tidy_pew <- gather(pew, income, frequency, -religion)
+tidy_pew
+```
+
+---
+
+### Multiple variables in one column
+
+```{r}
+tb <- read_csv(file.path(data_dir, "tb.csv"))
+tb
+```
+---
+
+- We need to `gather` the tabulation columns into a `demo` and `n` columns (for demographic and number of cases):
+
+```{r}
+tidy_tb <- gather(tb, demo, n, -iso2, -year)
+tidy_tb
+```
+
+---
+
+Need to `separate` the values in the `demo` column into two variables `sex` and `age`
+
+```{r}
+tidy_tb <- separate(tidy_tb, demo, c("sex", "age"), sep=1)
+tidy_tb
+```
+
+---
+
+We can put these two commands together in a pipeline:
+
+```{r}
+tidy_tb <- tb %>% 
+  gather(demo, n, -iso2, -year)  %>%
+  separate(demo, c("sex", "age"), sep=1)
+tidy_tb
+```
+
+---
+
+### Variables stored in both rows and columns
+
+This is the messiest, commonly found type of data. 
+
+```{r}
+weather <- read_csv(file.path(data_dir, "weather.csv"))
+weather
+```
+
+---
+
+We have two rows for each month: 
+- one with maximum daily temperature 
+- one with minimum daily temperature
+- the columns starting with `d` correspond to the day in the where the measurements were made.
+
+---
+
+```{r}
+weather %>%
+  gather(day, value, d1:d31, na.rm=TRUE) %>%
+  spread(element, value)
+```
+
+The new function we've used here is `spread`. It does the inverse of `gather` it spreads columns `element` and `value` into separate columns.
+
+---
+
+### Multiple types in one table
+
+Remember that an important aspect of tidy data is that it contains exactly one kind of observation in a single table. 
+
+
+```{r, echo=FALSE}
+billboard <- read_csv(file.path(data_dir, "billboard.csv"))
+tidy_billboard <- billboard %>%
+  gather(week, rank, wk1:wk76, na.rm=TRUE)
+tidy_billboard
+```
+
+```{r}
+tidy_billboard <- tidy_billboard %>%
+  arrange(track)
+tidy_billboard
+```
+
+---
+
+Let's make a song table that only includes information about songs:
+
+```{r}
+song <- tidy_billboard %>%
+  dplyr::select(artist, track, year, time, date.entered) %>%
+  unique()
+song
+```
+
+---
+
+Next, we would like to remove all the song information from the rank table. 
+
+```{r}
+song <- tidy_billboard %>%
+  dplyr::select(artist, track, year, time, date.entered) %>% 
+  unique() %>%
+  mutate(song_id = row_number())
+song
+```
+
+---
+
+Now we can make a rank table, we combine the tidy billboard table with our new song table using a `join`. 
+
+```{r}
+tidy_billboard %>%
+  left_join(song, c("artist", "year", "track", "time", "date.entered"))
+```
+
+---
+
+```{r}
+rank <- tidy_billboard %>%
+  left_join(song, c("artist", "year", "track", "time", "date.entered")) %>%
+  dplyr::select(song_id, week, rank)
+rank
+```
+
+---
+layout: false
+
+## Tidy data and the ER model
+
+_tidy data_ as presented here is purposefully parallel to the ER model formalism.
+
+However, this formalism extends beyond what we've seen here targeted towards data analysis. 
+Many features of the ER model formalism are more applicable to data management issues, especially consistency and redundancy.

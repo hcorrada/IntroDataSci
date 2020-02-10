@@ -51,7 +51,7 @@ title = "Preliminaries 2: More data operations"
 notes = "bookdown-notes/principles-more-operations.html"
 
 [[day03.covers]]
-title = "Lecture Notes: More data operations"
+title = "Lecture Slides: More data operations"
 notes = "slides/cmsc320_operations.pdf"
 
 [[day03.covers]]
@@ -59,7 +59,7 @@ title = "Basic data plotting"
 notes = "bookdown-notes/basic-plotting-with-ggplot.html"
 
 [[day03.covers]]
-title = "Lecture Notes: Basic data plotting"
+title = "Lecture Slides: Basic data plotting"
 notes = "slides/cmsc320_basic-plotting.pdf"
 
 [[day03.covers]]
@@ -91,6 +91,10 @@ notes = "bookdown-notes/tidy-data-i-the-er-model.html"
 title = "SQL I: Single-table Queries"
 notes = "bookdown-notes/sql-i-single-table-queries.html"
 
+[[day05.covers]]
+title = "Lecture Slides: Data representation models"
+notes = "slides/cmsc320_representation-models.pdf"
+
 #[day05.class_notes]
 #link = "cmsc320_class-notes_20180208.pdf"
 
@@ -108,6 +112,10 @@ notes = "bookdown-notes/two-table-operations.html"
 [[day06.covers]]
 title = "Entity Resolution and Record Linkage"
 notes = "bookdown-notes/entity-resolution-and-record-linkage.html"
+
+[[day06.covers]]
+title = "Lecture Slides: Joins and Entity Resolution"
+notes = "slides/cmsc320_representation-models.pdf"
 
 # [[day07.covers]]
 # title = "More SQL: data defintion, consistency and other constructs"

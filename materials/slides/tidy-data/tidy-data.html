@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Principles</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2019-08-08" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Principles]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+2019-08-08
+]
+
+.logo[![](img/logo.png)]
+
+---
+layout: true
+
+## Tidying data
+
+---
+
+
+
+- Common problems in data preparation:
+
+- Use cases commonly found in raw datasets that need to be addressed to turn messy data into tidy data. 
+
+- We derive many of our ideas from the paper [Tidy Data](http://www.jstatsoft.org/v59/i10/paper) by Hadley Wickham. 
+
+---
+
+Here we assume we are working with a data model based on rectangular data structures where
+
+1. Each attribute (or variable) forms a column
+2. Each entity (or observation) forms a row  
+3. Each type of entity (observational unit) forms a table  
+
+---
+
+Here is an example of a tidy dataset: 
+
+
+```r
+library(nycflights13)
+head(flights)
+```
+
+```
+## # A tibble: 6 x 19
+##    year month   day dep_time sched_dep_time dep_delay arr_time
+##   &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+## 1  2013     1     1      517            515         2      830
+## 2  2013     1     1      533            529         4      850
+## 3  2013     1     1      542            540         2      923
+## 4  2013     1     1      544            545        -1     1004
+## 5  2013     1     1      554            600        -6      812
+## 6  2013     1     1      554            558        -4      740
+## # … with 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;,
+## #   time_hour &lt;dttm&gt;
+```
+
+---
+layout: true
+
+## Common problems in messy data
+
+---
+
+The set of common operations we will study are based on these common problems found in datasets. 
+
+- Column headers are values, not variable names (gather)  
+- Multiple variables stored in one column (split)  
+- Variables stored in both rows and column (rotate)  
+- Multiple types of observational units are stored in the same table (normalize)  
+
+---
+
+### Headers as values
+
+The first problem we'll see is the case where a table header contains values. 
+
+
+```
+## # A tibble: 18 x 11
+##    religion `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k`
+##    &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Agnostic      27        34        60        81        76       137
+##  2 Atheist       12        27        37        52        35        70
+##  3 Buddhist      27        21        30        34        33        58
+##  4 Catholic     418       617       732       670       638      1116
+##  5 Don’t k…      15        14        15        11        10        35
+##  6 Evangel…     575       869      1064       982       881      1486
+##  7 Hindu          1         9         7         9        11        34
+##  8 Histori…     228       244       236       238       197       223
+##  9 Jehovah…      20        27        24        24        21        30
+## 10 Jewish        19        19        25        25        30        95
+## 11 Mainlin…     289       495       619       655       651      1107
+## 12 Mormon        29        40        48        51        56       112
+## 13 Muslim         6         7         9        10         9        23
+## 14 Orthodox      13        17        23        32        32        47
+## 15 Other C…       9         7        11        13        13        14
+## 16 Other F…      20        33        40        46        49        63
+## 17 Other W…       5         2         3         4         2         7
+## 18 Unaffil…     217       299       374       365       341       528
+## # … with 4 more variables: `$75-100k` &lt;dbl&gt;, `$100-150k` &lt;dbl&gt;,
+## #   `&gt;150k` &lt;dbl&gt;, `Don't know/refused` &lt;dbl&gt;
+```
+
+---
+
+A tidy version of this table would consider the *variables* of each observation to be `religion, income, frequency` where `frequency` has the number of respondents for each religion and income range. 
+
+---
+
+The function to use in the `tidyr` package is `gather`:
+
+
+```r
+tidy_pew &lt;- gather(pew, income, frequency, -religion)
+tidy_pew
+```
+
+```
+## # A tibble: 180 x 3
+##    religion                income frequency
+##    &lt;chr&gt;                   &lt;chr&gt;      &lt;dbl&gt;
+##  1 Agnostic                &lt;$10k         27
+##  2 Atheist                 &lt;$10k         12
+##  3 Buddhist                &lt;$10k         27
+##  4 Catholic                &lt;$10k        418
+##  5 Don’t know/refused      &lt;$10k         15
+##  6 Evangelical Prot        &lt;$10k        575
+##  7 Hindu                   &lt;$10k          1
+##  8 Historically Black Prot &lt;$10k        228
+##  9 Jehovah's Witness       &lt;$10k         20
+## 10 Jewish                  &lt;$10k         19
+## # … with 170 more rows
+```
+
+---
+
+### Multiple variables in one column
+
+
+```r
+tb &lt;- read_csv(file.path(data_dir, "tb.csv"))
+tb
+```
+
+```
+## # A tibble: 5,769 x 22
+##    iso2   year   m04  m514  m014 m1524 m2534 m3544 m4554 m5564   m65    mu
+##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 AD     1989    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  2 AD     1990    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  3 AD     1991    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  4 AD     1992    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  5 AD     1993    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  6 AD     1994    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+##  7 AD     1996    NA    NA     0     0     0     4     1     0     0    NA
+##  8 AD     1997    NA    NA     0     0     1     2     2     1     6    NA
+##  9 AD     1998    NA    NA     0     0     0     1     0     0     0    NA
+## 10 AD     1999    NA    NA     0     0     0     1     1     0     0    NA
+## # … with 5,759 more rows, and 10 more variables: f04 &lt;dbl&gt;, f514 &lt;dbl&gt;,
+## #   f014 &lt;dbl&gt;, f1524 &lt;dbl&gt;, f2534 &lt;dbl&gt;, f3544 &lt;dbl&gt;, f4554 &lt;dbl&gt;,
+## #   f5564 &lt;dbl&gt;, f65 &lt;dbl&gt;, fu &lt;dbl&gt;
+```
+---
+
+- We need to `gather` the tabulation columns into a `demo` and `n` columns (for demographic and number of cases):
+
+
+```r
+tidy_tb &lt;- gather(tb, demo, n, -iso2, -year)
+tidy_tb
+```
+
+```
+## # A tibble: 115,380 x 4
+##    iso2   year demo      n
+##    &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+##  1 AD     1989 m04      NA
+##  2 AD     1990 m04      NA
+##  3 AD     1991 m04      NA
+##  4 AD     1992 m04      NA
+##  5 AD     1993 m04      NA
+##  6 AD     1994 m04      NA
+##  7 AD     1996 m04      NA
+##  8 AD     1997 m04      NA
+##  9 AD     1998 m04      NA
+## 10 AD     1999 m04      NA
+## # … with 115,370 more rows
+```
+
+---
+
+Need to `separate` the values in the `demo` column into two variables `sex` and `age`
+
+
+```r
+tidy_tb &lt;- separate(tidy_tb, demo, c("sex", "age"), sep=1)
+tidy_tb
+```
+
+```
+## # A tibble: 115,380 x 5
+##    iso2   year sex   age       n
+##    &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+##  1 AD     1989 m     04       NA
+##  2 AD     1990 m     04       NA
+##  3 AD     1991 m     04       NA
+##  4 AD     1992 m     04       NA
+##  5 AD     1993 m     04       NA
+##  6 AD     1994 m     04       NA
+##  7 AD     1996 m     04       NA
+##  8 AD     1997 m     04       NA
+##  9 AD     1998 m     04       NA
+## 10 AD     1999 m     04       NA
+## # … with 115,370 more rows
+```
+
+---
+
+We can put these two commands together in a pipeline:
+
+
+```r
+tidy_tb &lt;- tb %&gt;% 
+  gather(demo, n, -iso2, -year)  %&gt;%
+  separate(demo, c("sex", "age"), sep=1)
+tidy_tb
+```
+
+```
+## # A tibble: 115,380 x 5
+##    iso2   year sex   age       n
+##    &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+##  1 AD     1989 m     04       NA
+##  2 AD     1990 m     04       NA
+##  3 AD     1991 m     04       NA
+##  4 AD     1992 m     04       NA
+##  5 AD     1993 m     04       NA
+##  6 AD     1994 m     04       NA
+##  7 AD     1996 m     04       NA
+##  8 AD     1997 m     04       NA
+##  9 AD     1998 m     04       NA
+## 10 AD     1999 m     04       NA
+## # … with 115,370 more rows
+```
+
+---
+
+### Variables stored in both rows and columns
+
+This is the messiest, commonly found type of data. 
+
+
+```r
+weather &lt;- read_csv(file.path(data_dir, "weather.csv"))
+weather
+```
+
+```
+## # A tibble: 22 x 35
+##    id     year month element    d1    d2    d3    d4    d5    d6    d7
+##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 MX17…  2010     1 tmax       NA  NA    NA      NA  NA      NA    NA
+##  2 MX17…  2010     1 tmin       NA  NA    NA      NA  NA      NA    NA
+##  3 MX17…  2010     2 tmax       NA  27.3  24.1    NA  NA      NA    NA
+##  4 MX17…  2010     2 tmin       NA  14.4  14.4    NA  NA      NA    NA
+##  5 MX17…  2010     3 tmax       NA  NA    NA      NA  32.1    NA    NA
+##  6 MX17…  2010     3 tmin       NA  NA    NA      NA  14.2    NA    NA
+##  7 MX17…  2010     4 tmax       NA  NA    NA      NA  NA      NA    NA
+##  8 MX17…  2010     4 tmin       NA  NA    NA      NA  NA      NA    NA
+##  9 MX17…  2010     5 tmax       NA  NA    NA      NA  NA      NA    NA
+## 10 MX17…  2010     5 tmin       NA  NA    NA      NA  NA      NA    NA
+## # … with 12 more rows, and 24 more variables: d8 &lt;dbl&gt;, d9 &lt;lgl&gt;,
+## #   d10 &lt;dbl&gt;, d11 &lt;dbl&gt;, d12 &lt;lgl&gt;, d13 &lt;dbl&gt;, d14 &lt;dbl&gt;, d15 &lt;dbl&gt;,
+## #   d16 &lt;dbl&gt;, d17 &lt;dbl&gt;, d18 &lt;lgl&gt;, d19 &lt;lgl&gt;, d20 &lt;lgl&gt;, d21 &lt;lgl&gt;,
+## #   d22 &lt;lgl&gt;, d23 &lt;dbl&gt;, d24 &lt;lgl&gt;, d25 &lt;dbl&gt;, d26 &lt;dbl&gt;, d27 &lt;dbl&gt;,
+## #   d28 &lt;dbl&gt;, d29 &lt;dbl&gt;, d30 &lt;dbl&gt;, d31 &lt;dbl&gt;
+```
+
+---
+
+We have two rows for each month: 
+- one with maximum daily temperature 
+- one with minimum daily temperature
+- the columns starting with `d` correspond to the day in the where the measurements were made.
+
+---
+
+
+```r
+weather %&gt;%
+  gather(day, value, d1:d31, na.rm=TRUE) %&gt;%
+  spread(element, value)
+```
+
+```
+## # A tibble: 33 x 6
+##    id       year month day    tmax  tmin
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 MX17004  2010     1 d30    27.8  14.5
+##  2 MX17004  2010     2 d11    29.7  13.4
+##  3 MX17004  2010     2 d2     27.3  14.4
+##  4 MX17004  2010     2 d23    29.9  10.7
+##  5 MX17004  2010     2 d3     24.1  14.4
+##  6 MX17004  2010     3 d10    34.5  16.8
+##  7 MX17004  2010     3 d16    31.1  17.6
+##  8 MX17004  2010     3 d5     32.1  14.2
+##  9 MX17004  2010     4 d27    36.3  16.7
+## 10 MX17004  2010     5 d27    33.2  18.2
+## # … with 23 more rows
+```
+
+The new function we've used here is `spread`. It does the inverse of `gather` it spreads columns `element` and `value` into separate columns.
+
+---
+
+### Multiple types in one table
+
+Remember that an important aspect of tidy data is that it contains exactly one kind of observation in a single table. 
+
+
+
+```
+## # A tibble: 5,307 x 7
+##     year artist        track                 time  date.entered week   rank
+##    &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;                 &lt;tim&gt; &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;
+##  1  2000 2 Pac         Baby Don't Cry (Keep… 04:22 2000-02-26   wk1      87
+##  2  2000 2Ge+her       The Hardest Part Of … 03:15 2000-09-02   wk1      91
+##  3  2000 3 Doors Down  Kryptonite            03:53 2000-04-08   wk1      81
+##  4  2000 3 Doors Down  Loser                 04:24 2000-10-21   wk1      76
+##  5  2000 504 Boyz      Wobble Wobble         03:35 2000-04-15   wk1      57
+##  6  2000 98^0          Give Me Just One Nig… 03:24 2000-08-19   wk1      51
+##  7  2000 A*Teens       Dancing Queen         03:44 2000-07-08   wk1      97
+##  8  2000 Aaliyah       I Don't Wanna         04:15 2000-01-29   wk1      84
+##  9  2000 Aaliyah       Try Again             04:03 2000-03-18   wk1      59
+## 10  2000 Adams, Yolan… Open My Heart         05:30 2000-08-26   wk1      76
+## # … with 5,297 more rows
+```
+
+
+```r
+tidy_billboard &lt;- tidy_billboard %&gt;%
+  arrange(track)
+tidy_billboard
+```
+
+```
+## # A tibble: 5,307 x 7
+##     year artist track                   time   date.entered week   rank
+##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;time&gt; &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;
+##  1  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk1     100
+##  2  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk2      99
+##  3  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk3      96
+##  4  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk4      76
+##  5  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk5      55
+##  6  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk6      37
+##  7  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk7      24
+##  8  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk8      24
+##  9  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk9      30
+## 10  2000 Nelly  (Hot S**t) Country G... 04:17  2000-04-29   wk10     36
+## # … with 5,297 more rows
+```
+
+---
+
+Let's make a song table that only includes information about songs:
+
+
+```r
+song &lt;- tidy_billboard %&gt;%
+  dplyr::select(artist, track, year, time, date.entered) %&gt;%
+  unique()
+song
+```
+
+```
+## # A tibble: 317 x 5
+##    artist        track                    year time   date.entered
+##    &lt;chr&gt;         &lt;chr&gt;                   &lt;dbl&gt; &lt;time&gt; &lt;date&gt;      
+##  1 Nelly         (Hot S**t) Country G...  2000 04:17  2000-04-29  
+##  2 Nu Flavor     3 Little Words           2000 03:54  2000-06-03  
+##  3 Jean, Wyclef  911                      2000 04:00  2000-10-07  
+##  4 Brock, Chad   A Country Boy Can Su...  2000 03:54  2000-01-01  
+##  5 Clark, Terri  A Little Gasoline        2000 03:07  2000-12-16  
+##  6 Son By Four   A Puro Dolor (Purest...  2000 03:30  2000-04-08  
+##  7 Carter, Aaron Aaron's Party (Come ...  2000 03:23  2000-08-26  
+##  8 Nine Days     Absolutely (Story Of...  2000 03:09  2000-05-06  
+##  9 De La Soul    All Good?                2000 05:02  2000-12-23  
+## 10 Blink-182     All The Small Things     2000 02:52  1999-12-04  
+## # … with 307 more rows
+```
+
+---
+
+Next, we would like to remove all the song information from the rank table. 
+
+
+```r
+song &lt;- tidy_billboard %&gt;%
+  dplyr::select(artist, track, year, time, date.entered) %&gt;% 
+  unique() %&gt;%
+  mutate(song_id = row_number())
+song
+```
+
+```
+## # A tibble: 317 x 6
+##    artist        track                    year time   date.entered song_id
+##    &lt;chr&gt;         &lt;chr&gt;                   &lt;dbl&gt; &lt;time&gt; &lt;date&gt;         &lt;int&gt;
+##  1 Nelly         (Hot S**t) Country G...  2000 04:17  2000-04-29         1
+##  2 Nu Flavor     3 Little Words           2000 03:54  2000-06-03         2
+##  3 Jean, Wyclef  911                      2000 04:00  2000-10-07         3
+##  4 Brock, Chad   A Country Boy Can Su...  2000 03:54  2000-01-01         4
+##  5 Clark, Terri  A Little Gasoline        2000 03:07  2000-12-16         5
+##  6 Son By Four   A Puro Dolor (Purest...  2000 03:30  2000-04-08         6
+##  7 Carter, Aaron Aaron's Party (Come ...  2000 03:23  2000-08-26         7
+##  8 Nine Days     Absolutely (Story Of...  2000 03:09  2000-05-06         8
+##  9 De La Soul    All Good?                2000 05:02  2000-12-23         9
+## 10 Blink-182     All The Small Things     2000 02:52  1999-12-04        10
+## # … with 307 more rows
+```
+
+---
+
+Now we can make a rank table, we combine the tidy billboard table with our new song table using a `join`. 
+
+
+```r
+tidy_billboard %&gt;%
+  left_join(song, c("artist", "year", "track", "time", "date.entered"))
+```
+
+```
+## # A tibble: 5,307 x 8
+##     year artist track                time  date.entered week   rank song_id
+##    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;                &lt;tim&gt; &lt;date&gt;       &lt;chr&gt; &lt;dbl&gt;   &lt;int&gt;
+##  1  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk1     100       1
+##  2  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk2      99       1
+##  3  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk3      96       1
+##  4  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk4      76       1
+##  5  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk5      55       1
+##  6  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk6      37       1
+##  7  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk7      24       1
+##  8  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk8      24       1
+##  9  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk9      30       1
+## 10  2000 Nelly  (Hot S**t) Country … 04:17 2000-04-29   wk10     36       1
+## # … with 5,297 more rows
+```
+
+---
+
+
+```r
+rank &lt;- tidy_billboard %&gt;%
+  left_join(song, c("artist", "year", "track", "time", "date.entered")) %&gt;%
+  dplyr::select(song_id, week, rank)
+rank
+```
+
+```
+## # A tibble: 5,307 x 3
+##    song_id week   rank
+##      &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
+##  1       1 wk1     100
+##  2       1 wk2      99
+##  3       1 wk3      96
+##  4       1 wk4      76
+##  5       1 wk5      55
+##  6       1 wk6      37
+##  7       1 wk7      24
+##  8       1 wk8      24
+##  9       1 wk9      30
+## 10       1 wk10     36
+## # … with 5,297 more rows
+```
+
+---
+layout: false
+
+## Tidy data and the ER model
+
+_tidy data_ as presented here is purposefully parallel to the ER model formalism.
+
+However, this formalism extends beyond what we've seen here targeted towards data analysis. 
+Many features of the ER model formalism are more applicable to data management issues, especially consistency and redundancy.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
