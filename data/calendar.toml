@@ -84,13 +84,12 @@ notes = "slides/cmsc320_s2020_dickerson_guest_lecture.pptx"
 date = "2/10"
 
 [[day05.covers]]
-title = "Data acquisition: loading and scraping"
-notes = "bookdown-notes/ingesting-data.html"
+title = "Data representation models: The ER model"
+notes = "bookdown-notes/tidy-data-i-the-er-model.html"
 
 [[day05.covers]]
-title = "Data cleaning: handling text and dates"
-notes = "bookdown-notes/text-and-dates.html"
-
+title = "SQL I: Single-table Queries"
+notes = "bookdown-notes/sql-i-single-table-queries.html"
 
 #[day05.class_notes]
 #link = "cmsc320_class-notes_20180208.pdf"
@@ -103,12 +102,17 @@ notes = "bookdown-notes/text-and-dates.html"
 date = "2/12"
 
 [[day06.covers]]
-title = "Data representation models: The ER model"
-notes = "bookdown-notes/tidy-data-i-the-er-model.html"
+title = "Relational data operations: Joins"
+notes = "bookdown-notes/two-table-operations.html"
 
 [[day06.covers]]
-title = "SQL I: Single-table Queries"
-notes = "bookdown-notes/sql-i-single-table-queries.html"
+title = "Entity Resolution and Record Linkage"
+notes = "bookdown-notes/entity-resolution-and-record-linkage.html"
+
+# [[day07.covers]]
+# title = "More SQL: data defintion, consistency and other constructs"
+# notes = "bookdown-notes/sql-system-constructs.html"
+
 
 # [[day08.covers]]
 # title = "SQL examples with baseball (Rmarkdown file)"
@@ -125,16 +129,12 @@ date = "2/17"
 
 
 [[day07.covers]]
-title = "Relational data operations: Joins"
-notes = "bookdown-notes/two-table-operations.html"
-
-# [[day07.covers]]
-# title = "More SQL: data defintion, consistency and other constructs"
-# notes = "bookdown-notes/sql-system-constructs.html"
+title = "Data acquisition: loading and scraping"
+notes = "bookdown-notes/ingesting-data.html"
 
 [[day07.covers]]
-title = "DB parting shots: query optimization and the JSON data model"
-notes = "bookdown-notes/db-parting-shots.html"
+title = "Common operations for data tidying"
+notes = "bookdown-notes/tidying-data.html"
 
 # [[day08.covers]]
 # title = "Notebook: Building a complex SQL query"
@@ -146,13 +146,14 @@ notes = "bookdown-notes/db-parting-shots.html"
 [day08]
 date = "2/19"
 
-[[day08.covers]]
-title = "Entity Resolution and Record Linkage"
-notes = "bookdown-notes/entity-resolution-and-record-linkage.html"
 
 [[day08.covers]]
-title = "Common operations for data tidying"
-notes = "bookdown-notes/tidying-data.html"
+title = "Data cleaning: handling text and dates"
+notes = "bookdown-notes/text-and-dates.html"
+
+[[day08.covers]]
+title = "DB parting shots: query optimization and the JSON data model"
+notes = "bookdown-notes/db-parting-shots.html"
 
 [day08a]
 date = "2/24"
