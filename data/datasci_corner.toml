@@ -169,16 +169,16 @@
 # show = ""
 
 # [[entries]]
-# date = "2/19"
-# description = "The Julia programming language"
-# link = "https://julialang.org/"
-# show = ""
-
-# [[entries]]
 # date = "2/12"
 # description = "Example wrangling with R and Python"
 # link = "https://www.superdatascience.com/wrangling-data-r-python/"
 # show = ""
+
+[[entries]]
+date = "2/12"
+description = "The Julia programming language"
+link = "https://julialang.org/"
+show = ""
 
 [[entries]]
 date = "2/10"
