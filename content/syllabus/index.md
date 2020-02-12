@@ -55,7 +55,7 @@ libraries, data resources and publishing mechanisms.
 
 ## TAs and Office Hours Schedule
 
-**Location is (open area in front of) IRB 4138 unless noted otherwise**
+**Location is AVW 4122 unless noted otherwise**
 
 | Instructor           | Day       | Start Time | End Time | Location | R/Python |
 |----------------------|-----------|------------|----------|----------|----------|
