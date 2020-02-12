@@ -5,7 +5,7 @@ date: "2018-02-20"
 
 Practice making an ER diagram and writing SQL queries.
 
-**DUE**: Monday Feb. 25, 11:59pm
+**DUE**: Wednesday Feb. 19, 11:59pm
 
 <!--more-->
 
@@ -36,9 +36,25 @@ DBI::dbDisconnect(db)
 
 You should see the list of tables in the Lahman database. Note that this assumes the working directory in the R console contains the SQLite file. Otherwise, you need to provide the full path to the file.
 
-### Download shell file
+#### Download shell file
 
 Download the Rmarkdown shell file here: [HW2 Rmarkdown shell](/misc/hw2_er-sql.Rmd) and fill in with your answers. 
+
+### Setup Python
+
+Make sure the `sqlite3` package is installed, if not install it.
+
+Check you can connect to the database from Python by evaluating the following code:
+
+```python
+con = sqlite3.connect('r/data/lahman2016.sqlite')
+con.cursor()
+con.close()
+```
+#### Download shell notebook
+
+Download the jupyter notebook shell here: [HW2 ipynb shell](/misc/hw2_er-sql.ipynb) and fill in with your answers.
+
 
 ### (Optional) SQLite Command Line Interface
 
@@ -77,6 +93,6 @@ Write a SQL query to answer each of the following questions:
 
 ## Submitting
 
-Enter your answers in the shell Rmarkdown file linked above. Knit to PDF and submit to ELMS.
+Enter your answers in the shell Rmarkdown file or Jupyter notebook linked above. Export your work to PDF and submit to ELMS.
 
 

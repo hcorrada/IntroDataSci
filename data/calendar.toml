@@ -110,6 +110,14 @@ title = "Relational data operations: Joins"
 notes = "bookdown-notes/two-table-operations.html"
 
 [[day06.covers]]
+title = "Rmarkdown and SQL"
+notes = "misc/sql_baseball.Rmd"
+
+[[day06.covers]]
+title = "Pandas and SQL"
+notes = "ipynb/pandas_sql.ipynb"
+
+[[day06.covers]]
 title = "Entity Resolution and Record Linkage"
 notes = "bookdown-notes/entity-resolution-and-record-linkage.html"
 
