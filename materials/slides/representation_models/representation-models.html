@@ -4,7 +4,7 @@
     <title>Data Representation Models</title>
     <meta charset="utf-8" />
     <meta name="author" content="Héctor Corrada Bravo" />
-    <meta name="date" content="2020-02-10" />
+    <meta name="date" content="2020-02-12" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
@@ -24,7 +24,7 @@ count: false
 
 .other-info[
 University of Maryland, College Park, USA  
-2020-02-10
+2020-02-12
 ]
 
 .logo[![](img/logo.png)]
@@ -181,11 +181,12 @@ For example: if `\(e_1 \in E_1\)` and `\(e_2 \in E_2\)`, then  `\((e_1, e_2) \in
 
 Arrows specify how entities participate in relationships. 
 
-For example: this specifies that entities in `\(E_1\)` appear in _only one_ relationship pair. 
+For example: this diagram specifies that entities in `\(E_1\)` appear in _only one_ relationship pair. 
 
 .center.image-50[![](img/rel_example.png)]
 
-That is, there is a single entity `\(e_2 \in E_2\)` such that `\((e_1,e_2) \in R\)`.
+That is, if `\(e_i \in E_1\)`, `\(e_j \in E_2\)` and `\((e_i, e_j) \in R\)`, then there is no
+other pair `\((e_i, e_k) \in R\)`. 
 
 ---
 
