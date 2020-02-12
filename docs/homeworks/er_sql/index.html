@@ -190,9 +190,9 @@
 
 
 
-<a  title="Logistics" href="https://www.hcbravo.org/IntroDataSci/logistics/">
+<a  title="Syllabus" href="https://www.hcbravo.org/IntroDataSci/syllabus/">
 	
-	Logistics
+	Syllabus
 </a>
 
 
@@ -334,7 +334,7 @@
 
 			<p>Practice making an ER diagram and writing SQL queries.</p>
 
-<p><strong>DUE</strong>: Monday Feb. 25, 11:59pm</p>
+<p><strong>DUE</strong>: Wednesday Feb. 19, 11:59pm</p>
 
 <p></p>
 
@@ -364,9 +364,24 @@ DBI::dbDisconnect(db)
 
 <p>You should see the list of tables in the Lahman database. Note that this assumes the working directory in the R console contains the SQLite file. Otherwise, you need to provide the full path to the file.</p>
 
-<h3 id="download-shell-file">Download shell file</h3>
+<h4 id="download-shell-file">Download shell file</h4>
 
 <p>Download the Rmarkdown shell file here: <a href="https://www.hcbravo.org/IntroDataSci/misc/hw2_er-sql.Rmd">HW2 Rmarkdown shell</a> and fill in with your answers.</p>
+
+<h3 id="setup-python">Setup Python</h3>
+
+<p>Make sure the <code>sqlite3</code> package is installed, if not install it.</p>
+
+<p>Check you can connect to the database from Python by evaluating the following code:</p>
+
+<pre><code class="language-python">con = sqlite3.connect('r/data/lahman2016.sqlite')
+con.cursor()
+con.close()
+</code></pre>
+
+<h4 id="download-shell-notebook">Download shell notebook</h4>
+
+<p>Download the jupyter notebook shell here: <a href="https://www.hcbravo.org/IntroDataSci/misc/hw2_er-sql.ipynb">HW2 ipynb shell</a> and fill in with your answers.</p>
 
 <h3 id="optional-sqlite-command-line-interface">(Optional) SQLite Command Line Interface</h3>
 
@@ -407,7 +422,7 @@ DBI::dbDisconnect(db)
 
 <h2 id="submitting">Submitting</h2>
 
-<p>Enter your answers in the shell Rmarkdown file linked above. Knit to PDF and submit to ELMS.</p>
+<p>Enter your answers in the shell Rmarkdown file or Jupyter notebook linked above. Export your work to PDF and submit to ELMS.</p>
 
 			<aside class="copyright" role="note">
 				
@@ -425,7 +440,7 @@ DBI::dbDisconnect(db)
 <nav class="pagination" aria-label="Footer">
   <div class="previous">
   
-      <a href="https://www.hcbravo.org/IntroDataSci/homeworks/regression/" title="Homework 5: Regression Interpretation">
+      <a href="https://www.hcbravo.org/IntroDataSci/projects/final_project/" title="CMSC320 Final Project">
         <span class="direction">
           Previous
         </span>
@@ -435,7 +450,7 @@ DBI::dbDisconnect(db)
           </div>
           <div class="stretch">
             <div class="title">
-              Homework 5: Regression Interpretation
+              CMSC320 Final Project
             </div>
           </div>
         </div>
