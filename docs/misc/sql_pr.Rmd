@@ -1,0 +1,113 @@
+---
+title: "Building a complex query with SQL"
+author: "Hector Corrada Bravo"
+date: "2/15/2018"
+output: html_document
+---
+
+```{r}
+dbfile <- "/Users/hcorrada/Teaching/CMSC320_Spring2018/materials/lecture-notes/data/lahman2016.sqlite"
+db <- DBI::dbConnect(RSQLite::SQLite(), dbfile)
+```
+
+We want to find "the ten players from PR _not_ in HOF with the most career hits". We build the query step by step.
+
+- Players from PR
+
+```{sql, connection=db}
+select playerID, nameFirst, nameLast
+from Master
+where birthCountry = "P.R."
+```
+
+- Players in the HOF
+
+```{sql, connection=db}
+select distinct playerID
+from HallOfFame
+where inducted = "Y"
+```
+
+- Players from PR _not_ in HOF
+
+```{sql, connection=db}
+select m.playerID, nameFirst, nameLast
+from Master as m
+  left join (select distinct playerID
+      from HallOfFame
+      where inducted = "Y") as hof
+    on m.playerID = hof.playerID
+where birthCountry = "P.R."
+  and hof.playerID is NULL
+```
+- Add hits per season to table of players from PR _not_in HOF
+
+
+```{sql, connection=db}
+with pr_not_in_hof(playerID, nameFirst, nameLast) as (
+  select m.playerID, nameFirst, nameLast
+  from Master as m
+    left join 
+      ( select distinct playerID
+        from HallOfFame
+        where inducted = "Y" 
+      ) as hof
+      on m.playerID = hof.playerID
+  where birthCountry = "P.R."
+    and hof.playerID is NULL
+)
+select pr.playerID, b.H, pr.nameFirst, pr.nameLast
+from pr_not_in_hof as pr  
+  join Batting as b on pr.playerID = b.playerID
+```
+
+- Total number of career hits for players from PR _not_ in HOF
+
+```{sql, connection=db}
+with pr_not_in_hof(playerID, nameFirst, nameLast) as (
+  select m.playerID, nameFirst, nameLast
+  from Master as m
+    left join 
+      ( select distinct playerID
+        from HallOfFame
+        where inducted = "Y" 
+      ) as hof
+      on m.playerID = hof.playerID
+  where birthCountry = "P.R."
+    and hof.playerID is NULL
+)
+select pr.playerID, sum(b.H) as total_hits, pr.nameFirst, pr.nameLast
+from pr_not_in_hof as pr 
+  join Batting as b on pr.playerID = b.playerID
+group by pr.playerID
+```
+
+- Final query: Ten players from PR _not_ in HOF with the most career hits.
+
+```{sql, connection=db}
+with pr_not_in_hof(playerID, nameFirst, nameLast) as (
+  select m.playerID, nameFirst, nameLast
+  from Master as m
+    left join 
+      ( select distinct playerID
+        from HallOfFame
+        where inducted = "Y" 
+      ) as hof
+      on m.playerID = hof.playerID
+  where birthCountry = "P.R."
+    and hof.playerID is NULL
+)
+select pr.playerID, sum(b.H) as total_hits, pr.nameFirst, pr.nameLast
+from pr_not_in_hof as pr 
+  join Batting as b on pr.playerID = b.playerID
+group by pr.playerID
+order by total_hits desc
+limit 10
+```
+
+
+
+
+```{r}
+DBI::dbDisconnect(db)
+```
