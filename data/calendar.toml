@@ -118,10 +118,6 @@ title = "Pandas and SQL"
 notes = "ipynb/pandas_sql.ipynb"
 
 [[day06.covers]]
-title = "Entity Resolution and Record Linkage"
-notes = "bookdown-notes/entity-resolution-and-record-linkage.html"
-
-[[day06.covers]]
 title = "Lecture Slides: Joins and Entity Resolution"
 notes = "slides/cmsc320_representation-models.pdf"
 
@@ -143,6 +139,17 @@ notes = "slides/cmsc320_representation-models.pdf"
 [day07]
 date = "2/17"
 
+[[day07.covers]]
+title = "Notebook: Building a complex SQL query"
+notes = "misc/sql_pr.Rmd"
+
+[[day07.covers]]
+title = "Entity Resolution and Record Linkage"
+notes = "bookdown-notes/entity-resolution-and-record-linkage.html"
+
+[[day07.covers]]
+title = "Lecture Slides: Joins and Entity Resolution"
+notes = "slides/cmsc320_representation-models.pdf"
 
 [[day07.covers]]
 title = "Data acquisition: loading and scraping"
@@ -151,10 +158,6 @@ notes = "bookdown-notes/ingesting-data.html"
 [[day07.covers]]
 title = "Common operations for data tidying"
 notes = "bookdown-notes/tidying-data.html"
-
-# [[day08.covers]]
-# title = "Notebook: Building a complex SQL query"
-# notes = "classroom-notes/sql_pr.html"
 
 #[day07.class_notes]
 #link = "cmsc320_class-notes_20180213.pdf"
