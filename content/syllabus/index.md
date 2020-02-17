@@ -132,6 +132,20 @@ will be determined based on the following scheme:
 
 You are responsible for all material discussed in lecture and posted on the class web page, including announcements, deadlines, policies, etc.
 
+### Regrade Requests
+
+Regrade requests for homeworks, exams and projects will be accepted for 48 hours once grades are posted. We will use the following procedures.
+
+#### Homeworks and projects
+
+- Assignment/Exam/Project grades are _unmuted_ in ELMS, an announcement in Piazza will be made stating that regrade window is open
+- Submit request by sending message **through ELMS** to the instructor and TAs with subject `[CMSC320 <Assignment> Regrade Request]`
+- Requests submitted within the 48 hour window will be honored, we will reach out through ELMS
+
+#### Exams
+
+Regrade requests for exams will be handled through Gradescope
+
 ### Midterms
 
 There will be two in-class midterms (dates subject to minor shift based on course pace):
