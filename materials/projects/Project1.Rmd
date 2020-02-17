@@ -1,6 +1,6 @@
 ---
 title: "Project 1: Data scraping and cleaning"
-author: "CMSC320, Spring 2019"
+author: "CMSC320, Spring 2020"
 output: html_document
 ---
 
@@ -8,9 +8,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-**Posted:** Feb 19, 2019    
+**Posted:** Feb 17, 2020    
 **Last Updated:** `r format(Sys.Date(), "%b %d, %Y")`  
-**Due:** Mar 15, 2019    
+**Due:** Mar 9, 2020    
 
 You've been hired by a new space weather startup looking to disrupt the space weather reporting business. Your first project
 is to provide better data about the top 50 solar flares recorded so far than the data shown by your startup
@@ -33,14 +33,11 @@ For this project you will do the following:
 
 Scrape data for the top 50 solar flares shown in [SpaceWeatherLive.com](https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares). Steps to do this are:
 
-1. Use the `html` function to read the html page from the url above
-2. Use the `html_nodes` function to find the page node corresponding to the table we want. Notice there are more than one table in that page, so you need to make sure you are finding the proper node.
-3. Use the `html_table` to parse the table into a data frame
-4. Rename attributes to some reasonable names for, e.g., `rank`, `flare_classification`, `date`, `flare_region`,
-`start_time`, `maximum_time`, `end_time`, `movie`. You can use `magrittr::set_colnames` within a pipeline.
-5. Finish the pipeline with a call to `as_data_frame` to make the data frame easier to use.
+1. Use `rvest` (if using R), or `beautiful soup` (if using Python) to parse the table into a data frame.
+2. Rename attributes to some reasonable names for, e.g., `rank`, `flare_classification`, `date`, `flare_region`,
+`start_time`, `maximum_time`, `end_time`, `movie`. 
 
-The result should be a data frame, a `tibble` really, with the first few rows as:
+The result should be a data frame with the first few rows as:
 
 ```
 # A tibble: 50 x 8
@@ -63,11 +60,11 @@ The result should be a data frame, a `tibble` really, with the first few rows as
 
 ### Step 2: Tidy the top 50 solar flare data (10 pts)
 
-Your next step is to make sure this table is usable using the `dplyr` and `tidyr` packages:
+Your next step is to make sure this table is usable:
 
 1. Drop the last column of the table, since we are not going to use it moving forward.
-2. Use the `tidyr::unite` package to combine the `date` and each of the three time columns into three datetime columns. You will see why this is useful later on.
-3. Use the `readr::type_convert` function to convert columns containing datetimes into actual datetime objects (see `?col_datetime`, especially the `format` argument) .
+2. Combine the `date` attribuet and each of the three time attributes into three datetime columns. You will see why this is useful later on.
+3. Convert columns containing datetimes into actual datetime objects.
 
 The result of this step should be a data_frame with the first few rows as:
 
@@ -241,8 +238,8 @@ Virtual Observatories Program</p>
 
 #### Tasks
 
-1. Use `rvest` functions (e.g., `html_node`, `html_text`) and `stringr` functions (e.g., `str_split`, `str_subset`) to obtain each row of data as a long string. Create a `data_frame` using `as_data_frame` at this point so it's easier to use `dplyr` and `tidyr` for the next few steps.
-2. Use `tidyr::separate` to separate each line of text into a data row. Choose appropriate names for columns.
+1. Use `rvest` (if using R) or `beautifulsoup4` (if using python) to obtain each row of data as a long string. Create a `data_frame` (or Pandas `DataFrame`) at this point so it's easier to operate on.
+2. Separate each line of text into a data row. Choose appropriate names for columns.
 
 The result of this step should be similar to:
 
@@ -279,7 +276,7 @@ Now, we tidy up the NASA table. Here we will code missing observations properly,
 2. The CPA column (`cme_angle`) contains angles in degrees for most rows, except for halo flares, which are coded as `Halo`. Create a new (logical) column that indicates if a row corresponds to a halo flare or not, and then replace `Halo` entries in the `cme_angle` column as NA.
 3. The `width` column indicates if the given value is a lower bound. Create a new (logical) column that indicates if width is given as a lower bound, and remove any non-numeric part of the width column.
 4. Combine date and time columns for `start`, `end` and `cme` so they can be encoded as `datetime` objects.
-5. Use the `readr::type_convert` function to convert columns to appropriate types.
+5. Convert columns to appropriate data types.
 
 The output of this step should be similar to this (note the column types)
 
@@ -313,7 +310,7 @@ Now that you have data from both sites, let's start some analysis.
 
 Can you replicate the top 50 solar flare table in [SpaceWeatherLive.com](https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares) exactly using the data obtained from NASA? That is, if you get the top 50 solar flares from the NASA table based on their classification (e.g., `X28` is the highest), do you get data for the same 50 solar flare events in the SpaceWeatherLive page? If not, why not?
 
-Include code used to get the top 50 solar flares from the NASA table (be careful when ordering by classification, using `tidyr::separate` here is useful). Write a sentence or two discussing how well you can replicate the SpaceWeatherLive data from the NASA data.
+Include code used to get the top 50 solar flares from the NASA table (be careful when ordering by classification, separating classification is useful). Write a sentence or two discussing how well you can replicate the SpaceWeatherLive data from the NASA data.
 
 ### Question 2: Entity Resolution (15 pts)
 
@@ -339,11 +336,11 @@ Prepare one plot that shows the top 50 solar flares in context with all data ava
 
 ## Submission
 
-Prepare and knit an Rmarkdown file that includes for each step in Part 1: (a) code to carry out the step discussed, (b) partial output showing the output of your code, similar to the examples above, and (c) a short prose description of how your code works. 
+Prepare an Rmarkdown file (if using R) or Jupyter notebook (if using python) that includes for each step in Part 1: (a) code to carry out the step discussed, (b) partial output showing the output of your code, similar to the examples above, and (c) a short prose description of how your code works. 
 
 For questions 1 and 2 of Part 2, follow the instructions there. 
 
 For Question 3 of part 2 provide: (a) a short description (2 sentences) of what the intent of your plot is (think in terms of our discussion on how we show variation, co-variation in terms of central trend, spread, skew etc.), (b) code to produce your plot, (c) a short text description of your plot, and (d) a sentence or two of interpretation of your plot (again think of variation, co-variation, etc.).
 
-Submit the resulting PDF to ELMS.
+Export to PDF and submit that to ELMS.
 

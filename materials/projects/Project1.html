@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="CMSC320, Spring 2019" />
+<meta name="author" content="CMSC320, Spring 2020" />
 
 
 <title>Project 1: Data scraping and cleaning</title>
@@ -255,9 +255,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type="text/css">
 .main-container {
@@ -271,7 +269,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -288,8 +285,6 @@ summary {
 </style>
 
 
-
-<div class="container-fluid main-container">
 
 <!-- tabsets -->
 
@@ -335,6 +330,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -347,20 +343,17 @@ summary {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -370,14 +363,14 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Project 1: Data scraping and cleaning</h1>
-<h4 class="author"><em>CMSC320, Spring 2019</em></h4>
+<h4 class="author">CMSC320, Spring 2020</h4>
 
 </div>
 
 
-<p><strong>Posted:</strong> Feb 19, 2019<br />
-<strong>Last Updated:</strong> Mar 12, 2019<br />
-<strong>Due:</strong> Mar 15, 2019</p>
+<p><strong>Posted:</strong> Feb 17, 2020<br />
+<strong>Last Updated:</strong> Feb 17, 2020<br />
+<strong>Due:</strong> Mar 9, 2020</p>
 <p>You’ve been hired by a new space weather startup looking to disrupt the space weather reporting business. Your first project is to provide better data about the top 50 solar flares recorded so far than the data shown by your startup ’s competitor <a href="https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares">SpaceWeatherLive.com</a>. To do this, your boss pointed you to <a href="http://cdaw.gsfc.nasa.gov/CME_list/radio/waves_type2.html">this messy HTML page</a> from NASA (<a href="/misc/waves_type2.html">available here also</a>) where you can get extra data that your startup can post in your new spiffy site.</p>
 <p>Of course, you don’t have access to the raw data for either of these two tables, so as an enterprising data scientist you will scrape this information directly from each HTML page using all the great tools we have seen in class.</p>
 <p>By the way, you should read up a bit on <a href="https://en.wikipedia.org/wiki/Solar_flare">Solar Flares</a>, <a href="https://www.spaceweatherlive.com/en/help/what-is-a-coronal-mass-ejection-cme">coronal mass ejections</a>, <a href="http://spaceweather.com/glossary/flareclasses.html">the solar flare alphabet soup</a>, <a href="http://www.nasa.gov/topics/solarsystem/features/halloween_storms.html">the scary storms of Halloween 2003</a>, and <a href="https://science.nasa.gov/science-news/science-at-nasa/2005/27jan_solarflares">sickening solar flares</a>.</p>
@@ -395,13 +388,10 @@ $(document).ready(function () {
 <h3>Step 1: Scrape your competitor’s data (10 pts)</h3>
 <p>Scrape data for the top 50 solar flares shown in <a href="https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares">SpaceWeatherLive.com</a>. Steps to do this are:</p>
 <ol style="list-style-type: decimal">
-<li>Use the <code>html</code> function to read the html page from the url above</li>
-<li>Use the <code>html_nodes</code> function to find the page node corresponding to the table we want. Notice there are more than one table in that page, so you need to make sure you are finding the proper node.</li>
-<li>Use the <code>html_table</code> to parse the table into a data frame</li>
-<li>Rename attributes to some reasonable names for, e.g., <code>rank</code>, <code>flare_classification</code>, <code>date</code>, <code>flare_region</code>, <code>start_time</code>, <code>maximum_time</code>, <code>end_time</code>, <code>movie</code>. You can use <code>magrittr::set_colnames</code> within a pipeline.</li>
-<li>Finish the pipeline with a call to <code>as_data_frame</code> to make the data frame easier to use.</li>
+<li>Use <code>rvest</code> (if using R), or <code>beautiful soup</code> (if using Python) to parse the table into a data frame.</li>
+<li>Rename attributes to some reasonable names for, e.g., <code>rank</code>, <code>flare_classification</code>, <code>date</code>, <code>flare_region</code>, <code>start_time</code>, <code>maximum_time</code>, <code>end_time</code>, <code>movie</code>.</li>
 </ol>
-<p>The result should be a data frame, a <code>tibble</code> really, with the first few rows as:</p>
+<p>The result should be a data frame with the first few rows as:</p>
 <pre><code># A tibble: 50 x 8
     rank flare_classification date       flare_region
    &lt;int&gt; &lt;chr&gt;                &lt;chr&gt;             &lt;int&gt;
@@ -421,11 +411,11 @@ $(document).ready(function () {
 </div>
 <div id="step-2-tidy-the-top-50-solar-flare-data-10-pts" class="section level3">
 <h3>Step 2: Tidy the top 50 solar flare data (10 pts)</h3>
-<p>Your next step is to make sure this table is usable using the <code>dplyr</code> and <code>tidyr</code> packages:</p>
+<p>Your next step is to make sure this table is usable:</p>
 <ol style="list-style-type: decimal">
 <li>Drop the last column of the table, since we are not going to use it moving forward.</li>
-<li>Use the <code>tidyr::unite</code> package to combine the <code>date</code> and each of the three time columns into three datetime columns. You will see why this is useful later on.</li>
-<li>Use the <code>readr::type_convert</code> function to convert columns containing datetimes into actual datetime objects (see <code>?col_datetime</code>, especially the <code>format</code> argument) .</li>
+<li>Combine the <code>date</code> attribuet and each of the three time attributes into three datetime columns. You will see why this is useful later on.</li>
+<li>Convert columns containing datetimes into actual datetime objects.</li>
 </ol>
 <p>The result of this step should be a data_frame with the first few rows as:</p>
 <pre><code># A tibble: 50 x 6
@@ -579,8 +569,8 @@ This work is supported by NASA’s Virtual Observatories Program
 <div id="tasks" class="section level4">
 <h4>Tasks</h4>
 <ol style="list-style-type: decimal">
-<li>Use <code>rvest</code> functions (e.g., <code>html_node</code>, <code>html_text</code>) and <code>stringr</code> functions (e.g., <code>str_split</code>, <code>str_subset</code>) to obtain each row of data as a long string. Create a <code>data_frame</code> using <code>as_data_frame</code> at this point so it’s easier to use <code>dplyr</code> and <code>tidyr</code> for the next few steps.</li>
-<li>Use <code>tidyr::separate</code> to separate each line of text into a data row. Choose appropriate names for columns.</li>
+<li>Use <code>rvest</code> (if using R) or <code>beautifulsoup4</code> (if using python) to obtain each row of data as a long string. Create a <code>data_frame</code> (or Pandas <code>DataFrame</code>) at this point so it’s easier to operate on.</li>
+<li>Separate each line of text into a data row. Choose appropriate names for columns.</li>
 </ol>
 <p>The result of this step should be similar to:</p>
 <pre><code># A tibble: 482 x 14
@@ -615,7 +605,7 @@ This work is supported by NASA’s Virtual Observatories Program
 <li>The CPA column (<code>cme_angle</code>) contains angles in degrees for most rows, except for halo flares, which are coded as <code>Halo</code>. Create a new (logical) column that indicates if a row corresponds to a halo flare or not, and then replace <code>Halo</code> entries in the <code>cme_angle</code> column as NA.</li>
 <li>The <code>width</code> column indicates if the given value is a lower bound. Create a new (logical) column that indicates if width is given as a lower bound, and remove any non-numeric part of the width column.</li>
 <li>Combine date and time columns for <code>start</code>, <code>end</code> and <code>cme</code> so they can be encoded as <code>datetime</code> objects.</li>
-<li>Use the <code>readr::type_convert</code> function to convert columns to appropriate types.</li>
+<li>Convert columns to appropriate data types.</li>
 </ol>
 <p>The output of this step should be similar to this (note the column types)</p>
 <pre><code># A tibble: 482 x 13
@@ -645,7 +635,7 @@ This work is supported by NASA’s Virtual Observatories Program
 <div id="question-1-replication-10-pts" class="section level3">
 <h3>Question 1: Replication (10 pts)</h3>
 <p>Can you replicate the top 50 solar flare table in <a href="https://www.spaceweatherlive.com/en/solar-activity/top-50-solar-flares">SpaceWeatherLive.com</a> exactly using the data obtained from NASA? That is, if you get the top 50 solar flares from the NASA table based on their classification (e.g., <code>X28</code> is the highest), do you get data for the same 50 solar flare events in the SpaceWeatherLive page? If not, why not?</p>
-<p>Include code used to get the top 50 solar flares from the NASA table (be careful when ordering by classification, using <code>tidyr::separate</code> here is useful). Write a sentence or two discussing how well you can replicate the SpaceWeatherLive data from the NASA data.</p>
+<p>Include code used to get the top 50 solar flares from the NASA table (be careful when ordering by classification, separating classification is useful). Write a sentence or two discussing how well you can replicate the SpaceWeatherLive data from the NASA data.</p>
 </div>
 <div id="question-2-entity-resolution-15-pts" class="section level3">
 <h3>Question 2: Entity Resolution (15 pts)</h3>
@@ -669,10 +659,10 @@ This work is supported by NASA’s Virtual Observatories Program
 </div>
 <div id="submission" class="section level2">
 <h2>Submission</h2>
-<p>Prepare and knit an Rmarkdown file that includes for each step in Part 1: (a) code to carry out the step discussed, (b) partial output showing the output of your code, similar to the examples above, and (c) a short prose description of how your code works.</p>
+<p>Prepare an Rmarkdown file (if using R) or Jupyter notebook (if using python) that includes for each step in Part 1: (a) code to carry out the step discussed, (b) partial output showing the output of your code, similar to the examples above, and (c) a short prose description of how your code works.</p>
 <p>For questions 1 and 2 of Part 2, follow the instructions there.</p>
 <p>For Question 3 of part 2 provide: (a) a short description (2 sentences) of what the intent of your plot is (think in terms of our discussion on how we show variation, co-variation in terms of central trend, spread, skew etc.), (b) code to produce your plot, (c) a short text description of your plot, and (d) a sentence or two of interpretation of your plot (again think of variation, co-variation, etc.).</p>
-<p>Submit the resulting PDF to ELMS.</p>
+<p>Export to PDF and submit that to ELMS.</p>
 </div>
 
 
@@ -692,6 +682,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
