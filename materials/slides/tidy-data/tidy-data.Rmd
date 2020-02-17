@@ -1,11 +1,12 @@
 ---
-title: "Principles"
+title: "Common operations in data tyding"
 author: "Héctor Corrada Bravo"
 company: "University of Maryland"
 date: "`r Sys.Date()`"
 css: ["custom.css"]
 output:
   xaringan::moon_reader:
+    chakra: libs/remark-0.14.0.min.js
     lib_dir: libs
     seal: false
     includes: 
@@ -22,7 +23,7 @@ count: false
 
 .banner[![](img/epiviz.png)]
 
-.title[Introduction to Data Science: Principles]
+.title[Introduction to Data Science: Common operations for data tidying]
 
 .author[Héctor Corrada Bravo]
 
