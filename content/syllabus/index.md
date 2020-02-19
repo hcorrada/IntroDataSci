@@ -61,9 +61,8 @@ libraries, data resources and publishing mechanisms.
 |----------------------|-----------|------------|----------|----------|----------|
 | Aya Ismail           | Monday    | 12:00      | 14:00    |          | Python   |
 | Yifan Yang           | Monday    | 13:00      | 15:00    |          | Both     |
-| Victoria Cepeda      | Monday    | 13:00      | 17:00    |          | Both     |
+| Victoria Cepeda      | Monday    | 15:00      | 17:00    |          | Both     |
 | Samuel Dooley        | Tuesday   | 07:30      | 09:30    |          | Both     |
-| Alexander Hoyle      | Tuesday   | 09:00      | 11:00    |          | Both     |
 | Victoria Cepeda      | Tuesday   | 09:30      | 11:30    |          | Both     |
 | Mohamed Gunady       | Tuesday   | 13:00      | 15:00    |          | Both     |
 | Yifan Yang           | Tuesday   | 15:00      | 17:00    |          | Both     |
@@ -72,6 +71,7 @@ libraries, data resources and publishing mechanisms.
 | Theresa Choi         | Wednesday | 10:00      | 13:00    |          | Both     |
 | Noor Pratap          | Wednesday | 15:00      | 17:00    |          | Both     |
 | Samuel Dooley        | Thursday  | 07:30      | 09:30    |          | Both     |
+| Alexander Hoyle      | Thursday  | 09:00      | 11:00    |          | Both     |
 | Gowthami Somepalli   | Thursday  | 14:00      | 18:00    |          | Python   |
 | Alexander Hoyle      | Friday    | 08:30      | 10:30    |          | Both     |
 | Zinat Tasnim         | Friday    | 09:00      | 11:00    |          | Both     |
