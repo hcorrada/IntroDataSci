@@ -2,7 +2,9 @@
 title: "Building a complex query with SQL"
 author: "Hector Corrada Bravo"
 date: "2/15/2018"
-output: html_document
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r}
@@ -40,6 +42,7 @@ from Master as m
 where birthCountry = "P.R."
   and hof.playerID is NULL
 ```
+
 - Add hits per season to table of players from PR _not_in HOF
 
 
