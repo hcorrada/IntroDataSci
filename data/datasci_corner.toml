@@ -151,12 +151,6 @@
 # show = ""
 
 # [[entries]]
-# date = "3/5"
-# description = "One take on Data Science Survey"
-# link = "https://www.theverge.com/2017/11/1/16589246/machine-learning-data-science-dirty-data-kaggle-survey-2017"
-# show = ""
-
-# [[entries]]
 # date = "2/26"
 # description = "The book: playing the percentages in baseball"
 # link = "https://amzn.to/2BPzJ0X"
@@ -167,6 +161,12 @@
 # description = "Uber Engineering Blogpost on their Data Science Workbench"
 # link = "https://eng.uber.com/dsw/"
 # show = ""
+
+[[entries]]
+date = "3/5"
+description = "One take on Data Science Survey"
+link = "https://www.theverge.com/2017/11/1/16589246/machine-learning-data-science-dirty-data-kaggle-survey-2017"
+show = ""
 
 [[entries]]
 date = "2/17"
