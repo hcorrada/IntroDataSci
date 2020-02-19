@@ -151,18 +151,6 @@ notes = "bookdown-notes/entity-resolution-and-record-linkage.html"
 title = "Lecture Slides: Joins and Entity Resolution"
 notes = "slides/cmsc320_representation-models.pdf"
 
-[[day07.covers]]
-title = "Data acquisition: loading and scraping"
-notes = "bookdown-notes/ingesting-data.html"
-
-[[day07.covers]]
-title = "Common operations for data tidying"
-notes = "bookdown-notes/tidying-data.html"
-
-[[day07.covers]]
-title = "Lecture Slides: Common operations for data tidying"
-notes = "slides/cmsc320_tidy-data.pdf"
-
 #[day07.class_notes]
 #link = "cmsc320_class-notes_20180213.pdf"
 
@@ -171,12 +159,32 @@ date = "2/19"
 
 
 [[day08.covers]]
-title = "Data cleaning: handling text and dates"
-notes = "bookdown-notes/text-and-dates.html"
-
-[[day08.covers]]
 title = "DB parting shots: query optimization and the JSON data model"
 notes = "bookdown-notes/db-parting-shots.html"
+
+[[day08.covers]]
+title = "Lecture Slides: Query optimization and JSON"
+notes = "slides/cmsc320_representation-models.pdf"
+
+[[day08.covers]]
+title = "Common operations for data tidying"
+notes = "bookdown-notes/tidying-data.html"
+
+[[day08.covers]]
+title = "Lecture Slides: Common operations for data tidying"
+notes = "slides/cmsc320_tidy-data.pdf"
+
+[[day08.covers]]
+title = "Data acquisition: loading and scraping"
+notes = "bookdown-notes/ingesting-data.html"
+
+[[day08.covers]]
+title = "Scraping with python: Beautiful Soup"
+notes = "https://www.digitalocean.com/community/tutorials/how-to-scrape-web-pages-with-beautiful-soup-and-python-3"
+
+[[day08.covers]]
+title = "Data cleaning: handling text and dates"
+notes = "bookdown-notes/text-and-dates.html"
 
 [day08a]
 date = "2/24"
