@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Network Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2020-02-24" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Network Data]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+2020-02-24
+]
+
+.logo[![](img/logo.png)]
+
+---
+layout: true
+
+## Network Data
+
+---
+
+
+
+
+In many applications we have data about entities, but also
+have data about interactions between entities. 
+
+Dataset of financial transactions
+available from Kaggle at https://www.kaggle.com/ntnu-testimon/paysim1. 
+
+Some of these
+transactions are marked as fraudulent. 
+
+
+
+
+
+
+
+---
+
+![](network-data_files/figure-html/plotgraph-1.png)&lt;!-- --&gt;
+
+---
+layout: true
+
+## Preliminaries
+
+---
+
+Think about ways to represent data about entities and their interactions. 
+
+Mathematically, we use  a **Network** as an abstraction of _entities_ and their interactions. 
+
+We can use a **Graph** as a  mathematical representation of this data. In this case, _vertices_ represent nodes (entities), and _edges_ represent links (interactions).
+
+---
+
+Here is another graph as an example. In this case edges (or links) do not have directionality. 
+
+
+
+![](network-data_files/figure-html/plot_undirected-1.png)&lt;!-- --&gt;
+
+---
+
+We can also represent directional interactions with directed edges.
+
+![](network-data_files/figure-html/toygraph2-1.png)&lt;!-- --&gt;
+---
+
+In terms of our previous discussion on tidy, rectangular datasets, this is a case where we need to have two distinct
+tables to represent this data. 
+
+- One table represents entities and their attributes:
+
+
+```
+## # A tibble: 1,920 x 2
+##    name        node_type
+##    &lt;chr&gt;       &lt;chr&gt;    
+##  1 C746757564  C        
+##  2 C336400944  C        
+##  3 C1562533966 C        
+##  4 C1889457907 C        
+##  5 C1940311161 C        
+##  6 C501036152  C        
+##  7 C1594857799 C        
+##  8 C916100517  C        
+##  9 C1029898472 C        
+## 10 C1107404311 C        
+## # … with 1,910 more rows
+```
+
+---
+
+- Second table to represent edges and their attributes:
+
+
+```
+## # A tibble: 1,101 x 11
+##     from    to  step type  amount oldbalanceOrg newbalanceOrig
+##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;
+##  1     1  1102     2 CASH… 8.43e4      7929846.       8014145.
+##  2     2  1103     1 PAYM… 2.60e4            0              0 
+##  3     3  1104     5 PAYM… 2.50e3            0              0 
+##  4     4  1105     2 PAYM… 9.63e3         6847              0 
+##  5     5  1106     3 PAYM… 1.53e4         9083              0 
+##  6     6  1107     1 CASH… 1.68e5        30040.        198492.
+##  7     7  1108     2 CASH… 6.31e4      6308037.       6371153.
+##  8     8  1109     5 PAYM… 1.01e4        60358.         50235.
+##  9     9  1110     1 PAYM… 3.39e3       340661         337268.
+## 10    10  1111     1 PAYM… 2.18e4            0              0 
+## # … with 1,091 more rows, and 4 more variables: oldbalanceDest &lt;dbl&gt;,
+## #   newbalanceDest &lt;dbl&gt;, isFraud &lt;fct&gt;, isFlaggedFraud &lt;dbl&gt;
+```
+
+---
+layout: true
+
+## Network-derived attributes
+
+---
+
+Besides attributes measured for each node, in our example the
+type of party (Merchant or not for example), we can derive 
+node and edge attributes based on the structure of the network.
+
+For instance, we can compute the _degree_ of a node, that is, the number of edges incident to the node. 
+
+---
+
+
+```
+## # A tibble: 1,920 x 4
+##    name        node_type in_degree out_degree
+##    &lt;chr&gt;       &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt;
+##  1 C746757564  C                 0          1
+##  2 C336400944  C                 0          1
+##  3 C1562533966 C                 0          1
+##  4 C1889457907 C                 0          1
+##  5 C1940311161 C                 0          1
+##  6 C501036152  C                 0          1
+##  7 C1594857799 C                 0          1
+##  8 C916100517  C                 0          1
+##  9 C1029898472 C                 0          1
+## 10 C1107404311 C                 0          1
+## # … with 1,910 more rows
+```
+
+---
+
+The distribution of these newly created attributes, e.g., degree, are fundamental analytical tools to characterize networks.
+
+&lt;img src="network-data_files/figure-html/plot_deg-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+High-degree nodes are _important_ to the network since they interact with many other nodes in the network? 
+
+It would be useful to know if the nodes they interact with are also _important_ nodes. 
+
+This is referred to 
+as _centrality_.
+
+---
+
+&lt;img src="network-data_files/figure-html/centrality-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+We can similarily think of _important_ edges in the network. What are edges that may connect clusters of nodes in the network?
+
+One measure of edge importance is _betweeness_. 
+---
+
+&lt;img src="network-data_files/figure-html/betweenness-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+These types of network-derived attributes can in turn be used to
+understand topological properties of networks. 
+
+For instance, we 
+can use betweeness to find _communities_ or clusters of nodes in the graph. 
+
+The Girvan-Newman Algorithm is a hierarchical method to partition nodes into communities using edge betweenness
+
+---
+
+&lt;img src="network-data_files/figure-html/gn-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Calculating Betweenness
+
+Formally, `\(\mathrm{betweenness}(e)\)`: fraction of node pairs `\((x,y)\)` where shortest path crosses edge `\(e\)`
+
+For each node `\(x\)`, use breadth-first-search to count number of shortest paths through each edge in graph
+
+Sum result across nodes, and divide by two
+
+---
+
+---
+layout: true
+
+## Resources
+
+---
+
+There are a number of very useful R and python software tools
+to represent and manipulate network data.
+
+### Cross-language
+igraph: http://igraph.org/ Extremely powerful tool for the
+representation, manipulation and visualization of network data. It underlies many of the R and python network libraries.
+
+---
+
+### R
+
+In R, the most commonly used packages are: 
+- [`igraph`](https://cran.r-project.org/web/packages/igraph/index.html)
+- [`Rgraphviz`](https://www.bioconductor.org/packages/release/bioc/html/Rgraphviz.html)
+
+Newer pacakges use the tidy data paradigm to represent and manipulate networks:
+
+- [`tidygraph`](https://cran.r-project.org/web/packages/tidygraph/index.html)
+- [`ggraph`](https://cran.r-project.org/web/packages/ggraph/index.html)
+
+---
+
+### Python
+
+In python, most common tools are:
+
+- [`igraph`](http://igraph.org/python/doc/tutorial/tutorial.html)
+- [`networkx`](https://networkx.github.io/)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-0.14.0.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

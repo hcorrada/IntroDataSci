@@ -1,0 +1,331 @@
+---
+title: "Network Data"
+author: "Héctor Corrada Bravo"
+company: "University of Maryland"
+date: "`r Sys.Date()`"
+css: ["custom.css"]
+output:
+  xaringan::moon_reader:
+    chakra: libs/remark-0.14.0.min.js
+    lib_dir: libs
+    seal: false
+    includes: 
+      after_body: "custom.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Network Data]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+`r Sys.Date()`
+]
+
+.logo[![](img/logo.png)]
+
+---
+layout: true
+
+## Network Data
+
+---
+
+```{r setup1, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(cache=TRUE)
+```
+
+
+In many applications we have data about entities, but also
+have data about interactions between entities. 
+
+Dataset of financial transactions
+available from Kaggle at https://www.kaggle.com/ntnu-testimon/paysim1. 
+
+Some of these
+transactions are marked as fraudulent. 
+
+```{r libsetup, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggraph)
+library(tidygraph)
+
+extrafont::loadfonts()
+```
+
+```{r read_data, cache=TRUE, echo=FALSE, message=FALSE}
+node_df <- read_csv("data/transactions_nodes.csv")
+edge_df <- read_csv("data/transactions_edges.csv")
+```
+
+```{r setup_data, cache=TRUE, echo=FALSE, message=FALSE}
+transaction_graph <- edge_df %>%
+  inner_join(select(node_df, name, index), by=c("from"="index")) %>%
+  mutate(from=name) %>%
+  select(-name) %>%
+  inner_join(select(node_df, name, index), by=c("to"="index")) %>%
+  mutate(to=name) %>%
+  select(-name) %>%
+  as_tbl_graph(directed=TRUE) %>%
+  activate(nodes) %>%
+  mutate(node_type = str_sub(name, 1, 1)) %>%
+  activate(edges) %>%
+  mutate(isFraud=factor(isFraud))
+```
+
+---
+
+```{r plotgraph, echo=FALSE, warning=FALSE}
+transaction_graph %>%
+  ggraph(layout='graphopt') +
+    geom_edge_fan(aes(color=isFraud), width=1) +
+    geom_node_point(size=.1) +
+    theme_graph(foreground=NA) +
+    ggtitle("Network of financial transactions")
+```
+
+---
+layout: true
+
+## Preliminaries
+
+---
+
+Think about ways to represent data about entities and their interactions. 
+
+Mathematically, we use  a **Network** as an abstraction of _entities_ and their interactions. 
+
+We can use a **Graph** as a  mathematical representation of this data. In this case, _vertices_ represent nodes (entities), and _edges_ represent links (interactions).
+
+---
+
+Here is another graph as an example. In this case edges (or links) do not have directionality. 
+
+```{r toygraph, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidygraph)
+library(ggraph)
+
+graph <- as_tbl_graph(highschool)
+
+graph_1958 <- graph %>%
+  activate(edges) %>%
+  filter(year == 1958)
+
+undirected_graph_1958 <- graph_1958 %>%
+  convert(to_undirected) %>%
+  convert(to_simple)
+```
+
+```{r plot_undirected, echo=FALSE}
+undirected_graph_1958 %>%
+  ggraph(layout="kk") +
+    geom_edge_fan() +
+    geom_node_point(size=3) +
+    theme_graph(foreground=NA) +
+    ggtitle("Undirected graph")
+```
+
+---
+
+We can also represent directional interactions with directed edges.
+
+```{r toygraph2, echo=FALSE, message=FALSE}
+graph_1958 %>%
+  ggraph(layout="kk") +
+    geom_edge_fan(arrow=arrow(length=unit(0.15,"inches"))) +
+    geom_node_point(size=3) +
+    theme_graph(foreground=NA) +
+    ggtitle("Directed graph")
+```
+---
+
+In terms of our previous discussion on tidy, rectangular datasets, this is a case where we need to have two distinct
+tables to represent this data. 
+
+- One table represents entities and their attributes:
+
+```{r graph_nodes, echo=FALSE}
+transaction_graph %>%
+  activate(nodes) %>%
+  as_tibble()
+```
+
+---
+
+- Second table to represent edges and their attributes:
+
+```{r graph_edges, echo=FALSE}
+transaction_graph %>%
+  activate(edges) %>%
+  as_tibble()
+```
+
+---
+layout: true
+
+## Network-derived attributes
+
+---
+
+Besides attributes measured for each node, in our example the
+type of party (Merchant or not for example), we can derive 
+node and edge attributes based on the structure of the network.
+
+For instance, we can compute the _degree_ of a node, that is, the number of edges incident to the node. 
+
+---
+
+```{r node_add_degree, echo=FALSE}
+transaction_graph <- transaction_graph %<>%
+  activate(nodes) %>%
+  mutate(in_degree = centrality_degree(mode="in"),
+         out_degree = centrality_degree(mode="out"))
+
+transaction_graph %>%
+  activate(nodes) %>%
+  as_tibble
+```
+
+---
+
+The distribution of these newly created attributes, e.g., degree, are fundamental analytical tools to characterize networks.
+
+```{r plot_deg, echo=FALSE, eval=TRUE,fig.align='center',fig.height=5}
+transaction_graph %>%
+  activate(nodes) %>%
+  as_tibble() %>%
+  group_by(in_degree) %>%
+  summarize(n=n()) %>%
+  ungroup() %>%
+  mutate(num_nodes = sum(n)) %>%
+  mutate(deg_prop = n / num_nodes) %>%
+  ggplot(aes(x=log(in_degree), y=log(deg_prop))) +
+    geom_point() +
+    labs(title="Degree distribution of transaction network",
+         x="In-degree (log)",
+         y="Proportion of nodes (log)")
+```
+
+---
+
+High-degree nodes are _important_ to the network since they interact with many other nodes in the network? 
+
+It would be useful to know if the nodes they interact with are also _important_ nodes. 
+
+This is referred to 
+as _centrality_.
+
+---
+
+```{r centrality, echo=FALSE,eval=TRUE,warning=FALSE,fig.align='center'}
+undirected_graph_1958 %>%
+  activate(nodes) %>% 
+  mutate(centrality = centrality_eigen()) %>%
+  ggraph(layout="kk") +
+    geom_edge_fan() +
+    geom_node_point(aes(size=centrality)) +
+    theme_graph(foreground=NA) +
+    ggtitle("Eigen-centrality")
+```
+
+---
+
+We can similarily think of _important_ edges in the network. What are edges that may connect clusters of nodes in the network?
+
+One measure of edge importance is _betweeness_. 
+---
+
+```{r betweenness, echo=FALSE,eval=TRUE,warning=FALSE,fig.align='center'}
+undirected_graph_1958 %>%
+  activate(edges) %>% 
+  mutate(betweenness = centrality_edge_betweenness()) %>%
+  ggraph(layout="kk") +
+    geom_edge_fan(aes(width=betweenness)) +
+    scale_edge_width_continuous(range=c(0,2)) +
+    geom_node_point(size=3) +
+    theme_graph(foreground=NA)
+```
+
+---
+
+These types of network-derived attributes can in turn be used to
+understand topological properties of networks. 
+
+For instance, we 
+can use betweeness to find _communities_ or clusters of nodes in the graph. 
+
+The Girvan-Newman Algorithm is a hierarchical method to partition nodes into communities using edge betweenness
+
+---
+
+```{r gn, echo=FALSE, eval=TRUE,warning=FALSE,fig.align='center'}
+undirected_graph_1958 %>%
+  activate(edges) %>%
+  mutate(betweenness=centrality_edge_betweenness()) %>%
+  activate(nodes) %>%
+  mutate(group = factor(group_edge_betweenness())) %>%
+  ggraph(layout="kk") +
+    geom_edge_fan(aes(width=betweenness)) +
+    scale_edge_width_continuous(range=c(0,2)) +
+    geom_node_point(aes(color=group), size=3) +
+    theme_graph(foreground=NA)
+```
+
+---
+
+### Calculating Betweenness
+
+Formally, $\mathrm{betweenness}(e)$: fraction of node pairs $(x,y)$ where shortest path crosses edge $e$
+
+For each node $x$, use breadth-first-search to count number of shortest paths through each edge in graph
+
+Sum result across nodes, and divide by two
+
+---
+
+---
+layout: true
+
+## Resources
+
+---
+
+There are a number of very useful R and python software tools
+to represent and manipulate network data.
+
+### Cross-language
+igraph: http://igraph.org/ Extremely powerful tool for the
+representation, manipulation and visualization of network data. It underlies many of the R and python network libraries.
+
+---
+
+### R
+
+In R, the most commonly used packages are: 
+- [`igraph`](https://cran.r-project.org/web/packages/igraph/index.html)
+- [`Rgraphviz`](https://www.bioconductor.org/packages/release/bioc/html/Rgraphviz.html)
+
+Newer pacakges use the tidy data paradigm to represent and manipulate networks:
+
+- [`tidygraph`](https://cran.r-project.org/web/packages/tidygraph/index.html)
+- [`ggraph`](https://cran.r-project.org/web/packages/ggraph/index.html)
+
+---
+
+### Python
+
+In python, most common tools are:
+
+- [`igraph`](http://igraph.org/python/doc/tutorial/tutorial.html)
+- [`networkx`](https://networkx.github.io/)

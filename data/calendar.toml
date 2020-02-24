@@ -174,23 +174,28 @@ notes = "bookdown-notes/tidying-data.html"
 title = "Lecture Slides: Common operations for data tidying"
 notes = "slides/cmsc320_tidy-data.pdf"
 
+[day08a]
+date = "2/24"
+
 [[day08.covers]]
 title = "Data acquisition: loading and scraping"
 notes = "bookdown-notes/ingesting-data.html"
+
+[[day08a.covers]]
+title = "Lecture Slides: Scraping"
+notes = "slides/scrape-dickerson.pdf"
 
 [[day08.covers]]
 title = "Scraping with python: Beautiful Soup"
 notes = "https://www.digitalocean.com/community/tutorials/how-to-scrape-web-pages-with-beautiful-soup-and-python-3"
 
+[[day08a.covers]]
+title = "Representing and operating on network data"
+notes = "slides/cmsc320_network-data.pdf"
+
 [[day08.covers]]
 title = "Data cleaning: handling text and dates"
 notes = "bookdown-notes/text-and-dates.html"
-
-[day08a]
-date = "2/24"
-
-[[day08a.covers]]
-title = "Representing and operating on network data"
 
 # [[day08a.workdue]]
 # title = "HW2: ER Model and SQL"
