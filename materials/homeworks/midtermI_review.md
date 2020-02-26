@@ -106,7 +106,19 @@ fontfamily: utopia
 
 ### References
 
-- Lecture Notes 17, 18.1
+- Lecture Notes Ch. 17, 18
+
+## Entity Resolution
+
+- The Entity Resolution problem
+- Calculating similarity between categorical attribute values
+- Calculating similarity between numeric attribute values
+- Calculating similarity between entities
+- Solving the one-to-many resolution problem
+
+### References
+
+- Lecture Notes Ch. 19
 
 ## Network Data
 
