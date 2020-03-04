@@ -1,0 +1,1117 @@
+---
+title: "Exploratory Data Analysis"
+author: "Héctor Corrada Bravo"
+company: "University of Maryland"
+date: "`r Sys.Date()`"
+css: ["custom.css"]
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    includes: 
+      after_body: "custom.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Exploratory Data Analysis]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+`r Sys.Date()`
+]
+
+.logo[![](img/logo.png)]
+
+```{r setup1, echo=FALSE, message=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(cache=TRUE)
+library(tidyverse)
+theme_set(theme_bw())
+```
+
+---
+layout: true
+
+## Exploratory Data Analysis
+
+---
+
+What to do with a dataset before modeling using Statistics or Machine Learning. 
+
+- Better understand the data at hand, 
+- help us make decisions about appropriate modeling methods, 
+- helpful data transformations that may be helpful to do. 
+
+---
+
+There are many instances where statistical data modeling is not required to tell a clear and convincing story with data. 
+
+Many times an effective visualization can lead to convincing conclusions.
+
+---
+
+**Goal** Perform an initial exploration of attributes/variables across entities/observations. 
+
+We will concentrate on exploration of single or pairs of variables. 
+
+Later on in the course we will see _dimensionality reduction_ methods that are useful in exploration of more than two variables at a time.
+
+---
+
+Computing summary statistics 
+
+- how to interpret them 
+- understand properties of attributes. 
+
+Data transformations 
+
+- change properties of variables to help in visualization or modeling. 
+
+First, how to use visualization for exploratory data analysis.
+
+---
+
+Ultimately, the purpose of EDA is to spot problems in data (as part of data wrangling) and understand variable properties like:
+
+- central trends (mean)
+- spread (variance)
+- skew
+- outliers
+
+This will help us think of possible modeling strategies (e.g., probability distributions)
+
+---
+layout: true
+## Visualization of single variables
+
+---
+class: split-50
+
+.column[
+```r
+flights %>%
+  sample_frac(.1) %>%
+  rowid_to_column() %>%
+  ggplot(aes(x=rowid, y=dep_delay)) +
+    geom_point() 
+```
+]
+
+.column[
+```{r, warning=FALSE, dev="png", echo=FALSE, fig.align="center", fig.width=6.5}
+library(nycflights13)
+
+flights %>%
+  sample_frac(.1) %>%
+  rowid_to_column() %>%
+  ggplot(aes(x=rowid, y=dep_delay)) +
+    geom_point() 
+```
+]
+
+---
+class: split-50
+
+.column[
+```r
+flights %>%
+  sample_frac(.1) %>%
+  arrange(dep_delay) %>%
+  rowid_to_column() %>%
+  ggplot(aes(x=rowid, y=dep_delay)) +
+    geom_point() 
+```
+]
+
+.column[
+```{r, warning=FALSE, dev="png",fig.align="center", fig.width=6.5,echo=FALSE}
+flights %>%
+  sample_frac(.1) %>%
+  arrange(dep_delay) %>%
+  rowid_to_column() %>%
+  ggplot(aes(x=rowid, y=dep_delay)) +
+    geom_point() 
+```
+]
+
+---
+
+What can we make of that plot now? Start thinking of _central tendency_, _spread_ and _skew_ as you look at that plot.
+
+Let's now create a graphical summary of that variable to incorporate observations made from this initial plot. 
+
+Let's start with a _histogram_: it divides the _range_ of the `dep_delay` attribute into **equal-sized** bins, then plots the number of observations within each bin. 
+
+---
+class: split-50
+
+.column[
+```r
+flights %>%
+  ggplot(aes(x=dep_delay)) +
+    geom_histogram() 
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.align="center", fig.width=6.5, warning=FALSE, message=FALSE}
+flights %>%
+  ggplot(aes(x=dep_delay)) +
+    geom_histogram() 
+```
+]
+
+---
+
+**Density plot**
+
+We can (conceptually) make the bins as small as possible and get a smooth curve that describes the _distribution_ of values of the `dep_delay` variable. 
+
+---
+class: split-50
+
+.column[
+```r
+flights %>%
+  ggplot(aes(x=dep_delay)) +
+    geom_density()
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.width=6.5, fig.align="center", message=FALSE, warning=FALSE}
+flights %>%
+  ggplot(aes(x=dep_delay)) +
+    geom_density()
+```
+]
+
+---
+
+**Boxplot** Succint graphical summary of the distribution of a variable.
+
+---
+class: split-50
+
+.column[
+```r
+flights %>%
+   ggplot(aes(x='',y=dep_delay)) +
+    geom_boxplot()
+```
+]
+
+.column[
+```{r, dev="png", echo=FALSE, fig.width=6.5,fig.align="center",warning=FALSE}
+flights %>%
+   ggplot(aes(x='',y=dep_delay)) +
+    geom_boxplot()
+```
+]
+
+---
+
+That's not very clear to see, so let's do a _logarithmic_ transformation of this data to see distribution better.
+
+---
+class: split-50
+
+.column[
+```r
+flights %>%
+  mutate(min_delay=min(dep_delay, na.rm=TRUE)) %>%
+  mutate(log_dep_delay = log(dep_delay - min_delay)) %>%
+  ggplot(aes(x='', y=log_dep_delay)) +
+    geom_boxplot()
+```
+]
+
+.column[
+```{r, dev="png", echo=FALSE, fig.align='center',fig.width=6.5,warning=FALSE}
+flights %>%
+  mutate(min_delay=min(dep_delay, na.rm=TRUE)) %>%
+  mutate(log_dep_delay = 
+           log(dep_delay - min_delay)) %>%
+  ggplot(aes(x='', y=log_dep_delay)) +
+    geom_boxplot()
+```
+]
+
+---
+
+So what does this represent? 
+
+  (a) central tendency (using the median) is represented by the black line within the box, 
+  
+  (b) spread (using inter-quartile range) is represented by the box and whiskers. 
+  
+  (c) outliers (data that is _unusually_ outside the spread of the data) 
+
+---
+layout: true
+
+## Visualization of pairs of variables
+
+---
+
+How do each of the distributional properties we care about (central trend, spread and skew) of the values of an attribute change based on the value of a different attribute?
+
+Suppose we want to see the relationship between `dep_delay`, a _numeric_ variable, and `origin`, a _categorical_ variable. 
+
+---
+
+Previously, we saw used `group_by`-`summarize` operations to compute attribute summaries based on the value of another attribute. 
+
+We also called this _conditioning_. In visualization we can start thinking about conditioning as we saw before. 
+
+Here is how we can see a plot of the distribution of departure delays _conditioned_ on origin airport.
+
+---
+class: split-50
+
+.column[
+```r
+flights %>%
+  mutate(min_delay = min(dep_delay, na.rm=TRUE)) %>%
+  mutate(log_dep_delay = log(dep_delay - min_delay)) %>%
+  ggplot(aes(x=origin, y=log_dep_delay)) +
+    geom_boxplot()
+```
+]
+
+.column[
+```{r, dev="png", echo=FALSE, warning=FALSE,fig.align="center",fig.width=6.5}
+flights %>%
+  mutate(min_delay = min(dep_delay, na.rm=TRUE)) %>%
+  mutate(log_dep_delay = log(dep_delay - min_delay)) %>%
+  ggplot(aes(x=origin, y=log_dep_delay)) +
+    geom_boxplot()
+```
+]
+
+---
+
+For pairs of continuous variables, the most useful visualization is the scatter plot. 
+
+This gives an idea of how
+one variable varies (in terms of central trend, variance and skew) conditioned on another variable.
+
+---
+class: split-50
+
+.column[
+```r
+flights %>%
+  sample_frac(.1) %>%
+  ggplot(aes(x=dep_delay, y=arr_delay)) +
+    geom_point()
+```
+]
+
+.column[
+```{r, eval=TRUE, dev="png", echo=FALSE, fig.width=6.5, fig.align="center", warning=FALSE}
+flights %>%
+  sample_frac(.1) %>%
+  ggplot(aes(x=dep_delay, y=arr_delay)) +
+    geom_point()
+```
+]
+
+---
+layout: true
+
+## EDA with the grammar of graphics
+
+---
+
+While we have seen a basic repertoire of graphics it's easier to proceed if we have a bit more formal way of thinking about graphics and plots. 
+
+The central premise is to characterize the building pieces behind plots:
+
+1. The data that goes into a plot, works best when data is tidy
+2. The mapping between data and *aesthetic* attributes
+3. The *geometric* representation of these attributes
+
+---
+class: split-50
+
+.column[
+```r
+batting %>% 
+  filter(yearID == "2010") %>%
+  ggplot(aes(x=AB, y=R)) +
+    geom_point()
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.align="center", fig.width=6.5}
+batting <- tbl_df(Batting)
+
+batting %>% 
+  filter(yearID == "2010") %>%
+  ggplot(aes(x=AB, y=R)) +
+    geom_point()
+```
+]
+
+---
+
+**Data**: Batting table filtering for year  
+**Aesthetic attributes**: 
+  - x-axis mapped to variables `AB`
+  - y-axis mapped to variable `R`  
+  
+**Geometric Representation**: points!  
+
+Now, you can cleanly distinguish the constituent parts of the plot.
+
+---
+class: split-50
+
+E.g., change the geometric representation
+
+.column[
+```r
+batting %>% 
+  filter(yearID == "2010") %>%
+  ggplot(aes(x=AB, y=R, label=teamID)) +
+    geom_text() 
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.align="center", fig.width=6.5, fig.height=6}
+# scatter plot of at bats vs. runs for 2010
+batting %>% 
+  filter(yearID == "2010") %>%
+  ggplot(aes(x=AB, y=R, label=teamID)) +
+    geom_text() 
+```
+]
+
+---
+class: split-50
+
+E.g., change the data.
+
+.column[
+```r
+# scatter plot of at bats vs. runs for 1995
+batting %>% 
+  filter(yearID == "1995") %>%
+  ggplot(aes(x=AB, y=R)) +
+    geom_point()
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.align="center", fig.width=6.5, fig.height=6}
+# scatter plot of at bats vs. runs for 1995
+batting %>% 
+  filter(yearID == "1995") %>%
+  ggplot(aes(x=AB, y=R)) +
+    geom_point()
+```
+]
+---
+class: split-50
+
+E.g., change the aesthetic.
+
+.column[
+```r
+# scatter plot of at bats vs. hits for 2010
+batting %>% 
+  filter(yearID == "2010") %>%
+  ggplot(aes(x=AB, y=H)) +
+    geom_point()
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.align="center", fig.width=6.5, fig.height=6}
+# scatter plot of at bats vs. hits for 2010
+batting %>% 
+  filter(yearID == "2010") %>%
+  ggplot(aes(x=AB, y=H)) +
+    geom_point()
+```
+]
+
+---
+
+Let's make a line plot
+
+What do we change? (data, aesthetic or geometry?)
+
+---
+class: split-50
+
+.column[
+```r
+batting %>%
+  filter(yearID == "2010") %>%
+  sample_n(100) %>%
+  ggplot(aes(x=AB, y=H)) +
+    geom_line()
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.align="center", fig.width=6.5}
+batting %>%
+  filter(yearID == "2010") %>%
+  sample_n(100) %>%
+  ggplot(aes(x=AB, y=H)) +
+  geom_line()
+```
+]
+
+---
+
+Let's add a regression line 
+
+What do we add? (data, aesthetic or geometry?)
+
+---
+class: split-50
+
+What can we see about central trend, variation and skew with this plot?
+
+.column[
+```r
+batting %>%
+  filter(yearID == "2010") %>%
+  ggplot(aes(x=AB, y=H)) +
+    geom_point() + 
+    geom_smooth(method=lm)
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.align="center", fig.width=6.5, fig.height=5.5}
+batting %>%
+  filter(yearID == "2010") %>%
+  ggplot(aes(x=AB, y=H)) +
+  geom_point() + 
+  geom_smooth(method=lm)
+```
+]
+
+---
+class: split-50
+
+Using other aesthetics we can incorporate information from other variables.
+
+.column[
+Color: color by categorical variable
+
+```r
+batting %>%
+  filter(yearID == "2010") %>%
+  ggplot(aes(x=AB, y=H, color=lgID)) +
+    geom_point() + 
+    geom_smooth(method=lm)
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.align="center", fig.width=6.5, fig.height=5.5}
+batting %>%
+  filter(yearID == "2010") %>%
+  ggplot(aes(x=AB, y=H, color=lgID)) +
+  geom_point() + 
+  geom_smooth(method=lm)
+```
+]
+
+---
+class: split-50
+
+.column[
+
+Size: size by (continuous) numeric variable
+
+```r
+batting %>%
+  filter(yearID == "2010") %>%
+  ggplot(aes(x=AB, y=R, size=HR)) +
+    geom_point() + 
+    geom_smooth(method=lm)
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.align="center", fig.width=6.5, fig.height=5.5}
+batting %>%
+  filter(yearID == "2010") %>%
+  ggplot(aes(x=AB, y=R, size=HR)) +
+  geom_point() + 
+  geom_smooth(method=lm)
+```
+]
+
+---
+
+### Faceting
+
+The last major component of exploratory analysis called `faceting` in visualization,
+corresponds to `conditioning` in statistical modeling, we've seen it as the motivation of `grouping`
+when wrangling data.
+
+---
+class: split-50
+
+.column[
+```r
+batting %>%
+  filter(yearID %in% c("1995", "2000", "2010")) %>%
+  ggplot(aes(x=AB, y=R, size=HR)) +
+    facet_grid(lgID~yearID) +
+    geom_point() + 
+    geom_smooth(method=lm)
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.align="center", fig.width=6.5}
+batting %>%
+  filter(yearID %in% c("1995", "2000", "2010")) %>%
+  ggplot(aes(x=AB, y=R, size=HR)) +
+  facet_grid(lgID~yearID) +
+  geom_point() + 
+  geom_smooth(method=lm)
+```
+]
+
+---
+layout: true
+
+## Exploratory Data Analysis: Summary Statistics
+
+---
+
+
+Let's continue our discussion of Exploratory Data Analysis. 
+
+In the previous section we saw ways of visualizing attributes (variables) using plots to start understanding properties of how data is distributed. 
+
+In this section, we start discussing statistical summaries of data to quantify properties that we observed using visual summaries and representations.
+
+---
+
+Remember that one purpose of EDA is to spot problems in data (as part of data wrangling) and understand variable properties like:
+
+- central trends (mean)
+- spread (variance)
+- skew
+- suggest possible modeling strategies (e.g., probability distributions)
+
+---
+
+One last note on EDA. 
+
+John W. Tukey was an exceptional scientist/mathematician, who had profound impact on statistics and Computer Science. 
+
+A lot of what we cover in EDA is based on his groundbreaking work. 
+
+[https://www.stat.berkeley.edu/~brill/Papers/life.pdf](https://www.stat.berkeley.edu/~brill/Papers/life.pdf).
+  
+---
+
+## Range
+
+Part of our goal is to understand how variables are distributed in a given dataset. 
+
+Note, again, that we are not using _distributed_ in a formal mathematical (or probabilistic) sense. 
+
+All statements we are making here are based on data at hand, so we could refer to this as the _empirical distribution_ of data. 
+
+---
+class: split-50
+
+Let's use a dataset on diamond characteristics as an example.
+
+```{r,echo=FALSE, fig.align="center", fig.height=5.5,fig.width=6.5}
+data(diamonds)
+
+diamonds %>%
+  ggplot(aes(x=depth)) +
+    geom_histogram(bins=100)
+```
+
+---
+
+### Notation
+
+We assume that we have data across $n$ entitites (or observational units) for $p$ attributes. 
+
+In this dataset $n=`r nrow(diamonds)`$ and $p=`r ncol(diamonds)`$. 
+
+However, let's consider a single attribute, and denote the data for that attribute (or variable) as $x_1, x_2, \ldots, x_n$. 
+
+---
+
+Since we want to understand how data is distributed across a _range_, we should first define the range. 
+
+```{r}
+diamonds %>%
+  summarize(min_depth = min(depth), max_depth = max(depth))
+```
+
+---
+
+We use notation $x_{(1)}$ and $x_{(n)}$ to denote the minimum and maximum statistics. 
+
+In general, we use notation $x_{(q)}$ for the rank statistics, e.g., the $q$th largest value in the data.
+
+---
+
+### Central Tendency
+
+Now that we know the range over which data is distributed, we can figure out a first summary of data is distributed across this range. 
+
+Let's start with the _center_ of the data: the _median_ is a statistic defined such that half of the data has a smaller value. 
+
+We can use notation $x_{(n/2)}$ (a rank statistic) to represent the median. 
+
+---
+
+```{r, echo=FALSE}
+diamonds %>%
+  ggplot(aes(x=depth)) +
+    geom_histogram(bins=100) +
+    geom_vline(aes(xintercept=median(depth)), color="red")
+```
+
+---
+
+### Derivation of the mean as central tendency statistic
+
+Best known statistic for central tendency is the _mean_, or average of the data: $\overline{x} = \frac{1}{n} \sum_{i=1}^n x_i$. 
+It turns out that in this case, we can be a bit more formal about "center" means in this case. 
+
+Let's say that the _center_ of a dataset is a point in the range of the data that is _close_ to the data. 
+
+To say that something is _close_ we need a measure of _distance_. 
+
+---
+
+So for two points $x_1$ and $x_2$ what should we use for distance? 
+
+The distance between data point $x_1$ and $x_2$ is $(x_1 - x_2)^2$. 
+
+---
+
+So, to define the _center_, let's build a criterion based on this distance by adding this distance across all points in our dataset:
+
+$$
+RSS(\mu) = \frac{1}{2} \sum_{i=1}^n (x_i - \mu)^2
+$$
+
+Here RSS means _residual sum of squares_, and we $\mu$ to stand for candidate values of _center_. 
+
+---
+
+We can plot RSS for different values of $\mu$:
+
+```{r, echo=FALSE, fig.align="center",fig.height=5.5}
+rss <- function(mu) { 0.5 * sum((diamonds$depth - mu)^2)}
+mu_candidates <- seq(min(diamonds$depth), max(diamonds$depth), len=1000)
+plot(mu_candidates, sapply(mu_candidates, rss), xlab="Depth", ylab="RSS", type="l", lwd=2, main="Residual Sum of Squares")
+```
+
+---
+
+Now, what should our "center" estimate be? 
+
+We want a value that is _close_ to the data based on RSS! 
+
+So we need to find the value in the range that minimizes RSS. 
+
+---
+
+From calculus, we know that a necessary condition for the minimizer $\hat{\mu}$ of RSS is that the derivative of RSS is zero at that point. 
+
+So, the strategy to minimize RSS is to compute its derivative, and find the value of $\mu$ where it equals zero. 
+
+---
+
+\begin{align}
+\frac{\partial}{\partial \mu} \frac{1}{2} \sum_{i=1}^n (x_i - \mu)^2 & = & \frac{1}{2} \sum_{i=1}^n \frac{\partial}{\partial \mu} (x_i - \mu)^2 \; \textrm{(sum rule)}\\
+{} & = & \sum_{i=1}^n \mu - \sum_{i=1}^n x_i \\
+{} & = & n\mu - \sum_{i=1}^n x_i
+\end{align}
+
+---
+
+```{r, echo=FALSE, fig.align="center"}
+rss_deriv <- function(mu) { nrow(diamonds)*mu - sum(diamonds$depth)}
+plot(mu_candidates, sapply(mu_candidates, rss_deriv), xlab="Depth", ylab="RSS Derivative", type="l", lwd=2, main="Derivative of RSS")
+abline(h=0,lty=2,lwd=1.6)
+```
+
+---
+
+Next, we set that equal to zero and find the value of $\mu$ that solves that equation:
+
+\begin{align}
+\frac{\partial}{\partial \mu} & = & 0 & \Rightarrow \\
+n\mu & = & \sum_{i=1}^n x_i & \Rightarrow \\
+\mu & = & \frac{1}{n} \sum_{i=1}^n x_i & {}
+\end{align}
+
+---
+
+The fact you should remember:
+
+**The mean is the value that minimizes RSS for a vector of attribute values**
+
+---
+
+It equals the value where the derivative of RSS is 0:
+
+```{r, echo=FALSE, fig.align="center", fig.height=6}
+our_mean <- sum(diamonds$depth) / nrow(diamonds)
+plot(mu_candidates, sapply(mu_candidates, rss_deriv), xlab="Depth", ylab="RSS Derivative", type="l", lwd=1.3)
+abline(v=our_mean, lwd=2.3, col="blue")
+abline(h=0, lty=2, lwd=1.6)
+```
+
+---
+
+It is the value that minimizes RSS:
+
+```{r, echo=FALSE, fig.align="center", fig.height=6}
+plot(mu_candidates, sapply(mu_candidates, rss), xlab="Depth", ylab="RSS Derivative", type="l", lwd=1.3)
+abline(v=our_mean, lwd=2.3, col="blue")
+```
+
+---
+
+And it serves as an estimate of central tendency of the dataset:
+
+```{r, echo=FALSE,fig.align="center",fig.height=6}
+diamonds %>%
+  ggplot(aes(x=depth)) +
+    geom_histogram(bins=100) +
+    geom_vline(aes(xintercept=median(depth)), color="red", size=1.3) +
+    geom_vline(aes(xintercept=mean(depth)), color="blue", size=1.3)
+```
+
+---
+
+Note that in this dataset the mean and median are not exactly equal, but are very close:
+
+```{r}
+diamonds %>%
+  summarize(mean_depth = mean(depth), median_depth = median(depth))
+```
+
+---
+
+There is a similar argument to define the median as a measure of _center_. 
+
+In this case, instead of using RSS we use a different criterion: the sum of absolute deviations 
+
+$$
+SAD(m) = \sum_{i=1}^n |x_i - m|.
+$$
+
+The median is the minimizer of this criterion.
+
+---
+
+```{r, echo=FALSE,fig.align="center",fig.height=6}
+sad <- function(m) sum(abs(diamonds$depth - m))
+plot(mu_candidates, sapply(mu_candidates, sad), xlab="Depth", ylab="Sum of Absolute Deviations", type="l", lwd=1.3)
+abline(v=median(diamonds$depth), lwd=2.3, col="red")
+```
+
+---
+
+## Spread
+
+Now that we have a measure of center, we can now discuss how data is _spread_ around that center. 
+
+---
+
+### Variance
+
+For the mean, we have a convenient way of describing this: the average distance (using squared difference) from the mean. We call this the _variance_ of the data:
+
+$$
+\mathrm{var}(x) = \frac{1}{n} \sum_{i=1}^n (x_i - \overline{x})^2
+$$
+
+---
+
+You will also see it with a slightly different constant in the front for technical reasons that we may discuss later on:
+
+$$
+\mathrm{var}(x) = \frac{1}{n-1} \sum_{i=1}^n (x_i - \overline{x})^2
+$$
+
+---
+
+Variance is a commonly used statistic for spread but it has the disadvantage that its units are not easy to conceptualize (e.g., squared diamond depth). 
+
+A spread statistic that is in the same units as the data is the _standard deviation_, which is just the squared root of variance:
+
+$$
+\mathrm{sd}(x) = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \overline{x})^2}
+$$
+
+---
+
+We can also use _standard deviations_ as an interpretable unit of how far a given data point is from the mean:
+
+```{r, echo=FALSE, fig.align="center", fig.height=6}
+# create a df with standard deviation values to plot
+sds_to_plot <- seq(-6,6)
+sd_df <- diamonds %>%
+  summarize(mean_depth = mean(depth), sd_depth = sd(depth)) %>%
+  slice(rep_along(sds_to_plot, 1)) %>%
+  mutate(sd_to_plot=sds_to_plot) %>%
+  mutate(sd_val = mean_depth + sd_to_plot * sd_depth)
+
+diamonds %>%
+  ggplot(aes(x=depth)) + 
+    geom_histogram(bins=100) +
+    geom_vline(aes(xintercept=mean(depth)), col="blue", size=1.5) +
+    geom_vline(aes(xintercept = sd_val), data=sd_df,
+               linetype=2, size=1.2 - abs(seq(-1,1, len=13)))
+```
+
+---
+
+As a rough guide, we can use "standard deviations away from the mean" as a measure of spread as follows:
+
+| SDs | proportion | Interpretation |
+|-----|------------|----------------|
+| 1   | `r round(1-2*pnorm(-1),2)` | `r 100*round(1-2*pnorm(-1),2)`% of the data is within $\pm$ 1 sds |
+| 2   | `r round(1-2*pnorm(-2),2)` | `r 100*round(1-2*pnorm(-2),2)`% of the data is within $\pm$ 2 sds |
+| 3   | `r round(1-2*pnorm(-3),4)` | `r 100*round(1-2*pnorm(-3),4)`% of the data is within $\pm$ 3 sds |
+| 4   | `r round(1-2*pnorm(-4),6)` | `r 100*round(1-2*pnorm(-4),6)`% of the data is within $\pm$ 4 sds |
+| 5   | `r round(1-2*pnorm(-5),8)` | `r 100*round(1-2*pnorm(-5),8)`% of the data is within $\pm$ 5 sds |
+| 6   | `r round(1-2*pnorm(-6),10)` | `r 100*round(1-2*pnorm(-6),10)`% of the data is within $\pm$ 6 sds |
+
+---
+
+### Spread estimates using rank statistics
+
+Just like we saw how the median is a rank statistic used to describe central tendency, we can also use rank statistics to describe spread. 
+
+For this we use two more rank statistics: the first and third _quartiles_, $x_{(n/4)}$ and $x_{(3n/4)}$ respectively.
+
+---
+
+```{r, warning=FALSE, echo=FALSE, fig.align="center", fig.height=6.5}
+quartile_df <- diamonds %>%
+  summarize(first=quantile(diamonds$depth, p=1/4),
+            third=quantile(diamonds$depth, p=3/4)) %>%
+  tidyr::gather(quartile, value)
+
+diamonds %>%
+  ggplot(aes(x=depth)) +
+    geom_histogram(bins=100) +
+    geom_vline(aes(xintercept=median(depth)), size=1.3, color="red") +
+    geom_vline(aes(xintercept=value), data=quartile_df, 
+               size=1,color="red", linetype=2)
+```
+
+---
+
+Note, the five order statistics we have seen so far: minimum, maximum, median and first and third quartiles are so frequently used that this is exactly what `R` uses by default as a `summary` of a numeric vector of data (along with the mean):
+
+```{r}
+summary(diamonds$depth)
+```
+
+---
+
+This five-number summary are also all of the statistics used to construct a boxplot to summarize data distribution. 
+
+In particular, the _inter-quartile range_, which is defined as the difference between the third and first quartile: $\mathrm{IQR}(x) = x_{(3n/4)} - x_{(1n/4)}$ gives a measure of spread. 
+
+---
+
+The interpretation here is that half the data is within the IQR around the median.
+
+```{r}
+diamonds %>%
+  summarize(sd_depth = sd(depth), iqr_depth = IQR(depth))
+```
+
+---
+
+## Outliers
+
+We can use estimates of spread to identify outlier values in a dataset. Given an estimate of spread based on the techniques we've just seen, we can identify values that are _unusually_ far away from the center of the distribution. 
+
+---
+
+One often cited rule of thumb is based on using standard deviation estimates. We can identify outliers as the set
+
+$$
+\mathrm{outliers_{sd}}(x) = \\{x_j \, | \, |x_j| > \overline{x} + k \times \mathrm{sd}(x) \\}
+$$
+where $\overline{x}$ is the sample mean of the data and $\mathrm{sd}(x)$ it's standard deviation. 
+
+Multiplier $k$ determines if we are identifying (in Tukey's nomenclature) _outliers_ or points that are _far out_. 
+
+---
+
+```{r, warnings=FALSE, echo=FALSE,fig.align="center",fig.height=6.5}
+outlier_df <- diamonds %>%
+  summarize(mean_depth=mean(depth), sd_depth=sd(depth)) %>%
+  slice(rep(1, 4)) %>%
+  mutate(multiplier = c(-3, -1.5, 1.5, 3)) %>%
+  mutate(outlier_limit = mean_depth + multiplier * sd_depth)
+
+diamonds %>%
+  ggplot(aes(x=depth)) +
+    geom_histogram(bins=100) +
+    geom_vline(aes(xintercept=outlier_limit), data=outlier_df, color="blue")
+```
+
+---
+
+While this method works relatively well in practice, it presents a fundamental problem. 
+
+Severe outliers can significantly affect spread estimates based on standard deviation. 
+
+Specifically, spread estimates will be inflated in the presence of severe outliers. 
+
+---
+
+To circumvent this problem, we use rank-based estimates of spread to identify outliers as:
+
+$$\mathrm{outliers_{IQR}}(x) = \{x_j \, | \\ 
+\, x_j < x_{(1/4)} - k \times \mathrm{IQR}(x) \; \mathrm{ or } \\ \; x_j > x_{(3/4)} + k \times \mathrm{IQR}(x)\}$$
+
+This is usually referred to as the _Tukey outlier rule_, with multiplier $k$ serving the same role as before. 
+
+---
+
+We use the IQR here because it is less susceptible to be inflated by severe outliers in the dataset. 
+
+It also works better for skewed data than the method based on standard deviation.
+
+---
+
+
+```{r, warnings=FALSE, echo=FALSE, fig.align="center", fig.height=6.5}
+outlier_df <- diamonds %>%
+  summarize(q1=quantile(depth, 1/4), q3=quantile(depth, 3/4), iqr=IQR(depth)) %>%
+  slice(rep(1, 2)) %>%
+  mutate(multiplier = c(1.5, 3)) %>%
+  mutate(lower_outlier_limit = q1 - multiplier * iqr) %>%
+  mutate(upper_outlier_limit = q3 + multiplier * iqr)
+
+diamonds %>%
+  ggplot(aes(x=depth)) +
+    geom_histogram(bins=100) +
+    geom_vline(aes(xintercept=lower_outlier_limit), data=outlier_df, color="red") +
+    geom_vline(aes(xintercept=upper_outlier_limit), data=outlier_df, color="red")
+```
+
+---
+
+### Skew
+
+The five-number summary can be used to understand if data is skewed. 
+
+Consider the differences between the first and third quartiles to the median.
+
+---
+
+```{r}
+diamonds %>%
+  summarize(med_depth = median(depth), 
+            q1_depth = quantile(depth, 1/4),
+            q3_depth = quantile(depth, 3/4)) %>%
+  mutate(d1_depth = med_depth - q1_depth,
+         d2_depth = q3_depth - med_depth) %>%
+  select(d1_depth, d2_depth)
+```
+
+---
+
+If one of these differences is larger than the other, then that indicates that this dataset might be skewed.
+
+The range of data on one side of the median is longer (or shorter) than the range of data on the other side of the median. 
+
+---
+
+### Covariance and correlation
+
+The scatter plot is a visual way of observing relationships between pairs of variables. 
+
+Like descriptions of distributions of single variables, we would like to construct statistics that summarize the relationship between two variables quantitatively. 
+
+To do this we will extend our notion of _spread_ (or variation of data around the mean) to the notion of _co-variation_: do pairs of variables vary around the mean in the same way.
+
+---
+
+Consider now data for two variables over the same $n$ entities: $(x_1,y_1), (x_2,y_2), \ldots, (x_n,y_n)$. 
+
+For example, for each diamond, we have `carat` and `price` as two variables.
+
+---
+
+```{r, echo=FALSE, fig.align="center", fig.height=6}
+diamonds %>%
+  ggplot(aes(x=carat, y=price)) +
+    geom_point() +
+    geom_hline(aes(yintercept = mean(price)), color="blue", lty=2) +
+    geom_vline(aes(xintercept = mean(carat)), color="blue", lty=2)
+```
+
+---
+
+We want to capture the relationship: does $x_i$ vary in the same direction and scale away from its mean as $y_i$? 
+
+This leads to _covariance_
+
+$$
+cov(x,y) = \frac{1}{n} \sum_{i=1}^n (x_i - \overline{x})(y_i - \overline{y})
+$$
+
+---
+
+Just like variance, we have an issue with units and interpretation for covariance, so we introduce _correlation_ (formally, Pearson's correlation coefficient) to summarize this relationship in a _unit-less_ way:
+
+$$
+cor(x,y) = \frac{cov(x,y)}{sd(x) sd(y)}
+$$
+
+---
+
+As before, we can also use rank statistics to define a measure of how two variables are associated. 
+
+One of these, _Spearman correlation_ is commonly used. 
+
+It is defined as the Pearson correlation coefficient of the ranks (rather than actual values) of pairs of variables.
+
+---
+
+### Summary
+
+EDA: visual and computational methods to describe the distribution of data attributes over a range of values
+
+Grammar of graphics as effective tool for visual EDA
+
+Statistical summaries that directly establish properties of data distribution

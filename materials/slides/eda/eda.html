@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Exploratory Data Analysis</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2020-03-04" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Exploratory Data Analysis]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+2020-03-04
+]
+
+.logo[![](img/logo.png)]
+
+
+
+---
+layout: true
+
+## Exploratory Data Analysis
+
+---
+
+What to do with a dataset before modeling using Statistics or Machine Learning. 
+
+- Better understand the data at hand, 
+- help us make decisions about appropriate modeling methods, 
+- helpful data transformations that may be helpful to do. 
+
+---
+
+There are many instances where statistical data modeling is not required to tell a clear and convincing story with data. 
+
+Many times an effective visualization can lead to convincing conclusions.
+
+---
+
+**Goal** Perform an initial exploration of attributes/variables across entities/observations. 
+
+We will concentrate on exploration of single or pairs of variables. 
+
+Later on in the course we will see _dimensionality reduction_ methods that are useful in exploration of more than two variables at a time.
+
+---
+
+Computing summary statistics 
+
+- how to interpret them 
+- understand properties of attributes. 
+
+Data transformations 
+
+- change properties of variables to help in visualization or modeling. 
+
+First, how to use visualization for exploratory data analysis.
+
+---
+
+Ultimately, the purpose of EDA is to spot problems in data (as part of data wrangling) and understand variable properties like:
+
+- central trends (mean)
+- spread (variance)
+- skew
+- outliers
+
+This will help us think of possible modeling strategies (e.g., probability distributions)
+
+---
+layout: true
+## Visualization of single variables
+
+---
+class: split-50
+
+.column[
+```r
+flights %&gt;%
+  sample_frac(.1) %&gt;%
+  rowid_to_column() %&gt;%
+  ggplot(aes(x=rowid, y=dep_delay)) +
+    geom_point() 
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: split-50
+
+.column[
+```r
+flights %&gt;%
+  sample_frac(.1) %&gt;%
+  arrange(dep_delay) %&gt;%
+  rowid_to_column() %&gt;%
+  ggplot(aes(x=rowid, y=dep_delay)) +
+    geom_point() 
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+What can we make of that plot now? Start thinking of _central tendency_, _spread_ and _skew_ as you look at that plot.
+
+Let's now create a graphical summary of that variable to incorporate observations made from this initial plot. 
+
+Let's start with a _histogram_: it divides the _range_ of the `dep_delay` attribute into **equal-sized** bins, then plots the number of observations within each bin. 
+
+---
+class: split-50
+
+.column[
+```r
+flights %&gt;%
+  ggplot(aes(x=dep_delay)) +
+    geom_histogram() 
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+**Density plot**
+
+We can (conceptually) make the bins as small as possible and get a smooth curve that describes the _distribution_ of values of the `dep_delay` variable. 
+
+---
+class: split-50
+
+.column[
+```r
+flights %&gt;%
+  ggplot(aes(x=dep_delay)) +
+    geom_density()
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+**Boxplot** Succint graphical summary of the distribution of a variable.
+
+---
+class: split-50
+
+.column[
+```r
+flights %&gt;%
+   ggplot(aes(x='',y=dep_delay)) +
+    geom_boxplot()
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+That's not very clear to see, so let's do a _logarithmic_ transformation of this data to see distribution better.
+
+---
+class: split-50
+
+.column[
+```r
+flights %&gt;%
+  mutate(min_delay=min(dep_delay, na.rm=TRUE)) %&gt;%
+  mutate(log_dep_delay = log(dep_delay - min_delay)) %&gt;%
+  ggplot(aes(x='', y=log_dep_delay)) +
+    geom_boxplot()
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+So what does this represent? 
+
+  (a) central tendency (using the median) is represented by the black line within the box, 
+  
+  (b) spread (using inter-quartile range) is represented by the box and whiskers. 
+  
+  (c) outliers (data that is _unusually_ outside the spread of the data) 
+
+---
+layout: true
+
+## Visualization of pairs of variables
+
+---
+
+How do each of the distributional properties we care about (central trend, spread and skew) of the values of an attribute change based on the value of a different attribute?
+
+Suppose we want to see the relationship between `dep_delay`, a _numeric_ variable, and `origin`, a _categorical_ variable. 
+
+---
+
+Previously, we saw used `group_by`-`summarize` operations to compute attribute summaries based on the value of another attribute. 
+
+We also called this _conditioning_. In visualization we can start thinking about conditioning as we saw before. 
+
+Here is how we can see a plot of the distribution of departure delays _conditioned_ on origin airport.
+
+---
+class: split-50
+
+.column[
+```r
+flights %&gt;%
+  mutate(min_delay = min(dep_delay, na.rm=TRUE)) %&gt;%
+  mutate(log_dep_delay = log(dep_delay - min_delay)) %&gt;%
+  ggplot(aes(x=origin, y=log_dep_delay)) +
+    geom_boxplot()
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+For pairs of continuous variables, the most useful visualization is the scatter plot. 
+
+This gives an idea of how
+one variable varies (in terms of central trend, variance and skew) conditioned on another variable.
+
+---
+class: split-50
+
+.column[
+```r
+flights %&gt;%
+  sample_frac(.1) %&gt;%
+  ggplot(aes(x=dep_delay, y=arr_delay)) +
+    geom_point()
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+layout: true
+
+## EDA with the grammar of graphics
+
+---
+
+While we have seen a basic repertoire of graphics it's easier to proceed if we have a bit more formal way of thinking about graphics and plots. 
+
+The central premise is to characterize the building pieces behind plots:
+
+1. The data that goes into a plot, works best when data is tidy
+2. The mapping between data and *aesthetic* attributes
+3. The *geometric* representation of these attributes
+
+---
+class: split-50
+
+.column[
+```r
+batting %&gt;% 
+  filter(yearID == "2010") %&gt;%
+  ggplot(aes(x=AB, y=R)) +
+    geom_point()
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+**Data**: Batting table filtering for year  
+**Aesthetic attributes**: 
+  - x-axis mapped to variables `AB`
+  - y-axis mapped to variable `R`  
+  
+**Geometric Representation**: points!  
+
+Now, you can cleanly distinguish the constituent parts of the plot.
+
+---
+class: split-50
+
+E.g., change the geometric representation
+
+.column[
+```r
+batting %&gt;% 
+  filter(yearID == "2010") %&gt;%
+  ggplot(aes(x=AB, y=R, label=teamID)) +
+    geom_text() 
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: split-50
+
+E.g., change the data.
+
+.column[
+```r
+# scatter plot of at bats vs. runs for 1995
+batting %&gt;% 
+  filter(yearID == "1995") %&gt;%
+  ggplot(aes(x=AB, y=R)) +
+    geom_point()
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+]
+---
+class: split-50
+
+E.g., change the aesthetic.
+
+.column[
+```r
+# scatter plot of at bats vs. hits for 2010
+batting %&gt;% 
+  filter(yearID == "2010") %&gt;%
+  ggplot(aes(x=AB, y=H)) +
+    geom_point()
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+Let's make a line plot
+
+What do we change? (data, aesthetic or geometry?)
+
+---
+class: split-50
+
+.column[
+```r
+batting %&gt;%
+  filter(yearID == "2010") %&gt;%
+  sample_n(100) %&gt;%
+  ggplot(aes(x=AB, y=H)) +
+    geom_line()
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+Let's add a regression line 
+
+What do we add? (data, aesthetic or geometry?)
+
+---
+class: split-50
+
+What can we see about central trend, variation and skew with this plot?
+
+.column[
+```r
+batting %&gt;%
+  filter(yearID == "2010") %&gt;%
+  ggplot(aes(x=AB, y=H)) +
+    geom_point() + 
+    geom_smooth(method=lm)
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: split-50
+
+Using other aesthetics we can incorporate information from other variables.
+
+.column[
+Color: color by categorical variable
+
+```r
+batting %&gt;%
+  filter(yearID == "2010") %&gt;%
+  ggplot(aes(x=AB, y=H, color=lgID)) +
+    geom_point() + 
+    geom_smooth(method=lm)
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+class: split-50
+
+.column[
+
+Size: size by (continuous) numeric variable
+
+```r
+batting %&gt;%
+  filter(yearID == "2010") %&gt;%
+  ggplot(aes(x=AB, y=R, size=HR)) +
+    geom_point() + 
+    geom_smooth(method=lm)
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+### Faceting
+
+The last major component of exploratory analysis called `faceting` in visualization,
+corresponds to `conditioning` in statistical modeling, we've seen it as the motivation of `grouping`
+when wrangling data.
+
+---
+class: split-50
+
+.column[
+```r
+batting %&gt;%
+  filter(yearID %in% c("1995", "2000", "2010")) %&gt;%
+  ggplot(aes(x=AB, y=R, size=HR)) +
+    facet_grid(lgID~yearID) +
+    geom_point() + 
+    geom_smooth(method=lm)
+```
+]
+
+.column[
+&lt;img src="eda_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+layout: true
+
+## Exploratory Data Analysis: Summary Statistics
+
+---
+
+
+Let's continue our discussion of Exploratory Data Analysis. 
+
+In the previous section we saw ways of visualizing attributes (variables) using plots to start understanding properties of how data is distributed. 
+
+In this section, we start discussing statistical summaries of data to quantify properties that we observed using visual summaries and representations.
+
+---
+
+Remember that one purpose of EDA is to spot problems in data (as part of data wrangling) and understand variable properties like:
+
+- central trends (mean)
+- spread (variance)
+- skew
+- suggest possible modeling strategies (e.g., probability distributions)
+
+---
+
+One last note on EDA. 
+
+John W. Tukey was an exceptional scientist/mathematician, who had profound impact on statistics and Computer Science. 
+
+A lot of what we cover in EDA is based on his groundbreaking work. 
+
+[https://www.stat.berkeley.edu/~brill/Papers/life.pdf](https://www.stat.berkeley.edu/~brill/Papers/life.pdf).
+  
+---
+
+## Range
+
+Part of our goal is to understand how variables are distributed in a given dataset. 
+
+Note, again, that we are not using _distributed_ in a formal mathematical (or probabilistic) sense. 
+
+All statements we are making here are based on data at hand, so we could refer to this as the _empirical distribution_ of data. 
+
+---
+class: split-50
+
+Let's use a dataset on diamond characteristics as an example.
+
+&lt;img src="eda_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Notation
+
+We assume that we have data across `\(n\)` entitites (or observational units) for `\(p\)` attributes. 
+
+In this dataset `\(n=53940\)` and `\(p=10\)`. 
+
+However, let's consider a single attribute, and denote the data for that attribute (or variable) as `\(x_1, x_2, \ldots, x_n\)`. 
+
+---
+
+Since we want to understand how data is distributed across a _range_, we should first define the range. 
+
+
+```r
+diamonds %&gt;%
+  summarize(min_depth = min(depth), max_depth = max(depth))
+```
+
+```
+## # A tibble: 1 x 2
+##   min_depth max_depth
+##       &lt;dbl&gt;     &lt;dbl&gt;
+## 1        43        79
+```
+
+---
+
+We use notation `\(x_{(1)}\)` and `\(x_{(n)}\)` to denote the minimum and maximum statistics. 
+
+In general, we use notation `\(x_{(q)}\)` for the rank statistics, e.g., the `\(q\)`th largest value in the data.
+
+---
+
+### Central Tendency
+
+Now that we know the range over which data is distributed, we can figure out a first summary of data is distributed across this range. 
+
+Let's start with the _center_ of the data: the _median_ is a statistic defined such that half of the data has a smaller value. 
+
+We can use notation `\(x_{(n/2)}\)` (a rank statistic) to represent the median. 
+
+---
+
+![](eda_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+
+---
+
+### Derivation of the mean as central tendency statistic
+
+Best known statistic for central tendency is the _mean_, or average of the data: `\(\overline{x} = \frac{1}{n} \sum_{i=1}^n x_i\)`. 
+It turns out that in this case, we can be a bit more formal about "center" means in this case. 
+
+Let's say that the _center_ of a dataset is a point in the range of the data that is _close_ to the data. 
+
+To say that something is _close_ we need a measure of _distance_. 
+
+---
+
+So for two points `\(x_1\)` and `\(x_2\)` what should we use for distance? 
+
+The distance between data point `\(x_1\)` and `\(x_2\)` is `\((x_1 - x_2)^2\)`. 
+
+---
+
+So, to define the _center_, let's build a criterion based on this distance by adding this distance across all points in our dataset:
+
+$$
+RSS(\mu) = \frac{1}{2} \sum_{i=1}^n (x_i - \mu)^2
+$$
+
+Here RSS means _residual sum of squares_, and we `\(\mu\)` to stand for candidate values of _center_. 
+
+---
+
+We can plot RSS for different values of `\(\mu\)`:
+
+&lt;img src="eda_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+Now, what should our "center" estimate be? 
+
+We want a value that is _close_ to the data based on RSS! 
+
+So we need to find the value in the range that minimizes RSS. 
+
+---
+
+From calculus, we know that a necessary condition for the minimizer `\(\hat{\mu}\)` of RSS is that the derivative of RSS is zero at that point. 
+
+So, the strategy to minimize RSS is to compute its derivative, and find the value of `\(\mu\)` where it equals zero. 
+
+---
+
+`\begin{align}
+\frac{\partial}{\partial \mu} \frac{1}{2} \sum_{i=1}^n (x_i - \mu)^2 &amp; = &amp; \frac{1}{2} \sum_{i=1}^n \frac{\partial}{\partial \mu} (x_i - \mu)^2 \; \textrm{(sum rule)}\\
+{} &amp; = &amp; \sum_{i=1}^n \mu - \sum_{i=1}^n x_i \\
+{} &amp; = &amp; n\mu - \sum_{i=1}^n x_i
+\end{align}`
+
+---
+
+&lt;img src="eda_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+Next, we set that equal to zero and find the value of `\(\mu\)` that solves that equation:
+
+`\begin{align}
+\frac{\partial}{\partial \mu} &amp; = &amp; 0 &amp; \Rightarrow \\
+n\mu &amp; = &amp; \sum_{i=1}^n x_i &amp; \Rightarrow \\
+\mu &amp; = &amp; \frac{1}{n} \sum_{i=1}^n x_i &amp; {}
+\end{align}`
+
+---
+
+The fact you should remember:
+
+**The mean is the value that minimizes RSS for a vector of attribute values**
+
+---
+
+It equals the value where the derivative of RSS is 0:
+
+&lt;img src="eda_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+It is the value that minimizes RSS:
+
+&lt;img src="eda_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+And it serves as an estimate of central tendency of the dataset:
+
+&lt;img src="eda_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+Note that in this dataset the mean and median are not exactly equal, but are very close:
+
+
+```r
+diamonds %&gt;%
+  summarize(mean_depth = mean(depth), median_depth = median(depth))
+```
+
+```
+## # A tibble: 1 x 2
+##   mean_depth median_depth
+##        &lt;dbl&gt;        &lt;dbl&gt;
+## 1       61.7         61.8
+```
+
+---
+
+There is a similar argument to define the median as a measure of _center_. 
+
+In this case, instead of using RSS we use a different criterion: the sum of absolute deviations 
+
+$$
+SAD(m) = \sum_{i=1}^n |x_i - m|.
+$$
+
+The median is the minimizer of this criterion.
+
+---
+
+&lt;img src="eda_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Spread
+
+Now that we have a measure of center, we can now discuss how data is _spread_ around that center. 
+
+---
+
+### Variance
+
+For the mean, we have a convenient way of describing this: the average distance (using squared difference) from the mean. We call this the _variance_ of the data:
+
+$$
+\mathrm{var}(x) = \frac{1}{n} \sum_{i=1}^n (x_i - \overline{x})^2
+$$
+
+---
+
+You will also see it with a slightly different constant in the front for technical reasons that we may discuss later on:
+
+$$
+\mathrm{var}(x) = \frac{1}{n-1} \sum_{i=1}^n (x_i - \overline{x})^2
+$$
+
+---
+
+Variance is a commonly used statistic for spread but it has the disadvantage that its units are not easy to conceptualize (e.g., squared diamond depth). 
+
+A spread statistic that is in the same units as the data is the _standard deviation_, which is just the squared root of variance:
+
+$$
+\mathrm{sd}(x) = \sqrt{\frac{1}{n}\sum_{i=1}^n (x_i - \overline{x})^2}
+$$
+
+---
+
+We can also use _standard deviations_ as an interpretable unit of how far a given data point is from the mean:
+
+&lt;img src="eda_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+As a rough guide, we can use "standard deviations away from the mean" as a measure of spread as follows:
+
+| SDs | proportion | Interpretation |
+|-----|------------|----------------|
+| 1   | 0.68 | 68% of the data is within `\(\pm\)` 1 sds |
+| 2   | 0.95 | 95% of the data is within `\(\pm\)` 2 sds |
+| 3   | 0.9973 | 99.73% of the data is within `\(\pm\)` 3 sds |
+| 4   | 0.999937 | 99.9937% of the data is within `\(\pm\)` 4 sds |
+| 5   | 0.9999994 | 99.999943% of the data is within `\(\pm\)` 5 sds |
+| 6   | 1 | 99.9999998% of the data is within `\(\pm\)` 6 sds |
+
+---
+
+### Spread estimates using rank statistics
+
+Just like we saw how the median is a rank statistic used to describe central tendency, we can also use rank statistics to describe spread. 
+
+For this we use two more rank statistics: the first and third _quartiles_, `\(x_{(n/4)}\)` and `\(x_{(3n/4)}\)` respectively.
+
+---
+
+&lt;img src="eda_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+Note, the five order statistics we have seen so far: minimum, maximum, median and first and third quartiles are so frequently used that this is exactly what `R` uses by default as a `summary` of a numeric vector of data (along with the mean):
+
+
+```r
+summary(diamonds$depth)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   43.00   61.00   61.80   61.75   62.50   79.00
+```
+
+---
+
+This five-number summary are also all of the statistics used to construct a boxplot to summarize data distribution. 
+
+In particular, the _inter-quartile range_, which is defined as the difference between the third and first quartile: `\(\mathrm{IQR}(x) = x_{(3n/4)} - x_{(1n/4)}\)` gives a measure of spread. 
+
+---
+
+The interpretation here is that half the data is within the IQR around the median.
+
+
+```r
+diamonds %&gt;%
+  summarize(sd_depth = sd(depth), iqr_depth = IQR(depth))
+```
+
+```
+## # A tibble: 1 x 2
+##   sd_depth iqr_depth
+##      &lt;dbl&gt;     &lt;dbl&gt;
+## 1     1.43       1.5
+```
+
+---
+
+## Outliers
+
+We can use estimates of spread to identify outlier values in a dataset. Given an estimate of spread based on the techniques we've just seen, we can identify values that are _unusually_ far away from the center of the distribution. 
+
+---
+
+One often cited rule of thumb is based on using standard deviation estimates. We can identify outliers as the set
+
+$$
+\mathrm{outliers_{sd}}(x) = \\{x_j \, | \, |x_j| &gt; \overline{x} + k \times \mathrm{sd}(x) \\}
+$$
+where `\(\overline{x}\)` is the sample mean of the data and `\(\mathrm{sd}(x)\)` it's standard deviation. 
+
+Multiplier `\(k\)` determines if we are identifying (in Tukey's nomenclature) _outliers_ or points that are _far out_. 
+
+---
+
+&lt;img src="eda_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+While this method works relatively well in practice, it presents a fundamental problem. 
+
+Severe outliers can significantly affect spread estimates based on standard deviation. 
+
+Specifically, spread estimates will be inflated in the presence of severe outliers. 
+
+---
+
+To circumvent this problem, we use rank-based estimates of spread to identify outliers as:
+
+`$$\mathrm{outliers_{IQR}}(x) = \{x_j \, | \\ 
+\, x_j &lt; x_{(1/4)} - k \times \mathrm{IQR}(x) \; \mathrm{ or } \\ \; x_j &gt; x_{(3/4)} + k \times \mathrm{IQR}(x)\}$$`
+
+This is usually referred to as the _Tukey outlier rule_, with multiplier `\(k\)` serving the same role as before. 
+
+---
+
+We use the IQR here because it is less susceptible to be inflated by severe outliers in the dataset. 
+
+It also works better for skewed data than the method based on standard deviation.
+
+---
+
+
+&lt;img src="eda_files/figure-html/unnamed-chunk-33-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Skew
+
+The five-number summary can be used to understand if data is skewed. 
+
+Consider the differences between the first and third quartiles to the median.
+
+---
+
+
+```r
+diamonds %&gt;%
+  summarize(med_depth = median(depth), 
+            q1_depth = quantile(depth, 1/4),
+            q3_depth = quantile(depth, 3/4)) %&gt;%
+  mutate(d1_depth = med_depth - q1_depth,
+         d2_depth = q3_depth - med_depth) %&gt;%
+  select(d1_depth, d2_depth)
+```
+
+```
+## # A tibble: 1 x 2
+##   d1_depth d2_depth
+##      &lt;dbl&gt;    &lt;dbl&gt;
+## 1    0.800      0.7
+```
+
+---
+
+If one of these differences is larger than the other, then that indicates that this dataset might be skewed.
+
+The range of data on one side of the median is longer (or shorter) than the range of data on the other side of the median. 
+
+---
+
+### Covariance and correlation
+
+The scatter plot is a visual way of observing relationships between pairs of variables. 
+
+Like descriptions of distributions of single variables, we would like to construct statistics that summarize the relationship between two variables quantitatively. 
+
+To do this we will extend our notion of _spread_ (or variation of data around the mean) to the notion of _co-variation_: do pairs of variables vary around the mean in the same way.
+
+---
+
+Consider now data for two variables over the same `\(n\)` entities: `\((x_1,y_1), (x_2,y_2), \ldots, (x_n,y_n)\)`. 
+
+For example, for each diamond, we have `carat` and `price` as two variables.
+
+---
+
+&lt;img src="eda_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+We want to capture the relationship: does `\(x_i\)` vary in the same direction and scale away from its mean as `\(y_i\)`? 
+
+This leads to _covariance_
+
+$$
+cov(x,y) = \frac{1}{n} \sum_{i=1}^n (x_i - \overline{x})(y_i - \overline{y})
+$$
+
+---
+
+Just like variance, we have an issue with units and interpretation for covariance, so we introduce _correlation_ (formally, Pearson's correlation coefficient) to summarize this relationship in a _unit-less_ way:
+
+$$
+cor(x,y) = \frac{cov(x,y)}{sd(x) sd(y)}
+$$
+
+---
+
+As before, we can also use rank statistics to define a measure of how two variables are associated. 
+
+One of these, _Spearman correlation_ is commonly used. 
+
+It is defined as the Pearson correlation coefficient of the ranks (rather than actual values) of pairs of variables.
+
+---
+
+### Summary
+
+EDA: visual and computational methods to describe the distribution of data attributes over a range of values
+
+Grammar of graphics as effective tool for visual EDA
+
+Statistical summaries that directly establish properties of data distribution
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
