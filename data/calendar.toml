@@ -212,10 +212,6 @@ notes = "misc/midtermI_review.pdf"
 # title = "Wrangling exercise"
 # notes = "misc/wrangling_exercise.html"
 
-# [[day11.covers]]
-# title = "Iteration over rows in two data frames"
-# notes = "misc/two_tables_example.html"
-
 #[day09.class_notes]
 #link = "cmsc320_class-notes_20180222.pdf"
 
@@ -227,6 +223,14 @@ title = "Midterm I"
 
 [day11]
 date = "3/4"
+
+[[day11.covers]]
+title = "Iteration over rows in two data frames (R)"
+notes = "misc/two_tables_example_r.html"
+
+[[day11.covers]]
+title = "Iteration over rows in two data frames (python)"
+notes = "misc/two_tables_example_python.html"
 
 [[day11.covers]]
 title = "Exploratory Data Analysis 1: Visualization"

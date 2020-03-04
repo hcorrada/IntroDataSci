@@ -24,7 +24,7 @@ generate_df <- function(dummy_name, n=10,
                         min_num=-10,
                         max_num=10) {
 date_range <- seq(min_date, max_date, by=1)
-df <- data_frame(date = sample(date_range, n, replace=TRUE),
+df <- tibble(date = sample(date_range, n, replace=TRUE),
            cat = factor(sample(cat_levels, n, replace=TRUE), levels=cat_levels),
            num = runif(n, min_num, max_num),
            dummy=runif(n, min_num, max_num))
@@ -42,6 +42,11 @@ df2 <- generate_df("b", n=10) %>% rowid_to_column()
 
 df1
 df2
+```
+
+```{r, echo=FALSE}
+write_csv(df1, path="two_tables_df1.csv")
+write_csv(df2, path="two_tables_df2.csv")
 ```
 
 ## Similarity functions
@@ -90,12 +95,21 @@ round(sim_matrix,2)
 We can then use this similarity matrix as needed. To turn this into a tidy data frame we can use in subsequent analysis we could use something like this:
 
 ```{r}
-sim_matrix %>%
+similarity_df <- sim_matrix %>%
   magrittr::set_colnames(seq(1,ncol(.))) %>%
   as_tibble() %>%
   rowid_to_column("df1_id") %>%
   tidyr::gather(df2_id, similarity, -df1_id) %>%
   mutate(df2_id = as.integer(df2_id))
+similarity_df
+```
+
+To find out which row in `df2` have highest similarity for each row of `df1`, we can use the group_by and summarize construct as we have done previously.
+
+```{r}
+similarity_df %>%
+  group_by(df1_id) %>%
+  summarize(max_sim = max(similarity), df2_match_id=df2_id[which.max(similarity)])
 ```
 
 ## Version 2: Using data frames
@@ -143,7 +157,7 @@ similarity_df <- similarity_df %>%
   select(df1_id, df2_id, similarity)
 ```
 
-If we wanted to find out which row in `df2` have highest similarity for each row of `df1`, we can use the group_by and summarize construct as we have done previously.
+As in the first option, we can use the group_by and summarize construct.
 
 ```{r}
 similarity_df %>%
