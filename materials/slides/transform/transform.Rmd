@@ -1,0 +1,379 @@
+---
+title: "Data Transformations"
+author: "Héctor Corrada Bravo"
+company: "University of Maryland"
+date: "`r Sys.Date()`"
+css: ["custom.css"]
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    includes: 
+      after_body: "custom.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Data Transformations]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+`r Sys.Date()`
+]
+
+.logo[![](img/logo.png)]
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+---
+layout: true
+
+## EDA: Data Transformations
+
+---
+
+
+How is data distributed?
+  - visual EDA
+  - quantitative summaries
+  
+--
+
+Now consider transformations of attributes: 
+  - help interpretation of data analyses 
+  - help application statistical and machine learning models
+
+---
+layout: true
+
+## Centering and scaling
+
+---
+
+A very common and important transformation  is to scale data to a common unit-less scale. 
+
+Transforming variables from whatever units they are measured (e.g., diamond depth percentage) 
+
+into "standard deviations away from the mean" units (_standard units_, or $z$-score). 
+
+---
+
+Given data $x = x_1, x_2, \ldots, x_n$, the transformation applied to obtain centered and scaled variable $z$ is:
+
+$$
+z_i = \frac{(x_i - \overline{x})}{\mathrm{sd}(x)}
+$$
+
+where $\overline{x}$ is the mean of data $x$, and $\mathrm{sd}(x)$ is its standard deviation.
+
+---
+class: split-50
+
+.column[
+```r
+diamonds %>%
+  mutate(scaled_depth = (depth - mean(depth)) / sd(depth)) %>%
+  ggplot(aes(x=scaled_depth)) +
+    geom_histogram(binwidth=.5)
+```
+]
+
+```{r, echo=FALSE, fig.align="center", fig.width=6.5}
+library(ggplot2)
+data(diamonds)
+
+diamonds %>%
+  mutate(scaled_depth = (depth - mean(depth)) / sd(depth)) %>%
+  ggplot(aes(x=scaled_depth)) +
+    geom_histogram(binwidth=.5)
+```
+
+Question: what is the mean of $z$? What is it's standard deviation? 
+
+---
+
+Another name for this transformation is to _standardize_ a variable.
+
+--
+
+After transformation: 
+ - all variables in a dataset are in the same, and thus comparable, units.
+ - all variables have the same mean and variance
+
+--
+
+This is very helpful for _multivariate_ statistical and ML analyses
+
+---
+
+On occasion, you will have use to apply transformations that only _center_ (but not scale) data:
+
+$$
+z_i = (x_i - \overline{x})
+$$
+
+---
+
+Or, apply transformations that only _scale_ (but not center) data:
+
+$$
+z_i = \frac{x_i}{\mathrm{sd}(x)}
+$$
+
+---
+layout: true
+
+## Treating categorical variables as numeric
+
+---
+
+Many modeling algorithms work strictly on numeric measurements. 
+
+For example: 
+  - linear regression, or
+  - support vector machines
+  
+Strictly defined for numeric measurements.
+
+--
+
+In this case, need to transform categorical variables into something that we can treat as numeric. 
+
+---
+
+Let's see a couple of important guidelines for _binary_ variables:
+
+categorical variables that only take two values, e.g. 
+
+- `health_insurance` Yes/No
+- `cat_picture` Yes/No
+
+---
+
+
+One option is to encode one value of the variable as 1 and the other as 0. For instance:
+
+```{r, echo=FALSE}
+library(ISLR)
+data(Wage)
+```
+
+```{r}
+Wage %>%
+  mutate(numeric_insurance = ifelse(health_ins == "1. Yes", 1, 0)) %>%
+  select(year, age, health_ins, numeric_insurance) %>%
+  head()
+```
+
+---
+
+Another option is to encode one value as 1 and the other as -1:
+
+```{r}
+Wage %>%
+  mutate(numeric_insurance = ifelse(health_ins == "1. Yes", 1, -1)) %>%
+  select(year, age, health_ins, numeric_insurance) %>%
+  head()
+```
+
+---
+
+The decision of which of these two transformations to use is based on the method to use or the goal of your analysis. 
+
+--
+
+E.g, predict `wage` based on `health insurance status` (coded as 0/1) let's us make statements like: "on average, wage increases by $XX if a person has health insurance". 
+
+--
+
+But, to predict `health insurance status` based on other attributes, a Support Vector Machine requires `health insurance status` to be coded as +1/-1
+
+---
+
+For categorical attributes with more than two values, we extend this idea and encode _each_ value of the categorical variable as a 0/1 column. 
+
+You will see this referred to as _one-hot-encoding_.
+
+---
+
+```{r}
+Wage %>%
+  mutate(race_white = ifelse(race == "1. White", 1, 0),
+         race_black = ifelse(race == "2. Black", 1, 0),
+         race_asian = ifelse(race == "3. Asian", 1, 0),
+         race_other = ifelse(race == "4. Other", 1, 0)) %>%
+  select(starts_with("race")) %>%
+  sample_n(5)
+```
+
+---
+layout: true
+
+### Discretizing continuous values. 
+
+---
+
+How about transforming data in the other direction, from continuous to discrete values. 
+
+This can make it easier to compare differences related to continuous measurements: 
+
+Do doctors prescribe a certain medication to older kids more often? Is there a difference in wage based on age?
+
+---
+
+It is also a useful way of capturing non-linear relationships in data: we will see this in our regression and prediction unit. 
+
+Two standard methods used for discretization are to use **equal-length** bins, where variable range is divided into bins _regardless_ of the data distribution.
+
+---
+class: split-50
+
+```{r, eval=TRUE, echo=FALSE}
+library(nycflights13)
+```
+
+.column[
+```r
+flights %>% 
+  mutate(dep_delay_discrete = cut(dep_delay, breaks=100)) %>%
+  ggplot(aes(x=dep_delay_discrete)) +
+  geom_bar()
+```
+]
+
+.column[
+```{r, fig.align="center", fig.width=6.5, echo=FALSE}
+flights %>% 
+  mutate(dep_delay_discrete = 
+           cut(dep_delay, breaks=100)) %>%
+  ggplot(aes(x=dep_delay_discrete)) +
+  geom_bar()
+```
+]
+---
+
+The second approach uses **equal-sized** bins, where the range is divided into bins _based_ on data distribution
+
+---
+class: split-50
+
+.column[
+```r
+flights %>% 
+  mutate(dep_delay_discrete = cut(dep_delay, 
+          breaks=quantile(dep_delay, probs=seq(0,1,len=11), na.rm=TRUE))) %>%
+  ggplot(aes(x=dep_delay_discrete)) +
+  geom_bar()
+```
+]
+
+.column[
+```{r, eval=TRUE, echo=FALSE, fig.align="center", fig.width=6.5}
+flights %>% 
+  mutate(dep_delay_discrete = cut(dep_delay, 
+          breaks=quantile(dep_delay, probs=seq(0,1,len=11), na.rm=TRUE))) %>%
+  ggplot(aes(x=dep_delay_discrete)) +
+  geom_bar()
+```
+]
+---
+layout: true
+
+## Skewed Data
+
+---
+
+In many data analysis, variables will have a _skewed_ distribution over their range. 
+
+In the last section we saw one way of defining skew using quartiles and median. 
+
+Variables with skewed distributions can be hard to incorporate into some modeling procedures, especially in the presence of other variables that are not skewed. 
+
+---
+
+Skewed data may arise when measuring *multiplicative* processes. In this case, interpretation of data may be more intiuitive after a transformation.
+
+We have seen an example of skewed data previously when we looked at departure delays in our flights dataset.
+
+---
+class: split-50
+
+```{r echo=FALSE}
+library(tidyverse)
+library(nycflights13)
+```
+
+.column[
+```r
+flights %>% ggplot(aes(x=dep_delay)) +
+  geom_histogram(binwidth=30)
+```
+]
+
+.column[
+```{r, fig.width=6.5, fig.align="center", echo=FALSE, warning=FALSE}
+flights %>% ggplot(aes(x=dep_delay)) + geom_histogram(binwidth=30)
+```
+]
+
+---
+In many cases a logarithmic transform is an appropriate transformation to reduce data skew:
+
+- If values are all positive: apply `log2` transform
+- If some values are negative, two options
+  - Started Log: shift all values so they are positive, apply `log2`
+  - Signed Log: $sign(x) \times log2(abs(x) + 1)$.
+  
+---
+class: split-50
+
+Here is a signed log transformation of departure delay data:
+
+.column[
+```r
+transformed_flights <- flights %>%
+  mutate(transformed_dep_delay = sign(dep_delay) * log2(abs(dep_delay) + 1))
+
+transformed_flights %>%
+  ggplot(aes(x=transformed_dep_delay)) +
+    geom_histogram(binwidth=1)
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.align="center", fig.width=6, warning=FALSE, fig.height=5.5}
+transformed_flights <- flights %>%
+  mutate(transformed_dep_delay = sign(dep_delay) * log2(abs(dep_delay) + 1))
+
+transformed_flights %>%
+  ggplot(aes(x=transformed_dep_delay)) +
+    geom_histogram(binwidth=1)
+```
+]
+
+---
+layout: false
+
+## Summary
+
+Given what we learn from EDA (visually and statistically), we can guide decisions on data transformations
+
+- Change data types continuous <-> numeric
+- Standardization
+- Log-transforms (reduce skew, also variance stabilization)
+
