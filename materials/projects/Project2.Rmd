@@ -8,9 +8,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-**Posted:** March 20, 2019  
+**Posted:** March 11, 2020  
 **Last Updated:** `r format(Sys.Date(), "%b %d, %Y")`  
-**Due:** April 5, 2019    
 
 In this project you will apply your data wrangling and exploratory data analysis
 skills to baseball business data. In particular, we want to know how well did Moneyball work
@@ -56,9 +55,11 @@ The data you need to answer these questions is in the `Salaries` and `Teams` tab
 
 **Problem 1** Using SQL, write a query to compute the total payroll and winning percentage (number of wins / number of games * 100) for each team (that is, for each `teamID` and `yearID` combination). You should include other columns that will help when performing EDA later on (e.g., franchise ids, number of wins, number of games).
 
-**Note:** We will only use data for years 1990-2014 (inclusive) for the project. You can filter entities in your SQL query for Problem 1, or later when you use the result of this query below.
+**Note:** We will only use data for years 1990-2014 (inclusive) for the project. Make sure your query includes a `WHERE` clause to capture this.
 
-As in HW2 you will write your query inside an Rmarkdown document. You can use something like this to capture the result of the SQL query into a data frame for use later on in the Rmarkdown documnt:
+As in HW2 you will write your query inside an Rmarkdown document or Jupyter notebook. 
+
+In Rmarkdown you can use the following pattern to capture the result of the SQL query into a data frame for use later on in the Rmarkdown documnt (see the argument `output.var` in the `sql` query chunk:
 
 ```{r echo=FALSE, comment=""}
 cat(htmltools::includeText("project2_sql.Rmd"))
@@ -66,15 +67,15 @@ cat(htmltools::includeText("project2_sql.Rmd"))
 
 More info on using SQL within Rmarkdown here: https://rmarkdown.rstudio.com/authoring_knitr_engines.html#sql
 
-Include a sentence or two indicating how you dealt with any missing data in these two relations. Specifically, indicate if there is missing data in either table, and how the type of join you used determines how you dealt with this missing data. One note, for SQL you have to be mindful of integer vs. float division.
+In a Jupyter notebook you saw in HW2 how to use `pandas` to perform a sql query. Follow the same pattern for this project.
 
-_Note_: This combination of SQL and R (which you will use shortly). Is a very common workflow in Data Science projects. For data in databases, you use SQL to extract data (aggregates for example) computed on the database server itself. Then use those results for exploratory and other downstream analysis in R or python.
+_Note_: This combination of SQL and R (or python) is a very common workflow in Data Science projects. For data in databases, you use SQL to extract data (aggregates for example) computed on the database server itself. Then use those results for exploratory and other downstream analysis in R or python.
 
 # Exploratory data analysis
 
 ## Payroll distribution
 
-**Problem 2**. Write code to produce a plot (or plots) that shows the distribution of payrolls across teams conditioned on time (from 1990-2014). Note: you may
+**Problem 2**. Write code to produce a plot (or plots) that shows the distribution of payrolls across teams _conditioned_ on year (from 1990-2014). Note: you may
 create a single plot as long as the distributions for
 each year are **clearly** distinguishable (e.g., a single plot overlaying histograms is not OK).
 
@@ -84,9 +85,9 @@ each year are **clearly** distinguishable (e.g., a single plot overlaying histog
 
 ## Correlation between payroll and winning percentage
 
-**Problem 4**. Write code to discretize year into five time periods (using the `cut` function with parameter `breaks=5`) and then make a scatterplot showing mean winning percentage (y-axis) vs. mean payroll (x-axis) for each of the five time periods. You could add a regression line (using `geom_smooth(method=lm)`) in each scatter plot to ease interpretation. Note: look at the discussion on _faceting_ in the visualization EDA lecture notes.
+**Problem 4**. Write code to discretize year into five time periods (e.g., using the `cut` function with parameter `breaks=5` (in R, `bins=5` in python) and then make a scatterplot showing mean winning percentage (y-axis) vs. mean payroll (x-axis) for each of the five time periods. You could add a regression line (using `geom_smooth(method=lm)`) in each scatter plot to ease interpretation. Note: look at the discussion on _faceting_ in the visualization EDA lecture notes.
 
-**Question 2**. What can you say about team payrolls across these periods? Are there any teams that standout as being particularly good at paying for wins across these time periods? What can you say about the Oakland A's spending efficiency across these time periods (labeling points in the scatterplot can help interpretation).
+**Question 2**. What can you say about team payrolls across these periods? Are there any teams that standout as being particularly good at paying for wins across these time periods? What can you say about the Oakland A's spending efficiency across these time periods (labeling some points in the scatterplot can help interpretation).
 
 # Data transformations
 
@@ -94,7 +95,7 @@ each year are **clearly** distinguishable (e.g., a single plot overlaying histog
 
 It looks like comparing payrolls across years is problematic so let's do a transformation that will help with these comparisons.
 
-**Problem 5**. Write `dplyr` code to create a new variable in your dataset that standardizes payroll conditioned on year. So, this column for team $i$ in year $j$ should equal
+**Problem 5**. Write code to create a new variable in your dataset that standardizes payroll conditioned on year. So, this column for team $i$ in year $j$ should equal
 
 $$
 \mathrm{standardized\_payroll}_{ij}=\frac{\mathrm{payroll}_{ij} - \overline{\mathrm{payroll}_{\cdot j}}}{s_{\cdot j}}
@@ -105,7 +106,7 @@ standard deviation of payroll for year $j$.
 
 **Problem 6**. Repeat the same plots as Problem 4, but use this new standardized payroll variable.
 
-**Question 3**. Discuss how the plots from Problem 4 and Problem 6 reflect the transformation you did on the payroll variable. Consider data range, center and spread along with observed correlation in your discussion. Some of these change after transformation, others don't. 
+**Question 3**. Discuss how the plots from Problem 4 and Problem 6 reflect the transformation you did on the payroll variable. Consider data range, center and spread along with observed correlation in your discussion. Some of these change after the transformation, others don't. 
 
 ## Expected wins
 
@@ -126,7 +127,7 @@ $$
 
 Using this result, we can now create a single plot that makes it easier to compare teams efficiency. The idea is to create a new measurement unit for each team based on their winning percentage and their expected winning percentage that we can plot across time summarizing how efficient each team is in their spending.
 
-**Problem 8**. Write `dplyr` code to calculate spending efficiency for each team
+**Problem 8**. Write code to calculate spending efficiency for each team
 
 $$
 \mathrm{efficiency}_{ij} = \mathrm{win\_pct}_{ij} - \mathrm{expected\_win\_pct}_{ij}
@@ -140,7 +141,7 @@ Make a line plot with year on the x-axis and efficiency on the y-axis. A good se
 
 ## Submission
 
-Prepare and knit to PDF an Rmarkdown file that includes for each Problem: (a) code to carry out the step discussed, (b) output showing enough of the result of your code to understand the result, and (c) a short prose description of how your code works. Remember, the writeup you are preparing is intended to communicate your data analysis effectively. Thoughtlessly showing large amounts of output in your writeup defeats that purpose.  
+Prepare and knit to PDF an Rmarkdown file or Jupyter notebook that includes for each Problem: (a) code to carry out the step discussed, (b) output showing enough of the result of your code to understand the result, and (c) a short prose description of how your code works. Remember, the writeup you are preparing is intended to communicate your data analysis effectively. Thoughtlessly showing large amounts of output in your writeup defeats that purpose.  
 
 All axes in plots should be labeled in an informative manner. Your answers to any question that refers to a plot should include both (a) a text description of your plot, and (b) a sentence or two of interpretation as it relates to the question asked.
 
