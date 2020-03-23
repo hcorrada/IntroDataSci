@@ -24,16 +24,32 @@ tidy_weather <- weather %>%
 tidy_weather
 ```
 
-In this dataset, temperature observations coded as `NA` are considered _missing_. Now, we can imagine that either the measurement failed in a specific day for a specific weather station, or that certain stations only measure temperatures on certain days of the month. Knowing which of these applies can change how we approach this missing data. As you can see, how to treat missing data depends highly on how the data was obtained, and the more you know about a dataset, the better decision you can make.
+In this dataset, temperature observations coded as `NA` are considered _missing_. Now, we can imagine a few reasons why measurements would be missing in this dataset: (a) the measurement failed in a specific day for a specific weather station, or (b) certain stations only measure temperatures on specific days of the month, or (c) the measurement fails if the temperature is too high or too low. Knowing which of these applies can change how we approach this missing data. As you can see, how to treat missing data depends highly on how the data was obtained, and the more you know about a dataset, the better decision you can make.
 
-In general, the central question with missing data is: Should we remove observations with missing values, or should we *impute* missing values? This also relates to the difference between values that are missing _at random_ vs. values that are missing _systematically_. In the weather example above, the first case (of failed measurements) could be thought of as missing _at random_, and the second case as missing _systematically_.
+In general, the central question with missing data is: should we *remove* observations with missing values, or should we *impute* missing values? In fact, can we do anything with a dataset that is missing data at all? 
+
+The answers to these require us to think about **why** the data is missing. 
+
+## Mechanisms of missing data
+
+For this discussion let's assume we have an attribute $y$ that contains missing data, a  binary attribute $r$ that encodes if observation in $y$ is missing, and other attributes $x$ in our dataset.
+
+Also, we will make statements like _depend_ or _not depend_, e.g., value of $r_i$ does not depend on value of $y_i$. For now, until we formalize this concept further, you can take this to mean the: _properties of the distribution of $r$ do not change based on values of $y$_.
+
+**Data missing completely at random (MCAR)**: missingness does not depend on any values of the missing or measured data. That is missingness $r_i$ does not depend on the (unobserved) value $y_i$ or on observed values $x_i$. In this case, entities with missing data can be removed from the analysis safely. Imputation can be performed, see more below. In our weather example, this would be case (a): stations failed for no discernible reason.
+
+**Data missing at random (MAR)**: missingness $r_i$ does not depend on value of $y_i$, but may depend on the value of $x_i$. Here, removing data can bias analysis since you would drop values of $x$ based on missingness and potentially change the distribution of $x$. Imputation can be done as well, see more below. In our weather example, this would be case (b): measurements are not taken on specific days of the month (where "day of the month" serves the role of $x$).
+
+**Data not missing at random (NMAR)**: missingness $r_i$ depends on $y_i$. This is the most pernicious of all, and usually means that we want to go back to our collaborator and tell them that we are in a bind. Removing or imputing data as discussed below is not appropriate in this case, and appropriate methods to deal with it are beyond the scope of this discussion. This is a good resource: https://www.wiley.com/en-us/Statistical+Data+Cleaning+with+Applications+in+R-p-9781118897157 (Ch. 10). In our weather example this would be case (c): measurements fail when the temperature is too hot or cold. 
 
 
-Data that is missing systematically can significantly bias an analysis. For example: 
-Suppose we want to predict how sick someone is from test result. If doctors do not carry out the test because a patient is too sick, then the fact test is missing is a great predictor of how sick the patient is.
+So in general, the **first step** when dealing with missing data is to understand *why* and *how* data may be missing. I.e., talk to collaborator, or person who created the dataset. 
 
+## Handling missing data
 
-So in general, the **first step** when dealing with missing data is to understand *why* and *how* data may be missing. I.e., talk to collaborator, or person who created the dataset. Once you know that data is not missing systematically and a relatively small fraction of observations contain have missing values, then it may be safe to remove observations.
+### Removing missing data 
+
+Once you know that data is MCAR and a relatively small fraction of observations have missing values, then it may be safe to remove observations.
 
 ```{r}
 tidy_weather_nomissing <- tidy_weather %>%
@@ -41,11 +57,9 @@ tidy_weather_nomissing <- tidy_weather %>%
 tidy_weather_nomissing
 ```
 
-## Dealing with data missing at random
-
 ### Encoding as missing
 
-In the case of categorical attributes, a useful approach is to encode the fact that a value is missing as a new category and include that in subsequent modeling.
+In the MCAR or MAR case for categorical attributes $y$, a useful approach is to encode the fact that a value is missing as a new category and include that in subsequent analysis of attribute $y$.
 
 ```{r, message=FALSE}
 tb <- read_csv(file.path("data", "tb.csv"))
@@ -59,16 +73,21 @@ tidy_tb %>%
 
 ### Imputation
 
-In the case of numeric values, we can use a simple method for imputation where we
-replace missing values for a variable with, for instance, the mean of non-missing values
+#### MCAR (also for MAR, but this is not ideal)
+
+In this case we can use a simple method for imputation of $y$. For numeric attributes we replace missing values in $y$ with the mean of non-missing values of $y$.
 
 ```{r}
 flights %>%
   tidyr::replace_na(list(dep_delay=mean(.$dep_delay, na.rm=TRUE)))
 ```
 
-A more complex method is to replace missing values for a variable predicting from
-other variables when variables are related (we will see linear regression using the `lm` and `predict` functions later on)
+For categorical attributes $y$, we replace missing values with the most common category in the non-missing values of $y$.
+
+#### MAR
+
+In this case we use a more complex method by replacing missing values for attribute $y$ predicting from
+other variables $x$ when variables are related (we will see linear regression using the `lm` and `predict` functions later on)
 
 ```{r}
 dep_delay_fit <- flights %>% lm(dep_delay~origin, data=.)
@@ -83,7 +102,9 @@ flights %>%
   filter(is.na(dep_delay))
 ```
 
-In either case, a common approach is to add an additional indicator
+For categorical attributes we use a different kind of regression more appropriate to categorical attributes (logistic regression, again we will see that later on).
+
+For both imputation methods, a common approach is to add an additional indicator
 variable stating if numeric missing value was imputed
 
 ```{r}
@@ -91,4 +112,12 @@ flights %>%
   mutate(dep_delay_missing = is.na(dep_delay))
 ```
 
-In both of these cases note that imputing missing values has two effects. First, the central tendency of data is retained, for example, if we impute missing data using the mean of a numeric variable, the mean after imputation will not change. This is a good reason to impute based on estimates of central tendency. However, the _spread_ of the data will change. After imputation, the spread of the data will be smaller relative to spread if we ignore missing values. This could be problematic as underestimating the spread of data can yield over-confident inferences in downstream analysis. We will not address these issues directly in later chapters, but you should be aware of this.
+## Implications of imputation
+
+Imputation has some effects that can impact analysis. 
+
+(a) The central tendency of data is retained. For example, if we impute missing data using the mean of a numeric variable, the mean after imputation will not change. This is a good reason to impute based on estimates of central tendency. 
+
+(b) The _spread_ of the data will change. After imputation, the spread of the data will be smaller relative to spread if we ignore missing values. This could be problematic as underestimating the spread of data can yield over-confident inferences in downstream analysis. 
+
+We will not address these issues directly in later chapters, but you should be aware of this.
