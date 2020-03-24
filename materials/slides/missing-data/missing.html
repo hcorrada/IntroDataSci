@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Missing Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2020-03-23" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Handling Missing Data]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+2020-03-23
+]
+
+.logo[![](img/logo.png)]
+
+
+
+---
+layout: true
+
+## Handling Missing Data
+
+---
+
+We can now move on to a very important aspect of data preparation and transformation: how to deal with missing data? 
+
+Values that are unrecorded, unknown or unspecified in a dataset. 
+
+---
+
+
+```
+## # A tibble: 22 x 35
+##    id     year month element    d1    d2    d3    d4    d5    d6    d7
+##    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 MX17…  2010     1 tmax       NA  NA    NA      NA  NA      NA    NA
+##  2 MX17…  2010     1 tmin       NA  NA    NA      NA  NA      NA    NA
+##  3 MX17…  2010     2 tmax       NA  27.3  24.1    NA  NA      NA    NA
+##  4 MX17…  2010     2 tmin       NA  14.4  14.4    NA  NA      NA    NA
+##  5 MX17…  2010     3 tmax       NA  NA    NA      NA  32.1    NA    NA
+##  6 MX17…  2010     3 tmin       NA  NA    NA      NA  14.2    NA    NA
+##  7 MX17…  2010     4 tmax       NA  NA    NA      NA  NA      NA    NA
+##  8 MX17…  2010     4 tmin       NA  NA    NA      NA  NA      NA    NA
+##  9 MX17…  2010     5 tmax       NA  NA    NA      NA  NA      NA    NA
+## 10 MX17…  2010     5 tmin       NA  NA    NA      NA  NA      NA    NA
+## # … with 12 more rows, and 24 more variables: d8 &lt;dbl&gt;, d9 &lt;lgl&gt;,
+## #   d10 &lt;dbl&gt;, d11 &lt;dbl&gt;, d12 &lt;lgl&gt;, d13 &lt;dbl&gt;, d14 &lt;dbl&gt;, d15 &lt;dbl&gt;,
+## #   d16 &lt;dbl&gt;, d17 &lt;dbl&gt;, d18 &lt;lgl&gt;, d19 &lt;lgl&gt;, d20 &lt;lgl&gt;, d21 &lt;lgl&gt;,
+## #   d22 &lt;lgl&gt;, d23 &lt;dbl&gt;, d24 &lt;lgl&gt;, d25 &lt;dbl&gt;, d26 &lt;dbl&gt;, d27 &lt;dbl&gt;,
+## #   d28 &lt;dbl&gt;, d29 &lt;dbl&gt;, d30 &lt;dbl&gt;, d31 &lt;dbl&gt;
+```
+
+
+```
+## # A tibble: 341 x 6
+##    id       year month day    tmax  tmin
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 MX17004  2010     1 d1       NA    NA
+##  2 MX17004  2010     1 d10      NA    NA
+##  3 MX17004  2010     1 d11      NA    NA
+##  4 MX17004  2010     1 d12      NA    NA
+##  5 MX17004  2010     1 d13      NA    NA
+##  6 MX17004  2010     1 d14      NA    NA
+##  7 MX17004  2010     1 d15      NA    NA
+##  8 MX17004  2010     1 d16      NA    NA
+##  9 MX17004  2010     1 d17      NA    NA
+## 10 MX17004  2010     1 d18      NA    NA
+## # … with 331 more rows
+```
+
+
+---
+
+Temperature observations coded as `NA` are considered _missing_. 
+
+(a) measurement failed in a specific day for a specific weather station, or
+
+(b) certain stations only measure temperatures on certain days of the month, or
+
+(c) measurement fails if the temperature is too high or too low
+
+--
+
+Knowing which of these applies can change how we approach this missing data. 
+
+---
+
+Treatment of missing data depends highly on how the data was obtained,
+
+The more you know about a dataset, the better decision you can make.
+
+---
+
+Central question with missing data is: 
+
+Should we *remove* observations with missing values, or should we *impute* missing values? 
+
+--
+
+In fact, can we do anything with a dataset that has missing data?
+
+--
+
+Answering this requires us to think **why** the data is missing.
+
+---
+layout: true
+
+## Mechanisms of missing data
+
+---
+
+### Some preliminaries
+
+Let's assume we have the following attributes:
+
+- `\(y\)` that contains missing data, (e.g., temperature measurement)
+
+- a  binary attribute `\(r\)` that encodes if observation in `\(y\)` is missing (this is not in our example dataset), 
+
+- other attributes `\(x\)` in our dataset (day, month, etc.)
+
+---
+
+We will make statements like _depend_ or _not depend_, 
+
+e.g., value of `\(r_i\)` does not depend on value of `\(y_i\)`. 
+
+--
+
+i.e., the fact that a value is missing `\((r_i=1)\)` _does not depend_ on (missing) temperature value `\((y_i)\)`.
+
+--
+
+For now:
+
+_properties of the distribution of `\(r\)` do not change based on values of `\(y\)`_.
+
+---
+
+### Missing completely at random (MCAR)
+
+*Def*: Missingness `\(r_i\)` does not depend on the (unobserved) value `\(y_i\)` or on observed values `\(x_i\)`. 
+
+_Weather ex._ (a): stations failed for no discernible reason.
+
+--
+
+**Removal**: Entities with missing data can be removed from the analysis safely. 
+
+**Imputation**: Go for it (but see later) 
+
+---
+
+### Missing at random (MAR)
+
+*Def*: missingness `\(r_i\)` does not depend on the value of `\(y_i\)`, but may depend on the value of `\(x_i\)`. 
+
+_Weather ex._ (b): measurements are not taken on specific days of the month (where "day of the month" serves the role of `\(x\)`).
+
+--
+
+**Removal**: No!, it will bias analysis since you would drop values of `\(x\)` based on missingness and potentially change the distribution of `\(x\)`. 
+
+**Imputation**: Go for it (but see later)
+
+---
+
+### Not missing at random (NMAR)
+
+*Def*: missingness `\(r_i\)` depends on `\(y_i\)`. 
+
+*Weather ex.* (c): measurements fail when the temperature is too hot or cold. 
+
+--
+
+The worst case! Usually means that we want to go back to our collaborator and tell them that we are in a bind. 
+
+**Removal**: No.
+
+**Imputation** No.
+
+---
+
+### Summary
+
+The **first step** when dealing with missing data is to understand *why* and *how* data may be missing. 
+
+I.e., talk to collaborator, or person who created the dataset. 
+
+---
+layout: true
+
+## Handling missing data
+
+---
+class: split-50
+### Removing missing data
+
+(MCAR) Not a lot of entities with missing data: 
+
+.column[
+
+```r
+tidy_weather_nomissing &lt;- 
+  tidy_weather %&gt;%
+    tidyr::drop_na(tmax, tmin)
+```
+]
+
+.column[
+
+```
+## # A tibble: 33 x 6
+##    id       year month day    tmax  tmin
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 MX17004  2010     1 d30    27.8  14.5
+##  2 MX17004  2010     2 d11    29.7  13.4
+##  3 MX17004  2010     2 d2     27.3  14.4
+##  4 MX17004  2010     2 d23    29.9  10.7
+##  5 MX17004  2010     2 d3     24.1  14.4
+##  6 MX17004  2010     3 d10    34.5  16.8
+##  7 MX17004  2010     3 d16    31.1  17.6
+##  8 MX17004  2010     3 d5     32.1  14.2
+##  9 MX17004  2010     4 d27    36.3  16.7
+## 10 MX17004  2010     5 d27    33.2  18.2
+## # … with 23 more rows
+```
+]
+
+---
+
+### Encoding as missing
+
+(MCAR or MAR) For categorical attributes: encode the fact that a value is missing as a new category and use in subsequent modeling.
+
+
+
+
+```
+## # A tibble: 4 x 6
+##   iso2     year sex   age       n iso2_missing
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;lgl&gt;       
+## 1 missing  1985 m     04       NA TRUE        
+## 2 missing  1986 m     04       NA TRUE        
+## 3 AD       1989 m     04       NA FALSE       
+## 4 AD       1990 m     04       NA FALSE
+```
+
+---
+
+### Imputation (MCAR)
+
+(Also for MAR but not ideal) Numeric values, replace missing values of `\(y\)` with, e.g., the mean of non-missing `\(y\)`
+
+
+```r
+library(nycflights13)
+flights %&gt;%
+  tidyr::replace_na(list(dep_delay=mean(.$dep_delay, na.rm=TRUE)))
+```
+
+Categorical attributes, replace missing `\(y\)` with most common category in non-missing `\(y\)`.
+
+---
+
+### Imputation (MAR)
+
+Replace missing `\(y\)` predicting from other variables `\(x\)` (we will see linear regression using the `lm` and `predict` functions later on)
+
+
+```r
+dep_delay_fit &lt;- flights %&gt;% lm(dep_delay~origin, data=.)
+flights %&gt;%
+  modelr::add_predictions(dep_delay_fit, var="pred_delay") %&gt;%
+  mutate(dep_delay_fixed = 
+           ifelse(!is.na(dep_delay), dep_delay, pred_delay)) 
+```
+
+(categorical, use logistic regression)
+
+---
+
+### Imputation
+
+After imputation it is useful to add an additional indicator
+attribute stating if a missing value was imputed
+
+
+```r
+flights %&gt;%
+  mutate(dep_delay_missing = is.na(dep_delay))
+```
+
+---
+layout: true
+
+## Implications of imputation
+
+---
+
+Imputing missing values as discussed has two effects.
+
+*Central tendency of data is retained*
+
+If we impute missing data using the mean of a numeric variable, the mean after imputation will not change. 
+
+This is a good reason to impute based on estimates of central tendency. 
+
+---
+
+*The _spread_ of the data will change*
+
+After imputation, the spread of the data will be smaller relative to spread if we ignore missing values. 
+
+This could be problematic as underestimating the spread of data can yield over-confident inferences in downstream analysis.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

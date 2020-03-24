@@ -1,0 +1,303 @@
+---
+title: "Missing Data"
+author: "Héctor Corrada Bravo"
+company: "University of Maryland"
+date: "`r Sys.Date()`"
+css: ["custom.css"]
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    includes: 
+      after_body: "custom.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Handling Missing Data]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+`r Sys.Date()`
+]
+
+.logo[![](img/logo.png)]
+
+```{r, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+library(tidyverse)
+
+theme_set(theme_bw())
+```
+
+---
+layout: true
+
+## Handling Missing Data
+
+---
+
+We can now move on to a very important aspect of data preparation and transformation: how to deal with missing data? 
+
+Values that are unrecorded, unknown or unspecified in a dataset. 
+
+---
+
+```{r, echo=FALSE, message=FALSE}
+data_dir <- "data"
+weather <- read_csv(file.path(data_dir, "weather.csv"))
+weather
+```
+
+```{r, echo=FALSE}
+tidy_weather <- weather %>%
+  gather(day, temp, d1:d31) %>%
+  spread(element, temp)
+tidy_weather
+```
+
+
+---
+
+Temperature observations coded as `NA` are considered _missing_. 
+
+(a) measurement failed in a specific day for a specific weather station, or
+
+(b) certain stations only measure temperatures on certain days of the month, or
+
+(c) measurement fails if the temperature is too high or too low
+
+--
+
+Knowing which of these applies can change how we approach this missing data. 
+
+---
+
+Treatment of missing data depends highly on how the data was obtained,
+
+The more you know about a dataset, the better decision you can make.
+
+---
+
+Central question with missing data is: 
+
+Should we *remove* observations with missing values, or should we *impute* missing values? 
+
+--
+
+In fact, can we do anything with a dataset that has missing data?
+
+--
+
+Answering this requires us to think **why** the data is missing.
+
+---
+layout: true
+
+## Mechanisms of missing data
+
+---
+
+### Some preliminaries
+
+Let's assume we have the following attributes:
+
+- $y$ that contains missing data, (e.g., temperature measurement)
+
+- a  binary attribute $r$ that encodes if observation in $y$ is missing (this is not in our example dataset), 
+
+- other attributes $x$ in our dataset (day, month, etc.)
+
+---
+
+We will make statements like _depend_ or _not depend_, 
+
+e.g., value of $r_i$ does not depend on value of $y_i$. 
+
+--
+
+i.e., the fact that a value is missing $(r_i=1)$ _does not depend_ on (missing) temperature value $(y_i)$.
+
+--
+
+For now:
+
+_properties of the distribution of $r$ do not change based on values of $y$_.
+
+---
+
+### Missing completely at random (MCAR)
+
+*Def*: Missingness $r_i$ does not depend on the (unobserved) value $y_i$ or on observed values $x_i$. 
+
+_Weather ex._ (a): stations failed for no discernible reason.
+
+--
+
+**Removal**: Entities with missing data can be removed from the analysis safely. 
+
+**Imputation**: Go for it (but see later) 
+
+---
+
+### Missing at random (MAR)
+
+*Def*: missingness $r_i$ does not depend on the value of $y_i$, but may depend on the value of $x_i$. 
+
+_Weather ex._ (b): measurements are not taken on specific days of the month (where "day of the month" serves the role of $x$).
+
+--
+
+**Removal**: No!, it will bias analysis since you would drop values of $x$ based on missingness and potentially change the distribution of $x$. 
+
+**Imputation**: Go for it (but see later)
+
+---
+
+### Not missing at random (NMAR)
+
+*Def*: missingness $r_i$ depends on $y_i$. 
+
+*Weather ex.* (c): measurements fail when the temperature is too hot or cold. 
+
+--
+
+The worst case! Usually means that we want to go back to our collaborator and tell them that we are in a bind. 
+
+**Removal**: No.
+
+**Imputation** No.
+
+---
+
+### Summary
+
+The **first step** when dealing with missing data is to understand *why* and *how* data may be missing. 
+
+I.e., talk to collaborator, or person who created the dataset. 
+
+---
+layout: true
+
+## Handling missing data
+
+---
+class: split-50
+### Removing missing data
+
+(MCAR) Not a lot of entities with missing data: 
+
+.column[
+```{r, echo=TRUE, eval=FALSE}
+tidy_weather_nomissing <- 
+  tidy_weather %>%
+    tidyr::drop_na(tmax, tmin)
+```
+]
+
+.column[
+```{r, echo=FALSE, eval=TRUE}
+tidy_weather_nomissing <- tidy_weather %>%
+  tidyr::drop_na(tmax, tmin)
+tidy_weather_nomissing
+```
+]
+
+---
+
+### Encoding as missing
+
+(MCAR or MAR) For categorical attributes: encode the fact that a value is missing as a new category and use in subsequent modeling.
+
+```{r, message=FALSE, echo=FALSE}
+tb <- read_csv(file.path("data", "tb.csv"))
+tidy_tb <- tb %>%
+  gather(demo, n, -iso2, -year)  %>%
+  separate(demo, c("sex", "age"), sep=1)
+```
+
+```{r, echo=FALSE}
+tidy_tb %>%
+  tidyr::replace_na(list(iso2="missing")) %>%
+  mutate(iso2_missing=iso2 == "missing") %>%
+  group_by(iso2_missing) %>%
+  slice(1:2) %>%
+  ungroup() %>%
+  sample_frac(1)
+```
+
+---
+
+### Imputation (MCAR)
+
+(Also for MAR but not ideal) Numeric values, replace missing values of $y$ with, e.g., the mean of non-missing $y$
+
+```{r, eval=FALSE}
+library(nycflights13)
+flights %>%
+  tidyr::replace_na(list(dep_delay=mean(.$dep_delay, na.rm=TRUE)))
+```
+
+Categorical attributes, replace missing $y$ with most common category in non-missing $y$.
+
+---
+
+### Imputation (MAR)
+
+Replace missing $y$ predicting from other variables $x$ (we will see linear regression using the `lm` and `predict` functions later on)
+
+```{r, eval=FALSE}
+dep_delay_fit <- flights %>% lm(dep_delay~origin, data=.)
+flights %>%
+  modelr::add_predictions(dep_delay_fit, var="pred_delay") %>%
+  mutate(dep_delay_fixed = 
+           ifelse(!is.na(dep_delay), dep_delay, pred_delay)) 
+```
+
+(categorical, use logistic regression)
+
+---
+
+### Imputation
+
+After imputation it is useful to add an additional indicator
+attribute stating if a missing value was imputed
+
+```{r, eval=FALSE}
+flights %>%
+  mutate(dep_delay_missing = is.na(dep_delay))
+```
+
+---
+layout: true
+
+## Implications of imputation
+
+---
+
+Imputing missing values as discussed has two effects.
+
+*Central tendency of data is retained*
+
+If we impute missing data using the mean of a numeric variable, the mean after imputation will not change. 
+
+This is a good reason to impute based on estimates of central tendency. 
+
+---
+
+*The _spread_ of the data will change*
+
+After imputation, the spread of the data will be smaller relative to spread if we ignore missing values. 
+
+This could be problematic as underestimating the spread of data can yield over-confident inferences in downstream analysis. 
+
