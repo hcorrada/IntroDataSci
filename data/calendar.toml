@@ -282,6 +282,10 @@ notes = "bookdown-notes/eda-data-transformations.html"
 title = "Lecture Slides: Data Transformations"
 notes = "slides/cmsc320-transform.pdf"
 
+[[day13.covers]]
+title = "Lecture Recording: Data Transformations"
+notes = "https://umd.hosted.panopto.com/Panopto/Pages/Viewer.aspx?pid=4cf585d7-59f0-4557-9228-ab89001a9242"
+
 #[day13.class_notes]
 #link = "cmsc320_class-notes_20180308.pdf"
 
@@ -305,27 +309,28 @@ date = "3/23"
 title = "CLASS CANCELLED - PREP WEEK FOR ONLINE MOVE"
 notes = "campus-closure/index.html"
 
-[[day14.covers]]
-title = "Handling missing data"
-notes = "bookdown-notes/eda-handling-missing-data.html"
-
-[[day14.covers]]
-title = "Lecture slides: Handling missing data"
-notes = "slides/cmsc320_missing-data.pdf"
-
 #[day14.class_notes]
 #link = "cmsc320_class-notes_20180314.pdf"
 
 [day15]
 date = "3/25"
 
-[[day15.covers]]
-title = "Univariate distributions and statistics"
-notes = "bookdown-notes/univariate-distributions-and-statistics.html"
 
 [[day15.covers]]
-title = "Experiment design and hypothesis testing"
-notes = "bookdown-notes/experiment-design-and-hypothesis-testing.html"
+title = "CLASS CANCELLED - PREP WEEK FOR ONLINE MOVE"
+notes = "campus-closure/index.html"
+
+[[day15.covers]]
+title = "Handling missing data"
+notes = "bookdown-notes/eda-handling-missing-data.html"
+
+[[day15.covers]]
+title = "Lecture slides: Handling missing data"
+notes = "slides/cmsc320_missing-data.pdf"
+
+[[day15.covers]]
+title = "Lecture recording: Handling missing data"
+notes = "https://umd.hosted.panopto.com/Panopto/Pages/Viewer.aspx?pid=f16d0b89-0456-44f0-8620-ab8901862c4d"
 
 # [day16a]
 # date = "4/1"
@@ -342,12 +347,16 @@ notes = "bookdown-notes/experiment-design-and-hypothesis-testing.html"
 date = "3/30"
 
 [[day16.covers]]
-title = "Multivariate probability and statistics"
-notes = "bookdown-notes/multivariate-probability.html"
+title = "Univariate distributions and statistics"
+notes = "bookdown-notes/univariate-distributions-and-statistics.html"
 
 [[day16.covers]]
-title = "Data Analysis with Geometry"
-notes = "bookdown-notes/data-analysis-with-geometry.html"
+title = "Experiment design and hypothesis testing"
+notes = "bookdown-notes/experiment-design-and-hypothesis-testing.html"
+
+[[day16.covers]]
+title = "Multivariate probability and statistics"
+notes = "bookdown-notes/multivariate-probability.html"
 
 #[day16.class_notes]
 #link = "cmsc320_class-notes_20180327.pdf"
@@ -355,6 +364,10 @@ notes = "bookdown-notes/data-analysis-with-geometry.html"
 # out for simons
 [day17]
 date = "4/1"
+
+[[day17.covers]]
+title = "Data Analysis with Geometry"
+notes = "bookdown-notes/data-analysis-with-geometry.html"
 
 [[day17.covers]]
 title = "Linear models for regression"
