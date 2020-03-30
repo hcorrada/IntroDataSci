@@ -351,10 +351,14 @@ title = "Univariate distributions and statistics"
 notes = "bookdown-notes/univariate-distributions-and-statistics.html"
 
 [[day16.covers]]
+title = "Lecture slides: Univariate distributions and statistics"
+notes = "slides/cmsc320_stat-intro.pdf"
+
+[[day17.covers]]
 title = "Experiment design and hypothesis testing"
 notes = "bookdown-notes/experiment-design-and-hypothesis-testing.html"
 
-[[day16.covers]]
+[[day17.covers]]
 title = "Multivariate probability and statistics"
 notes = "bookdown-notes/multivariate-probability.html"
 
@@ -365,11 +369,11 @@ notes = "bookdown-notes/multivariate-probability.html"
 [day17]
 date = "4/1"
 
-[[day17.covers]]
+[[day18.covers]]
 title = "Data Analysis with Geometry"
 notes = "bookdown-notes/data-analysis-with-geometry.html"
 
-[[day17.covers]]
+[[day18.covers]]
 title = "Linear models for regression"
 notes = "bookdown-notes/linear-regression.html"
 
@@ -379,7 +383,7 @@ notes = "bookdown-notes/linear-regression.html"
 [day18]
 date = "4/6"
 
-[[day18.covers]]
+[[day19.covers]]
 title = "Linear models for classification"
 notes = "bookdown-notes/linear-models-for-classification.html"
 
