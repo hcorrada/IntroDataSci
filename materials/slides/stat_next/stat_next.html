@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Statistical Principles (Part 2)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2020-04-01" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Statistical Principles (Part 2)]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+CMSC320: 2020-04-01
+]
+
+.logo[![](img/logo.png)]
+
+
+
+---
+layout: true
+
+## Inference
+
+One way to think about how we use probability in data analysis (statistical and machine learning) is like this:
+
+---
+
+.center.image-60[![](img/inference.png)]
+
+---
+
+.center.image-60[![](img/inference1.png)]
+
+---
+layout: true
+
+## Inference
+
+---
+
+**Law of Large Numbers (LLN)**: parameter `\(\hat{p}\)` will be close to `\(p\)` on average,  
+**Central Limit Theorem (CLT)**: how confident are we that we found `\(p\)`. 
+
+--
+
+**Confidence Interval**: 
+
+Since `\(\hat{p} \sim N(p,\frac{\sqrt{p(1-p)}}{\sqrt{n}})\)` let's find an interval `\([\hat{p}_{-}, \hat{p}_{+}]\)`, with:
+
+- `\(\hat{p}\)` at its center, 
+- contains 95% of the probability specified by the CLT. 
+
+---
+
+How do we calculate this interval? 
+
+`\(\hat{p}_{-}\)` will be the value where `\(N\left( p,\frac{\sqrt{p(1-p)}}{\sqrt{n}} \right)\)` is such that `\(P(Y \leq \hat{p}_{-}) = .05/2\)`. 
+
+--
+
+In R, we calculate with `qnorm`: 
+
+$$
+`\begin{align}
+\hat{p}_{-} &amp; = \mathtt{qnorm}(.05/2, \hat{p}, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}}) \\
+{} &amp; = \hat{p} + \mathtt{qnorm}(.05/2,0, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}})
+\end{align}`
+$$
+
+---
+
+The upper value of the interval is computed with probability `\(1-(.05/2)\)`, 
+
+By the symmetry of the normal distribution is
+
+`$$\hat{p}_{+} = \hat{p} + -\mathtt{qnorm}(.05/2,0, \frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}})$$`
+
+---
+
+Let's see how these intervals look for our twitter bot example:
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; sample_size &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; phat &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; se &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; lower &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; upper &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.700 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.145 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.416 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.984 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.690 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.046 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.599 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.781 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.702 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.662 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.742 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.694 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.015 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.665 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.723 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 10000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.698 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.005 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.689 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.707 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+For `\(n=500\)`, our estimate of `\(p\)` is `\({}_{0.66}0.7_{0.74}\)`.  
+
+---
+layout: true
+
+## Hypothesis testing
+
+---
+
+Suppose that **before** I sampled tweets I thought (_hypothesized_) that more than 50% of tweets are bot-generated.
+
+--
+
+**Hypothesis Testing** A very popular way of using data to suggest this hypothesis is **true**:
+
+--
+
+By using inference to **reject** the hypothesis that it is **not true**. 
+
+---
+
+_null_ hypothesis: **50% or less of tweets are bot-generated**  
+
+_alternative_ hypothesis (the one we cared about): **more than 50% of tweets are bot-generated**
+
+--
+
+You will see this written in statistics textbooks as:
+
+$$
+`\begin{align}
+H_0: \, &amp; p \leq .5 &amp; \textrm{(null)} \\
+H_1: \, &amp; p &gt; .5 &amp; \textrm{(alternative)}
+\end{align}`
+$$
+
+---
+
+Given sample of `\(n\)` tweets, estimate `\(\hat{p}\)` as we did before. 
+
+If `\(\hat{p}\)` (sample mean from our sample of tweets) is _too far_ from `\(p=.5\)`: 
+
+then we **reject** the _null_ hypothesis: the estimate we derived from the data we have is not statistically consistent with the _null_ hypothesis. 
+
+---
+class:split-50
+
+How do we say our estimate `\(\hat{p}\)` is too far? Use the probability model given by the CLT. 
+
+If `\(P(Y \geq \hat{p}) \geq .95\)` under the null model (of `\(p=.5\)`), we say it is too far and we reject.
+
+
+.column.center.image-80[![](img/testing.png)]
+.column.center.image-80[![](img/testing1.png)]
+
+---
+
+This 95% threshold is conservative, but somewhat arbitrary. 
+
+So we use one more metric, `\(P(|Y| \geq \hat{p})\)` (the infamous p-value) to say: 
+
+We could reject the _null_ hypothesis for all thresholds greater than this p-value.
+
+---
+
+Let's see how testing would look like for our tweet example
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; sample_size &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; phat &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; se &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; lower &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; upper &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p_value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.700 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.145 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.416 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.984 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.084 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.690 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.046 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.599 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.781 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.702 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.662 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.742 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.694 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.015 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.665 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.723 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 10000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.698 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.005 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.689 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.707 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## The `\(t\)`-test
+
+These results hold for `\(n\)` sufficiently large that the normal distribution in the CLT provides a good approximation of the distribution of estimates `\(\hat{p}\)`. 
+
+In cases where `\(n\)` is smaller, the `\(t\)`-distribution, as opposed to the normal distribution, provides a better approximation of the distribution of estimates `\(\hat{p}\)`. 
+
+As `\(n\)` grows, the `\(t\)`-distribution approaches a normal distribution which is why analysts use the `\(t\)`-test regularly.  
+
+---
+
+### A/B Testing
+
+A classic experimental design where hypothesis testing is commonly used in A/B testing. 
+
+.center![](img/A-B_testing.png)
+
+---
+
+Here we have two estimates `\(\hat{p}_A\)` and `\(\hat{p}_B\)`, the proportion of clicks for design A and B respectively. 
+
+The null hypothesis we would test is that _there is no difference in proportions_ between the two designs. 
+
+Mathematically, we would like to know "What is the probability that we observe a difference in proportions this large under the null hypothesis". 
+
+We will work this out as a homework exercise (HW4).
+
+---
+layout: true
+
+## Summary
+
+---
+
+**Inference**: estimate parameter from data based on assumed probability model 
+
+(e.g, matching expectation; we'll see later another method called maximum likelihood).
+
+--
+
+For _averages_ the LLN and CLT tells us how to compute probabilities from a single parameter estimate derived from one dataset of samples. 
+
+With these probabilities we can construct confidence intervals for our estimate.
+
+---
+
+**Testing**: Use probability _under null hypothesis_ to see how statistically consistency of estimates obtained from data, 
+
+Reject the null hypothesis if estimates are not statistically consistent enough 
+
+(again using probability from CLT when dealing with averages).
+
+---
+layout: false
+
+## Probability Distributions
+
+Check lecture notes for further discussion of the probability distributions we saw in this discussion.
+
+---
+layout: true
+
+## Joint and conditional probability
+
+---
+
+Suppose that for each tweet I sample I can also say if it has _a lot_ of retweets or not. 
+
+I have another binary random variable `\(Y \in \{0,1\}\)` where `\(Y=1\)` indicates the sampled tweet has a lot of retweets.
+
+---
+
+We could illustrate the population of "all" tweets as
+
+.center.image-50[![](img/joint.png)]
+
+---
+
+We can talk of the joint probability mass function of `\(X\)` and `\(Y\)`: `\(p(X=x, Y=y)\)`,
+
+where random variables `\(X\)` and `\(Y\)` can take values from domains `\(\mathcal{D}_X\)` and `\(\mathcal{D}_Y\)` respectively.
+
+Here we have the same conditions as we had for univariate distributions:
+
+1. `\(p(X=x,Y=y)\geq 0\)` for all combination of values `\(x\)` and `\(y\)`, and  
+2. `\(\sum_{(x,y) \in \mathcal{D}_X \times \mathcal{D}_Y} p(X=x,Y=y) = 1\)`
+
+---
+
+We can also talk about _conditional probability_: 
+
+the probability of a tweet being bot-generated or not,  
+_conditioned_ on whether it has lots of retweets or not:
+
+$$
+p(X=x | Y=y)
+$$
+
+which also needs to satisfy the properties of a probability distribution. 
+
+---
+
+So to make sure
+
+$$
+\sum_{x \in \mathcal{D}_X} p(X=x|Y=y) = 1
+$$
+
+we define
+
+$$
+p(X=x | Y=y) = \frac{p(X=x,Y=y)}{p(Y=y)}
+$$
+
+
+_marginalization_: follows from the properties of joint probability distribution: `\(\sum_{x \in \mathcal{D}_X} p(X=x, Y=y) = p(Y=y)\)`.
+
+---
+
+Conditional probability lets us talk about _independence_: 
+
+if the probabilty of a tweet being bot-generated _does not_ depend on a tweet having lots of retweets
+
+i.e., `\(p(X=x) = p(X=x|Y=y)\)` for all `\(y\)`, 
+
+then we say `\(X\)` is _independent_ of `\(Y\)`. 
+
+---
+
+.center.image-40[![](img/joint.png)]
+
+Is `\(X\)` independent of `\(Y\)`? What would the diagram look like if `\(X\)` was independent of `\(Y\)`?
+
+---
+
+For independent random variables, the joint probability has an easy form 
+
+`$$p(X=x,Y=y)=p(X=x)p(Y=y)$$`
+
+Generalizes to more than two independent random variables.
+
+---
+layout: true
+
+## Bayes' Rule
+
+---
+
+An extremely useful and important rule of probability follows from our definitions of conditional and joint probability above. 
+
+Bayes' rule is pervasive in Statistics, Machine Learning and Artificial Intelligence. 
+
+It is a very powerful tool to talk about uncertainty, beliefs, evidence, and many other technical and philosophical matters. It is however, of extreme simplicity. 
+
+---
+
+Bayes' Rule states that
+
+$$
+p(X=x|Y=y) = \frac{p(Y=y|X=x)p(X=x)}{p(Y=y)}
+$$
+
+which follow directly from our definitions above. 
+
+---
+
+One very common usage of Bayes' Rule is that it let's us define one conditional probability distribution based on another probability distribution. 
+
+For example, it may be hard to reason about `\(p(X=x|Y=y)\)` in our tweet example. 
+
+--
+
+If you know a tweet has a lot retweets `\((Y=1)\)`, what can you say about the probability that it is bot-generated, i.e., `\(p(X=1|Y=1)\)`? 
+
+Maybe not much, tweets have lots of retweets for many reasons. 
+
+---
+
+However, it may be easier to reason about the reverse: if I tell you a tweet is bot-generated `\((X=1)\)`, what can you say about the probability that it has a lot of retweets, i.e., `\(p(Y=1|X=1)\)`? 
+
+That may be easier to reason about, at least bot-generated tweets are designed to get lots of retweets. 
+
+At minimum, it's easier to estimate because we can get a training set of bot-generated tweets and _estimate_ this conditional probability.
+
+---
+
+Bayes' Rule tells us how to get the hard to reason about (or estimate) conditional probability `\(p(X=x|Y=y)\)` 
+
+In terms of the conditional probability that is easier to reason about (or estimate) `\(p(Y=y|X=x)\)`. 
+
+This is the basis of the Naive Bayes prediction method, which we'll revisit briefly later on.
+
+---
+layout: true
+
+## Conditional expectation
+
+---
+
+With conditional probabilty we can start talking about conditional expectation, which generalizes the concept of expectation we saw before. 
+
+The _conditional expected value_ (conditional mean) of `\(X\)` given `\(Y=y\)` is
+
+$$
+\mathbb{E} [ X|Y=y ] = \sum_{x \in \mathcal{D}_X} x p(X=x|Y=y)
+$$
+
+Conditional Expectation, which follows from conditional probability, will serve as the basis for our Machine Learning method studies in the next few lectures!
+
+---
+layout: true
+
+## Maximum likelihood
+
+---
+
+We saw before how we estimated a parameter from matching expectation from a probability model with what we observed in data. 
+
+The most popular method of estimation (Maximum Likelihood Estimation) uses a similar idea.
+
+---
+
+Given data `\(x_1,x_2,\ldots,x_n\)` and an assumed model of their distribution, e.g., 
+
+- `\(X_i\sim \mathrm{Bernoulli}(p)\)` for all `\(i\)`, 
+- they are iid, 
+
+Let's find the value of parameter `\(p\)` that maximizes the likelihood (or probability) of the data we observe under this assumed probability model.
+
+
+We call the resulting estimate the _maximum likelihood estimate_ (MLE). 
+
+---
+
+Here are some fun exercises to try:
+
+1) Given a sample `\(x_1\)` with `\(X_1 \sim N(\mu,1)\)`, show that the maximum likelihood estimate of `\(\mu\)`, `\(\hat{\mu}=x_1\)`.
+
+--
+
+It is most often convinient to _minimize negative log-likelihood_ instead of maximizing likelihood. So in this case:
+
+$$
+`\begin{align}
+-\mathscr{L}(\mu) &amp; = - \log p(X_1=x_1) \\
+{} &amp; = \log{\sqrt{2\pi}} + \frac{1}{2}(x_1 - \mu)^2
+\end{align}`
+$$
+
+---
+
+To minimize
+
+`$$-\mathscr{L}(\mu) = \log{\sqrt{2\pi}} + \frac{1}{2}(x_1 - \mu)^2$$`
+Ignore terms that are independent of `\(\mu\)`, and concentrate only on minimizing the last term. 
+
+Now, this term is always positive, so the smallest value it can have is 0. So, we minimize it by setting `\(\hat{\mu}=x_1\)`.
+
+---
+
+2) Given a sample `\(x_1,x_2,\ldots,x_n\)` of `\(n\)` iid random variables with `\(X_i \sim N(\mu,1)\)` for all `\(i\)`, 
+
+Show that the maximum likelihood estimate of `\(\mu\)`, `\(\hat{\mu}=\overline{x}\)` the sample mean!
+
+---
+
+Here we would follow a similar approach, write out the negative log likelihood as a function `\(f(\mu;x_i)\)` of `\(\mu\)` that depends on data `\(x_i\)`. Two useful properties here are:
+
+1. `\(p(X_1=x_1,X_2=x_2,\ldots,X_n=x_n)=p(X_1=x_1)p(X_2=x_2)\cdots p(X_n=x_n)\)`, 
+2. `\(\log \prod_i f(\mu;x_i) = \sum_i \log f(\mu;x_i)\)`
+
+Then find a value of `\(\mu\)` that minimizes this function. Hint: we saw this when we showed that the sample mean is the minimizer of total squared distance in our exploratory analysis unit!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

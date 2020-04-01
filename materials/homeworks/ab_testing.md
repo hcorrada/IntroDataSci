@@ -20,31 +20,31 @@ and use the sample mean $\overline{x}=\frac{1}{n} \sum_{i=1}^{n} x_i=\frac{30}{5
 
 You remember that the hypothesis testing framework is setup in a way where you use your experiment to _reject_ the hypothesis
 that the new design _does not_ increase click rate.
-Therefore, you want to test the (null) hypothesis $p_B \leq p_A = 0.5$ and _reject_ it if $p(\overline{X} > \hat{p}_B) \leq \alpha$ under this hypothesis.
+Therefore, you want to test the (null) hypothesis $p_B \leq p_A = 0.5$ and _reject_ it if $P(\overline{X} > \hat{p}_B) \leq \alpha$ under this hypothesis.
 Remember, $\alpha$ is the rejection level, and we will use $\alpha=0.05$ here.
 
-To compute $p(\overline{X} > \hat{p}_B)$ under the null hypothesis you will use the normal approximation given by the Central Limit Theorem (CLT). 
+To compute $P(\overline{X} > \hat{p}_B)$ under the null hypothesis you will use the normal approximation given by the Central Limit Theorem (CLT). 
 
-(a) Derive expressions for $\mathrm{E} \overline{X}$ and $\mathrm{Var}(\overline {X})$ under the null hypothesis in terms of $p_A$. You will need to use the properties of
-expectations and variances described below. Here, I give you the derivation for $\mathrm{E} \overline{X}$, you need to do the same for $\mathrm{Var}(\overline{X})$.
+(a) Derive expressions for $\mathbb{E} \overline{X}$ and $\mathrm{var}[\overline {X}]$ under the null hypothesis in terms of $p_A$. You will need to use the properties of
+expectations and variances described below. Here, I give you the derivation for $\mathbb{E} [\overline{X}]$, you need to do the same for $\mathrm{var}[\overline{X}]$.
 
 \begin{eqnarray}
-\mathrm{E} \overline{X} & = & \mathrm{E} \left[ \frac{1}{n} \sum_{i=1}^n X_i \right] \\
-{} & = & \frac{1}{n} \sum_{i=1}^n \mathrm{E} X_i \\
+\mathbb{E} [\overline{X}] & = & \mathbb{E} \left[ \frac{1}{n} \sum_{i=1}^n X_i \right] \\
+{} & = & \frac{1}{n} \sum_{i=1}^n \mathbb{E} [X_i] \\
 {} & = & \frac{1}{n} (np_A) \\
 {} & = & p_A
 \end{eqnarray}
 
-(b) Based on your derivation, compute values for $\mathrm{E} \overline{X}$ and $\mathrm{Var}(\overline{X})$ based on $p_A=0.5$ and $n=50$. Use R to do this.
+(b) Based on your derivation, compute values for $\mathbb{E} [\overline{X}]$ and $\mathrm{var} [\overline{X}]$ based on $p_A=0.5$ and $n=50$. Use R or python to do this.
 
-(c) Using the result above, you can now use the CLT by approximating the distribution of $\overline{X}$ as $N(\mathrm{E} \overline{X}, \sqrt{\mathrm{Var}(\overline{X})})$.
-Based on this approximation, compute $p(\overline{X} > \hat{p}_B)$. Use the R function `pnorm` to compute this.
+(c) Using the result above, you can now use the CLT by approximating the distribution of $\overline{X}$ as $N(\mathbb{E} [\overline{X}], \sqrt{\mathrm{var}(\overline{X})})$.
+Based on this approximation, compute $P(\overline{X} > \hat{p}_B)$. Use the R function `pnorm`, or `norm.cdf` in `scipy.stats` to compute this.
 
 (d) Should you reject the null hypothesis $p_B \leq p_A$? Why?
 
 (e) What if you had observed the same $\hat{p}_B=0.6$ but with $n=100$ samples. Should you reject the null hypothesis in this case? Why?
 
-(f) What is the _smallest_ value $\hat{p}_B$ you would reject the null hypothesis with $n=100$. Use the `qnorm` function for this. Denote this _smallest_ value as 
+(f) What is the _smallest_ value $\hat{p}_B$ you would reject the null hypothesis with $n=100$. Use the `qnorm` function in R or `norm.ppf` in `scipy.stats` for this. Denote this _smallest_ value as 
 $q_B$. 
 
 (g) Based on (f), the smallest detectable improvement for $p_A=0.5$ with $n=100$ is then $q_B - p_A$. What is the smallest detectable improvement in your experiment (that is, with $n=50$)?
@@ -55,18 +55,18 @@ In this second case, you also assume the click rate for the original version is 
 The data recorded for the experiment is the same. You showed the new design to $n=50$ subjects and recorded that
 $s=30$ clicked on the link of interest.
 
-You want to test the hypothesis $p_B \leq 0.75$ and reject it if $p(\overline{X} > \hat{p}_B) < 0.05$ under this hypothesis. Note the
+You want to test the hypothesis $p_B \leq 0.75$ and reject it if $P(\overline{X} > \hat{p}_B) < 0.05$ under this hypothesis. Note the
 probability in this case is different since $p_A = 0.75$.
 
-(a) What are the values of $\mathrm{E} \overline{X}$ and $\mathrm{Var}(\overline{X})$ under the null hypothesis in this case.
+(a) What are the values of $\mathbb{E} [\overline{X}]$ and $\mathrm{var}(\overline{X})$ under the null hypothesis in this case.
 
-(b) Based on the CLT approximation, compute $p(\overline{X} > \hat{p}_B)$ under the null hypothesis. 
+(b) Based on the CLT approximation, compute $P(\overline{X} > \hat{p}_B)$ under the null hypothesis. 
 
 (c) Should you reject the null hypothesis $p_B \leq 0.75$? Why?
 
 (d) What if you had observed the same $\hat{p}_B=0.6$ but with $n=100$ samples. Should you reject the null hypothesis in this case? Why?
 
-(e) What is the _smallest_ value $\hat{p}_B$ you should reject the null hypothesis with $n=100$. Use the `qnorm` function for this. Denote this _smallest_ value as 
+(e) What is the _smallest_ value $\hat{p}_B$ you should reject the null hypothesis with $n=100$. Denote this _smallest_ value as 
 $q_B$. 
 
 (f) Based on (e), the smallest detectable improvement for $p_A=0.75$ with $n=100$ is then $q_B - p_A$. What is the smallest detectable improvement in your experiment ($n=50$)?
@@ -79,7 +79,7 @@ Explain why this makes sense mathematically.
 ## Part 4: Comparing to estimated click rate $p_A$.
 
 In this more realistic case you estimate click rates for both page designs in your experiment. The experiment you carry out is as follows: when a customer visits the site, 
-they are randomly (and independently from other customers) shown design A or B, and you record if the click on the link of interest or not. 
+they are randomly (and independently from other customers) shown design A or B, and you record if they click on the link of interest or not. 
 You did this for $n=100$ customers and recorded the following data:
 
 | design | number shown | number clicked |
@@ -89,15 +89,15 @@ You did this for $n=100$ customers and recorded the following data:
 
 The null hypothesis we want to test in this case is that $p_B - p_A \leq 0$. That is, that the new design _does not_ improve the click rate. How can we use what we know about the CLT in this case?
 
-What we will do is treat estimates using sample means $\hat{p_A}=\overline{X}_A$ and $\hat{p}_B=\overline{X}_B$ as random variables and define a new random variable $Y=\overline{X}_B - \overline{X}_A$ corresponding to the _difference in click rates_ $p_B - p_A$. 
-With that, we derive $EY$ and $\mathrm{Var}(Y)$ under the null hypothesis that $p_B - p_A = 0$.
+What we will do is treat estimates using sample means $\hat{p}_A=\overline{X}_A$ and $\hat{p}_B=\overline{X}_B$ as random variables and define a new random variable $Y=\overline{X}_B - \overline{X}_A$ corresponding to the _difference in click rates_ $p_B - p_A$. 
+With that, we derive $\mathbb{E} [Y]$ and $\mathrm{var}(Y)$ under the null hypothesis that $p_B - p_A = 0$.
 
-(a) Derive expressions for $\mathrm{E} Y$ and $\mathrm{Var}(Y)$ under the null hypothesis in terms of $p_A=p_B=p$. You will need to use the properties of
-expectations and variances described below. Here, I give you the derivation for $\mathrm{E} Y$, you need to do the same for $\mathrm{Var}(Y)$.
+(a) Derive expressions for $\mathbb{E} [Y]$ and $\mathrm{var}(Y)$ under the null hypothesis in terms of $p_A=p_B=p$. You will need to use the properties of
+expectations and variances described below. Here, I give you the derivation for $\mathbb{E} [Y]$, you need to do the same for $\mathrm{var}(Y)$.
 
 \begin{eqnarray}
-\mathrm{E} Y & = & \mathrm{E} \left[ \overline{X}_B - \overline{X}_A \right] \\ 
-{} & = & \mathrm{E} \overline{X}_B - \mathrm{E} \overline{X}_A \\
+\mathbb{E} [Y] & = & \mathbb{E} \left[ \overline{X}_B - \overline{X}_A \right] \\ 
+{} & = & \mathbb{E} [\overline{X}_B] - \mathbb{E} [\overline{X}_A] \\
 {} & = & p_B - p_A \\
 {} & = & 0
 \end{eqnarray}
@@ -106,13 +106,13 @@ expectations and variances described below. Here, I give you the derivation for 
 can be treated as independent identically distributed (iid) draws from a $\mathrm{Bernoulli}(p)$ distribution. Based on this observation, what would be your estimate of
 $p_A=p_B=p$?
 
-(c) Now that you have an estimate of $p$, compute a value for $\mathrm{Var}(Y)$. 
+(c) Now that you have an estimate of $p$, compute a value for $\mathrm{var}(Y)$. 
 
 (d) What is your estimate $\hat{y}$ of $p_B - p_A$ based on the data your recorded for this experiment?
 
 Now, we can reject the null hypothesis of no improvement if $p(Y > \hat{y}) \leq \alpha$ under the null hypothesis. 
 
-(e) Using the CLT approximation, what is $p(Y > \hat{y})$
+(e) Using the CLT approximation, what is $P(Y > \hat{y})$
 
 (f) Can you reject the null hypothesis of no improvement in this case? Why? Remember, we are using $\alpha=0.05$.
 
@@ -123,20 +123,20 @@ cannot compute a smallest detectable improvement before the experiment is run be
 difference _would be_ for different values of $p$. 
 
 (a) Make a line plot, with $p$ in the x-axis and the smallest detectable difference as a function of $p$ in the y-axis. You should assume $n_A=55$ and $n_B=45$ 
-as above. Again, use the `qnorm` function for this.
+as above. 
 
 ## Expectation and variance properties
 
 ### Properties of expectation
 
-(i) $\mathrm{E}(aX) = a \mathrm{E}X$ for constant $a$ and random variable $X$
-(ii) $\mathrm{E}(X + Y) = \mathrm{E}X + \mathrm{E}Y$ for random variables $X$ and $Y$
+(i) $\mathbb{E}[aX] = a \mathbb{E}[X]$ for constant $a$ and random variable $X$
+(ii) $\mathbb{E}[X + Y] = \mathbb{E}[X] + \mathbb{E}[Y]$ for random variables $X$ and $Y$
 
 ### Properties of variance
 
-(i) $\mathrm{Var}(aX) = a^2 \mathrm{Var}(X)$ for constant $a$ and random variable $X$
-(ii) $Var(X+Y)=Var(X) + Var(Y)$ for _independent_ random variables $X$ and $Y$
+(i) $\mathrm{var}[aX] = a^2 \mathrm{var}[X]$ for constant $a$ and random variable $X$
+(ii) $\mathrm{var}[X+Y]=\mathrm{var}[X] + \mathrm{var}[Y]$ for _independent_ random variables $X$ and $Y$
 
 ## Submission
 
-Prepare an Rmarkdown file with your derivations and answer, including code you used to get your answers. Knit to PDF (or save HTML to PDF) and submit to ELMS.
+Prepare an Rmarkdown file or Jupyter notebook with your derivations and answers, including code you used to get your answers. Knit to PDF (or save HTML to PDF) and submit to ELMS.

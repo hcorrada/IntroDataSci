@@ -358,6 +358,14 @@ notes = "slides/cmsc320_stat-intro.pdf"
 title = "Lecture Recordings: Univariate distributions and statistics"
 notes = "https://umd.hosted.panopto.com/Panopto/Pages/Viewer.aspx?pid=9f9ad8e0-2007-4ea4-842c-ab8e00ebdaf6"
 
+
+#[day16.class_notes]
+#link = "cmsc320_class-notes_20180327.pdf"
+
+# out for simons
+[day17]
+date = "4/1"
+
 [[day17.covers]]
 title = "Experiment design and hypothesis testing"
 notes = "bookdown-notes/experiment-design-and-hypothesis-testing.html"
@@ -366,12 +374,9 @@ notes = "bookdown-notes/experiment-design-and-hypothesis-testing.html"
 title = "Multivariate probability and statistics"
 notes = "bookdown-notes/multivariate-probability.html"
 
-#[day16.class_notes]
-#link = "cmsc320_class-notes_20180327.pdf"
-
-# out for simons
-[day17]
-date = "4/1"
+[[day17.covers]]
+title = "Lecture Slides: Design and multivariate probability"
+notes = "slides/cmsc320-stat_next.pdf"
 
 [[day18.covers]]
 title = "Data Analysis with Geometry"
