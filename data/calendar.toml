@@ -378,6 +378,16 @@ notes = "bookdown-notes/multivariate-probability.html"
 title = "Lecture Slides: Design and multivariate probability"
 notes = "slides/cmsc320-stat_next.pdf"
 
+[[day17.covers]]
+title = "Lecture Recordings: Design and multivariate probability"
+notes = "https://umd.hosted.panopto.com/Panopto/Pages/Viewer.aspx?pid=493deda6-9724-4c8c-9ff5-ab9000e9f3a2"
+
+#[day17.class_notes]
+#link = "cmsc320_class-notes_20180329.pdf"
+
+[day18]
+date = "4/6"
+
 [[day18.covers]]
 title = "Data Analysis with Geometry"
 notes = "bookdown-notes/data-analysis-with-geometry.html"
@@ -385,12 +395,6 @@ notes = "bookdown-notes/data-analysis-with-geometry.html"
 [[day18.covers]]
 title = "Linear models for regression"
 notes = "bookdown-notes/linear-regression.html"
-
-#[day17.class_notes]
-#link = "cmsc320_class-notes_20180329.pdf"
-
-[day18]
-date = "4/6"
 
 [[day19.covers]]
 title = "Linear models for classification"
