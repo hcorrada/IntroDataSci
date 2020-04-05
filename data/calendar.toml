@@ -396,9 +396,10 @@ notes = "bookdown-notes/data-analysis-with-geometry.html"
 title = "Linear models for regression"
 notes = "bookdown-notes/linear-regression.html"
 
-[[day19.covers]]
-title = "Linear models for classification"
-notes = "bookdown-notes/linear-models-for-classification.html"
+[[day18.covers]]
+title = "Lecture Slides: Linear models for regression"
+notes = "slides/cmsc320_linear-regression.pdf"
+
 
 #[day18.class_notes]
 #link = "cmsc320_class-notes_20180403.pdf"
@@ -412,6 +413,10 @@ notes = "bookdown-notes/linear-models-for-classification.html"
 
 [day19]
 date = "4/8"
+
+[[day19.covers]]
+title = "Linear models for classification"
+notes = "bookdown-notes/linear-models-for-classification.html"
 
 [[day19.covers]]
 title = "Solving linear ML problems"
