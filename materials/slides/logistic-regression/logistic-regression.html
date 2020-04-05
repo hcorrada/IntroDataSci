@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Logistic Regression</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2020-04-05" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Logistic Regression]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+2020-04-05
+]
+
+.logo[![](img/logo.png)]
+
+
+
+---
+layout: true
+
+## Linear models for classification
+
+---
+
+
+The general classification setting is: can we predict categorical response/output `\(Y\)`, from set of predictors `\(X_1,X_2,\ldots,X_p\)`? 
+
+As in the regression case, we assume training data `\((\mathbf{x}_1, y_1), \ldots, (\mathbf{x}_n, y_n)\)`. 
+In this case, however, responses `\(y_i\)` are categorical and take one of a fixed set of values. 
+
+---
+
+.image-40[![](img/4_1a.png)]
+.image-40[![](img/4_1b.png)]
+
+---
+
+### An example classification problem
+
+An individual's choice of transportation mode to commute to work. 
+
+Predictors: income, cost and time required for each of the alternatives: driving/carpooling,  biking, taking a bus, taking the train. 
+
+Response: whether the individual makes their commute by car, bike, bus or train. 
+
+---
+
+### Why not linear regression?
+
+Why can't we use linear regression in the classification setting. 
+
+For categorical responses with more than two values, if order and scale (units) don't make sense, then it's not a regression problem
+
+---
+
+For **binary** (0/1) responses, it's a little better.
+
+We could use linear regression in this setting and _interpret_ response `\(Y\)` as a probability (e.g, if `\(\hat{y} &gt; 0.5\)` predict `\(\mathtt{drug overdose}\)`)
+
+---
+
+.center.image-80[![](img/4_2.png)]
+
+---
+
+### Classification as probability estimation problem
+
+Instead of modeling classes 0 or 1 directly, we will model the conditional class probability `\(p(Y=1|X=x)\)`, and classify based on this probability. 
+
+In general, classification approaches use _discriminant_ (think of _scoring_) functions to do classification. 
+
+_Logistic regression_ is **one** way of estimating the class probability `\(p(Y=1|X=x)\)` (also denoted `\(p(x)\)`)
+
+---
+
+
+
+&lt;img src="logistic-regression_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Logistic regression
+
+The basic idea behind _logistic regression_ is to build a **linear** model _related_ to `\(p(x)\)`, since linear regression directly (i.e. `\(p(x) = \beta_0 + \beta_1 x\)`) doesn't work. 
+
+---
+
+Instead we build a linear model of _log-odds_:
+
+$$
+\log \frac{p(x)}{1-p(x)} = \beta_0 + \beta_1 x
+$$
+
+---
+
+&lt;img src="logistic-regression_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+Here is how we compute a logistic regression model in R
+
+
+
+
+```r
+default_fit &lt;- glm(default ~ balance, data=Default, family=binomial)
+default_fit %&gt;% 
+  tidy() 
+```
+
+```
+## # A tibble: 2 x 5
+##   term  estimate std.error statistic
+##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Int… -1.07e+1  0.361        -29.5
+## 2 bala…  5.50e-3  0.000220      25.0
+## # … with 1 more variable: p.value &lt;dbl&gt;
+```
+
+---
+
+Interpretation of logistic regression models is slightly different than the linear regression model we looked at. 
+
+In this case, the **odds** that a person defaults increase by `\(e^{0.05} \approx 1.051\)` for every dollar in their account balance. 
+
+---
+
+As before, the **accuracy** of `\(\hat{\beta}_1\)` as an estimate of the **population** parameter is given its standard error. 
+
+We can again construct a confidence interval for this estimate as we've done before.
+
+---
+
+As before, we can do hypothesis testing of a relationship between account balance and the probability of default. 
+
+In this case, we use a `\(Z\)`-statistic `\(\frac{\hat{\beta}_1}{\mathrm{SE}(\hat{\beta}_1)}\)` which plays the role of the t-statistic in linear regression: a scaled measure of our estimate (signal / noise). 
+
+---
+
+As before, the P-value is the probability of seeing a Z-value as large (e.g., 24.95) under the null hypothesis that **there is no relationship between balance and the probability of defaulting**, i.e., `\(\beta_1=0\)` in the population.
+
+---
+
+We require an algorithm required to _estimate_ parameters `\(\beta_0\)` and `\(\beta_1\)` according to a data fit criterion. 
+
+In logistic regression we use the **Bernoulli** probability model we saw previously (think of flipping a coin weighted by `\(p(x)\)`), and _estimate_ parameters to **maximize** the _likelihood_ of the observed training data under this coin flipping (binomial) model. 
+
+---
+
+Usually, we do this by _minimizing_ the negative of the log likelihood of the model. I.e.: solve the following optimization problem
+
+`$$\min_{\beta_0, \beta_1} \sum_{i:\, y_i=1} -y_i f(x_i) + \log (1+e^{f(x_i)})$$`
+
+where `\(f(x_i) = \beta_0 + \beta_1 x_i\)`. This is a non-linear (but convex) optimization problem. 
+
+
+---
+
+### Making predictions
+
+We can use a learned logistic regression model to make predictions. E.g., "on average, the probability that a person with a balance of $1,000 defaults is":
+ 
+$$
+\hat{p}(1000) = \frac{e^{\hat{\beta}_0 + \hat{\beta}_1 \times 1000}}{1+e^{\beta_0 + \beta_1 \times 1000}} 
+\approx \frac{e^{-10.6514 + 0.0055 \times 1000}}{1+e^{-10.6514 + 0.0055 \times 1000}} \\
+\approx 0.00576 
+$$
+ 
+
+---
+
+### Multiple logistic regression
+
+This is a classification analog to linear regression:
+
+$$
+\log \frac{p(\mathbf{x})}{1-p(\mathbf{x})} = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p
+$$
+
+---
+
+
+```r
+fit &lt;- glm(default ~ balance + income + student, data=Default, family="binomial")
+fit %&gt;% 
+  tidy() 
+```
+
+```
+## # A tibble: 4 x 5
+##   term  estimate std.error statistic
+##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Int… -1.09e+1   4.92e-1   -22.1  
+## 2 bala…  5.74e-3   2.32e-4    24.7  
+## 3 inco…  3.03e-6   8.20e-6     0.370
+## 4 stud… -6.47e-1   2.36e-1    -2.74 
+## # … with 1 more variable: p.value &lt;dbl&gt;
+```
+
+---
+
+As in multiple linear regression it is essential to avoid **confounding!**. 
+
+---
+
+Consider an example of single logistic regression of default vs. student status:
+
+
+```r
+fit1 &lt;- glm(default ~ student, data=Default, family="binomial")
+fit1 %&gt;% tidy() 
+```
+
+```
+## # A tibble: 2 x 5
+##   term  estimate std.error statistic p.value
+##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Int…   -3.50     0.0707    -49.6  0.     
+## 2 stud…    0.405    0.115       3.52 4.31e-4
+```
+
+---
+
+and a multiple logistic regression:
+
+
+```r
+fit2 &lt;- glm(default ~ balance + income + student, data=Default, family="binomial")
+fit2 %&gt;% tidy() 
+```
+
+```
+## # A tibble: 4 x 5
+##   term  estimate std.error statistic
+##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Int… -1.09e+1   4.92e-1   -22.1  
+## 2 bala…  5.74e-3   2.32e-4    24.7  
+## 3 inco…  3.03e-6   8.20e-6     0.370
+## 4 stud… -6.47e-1   2.36e-1    -2.74 
+## # … with 1 more variable: p.value &lt;dbl&gt;
+```
+
+---
+
+![](logistic-regression_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+
+![](logistic-regression_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+---
+layout: true
+
+## Classifier evaluation
+
+---
+
+How do we determine how well classifiers are performing? 
+
+One way is to compute the _error rate_ of the classifier, the percent of mistakes it makes when predicting class
+
+---
+
+We need a more precise language to describe classification mistakes:
+
+
+|                   | True Class +        | True Class -        | Total |
+|------------------:|:--------------------|---------------------|-------|
+| Predicted Class + | True Positive (TP)  | False Positive (FP) | P*    |
+| Predicted Class - | False Negative (FN) | True Negative (TN)  | N*    |
+| Total             | P                   | N                   |       |
+
+---
+
+Using these we can define statistics that describe classifier performance
+
+| Name                            | Definition | Synonyms                                          |
+|--------------------------------:|:-----------|---------------------------------------------------|
+| False Positive Rate (FPR)       | FP / N     | Type-I error, 1-Specificity                       |
+| True Positive Rate (TPR)        | TP / P     | 1 - Type-II error, power, sensitivity, **recall** |
+| Positive Predictive Value (PPV) | TP / P*    | **precision**, 1-false discovery proportion       |
+| Negative Predicitve Value (NPV) | FN / N*    |                                                   |
+---
+
+In the credit default case we may want to increase **TPR** (recall, make sure we catch all defaults) at the expense
+of **FPR** (1-Specificity, clients we lose because we think they will default)
+
+---
+
+This leads to a natural question: Can we adjust our classifiers TPR and FPR?
+
+Remember we are classifying `Yes` if 
+
+$$
+\log \frac{P(Y=\mathtt{Yes}|X)}{P(Y=\mathtt{No}|X)} &gt; 0 \Rightarrow \\
+P(Y=\mathtt{Yes}|X) &gt; 0.5
+$$
+
+What would happen if we use `\(P(Y=\mathtt{Yes}|X) &gt; 0.2\)`?
+
+---
+
+A way of describing the TPR and FPR tradeoff is by using the **ROC curve** (Receiver Operating Characteristic) 
+and the **AUROC** (area under the ROC)
+
+Another metric that is frequently used to understand classification errors and tradeoffs is the precision-recall curve:
+
+---
+layout: true
+
+## Summary
+
+---
+
+We approach classification as a class probability estimation problem. 
+
+Logistic regression partition predictor space with linear functions. 
+
+Logistic regression learns parameter using Maximum Likelihood (numerical optimization)
+
+---
+
+Error and accuracy statistics are not enough to understand classifier performance. 
+
+Classifications can be done using probability cutoffs to trade, e.g., TPR-FPR (ROC curve), or precision-recall (PR curve). 
+
+Area under ROC or PR curve summarize classifier performance across different cutoffs.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
