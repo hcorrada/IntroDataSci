@@ -393,6 +393,10 @@ title = "Data Analysis with Geometry"
 notes = "bookdown-notes/data-analysis-with-geometry.html"
 
 [[day18.covers]]
+title = "Lecture Slides: Data analysis with geometry"
+notes = "slides/cmsc320_geometry.pdf"
+
+[[day18.covers]]
 title = "Linear models for regression"
 notes = "bookdown-notes/linear-regression.html"
 
@@ -422,10 +426,6 @@ notes = "bookdown-notes/linear-models-for-classification.html"
 title = "Lecture Slides: Linear models for classification"
 notes = "slides/cmsc320_logistic-regression.pdf"
 
-[[day19.covers]]
-title = "Solving linear ML problems"
-notes = "bookdown-notes/solving-linear-ml-problems.html"
-
 #[day19.class_notes]
 #link = "cmsc320_class-notes_20180405.pdf"
 
@@ -433,8 +433,8 @@ notes = "bookdown-notes/solving-linear-ml-problems.html"
 date = "4/13"
 
 [[day20.covers]]
-title = "Non-linear models for regression and classification: Trees"
-notes = "bookdown-notes/tree-based-methods.html"
+title = "Solving linear ML problems"
+notes = "bookdown-notes/solving-linear-ml-problems.html"
 
 #[day20.class_notes]
 #link = "cmsc320_class-notes_20180410.pdf"
@@ -488,6 +488,10 @@ title = "Midterm II"
 
 [day23]
 date = "4/22"
+
+[[day23.covers]]
+title = "Non-linear models for regression and classification: Trees"
+notes = "bookdown-notes/tree-based-methods.html"
 
 [[day23. covers]]
 title = "Random Forests"
