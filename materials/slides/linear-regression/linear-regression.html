@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Linear Regression</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2020-04-05" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Linear Regression]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+2020-04-05
+]
+
+.logo[![](img/logo.png)]
+
+
+
+---
+layout: true
+
+## Linear Regression
+
+---
+
+Linear regression is a very elegant, simple, powerful and commonly used technique for data analysis. 
+
+We use it extensively in exploratory data analysis and in statistical analyses
+
+---
+
+### Simple Regression
+
+The goal here is to analyze the relationship between a _continuous numerical_ attribute `\(Y\)` and another (_numerical_ or _categorical_) variable `\(X\)`. 
+
+We assume that in the population, the relationship between the two is given by a linear function:
+
+$$
+Y = \beta_0 + \beta_1 X
+$$
+
+---
+
+Here is (simulated) data from an advertising campaign measuring sales and the amount spent in advertising. 
+
+$$
+\mathtt{sales} \approx \beta_0 + \beta_1 \times \mathtt{TV}
+$$
+
+---
+
+.center.image-60[![](img/regression_example.png)]
+
+---
+
+We would say that we _regress_ `sales` on `TV` when we perform this regression analysis. 
+
+As before, given data we would like to estimate what this relationship is in the _population_ (what is the population in this case?). 
+
+What do we need to estimate in this case? Values for `\(\beta_0\)` and `\(\beta_1\)`. What is the criteria that we use to estimate them?
+
+---
+
+We are stating mathematically: 
+
+$$
+\mathbb{E}[Y|X=x] = \beta_0 + \beta_1 x
+$$
+
+
+---
+
+Given a dataset, the problem is then to find the values of `\(\beta_0\)` and `\(\beta_1\)` that minimize deviation between data and expectation
+
+Like the estimation of central trend (mean) we use squared devation to do this.
+
+---
+
+**The linear regression problem**
+
+Given data `\((x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)\)`, find values `\(\beta_0\)` and `\(\beta_1\)` that minimize _objective_ or _loss_ function RSS (residual sum of squares):
+
+$$
+\arg \min_{\beta_0,\beta_1} RSS = \frac{1}{2} \sum_i (y_i - (\beta_0 + \beta_1 x_i))^2
+$$
+
+---
+
+.center.image-70[![](img/minimizing.png)]
+
+---
+
+Like derivation of the mean as a measure of central tendency we can derive the values of minimizers `\(\hat{\beta}_0\)` and `\(\hat{\beta}_1\)`. 
+
+We use the same principle, compute derivatives
+(partial this time) of the objective function RSS, set to zero and solve.
+
+---
+
+
+$$
+`\begin{aligned}
+\hat{\beta}_1 &amp; = \frac{\sum_{i=1}^n (y_i - \overline{y})(x_i - \overline{x})}{\sum_{i=1}^n (x_i - \overline{x})^2} \\
+{} &amp; = \frac{\mathrm{cov}(y,x)}{\mathrm{var}(x)} \\
+\hat{\beta}_0 &amp; = \overline{y} - \hat{\beta}_1 \overline{x} 
+\end{aligned}`
+$$
+
+---
+
+![](linear-regression_files/figure-html/unnamed-chunk-1-1.png)&lt;!-- --&gt;
+
+---
+
+In R, linear models are built using the `lm` function
+
+
+```r
+auto_fit &lt;- lm(mpg~weight, data=Auto)
+auto_fit
+```
+
+```
+## 
+## Call:
+## lm(formula = mpg ~ weight, data = Auto)
+## 
+## Coefficients:
+## (Intercept)       weight  
+##   46.216525    -0.007647
+```
+
+---
+
+This states that for this dataset 
+
+`\(\hat{\beta}_0 = 46.2165245\)` `\(\hat{\beta}_1 = -0.0076473\)`. 
+
+What's the interpretation? 
+
+---
+
+According to this model, 
+
+a weightless car `weight=0` would run `\(\approx 46.22\)` _miles per gallon_ on average, and, 
+
+on average, a car would run `\(\approx 0.01\)` _miles per gallon_ fewer for every extra _pound_ of weight. 
+
+Units of the outcome `\(Y\)` and the predictor `\(X\)` matter for the interpretation of these values.
+
+---
+
+### Inference
+
+Now that we have an estimate, we want to know its precision. 
+
+The main point is to understand that like the sample mean, the regression line we learn from a specific dataset is an estimate. 
+
+A different sample from the same population would give us a different estimate (regression line).
+
+---
+
+The Central Limit Theorem tells us
+
+on average, we are close to population regression line (I.e., close to `\(\beta_0\)` and `\(\beta_1\)`), 
+
+the spread around `\(\beta_0\)` and `\(\beta_1\)` is well approximated by a normal distribution and 
+
+the spread goes to zero as the sample size increases.
+
+---
+
+.image.center-60[![](img/population_line.png)]
+
+---
+
+### Confidence Interval
+
+We can construct a confidence interval to say how precise we think our estimates are.
+
+We want to see how precise our estimate of `\(\beta_1\)` is, since that captures the relationship between the two variables. 
+
+---
+
+First, we calculate a standard error estimate for `\(\beta_1\)`:
+
+$$
+\mathrm{se}(\hat{beta}_1)^2 = \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (x_i - \overline{x})^2}
+$$
+
+---
+
+and construct a 95% confidence interval
+
+$$
+\beta_1 = \hat{\beta}_1 \pm 1.95 \times \mathrm{se}(\hat{beta}_1)
+$$
+
+---
+
+Going back to our example:
+
+
+```r
+auto_fit_stats &lt;- auto_fit %&gt;%
+  tidy() %&gt;%
+  select(term, estimate, std.error)
+auto_fit_stats
+```
+
+```
+## # A tibble: 2 x 3
+##   term        estimate std.error
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept) 46.2      0.799   
+## 2 weight      -0.00765  0.000258
+```
+
+---
+
+
+
+Given the confidence interval, we would say, 
+
+"on average, a car runs `\(_{-0.0082} -0.0076_{-0.0071}\)` _miles per gallon_ fewer per pound of weight.
+
+---
+
+### The `\(t\)`-statistic and the `\(t\)`-distribution
+
+We can also test a null hypothesis about this relationship: "there is no relationship between weight and miles per gallon", 
+
+this translates to `\(\beta_1=0\)`. 
+
+---
+
+Again, using the same argument based on the CLT, if this hypothesis is true then the distribution of `\(\hat{\beta}_1\)` is well approximated by `\(N(0,\mathrm{se}(\hat{\beta}_1))\)`, 
+
+if we observe the learned `\(\hat{\beta}_1\)` is _too far_ from 0 according to this distribution then we _reject_ the hypothesis.
+
+---
+
+The CLT states that the normal approximation is good as sample size increases, but what about moderate sample sizes (say, less than 100)? 
+
+The `\(t\)` distribution provides a better approximation of the sampling distribution of these estimates for moderate sample sizes, and it tends to the normal distribution as sample size increases.
+
+---
+
+The `\(t\)` distribution is commonly used in this testing situation to obtain the probability of rejecting the null hypothesis. 
+
+It is based on the `\(t\)`-statistic
+
+$$
+\frac{\hat{\beta}_1}{\mathrm{se}(\hat{\beta}_1)}
+$$
+
+---
+
+You can think of this as a _signal-to-noise_ ratio, 
+or a standardizing transformation on the estimated parameter. 
+
+---
+
+In our example, we get a `\(t\)` statistic and p-value as follows:
+
+
+```r
+auto_fit_stats &lt;- auto_fit %&gt;%
+  tidy()
+auto_fit_stats
+```
+
+```
+## # A tibble: 2 x 5
+##   term  estimate std.error statistic
+##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Int… 46.2      0.799         57.9
+## 2 weig… -0.00765  0.000258     -29.6
+## # … with 1 more variable: p.value &lt;dbl&gt;
+```
+
+---
+
+We would say: 
+
+"We found a statistically significant relationship between weight and miles per gallon. On average, a car runs `\(_{-0.0082} -0.0076_{-0.0071}\)` _miles per gallon_ fewer per pound of weight ( `\(t\)`=-29.65, `\(p&lt;\)` 6.02e-102 )."
+
+---
+
+### Global Fit
+
+We can make _predictions_ based on our conditional expectation, 
+
+that prediction should be better than a prediction of the outcome with a simple average. 
+
+We can use this comparison as a measure of how good of a job we are doing using our model to fit this data: how much of the variance of `\(Y\)` can we _explain_ with our model. 
+
+---
+
+To do this we can calculate _total sum of squares_: 
+
+$$
+TSS = \sum_i (y_i - \overline{y})^2
+$$
+
+(this is the squared error of a prediction using the sample mean of `\(Y\)`)
+
+---
+
+and the _residual sum of squares_:
+
+$$
+RSS = \sum_i (y_i - \hat{y}_i)^2
+$$
+
+(which is the squared error of a prediction using the linear model we learned)
+
+---
+
+The commonly used `\(R^2\)` measure compares these two quantities:
+
+$$
+R^2 = \frac{\mathrm{TSS}-\mathrm{RSS}}{\mathrm{TSS}} = 1 - \frac{\mathrm{RSS}}{\mathrm{TSS}}
+$$
+
+---
+
+These types of global statistics for the linear model can be obtained using the `glance` function in the `broom` package. In our example
+
+
+```r
+auto_fit %&gt;%
+  glance() %&gt;%
+  select(r.squared, sigma, statistic, df, p.value)
+```
+
+```
+## # A tibble: 1 x 5
+##   r.squared sigma statistic    df   p.value
+##       &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt;
+## 1     0.693  4.33      879.     2 6.02e-102
+```
+
+---
+
+### Some important technicalities
+
+We mentioned above that predictor `\(X\)` could be _numeric_ or _categorical_. 
+
+However, this is not precisely true. We use a transformation to represent _categorical_ variables. 
+
+---
+
+Here is a simple example:
+
+Suppose we have a categorical attribute`sex`. We can create a 0-1 dummy variable `\(x\)` as we have seen before.
+
+and fit a model `\(y = \beta_0 + \beta_1 x\)`. 
+
+---
+
+What is the conditional expectation given by this model? 
+
+If the person is male, then `\(y=\beta_0\)`, if the person is female, then `\(y=\beta_0 + \beta_1\)`. 
+
+So, what is the interpretation of `\(\beta_1\)`? 
+
+--
+
+The average difference in credit card balance between females and males.
+
+---
+
+We could do a +1/-1 different encoding as well.
+
+Then what is the interpretation of `\(\beta_1\)` in this case?
+
+---
+
+Note, that when we call the `lm(y~x)` function and `x` is a factor with two levels, the first transformation is used by default. 
+
+What if there are more than 2 levels? We need multiple regression, which we will see shortly.
+
+---
+layout: true
+
+## Issues with linear regression
+
+---
+
+There are some assumptions underlying the inferences and predictions we make using linear regression 
+
+We should verify are met when we use this framework. 
+
+---
+
+### Non-linearity of outcome-predictor relationship
+
+What if the underlying relationship is not linear? 
+
+We can use exploratory visual analysis to do this for now by plotting residuals `\((y_i - \hat{y}_i)^2\)` as a function of the fitted values `\(\hat{y}_i\)`. 
+
+---
+
+![](linear-regression_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+---
+
+### Correlated Error
+
+For our inferences to be valid, we need residuals to be independent and identically distributed. 
+
+We can spot non independence if we observe a trend in residuals as a function of the predictor `\(X\)`. 
+
+---
+
+.center.image-70[![](img/correlated_error.png)]
+
+In this case, our standard error estimates would be underestimated and our confidence intervals and hypothesis testing results would be biased.
+
+---
+
+### Non-constant variance
+
+Here is an illustration, and a possible fix using a log transformation on the outcome `\(Y\)`.
+
+.center.image-60[![](img/residual_variance.png)]
+
+---
+layout: true
+
+## Multiple linear regression
+
+---
+
+In this case, we use models of conditional expectation represented as linear functions of multiple variables:
+
+$$
+\mathbb{E}[Y|X_1=x_1,X_2=x_2,\ldots,X_p=x_p] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots \beta_3 x_3
+$$
+
+---
+
+In the case of our advertising example, this would be a model:
+
+$$
+\mathtt{sales} = \beta_0 + \beta_1 \times \mathtt{TV} + \beta_2 \times \mathtt{newspaper} + \beta_3 \times \mathtt{facebook}
+$$
+---
+
+These models let us make statements of the type: 
+
+"holding everything else constant, sales increased on average by 1000 per dollar spent on Facebook advertising" (this would be given by parameter `\(\beta_3\)` in the example model).
+
+---
+
+### Estimation in multivariate regression
+
+Generalizing simple regression, we estimate `\(\beta\)`'s by minimizing an objective function that represents the difference between observed data and our expectation based on the linear model:
+
+$$
+`\begin{aligned}
+RSS &amp; = \frac{1}{2} \sum_{i=1}^n (y_i - \hat{y}_i)^2 \\
+{} &amp; = \frac{1}{2} \sum_{i=1}^n (y_i - (\beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p))^2
+\end{aligned}`
+$$
+
+---
+
+.center.image-70[![](img/multiple_rss.png)]
+
+---
+
+The minimizer is found using numerical algorithms to solve this type of _least squares_ problems. 
+
+Later in the course we will look at _stochastic gradient descent_, a simple algorithm that scales to very large datasets.
+
+---
+
+### Example (cont'd)
+
+
+```r
+auto_fit &lt;- lm(mpg~1+weight+cylinders+horsepower+displacement+year, data=Auto)
+auto_fit
+```
+---
+
+
+```
+## 
+## Call:
+## lm(formula = mpg ~ 1 + weight + cylinders + horsepower + displacement + 
+##     year, data = Auto)
+## 
+## Coefficients:
+##  (Intercept)        weight     cylinders  
+##   -12.779493     -0.006524     -0.343690  
+##   horsepower  displacement          year  
+##    -0.007715      0.006996      0.749924
+```
+---
+
+From this model we can make the statement: 
+
+"Holding everything else constant, cars run 0.76 miles per gallon more each year on average".
+
+---
+
+### Statistical statements (cont'd)
+
+Like simple linear regression, we can construct confidence intervals, and test a null hypothesis of no relationship ( `\(\beta_j=0\)` ) for the parameter corresponding to each predictor. 
+
+---
+
+This is again nicely managed by the `broom` package:
+
+
+```r
+auto_fit_stats &lt;- auto_fit %&gt;%
+  tidy()
+auto_fit_stats
+```
+
+```
+## # A tibble: 6 x 5
+##   term  estimate std.error statistic
+##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Int… -1.28e+1  4.27        -2.99 
+## 2 weig… -6.52e-3  0.000587   -11.1  
+## 3 cyli… -3.44e-1  0.332       -1.04 
+## 4 hors… -7.71e-3  0.0107      -0.721
+## 5 disp…  7.00e-3  0.00731      0.957
+## 6 year   7.50e-1  0.0524      14.3  
+## # … with 1 more variable: p.value &lt;dbl&gt;
+```
+
+---
+
+
+
+In this case we would reject the null hypothesis of no relationship only for predictors `weight` and `year`. 
+
+We would write the statement for year as follows:
+
+"Holding everything else constant, cars run `\({}_{0.65} 0.75_{0.85}\)` miles per gallon more each year on average (P&lt;1e-16)".
+
+---
+
+### The F-test
+
+We can make additional statements for multivariate regression: 
+
+"is there a relationship between _any_ of the predictors and the response?". 
+
+Mathematically, we write this as `\(\beta_1 = \beta_2 = \cdots = \beta_p = 0\)`.
+
+---
+
+As before, we can compare total outcome variance the residual sum of squared error `\(RSS\)` using the `\(F\)` statistic:
+
+$$
+\frac{(\mathrm{TSS}-\mathrm{RSS})/p}{\mathrm{RSS}/(n-p-1)}
+$$
+
+---
+
+Back to our example, we use the `glance` function to compute this type of summary:
+
+
+```r
+auto_fit %&gt;% 
+  glance() %&gt;%
+  select(r.squared, sigma, statistic, df, p.value) %&gt;%
+  knitr::kable("html")
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; r.squared &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sigma &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.8089093 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.433902 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 326.7965 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+In comparison with the linear model only using `weight`, this multivariate model explains _more of the variance_ of `mpg`, but using more predictors. 
+
+This is where the notion of _degrees of freedom_ comes in: we now have a model with expanded _representational_ ability. 
+
+---
+
+The bigger the model, we are conditioning more and more, 
+
+given a fixed dataset, have fewer data points to estimate conditional expectation for each value of the predictors. 
+
+estimated conditional expectation is less _precise_.
+
+---
+
+To capture this phenomenon, we want statistics that tradeoff how well the model fits the data, and the "complexity" of the model. 
+
+---
+
+Now, we can look at the full output of the `glance` function:
+
+
+```r
+auto_fit %&gt;%
+  glance() %&gt;%
+  knitr::kable("html")
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; r.squared &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; adj.r.squared &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sigma &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; logLik &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; AIC &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; BIC &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; deviance &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df.residual &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.8089093 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.806434 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.433902 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 326.7965 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1036.81 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2087.62 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2115.419 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4551.589 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 386 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+Columns `AIC` and `BIC` display statistics that penalize model fit with model size. 
+
+The smaller this value, the better. 
+
+Let's now compare a model only using `weight`, a model only using `weight` and `year` and the full multiple regression model we saw before.
+
+---
+
+
+```r
+lm(mpg~weight, data=Auto) %&gt;%
+  glance() %&gt;%
+  knitr::kable("html")
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; r.squared &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; adj.r.squared &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sigma &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; logLik &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; AIC &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; BIC &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; deviance &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df.residual &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.6926304 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.6918423 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.332712 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 878.8309 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1129.969 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2265.939 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2277.852 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7321.234 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 390 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+
+```r
+lm(mpg~weight+year, data=Auto) %&gt;%
+  glance() %&gt;%
+  knitr::kable("html")
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; r.squared &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; adj.r.squared &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sigma &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; logLik &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; AIC &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; BIC &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; deviance &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; df.residual &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.8081803 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8071941 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.427153 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 819.473 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1037.556 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2083.113 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2098.998 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4568.952 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 389 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+In this case, using more predictors beyond `weight` and `year` doesn't help.
+
+---
+
+### Categorical predictors (cont'd)
+
+We saw transformations for categorical predictors with only two values.
+
+In our example we have the `origin` predictor, corresponding to where the car was manufactured, which has multiple values 
+
+
+```r
+Auto &lt;- Auto %&gt;%
+  mutate(origin=factor(origin))
+levels(Auto$origin)
+```
+
+```
+## [1] "1" "2" "3"
+```
+
+As before, we can only use numerical predictors in linear regression models. We can encode these values using variables `\(x_1\)` and `\(x_2\)` 
+
+$$
+x_1 = \left\{
+`\begin{aligned}
+1 &amp; \textrm{ if origin=1} \\
+0 &amp; \textrm{ o.w.}
+\end{aligned}`
+\right.
+$$
+
+$$
+x_2 = \left\{
+`\begin{aligned}
+1 &amp; \textrm{ if origin=2} \\
+0 &amp; \textrm{ o.w.}
+\end{aligned}`
+\right.
+$$
+---
+
+The `lm` function in R does this transformation by default when a variable has class `factor`.
+
+We can see what the underlying numerical predictors look like by using the `model_matrix` function and passing it the model formula we build:
+
+
+```
+##   (Intercept) origin2 origin3 origin
+## 1           1       0       0      1
+## 2           1       0       0      1
+## 3           1       0       0      1
+## 4           1       0       0      1
+## 5           1       0       0      1
+## 6           1       0       0      1
+```
+
+---
+
+
+```
+##   (Intercept) origin2 origin3 origin
+## 1           1       1       0      2
+## 2           1       1       0      2
+## 3           1       1       0      2
+## 4           1       1       0      2
+## 5           1       1       0      2
+## 6           1       1       0      2
+```
+
+---
+
+
+```
+##   (Intercept) origin2 origin3 origin
+## 1           1       0       1      3
+## 2           1       0       1      3
+## 3           1       0       1      3
+## 4           1       0       1      3
+## 5           1       0       1      3
+## 6           1       0       1      3
+```
+
+---
+layout: true
+
+## Interactions in linear models
+
+---
+
+The linear models so far include _additive_ terms for a single predictor. 
+
+That let us made statemnts of the type "holding everything else constant...". 
+
+But what if we think that a pair of predictors _together_ have a relationship with the outcome. 
+
+---
+
+We can add these _interaction_ terms to our linear models as products
+
+`$$\mathbb{E} Y|X_1=x_1,X_2=x2 = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_{12} x_1 x_2$$`
+---
+
+Consider the advertising example:
+
+$$
+\mathtt{sales} = \beta_0 + \beta_1 \times \mathtt{TV} + \beta_2 \times \mathtt{facebook} + \beta_3 \times (\mathtt{TV} \times \mathtt{facebook})
+$$
+
+If `\(\beta_3\)` is positive, then the effect of increasing TV advertising money is increased if facebook advertising is also increased.
+
+---
+
+When using categorical variables, interactions have an elegant interpretation. 
+
+Consider our car example, and suppose we build a model with an interaction between `weight` and `origin`. 
+
+---
+
+Let's look at what the numerical predictors look like:
+
+
+```
+##   (Intercept) weight origin2 origin3
+## 1           1   3504       0       0
+## 2           1   3693       0       0
+## 3           1   3436       0       0
+## 4           1   3433       0       0
+## 5           1   3449       0       0
+## 6           1   4341       0       0
+##   weight:origin2 weight:origin3 origin
+## 1              0              0      1
+## 2              0              0      1
+## 3              0              0      1
+## 4              0              0      1
+## 5              0              0      1
+## 6              0              0      1
+```
+
+---
+
+
+```
+##   (Intercept) weight origin2 origin3
+## 1           1   1835       1       0
+## 2           1   2672       1       0
+## 3           1   2430       1       0
+## 4           1   2375       1       0
+## 5           1   2234       1       0
+## 6           1   2123       1       0
+##   weight:origin2 weight:origin3 origin
+## 1           1835              0      2
+## 2           2672              0      2
+## 3           2430              0      2
+## 4           2375              0      2
+## 5           2234              0      2
+## 6           2123              0      2
+```
+
+---
+
+
+```
+##   (Intercept) weight origin2 origin3
+## 1           1   2372       0       1
+## 2           1   2130       0       1
+## 3           1   2130       0       1
+## 4           1   2228       0       1
+## 5           1   1773       0       1
+## 6           1   1613       0       1
+##   weight:origin2 weight:origin3 origin
+## 1              0           2372      3
+## 2              0           2130      3
+## 3              0           2130      3
+## 4              0           2228      3
+## 5              0           1773      3
+## 6              0           1613      3
+```
+
+---
+
+So what is the expected miles per gallon for a car with `origin == 1` as a function of weight?
+
+$$
+\mathtt{mpg} = \beta_0 + \beta_1 \times \mathtt{weight}
+$$
+
+---
+
+Now how about a car with `origin == 2`?
+
+$$
+\mathtt{mpg} = \beta_0 + \beta_1 \times \mathtt{weight} + \beta_2 + \beta_4 \times \mathtt{weight}
+$$
+---
+
+Now think of the graphical representation of these lines. 
+
+For `origin == 1` the intercept of the regression line is `\(\beta_0\)` and its slope is `\(\beta_1\)`. 
+
+For `origin == 2` the intercept
+of the regression line is `\(\beta_0 + \beta_2\)` and its slope is `\(\beta_1+\beta_4\)`.
+
+---
+class: split-50
+
+`ggplot` does this when we map a factor variable to a aesthetic, say color, and use the `geom_smooth` method:
+
+.column[
+```r
+Auto %&gt;%
+  ggplot(aes(x=weight, y=mpg, color=origin)) +
+    geom_point() +
+    geom_smooth(method=lm)
+```
+]
+
+.column[
+&lt;img src="linear-regression_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+The intercept of the three lines seem to be different, but the slope of `origin == 3` looks different (decreases faster) than the slopes of `origin == 1` and `origin == 2` that look very similar to each other. 
+
+---
+
+Let's fit the model and see how much statistical confidence we can give to those observations:
+
+
+```
+## # A tibble: 6 x 5
+##   term  estimate std.error statistic
+##   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Int…  4.31e+1  1.19      36.4    
+## 2 weig… -6.85e-3  0.000342 -20.0    
+## 3 orig…  1.12e+0  2.88       0.391  
+## 4 orig…  1.11e+1  3.57       3.11   
+## 5 weig…  3.58e-6  0.00111    0.00322
+## 6 weig… -3.87e-3  0.00154   -2.51   
+## # … with 1 more variable: p.value &lt;dbl&gt;
+```
+
+---
+There is still an issue here because this could be the result of a poor fit from a linear model, it seems none of these lines do a very good job of modeling the data we have. 
+
+---
+We can again check this for this model:
+
+![](linear-regression_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+
+---
+layout: true
+
+## Additional issues with linear regression
+
+---
+
+Multiple linear regression introduces an additional issue that is extremely important to consider when interpreting the results of these analyses: collinearity.
+
+---
+
+.center.image-70[![](img/collinearity.png)]
+
+---
+
+In that case, the set of `\(\beta\)`'s that minimize RSS may not be unique, and therefore our interpretation is invalid. 
+
+You can identify this potential problem by regressing predictors onto each other. 
+
+The usual solution is to fit models only including one of the colinear variables.
+
+---
+layout: false
+
+## Summary
+
+Flexible, but highly biased method for modeling relationships between variables and deriving predictions for continuous attributes.
+
+We have seen how it is used in the context of EDA and statistical inference.
+
+Saw important caveats to their application.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

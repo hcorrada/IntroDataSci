@@ -1,0 +1,863 @@
+---
+title: "Linear Regression"
+author: "Héctor Corrada Bravo"
+company: "University of Maryland"
+date: "`r Sys.Date()`"
+css: ["custom.css"]
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    includes: 
+      after_body: "custom.html"
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Linear Regression]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+`r Sys.Date()`
+]
+
+.logo[![](img/logo.png)]
+
+```{r setup1, include=FALSE, message=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(cache=TRUE)
+
+library(tidyverse)
+library(broom)
+```
+
+---
+layout: true
+
+## Linear Regression
+
+---
+
+Linear regression is a very elegant, simple, powerful and commonly used technique for data analysis. 
+
+We use it extensively in exploratory data analysis and in statistical analyses
+
+---
+
+### Simple Regression
+
+The goal here is to analyze the relationship between a _continuous numerical_ attribute $Y$ and another (_numerical_ or _categorical_) variable $X$. 
+
+We assume that in the population, the relationship between the two is given by a linear function:
+
+$$
+Y = \beta_0 + \beta_1 X
+$$
+
+---
+
+Here is (simulated) data from an advertising campaign measuring sales and the amount spent in advertising. 
+
+$$
+\mathtt{sales} \approx \beta_0 + \beta_1 \times \mathtt{TV}
+$$
+
+---
+
+.center.image-60[![](img/regression_example.png)]
+
+---
+
+We would say that we _regress_ `sales` on `TV` when we perform this regression analysis. 
+
+As before, given data we would like to estimate what this relationship is in the _population_ (what is the population in this case?). 
+
+What do we need to estimate in this case? Values for $\beta_0$ and $\beta_1$. What is the criteria that we use to estimate them?
+
+---
+
+We are stating mathematically: 
+
+$$
+\mathbb{E}[Y|X=x] = \beta_0 + \beta_1 x
+$$
+
+
+---
+
+Given a dataset, the problem is then to find the values of $\beta_0$ and $\beta_1$ that minimize deviation between data and expectation
+
+Like the estimation of central trend (mean) we use squared devation to do this.
+
+---
+
+**The linear regression problem**
+
+Given data $(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)$, find values $\beta_0$ and $\beta_1$ that minimize _objective_ or _loss_ function RSS (residual sum of squares):
+
+$$
+\arg \min_{\beta_0,\beta_1} RSS = \frac{1}{2} \sum_i (y_i - (\beta_0 + \beta_1 x_i))^2
+$$
+
+---
+
+.center.image-70[![](img/minimizing.png)]
+
+---
+
+Like derivation of the mean as a measure of central tendency we can derive the values of minimizers $\hat{\beta}_0$ and $\hat{\beta}_1$. 
+
+We use the same principle, compute derivatives
+(partial this time) of the objective function RSS, set to zero and solve.
+
+---
+
+
+$$
+\begin{aligned}
+\hat{\beta}_1 & = \frac{\sum_{i=1}^n (y_i - \overline{y})(x_i - \overline{x})}{\sum_{i=1}^n (x_i - \overline{x})^2} \\
+{} & = \frac{\mathrm{cov}(y,x)}{\mathrm{var}(x)} \\
+\hat{\beta}_0 & = \overline{y} - \hat{\beta}_1 \overline{x} 
+\end{aligned}
+$$
+
+---
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(ISLR)
+library(tidyverse)
+
+data(Auto)
+
+Auto %>%
+  ggplot(aes(x=weight, y=mpg)) +
+    geom_point() + 
+    geom_smooth(method=lm) + 
+    theme_minimal()
+```
+
+---
+
+In R, linear models are built using the `lm` function
+
+```{r}
+auto_fit <- lm(mpg~weight, data=Auto)
+auto_fit
+```
+
+---
+
+This states that for this dataset 
+
+$\hat{\beta}_0 = `r auto_fit$coef[1]`$ $\hat{\beta}_1 = `r auto_fit$coef[2]`$. 
+
+What's the interpretation? 
+
+---
+
+According to this model, 
+
+a weightless car `weight=0` would run $\approx `r round(auto_fit$coef[1], 2)`$ _miles per gallon_ on average, and, 
+
+on average, a car would run $\approx `r -round(auto_fit$coef[2],2)`$ _miles per gallon_ fewer for every extra _pound_ of weight. 
+
+Units of the outcome $Y$ and the predictor $X$ matter for the interpretation of these values.
+
+---
+
+### Inference
+
+Now that we have an estimate, we want to know its precision. 
+
+The main point is to understand that like the sample mean, the regression line we learn from a specific dataset is an estimate. 
+
+A different sample from the same population would give us a different estimate (regression line).
+
+---
+
+The Central Limit Theorem tells us
+
+on average, we are close to population regression line (I.e., close to $\beta_0$ and $\beta_1$), 
+
+the spread around $\beta_0$ and $\beta_1$ is well approximated by a normal distribution and 
+
+the spread goes to zero as the sample size increases.
+
+---
+
+.image.center-60[![](img/population_line.png)]
+
+---
+
+### Confidence Interval
+
+We can construct a confidence interval to say how precise we think our estimates are.
+
+We want to see how precise our estimate of $\beta_1$ is, since that captures the relationship between the two variables. 
+
+---
+
+First, we calculate a standard error estimate for $\beta_1$:
+
+$$
+\mathrm{se}(\hat{beta}_1)^2 = \frac{\sum_i (y_i - \hat{y}_i)^2}{\sum_i (x_i - \overline{x})^2}
+$$
+
+---
+
+and construct a 95% confidence interval
+
+$$
+\beta_1 = \hat{\beta}_1 \pm 1.95 \times \mathrm{se}(\hat{beta}_1)
+$$
+
+---
+
+Going back to our example:
+
+```{r}
+auto_fit_stats <- auto_fit %>%
+  tidy() %>%
+  select(term, estimate, std.error)
+auto_fit_stats
+```
+
+---
+
+```{r, echo=FALSE}
+confidence_interval_offset <- 1.95 * auto_fit_stats$std.error[2]
+confidence_interval <- round(c(auto_fit_stats$estimate[2] - confidence_interval_offset,
+                               auto_fit_stats$estimate[2],
+                               auto_fit_stats$estimate[2] + confidence_interval_offset), 4)
+```
+
+Given the confidence interval, we would say, 
+
+"on average, a car runs $_{`r confidence_interval[1]`} `r confidence_interval[2]`_{`r confidence_interval[3]`}$ _miles per gallon_ fewer per pound of weight.
+
+---
+
+### The $t$-statistic and the $t$-distribution
+
+We can also test a null hypothesis about this relationship: "there is no relationship between weight and miles per gallon", 
+
+this translates to $\beta_1=0$. 
+
+---
+
+Again, using the same argument based on the CLT, if this hypothesis is true then the distribution of $\hat{\beta}_1$ is well approximated by $N(0,\mathrm{se}(\hat{\beta}_1))$, 
+
+if we observe the learned $\hat{\beta}_1$ is _too far_ from 0 according to this distribution then we _reject_ the hypothesis.
+
+---
+
+The CLT states that the normal approximation is good as sample size increases, but what about moderate sample sizes (say, less than 100)? 
+
+The $t$ distribution provides a better approximation of the sampling distribution of these estimates for moderate sample sizes, and it tends to the normal distribution as sample size increases.
+
+---
+
+The $t$ distribution is commonly used in this testing situation to obtain the probability of rejecting the null hypothesis. 
+
+It is based on the $t$-statistic
+
+$$
+\frac{\hat{\beta}_1}{\mathrm{se}(\hat{\beta}_1)}
+$$
+
+---
+
+You can think of this as a _signal-to-noise_ ratio, 
+or a standardizing transformation on the estimated parameter. 
+
+---
+
+In our example, we get a $t$ statistic and p-value as follows:
+
+```{r}
+auto_fit_stats <- auto_fit %>%
+  tidy()
+auto_fit_stats
+```
+
+---
+
+We would say: 
+
+"We found a statistically significant relationship between weight and miles per gallon. On average, a car runs $_{`r confidence_interval[1]`} `r confidence_interval[2]`_{`r confidence_interval[3]`}$ _miles per gallon_ fewer per pound of weight ( $t$=`r round(auto_fit_stats$statistic[2],2)`, $p<$ `r format(auto_fit_stats$p.value[2], digits=3)` )."
+
+---
+
+### Global Fit
+
+We can make _predictions_ based on our conditional expectation, 
+
+that prediction should be better than a prediction of the outcome with a simple average. 
+
+We can use this comparison as a measure of how good of a job we are doing using our model to fit this data: how much of the variance of $Y$ can we _explain_ with our model. 
+
+---
+
+To do this we can calculate _total sum of squares_: 
+
+$$
+TSS = \sum_i (y_i - \overline{y})^2
+$$
+
+(this is the squared error of a prediction using the sample mean of $Y$)
+
+---
+
+and the _residual sum of squares_:
+
+$$
+RSS = \sum_i (y_i - \hat{y}_i)^2
+$$
+
+(which is the squared error of a prediction using the linear model we learned)
+
+---
+
+The commonly used $R^2$ measure compares these two quantities:
+
+$$
+R^2 = \frac{\mathrm{TSS}-\mathrm{RSS}}{\mathrm{TSS}} = 1 - \frac{\mathrm{RSS}}{\mathrm{TSS}}
+$$
+
+---
+
+These types of global statistics for the linear model can be obtained using the `glance` function in the `broom` package. In our example
+
+```{r}
+auto_fit %>%
+  glance() %>%
+  select(r.squared, sigma, statistic, df, p.value)
+```
+
+---
+
+### Some important technicalities
+
+We mentioned above that predictor $X$ could be _numeric_ or _categorical_. 
+
+However, this is not precisely true. We use a transformation to represent _categorical_ variables. 
+
+---
+
+Here is a simple example:
+
+Suppose we have a categorical attribute`sex`. We can create a 0-1 dummy variable $x$ as we have seen before.
+
+and fit a model $y = \beta_0 + \beta_1 x$. 
+
+---
+
+What is the conditional expectation given by this model? 
+
+If the person is male, then $y=\beta_0$, if the person is female, then $y=\beta_0 + \beta_1$. 
+
+So, what is the interpretation of $\beta_1$? 
+
+--
+
+The average difference in credit card balance between females and males.
+
+---
+
+We could do a +1/-1 different encoding as well.
+
+Then what is the interpretation of $\beta_1$ in this case?
+
+---
+
+Note, that when we call the `lm(y~x)` function and `x` is a factor with two levels, the first transformation is used by default. 
+
+What if there are more than 2 levels? We need multiple regression, which we will see shortly.
+
+---
+layout: true
+
+## Issues with linear regression
+
+---
+
+There are some assumptions underlying the inferences and predictions we make using linear regression 
+
+We should verify are met when we use this framework. 
+
+---
+
+### Non-linearity of outcome-predictor relationship
+
+What if the underlying relationship is not linear? 
+
+We can use exploratory visual analysis to do this for now by plotting residuals $(y_i - \hat{y}_i)^2$ as a function of the fitted values $\hat{y}_i$. 
+
+---
+
+```{r, echo=FALSE, message=FALSE}
+auto_fit %>%
+  augment() %>%
+  ggplot(aes(x=.fitted,y=.resid)) +
+    geom_point() + 
+    geom_smooth() +
+    labs(x="fitted", y="residual")
+```
+---
+
+### Correlated Error
+
+For our inferences to be valid, we need residuals to be independent and identically distributed. 
+
+We can spot non independence if we observe a trend in residuals as a function of the predictor $X$. 
+
+---
+
+.center.image-70[![](img/correlated_error.png)]
+
+In this case, our standard error estimates would be underestimated and our confidence intervals and hypothesis testing results would be biased.
+
+---
+
+### Non-constant variance
+
+Here is an illustration, and a possible fix using a log transformation on the outcome $Y$.
+
+.center.image-60[![](img/residual_variance.png)]
+
+---
+layout: true
+
+## Multiple linear regression
+
+---
+
+In this case, we use models of conditional expectation represented as linear functions of multiple variables:
+
+$$
+\mathbb{E}[Y|X_1=x_1,X_2=x_2,\ldots,X_p=x_p] = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots \beta_3 x_3
+$$
+
+---
+
+In the case of our advertising example, this would be a model:
+
+$$
+\mathtt{sales} = \beta_0 + \beta_1 \times \mathtt{TV} + \beta_2 \times \mathtt{newspaper} + \beta_3 \times \mathtt{facebook}
+$$
+---
+
+These models let us make statements of the type: 
+
+"holding everything else constant, sales increased on average by 1000 per dollar spent on Facebook advertising" (this would be given by parameter $\beta_3$ in the example model).
+
+---
+
+### Estimation in multivariate regression
+
+Generalizing simple regression, we estimate $\beta$'s by minimizing an objective function that represents the difference between observed data and our expectation based on the linear model:
+
+$$
+\begin{aligned}
+RSS & = \frac{1}{2} \sum_{i=1}^n (y_i - \hat{y}_i)^2 \\
+{} & = \frac{1}{2} \sum_{i=1}^n (y_i - (\beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p))^2
+\end{aligned}
+$$
+
+---
+
+.center.image-70[![](img/multiple_rss.png)]
+
+---
+
+The minimizer is found using numerical algorithms to solve this type of _least squares_ problems. 
+
+Later in the course we will look at _stochastic gradient descent_, a simple algorithm that scales to very large datasets.
+
+---
+
+### Example (cont'd)
+
+```{r, eval=FALSE}
+auto_fit <- lm(mpg~1+weight+cylinders+horsepower+displacement+year, data=Auto)
+auto_fit
+```
+---
+
+```{r, echo=FALSE}
+auto_fit <- lm(mpg~1+weight+cylinders+horsepower+displacement+year, data=Auto)
+auto_fit
+```
+---
+
+From this model we can make the statement: 
+
+"Holding everything else constant, cars run 0.76 miles per gallon more each year on average".
+
+---
+
+### Statistical statements (cont'd)
+
+Like simple linear regression, we can construct confidence intervals, and test a null hypothesis of no relationship ( $\beta_j=0$ ) for the parameter corresponding to each predictor. 
+
+---
+
+This is again nicely managed by the `broom` package:
+
+```{r}
+auto_fit_stats <- auto_fit %>%
+  tidy()
+auto_fit_stats
+```
+
+---
+
+```{r, echo=FALSE}
+
+print_confint <- function(fit_df, term, digits=2) {
+  i <- match(term, fit_df$term)
+  confint_offset <- 1.95 * fit_df$std.error[i]
+  confint <- round(c(fit_df$estimate[i] - confint_offset,
+                     fit_df$estimate[i],
+                     fit_df$estimate[i] + confint_offset), digits)
+  paste0("{}_{", confint[1], "} ", confint[2], "_{", confint[3], "}")
+}
+
+print_pval <- function(fit_df, term) {
+  i <- match(term, fit_df$term)
+  pval <- fit_df$p.value[i]
+  out <- ifelse(pval<1e-16, "<1e-16", paste0("=", pval))
+  paste0("P", out)
+}
+```
+
+In this case we would reject the null hypothesis of no relationship only for predictors `weight` and `year`. 
+
+We would write the statement for year as follows:
+
+"Holding everything else constant, cars run $`r auto_fit_stats %>% print_confint("year")`$ miles per gallon more each year on average (`r auto_fit_stats %>% print_pval("year")`)".
+
+---
+
+### The F-test
+
+We can make additional statements for multivariate regression: 
+
+"is there a relationship between _any_ of the predictors and the response?". 
+
+Mathematically, we write this as $\beta_1 = \beta_2 = \cdots = \beta_p = 0$.
+
+---
+
+As before, we can compare total outcome variance the residual sum of squared error $RSS$ using the $F$ statistic:
+
+$$
+\frac{(\mathrm{TSS}-\mathrm{RSS})/p}{\mathrm{RSS}/(n-p-1)}
+$$
+
+---
+
+Back to our example, we use the `glance` function to compute this type of summary:
+
+```{r}
+auto_fit %>% 
+  glance() %>%
+  select(r.squared, sigma, statistic, df, p.value) %>%
+  knitr::kable("html")
+```
+
+---
+
+In comparison with the linear model only using `weight`, this multivariate model explains _more of the variance_ of `mpg`, but using more predictors. 
+
+This is where the notion of _degrees of freedom_ comes in: we now have a model with expanded _representational_ ability. 
+
+---
+
+The bigger the model, we are conditioning more and more, 
+
+given a fixed dataset, have fewer data points to estimate conditional expectation for each value of the predictors. 
+
+estimated conditional expectation is less _precise_.
+
+---
+
+To capture this phenomenon, we want statistics that tradeoff how well the model fits the data, and the "complexity" of the model. 
+
+---
+
+Now, we can look at the full output of the `glance` function:
+
+```{r}
+auto_fit %>%
+  glance() %>%
+  knitr::kable("html")
+```
+
+---
+
+Columns `AIC` and `BIC` display statistics that penalize model fit with model size. 
+
+The smaller this value, the better. 
+
+Let's now compare a model only using `weight`, a model only using `weight` and `year` and the full multiple regression model we saw before.
+
+---
+
+```{r}
+lm(mpg~weight, data=Auto) %>%
+  glance() %>%
+  knitr::kable("html")
+```
+
+---
+
+```{r}
+lm(mpg~weight+year, data=Auto) %>%
+  glance() %>%
+  knitr::kable("html")
+```
+
+---
+
+In this case, using more predictors beyond `weight` and `year` doesn't help.
+
+---
+
+### Categorical predictors (cont'd)
+
+We saw transformations for categorical predictors with only two values.
+
+In our example we have the `origin` predictor, corresponding to where the car was manufactured, which has multiple values 
+
+```{r}
+Auto <- Auto %>%
+  mutate(origin=factor(origin))
+levels(Auto$origin)
+```
+
+As before, we can only use numerical predictors in linear regression models. We can encode these values using variables $x_1$ and $x_2$ 
+
+$$
+x_1 = \left\{
+\begin{aligned}
+1 & \textrm{ if origin=1} \\
+0 & \textrm{ o.w.}
+\end{aligned}
+\right.
+$$
+
+$$
+x_2 = \left\{
+\begin{aligned}
+1 & \textrm{ if origin=2} \\
+0 & \textrm{ o.w.}
+\end{aligned}
+\right.
+$$
+---
+
+The `lm` function in R does this transformation by default when a variable has class `factor`.
+
+We can see what the underlying numerical predictors look like by using the `model_matrix` function and passing it the model formula we build:
+
+```{r, echo=FALSE}
+extended_df <- model.matrix(~origin, data=Auto) %>% 
+  as.data.frame() %>%
+  mutate(origin = Auto$origin)
+
+extended_df %>%
+  filter(origin == "1") %>% head()
+```
+
+---
+
+```{r, echo=FALSE}
+extended_df %>% 
+  filter(origin == "2") %>% head()
+```
+
+---
+
+```{r, echo=FALSE}
+extended_df %>%
+  filter(origin == "3") %>% head()
+```
+
+---
+layout: true
+
+## Interactions in linear models
+
+---
+
+The linear models so far include _additive_ terms for a single predictor. 
+
+That let us made statemnts of the type "holding everything else constant...". 
+
+But what if we think that a pair of predictors _together_ have a relationship with the outcome. 
+
+---
+
+We can add these _interaction_ terms to our linear models as products
+
+$$\mathbb{E} Y|X_1=x_1,X_2=x2 = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_{12} x_1 x_2$$
+---
+
+Consider the advertising example:
+
+$$
+\mathtt{sales} = \beta_0 + \beta_1 \times \mathtt{TV} + \beta_2 \times \mathtt{facebook} + \beta_3 \times (\mathtt{TV} \times \mathtt{facebook})
+$$
+
+If $\beta_3$ is positive, then the effect of increasing TV advertising money is increased if facebook advertising is also increased.
+
+---
+
+When using categorical variables, interactions have an elegant interpretation. 
+
+Consider our car example, and suppose we build a model with an interaction between `weight` and `origin`. 
+
+---
+
+Let's look at what the numerical predictors look like:
+
+```{r, echo=FALSE}
+extended_df <- model.matrix(~weight+origin+weight:origin, data=Auto) %>%
+  as.data.frame() %>%
+  mutate(origin = Auto$origin)
+
+extended_df %>%
+  filter(origin == "1") %>% head()
+```
+
+---
+
+```{r, echo=FALSE}
+extended_df %>%
+  filter(origin == "2") %>% head()
+```
+
+---
+
+```{r, echo=FALSE}
+extended_df %>%
+  filter(origin == "3") %>% head()
+```
+
+---
+
+So what is the expected miles per gallon for a car with `origin == 1` as a function of weight?
+
+$$
+\mathtt{mpg} = \beta_0 + \beta_1 \times \mathtt{weight}
+$$
+
+---
+
+Now how about a car with `origin == 2`?
+
+$$
+\mathtt{mpg} = \beta_0 + \beta_1 \times \mathtt{weight} + \beta_2 + \beta_4 \times \mathtt{weight}
+$$
+---
+
+Now think of the graphical representation of these lines. 
+
+For `origin == 1` the intercept of the regression line is $\beta_0$ and its slope is $\beta_1$. 
+
+For `origin == 2` the intercept
+of the regression line is $\beta_0 + \beta_2$ and its slope is $\beta_1+\beta_4$.
+
+---
+class: split-50
+
+`ggplot` does this when we map a factor variable to a aesthetic, say color, and use the `geom_smooth` method:
+
+.column[
+```r
+Auto %>%
+  ggplot(aes(x=weight, y=mpg, color=origin)) +
+    geom_point() +
+    geom_smooth(method=lm)
+```
+]
+
+.column[
+```{r, echo=FALSE, fig.width=6, fig.align="center", message=FALSE, fig.height=5}
+Auto %>%
+  ggplot(aes(x=weight, y=mpg, color=origin)) +
+    geom_point() +
+    geom_smooth(method=lm)
+```
+]
+
+---
+
+The intercept of the three lines seem to be different, but the slope of `origin == 3` looks different (decreases faster) than the slopes of `origin == 1` and `origin == 2` that look very similar to each other. 
+
+---
+
+Let's fit the model and see how much statistical confidence we can give to those observations:
+
+```{r, echo=FALSE}
+auto_fit <- lm(mpg~weight*origin, data=Auto)
+auto_fit_stats <- auto_fit %>%
+  tidy() 
+auto_fit_stats
+```
+
+---
+There is still an issue here because this could be the result of a poor fit from a linear model, it seems none of these lines do a very good job of modeling the data we have. 
+
+---
+We can again check this for this model:
+
+```{r, echo=FALSE}
+auto_fit %>% 
+  augment() %>%
+  ggplot(aes(x=.fitted, y=.resid)) +
+    geom_point()
+```
+
+---
+layout: true
+
+## Additional issues with linear regression
+
+---
+
+Multiple linear regression introduces an additional issue that is extremely important to consider when interpreting the results of these analyses: collinearity.
+
+---
+
+.center.image-70[![](img/collinearity.png)]
+
+---
+
+In that case, the set of $\beta$'s that minimize RSS may not be unique, and therefore our interpretation is invalid. 
+
+You can identify this potential problem by regressing predictors onto each other. 
+
+The usual solution is to fit models only including one of the colinear variables.
+
+---
+layout: false
+
+## Summary
+
+Flexible, but highly biased method for modeling relationships between variables and deriving predictions for continuous attributes.
+
+We have seen how it is used in the context of EDA and statistical inference.
+
+Saw important caveats to their application.
