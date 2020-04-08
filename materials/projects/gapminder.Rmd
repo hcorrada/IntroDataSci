@@ -1,5 +1,5 @@
 ---
-title: "Project 3 (part 1): Regression analysis of Gapminder data"
+title: "Project 3: Regression analysis of Gapminder data"
 author: "CMSC320"
 output: html_document
 ---
@@ -8,12 +8,16 @@ output: html_document
 knitr::opts_chunk$set(cache=FALSE)
 ```
 
-In this part of this project you will practice and experiment with linear regression using
+**POSTED**: April 7, 2020  
+**LAST UPDATE**: April 7, 2020  
+**DUE**: April 20, 2020
+
+In this project you will practice and experiment with linear regression using
 data from [gapminder.org](http://gapminder.org). I recommend spending a little time looking at material there, it is quite an informative site.
 
 We will use a subset of data provided by gapminder provided by [Jennifer Bryan](http://www.stat.ubc.ca/~jenny/) described in it's [github page](https://github.com/jennybc/gapminder).
 
-The following commands load the dataset
+The following commands load the dataset in R
 
 ```{r}
 library(gapminder)
@@ -23,6 +27,8 @@ gapminder
 ```
 
 For this exercise you will explore how life expectancy has changed over 50 years across the world, and how economic measures like gross domestic product (GDP) are related to it.
+
+For python (or R I suppose), you can get the data from http://www.hcbravo.org/IntroDataSci/misc/gapminder.csv.
 
 
 **Exercise 1**: _Make a scatter plot of life expectancy across time._
@@ -82,12 +88,10 @@ Based on this plot, consider the following questions.
 
 **Question 12**: _On average, by how much does life expectancy increase each year for each  continent? (Provide code to answer this question by extracting relevant estimates from model fit)_
 
-**Exercise 7**: _Use the `anova` function to perform an F-test that compares how well two models fit your data: (a) the linear regression models from Exercise 2 (only including year as a covariate) and (b) Exercise 6 (including interaction between year and continent)._
-
-**Question 13**: _Is the interaction model significantly better than the year-only model? Why?_
-
-**Exercise 8**: _Make a residuals vs. year violin plot for the interaction model. Comment on how well it matches assumptions of the linear regression model. Do the same for a residuals vs. fitted values model._ (You should use the `broom::augment` function).
+**Exercise 7**: _Make a residuals vs. year violin plot for the interaction model. Comment on how well it matches assumptions of the linear regression model. Do the same for a residuals vs. fitted values model._ 
 
 ### Submission
 
-Prepare an Rmd file with code and answers. Knit the writeup to PDF and submit to ELMS.
+Prepare and knit a single Rmarkdown file or jupyter notebook that includes submission information described above.
+
+All axes in plots should be labeled in an informative manner. Your answers to any question that refers to a plot should include both (a) a text description of your plot, and (b) a sentence or two of interpretation as it relates to the question asked.
