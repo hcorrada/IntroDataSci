@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Solving Linear Problems</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Héctor Corrada Bravo" />
+    <meta name="date" content="2020-04-12" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+count: false
+
+.banner[![](img/epiviz.png)]
+
+.title[Introduction to Data Science: Solving Linear Problems]
+
+.author[Héctor Corrada Bravo]
+
+.other-info[
+University of Maryland, College Park, USA  
+2020-04-12
+]
+
+.logo[![](img/logo.png)]
+
+
+
+---
+layout: true
+
+## Solving linear problems
+
+---
+
+How to fit the type of analysis methods we've seen so far?
+
+We will use linear regression as a case study of how this insight would work.
+
+---
+
+### Case Study
+
+**Given**: Training set `\(\{(x_1, y_1), \ldots, (x_n, y_n)\}\)`, with continuous response `\(y_i\)` and single predictor `\(x_i\)` for the `\(i\)`-th observation.
+
+**Do**: Estimate parameter `\(\beta_1\)` in model `\(y=\beta_1 x\)` to solve
+
+`$$\min_{\beta_1} L(\beta_1) = \frac{1}{2} \sum_{i=1}^n (y_i - \beta_1 x_i)^2$$`
+
+---
+
+And suppose we want to fit this model to the following (simulated) data:
+
+&lt;img src="solving-linear-problems_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+Our goal is then to find the value of `\(\beta_1\)` that minimizes mean squared error. This corresponds to finding one of these many possible lines:
+
+&lt;img src="solving-linear-problems_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+Each of which has a specific error for this dataset:
+
+&lt;img src="solving-linear-problems_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+Insights:
+
+1) As we saw before in class, loss is minimized when the derivative of the loss function is 0
+
+2) and, the derivative of the loss (with respect to `\(\beta_1\)` ) at a given estimate `\(\beta_1\)` suggests new values of `\(\beta_1\)` with smaller loss!
+
+---
+
+Let's take a look at the derivative:
+
+`$$\frac{\partial}{\partial \beta_{1}} L(\beta_1) = \frac{\partial}{\partial \beta_{1}} \frac{1}{2} \sum_{i=1}^n (y_i - \beta_1 x_i)^2 \\
+{} = \sum_{i=1}^n (y_i - \beta_1 x_i) \frac{\partial}{\partial \beta_1} (y_i - \beta_1 x_i) \\
+{} = \sum_{i=1}^n (y_i - \beta_1 x_i) (-x_i)$$`
+
+
+---
+
+and plot it for our case study data:
+
+&lt;img src="solving-linear-problems_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Gradient Descent
+
+This plot suggests an algorithm:
+
+1. Initialize `\(\beta_1^0=0\)`
+2. Repeat for `\(k=1,2,\ldots\)` until convergence
+  - Set `\(\beta_1^k = \beta_1^{k-1} + \alpha \sum_{i=1}^n (y_i - f(x_i;\beta_1^{k-1})) x_i\)`
+
+Note: `\(f(x_i;\beta_1) = \beta_1 x_i\)`
+---
+
+This algorithm is called **gradient descent** in the general case.
+
+The basic idea is to move the current estimate of `\(\beta_1\)` in the direction that minimizes loss the *fastest*. 
+
+Another way of calling this algorithm is **Steepest Descent**.
+
+---
+
+
+
+
+
+Let's run this algorithm and track what it does:
+
+&lt;img src="solving-linear-problems_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+
+```
+## it:  0  beta:  0 loss:  405.87  alpha:  0.001 
+## it:  1  beta:  16.11 loss:  2004.46  alpha:  0.001 
+## it:  2  beta:  -19.85 loss:  9969.82  alpha:  0.001 
+## it:  3  beta:  60.41 loss:  49659.42  alpha:  5e-04 
+## it:  4  beta:  -29.17 loss:  18852.85  alpha:  5e-04 
+## it:  5  beta:  26.02 loss:  7159.08  alpha:  5e-04 
+## it:  6  beta:  -7.98 loss:  2720.28  alpha:  0.00025 
+## it:  7  beta:  2.5 loss:  104.56  alpha:  0.00025 
+## it:  8  beta:  4.51 loss:  8.19  alpha:  0.00025 
+## it:  9  beta:  4.89 loss:  4.64  alpha:  0.000125 
+## it:  10  beta:  4.93 loss:  4.55  alpha:  0.000125 
+## it:  11  beta:  4.95 loss:  4.52  alpha:  0.000125 
+## it:  12  beta:  4.96 loss:  4.51  alpha:  6.2e-05
+```
+
+---
+
+This algorithm is referred to as "Batch" gradient descent, 
+
+we take a step (update `\(\beta_1\)`) by calculating derivative with respect to _all_ `\(n\)` observations in our dataset. 
+
+---
+
+For clarity, let's write out the update equation again:
+
+`$$\beta_1^k = \beta_1^{k-1} + \alpha \sum_{i=1}^n (y_i - f(x_i; \beta_1^{k-1})) x_i$$`
+
+where `\(f(x_i; \beta_1) = \beta_1 x_i\)`.
+
+---
+
+For multiple predictors (e.g., adding an intercept), this generalizes to the _gradient_ i.e., the vector of first derivatives of _loss_ with respect to parameters.
+
+In this case, the model sets 
+
+`$$\begin{array}{l} 
+f(\mathbf{x}_i; \mathbf{\beta}) &amp; = &amp; \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip} \\
+{} &amp; = &amp; \sum_{j=0}^p \beta_j x_{ij} \\
+{} &amp; = &amp; \beta'x
+\end{array}$$`
+
+Note: we take `\(x_{i0} = 1\)`
+
+---
+exclude: false
+
+The gradient given by partial derivatives for each parameter
+
+`$$\nabla_{\mathbf{\beta}}L(\mathbf{\beta}) = \begin{bmatrix}
+\frac{\partial L(\beta)}{\partial \beta_0} \\
+\frac{\partial L(\beta)}{\partial \beta_1} \\
+\vdots \\
+\frac{\partial L(\beta)}{\partial \beta_p}
+\end{bmatrix}$$`
+
+---
+exclude: false
+
+The update equation is exactly the same for least squares regression
+
+`$$\mathbf{\beta}^k = \mathbf{\beta}^{k-1} + \alpha \sum_{i=1}^n (y_i - f(\mathbf{x}_i; \beta^{k-1})) \mathbf{x}_i$$`
+
+
+
+where `\(f(\mathbf{x}_i; \mathbf{\beta}) = \beta' \mathbf{x}_i\)`
+
+Note: `\(x_{i0}=1\)`
+
+---
+
+Gradient descent falls within a family of optimization methods called _first-order methods_ 
+
+These methods have properties amenable to use with very large datasets:
+
+1. Inexpensive updates    
+2. "Stochastic" version can converge with few sweeps of the data  
+3. "Stochastic" version easily extended to streams  
+4. Easily parallelizable  
+
+Drawback: Can take many steps before converging
+
+---
+
+### Logistic Regression
+
+Gradient descent is also used to solve the logistic regression problem. The same procedure follows 
+
+(1) define a loss function;  
+(2) derive the update equation;  
+(3) run the iterative gradient descent algorithm.  
+
+---
+
+Let's take a look at the first two steps in this case.
+
+For logistic regression, we turn to _maximum likelihood_ to formulate a loss function. 
+
+For the logistic regression problem we are given dataset `\(\{\langle \mathbf{x}_1, y_1\rangle, \ldots, \langle \mathbf{x}_n, y_n \rangle \}\)`, where outcomes `\(y_i \in \{0,1\}\)` since we are learning a binary classification problem. 
+
+---
+
+The goal is to estimate parameters `\(\mathbf{\beta}\)` in model
+
+`$$\begin{array}{l}
+\log{ \frac{p(Y=1 | \mathbf{X}=\mathbf{x})}{1-p(Y=1 | \mathbf{X}=\mathbf{x})}} &amp; = &amp;
+\beta_0 + \beta_0 x_{1} + \cdots + \beta_p x_{p} \\
+{} &amp; = &amp; \beta'\mathbf{x}
+\end{array}$$`
+
+Note: `\(x_{i0}=1\)`
+
+---
+
+To establish a loss function we first assume a model for data generation. The assumption we make here is if an entity has attribute values `\(\mathbf{x}\)`, then the outcome `\(Y=1\)` with probability given by 
+
+`$$p(\mathbf{x}; \mathbf{\beta}) = \frac{e^{f(\mathbf{x}; \mathbf{\beta})}}{1+e^{f(\mathbf{x}; \mathbf{\beta})}}$$`
+
+
+Note that we use the same notation `\(f(\mathbf{x}; \beta)=\beta'\mathbf{x}\)` as we did in linear regression.
+
+---
+
+Now, we can ask, what is the probability of the data we observe for entity `\(i\)` under this model?
+We can write this probability in this form:
+
+$$
+p(\mathbf{x}_i; \mathbf{\beta})^{y_i}(1-p(\mathbf{x}_i; \mathbf{\beta}))^{(1-y_i)}
+$$
+
+---
+
+Now, we can put these together for all observed entities since we assume that these are generated independently to get a _likelihood_ function:
+
+`$$\mathcal{L}(\mathbf{\beta}) = \prod_{i=1}^n p_i(\mathbf{x}_i;\mathbf{\beta})^{y_i}(1-p_i(\mathbf{x}_i;\mathbf{\beta}))^{(1-y_i)}$$`
+
+---
+
+Now, we need to turn this into a loss function we can _minimize_. 
+
+The likelihood function we wrote down is one we would _maximize_. 
+
+Also, it is usually more convenient to work with the logarithm of likelihoods. 
+
+---
+
+The loss function we use for gradient descent is the _negative log likelihood_
+
+`$$L(\mathbf{\beta}) = \sum_{i=1}^n -y_i f(\mathbf{x}_i;\mathbf{\beta}) + \log(1+e^{f(\mathbf{x}_i;\mathbf{\beta})})$$`
+
+---
+
+So, now that we have a loss function, we need to derive it's gradient to use the gradient descent algorithm. Check the lecture notes.
+
+`$$\nabla_{\mathbf{\beta}}
+L(\mathbf{\beta}) =  
+\sum_{i=1}^n (p(\mathbf{x}_i; \mathbf{\beta}) - y_i) \mathbf{x}_i$$`
+
+---
+
+Note the nice similarity to the gradient for linear regression. 
+
+It multiplies each data (expanded) data vector `\(\mathbf{x}_i\)` by the difference between a prediction, in this case the probability that the outcome `\(y_i=1\)` and the observed outcome `\(y_i\)`. 
+
+---
+layout: true
+
+## Stochastic gradient descent
+
+---
+
+**Key Idea**: Update parameters using update equation _one observation at a time_:
+
+1. Initialize `\(\beta=\mathbf{0}\)`, `\(i=1\)`
+2. Repeat until convergence
+  - For `\(i=1\)` to `\(n\)`
+    - Set `\(\beta = \beta + \alpha (y_i - f(\mathbf{x}_i, \beta)) \mathbf{x}_i\)`
+
+---
+
+
+
+Let's run this and see what it does:
+
+&lt;img src="solving-linear-problems_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+```
+## it:  0  beta:  0 loss:  405.87  alpha:  0.001 
+## it:  1  beta:  4.81 loss:  4.97  alpha:  0.001 
+## it:  2  beta:  4.99 loss:  4.5  alpha:  0.001 
+## it:  3  beta:  4.99 loss:  4.5  alpha:  0.001
+```
+
+---
+
+The stochastic gradient descent algorithm can easily adapt to _data streams_ where we receive observations one at a time and _assume_ they are not stored. 
+
+This setting falls in the general category of _online_ learning.
+
+---
+
+## Parallelizing gradient descent
+
+Gradient descent algorithms are easily parallelizable:
+
+- Split observations across computing units  
+- For each step, compute partial sum for each partition (map), compute final update (reduce)  
+
+---
+
+`$$\beta^k = \beta^{k-1} + \alpha * \sum_{\mathrm{partition}\; P} \sum_{i \in P} (y_i - f(\mathbf{x_i}; \beta^{k-1})) \mathbf{x}_i$$`
+
+---
+
+This observation has resulted in their implementation if systems for large-scale learning:
+
+1. [Vowpal Wabbit](https://github.com/JohnLangford/vowpal_wabbit/wiki)
+  - Implements general framework of (sparse) stochastic gradient descent for many optimization problems
+  - R interface: [http://cran.r-project.org/web/packages/RVowpalWabbit/index.html]
+  
+---
+
+This observation has resulted in their implementation if systems for large-scale learning:
+
+2. [Spark MLlib](https://spark.apache.org/docs/1.2.1/mllib-guide.html)
+  - Implements many learning algorithms using Spark framework we saw previously
+  - Some access to the MLlib API via R, but built on primitives accessible through `SparkR` library we saw previously
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
