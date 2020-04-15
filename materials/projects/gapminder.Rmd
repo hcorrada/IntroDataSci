@@ -9,7 +9,7 @@ knitr::opts_chunk$set(cache=FALSE)
 ```
 
 **POSTED**: April 7, 2020  
-**LAST UPDATE**: April 7, 2020  
+**LAST UPDATE**: April 15, 2020  
 **DUE**: April 20, 2020
 
 In this project you will practice and experiment with linear regression using
@@ -94,4 +94,4 @@ Based on this plot, consider the following questions.
 
 Prepare and knit a single Rmarkdown file or jupyter notebook that includes submission information described above.
 
-All axes in plots should be labeled in an informative manner. Your answers to any question that refers to a plot should include both (a) a text description of your plot, and (b) a sentence or two of interpretation as it relates to the question asked.
+All axes in plots should be labeled in an informative manner. Your answers to any exercise that refers to a plot should include both (a) a text description of your plot, and (b) a sentence or two of interpretation.
