@@ -9,7 +9,7 @@ knitr::opts_chunk$set(cache=FALSE)
 ```
 
 **POSTED**: April 7, 2020  
-**LAST UPDATE**: April 15, 2020  
+**LAST UPDATE**: April 20, 2020  
 **DUE**: April 20, 2020
 
 In this project you will practice and experiment with linear regression using
@@ -88,7 +88,7 @@ Based on this plot, consider the following questions.
 
 **Question 12**: _On average, by how much does life expectancy increase each year for each  continent? (Provide code to answer this question by extracting relevant estimates from model fit)_
 
-**Exercise 7**: _Make a residuals vs. year violin plot for the interaction model. Comment on how well it matches assumptions of the linear regression model. Do the same for a residuals vs. fitted values model._ 
+**Exercise 7**: _Make a residuals vs. year violin plot for the interaction model. Comment on how well it matches assumptions of the linear regression model. Do the same for a residuals vs. fitted values plot._ 
 
 ### Submission
 
