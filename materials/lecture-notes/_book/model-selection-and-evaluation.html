@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6 Principles: Basic Operations | Lecture Notes: Introduction to Data Science</title>
-  <meta name="description" content="6 Principles: Basic Operations | Lecture Notes: Introduction to Data Science" />
+  <title>32 Model Selection and Evaluation | Lecture Notes: Introduction to Data Science</title>
+  <meta name="description" content="32 Model Selection and Evaluation | Lecture Notes: Introduction to Data Science" />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6 Principles: Basic Operations | Lecture Notes: Introduction to Data Science" />
+  <meta property="og:title" content="32 Model Selection and Evaluation | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6 Principles: Basic Operations | Lecture Notes: Introduction to Data Science" />
+  <meta name="twitter:title" content="32 Model Selection and Evaluation | Lecture Notes: Introduction to Data Science" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="measurements-and-data-types.html"/>
-<link rel="next" href="principles-more-operations.html"/>
+<link rel="prev" href="tree-based-methods.html"/>
+<link rel="next" href="unsupervised-learning-clustering.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -514,388 +514,441 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="principles-basic-operations" class="section level1">
-<h1><span class="header-section-number">6</span> Principles: Basic Operations</h1>
-<p>Now that we have a data frame describing our data, let’s learn a few fundamental operations we perform on data frames on almost any analysis. We divide these first set of operations into two groups: operations on <em>attributes</em> and operations on <em>entitites</em>. These operations are defined in the <code>dplyr</code> package, part of the <code>tidyverse</code>, and are described in more detail in the “R for Data Science” textbook available in the course logistics page: <a href="http://r4ds.had.co.nz/transform.html" class="uri">http://r4ds.had.co.nz/transform.html</a>.</p>
-<div id="operations-that-subset-attributes" class="section level2">
-<h2><span class="header-section-number">6.1</span> Operations that subset attributes</h2>
-<div id="select" class="section level3">
-<h3><span class="header-section-number">6.1.1</span> <code>select</code></h3>
-<p>In our data set we have a large number of attributes describing each arrest. Now, suppose we only want to study patterns in these arrests based on a smaller number of attributes for purposes of efficiency, since we would operate over less data, or interpretability. In that case we would like to create a data frame that contains only those attributes of interest. We use the <code>select</code> function for this.</p>
-<p><img src="img/select.png" /></p>
-<p>Let’s create a data frame containing only the <code>age</code>, <code>sex</code> and <code>district</code> attributes</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, age, sex, district)</a></code></pre></div>
-<pre><code>## # A tibble: 104,528 x 3
-##      age sex   district    
-##    &lt;dbl&gt; &lt;fct&gt; &lt;chr&gt;       
-##  1    23 M     &lt;NA&gt;        
-##  2    37 M     SOUTHERN    
-##  3    46 M     NORTHEASTERN
-##  4    50 M     WESTERN     
-##  5    33 M     NORTHERN    
-##  6    41 M     SOUTHERN    
-##  7    29 M     WESTERN     
-##  8    20 M     NORTHEASTERN
-##  9    24 M     &lt;NA&gt;        
-## 10    53 M     NORTHWESTERN
-## # … with 104,518 more rows</code></pre>
-<p>The first argument to the <code>select</code> function is the data frame we want to operate on, the remaining arguments describe the attributes we want to include in the resulting data frame.</p>
-<p>Note a few other things:</p>
-<ol style="list-style-type: decimal">
-<li><p>The first argument to <code>select</code> is a data frame, and the value returned by <code>select</code> is also a data frame</p></li>
-<li><p>As always you can learn more about the function using <code>?select</code></p></li>
-</ol>
-<p>Attribute descriptor arguments can be fairly sophisticated. For example, we can use positive integers to indicate attribute (column) indices:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 104,528 x 3
-##      arrest race  sex  
-##       &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt;
-##  1 11126858 B     M    
-##  2 11127013 B     M    
-##  3 11126887 B     M    
-##  4 11126873 B     M    
-##  5 11126968 B     M    
-##  6 11127041 B     M    
-##  7 11126932 B     M    
-##  8 11126940 W     M    
-##  9 11127051 B     M    
-## 10 11127018 B     M    
-## # … with 104,518 more rows</code></pre>
-<p>R includes a useful operator to describe ranges. E.g., <code>1:5</code> would be attributes 1 through 5:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 104,528 x 5
-##      arrest   age race  sex   arrestDate
-##       &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;     
-##  1 11126858    23 B     M     01/01/2011
-##  2 11127013    37 B     M     01/01/2011
-##  3 11126887    46 B     M     01/01/2011
-##  4 11126873    50 B     M     01/01/2011
-##  5 11126968    33 B     M     01/01/2011
-##  6 11127041    41 B     M     01/01/2011
-##  7 11126932    29 B     M     01/01/2011
-##  8 11126940    20 W     M     01/01/2011
-##  9 11127051    24 B     M     01/01/2011
-## 10 11127018    53 B     M     01/01/2011
-## # … with 104,518 more rows</code></pre>
-<p>We can also use other helper functions to create attribute descriptors. For example, to choose all attributes that begin with the letter <code>a</code> we can the <code>starts_with</code> function which uses partial string matching:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, <span class="kw">starts_with</span>(<span class="st">&quot;a&quot;</span>))</a></code></pre></div>
-<pre><code>## # A tibble: 104,528 x 5
-##    arrest   age arrestDate arrestTime
-##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;time&gt;    
-##  1 1.11e7    23 01/01/2011 00&#39;00&quot;    
-##  2 1.11e7    37 01/01/2011 01&#39;00&quot;    
-##  3 1.11e7    46 01/01/2011 01&#39;00&quot;    
-##  4 1.11e7    50 01/01/2011 04&#39;00&quot;    
-##  5 1.11e7    33 01/01/2011 05&#39;00&quot;    
-##  6 1.11e7    41 01/01/2011 05&#39;00&quot;    
-##  7 1.11e7    29 01/01/2011 05&#39;00&quot;    
-##  8 1.11e7    20 01/01/2011 05&#39;00&quot;    
-##  9 1.11e7    24 01/01/2011 07&#39;00&quot;    
-## 10 1.11e7    53 01/01/2011 15&#39;00&quot;    
-## # … with 104,518 more rows, and 1 more variable:
-## #   arrestLocation &lt;chr&gt;</code></pre>
-<p>We can also use the attribute descriptor arguments to <em>drop</em> attributes. For instance using descriptor <code>-age</code> returns the arrest data frame with all but the <code>age</code> attribute included:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, <span class="op">-</span>age)</a></code></pre></div>
-<pre><code>## # A tibble: 104,528 x 14
-##    arrest race  sex   arrestDate arrestTime
-##     &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;    
-##  1 1.11e7 B     M     01/01/2011 00&#39;00&quot;    
-##  2 1.11e7 B     M     01/01/2011 01&#39;00&quot;    
-##  3 1.11e7 B     M     01/01/2011 01&#39;00&quot;    
-##  4 1.11e7 B     M     01/01/2011 04&#39;00&quot;    
-##  5 1.11e7 B     M     01/01/2011 05&#39;00&quot;    
-##  6 1.11e7 B     M     01/01/2011 05&#39;00&quot;    
-##  7 1.11e7 B     M     01/01/2011 05&#39;00&quot;    
-##  8 1.11e7 W     M     01/01/2011 05&#39;00&quot;    
-##  9 1.11e7 B     M     01/01/2011 07&#39;00&quot;    
-## 10 1.11e7 B     M     01/01/2011 15&#39;00&quot;    
-## # … with 104,518 more rows, and 9 more
-## #   variables: arrestLocation &lt;chr&gt;,
-## #   incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;,
-## #   chargeDescription &lt;chr&gt;, district &lt;chr&gt;,
-## #   post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location
-## #   1` &lt;chr&gt;</code></pre>
+<div id="model-selection-and-evaluation" class="section level1">
+<h1><span class="header-section-number">32</span> Model Selection and Evaluation</h1>
+<div id="classifier-evaluation" class="section level2">
+<h2><span class="header-section-number">32.1</span> Classifier evaluation</h2>
+<p>So far we have seen how we can use the <em>error rate</em> of a classifier to measure it’s generalization performance. How do we determine how well classifiers are performing? One way is to compute the <em>error rate</em> of the classifier, the percent of mistakes it makes when predicting class</p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb433-1" data-line-number="1"><span class="kw">library</span>(MASS)</a>
+<a class="sourceLine" id="cb433-2" data-line-number="2">logis_fit &lt;-<span class="st"> </span><span class="kw">glm</span>(default <span class="op">~</span><span class="st"> </span>balance, <span class="dt">data=</span>Default, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</a>
+<a class="sourceLine" id="cb433-3" data-line-number="3">logis_pred_prob &lt;-<span class="st"> </span><span class="kw">predict</span>(logis_fit, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>) </a>
+<a class="sourceLine" id="cb433-4" data-line-number="4">logis_pred &lt;-<span class="st"> </span><span class="kw">ifelse</span>(logis_pred_prob <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)</a>
+<a class="sourceLine" id="cb433-5" data-line-number="5"><span class="kw">print</span>(<span class="kw">table</span>(<span class="dt">predicted=</span>logis_pred, <span class="dt">observed=</span>Default<span class="op">$</span>default))</a></code></pre></div>
+<pre><code>##          observed
+## predicted   No  Yes
+##       No  9625  233
+##       Yes   42  100</code></pre>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb435-1" data-line-number="1"><span class="co"># error rate</span></a>
+<a class="sourceLine" id="cb435-2" data-line-number="2"><span class="kw">mean</span>(Default<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>logis_pred) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a></code></pre></div>
+<pre><code>## [1] 2.75</code></pre>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb437-1" data-line-number="1"><span class="co"># dummy error rate</span></a>
+<a class="sourceLine" id="cb437-2" data-line-number="2"><span class="kw">mean</span>(Default<span class="op">$</span>default <span class="op">!=</span><span class="st"> &quot;No&quot;</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a></code></pre></div>
+<pre><code>## [1] 3.33</code></pre>
+<p>In this case, it would seem that logistic regression performs well. But in fact, we can get similar error rate
+by always predicting “no default”. We can see from this table that these errors are not symmetric. It’s most common error is that <em>it misses true defaults</em>.</p>
+<p>We need a more precise language to describe classification mistakes:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right"></th>
+<th align="left">True Class +</th>
+<th>True Class -</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">Predicted Class +</td>
+<td align="left">True Positive (TP)</td>
+<td>False Positive (FP)</td>
+<td>P*</td>
+</tr>
+<tr class="even">
+<td align="right">Predicted Class -</td>
+<td align="left">False Negative (FN)</td>
+<td>True Negative (TN)</td>
+<td>N*</td>
+</tr>
+<tr class="odd">
+<td align="right">Total</td>
+<td align="left">P</td>
+<td>N</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Using these we can define statistics that describe classifier performance</p>
+<table>
+<colgroup>
+<col width="34%" />
+<col width="12%" />
+<col width="53%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Name</th>
+<th align="left">Definition</th>
+<th>Synonyms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">False Positive Rate (FPR)</td>
+<td align="left">FP / N</td>
+<td>Type-I error, 1-Specificity</td>
+</tr>
+<tr class="even">
+<td align="right">True Positive Rate (TPR)</td>
+<td align="left">TP / P</td>
+<td>1 - Type-II error, power, sensitivity, <strong>recall</strong></td>
+</tr>
+<tr class="odd">
+<td align="right">Positive Predictive Value (PPV)</td>
+<td align="left">TP / P*</td>
+<td><strong>precision</strong>, 1-false discovery proportion</td>
+</tr>
+<tr class="even">
+<td align="right">Negative Predicitve Value (NPV)</td>
+<td align="left">FN / N*</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>In the credit default case we may want to increase <strong>TPR</strong> (recall, make sure we catch all defaults) at the expense
+of <strong>FPR</strong> (1-Specificity, clients we lose because we think they will default)</p>
+<p>This leads to a natural question: Can we adjust our classifiers TPR and FPR?</p>
+<p>Remember we are classifying <code>Yes</code> if</p>
+<p><span class="math display">\[
+\log \frac{P(Y=\mathtt{Yes}|X)}{P(Y=\mathtt{No}|X)} &gt; 0 \Rightarrow \\
+P(Y=\mathtt{Yes}|X) &gt; 0.5
+\]</span></p>
+<p>What would happen if we use <span class="math inline">\(P(Y=\mathtt{Yes}|X) &gt; 0.2\)</span>?</p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb439-1" data-line-number="1"><span class="kw">library</span>(ROCR)</a>
+<a class="sourceLine" id="cb439-2" data-line-number="2">pred &lt;-<span class="st"> </span><span class="kw">prediction</span>(logis_pred_prob, Default<span class="op">$</span>default)</a>
+<a class="sourceLine" id="cb439-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb439-4" data-line-number="4"><span class="kw">layout</span>(<span class="kw">cbind</span>(<span class="dv">1</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb439-5" data-line-number="5"><span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>))</a>
+<a class="sourceLine" id="cb439-6" data-line-number="6"><span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;fpr&quot;</span>))</a></code></pre></div>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-240-1.svg" width="1152" /></p>
+<p>A way of describing the TPR and FPR tradeoff is by using the <strong>ROC curve</strong> (Receiver Operating Characteristic)
+and the <strong>AUROC</strong> (area under the ROC)</p>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb440-1" data-line-number="1">auc &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;auc&quot;</span>)<span class="op">@</span>y.values)</a>
+<a class="sourceLine" id="cb440-2" data-line-number="2"><span class="kw">plot</span>(<span class="kw">performance</span>(pred, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>), </a>
+<a class="sourceLine" id="cb440-3" data-line-number="3">     <span class="dt">main=</span><span class="kw">paste</span>(<span class="st">&quot;LDA AUROC=&quot;</span>, <span class="kw">round</span>(auc, <span class="dv">2</span>)), </a>
+<a class="sourceLine" id="cb440-4" data-line-number="4">     <span class="dt">lwd=</span><span class="fl">1.4</span>, <span class="dt">cex.lab=</span><span class="fl">1.7</span>, <span class="dt">cex.main=</span><span class="fl">1.5</span>)</a></code></pre></div>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-241-1.svg" width="1152" /></p>
+<p>Consider comparing a logistic regression model using all predictors in the dataset, including an interaction term between balance and student.</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb441-1" data-line-number="1">full_logis &lt;-<span class="st"> </span><span class="kw">glm</span>(default<span class="op">~</span>balance<span class="op">*</span>student <span class="op">+</span><span class="st"> </span>income, <span class="dt">data=</span>Default, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</a>
+<a class="sourceLine" id="cb441-2" data-line-number="2">full_logis_probs &lt;-<span class="st"> </span><span class="kw">predict</span>(full_logis, Default, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>)</a>
+<a class="sourceLine" id="cb441-3" data-line-number="3">full_logis_preds &lt;-<span class="st"> </span><span class="kw">ifelse</span>(full_logis_probs <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)</a>
+<a class="sourceLine" id="cb441-4" data-line-number="4"><span class="kw">print</span>(<span class="kw">table</span>(logis_pred, full_logis_preds, Default<span class="op">$</span>default))</a></code></pre></div>
+<pre><code>## , ,  = No
+## 
+##           full_logis_preds
+## logis_pred   No  Yes
+##        No  9615   10
+##        Yes   11   31
+## 
+## , ,  = Yes
+## 
+##           full_logis_preds
+## logis_pred   No  Yes
+##        No   218   15
+##        Yes    9   91</code></pre>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb443-1" data-line-number="1">pred_list &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb443-2" data-line-number="2">  <span class="dt">balance_logis =</span> logis_pred_prob,</a>
+<a class="sourceLine" id="cb443-3" data-line-number="3">  <span class="dt">full_logis =</span> full_logis_probs,</a>
+<a class="sourceLine" id="cb443-4" data-line-number="4">  <span class="dt">dummy =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="kw">nrow</span>(Default)))</a>
+<a class="sourceLine" id="cb443-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb443-6" data-line-number="6">pred_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_list,</a>
+<a class="sourceLine" id="cb443-7" data-line-number="7">  prediction, Default<span class="op">$</span>default)</a>
+<a class="sourceLine" id="cb443-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb443-9" data-line-number="9">aucs &lt;-<span class="st"> </span><span class="kw">sapply</span>(pred_objs, </a>
+<a class="sourceLine" id="cb443-10" data-line-number="10">  <span class="cf">function</span>(x) <span class="kw">unlist</span>(</a>
+<a class="sourceLine" id="cb443-11" data-line-number="11">    <span class="kw">performance</span>(x, <span class="st">&quot;auc&quot;</span>)<span class="op">@</span>y.values))</a>
+<a class="sourceLine" id="cb443-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb443-13" data-line-number="13">roc_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_objs, </a>
+<a class="sourceLine" id="cb443-14" data-line-number="14">  performance, <span class="st">&quot;tpr&quot;</span>, <span class="st">&quot;fpr&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb444-1" data-line-number="1"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="dt">along=</span>roc_objs)) {</a>
+<a class="sourceLine" id="cb444-2" data-line-number="2">  <span class="kw">plot</span>(roc_objs[[i]], <span class="dt">add =</span> i <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">col=</span>i, </a>
+<a class="sourceLine" id="cb444-3" data-line-number="3">       <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>)</a>
+<a class="sourceLine" id="cb444-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb444-5" data-line-number="5"><span class="kw">legend</span>(<span class="st">&quot;bottomright&quot;</span>, </a>
+<a class="sourceLine" id="cb444-6" data-line-number="6">       <span class="dt">legend=</span><span class="kw">paste</span>(<span class="kw">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="kw">names</span>(pred_list)), <span class="st">&quot;AUROC=&quot;</span>,<span class="kw">round</span>(aucs, <span class="dv">2</span>)), </a>
+<a class="sourceLine" id="cb444-7" data-line-number="7">       <span class="dt">col=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-244-1.svg" width="672" /></p>
+<p>Another metric that is frequently used to understand classification errors and tradeoffs is the precision-recall curve:</p>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb445-1" data-line-number="1"><span class="kw">library</span>(caTools)</a>
+<a class="sourceLine" id="cb445-2" data-line-number="2">pr_objs &lt;-<span class="st"> </span><span class="kw">lapply</span>(pred_objs[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], </a>
+<a class="sourceLine" id="cb445-3" data-line-number="3">  performance, <span class="st">&quot;prec&quot;</span>, <span class="st">&quot;rec&quot;</span>)</a>
+<a class="sourceLine" id="cb445-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb445-5" data-line-number="5"><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(<span class="dt">along=</span>pr_objs)) {</a>
+<a class="sourceLine" id="cb445-6" data-line-number="6">  <span class="kw">plot</span>(pr_objs[[i]], <span class="dt">add =</span> i <span class="op">!=</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">col=</span>i, </a>
+<a class="sourceLine" id="cb445-7" data-line-number="7">       <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex.lab=</span><span class="fl">1.5</span>)</a>
+<a class="sourceLine" id="cb445-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb445-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb445-10" data-line-number="10">auprs &lt;-<span class="st"> </span><span class="kw">sapply</span>(pr_objs, </a>
+<a class="sourceLine" id="cb445-11" data-line-number="11">  <span class="cf">function</span>(pr_obj) {</a>
+<a class="sourceLine" id="cb445-12" data-line-number="12">    pr_x &lt;-<span class="st"> </span><span class="kw">unlist</span>(pr_obj<span class="op">@</span>x.values)</a>
+<a class="sourceLine" id="cb445-13" data-line-number="13">    pr_y &lt;-<span class="st"> </span><span class="kw">unlist</span>(pr_obj<span class="op">@</span>y.values)</a>
+<a class="sourceLine" id="cb445-14" data-line-number="14">    keep &lt;-<span class="st"> </span><span class="kw">is.finite</span>(pr_x) <span class="op">&amp;</span><span class="st"> </span><span class="kw">is.finite</span>(pr_y)</a>
+<a class="sourceLine" id="cb445-15" data-line-number="15">    pracma<span class="op">::</span><span class="kw">trapz</span>(pr_x[keep], pr_y[keep])</a>
+<a class="sourceLine" id="cb445-16" data-line-number="16">  }</a>
+<a class="sourceLine" id="cb445-17" data-line-number="17">)</a>
+<a class="sourceLine" id="cb445-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb445-19" data-line-number="19"><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, </a>
+<a class="sourceLine" id="cb445-20" data-line-number="20">       <span class="dt">legend=</span><span class="kw">paste</span>(<span class="kw">gsub</span>(<span class="st">&quot;_&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="kw">names</span>(pr_objs)), <span class="st">&quot;AUPR=&quot;</span>,<span class="kw">round</span>(auprs, <span class="dv">2</span>)),</a>
+<a class="sourceLine" id="cb445-21" data-line-number="21">      <span class="dt">col=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="fl">1.3</span>)</a></code></pre></div>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-245-1.svg" width="960" /></p>
+<p>Here we see a marginal difference between the two models, with the full model showing a slightly higher precision at the same recall values and slightly higher
+area under the precision-recall curve. This is commonly found in datasets where
+there is a skewed distribution of classes (e.g., there are many more “No” than “Yes” in this dataset). The area under the PR curve tends to distinguish classifier
+performance than area under the ROC curve in these cases.</p>
 </div>
-<div id="rename" class="section level3">
-<h3><span class="header-section-number">6.1.2</span> <code>rename</code></h3>
-<p>To improve interpretability during an analysis we may want to rename attributes. We use the <code>rename</code> function for this:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">rename</span>(arrest_tab, <span class="dt">arrest_date=</span>arrestDate)</a></code></pre></div>
-<pre><code>## # A tibble: 104,528 x 15
-##    arrest   age race  sex   arrest_date
-##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      
-##  1 1.11e7    23 B     M     01/01/2011 
-##  2 1.11e7    37 B     M     01/01/2011 
-##  3 1.11e7    46 B     M     01/01/2011 
-##  4 1.11e7    50 B     M     01/01/2011 
-##  5 1.11e7    33 B     M     01/01/2011 
-##  6 1.11e7    41 B     M     01/01/2011 
-##  7 1.11e7    29 B     M     01/01/2011 
-##  8 1.11e7    20 W     M     01/01/2011 
-##  9 1.11e7    24 B     M     01/01/2011 
-## 10 1.11e7    53 B     M     01/01/2011 
-## # … with 104,518 more rows, and 10 more
-## #   variables: arrestTime &lt;time&gt;,
-## #   arrestLocation &lt;chr&gt;, incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;,
-## #   chargeDescription &lt;chr&gt;, district &lt;chr&gt;,
-## #   post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location
-## #   1` &lt;chr&gt;</code></pre>
-<p>Like <code>select</code>, the first argument to the function is the data frame we are operating on. The remaining arguemnts specify attributes to rename and the name they will have in the resulting data frame. Note that arguments in this case are <em>named</em> (have the form <code>lhs=rhs</code>). We can have selection <em>and</em> renaming by using named arguments in <code>select</code>:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">select</span>(arrest_tab, age, sex, <span class="dt">arrest_date=</span>arrestDate)</a></code></pre></div>
-<pre><code>## # A tibble: 104,528 x 3
-##      age sex   arrest_date
-##    &lt;dbl&gt; &lt;fct&gt; &lt;chr&gt;      
-##  1    23 M     01/01/2011 
-##  2    37 M     01/01/2011 
-##  3    46 M     01/01/2011 
-##  4    50 M     01/01/2011 
-##  5    33 M     01/01/2011 
-##  6    41 M     01/01/2011 
-##  7    29 M     01/01/2011 
-##  8    20 M     01/01/2011 
-##  9    24 M     01/01/2011 
-## 10    53 M     01/01/2011 
-## # … with 104,518 more rows</code></pre>
-<p>Also like <code>select</code>, the result of calling <code>rename</code> is a data frame. In fact, this will be the case for almost all operations in the <code>tidyverse</code> they operate on data frames (specified as the first</p>
-<p>ment in the function call) and return data frames.</p>
+<div id="model-selection" class="section level2">
+<h2><span class="header-section-number">32.2</span> Model selection</h2>
+<p>Our discussion on regression and classification has been centered on fitting models by minizing error or maximizing likelihood given a dataset (also referred to as training data). This is usually fine when we want to use our model for <em>explanatory</em> or <em>inferential</em> tasks. Or when we use relatively inflexible models, like linear regression or logistic regression. However, as our interests shift to <em>prediction</em> and more complex models, like non-linear regression, Tree-based methods or Support Vector Machines, this is usually not sufficient.</p>
+<p>In these cases, our goal is to avoid building models that are too <em>specific</em> for the dataset we have on hand. Complex models can easily <strong>overfit</strong> our training data, in which case we don’t learn much about the <em>population</em> from which we obtain the training data and instead learn only about the training data itself. We say that we want to learn, or train models that <strong>generalize</strong> beyond the training data to other, unseen, data from the same population.</p>
+<p>This leads to a bit of an issue. How do we measure our models ability to predict unseen data, when we only have access to training data?</p>
+<div id="cross-validation" class="section level3">
+<h3><span class="header-section-number">32.2.1</span> Cross Validation</h3>
+<p>The most common method to evaluate model <strong>generalization</strong> performance is <em>cross-validation</em>. It is used in two essential data analysis phases: <em>Model Selection</em> and <em>Model Assessment</em>.</p>
+<p>In <em>Model Selection</em>, we decide how complex of a model we should fit. Consider a linear regression example: I will fit a linear regression model, what predictors should be included?, interactions?, data transformations? Another example is what classification tree depth to use.</p>
+<p>In <em>Model Assessment</em>, we determine how well does our selected model performs as a <strong>general</strong> model. Example: I’ve built a linear regression models, with specific predictors. How well will it perform on unseen data? The same question can be asked of a classification tree (of specific depth).</p>
+<p>Cross-validation is a <em>resampling</em> method to obtain estimates of <strong>test error rate</strong> (or any other performance measure on unseen data). In some instances, you will have a large predefined test dataset <strong>that you should never use when training</strong>. In the absence of access to this kind of dataset, cross validation can be used.</p>
+</div>
+<div id="validation-set" class="section level3">
+<h3><span class="header-section-number">32.2.2</span> Validation Set</h3>
+<p>The simplest option to use cross-validation is to create a <em>validation</em> set, where our dataset is <strong>randomly</strong> divided into <em>training</em> and <em>validation</em> sets. Then the <em>validation</em> is set aside, and not used at until until we are ready to compute <strong>test error rate</strong> (once, don’t go back and check if you can improve it).</p>
+<p><img src="img/validation.png" /></p>
+<p>Let’s look at our running example using automobile data, where we want to build a
+regression model capable of predicting miles per gallon given other auto attributes.
+We saw in previous lectures that a linear regression model was not appropriate for this dataset. So instead we will use <em>polynomial</em> regression as an illustrative example.</p>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb446-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb446-2" data-line-number="2"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb446-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb446-4" data-line-number="4"><span class="kw">data</span>(Auto)</a>
+<a class="sourceLine" id="cb446-5" data-line-number="5"><span class="kw">ggplot</span>(Auto, <span class="kw">aes</span>(<span class="dt">x=</span>horsepower, <span class="dt">y=</span>mpg)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_smooth</span>()</a></code></pre></div>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-246-1.svg" width="672" /></p>
+<p>In this case our regression model (for a single predictor <span class="math inline">\(x\)</span>) is given as a <span class="math inline">\(d\)</span> degree polynomial.</p>
+<p><span class="math display">\[
+\mathbb{E}[Y|X=x] = \beta_0 + \beta_1 x + \beta_2 x^2 + \cdots + \beta_d x^d
+\]</span></p>
+<p>In the <em>Model Selection</em> case, we want to decide what degree <span class="math inline">\(d\)</span> we should use to model this data. Using the <em>validation set</em> method, we split our data into a training set, fit the regression model with different polynomial degrees <span class="math inline">\(d\)</span> on the training set, and measure test error on the validation set.</p>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb447-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1234</span>)</a>
+<a class="sourceLine" id="cb447-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb447-3" data-line-number="3">in_validation &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(Auto), <span class="kw">nrow</span>(Auto)<span class="op">/</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb447-4" data-line-number="4">validation_set &lt;-<span class="st"> </span>Auto[in_validation,]</a>
+<a class="sourceLine" id="cb447-5" data-line-number="5">training_set &lt;-<span class="st"> </span>Auto[<span class="op">-</span>in_validation,]</a>
+<a class="sourceLine" id="cb447-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb447-7" data-line-number="7"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb447-8" data-line-number="8"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb447-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb447-10" data-line-number="10">degrees &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb447-11" data-line-number="11">error_rates &lt;-<span class="st"> </span><span class="kw">sapply</span>(degrees, <span class="cf">function</span>(deg) {</a>
+<a class="sourceLine" id="cb447-12" data-line-number="12">  fit &lt;-<span class="st"> </span><span class="kw">lm</span>(mpg<span class="op">~</span><span class="kw">poly</span>(horsepower, <span class="dt">degree=</span>deg), <span class="dt">data=</span>training_set)</a>
+<a class="sourceLine" id="cb447-13" data-line-number="13">  predicted &lt;-<span class="st"> </span><span class="kw">predict</span>(fit, <span class="dt">newdata=</span>validation_set)</a>
+<a class="sourceLine" id="cb447-14" data-line-number="14">  <span class="kw">mean</span>((validation_set<span class="op">$</span>mpg <span class="op">-</span><span class="st"> </span>predicted)<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb447-15" data-line-number="15">})</a>
+<a class="sourceLine" id="cb447-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb447-17" data-line-number="17"><span class="kw">plot</span>(degrees, error_rates, <span class="dt">type=</span><span class="st">&quot;b&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Polynomial Degree&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Mean Squared Error&quot;</span>, <span class="dt">pch=</span><span class="dv">19</span>, <span class="dt">lwd=</span><span class="fl">1.4</span>, <span class="dt">cex=</span><span class="fl">1.4</span>)</a></code></pre></div>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-247-1.svg" width="672" /></p>
+</div>
+<div id="resampled-validation-set" class="section level3">
+<h3><span class="header-section-number">32.2.3</span> Resampled validation set</h3>
+<p>This approach can be prone to sampling issues. It can be highly variable as error rate is a random quantity and depends on observations in training and validation sets. We can improve our estimate of <em>test error</em> by averaging multiple measurements of it (remember the law of large numbers). We can do so by replicating our validation resampling 10 times (with different validation and training sets) and averaging the resulting test errors.</p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-248-1.svg" width="672" /></p>
+</div>
+<div id="leave-one-out-cross-validation" class="section level3">
+<h3><span class="header-section-number">32.2.4</span> Leave-one-out Cross-Validation</h3>
+<p>This approach still has some issues. Each of the training sets in our validation approach only uses 50% of data to train, which leads to models that may not perform as well as models trained with the full dataset and thus we can overestimate error. To alleviate this situation, we can extend our approach to the extreme. Make each single training point it’s own validation set.</p>
+<p>Procedure:<br />
+For each observation <span class="math inline">\(i\)</span> in data set:<br />
+a. Train model on all but <span class="math inline">\(i\)</span>-th observation<br />
+b. Predict response for <span class="math inline">\(i\)</span>-th observation<br />
+c. Calculate prediction error</p>
+<p>This gives us the following <em>cross-validation</em> estimate of error.</p>
+<p><span class="math display">\[
+CV_{(n)} = \frac{1}{n} \sum_i (y_i - \hat{y}_i)^2
+\]</span></p>
+<p><img src="img/loocv.png" /></p>
+<p>The advantages of this approach is that now we use <span class="math inline">\(n-1\)</span> observations to train each model and there is no randomness introduced since error is estimated on each sample. However, it has
+disadvantages as well. Depending on the models we are trying to fit, it can be very costly to train <span class="math inline">\(n-1\)</span> models. Also, the error estimate for each model is highly variable (since it comes from a single datapoint).</p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-250-1.svg" width="672" /></p>
+<p>For linear models (and some non-linear models) there is a nice trick that allows one to compute (exactly or approximately) LOOCV from the full data model fit which we will not get into here.</p>
+</div>
+<div id="k-fold-cross-validation" class="section level3">
+<h3><span class="header-section-number">32.2.5</span> k-fold Cross-Validation</h3>
+<p>This discussion leads us to the most commonly used cross-validation approach <em>k-fold Cross-Validation</em>.</p>
+<p>Procedure:<br />
+Partition observations randomly into <span class="math inline">\(k\)</span> groups (folds).</p>
+<p>For each of the <span class="math inline">\(k\)</span> groups of observations:
+- Train model on observations in the other <span class="math inline">\(k-1\)</span> folds<br />
+- Estimate test-set error (e.g., Mean Squared Error)</p>
+<p>Compute average error across <span class="math inline">\(k\)</span> folds</p>
+<p><img src="img/kfoldcv.png" /></p>
+<p><span class="math display">\[
+CV_{(k)} = \frac{1}{k} \sum_i MSE_i
+\]</span></p>
+<p>where <span class="math inline">\(MSE_i\)</span> is mean squared error estimated on the <span class="math inline">\(i\)</span>-th fold</p>
+<p>In this case, we have fewer models to fit (only <span class="math inline">\(k\)</span> of them), and there is less variance in each of the computed test error estimates in each fold. It can be shown that there is a slight bias (over estimating usually) in error estimate obtained from this procedure.</p>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-252-1.svg" width="672" /></p>
+</div>
+<div id="cross-validation-in-classification" class="section level3">
+<h3><span class="header-section-number">32.2.6</span> Cross-Validation in Classification</h3>
+<p>Each of these procedures can be used for classification as well. In this case we would substitute MSE with performance metric of choice. E.g., error rate, accuracy, TPR, FPR, AUROC. Note however that not all of these work with LOOCV (e.g. AUROC since it can’t be defined over single data points).</p>
+</div>
+<div id="comparing-models-statistically-using-cross-validation" class="section level3">
+<h3><span class="header-section-number">32.2.7</span> Comparing models statistically using cross-validation</h3>
+<p>Suppose you want to compare two classification models (logistic regression vs. a decision tree) on the <code>Default</code> dataset. We can use Cross-Validation to determine if one model is better than the other, using hypothesis testing with a paired <span class="math inline">\(t\)</span>-test for example.</p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb448-1" data-line-number="1"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb448-2" data-line-number="2"><span class="kw">library</span>(cvTools)</a>
+<a class="sourceLine" id="cb448-3" data-line-number="3"><span class="kw">library</span>(tree)</a>
+<a class="sourceLine" id="cb448-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb448-5" data-line-number="5"><span class="kw">data</span>(Default)</a>
+<a class="sourceLine" id="cb448-6" data-line-number="6">fold_indices &lt;-<span class="st"> </span><span class="kw">cvFolds</span>(<span class="dt">n=</span><span class="kw">nrow</span>(Default), <span class="dt">K=</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb448-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb448-8" data-line-number="8">error_rates &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="cf">function</span>(fold_index) {</a>
+<a class="sourceLine" id="cb448-9" data-line-number="9">  test_indices &lt;-<span class="st"> </span><span class="kw">which</span>(fold_indices<span class="op">$</span>which <span class="op">==</span><span class="st"> </span>fold_index)</a>
+<a class="sourceLine" id="cb448-10" data-line-number="10">  test_set &lt;-<span class="st"> </span>Default[test_indices,]</a>
+<a class="sourceLine" id="cb448-11" data-line-number="11">  train_set &lt;-<span class="st"> </span>Default[<span class="op">-</span>test_indices,]</a>
+<a class="sourceLine" id="cb448-12" data-line-number="12">  </a>
+<a class="sourceLine" id="cb448-13" data-line-number="13">  logis_fit &lt;-<span class="st"> </span><span class="kw">glm</span>(default<span class="op">~</span>., <span class="dt">data=</span>train_set, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>)</a>
+<a class="sourceLine" id="cb448-14" data-line-number="14">  logis_pred &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(logis_fit, <span class="dt">newdata=</span>test_set, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)</a>
+<a class="sourceLine" id="cb448-15" data-line-number="15">  logis_error &lt;-<span class="st"> </span><span class="kw">mean</span>(test_set<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>logis_pred)</a>
+<a class="sourceLine" id="cb448-16" data-line-number="16">  </a>
+<a class="sourceLine" id="cb448-17" data-line-number="17">  tree_fit &lt;-<span class="st"> </span><span class="kw">tree</span>(default<span class="op">~</span>., <span class="dt">data=</span>train_set)</a>
+<a class="sourceLine" id="cb448-18" data-line-number="18">  pruned_tree &lt;-<span class="st"> </span><span class="kw">prune.tree</span>(tree_fit, <span class="dt">best=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb448-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb448-20" data-line-number="20">  tree_pred &lt;-<span class="st"> </span><span class="kw">predict</span>(pruned_tree, <span class="dt">newdata=</span>test_set, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)</a>
+<a class="sourceLine" id="cb448-21" data-line-number="21">  tree_error &lt;-<span class="st"> </span><span class="kw">mean</span>(test_set<span class="op">$</span>default <span class="op">!=</span><span class="st"> </span>tree_pred)</a>
+<a class="sourceLine" id="cb448-22" data-line-number="22">  <span class="kw">c</span>(logis_error, tree_error)</a>
+<a class="sourceLine" id="cb448-23" data-line-number="23">  })</a>
+<a class="sourceLine" id="cb448-24" data-line-number="24"><span class="kw">rownames</span>(error_rates) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;logis&quot;</span>, <span class="st">&quot;tree&quot;</span>)</a>
+<a class="sourceLine" id="cb448-25" data-line-number="25">error_rates &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(error_rates))</a>
+<a class="sourceLine" id="cb448-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb448-27" data-line-number="27"><span class="kw">library</span>(tidyr)</a>
+<a class="sourceLine" id="cb448-28" data-line-number="28"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb448-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb448-30" data-line-number="30">error_rates &lt;-<span class="st"> </span>error_rates <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb448-31" data-line-number="31"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fold=</span><span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb448-32" data-line-number="32"><span class="st">  </span><span class="kw">gather</span>(method,error,<span class="op">-</span>fold)</a>
+<a class="sourceLine" id="cb448-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb448-34" data-line-number="34">error_rates <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb448-35" data-line-number="35"><span class="st">  </span><span class="kw">head</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb448-36" data-line-number="36"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="st">&quot;html&quot;</span>)</a></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+fold
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+error
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+logis
+</td>
+<td style="text-align:right;">
+0.028
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+logis
+</td>
+<td style="text-align:right;">
+0.037
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+logis
+</td>
+<td style="text-align:right;">
+0.021
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+logis
+</td>
+<td style="text-align:right;">
+0.030
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+logis
+</td>
+<td style="text-align:right;">
+0.029
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+logis
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb449-1" data-line-number="1"><span class="kw">dotplot</span>(error<span class="op">~</span>method, <span class="dt">data=</span>error_rates, <span class="dt">ylab=</span><span class="st">&quot;Mean Prediction Error&quot;</span>)</a></code></pre></div>
+<p><img src="lecture-notes_cmsc320_files/figure-html/unnamed-chunk-254-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb450-1" data-line-number="1"><span class="kw">lm</span>(error<span class="op">~</span>method, <span class="dt">data=</span>error_rates) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb450-2" data-line-number="2"><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb450-3" data-line-number="3"><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.0267</td>
+<td align="right">0.0020306</td>
+<td align="right">13.148828</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">methodtree</td>
+<td align="right">0.0030</td>
+<td align="right">0.0028717</td>
+<td align="right">1.044677</td>
+<td align="right">0.3099998</td>
+</tr>
+</tbody>
+</table>
+<p>In this case, we do not observe any significant difference between these methods.</p>
 </div>
 </div>
-<div id="operations-that-subset-entities" class="section level2">
-<h2><span class="header-section-number">6.2</span> Operations that subset entities</h2>
-<p>Next, we look at operations that select entities from a data frame. We will see a few operations to do this: selecting specific entities (rows) by position, selecting them based on attribute properties, and random sampling.</p>
-<p><img src="img/subset.png" /></p>
-<div id="slice" class="section level3">
-<h3><span class="header-section-number">6.2.1</span> <code>slice</code></h3>
-<p>We can choose specific entities by their row position. For instance, to choose entities in rows 1,3 and 10, we would use the following:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">slice</span>(arrest_tab, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">10</span>))</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 15
-##   arrest   age race  sex   arrestDate arrestTime
-##    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;    
-## 1 1.11e7    23 B     M     01/01/2011 00&#39;00&quot;    
-## 2 1.11e7    46 B     M     01/01/2011 01&#39;00&quot;    
-## 3 1.11e7    53 B     M     01/01/2011 15&#39;00&quot;    
-## # … with 9 more variables: arrestLocation &lt;chr&gt;,
-## #   incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;,
-## #   chargeDescription &lt;chr&gt;, district &lt;chr&gt;,
-## #   post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location
-## #   1` &lt;chr&gt;</code></pre>
-<p>As before, the first argument is the data frame to operate on. The second argument is a <em>vector</em> of indices. We used the <code>c</code> function (for concatenate) to create a vector of indices.</p>
-<p>We can also use the range operator here:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">slice</span>(arrest_tab, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 5 x 15
-##   arrest   age race  sex   arrestDate arrestTime
-##    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;    
-## 1 1.11e7    23 B     M     01/01/2011 00&#39;00&quot;    
-## 2 1.11e7    37 B     M     01/01/2011 01&#39;00&quot;    
-## 3 1.11e7    46 B     M     01/01/2011 01&#39;00&quot;    
-## 4 1.11e7    50 B     M     01/01/2011 04&#39;00&quot;    
-## 5 1.11e7    33 B     M     01/01/2011 05&#39;00&quot;    
-## # … with 9 more variables: arrestLocation &lt;chr&gt;,
-## #   incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;,
-## #   chargeDescription &lt;chr&gt;, district &lt;chr&gt;,
-## #   post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location
-## #   1` &lt;chr&gt;</code></pre>
-<p>To create general sequences of indices we would use the <code>seq</code> function. For example, to select entities in even positions we would use the following:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">slice</span>(arrest_tab, <span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">nrow</span>(arrest_tab), <span class="dt">by=</span><span class="dv">2</span>))</a></code></pre></div>
-<pre><code>## # A tibble: 52,264 x 15
-##    arrest   age race  sex   arrestDate arrestTime
-##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;    
-##  1 1.11e7    37 B     M     01/01/2011 01&#39;00&quot;    
-##  2 1.11e7    50 B     M     01/01/2011 04&#39;00&quot;    
-##  3 1.11e7    41 B     M     01/01/2011 05&#39;00&quot;    
-##  4 1.11e7    20 W     M     01/01/2011 05&#39;00&quot;    
-##  5 1.11e7    53 B     M     01/01/2011 15&#39;00&quot;    
-##  6 1.11e7    25 B     M     01/01/2011 20&#39;00&quot;    
-##  7 1.11e7    50 B     M     01/01/2011 40&#39;00&quot;    
-##  8 1.11e7    40 B     M     01/01/2011 40&#39;00&quot;    
-##  9 1.11e7    30 B     M     01/01/2011 40&#39;00&quot;    
-## 10 1.11e7    53 B     M     01/01/2011 40&#39;00&quot;    
-## # … with 52,254 more rows, and 9 more variables:
-## #   arrestLocation &lt;chr&gt;, incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;,
-## #   chargeDescription &lt;chr&gt;, district &lt;chr&gt;,
-## #   post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location
-## #   1` &lt;chr&gt;</code></pre>
-</div>
-<div id="filter" class="section level3">
-<h3><span class="header-section-number">6.2.2</span> <code>filter</code></h3>
-<p>We can also select entities based on attribute properties. For example, to select arrests where age is less than 18 years old, we would use the following:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">filter</span>(arrest_tab, age <span class="op">&lt;</span><span class="st"> </span><span class="dv">18</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 463 x 15
-##    arrest   age race  sex   arrestDate arrestTime
-##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;    
-##  1 1.11e7    17 B     M     01/03/2011 15:00     
-##  2 1.11e7    17 B     M     01/07/2011 18:40     
-##  3 1.11e7    17 A     M     01/10/2011 22:00     
-##  4 1.11e7    17 B     M     01/13/2011 01:00     
-##  5 1.11e7    17 B     F     01/13/2011 13:40     
-##  6 1.11e7    17 B     M     01/13/2011 18:40     
-##  7 1.11e7    14 B     M     01/17/2011 21:57     
-##  8 1.11e7    17 B     M     01/18/2011 15:00     
-##  9 1.11e7    17 B     M     01/18/2011 15:26     
-## 10 1.11e7    16 B     M     01/18/2011 16:00     
-## # … with 453 more rows, and 9 more variables:
-## #   arrestLocation &lt;chr&gt;, incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;,
-## #   chargeDescription &lt;chr&gt;, district &lt;chr&gt;,
-## #   post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location
-## #   1` &lt;chr&gt;</code></pre>
-<p>You know by now what the first argument is…</p>
-<p>The second argument is an expression that evaluates to a logical value (<code>TRUE</code> or <code>FALSE</code>), if the expression evaluates to TRUE for a given entity (row) then that entity (row) is part of the resulting data frame. Operators used frequently include:</p>
-<p><code>==</code>, <code>!=</code>: tests equality and inequality respectively (categorical, numerical, datetimes, etc.)<br />
-<code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>: tests order relationships for ordered data types (not categorical)<br />
-<code>!</code>, <code>&amp;</code>, <code>|</code>: not, and, or, logical operators</p>
-<p>To select arrests with ages between 18 and 25 we can use</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">filter</span>(arrest_tab, age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 35,770 x 15
-##    arrest   age race  sex   arrestDate arrestTime
-##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;    
-##  1 1.11e7    23 B     M     01/01/2011 00:00     
-##  2 1.11e7    20 W     M     01/01/2011 00:05     
-##  3 1.11e7    24 B     M     01/01/2011 00:07     
-##  4 1.11e7    25 B     M     01/01/2011 00:20     
-##  5 1.11e7    24 B     M     01/01/2011 00:40     
-##  6 1.11e7    20 B     M     01/01/2011 01:22     
-##  7 1.11e7    23 B     M     01/01/2011 01:30     
-##  8 1.11e7    22 A     M     01/01/2011 01:40     
-##  9 1.11e7    20 W     M     01/01/2011 02:00     
-## 10 1.11e7    20 B     M     01/01/2011 02:20     
-## # … with 35,760 more rows, and 9 more variables:
-## #   arrestLocation &lt;chr&gt;, incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;,
-## #   chargeDescription &lt;chr&gt;, district &lt;chr&gt;,
-## #   post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location
-## #   1` &lt;chr&gt;</code></pre>
-<p>The filter function can take multiple logical expressions. In this case they are combined with <code>&amp;</code>. So the above is equivalent to</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">filter</span>(arrest_tab, age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span>, age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 35,770 x 15
-##    arrest   age race  sex   arrestDate arrestTime
-##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;    
-##  1 1.11e7    23 B     M     01/01/2011 00:00     
-##  2 1.11e7    20 W     M     01/01/2011 00:05     
-##  3 1.11e7    24 B     M     01/01/2011 00:07     
-##  4 1.11e7    25 B     M     01/01/2011 00:20     
-##  5 1.11e7    24 B     M     01/01/2011 00:40     
-##  6 1.11e7    20 B     M     01/01/2011 01:22     
-##  7 1.11e7    23 B     M     01/01/2011 01:30     
-##  8 1.11e7    22 A     M     01/01/2011 01:40     
-##  9 1.11e7    20 W     M     01/01/2011 02:00     
-## 10 1.11e7    20 B     M     01/01/2011 02:20     
-## # … with 35,760 more rows, and 9 more variables:
-## #   arrestLocation &lt;chr&gt;, incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;,
-## #   chargeDescription &lt;chr&gt;, district &lt;chr&gt;,
-## #   post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location
-## #   1` &lt;chr&gt;</code></pre>
-</div>
-<div id="sample_n-and-sample_frac" class="section level3">
-<h3><span class="header-section-number">6.2.3</span> <code>sample_n</code> and <code>sample_frac</code></h3>
-<p>Frequently we will want to choose entities from a data frame at random. The <code>sample_n</code> function selects a specific number of entities at random:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw">sample_n</span>(arrest_tab, <span class="dv">10</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 10 x 15
-##     arrest   age race  sex   arrestDate
-##      &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;     
-##  1  1.12e7    41 B     M     06/08/2011
-##  2  1.26e7    28 B     M     12/12/2012
-##  3  1.25e7    21 B     M     07/31/2012
-##  4  1.14e7    26 B     M     11/13/2011
-##  5  1.13e7    55 B     M     08/31/2011
-##  6  1.14e7    25 B     M     11/12/2011
-##  7 NA         22 B     F     03/09/2011
-##  8  1.26e7    24 B     M     10/31/2012
-##  9 NA         37 B     M     05/27/2011
-## 10  1.26e7    40 B     M     11/13/2012
-## # … with 10 more variables: arrestTime &lt;time&gt;,
-## #   arrestLocation &lt;chr&gt;, incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;,
-## #   chargeDescription &lt;chr&gt;, district &lt;chr&gt;,
-## #   post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location
-## #   1` &lt;chr&gt;</code></pre>
-<p>The <code>sample_frac</code> function selects a fraction of entitites at random:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="kw">sample_frac</span>(arrest_tab, <span class="fl">.1</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 10,453 x 15
-##    arrest   age race  sex   arrestDate arrestTime
-##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;      &lt;time&gt;    
-##  1 1.13e7    53 B     M     07/27/2011 09:12     
-##  2 1.12e7    25 B     M     04/06/2011 19:45     
-##  3 1.26e7    20 B     M     10/08/2012 17:45     
-##  4 1.14e7    19 B     M     11/30/2011 19:30     
-##  5 1.25e7    25 B     M     08/11/2012 18:00     
-##  6 1.12e7    25 B     M     05/24/2011 18:45     
-##  7 1.12e7    20 B     M     02/26/2011 12:16     
-##  8 1.24e7    44 B     M     01/10/2012 13:30     
-##  9 1.25e7    20 B     M     06/19/2012 23:53     
-## 10 1.12e7    41 B     M     03/19/2011 15:00     
-## # … with 10,443 more rows, and 9 more variables:
-## #   arrestLocation &lt;chr&gt;, incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;,
-## #   chargeDescription &lt;chr&gt;, district &lt;chr&gt;,
-## #   post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location
-## #   1` &lt;chr&gt;</code></pre>
-</div>
-</div>
-<div id="pipelines-of-operations" class="section level2">
-<h2><span class="header-section-number">6.3</span> Pipelines of operations</h2>
-<p>All of the functions implementing our first set of operations have the same argument/value structure. They take a data frame as a first argument and return a data frame. We refer to this as the <em>data–&gt;transform–&gt;data</em> pattern. This is the core a lot of what we will do in class as part of data analyses. Specifically, we will combine operations into <em>pipelines</em> that manipulate data frames.</p>
-<p>The <code>dplyr</code> package introduces <em>syntactic sugar</em> to make this pattern explicit. For instance, we can rewrite the <code>sample_frac</code> example using the “pipe” operator <code>%&gt;%</code>:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1">arrest_tab <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb56-2" data-line-number="2"><span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">1</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 10,453 x 15
-##     arrest   age race  sex   arrestDate
-##      &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;fct&gt; &lt;chr&gt;     
-##  1  1.12e7    22 B     M     02/18/2011
-##  2  1.26e7    58 B     M     11/30/2012
-##  3 NA         28 W     F     08/22/2012
-##  4  1.24e7    38 B     F     01/08/2012
-##  5  1.24e7    22 B     M     03/22/2012
-##  6  1.25e7    43 B     F     04/06/2012
-##  7  1.12e7    21 B     F     05/11/2011
-##  8  1.25e7    25 B     M     07/20/2012
-##  9  1.13e7    18 B     M     10/07/2011
-## 10  1.25e7    19 B     M     09/01/2012
-## # … with 10,443 more rows, and 10 more
-## #   variables: arrestTime &lt;time&gt;,
-## #   arrestLocation &lt;chr&gt;, incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;,
-## #   chargeDescription &lt;chr&gt;, district &lt;chr&gt;,
-## #   post &lt;dbl&gt;, neighborhood &lt;chr&gt;, `Location
-## #   1` &lt;chr&gt;</code></pre>
-<p>The <code>%&gt;%</code> binary operator takes the value to its <strong>left</strong> and inserts it as the first argument of the function call to its <strong>right</strong>. So the expression <code>LHS %&gt;% f(another_argument)</code> is <strong>equivalent</strong> to the expression <code>f(LHS, another_argument)</code>.</p>
-<p>Using the <code>%&gt;%</code> operator and the <em>data–&gt;transform–&gt;data</em> pattern of the functions we’ve seen so far, we can create pipelines. For example, let’s create a pipeline that:</p>
-<ol style="list-style-type: decimal">
-<li>filters our dataset to arrests between the ages of 18 and 25</li>
-<li>selects attributes <code>sex</code>, <code>district</code> and <code>arrestDate</code> (renamed as <code>arrest_date</code>)</li>
-<li>samples 50% of those arrests at random</li>
-</ol>
-<p>We will assign the result to variable <code>analysis_tab</code></p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1">analysis_tab &lt;-<span class="st"> </span>arrest_tab <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb58-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span>, age <span class="op">&lt;=</span><span class="st"> </span><span class="dv">25</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(sex, district, <span class="dt">arrest_date=</span>arrestDate) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb58-4" data-line-number="4"><span class="st">  </span><span class="kw">sample_frac</span>(.<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb58-5" data-line-number="5">analysis_tab</a></code></pre></div>
-<pre><code>## # A tibble: 17,885 x 3
-##    sex   district     arrest_date
-##    &lt;fct&gt; &lt;chr&gt;        &lt;chr&gt;      
-##  1 F     EASTERN      11/02/2011 
-##  2 F     SOUTHWESTERN 11/02/2011 
-##  3 M     EASTERN      11/21/2012 
-##  4 M     &lt;NA&gt;         10/26/2011 
-##  5 M     SOUTHEASTERN 05/24/2012 
-##  6 M     EASTERN      03/20/2012 
-##  7 M     WESTERN      09/13/2011 
-##  8 M     EASTERN      06/24/2011 
-##  9 F     &lt;NA&gt;         10/16/2012 
-## 10 M     &lt;NA&gt;         02/21/2011 
-## # … with 17,875 more rows</code></pre>
-<p><strong>Exercise</strong>: Create a pipeline that:</p>
-<ol style="list-style-type: decimal">
-<li>filters dataset to arrests from the “SOUTHERN” district occurring before “12:00” (<code>arrestTime</code>)</li>
-<li>selects attributes, <code>sex</code>, <code>age</code></li>
-<li>samples 10 entities at random</li>
-</ol>
+<div id="summary-4" class="section level2">
+<h2><span class="header-section-number">32.3</span> Summary</h2>
+<p>Error and accuracy statistics are not enough to understand classifier performance. Classifications can be done using probability cutoffs to trade, e.g., TPR-FPR (ROC curve), or precision-recall (PR curve). Area under ROC or PR curve summarize classifier performance across different cutoffs.</p>
+<p>Model selection and assessment are critical steps of data analysis. Resampling methods are general tools used for this purpose.</p>
 
 </div>
 </div>
@@ -904,8 +957,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="measurements-and-data-types.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="principles-more-operations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tree-based-methods.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="unsupervised-learning-clustering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
