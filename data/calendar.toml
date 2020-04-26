@@ -533,11 +533,11 @@ date = "4/27"
 
 [[day24.covers]]
 title = "Classification Metrics"
-notes = "bookdown-notes/linear-models-for-classification.html"
+notes = "model-selection-and-evaluation.html#classifier-evaluation"
 
 [[day24.covers]]
 title = "Model evaluation using resampling"
-notes = "bookdown-notes/model-selection.html"
+notes = "bookdown-notes/model-selection-and-evaluation.html#model-selection"
 
 [day25]
 date = "4/29"
