@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>33 Unsupervised Learning: Clustering | Lecture Notes: Introduction to Data Science</title>
   <meta name="description" content="33 Unsupervised Learning: Clustering | Lecture Notes: Introduction to Data Science" />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="33 Unsupervised Learning: Clustering | Lecture Notes: Introduction to Data Science" />
   <meta property="og:type" content="book" />
@@ -24,14 +24,14 @@
 <meta name="author" content="Héctor Corrada Bravo" />
 
 
-<meta name="date" content="2020-03-23" />
+<meta name="date" content="2020-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="model-selection.html"/>
+<link rel="prev" href="model-selection-and-evaluation.html"/>
 <link rel="next" href="unsupervised-learning-dimensionality-reduction.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -443,8 +443,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="29.5" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>29.5</b> Linear Discriminant Analysis</a><ul>
 <li class="chapter" data-level="29.5.1" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#how-to-train-lda"><i class="fa fa-check"></i><b>29.5.1</b> How to train LDA</a></li>
 </ul></li>
-<li class="chapter" data-level="29.6" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#classifier-evaluation"><i class="fa fa-check"></i><b>29.6</b> Classifier evaluation</a></li>
-<li class="chapter" data-level="29.7" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#summary-3"><i class="fa fa-check"></i><b>29.7</b> Summary</a></li>
+<li class="chapter" data-level="29.6" data-path="linear-models-for-classification.html"><a href="linear-models-for-classification.html#summary-3"><i class="fa fa-check"></i><b>29.6</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="30" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html"><i class="fa fa-check"></i><b>30</b> Solving linear ML problems</a><ul>
 <li class="chapter" data-level="30.1" data-path="solving-linear-ml-problems.html"><a href="solving-linear-ml-problems.html#case-study"><i class="fa fa-check"></i><b>30.1</b> Case Study</a></li>
@@ -469,15 +468,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="31.5" data-path="tree-based-methods.html"><a href="tree-based-methods.html#random-forests"><i class="fa fa-check"></i><b>31.5</b> Random Forests</a></li>
 <li class="chapter" data-level="31.6" data-path="tree-based-methods.html"><a href="tree-based-methods.html#tree-based-methods-summary"><i class="fa fa-check"></i><b>31.6</b> Tree-based methods summary</a></li>
 </ul></li>
-<li class="chapter" data-level="32" data-path="model-selection.html"><a href="model-selection.html"><i class="fa fa-check"></i><b>32</b> Model Selection</a><ul>
-<li class="chapter" data-level="32.1" data-path="model-selection.html"><a href="model-selection.html#cross-validation"><i class="fa fa-check"></i><b>32.1</b> Cross Validation</a></li>
-<li class="chapter" data-level="32.2" data-path="model-selection.html"><a href="model-selection.html#validation-set"><i class="fa fa-check"></i><b>32.2</b> Validation Set</a></li>
-<li class="chapter" data-level="32.3" data-path="model-selection.html"><a href="model-selection.html#resampled-validation-set"><i class="fa fa-check"></i><b>32.3</b> Resampled validation set</a></li>
-<li class="chapter" data-level="32.4" data-path="model-selection.html"><a href="model-selection.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>32.4</b> Leave-one-out Cross-Validation</a></li>
-<li class="chapter" data-level="32.5" data-path="model-selection.html"><a href="model-selection.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>32.5</b> k-fold Cross-Validation</a></li>
-<li class="chapter" data-level="32.6" data-path="model-selection.html"><a href="model-selection.html#cross-validation-in-classification"><i class="fa fa-check"></i><b>32.6</b> Cross-Validation in Classification</a></li>
-<li class="chapter" data-level="32.7" data-path="model-selection.html"><a href="model-selection.html#comparing-models-using-cross-validation"><i class="fa fa-check"></i><b>32.7</b> Comparing models using cross-validation</a></li>
-<li class="chapter" data-level="32.8" data-path="model-selection.html"><a href="model-selection.html#summary-4"><i class="fa fa-check"></i><b>32.8</b> Summary</a></li>
+<li class="chapter" data-level="32" data-path="model-selection-and-evaluation.html"><a href="model-selection-and-evaluation.html"><i class="fa fa-check"></i><b>32</b> Model Selection and Evaluation</a><ul>
+<li class="chapter" data-level="32.1" data-path="model-selection-and-evaluation.html"><a href="model-selection-and-evaluation.html#classifier-evaluation"><i class="fa fa-check"></i><b>32.1</b> Classifier evaluation</a></li>
+<li class="chapter" data-level="32.2" data-path="model-selection-and-evaluation.html"><a href="model-selection-and-evaluation.html#model-selection"><i class="fa fa-check"></i><b>32.2</b> Model selection</a><ul>
+<li class="chapter" data-level="32.2.1" data-path="model-selection-and-evaluation.html"><a href="model-selection-and-evaluation.html#cross-validation"><i class="fa fa-check"></i><b>32.2.1</b> Cross Validation</a></li>
+<li class="chapter" data-level="32.2.2" data-path="model-selection-and-evaluation.html"><a href="model-selection-and-evaluation.html#validation-set"><i class="fa fa-check"></i><b>32.2.2</b> Validation Set</a></li>
+<li class="chapter" data-level="32.2.3" data-path="model-selection-and-evaluation.html"><a href="model-selection-and-evaluation.html#resampled-validation-set"><i class="fa fa-check"></i><b>32.2.3</b> Resampled validation set</a></li>
+<li class="chapter" data-level="32.2.4" data-path="model-selection-and-evaluation.html"><a href="model-selection-and-evaluation.html#leave-one-out-cross-validation"><i class="fa fa-check"></i><b>32.2.4</b> Leave-one-out Cross-Validation</a></li>
+<li class="chapter" data-level="32.2.5" data-path="model-selection-and-evaluation.html"><a href="model-selection-and-evaluation.html#k-fold-cross-validation"><i class="fa fa-check"></i><b>32.2.5</b> k-fold Cross-Validation</a></li>
+<li class="chapter" data-level="32.2.6" data-path="model-selection-and-evaluation.html"><a href="model-selection-and-evaluation.html#cross-validation-in-classification"><i class="fa fa-check"></i><b>32.2.6</b> Cross-Validation in Classification</a></li>
+<li class="chapter" data-level="32.2.7" data-path="model-selection-and-evaluation.html"><a href="model-selection-and-evaluation.html#comparing-models-statistically-using-cross-validation"><i class="fa fa-check"></i><b>32.2.7</b> Comparing models statistically using cross-validation</a></li>
+</ul></li>
+<li class="chapter" data-level="32.3" data-path="model-selection-and-evaluation.html"><a href="model-selection-and-evaluation.html#summary-4"><i class="fa fa-check"></i><b>32.3</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="33" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html"><i class="fa fa-check"></i><b>33</b> Unsupervised Learning: Clustering</a><ul>
 <li class="chapter" data-level="33.1" data-path="unsupervised-learning-clustering.html"><a href="unsupervised-learning-clustering.html#motivating-example"><i class="fa fa-check"></i><b>33.1</b> Motivating Example</a></li>
@@ -523,41 +525,41 @@ if we want to know if a given <em>predictor</em> is related to <em>response</em>
 <h2><span class="header-section-number">33.1</span> Motivating Example</h2>
 <p>Throughout this unit we will use a time series dataset of mortgage affordability
 as calculated and distributed by Zillow: <a href="https://www.zillow.com/research/data/" class="uri">https://www.zillow.com/research/data/</a>.</p>
-<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb455-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb455-2" data-line-number="2"><span class="kw">library</span>(readr)</a>
-<a class="sourceLine" id="cb455-3" data-line-number="3"><span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb455-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb455-5" data-line-number="5">datadir &lt;-<span class="st"> &quot;data&quot;</span></a>
-<a class="sourceLine" id="cb455-6" data-line-number="6">url &lt;-<span class="st"> &quot;http://files.zillowstatic.com/research/public/Affordability_Wide_2017Q4_Public.csv&quot;</span></a>
-<a class="sourceLine" id="cb455-7" data-line-number="7">filename &lt;-<span class="st"> </span><span class="kw">basename</span>(url)</a>
-<a class="sourceLine" id="cb455-8" data-line-number="8">datafile &lt;-<span class="st"> </span><span class="kw">file.path</span>(datadir, filename)</a>
-<a class="sourceLine" id="cb455-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb455-10" data-line-number="10"><span class="cf">if</span> (<span class="op">!</span><span class="kw">file.exists</span>(datafile)) {</a>
-<a class="sourceLine" id="cb455-11" data-line-number="11">  <span class="kw">download.file</span>(url, <span class="kw">file.path</span>(datadir, filename))</a>
-<a class="sourceLine" id="cb455-12" data-line-number="12">}</a>
-<a class="sourceLine" id="cb455-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb455-14" data-line-number="14">afford_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(datafile)</a></code></pre></div>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb456-1" data-line-number="1">tidy_afford &lt;-<span class="st"> </span>afford_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb456-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(Index <span class="op">==</span><span class="st"> &quot;Mortgage Affordability&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb456-3" data-line-number="3"><span class="st">  </span><span class="kw">drop_na</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb456-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(RegionID <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb456-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(RegionID, <span class="kw">matches</span>(<span class="st">&quot;^[1|2]&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb456-6" data-line-number="6"><span class="st">  </span><span class="kw">gather</span>(time, affordability, <span class="kw">matches</span>(<span class="st">&quot;^[1|2]&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb456-7" data-line-number="7"><span class="st">  </span><span class="kw">type_convert</span>(<span class="dt">col_types=</span><span class="kw">cols</span>(<span class="dt">time=</span><span class="kw">col_date</span>(<span class="dt">format=</span><span class="st">&quot;%Y-%m&quot;</span>)))</a>
-<a class="sourceLine" id="cb456-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb456-9" data-line-number="9">wide_afford_df &lt;-<span class="st"> </span>tidy_afford <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb456-10" data-line-number="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(RegionID, time, affordability) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb456-11" data-line-number="11"><span class="st">  </span><span class="kw">spread</span>(time, affordability)</a>
-<a class="sourceLine" id="cb456-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb456-13" data-line-number="13">value_mat &lt;-<span class="st">  </span>wide_afford_df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb456-14" data-line-number="14"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>RegionID) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb456-15" data-line-number="15"><span class="st">  </span><span class="kw">as.matrix</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb451-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb451-2" data-line-number="2"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb451-3" data-line-number="3"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb451-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb451-5" data-line-number="5">datadir &lt;-<span class="st"> &quot;data&quot;</span></a>
+<a class="sourceLine" id="cb451-6" data-line-number="6">url &lt;-<span class="st"> &quot;http://files.zillowstatic.com/research/public/Affordability_Wide_2017Q4_Public.csv&quot;</span></a>
+<a class="sourceLine" id="cb451-7" data-line-number="7">filename &lt;-<span class="st"> </span><span class="kw">basename</span>(url)</a>
+<a class="sourceLine" id="cb451-8" data-line-number="8">datafile &lt;-<span class="st"> </span><span class="kw">file.path</span>(datadir, filename)</a>
+<a class="sourceLine" id="cb451-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb451-10" data-line-number="10"><span class="cf">if</span> (<span class="op">!</span><span class="kw">file.exists</span>(datafile)) {</a>
+<a class="sourceLine" id="cb451-11" data-line-number="11">  <span class="kw">download.file</span>(url, <span class="kw">file.path</span>(datadir, filename))</a>
+<a class="sourceLine" id="cb451-12" data-line-number="12">}</a>
+<a class="sourceLine" id="cb451-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb451-14" data-line-number="14">afford_data &lt;-<span class="st"> </span><span class="kw">read_csv</span>(datafile)</a></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb452-1" data-line-number="1">tidy_afford &lt;-<span class="st"> </span>afford_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(Index <span class="op">==</span><span class="st"> &quot;Mortgage Affordability&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb452-3" data-line-number="3"><span class="st">  </span><span class="kw">drop_na</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(RegionID <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(RegionID, <span class="kw">matches</span>(<span class="st">&quot;^[1|2]&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-6" data-line-number="6"><span class="st">  </span><span class="kw">gather</span>(time, affordability, <span class="kw">matches</span>(<span class="st">&quot;^[1|2]&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-7" data-line-number="7"><span class="st">  </span><span class="kw">type_convert</span>(<span class="dt">col_types=</span><span class="kw">cols</span>(<span class="dt">time=</span><span class="kw">col_date</span>(<span class="dt">format=</span><span class="st">&quot;%Y-%m&quot;</span>)))</a>
+<a class="sourceLine" id="cb452-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb452-9" data-line-number="9">wide_afford_df &lt;-<span class="st"> </span>tidy_afford <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-10" data-line-number="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(RegionID, time, affordability) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-11" data-line-number="11"><span class="st">  </span><span class="kw">spread</span>(time, affordability)</a>
+<a class="sourceLine" id="cb452-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb452-13" data-line-number="13">value_mat &lt;-<span class="st">  </span>wide_afford_df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-14" data-line-number="14"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>RegionID) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb452-15" data-line-number="15"><span class="st">  </span><span class="kw">as.matrix</span>() </a></code></pre></div>
 <p>The dataset contains affordability measurements for 81 counties with data from 1979 to 2017. Here we plot the time series of affordability for all counties.</p>
-<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb457-1" data-line-number="1">tidy_afford <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb457-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time,<span class="dt">y=</span>affordability,<span class="dt">group=</span><span class="kw">factor</span>(RegionID))) <span class="op">+</span></a>
-<a class="sourceLine" id="cb457-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color=</span><span class="st">&quot;GRAY&quot;</span>, <span class="dt">alpha=</span><span class="dv">3</span><span class="op">/</span><span class="dv">4</span>, <span class="dt">size=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb457-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;County-Level Mortgage Affordability over Time&quot;</span>,</a>
-<a class="sourceLine" id="cb457-5" data-line-number="5">          <span class="dt">x=</span><span class="st">&quot;Date&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Mortgage Affordability&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb453-1" data-line-number="1">tidy_afford <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb453-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time,<span class="dt">y=</span>affordability,<span class="dt">group=</span><span class="kw">factor</span>(RegionID))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb453-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color=</span><span class="st">&quot;GRAY&quot;</span>, <span class="dt">alpha=</span><span class="dv">3</span><span class="op">/</span><span class="dv">4</span>, <span class="dt">size=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb453-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;County-Level Mortgage Affordability over Time&quot;</span>,</a>
+<a class="sourceLine" id="cb453-5" data-line-number="5">          <span class="dt">x=</span><span class="st">&quot;Date&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Mortgage Affordability&quot;</span>)</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/zillow_plot1-1.svg" width="672" /></p>
 <p>A natural question to ask about this data is, “can we partition counties into groups of counties with similar value trends across time”</p>
 </div>
@@ -575,16 +577,16 @@ as calculated and distributed by Zillow: <a href="https://www.zillow.com/researc
 <h2><span class="header-section-number">33.3</span> Cluster Analysis</h2>
 <p>The high-level goal of cluster analysis is to organize objects (observations) that are <em>similar</em> to each other into groups. We want objects within a group to be more <em>similar</em> to each other than objects in different groups.</p>
 <p>Central to this high-level goal is how to measure the degree of <em>similarity</em> between objects. A clustering method then uses the <em>similarity</em> measure provided to it to group objects into clusters.</p>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb458-1" data-line-number="1"><span class="kw">library</span>(broom)</a>
-<a class="sourceLine" id="cb458-2" data-line-number="2"><span class="kw">library</span>(stringr)</a></code></pre></div>
-<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb459-1" data-line-number="1">augmented_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb459-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">y=</span>affordability)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb459-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group=</span>RegionID), <span class="dt">color=</span><span class="st">&quot;GRAY&quot;</span>, <span class="dt">alpha=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">size=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb459-4" data-line-number="4"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>cluster) <span class="op">+</span></a>
-<a class="sourceLine" id="cb459-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">data=</span>kmeans_centers, <span class="dt">color=</span><span class="st">&quot;BLACK&quot;</span>, <span class="dt">alpha=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">size=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb459-6" data-line-number="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">main=</span><span class="st">&quot;Kmeans Clustering (k=9)&quot;</span>,</a>
-<a class="sourceLine" id="cb459-7" data-line-number="7">       <span class="dt">xlab=</span><span class="st">&quot;Date&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;affordability&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb459-8" data-line-number="8"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">45</span>, <span class="dt">hjust=</span><span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb454-1" data-line-number="1"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb454-2" data-line-number="2"><span class="kw">library</span>(stringr)</a></code></pre></div>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb455-1" data-line-number="1">augmented_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb455-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>time, <span class="dt">y=</span>affordability)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb455-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group=</span>RegionID), <span class="dt">color=</span><span class="st">&quot;GRAY&quot;</span>, <span class="dt">alpha=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">size=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb455-4" data-line-number="4"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>cluster) <span class="op">+</span></a>
+<a class="sourceLine" id="cb455-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">data=</span>kmeans_centers, <span class="dt">color=</span><span class="st">&quot;BLACK&quot;</span>, <span class="dt">alpha=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, <span class="dt">size=</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb455-6" data-line-number="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">main=</span><span class="st">&quot;Kmeans Clustering (k=9)&quot;</span>,</a>
+<a class="sourceLine" id="cb455-7" data-line-number="7">       <span class="dt">xlab=</span><span class="st">&quot;Date&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;affordability&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb455-8" data-line-number="8"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">45</span>, <span class="dt">hjust=</span><span class="dv">1</span>))</a></code></pre></div>
 <p><img src="lecture-notes_cmsc320_files/figure-html/kmeans_plot-1.svg" width="672" /></p>
 <p>This plot shows the result of the k-means algorithm partitioning the data into 16 clusters. We observe that series within each cluster have similar trends. The darker series within each cluster shows the average time series within the cluster. We also see that some clusters correspond to very similar series suggesting that partitioning the data into fewer clusters would be better.</p>
 </div>
@@ -672,7 +674,7 @@ W(C) = \frac{1}{2}\sum_{k=1}^K N_k \sum_{i:\,C(i)=k} \|x_i - \bar{x}_k\|^2
           </div>
         </div>
       </div>
-<a href="model-selection.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-selection-and-evaluation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="unsupervised-learning-dimensionality-reduction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
