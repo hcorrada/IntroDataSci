@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="" xml:lang="">
   <head>
     <title>Model Selection</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="author" content="Héctor Corrada Bravo" />
-    <meta name="date" content="2018-05-01" />
+    <meta name="date" content="2020-04-26" />
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
@@ -18,21 +18,159 @@ count: false
 
 .banner[![](img/epiviz.png)]
 
-.title[Model Selection]
+.title[Introduction to Data Science: Classifier Evaluation and Model Selection]
 
 .author[Héctor Corrada Bravo]
 
 .other-info[
 University of Maryland, College Park, USA  
-CMSC320: 2018-05-01
+CMSC320: 2020-04-26
 ]
 
 .logo[![](img/logo.png)]
 
+
+
 ---
+layout: true
+
+## Classifier evaluation
+
+---
+
+How do we determine how well classifiers are performing? 
+
+One way is to compute the _error rate_ of the classifier, the percent of mistakes it makes when predicting class
+
+---
+class: split-50
+
+.column[
+
+```r
+logis_fit &lt;- glm(default ~ balance, data=Default, family="binomial")
+logis_pred_prob &lt;- predict(logis_fit, type="response") 
+logis_pred &lt;- ifelse(logis_pred_prob &gt; 0.5, "Yes", "No")
+print(table(predicted=logis_pred, observed=Default$default))
+
+# error rate
+mean(Default$default != logis_pred) * 100
+
+# dummy error rate
+mean(Default$default != "No") * 100
+```
+]
+.column[
+
+```
+##          observed
+## predicted   No  Yes
+##       No  9625  233
+##       Yes   42  100
+```
+
+```
+## [1] 2.75
+```
+
+```
+## [1] 3.33
+```
+]
+
+---
+
+We need a more precise language to describe classification mistakes:
+
+
+|                   | True Class +        | True Class -        | Total |
+|------------------:|:--------------------|---------------------|-------|
+| Predicted Class + | True Positive (TP)  | False Positive (FP) | P*    |
+| Predicted Class - | False Negative (FN) | True Negative (TN)  | N*    |
+| Total             | P                   | N                   |       |
+
+---
+
+Using these we can define statistics that describe classifier performance
+
+| Name                            | Definition | Synonyms                                          |
+|--------------------------------:|:-----------|---------------------------------------------------|
+| False Positive Rate (FPR)       | FP / N     | Type-I error, 1-Specificity                       |
+| True Positive Rate (TPR)        | TP / P     | 1 - Type-II error, power, sensitivity, **recall** |
+| Positive Predictive Value (PPV) | TP / P*    | **precision**, 1-false discovery proportion       |
+| Negative Predicitve Value (NPV) | FN / N*    |                                                   |
+---
+
+In the credit default case we may want to increase **TPR** (recall, make sure we catch all defaults) at the expense
+of **FPR** (1-Specificity, clients we lose because we think they will default)
+
+---
+
+This leads to a natural question: Can we adjust our classifiers TPR and FPR?
+
+Remember we are classifying `Yes` if 
+
+$$
+\log \frac{P(Y=\mathtt{Yes}|X)}{P(Y=\mathtt{No}|X)} &gt; 0 \Rightarrow \\
+P(Y=\mathtt{Yes}|X) &gt; 0.5
+$$
+
+What would happen if we use `\(P(Y=\mathtt{Yes}|X) &gt; 0.2\)`?
+
+---
+
+![](index_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+
+
+---
+
+A way of describing the TPR and FPR tradeoff is by using the **ROC curve** (Receiver Operating Characteristic) 
+and the **AUROC** (area under the ROC)
+
+---
+
+![](index_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+
+---
+class: split-30
+
+Consider comparing a logistic regression model using all predictors in the dataset, including an interaction term between balance and student.
+
+.column[
+`default ~ balance*student + income`
+]
+
+.column[
+
+
+
+
+&lt;img src="index_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+Another metric that is frequently used to understand classification errors and tradeoffs is the precision-recall curve:
+
+&lt;img src="index_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+The bigger model shows a slightly higher precision at the same recall values and slightly higher
+area under the precision-recall curve. 
+
+This is commonly found in datasets where
+there is a skewed distribution of classes (e.g., there are many more "No" than "Yes" in this dataset). 
+
+The area under the PR curve tends to distinguish classifier
+performance than area under the ROC curve in these cases.
+
+---
+layout: true
 
 ## Model Selection
 
+---
 
 
 Our goal when we use a learning model like linear or logistic regression, decision trees, etc., is
@@ -47,16 +185,17 @@ We should therefore think of model evaluation based on _expected predicted error
 How then, do we measure our models' ability to predict unseen data, when we only have access to training data?
 
 ---
+layout: true
 
 ## Cross-validation
+
+---
 
 The most common method to evaluate model **generalization** performance is _cross-validation_. 
 
 It is used in two essential data analysis phases: _Model Selection_ and _Model Assessment_. 
 
 ---
-
-## Cross-validation
 
 ### Model Selection
 
@@ -76,8 +215,6 @@ Which kind of algorithm to use, linear regression vs. decision tree vs. random f
 
 ---
 
-## Cross-validation
-
 ### Model Assessment 
 
 Determine how well does our selected model performs as a **general** model. 
@@ -92,8 +229,6 @@ The same question can be asked of a classification tree of specific depth.
 
 ---
 
-## Cross-validation
-
 Cross-validation is a _resampling_ method to obtain estimates of **expected prediction error rate** (or any other performance measure on unseen data). 
 
 In some instances, you will have a large predefined test dataset **that you should never use when training**. 
@@ -101,8 +236,11 @@ In some instances, you will have a large predefined test dataset **that you shou
 In the absence of access to this kind of dataset, cross validation can be used.
 
 ---
+layout: true
 
 ## Validation Set
+
+---
 
 The simplest option to use cross-validation is to create a _validation_ set, where our dataset is **randomly** divided into _training_ and _validation_ sets. 
 
@@ -113,8 +251,6 @@ Then the _validation_ is set aside, and not used at until until we are ready to 
 ---
 class: split-50
 
-## Validation Set
-
 Let's look at our running example using automobile data, where we want to build a
 regression model to predict miles per gallon given other auto attributes.
 
@@ -122,12 +258,10 @@ regression model to predict miles per gallon given other auto attributes.
 ]
 
 .column[
-&lt;img src="index_files/figure-html/unnamed-chunk-2-1.png" width="480" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
-
-## Validation Set
 
 For polynomial regression, our regression model (for a single predictor `\(X\)`) is given as a `\(d\)` degree polynomial.
 
@@ -138,8 +272,6 @@ For _model selection_, we want to decide what degree `\(d\)` we should use to mo
 
 ---
 class: split-50
-
-## Validation Set
 
 .column[
 Using the _validation set_ method, split our data into a training set, 
@@ -152,12 +284,15 @@ measure test error on the validation set.
 
 
 .column[
-&lt;img src="index_files/figure-html/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
+layout: true
 
 ## Resampled validation set
+
+---
 
 The validation set approach can be prone to sampling issues. 
 
@@ -170,20 +305,21 @@ We can improve our estimate of _test error_ by averaging multiple measurements o
 ---
 class: split-50
 
-## Resampled validation set
-
 .column[
 Resample validation set 10 times (yielding different validation and training sets) and averaging the resulting test errors.]
 
 
 
 .column[
-&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" width="480" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
+layout: true
 
 ## Leave-one-out Cross-Validation
+
+---
 
 This approach still has some issues. 
 
@@ -195,8 +331,6 @@ To alleviate this situation, we can extend our approach to the extreme: Make eac
 
 ---
 class: split-50
-
-## Leave-one-out Cross-Validation
 
 .column[
 Procedure:  
@@ -211,8 +345,6 @@ For each observation `\(i\)` in data set:
 ---
 class: split-50
 
-## Leave-one-out Cross-Validation
-
 .column[
 This gives us the following _cross-validation_ estimate of error.
 
@@ -225,7 +357,6 @@ $$
 
 ---
 
-## Leave-one-out Cross-Validation
 
 Advantages: 
 
@@ -243,24 +374,22 @@ Disadvantages:
 
 ---
 
-## Leave-one-out Cross-Validation
-
 On our running example
 
 
 
-&lt;img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
+layout: true
 
 ## k-fold Cross-Validation
+---
 
 This discussion leads us to the most commonly used cross-validation approach _k-fold Cross-Validation_.
 
 ---
 class: split-50
-
-## k-fold Cross-Validation
 
 .column[
 Procedure:  
@@ -277,8 +406,6 @@ For each of the `\(k\)` groups of observations:
 ---
 class: split-50
 
-## k-fold Cross-Validation
-
 .column[
 Procedure:  
 
@@ -293,8 +420,6 @@ where `\(MSE_i\)` is mean squared error estimated on the `\(i\)`-th fold
 
 ---
 
-## k-fold Cross-Validation
-
 - Fewer models to fit (only `\(k\)` of them)
 - Less variance in each of the computed test error estimates in each fold. 
 
@@ -304,17 +429,18 @@ It can be shown that there is a slight bias (over estimating usually) in error e
 
 ---
 
-## k-fold Cross-Validation
-
 Running Example
 
 
 
-&lt;img src="index_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
+layout: true
 
 ## Cross-Validation in Classification
+
+---
 
 Each of these procedures can be used for classification as well. 
 
@@ -326,9 +452,13 @@ Note however that not all of these work with LOOCV (e.g. AUROC since it can't be
 
 
 ---
-class: split-50
+layout: true
 
 ## Comparing models using cross-validation
+
+---
+class: split-50
+
 
 .column[
 Suppose you want to compare two classification models (logistic regression vs. a decision tree) on the `Default` dataset. We can use Cross-Validation to determine if one model is better than the other, using a `\(t\)`-test for example.
@@ -337,11 +467,10 @@ Suppose you want to compare two classification models (logistic regression vs. a
 
 
 .column[
-&lt;img src="index_files/figure-html/unnamed-chunk-12-1.png" width="480" /&gt;
+![](index_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
 ]
 
 ---
-## Comparing models using cross-validation
 
 Using hypothesis testing:
 
@@ -376,15 +505,27 @@ Using hypothesis testing:
 In this case, we do not observe any significant difference between these two classification methods.
 
 ---
+layout: true
 
 ## Summary
 
+---
+
 Model selection and assessment are critical steps of data analysis. 
+
+Error and accuracy statistics are not enough to understand classifier performance. 
+
+Classifications can be done using probability cutoffs to trade, e.g., TPR-FPR (ROC curve), or precision-recall (PR curve). 
+
+Area under ROC or PR curve summarize classifier performance across different cutoffs.
+
+---
 
 Resampling methods are general tools used for this purpose. 
 
 k-fold cross-validation can be used to provide larger training sets to algorithms while stabilizing empirical estimates of expected prediction error
     </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "ratio": "16:9"
@@ -392,11 +533,67 @@ k-fold cross-validation can be used to provide larger training sets to algorithm
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
 })();</script>
 <script>
 remark.macros['scale'] = function (percentage) {
@@ -405,19 +602,31 @@ remark.macros['scale'] = function (percentage) {
 };
 </script>
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
   }
-});
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);
