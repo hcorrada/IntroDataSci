@@ -11,4 +11,4 @@ title: CMSC320 Projects
 
 <!-- [Bonus Project:](bonus_project) Due May 17, 2019 -->
 
-<!-- [Final Project:](final_project/) Due May 22, 2019 12:30pm -->
+[Final Project:](final_project/) Due May 18, 2020

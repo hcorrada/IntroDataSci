@@ -1,11 +1,11 @@
 ---
-title:  "Bonus Project: Classification"
+title:  "Project 4: Classification"
 author: "CMSC320"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=TRUE)
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=FALSE)
 ```
 
 **Last Update**: `r Sys.Date()`
@@ -16,11 +16,13 @@ We will use Mortgage Affordability data from Zillow to experiment with classific
 
 It is made available here: http://www.hcbravo.org/IntroDataSci/misc/Affordability_Wide_2017Q4_Public.csv
 
+Download the csv file to your project directory.
+
 ### Preparing data
 
 First, we will tidy the data. Please include this piece of code in your submission.
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, cache=FALSE}
 library(tidyverse)
 library(lubridate)
 theme_set(theme_bw())
@@ -72,7 +74,7 @@ Now, you have a dataframe with outcomes (labels) for each county in the dataset.
 
 The goal is then given predictors $X_i$ for county $i$, build a classifier for outcome $G_i \in \{\mathtt{up},\mathtt{down}\}$.
 
-For your classifiers you should use data up to 2016. 
+To train your classifiers you should use data up to 2016. 
 
 ```{r}
 predictor_df <- tidy_afford %>%
@@ -81,7 +83,7 @@ predictor_df <- tidy_afford %>%
 
 ## Your project
 
-Your goal for this project is to do an experiment to address a (one, single) technical question about our ability to make this prediction. There is a list of possible questions you may address below. Each of them asks two compare two specific choices in the classification workflow (e.g., two classification algorithms, two feature representations, etc.). You will implement each of the two choices and use 10-fold cross validation (across RegionID's) to compare their relative performance. You will also create an AUROC curve to compare them.
+Your goal for this project is to do an experiment to address a (one, single) technical question about our ability to make this prediction. Here is a list of possible questions you may address below. Each of them asks to compare two specific choices in the classification workflow (e.g., two classification algorithms, two feature representations, etc.). You will implement each of the two choices and use 10-fold cross validation (across RegionID's) to compare their relative performance. You will also create an AUROC curve to compare them.
 
 ### Possible Questions
 
@@ -101,10 +103,6 @@ Your goal for this project is to do an experiment to address a (one, single) tec
 - Is K-nearest neighbors bettern than a random forest?
 - Create your own question!
 
-#### Algorithm tuning
-
-- Does tuning hyper-parameters using cross-validation improve performance?
-
 Note that you still have to make some choices regardless of the question you choose. For example, to do the feature preprocessing and representation experiments you have to choose a classifier (random forest for example), and decide what to do about hyper-parameters if appropriate.
 
 ## Submission
@@ -118,9 +116,18 @@ Prepare an Rmarkdown file which includes:
 5) ROC curves for both experimental settings.
 5) Interpretation and discussion of your experiment results.
 
-## An example classifier
+Knit to PDF and submit on ELMS.
 
-Let's build a Random Forest classifer using quarterly differences after data standardization for years 2014-2016. First, filter to the years of interest and standardize affordability for each region
+## An example experiment
+
+Question: Does the number of trees used in a random forest classifier affect
+performance (AUROC measured with 5-fold CV)?
+
+Other decisions: We are transforming input data to use quarterly differences after data standardization for years 2014-2016. 
+
+### Data preparation
+
+First, filter to the years of interest and standardize affordability for each region
 
 ```{r}
 standardized_df <- predictor_df %>%
@@ -130,6 +137,7 @@ standardized_df <- predictor_df %>%
   mutate(sd_aff = sd(affordability)) %>%
   mutate(z_aff = (affordability - mean_aff) / sd_aff) %>%
   ungroup()
+standardized_df
 ```
 
 To train our model we need a table with one row per region, and attributes corresponding to differences in quarterly affordability. We will do this in stages, first we turn the tidy dataset into a wide dataset using `tidyr::spread` then create a dataframe containing the differences we use as features.
@@ -138,6 +146,7 @@ To train our model we need a table with one row per region, and attributes corre
 wide_df <- standardized_df %>%
   select(RegionID, time, z_aff) %>%
   tidyr::spread(time, z_aff)
+wide_df
 ```
 
 Now, we turn this into quarterly differences
@@ -164,66 +173,28 @@ Finally, add the outcome we want to predict from the data frame we created previ
 ```{r}
 final_df <- diff_df %>%
   inner_join(outcome_df %>% select(RegionID, Direction), by="RegionID") %>%
-  mutate(Direction=factor(Direction, levels=c("down", "up")))
+  mutate(Direction=factor(Direction, levels=c("down", "up"))) %>%
+  select(-RegionID)
 final_df
 ```
 
-For illustration, split up the data set into training regions and testing regions (using 50/50 random split).
 
-```{r}
-set.seed(1234)
-test_random_forest_df <- final_df %>%
-  group_by(Direction) %>%
-  sample_frac(.5) %>%
-  ungroup()
+### Run the experiment 
 
-train_random_forest_df <- final_df %>%
-  anti_join(test_random_forest_df, by="RegionID")
-```
+We will use but 5-fold cross-validation to compare a random forest with 500 trees, with a random forest with 10 trees. Since this is a smallish dataset, I am using 5-fold cross validation to make the validation sets have more examples and therefore more reliable performance estimates.
 
-Let's learn the random forest using default parameters.
-
-```{r}
-library(caret)
-
-rf_fit <- train(Direction~.,
-                data = train_random_forest_df %>%
-                  select(-RegionID),
-                method="rf",
-                trControl=trainControl(method="none"))
-rf_fit
-```
-
-Now, let's make predictions on the held out test set
-
-```{r}
-test_predictions <- predict(rf_fit,                      newdata = test_random_forest_df %>%
-                              select(-RegionID))
-```
-
-Make a confusion matrix and calculate error rate.
-
-```{r}
-table(pred=test_predictions,
-      observed=test_random_forest_df$Direction)
-```
-
-Error rate is `r 100 * mean(test_predictions != test_random_forest_df$Direction)`%
-
-## An example experiment 
-
-Using this classifier we show an example experiment comparing random forests with different number of predictors. We will use but 5-fold cross-validation to compare a random forest with 500 trees, with a random forest with 10 trees. Since this is a smallish dataset, I am using 5-fold cross validation to make the validation sets have more examples and therefore more reliable performance estimates.
-
-We use the `caret::createFolds` function to create a stratified 5-fold cross-validation partition.
-The result is a list of length 5, containing the indices of the examples used for validation in each of the cross-validation folds.
+We use the `caret::createFolds` function to create a stratified 5-fold cross-validation partition. The result is a list of length 5, containing the indices of the examples used for validation in each of the cross-validation folds.
 
 We use the `train` function in the `caret` package to organize our model training. It takes
 a `trControl` argument which sets up how to score models. Here we tell it to use 5-fold cross validation and measure sensitivity and specificity as performance metrics (`twoClassSummary`). We also tell it to
 `savePredictions` so we can make ROC plots later on. Other parameters needed by the `randomForest` function are passed through the `train` function.
 
-```{r}
+```{r, cache=FALSE}
+library(caret)
 set.seed(1234)
+```
 
+```{r, cache=FALSE}
 # create the cross-validation partition
 cv_partition <- createFolds(final_df$Direction,
                             k=5)

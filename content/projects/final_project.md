@@ -18,10 +18,13 @@ You could also create your own dataset using scraping skills you have learned in
 
 The tutorial should be self-contained as an Rmarkdown document, 
 and delivered as a GitHub statically-hosted Page (described below).
-You can see examples here: https://www.kaggle.com/kernels?sortBy=votes&group=everyone&pageSize=20&language=R
+You can see examples here: 
+
+For R - https://www.kaggle.com/kernels?sortBy=votes&group=everyone&pageSize=20&language=R  
+For python - https://www.kaggle.com/kernels?sortBy=votes&group=everyone&pageSize=20&language=Python
 
 In general, the tutorial should contain at least 1500 words of prose and 150 lines of (nonpadded,
-legitimate) R code, along with appropriate documentation, visualization, and
+legitimate) R or Python code, along with appropriate documentation, visualization, and
 links to any external information that might help the reader.
 
 
@@ -38,9 +41,7 @@ as whatever you chose for your global GitHub account.
 file and an HTML export of that Rmarkdown file.
 
 The deliverable to the CMSC320 staff will then be a single URL pointing to this publicly hosted
-GitHubs Pages-backed website. It is due by the CMSC320 university-wide prescheduled
-date of 12:30pm on Wednesday, May 22nd. We will not (cannot) accept late
-assignments.
+GitHubs Pages-backed website. 
 
 ## Grading
 
@@ -65,10 +66,6 @@ reader understand the tutorial? Does it give good examples of specific technique
 
 6. **Subjective evaluation**. If somebody linked to this tutorial from, say, Hacker News,
 would people actually read through the entire thing?
-
-The project is listed as 10% of the course grade in the syllabus. However, if you do exceptionally well in the final project
-(at least 55 of 60 points), we will count your final project as 20% of the grade (all other grades are downgraded uniformly) 
-if that results in a better final course grade.
 
 ## Group Work
 
