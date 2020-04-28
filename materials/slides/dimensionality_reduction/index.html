@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="" xml:lang="">
   <head>
-    <title>Unsupervised Learning: Dimensionality Reduction</title>
-    <meta charset="utf-8">
+    <title>Introduction to Data Science: Dimensionality Reduction</title>
+    <meta charset="utf-8" />
     <meta name="author" content="Héctor Corrada Bravo" />
-    <meta name="date" content="2018-05-01" />
+    <meta name="date" content="2020-04-28" />
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
@@ -18,13 +18,13 @@ count: false
 
 .banner[![](img/epiviz.png)]
 
-.title[Unsupervised Learning: Dimensionality Reduction]
+.title[Unsupervised Introduction to Data Science: Dimensionality Reduction]
 
 .author[Héctor Corrada Bravo]
 
 .other-info[
 University of Maryland, College Park, USA  
-CMSC320: 2018-05-01
+CMSC320: 2020-04-28
 ]
 
 .logo[![](img/logo.png)]
@@ -162,7 +162,7 @@ class: split-60
 .column[Mortgage affordability data embedded into the first two principal components.]
 
 .column[
-&lt;img src="index_files/figure-html/zillow_pcplot-1.png" width="672" /&gt;
+![](index_files/figure-html/zillow_pcplot-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -185,7 +185,7 @@ class: split-60
 .column[We can use this measure to choose number of PCs in an ad-hoc manner. In our case, using more than 10 or so PCs does not add information.]
 
 .column[
-&lt;img src="index_files/figure-html/pca_scree-1.png" width="672" /&gt;
+![](index_files/figure-html/pca_scree-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -250,7 +250,7 @@ For this reason, another useful post-hoc analysis is to plot the transformation 
 
 Here we plot the mean time series (since we center observations `\(X\)` before performing the embedding) along with the first three `\(\phi_j\)` vectors.
 
-&lt;img src="index_files/figure-html/pca_loadings-1.png" width="672" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/pca_loadings-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -289,8 +289,9 @@ Principal Component Analysis is a conceptually simple but powerful EDA tool. It 
 
 PCA interpretation can be very ad-hoc, however. It is part of large set of unsupervised methods based on _matrix decompositions_, including Kernel PCA, Non-negative Matrix Factorization and others.
 
-Embedding methods seek to capture local properties of observations. A popular recent method is the t-SNE method.
+Embedding methods seek to capture local properties of observations. Popular recent methods are `\(t\)`-SNE and UMAP.
     </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "ratio": "16:9"
@@ -298,11 +299,67 @@ Embedding methods seek to capture local properties of observations. A popular re
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
 })();</script>
 <script>
 remark.macros['scale'] = function (percentage) {
@@ -311,19 +368,31 @@ remark.macros['scale'] = function (percentage) {
 };
 </script>
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
   }
-});
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

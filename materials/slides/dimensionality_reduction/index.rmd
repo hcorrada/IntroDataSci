@@ -1,5 +1,5 @@
 ---
-title: "Unsupervised Learning: Dimensionality Reduction"
+title: "Introduction to Data Science: Dimensionality Reduction"
 author: "Héctor Corrada Bravo"
 company: "University of Maryland"
 date: "`r Sys.Date()`"
@@ -19,7 +19,7 @@ count: false
 
 .banner[![](img/epiviz.png)]
 
-.title[Unsupervised Learning: Dimensionality Reduction]
+.title[Unsupervised Introduction to Data Science: Dimensionality Reduction]
 
 .author[Héctor Corrada Bravo]
 
@@ -193,7 +193,7 @@ pc_loading <- broom::tidy(pca_res, matrix="variables") %>%
   mutate(PC=as.character(PC))
                             
 pc_mean <- pca_res$center
-pc_mean <- data_frame(column=names(pc_mean), PC="mean", value=pc_mean) %>%
+pc_mean <- tibble(column=names(pc_mean), PC="mean", value=pc_mean) %>%
   type_convert(col_types=cols(column=col_date("%Y-%m-%d")))
 
 pc_loading <- pc_mean %>%
@@ -353,7 +353,7 @@ Principal Component Analysis is a conceptually simple but powerful EDA tool. It 
 
 PCA interpretation can be very ad-hoc, however. It is part of large set of unsupervised methods based on _matrix decompositions_, including Kernel PCA, Non-negative Matrix Factorization and others.
 
-Embedding methods seek to capture local properties of observations. A popular recent method is the t-SNE method.
+Embedding methods seek to capture local properties of observations. Popular recent methods are $t$-SNE and UMAP.
 
 
 

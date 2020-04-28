@@ -1,5 +1,5 @@
 ---
-title: "Unsupervised Learning: Clustering Analysis"
+title: "Introduction to Data Science: Clustering Analysis"
 author: "Héctor Corrada Bravo"
 company: "University of Maryland"
 date: "`r Sys.Date()`"
@@ -18,11 +18,12 @@ count: false
 
 ```{r cowplot_setup, echo=FALSE, message=FALSE}
 library(cowplot)
+theme_set(theme_cowplot())
 ```
 
 .banner[![](img/epiviz.png)]
 
-.title[Unsupervised Learning: Clustering Analysis]
+.title[Introduction to Data Science: Clustering]
 
 .author[Héctor Corrada Bravo]
 
