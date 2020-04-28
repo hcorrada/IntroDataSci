@@ -5,7 +5,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=FALSE)
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, cache=TRUE)
 ```
 
 **Last Update**: `r Sys.Date()`
@@ -109,7 +109,7 @@ Note that you still have to make some choices regardless of the question you cho
 
 Prepare an Rmarkdown file which includes:
 
-1) Code to prepare data (copied from chunks above)
+1) Code to prepare data (copied from chunks above), plus any additional data prep for your experiment.
 2) Discussion of the question you have chosen to address including discussion of other choices you have made (e.g., feature representation, classification algorithm) to carry out your experiment.
 3) Code to carry out your cross-validation experiment.
 4) Table (result of hypothesis testing difference between algorithms) and plot comparing AUROCs
@@ -120,10 +120,10 @@ Knit to PDF and submit on ELMS.
 
 ## An example experiment
 
-Question: Does the number of trees used in a random forest classifier affect
+**Question**: Does the number of trees used in a random forest classifier affect
 performance (AUROC measured with 5-fold CV)?
 
-Other decisions: We are transforming input data to use quarterly differences after data standardization for years 2014-2016. 
+**Other factors**: We are transforming input data to use quarterly differences after data standardization for years 2014-2016. 
 
 ### Data preparation
 
@@ -183,12 +183,6 @@ final_df
 
 We will use but 5-fold cross-validation to compare a random forest with 500 trees, with a random forest with 10 trees. Since this is a smallish dataset, I am using 5-fold cross validation to make the validation sets have more examples and therefore more reliable performance estimates.
 
-We use the `caret::createFolds` function to create a stratified 5-fold cross-validation partition. The result is a list of length 5, containing the indices of the examples used for validation in each of the cross-validation folds.
-
-We use the `train` function in the `caret` package to organize our model training. It takes
-a `trControl` argument which sets up how to score models. Here we tell it to use 5-fold cross validation and measure sensitivity and specificity as performance metrics (`twoClassSummary`). We also tell it to
-`savePredictions` so we can make ROC plots later on. Other parameters needed by the `randomForest` function are passed through the `train` function.
-
 ```{r, cache=FALSE}
 library(caret)
 set.seed(1234)
@@ -199,80 +193,132 @@ set.seed(1234)
 cv_partition <- createFolds(final_df$Direction,
                             k=5)
 
+# setup training parameters
 fit_control <- trainControl( ## 5-fold CV
   method = "cv",
   number = 5,
-  indexOut = cv_partition,
+  #indexOut = cv_partition,
   summaryFunction=twoClassSummary,
   classProbs=TRUE,
   savePredictions=TRUE)
 
-big_rf_fit <- train(Direction~.,
-                    data=final_df,
-                    method = "rf",
-                    ntree = 500,
-                    trControl = fit_control,
-                    metric="ROC")
-                    
 
-small_rf_fit <- train(Direction~.,
-                      data = final_df,
-                      method = "rf",
-                      ntree = 10,
-                      trControl = fit_control,
-                      metric="ROC")
+# a function to obtain performance data
+# (tpr and fpr) over the given cross validation
+# partitions, for the number of trees in the
+# random forest
+get_roc_data <- function(ntree, cv_partition) {
+  mean_fpr <- seq(0, 1, len=100)
+  aucs <- numeric(length(cv_partition))
+  
+  # iterate over folds
+  res <- lapply(seq_along(cv_partition),  function(i) {
+    # train the random forest 
+    fit <- train(Direction~.,
+                        data = final_df[-cv_partition[[i]],], # all but the holdout set
+                        method = "rf",
+                        ntree = ntree,
+                        trControl = fit_control,
+                        metric="ROC")
+    
+    # make predictions on the holdout set
+    preds <- predict(fit, newdata=final_df[cv_partition[[i]],],type="prob")$up
+    
+    # compute tpr and fpr from the hold out set
+    perf <- ROCR::prediction(preds, final_df$Direction[cv_partition[[i]]]) %>%
+      ROCR::performance(measure="tpr", x.measure="fpr")
 
+    fpr <- unlist(perf@x.values)
+    tpr <- unlist(perf@y.values)
+    
+    # interpolate the roc curve over 0, 1 range
+    interp_tpr <- approxfun(fpr, tpr)(mean_fpr)
+    interp_tpr[1] <- 0.0
+    
+    # collect values for this fold
+    data_frame(fold=rep(i, length(mean_fpr)), fpr=mean_fpr, tpr=interp_tpr)
+  })
+  
+  # combine values across all folds
+  # into a single data frame
+  do.call(rbind, res)
+}
 
-show(big_rf_fit)
-small_rf_fit
+# calculate area under the ROC curve
+# from tpr and fpr values across folds
+compute_auc <- function(curve_df) {
+  curve_df %>% 
+    group_by(fold) %>%
+    summarize(auc=pracma::trapz(fpr, tpr))
+}
 ```
 
-Now let's compare models based on 5-CV area under the ROC curve (AUROC). For that purpose we use the `resamples` function in `caret`, which organizes the estimated AUROC values from each fold.
+```{r}
+# get performance data for random forest with
+# 10 trees
+small_curve_df <- get_roc_data(ntree = 10, cv_partition)
+small_auc_df <- compute_auc(small_curve_df)
+```
+
+```{r}
+# get performance data for random forest with
+# 500 trees
+large_curve_df <- get_roc_data(ntree=500, cv_partition)
+large_auc_df <- compute_auc(large_curve_df)
+```
+
+
+Now let's compare models based on 5-CV area under the ROC curve (AUROC). 
 
 ```{r, cache=FALSE}
-model_comparison <- resamples(list(small = small_rf_fit,
-                              big=big_rf_fit))
-ggplot(model_comparison) +
-  labs(title="ROC comparision", x="Model", y="ROC")
+# combine performance data for both models
+# into one data frame (adding column to indicate)
+# which model was used
+curve_df <- small_curve_df %>%
+  mutate(model="small") %>%
+  rbind(mutate(large_curve_df, model="large")) %>%
+  mutate(model = factor(model, levels=c("small", "large")))
+
+auc_df <- small_auc_df %>%
+  mutate(model="small") %>%
+  rbind(mutate(large_auc_df, model="large")) %>%
+  mutate(model = factor(model, levels=c("small", "large")))
+
+# plot distribution of 
+ggplot(auc_df, aes(x=model, y=auc)) +
+  geom_jitter(position=position_jitter(0.1)) +
+  coord_flip() + 
+  labs(title="AUC comparision",
+       x="Model",
+       y="Area under ROC curve")
 ```
 
-We can test for differences using linear regression.
+We test for differences using linear regression.
 
 ```{r}
 library(broom)
 
-comparison_df <- model_comparison %>%
-  as_tibble() %>%
-  gather("model", "roc", -Resample) %>%
-  mutate(model=factor(model, levels=c("small","big"))) 
+model_tab <- auc_df %>%
+  lm(auc~model,data=.) %>%
+  tidy() 
 
-comparison_df %>%
-  lm(roc~model,data=.) %>%
-  tidy() %>%
+model_tab %>%
   knitr::kable()
 ```
 
-We see that there is a small increase in average AUROC for the big model but it is not a statistically significant difference.
+We see that there is a small increase (`r format(abs(model_tab$estimate[2]) * 100, digits=2)`%) in average AUROC for the big model but it is not a statistically significant difference.
 
-Finally, let's make ROC curves of both models. 
+Finally, here are ROC curves of both models. 
 
 ```{r, warning=FALSE}
-library(plotROC)
-
-roc_df <-
-  big_rf_fit$pred %>%
-    filter(mtry == 2) %>%
-    mutate(model = "big") %>%
-    bind_rows(small_rf_fit$pred %>% 
-                filter(mtry == 2) %>%
-                mutate(model = "small"))
-
-roc_df %>%
-  ggplot(aes(m=up,
-             d=factor(obs, levels=c("down","up")),
-             color=model)) +
-    geom_roc(n.cuts=0) +
-    coord_equal() +
-    style_roc() 
+curve_df %>%
+  group_by(model, fpr) %>%
+  summarize(tpr = mean(tpr)) %>%
+  ggplot(aes(x=fpr, y=tpr, color=model)) +
+    geom_line() +
+    labs(title = "ROC curves",
+         x = "False positive rate",
+         y = "True positive rate")
 ```
 
+The bigger model has higher true positive rate at lower false positive rates. The smaller model is better at high false positive rates. Neither model is very good at this prediction task, and there is no clear advantage in using either of these for the analysis task.

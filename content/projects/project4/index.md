@@ -6,7 +6,7 @@ title: "Bonus Project: classification"
 An experiment on classification:
 
 [R instructions here](classification_zillow/)  
-[Python instructions here]
+[Python instructions here](model_selection.ipynb)
 
 ## Submission
 
