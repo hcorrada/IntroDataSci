@@ -1,6 +1,6 @@
 ---
 date: 2016-11-22T13:04:21-05:00
-title: "Bonus Project: classification"
+title: "Project 4: Classification"
 ---
 
 An experiment on classification:
