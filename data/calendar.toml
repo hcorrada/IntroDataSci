@@ -554,6 +554,22 @@ date = "4/29"
 title = "Unsupervised Learning: Clustering"
 notes = "bookdown-notes/unsupervised-learning-clustering.html"
 
+[[day25.covers]]
+title = "Lecture Slides: Clustering"
+notes = "slides/cmsc320_clustering.pdf"
+
+[[day25.covers]]
+title = "Unsupervised Learning: Dimensionality Reduction"
+notes = "bookdown-notes/unsupervised-learning-dimensionality-reduction.html"
+
+[[day25.covers]]
+title = "Lecture Slides: PCA"
+notes = "slides/cmsc320_dimensionality-reduction.pdf"
+
+[[day25.covers]]
+title = "Lecture Videos: Unsupervised Learning"
+notes = "https://umd.hosted.panopto.com/Panopto/Pages/Viewer.aspx?pid=7b418972-f55c-4cf8-85a3-abac0116adc0"
+
 #[day25.class_notes]
 #link = "cmsc320_class-notes_20180426.pdf"
 
@@ -571,8 +587,8 @@ notes = "bookdown-notes/unsupervised-learning-clustering.html"
 date = "5/4"
 
 [[day26.covers]]
-title = "Unsupervised Learning: Dimensionality Reduction"
-notes = "bookdown-notes/unsupervised-learning-dimensionality-reduction.html"
+title = "Introduction to interactive data visualization"
+notes = "slides/cmsc320_interactive-vis.pdf"
 
 [day27]
 date = "5/6"
@@ -584,10 +600,6 @@ notes = "slides/cmsc320_presentation.pdf"
 [[day27.covers]]
 title = "Design principles for data visualization"
 notes = "slides/cmsc320_presentation.pdf"
-
-[[day27.covers]]
-title = "Introduction to interactive data visualization"
-notes = "slides/cmsc320_interactive-vis.pdf"
 
 #[day26.class_notes]
 #link = "cmsc320_class-notes_20180501.pdf"
