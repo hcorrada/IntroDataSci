@@ -22,7 +22,7 @@ library(cowplot)
 
 .banner[![](img/epiviz.png)]
 
-.title[Interactive Visualization]
+.title[Introduction to Data Science: Interactive Visualization]
 
 .author[Héctor Corrada Bravo]
 
@@ -63,11 +63,17 @@ Take advantage of HTML document description and the [Document Object Model](http
 - [Data-driven Documents (d3.js)](http://d3js.org): bind data to svg elements directly
 
 ---
+class: split-50
 
 ## HTML and DOM
 
 Web pages are structured using Hypertext Markup Language
 
+.column[
+Basic idea is to only specify _content_ and _structure_ but not specify directly _how_ to render pages.
+]
+
+.column[
 ```{html}
 <!DOCTYPE html>
 <html>
@@ -80,37 +86,22 @@ Web pages are structured using Hypertext Markup Language
   </body>
 </html>
 ```
+]
 
-Basic idea is to only specify _content_ and _structure_ but not specify directly _how_ to render pages.
 
 ---
+class: split-50
 
 ## HTML and DOM
 
 Web pages are structured using Hypertext Markup Language
 
-```{html}
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Page Title</title>
-  </head>
-  <body>
-    <h1>Page Title</h1>
-    <p>This is a really interesting paragraph.</p>
-  </body>
-</html>
-```
-
+.column[
 Structure is provided by page _elements._
 An important element we'll see later is the arbitrary grouping/containment element `div`.
+]
 
----
-
-## HTML and DOM
-
-Web pages are structured using Hypertext Markup Language
-
+.column[
 ```{html}
 <!DOCTYPE html>
 <html>
@@ -123,8 +114,33 @@ Web pages are structured using Hypertext Markup Language
   </body>
 </html>
 ```
+]
 
+---
+class: split-50
+
+## HTML and DOM
+
+Web pages are structured using Hypertext Markup Language
+
+.column[
 The hierarchical structure of elements in a document are defined by the _Document Object Model_ (DOM).
+]
+
+.column[
+```{html}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page Title</title>
+  </head>
+  <body>
+    <h1>Page Title</h1>
+    <p>This is a really interesting paragraph.</p>
+  </body>
+</html>
+```
+]
 
 ---
 
@@ -280,6 +296,11 @@ We can also bind data directly to _graphical_ elements since using SVG these are
 [NVD3](http://nvd3.org/)
 - An alternative declarative library: [Vega](https://trifacta.github.io/vega/)
 
+- A no-hassle interactive vis library for multiple languages: 
+  - [plotly R](https://plotly.com/r/)  
+  - [plotly python](https://plotly.com/python/)  
+  - [plotly JS](https://plotly.com/javascript/)
+  
 ---
 
 ## D3 and R
@@ -297,3 +318,19 @@ We can also bind data directly to _graphical_ elements since using SVG these are
 - [htmlwidgets](http://www.htmlwidgets.org/index.html) a formalization of how to bind R to JS libraries. 
 - [Roll your own](https://github.com/jcheng5/shiny-js-examples) 
 
+---
+
+## D3 and jupyter
+
+In jupyter you can use HTML and javascript directly, and use D3 and other JS 
+libraries through that.
+
+For more info: https://blog.thedataincubator.com/2015/08/embedding-d3-in-an-ipython-notebook/
+
+---
+
+## Interactive visualization
+
+Essential tool for exploration
+
+Helps manage high-dimensionality of data (don't go 3D, link charts!!)
