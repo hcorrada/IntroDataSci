@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="CMSC320" />
 
 
-<title>Project 4: Interactive Data Maps</title>
+<title>Project 5: Interactive Data Maps</title>
 
 <script>/*! jQuery v1.12.4 | (c) jQuery Foundation | jquery.org/license */
 !function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=a.document,e=c.slice,f=c.concat,g=c.push,h=c.indexOf,i={},j=i.toString,k=i.hasOwnProperty,l={},m="1.12.4",n=function(a,b){return new n.fn.init(a,b)},o=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,p=/^-ms-/,q=/-([\da-z])/gi,r=function(a,b){return b.toUpperCase()};n.fn=n.prototype={jquery:m,constructor:n,selector:"",length:0,toArray:function(){return e.call(this)},get:function(a){return null!=a?0>a?this[a+this.length]:this[a]:e.call(this)},pushStack:function(a){var b=n.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a){return n.each(this,a)},map:function(a){return this.pushStack(n.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(e.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0>a?b:0);return this.pushStack(c>=0&&b>c?[this[c]]:[])},end:function(){return this.prevObject||this.constructor()},push:g,sort:c.sort,splice:c.splice},n.extend=n.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||n.isFunction(g)||(g={}),h===i&&(g=this,h--);i>h;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&&(j&&c&&(n.isPlainObject(c)||(b=n.isArray(c)))?(b?(b=!1,f=a&&n.isArray(a)?a:[]):f=a&&n.isPlainObject(a)?a:{},g[d]=n.extend(j,f,c)):void 0!==c&&(g[d]=c));return g},n.extend({expando:"jQuery"+(m+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===n.type(a)},isArray:Array.isArray||function(a){return"array"===n.type(a)},isWindow:function(a){return null!=a&&a==a.window},isNumeric:function(a){var b=a&&a.toString();return!n.isArray(a)&&b-parseFloat(b)+1>=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||"object"!==n.type(a)||a.nodeType||n.isWindow(a))return!1;try{if(a.constructor&&!k.call(a,"constructor")&&!k.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}if(!l.ownFirst)for(b in a)return k.call(a,b);for(b in a);return void 0===b||k.call(a,b)},type:function(a){return null==a?a+"":"object"==typeof a||"function"==typeof a?i[j.call(a)]||"object":typeof a},globalEval:function(b){b&&n.trim(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(p,"ms-").replace(q,r)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b){var c,d=0;if(s(a)){for(c=a.length;c>d;d++)if(b.call(a[d],d,a[d])===!1)break}else for(d in a)if(b.call(a[d],d,a[d])===!1)break;return a},trim:function(a){return null==a?"":(a+"").replace(o,"")},makeArray:function(a,b){var c=b||[];return null!=a&&(s(Object(a))?n.merge(c,"string"==typeof a?[a]:a):g.call(c,a)),c},inArray:function(a,b,c){var d;if(b){if(h)return h.call(b,a,c);for(d=b.length,c=c?0>c?Math.max(0,d+c):c:0;d>c;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,b){var c=+b.length,d=0,e=a.length;while(c>d)a[e++]=b[d++];if(c!==c)while(void 0!==b[d])a[e++]=b[d++];return a.length=e,a},grep:function(a,b,c){for(var d,e=[],f=0,g=a.length,h=!c;g>f;f++)d=!b(a[f],f),d!==h&&e.push(a[f]);return e},map:function(a,b,c){var d,e,g=0,h=[];if(s(a))for(d=a.length;d>g;g++)e=b(a[g],g,c),null!=e&&h.push(e);else for(g in a)e=b(a[g],g,c),null!=e&&h.push(e);return f.apply([],h)},guid:1,proxy:function(a,b){var c,d,f;return"string"==typeof b&&(f=a[b],b=a,a=f),n.isFunction(a)?(c=e.call(arguments,2),d=function(){return a.apply(b||this,c.concat(e.call(arguments)))},d.guid=a.guid=a.guid||n.guid++,d):void 0},now:function(){return+new Date},support:l}),"function"==typeof Symbol&&(n.fn[Symbol.iterator]=c[Symbol.iterator]),n.each("Boolean Number String Function Array Date RegExp Object Error Symbol".split(" "),function(a,b){i["[object "+b+"]"]=b.toLowerCase()});function s(a){var b=!!a&&"length"in a&&a.length,c=n.type(a);return"function"===c||n.isWindow(a)?!1:"array"===c||0===b||"number"==typeof b&&b>0&&b-1 in a}var t=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u="sizzle"+1*new Date,v=a.document,w=0,x=0,y=ga(),z=ga(),A=ga(),B=function(a,b){return a===b&&(l=!0),0},C=1<<31,D={}.hasOwnProperty,E=[],F=E.pop,G=E.push,H=E.push,I=E.slice,J=function(a,b){for(var c=0,d=a.length;d>c;c++)if(a[c]===b)return c;return-1},K="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",L="[\\x20\\t\\r\\n\\f]",M="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",N="\\["+L+"*("+M+")(?:"+L+"*([*^$|!~]?=)"+L+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+M+"))|)"+L+"*\\]",O=":("+M+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+N+")*)|.*)\\)|)",P=new RegExp(L+"+","g"),Q=new RegExp("^"+L+"+|((?:^|[^\\\\])(?:\\\\.)*)"+L+"+$","g"),R=new RegExp("^"+L+"*,"+L+"*"),S=new RegExp("^"+L+"*([>+~]|"+L+")"+L+"*"),T=new RegExp("="+L+"*([^\\]'\"]*?)"+L+"*\\]","g"),U=new RegExp(O),V=new RegExp("^"+M+"$"),W={ID:new RegExp("^#("+M+")"),CLASS:new RegExp("^\\.("+M+")"),TAG:new RegExp("^("+M+"|[*])"),ATTR:new RegExp("^"+N),PSEUDO:new RegExp("^"+O),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+L+"*(even|odd|(([+-]|)(\\d*)n|)"+L+"*(?:([+-]|)"+L+"*(\\d+)|))"+L+"*\\)|)","i"),bool:new RegExp("^(?:"+K+")$","i"),needsContext:new RegExp("^"+L+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+L+"*((?:-\\d)?\\d*)"+L+"*\\)|)(?=[^-]|$)","i")},X=/^(?:input|select|textarea|button)$/i,Y=/^h\d$/i,Z=/^[^{]+\{\s*\[native \w/,$=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,_=/[+~]/,aa=/'|\\/g,ba=new RegExp("\\\\([\\da-f]{1,6}"+L+"?|("+L+")|.)","ig"),ca=function(a,b,c){var d="0x"+b-65536;return d!==d||c?b:0>d?String.fromCharCode(d+65536):String.fromCharCode(d>>10|55296,1023&d|56320)},da=function(){m()};try{H.apply(E=I.call(v.childNodes),v.childNodes),E[v.childNodes.length].nodeType}catch(ea){H={apply:E.length?function(a,b){G.apply(a,I.call(b))}:function(a,b){var c=a.length,d=0;while(a[c++]=b[d++]);a.length=c-1}}}function fa(a,b,d,e){var f,h,j,k,l,o,r,s,w=b&&b.ownerDocument,x=b?b.nodeType:9;if(d=d||[],"string"!=typeof a||!a||1!==x&&9!==x&&11!==x)return d;if(!e&&((b?b.ownerDocument||b:v)!==n&&m(b),b=b||n,p)){if(11!==x&&(o=$.exec(a)))if(f=o[1]){if(9===x){if(!(j=b.getElementById(f)))return d;if(j.id===f)return d.push(j),d}else if(w&&(j=w.getElementById(f))&&t(b,j)&&j.id===f)return d.push(j),d}else{if(o[2])return H.apply(d,b.getElementsByTagName(a)),d;if((f=o[3])&&c.getElementsByClassName&&b.getElementsByClassName)return H.apply(d,b.getElementsByClassName(f)),d}if(c.qsa&&!A[a+" "]&&(!q||!q.test(a))){if(1!==x)w=b,s=a;else if("object"!==b.nodeName.toLowerCase()){(k=b.getAttribute("id"))?k=k.replace(aa,"\\$&"):b.setAttribute("id",k=u),r=g(a),h=r.length,l=V.test(k)?"#"+k:"[id='"+k+"']";while(h--)r[h]=l+" "+qa(r[h]);s=r.join(","),w=_.test(a)&&oa(b.parentNode)||b}if(s)try{return H.apply(d,w.querySelectorAll(s)),d}catch(y){}finally{k===u&&b.removeAttribute("id")}}}return i(a.replace(Q,"$1"),b,d,e)}function ga(){var a=[];function b(c,e){return a.push(c+" ")>d.cacheLength&&delete b[a.shift()],b[c+" "]=e}return b}function ha(a){return a[u]=!0,a}function ia(a){var b=n.createElement("div");try{return!!a(b)}catch(c){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function ja(a,b){var c=a.split("|"),e=c.length;while(e--)d.attrHandle[c[e]]=b}function ka(a,b){var c=b&&a,d=c&&1===a.nodeType&&1===b.nodeType&&(~b.sourceIndex||C)-(~a.sourceIndex||C);if(d)return d;if(c)while(c=c.nextSibling)if(c===b)return-1;return a?1:-1}function la(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function ma(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function na(a){return ha(function(b){return b=+b,ha(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function oa(a){return a&&"undefined"!=typeof a.getElementsByTagName&&a}c=fa.support={},f=fa.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?"HTML"!==b.nodeName:!1},m=fa.setDocument=function(a){var b,e,g=a?a.ownerDocument||a:v;return g!==n&&9===g.nodeType&&g.documentElement?(n=g,o=n.documentElement,p=!f(n),(e=n.defaultView)&&e.top!==e&&(e.addEventListener?e.addEventListener("unload",da,!1):e.attachEvent&&e.attachEvent("onunload",da)),c.attributes=ia(function(a){return a.className="i",!a.getAttribute("className")}),c.getElementsByTagName=ia(function(a){return a.appendChild(n.createComment("")),!a.getElementsByTagName("*").length}),c.getElementsByClassName=Z.test(n.getElementsByClassName),c.getById=ia(function(a){return o.appendChild(a).id=u,!n.getElementsByName||!n.getElementsByName(u).length}),c.getById?(d.find.ID=function(a,b){if("undefined"!=typeof b.getElementById&&p){var c=b.getElementById(a);return c?[c]:[]}},d.filter.ID=function(a){var b=a.replace(ba,ca);return function(a){return a.getAttribute("id")===b}}):(delete d.find.ID,d.filter.ID=function(a){var b=a.replace(ba,ca);return function(a){var c="undefined"!=typeof a.getAttributeNode&&a.getAttributeNode("id");return c&&c.value===b}}),d.find.TAG=c.getElementsByTagName?function(a,b){return"undefined"!=typeof b.getElementsByTagName?b.getElementsByTagName(a):c.qsa?b.querySelectorAll(a):void 0}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){while(c=f[e++])1===c.nodeType&&d.push(c);return d}return f},d.find.CLASS=c.getElementsByClassName&&function(a,b){return"undefined"!=typeof b.getElementsByClassName&&p?b.getElementsByClassName(a):void 0},r=[],q=[],(c.qsa=Z.test(n.querySelectorAll))&&(ia(function(a){o.appendChild(a).innerHTML="<a id='"+u+"'></a><select id='"+u+"-\r\\' msallowcapture=''><option selected=''></option></select>",a.querySelectorAll("[msallowcapture^='']").length&&q.push("[*^$]="+L+"*(?:''|\"\")"),a.querySelectorAll("[selected]").length||q.push("\\["+L+"*(?:value|"+K+")"),a.querySelectorAll("[id~="+u+"-]").length||q.push("~="),a.querySelectorAll(":checked").length||q.push(":checked"),a.querySelectorAll("a#"+u+"+*").length||q.push(".#.+[+~]")}),ia(function(a){var b=n.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("name","D"),a.querySelectorAll("[name=d]").length&&q.push("name"+L+"*[*^$|!~]?="),a.querySelectorAll(":enabled").length||q.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),q.push(",.*:")})),(c.matchesSelector=Z.test(s=o.matches||o.webkitMatchesSelector||o.mozMatchesSelector||o.oMatchesSelector||o.msMatchesSelector))&&ia(function(a){c.disconnectedMatch=s.call(a,"div"),s.call(a,"[s!='']:x"),r.push("!=",O)}),q=q.length&&new RegExp(q.join("|")),r=r.length&&new RegExp(r.join("|")),b=Z.test(o.compareDocumentPosition),t=b||Z.test(o.contains)?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)while(b=b.parentNode)if(b===a)return!0;return!1},B=b?function(a,b){if(a===b)return l=!0,0;var d=!a.compareDocumentPosition-!b.compareDocumentPosition;return d?d:(d=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):1,1&d||!c.sortDetached&&b.compareDocumentPosition(a)===d?a===n||a.ownerDocument===v&&t(v,a)?-1:b===n||b.ownerDocument===v&&t(v,b)?1:k?J(k,a)-J(k,b):0:4&d?-1:1)}:function(a,b){if(a===b)return l=!0,0;var c,d=0,e=a.parentNode,f=b.parentNode,g=[a],h=[b];if(!e||!f)return a===n?-1:b===n?1:e?-1:f?1:k?J(k,a)-J(k,b):0;if(e===f)return ka(a,b);c=a;while(c=c.parentNode)g.unshift(c);c=b;while(c=c.parentNode)h.unshift(c);while(g[d]===h[d])d++;return d?ka(g[d],h[d]):g[d]===v?-1:h[d]===v?1:0},n):n},fa.matches=function(a,b){return fa(a,null,null,b)},fa.matchesSelector=function(a,b){if((a.ownerDocument||a)!==n&&m(a),b=b.replace(T,"='$1']"),c.matchesSelector&&p&&!A[b+" "]&&(!r||!r.test(b))&&(!q||!q.test(b)))try{var d=s.call(a,b);if(d||c.disconnectedMatch||a.document&&11!==a.document.nodeType)return d}catch(e){}return fa(b,n,null,[a]).length>0},fa.contains=function(a,b){return(a.ownerDocument||a)!==n&&m(a),t(a,b)},fa.attr=function(a,b){(a.ownerDocument||a)!==n&&m(a);var e=d.attrHandle[b.toLowerCase()],f=e&&D.call(d.attrHandle,b.toLowerCase())?e(a,b,!p):void 0;return void 0!==f?f:c.attributes||!p?a.getAttribute(b):(f=a.getAttributeNode(b))&&f.specified?f.value:null},fa.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},fa.uniqueSort=function(a){var b,d=[],e=0,f=0;if(l=!c.detectDuplicates,k=!c.sortStable&&a.slice(0),a.sort(B),l){while(b=a[f++])b===a[f]&&(e=d.push(f));while(e--)a.splice(d[e],1)}return k=null,a},e=fa.getText=function(a){var b,c="",d=0,f=a.nodeType;if(f){if(1===f||9===f||11===f){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=e(a)}else if(3===f||4===f)return a.nodeValue}else while(b=a[d++])c+=e(b);return c},d=fa.selectors={cacheLength:50,createPseudo:ha,match:W,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(ba,ca),a[3]=(a[3]||a[4]||a[5]||"").replace(ba,ca),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||fa.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&fa.error(a[0]),a},PSEUDO:function(a){var b,c=!a[6]&&a[2];return W.CHILD.test(a[0])?null:(a[3]?a[2]=a[4]||a[5]||"":c&&U.test(c)&&(b=g(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(ba,ca).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+L+")"+a+"("+L+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||"undefined"!=typeof a.getAttribute&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=fa.attr(d,a);return null==e?"!="===b:b?(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e.replace(P," ")+" ").indexOf(c)>-1:"|="===b?e===c||e.slice(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),s=!i&&!h,t=!1;if(q){if(f){while(p){m=b;while(m=m[p])if(h?m.nodeName.toLowerCase()===r:1===m.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&s){m=q,l=m[u]||(m[u]={}),k=l[m.uniqueID]||(l[m.uniqueID]={}),j=k[a]||[],n=j[0]===w&&j[1],t=n&&j[2],m=n&&q.childNodes[n];while(m=++n&&m&&m[p]||(t=n=0)||o.pop())if(1===m.nodeType&&++t&&m===b){k[a]=[w,n,t];break}}else if(s&&(m=b,l=m[u]||(m[u]={}),k=l[m.uniqueID]||(l[m.uniqueID]={}),j=k[a]||[],n=j[0]===w&&j[1],t=n),t===!1)while(m=++n&&m&&m[p]||(t=n=0)||o.pop())if((h?m.nodeName.toLowerCase()===r:1===m.nodeType)&&++t&&(s&&(l=m[u]||(m[u]={}),k=l[m.uniqueID]||(l[m.uniqueID]={}),k[a]=[w,t]),m===b))break;return t-=e,t===d||t%d===0&&t/d>=0}}},PSEUDO:function(a,b){var c,e=d.pseudos[a]||d.setFilters[a.toLowerCase()]||fa.error("unsupported pseudo: "+a);return e[u]?e(b):e.length>1?(c=[a,a,"",b],d.setFilters.hasOwnProperty(a.toLowerCase())?ha(function(a,c){var d,f=e(a,b),g=f.length;while(g--)d=J(a,f[g]),a[d]=!(c[d]=f[g])}):function(a){return e(a,0,c)}):e}},pseudos:{not:ha(function(a){var b=[],c=[],d=h(a.replace(Q,"$1"));return d[u]?ha(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),b[0]=null,!c.pop()}}),has:ha(function(a){return function(b){return fa(a,b).length>0}}),contains:ha(function(a){return a=a.replace(ba,ca),function(b){return(b.textContent||b.innerText||e(b)).indexOf(a)>-1}}),lang:ha(function(a){return V.test(a||"")||fa.error("unsupported lang: "+a),a=a.replace(ba,ca).toLowerCase(),function(b){var c;do if(c=p?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===o},focus:function(a){return a===n.activeElement&&(!n.hasFocus||n.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeType<6)return!1;return!0},parent:function(a){return!d.pseudos.empty(a)},header:function(a){return Y.test(a.nodeName)},input:function(a){return X.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||"text"===b.toLowerCase())},first:na(function(){return[0]}),last:na(function(a,b){return[b-1]}),eq:na(function(a,b,c){return[0>c?c+b:c]}),even:na(function(a,b){for(var c=0;b>c;c+=2)a.push(c);return a}),odd:na(function(a,b){for(var c=1;b>c;c+=2)a.push(c);return a}),lt:na(function(a,b,c){for(var d=0>c?c+b:c;--d>=0;)a.push(d);return a}),gt:na(function(a,b,c){for(var d=0>c?c+b:c;++d<b;)a.push(d);return a})}},d.pseudos.nth=d.pseudos.eq;for(b in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})d.pseudos[b]=la(b);for(b in{submit:!0,reset:!0})d.pseudos[b]=ma(b);function pa(){}pa.prototype=d.filters=d.pseudos,d.setFilters=new pa,g=fa.tokenize=function(a,b){var c,e,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);h=a,i=[],j=d.preFilter;while(h){c&&!(e=R.exec(h))||(e&&(h=h.slice(e[0].length)||h),i.push(f=[])),c=!1,(e=S.exec(h))&&(c=e.shift(),f.push({value:c,type:e[0].replace(Q," ")}),h=h.slice(c.length));for(g in d.filter)!(e=W[g].exec(h))||j[g]&&!(e=j[g](e))||(c=e.shift(),f.push({value:c,type:g,matches:e}),h=h.slice(c.length));if(!c)break}return b?h.length:h?fa.error(a):z(a,i).slice(0)};function qa(a){for(var b=0,c=a.length,d="";c>b;b++)d+=a[b].value;return d}function ra(a,b,c){var d=b.dir,e=c&&"parentNode"===d,f=x++;return b.first?function(b,c,f){while(b=b[d])if(1===b.nodeType||e)return a(b,c,f)}:function(b,c,g){var h,i,j,k=[w,f];if(g){while(b=b[d])if((1===b.nodeType||e)&&a(b,c,g))return!0}else while(b=b[d])if(1===b.nodeType||e){if(j=b[u]||(b[u]={}),i=j[b.uniqueID]||(j[b.uniqueID]={}),(h=i[d])&&h[0]===w&&h[1]===f)return k[2]=h[2];if(i[d]=k,k[2]=a(b,c,g))return!0}}}function sa(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function ta(a,b,c){for(var d=0,e=b.length;e>d;d++)fa(a,b[d],c);return c}function ua(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;i>h;h++)(f=a[h])&&(c&&!c(f,d,e)||(g.push(f),j&&b.push(h)));return g}function va(a,b,c,d,e,f){return d&&!d[u]&&(d=va(d)),e&&!e[u]&&(e=va(e,f)),ha(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||ta(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:ua(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d){j=ua(r,n),d(j,[],h,i),k=j.length;while(k--)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l))}if(f){if(e||a){if(e){j=[],k=r.length;while(k--)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}k=r.length;while(k--)(l=r[k])&&(j=e?J(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=ua(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):H.apply(g,r)})}function wa(a){for(var b,c,e,f=a.length,g=d.relative[a[0].type],h=g||d.relative[" "],i=g?1:0,k=ra(function(a){return a===b},h,!0),l=ra(function(a){return J(b,a)>-1},h,!0),m=[function(a,c,d){var e=!g&&(d||c!==j)||((b=c).nodeType?k(a,c,d):l(a,c,d));return b=null,e}];f>i;i++)if(c=d.relative[a[i].type])m=[ra(sa(m),c)];else{if(c=d.filter[a[i].type].apply(null,a[i].matches),c[u]){for(e=++i;f>e;e++)if(d.relative[a[e].type])break;return va(i>1&&sa(m),i>1&&qa(a.slice(0,i-1).concat({value:" "===a[i-2].type?"*":""})).replace(Q,"$1"),c,e>i&&wa(a.slice(i,e)),f>e&&wa(a=a.slice(e)),f>e&&qa(a))}m.push(c)}return sa(m)}function xa(a,b){var c=b.length>0,e=a.length>0,f=function(f,g,h,i,k){var l,o,q,r=0,s="0",t=f&&[],u=[],v=j,x=f||e&&d.find.TAG("*",k),y=w+=null==v?1:Math.random()||.1,z=x.length;for(k&&(j=g===n||g||k);s!==z&&null!=(l=x[s]);s++){if(e&&l){o=0,g||l.ownerDocument===n||(m(l),h=!p);while(q=a[o++])if(q(l,g||n,h)){i.push(l);break}k&&(w=y)}c&&((l=!q&&l)&&r--,f&&t.push(l))}if(r+=s,c&&s!==r){o=0;while(q=b[o++])q(t,u,g,h);if(f){if(r>0)while(s--)t[s]||u[s]||(u[s]=F.call(i));u=ua(u)}H.apply(i,u),k&&!f&&u.length>0&&r+b.length>1&&fa.uniqueSort(i)}return k&&(w=y,j=v),t};return c?ha(f):f}return h=fa.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){b||(b=g(a)),c=b.length;while(c--)f=wa(b[c]),f[u]?d.push(f):e.push(f);f=A(a,xa(e,d)),f.selector=a}return f},i=fa.select=function(a,b,e,f){var i,j,k,l,m,n="function"==typeof a&&a,o=!f&&g(a=n.selector||a);if(e=e||[],1===o.length){if(j=o[0]=o[0].slice(0),j.length>2&&"ID"===(k=j[0]).type&&c.getById&&9===b.nodeType&&p&&d.relative[j[1].type]){if(b=(d.find.ID(k.matches[0].replace(ba,ca),b)||[])[0],!b)return e;n&&(b=b.parentNode),a=a.slice(j.shift().value.length)}i=W.needsContext.test(a)?0:j.length;while(i--){if(k=j[i],d.relative[l=k.type])break;if((m=d.find[l])&&(f=m(k.matches[0].replace(ba,ca),_.test(j[0].type)&&oa(b.parentNode)||b))){if(j.splice(i,1),a=f.length&&qa(j),!a)return H.apply(e,f),e;break}}}return(n||h(a,o))(f,b,!p,e,!b||_.test(a)&&oa(b.parentNode)||b),e},c.sortStable=u.split("").sort(B).join("")===u,c.detectDuplicates=!!l,m(),c.sortDetached=ia(function(a){return 1&a.compareDocumentPosition(n.createElement("div"))}),ia(function(a){return a.innerHTML="<a href='#'></a>","#"===a.firstChild.getAttribute("href")})||ja("type|href|height|width",function(a,b,c){return c?void 0:a.getAttribute(b,"type"===b.toLowerCase()?1:2)}),c.attributes&&ia(function(a){return a.innerHTML="<input/>",a.firstChild.setAttribute("value",""),""===a.firstChild.getAttribute("value")})||ja("value",function(a,b,c){return c||"input"!==a.nodeName.toLowerCase()?void 0:a.defaultValue}),ia(function(a){return null==a.getAttribute("disabled")})||ja(K,function(a,b,c){var d;return c?void 0:a[b]===!0?b.toLowerCase():(d=a.getAttributeNode(b))&&d.specified?d.value:null}),fa}(a);n.find=t,n.expr=t.selectors,n.expr[":"]=n.expr.pseudos,n.uniqueSort=n.unique=t.uniqueSort,n.text=t.getText,n.isXMLDoc=t.isXML,n.contains=t.contains;var u=function(a,b,c){var d=[],e=void 0!==c;while((a=a[b])&&9!==a.nodeType)if(1===a.nodeType){if(e&&n(a).is(c))break;d.push(a)}return d},v=function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c},w=n.expr.match.needsContext,x=/^<([\w-]+)\s*\/?>(?:<\/\1>|)$/,y=/^.[^:#\[\.,]*$/;function z(a,b,c){if(n.isFunction(b))return n.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return n.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(y.test(b))return n.filter(b,a,c);b=n.filter(b,a)}return n.grep(a,function(a){return n.inArray(a,b)>-1!==c})}n.filter=function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?n.find.matchesSelector(d,a)?[d]:[]:n.find.matches(a,n.grep(b,function(a){return 1===a.nodeType}))},n.fn.extend({find:function(a){var b,c=[],d=this,e=d.length;if("string"!=typeof a)return this.pushStack(n(a).filter(function(){for(b=0;e>b;b++)if(n.contains(d[b],this))return!0}));for(b=0;e>b;b++)n.find(a,d[b],c);return c=this.pushStack(e>1?n.unique(c):c),c.selector=this.selector?this.selector+" "+a:a,c},filter:function(a){return this.pushStack(z(this,a||[],!1))},not:function(a){return this.pushStack(z(this,a||[],!0))},is:function(a){return!!z(this,"string"==typeof a&&w.test(a)?n(a):a||[],!1).length}});var A,B=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,C=n.fn.init=function(a,b,c){var e,f;if(!a)return this;if(c=c||A,"string"==typeof a){if(e="<"===a.charAt(0)&&">"===a.charAt(a.length-1)&&a.length>=3?[null,a,null]:B.exec(a),!e||!e[1]&&b)return!b||b.jquery?(b||c).find(a):this.constructor(b).find(a);if(e[1]){if(b=b instanceof n?b[0]:b,n.merge(this,n.parseHTML(e[1],b&&b.nodeType?b.ownerDocument||b:d,!0)),x.test(e[1])&&n.isPlainObject(b))for(e in b)n.isFunction(this[e])?this[e](b[e]):this.attr(e,b[e]);return this}if(f=d.getElementById(e[2]),f&&f.parentNode){if(f.id!==e[2])return A.find(a);this.length=1,this[0]=f}return this.context=d,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):n.isFunction(a)?"undefined"!=typeof c.ready?c.ready(a):a(n):(void 0!==a.selector&&(this.selector=a.selector,this.context=a.context),n.makeArray(a,this))};C.prototype=n.fn,A=n(d);var D=/^(?:parents|prev(?:Until|All))/,E={children:!0,contents:!0,next:!0,prev:!0};n.fn.extend({has:function(a){var b,c=n(a,this),d=c.length;return this.filter(function(){for(b=0;d>b;b++)if(n.contains(this,c[b]))return!0})},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=w.test(a)||"string"!=typeof a?n(a,b||this.context):0;e>d;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&n.find.matchesSelector(c,a))){f.push(c);break}return this.pushStack(f.length>1?n.uniqueSort(f):f)},index:function(a){return a?"string"==typeof a?n.inArray(this[0],n(a)):n.inArray(a.jquery?a[0]:a,this):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){return this.pushStack(n.uniqueSort(n.merge(this.get(),n(a,b))))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}});function F(a,b){do a=a[b];while(a&&1!==a.nodeType);return a}n.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return u(a,"parentNode")},parentsUntil:function(a,b,c){return u(a,"parentNode",c)},next:function(a){return F(a,"nextSibling")},prev:function(a){return F(a,"previousSibling")},nextAll:function(a){return u(a,"nextSibling")},prevAll:function(a){return u(a,"previousSibling")},nextUntil:function(a,b,c){return u(a,"nextSibling",c)},prevUntil:function(a,b,c){return u(a,"previousSibling",c)},siblings:function(a){return v((a.parentNode||{}).firstChild,a)},children:function(a){return v(a.firstChild)},contents:function(a){return n.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:n.merge([],a.childNodes)}},function(a,b){n.fn[a]=function(c,d){var e=n.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=n.filter(d,e)),this.length>1&&(E[a]||(e=n.uniqueSort(e)),D.test(a)&&(e=e.reverse())),this.pushStack(e)}});var G=/\S+/g;function H(a){var b={};return n.each(a.match(G)||[],function(a,c){b[c]=!0}),b}n.Callbacks=function(a){a="string"==typeof a?H(a):n.extend({},a);var b,c,d,e,f=[],g=[],h=-1,i=function(){for(e=a.once,d=b=!0;g.length;h=-1){c=g.shift();while(++h<f.length)f[h].apply(c[0],c[1])===!1&&a.stopOnFalse&&(h=f.length,c=!1)}a.memory||(c=!1),b=!1,e&&(f=c?[]:"")},j={add:function(){return f&&(c&&!b&&(h=f.length-1,g.push(c)),function d(b){n.each(b,function(b,c){n.isFunction(c)?a.unique&&j.has(c)||f.push(c):c&&c.length&&"string"!==n.type(c)&&d(c)})}(arguments),c&&!b&&i()),this},remove:function(){return n.each(arguments,function(a,b){var c;while((c=n.inArray(b,f,c))>-1)f.splice(c,1),h>=c&&h--}),this},has:function(a){return a?n.inArray(a,f)>-1:f.length>0},empty:function(){return f&&(f=[]),this},disable:function(){return e=g=[],f=c="",this},disabled:function(){return!f},lock:function(){return e=!0,c||j.disable(),this},locked:function(){return!!e},fireWith:function(a,c){return e||(c=c||[],c=[a,c.slice?c.slice():c],g.push(c),b||i()),this},fire:function(){return j.fireWith(this,arguments),this},fired:function(){return!!d}};return j},n.extend({Deferred:function(a){var b=[["resolve","done",n.Callbacks("once memory"),"resolved"],["reject","fail",n.Callbacks("once memory"),"rejected"],["notify","progress",n.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return n.Deferred(function(c){n.each(b,function(b,f){var g=n.isFunction(a[b])&&a[b];e[f[1]](function(){var a=g&&g.apply(this,arguments);a&&n.isFunction(a.promise)?a.promise().progress(c.notify).done(c.resolve).fail(c.reject):c[f[0]+"With"](this===d?c.promise():this,g?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?n.extend(a,d):d}},e={};return d.pipe=d.then,n.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=e.call(arguments),d=c.length,f=1!==d||a&&n.isFunction(a.promise)?d:0,g=1===f?a:n.Deferred(),h=function(a,b,c){return function(d){b[a]=this,c[a]=arguments.length>1?e.call(arguments):d,c===i?g.notifyWith(b,c):--f||g.resolveWith(b,c)}},i,j,k;if(d>1)for(i=new Array(d),j=new Array(d),k=new Array(d);d>b;b++)c[b]&&n.isFunction(c[b].promise)?c[b].promise().progress(h(b,j,i)).done(h(b,k,c)).fail(g.reject):--f;return f||g.resolveWith(k,c),g.promise()}});var I;n.fn.ready=function(a){return n.ready.promise().done(a),this},n.extend({isReady:!1,readyWait:1,holdReady:function(a){a?n.readyWait++:n.ready(!0)},ready:function(a){(a===!0?--n.readyWait:n.isReady)||(n.isReady=!0,a!==!0&&--n.readyWait>0||(I.resolveWith(d,[n]),n.fn.triggerHandler&&(n(d).triggerHandler("ready"),n(d).off("ready"))))}});function J(){d.addEventListener?(d.removeEventListener("DOMContentLoaded",K),a.removeEventListener("load",K)):(d.detachEvent("onreadystatechange",K),a.detachEvent("onload",K))}function K(){(d.addEventListener||"load"===a.event.type||"complete"===d.readyState)&&(J(),n.ready())}n.ready.promise=function(b){if(!I)if(I=n.Deferred(),"complete"===d.readyState||"loading"!==d.readyState&&!d.documentElement.doScroll)a.setTimeout(n.ready);else if(d.addEventListener)d.addEventListener("DOMContentLoaded",K),a.addEventListener("load",K);else{d.attachEvent("onreadystatechange",K),a.attachEvent("onload",K);var c=!1;try{c=null==a.frameElement&&d.documentElement}catch(e){}c&&c.doScroll&&!function f(){if(!n.isReady){try{c.doScroll("left")}catch(b){return a.setTimeout(f,50)}J(),n.ready()}}()}return I.promise(b)},n.ready.promise();var L;for(L in n(l))break;l.ownFirst="0"===L,l.inlineBlockNeedsLayout=!1,n(function(){var a,b,c,e;c=d.getElementsByTagName("body")[0],c&&c.style&&(b=d.createElement("div"),e=d.createElement("div"),e.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(e).appendChild(b),"undefined"!=typeof b.style.zoom&&(b.style.cssText="display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1",l.inlineBlockNeedsLayout=a=3===b.offsetWidth,a&&(c.style.zoom=1)),c.removeChild(e))}),function(){var a=d.createElement("div");l.deleteExpando=!0;try{delete a.test}catch(b){l.deleteExpando=!1}a=null}();var M=function(a){var b=n.noData[(a.nodeName+" ").toLowerCase()],c=+a.nodeType||1;return 1!==c&&9!==c?!1:!b||b!==!0&&a.getAttribute("classid")===b},N=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,O=/([A-Z])/g;function P(a,b,c){if(void 0===c&&1===a.nodeType){var d="data-"+b.replace(O,"-$1").toLowerCase();if(c=a.getAttribute(d),"string"==typeof c){try{c="true"===c?!0:"false"===c?!1:"null"===c?null:+c+""===c?+c:N.test(c)?n.parseJSON(c):c}catch(e){}n.data(a,b,c)}else c=void 0;
@@ -443,13 +443,38 @@ color: #d14;
           theseArgs = theseArgs.concat([task.data]);
           task = task.code;
         }
-        var taskFunc = eval("(" + task + ")");
+        var taskFunc = tryEval(task);
         if (typeof(taskFunc) !== "function") {
           throw new Error("Task must be a function! Source:\n" + task);
         }
         taskFunc.apply(target, theseArgs);
       });
     }
+  }
+
+  // Attempt eval() both with and without enclosing in parentheses.
+  // Note that enclosing coerces a function declaration into
+  // an expression that eval() can parse
+  // (otherwise, a SyntaxError is thrown)
+  function tryEval(code) {
+    var result = null;
+    try {
+      result = eval(code);
+    } catch(error) {
+      if (!error instanceof SyntaxError) {
+        throw error;
+      }
+      try {
+        result = eval("(" + code + ")");
+      } catch(e) {
+        if (e instanceof SyntaxError) {
+          throw error;
+        } else {
+          throw e;
+        }
+      }
+    }
+    return result;
   }
 
   function initSizing(el) {
@@ -844,17 +869,56 @@ color: #d14;
     invokePostRenderHandlers();
   }
 
-  // Wait until after the document has loaded to render the widgets.
+
+  function has_jQuery3() {
+    if (!window.jQuery) {
+      return false;
+    }
+    var $version = window.jQuery.fn.jquery;
+    var $major_version = parseInt($version.split(".")[0]);
+    return $major_version >= 3;
+  }
+
+  /*
+  / Shiny 1.4 bumped jQuery from 1.x to 3.x which means jQuery's
+  / on-ready handler (i.e., $(fn)) is now asyncronous (i.e., it now
+  / really means $(setTimeout(fn)).
+  / https://jquery.com/upgrade-guide/3.0/#breaking-change-document-ready-handlers-are-now-asynchronous
+  /
+  / Since Shiny uses $() to schedule initShiny, shiny>=1.4 calls initShiny
+  / one tick later than it did before, which means staticRender() is
+  / called renderValue() earlier than (advanced) widget authors might be expecting.
+  / https://github.com/rstudio/shiny/issues/2630
+  /
+  / For a concrete example, leaflet has some methods (e.g., updateBounds)
+  / which reference Shiny methods registered in initShiny (e.g., setInputValue).
+  / Since leaflet is privy to this life-cycle, it knows to use setTimeout() to
+  / delay execution of those methods (until Shiny methods are ready)
+  / https://github.com/rstudio/leaflet/blob/18ec981/javascript/src/index.js#L266-L268
+  /
+  / Ideally widget authors wouldn't need to use this setTimeout() hack that
+  / leaflet uses to call Shiny methods on a staticRender(). In the long run,
+  / the logic initShiny should be broken up so that method registration happens
+  / right away, but binding happens later.
+  */
+  function maybeStaticRenderLater() {
+    if (shinyMode && has_jQuery3()) {
+      window.jQuery(window.HTMLWidgets.staticRender);
+    } else {
+      window.HTMLWidgets.staticRender();
+    }
+  }
+
   if (document.addEventListener) {
     document.addEventListener("DOMContentLoaded", function() {
       document.removeEventListener("DOMContentLoaded", arguments.callee, false);
-      window.HTMLWidgets.staticRender();
+      maybeStaticRenderLater();
     }, false);
   } else if (document.attachEvent) {
     document.attachEvent("onreadystatechange", function() {
       if (document.readyState === "complete") {
         document.detachEvent("onreadystatechange", arguments.callee);
-        window.HTMLWidgets.staticRender();
+        maybeStaticRenderLater();
       }
     });
   }
@@ -942,7 +1006,7 @@ color: #d14;
       if (o !== null && typeof o === "object" && part in o) {
         if (i == (l - 1)) { // if we are at the end of the line then evalulate
           if (typeof o[part] === "string")
-            o[part] = eval("(" + o[part] + ")");
+            o[part] = tryEval(o[part]);
         } else { // otherwise continue to next embedded object
           o = o[part];
         }
@@ -1395,7 +1459,7 @@ cursor: pointer;
 z-index: auto;
 }
 </style>
-<script>(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+<script>(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1582,8 +1646,7 @@ function getCRS(crsOptions) {
         crsOptions.options.transformation = _leaflet2.default.Transformation(crsOptions.options.transformation[0], crsOptions.options.transformation[1], crsOptions.options.transformation[2], crsOptions.options.transformation[3]);
       }
       // L.Proj.CRS.TMS is deprecated as of Leaflet 1.x, fall back to L.Proj.CRS
-      //crs = new Proj4Leaflet.CRS.TMS(crsOptions.code, crsOptions.proj4def,
-      //crsOptions.projectedBounds, crsOptions.options);
+      //crs = new Proj4Leaflet.CRS.TMS(crsOptions.code, crsOptions.proj4def, crsOptions.projectedBounds, crsOptions.options);
       crs = new _proj4leaflet2.default.CRS(crsOptions.code, crsOptions.proj4def, crsOptions.options);
       break;
   }
@@ -1597,8 +1660,6 @@ function getCRS(crsOptions) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1682,17 +1743,11 @@ var DataFrame = function () {
 
       var colIndex = -1;
       if (typeof col === "undefined") {
-        var _ret = function () {
-          var rowData = {};
-          _this3.colnames.forEach(function (name, i) {
-            rowData[name] = _this3.columns[i][row % _this3.columns[i].length];
-          });
-          return {
-            v: rowData
-          };
-        }();
-
-        if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
+        var rowData = {};
+        this.colnames.forEach(function (name, i) {
+          rowData[name] = _this3.columns[i][row % _this3.columns[i].length];
+        });
+        return rowData;
       } else if (typeof col === "string") {
         colIndex = this._colIndex(col);
       } else if (typeof col === "number") {
@@ -2040,42 +2095,40 @@ _htmlwidgets2.default.widget({
 
         // Check if the map is rendered statically (no output binding)
         if (_htmlwidgets2.default.shinyMode && /\bshiny-bound-output\b/.test(el.className)) {
-          (function () {
 
-            map.id = el.id;
+          map.id = el.id;
 
-            // Store the map on the element so we can find it later by ID
-            (0, _jquery2.default)(el).data("leaflet-map", map);
+          // Store the map on the element so we can find it later by ID
+          (0, _jquery2.default)(el).data("leaflet-map", map);
 
-            // When the map is clicked, send the coordinates back to the app
-            map.on("click", function (e) {
-              _shiny2.default.onInputChange(map.id + "_click", {
-                lat: e.latlng.lat,
-                lng: e.latlng.lng,
-                ".nonce": Math.random() // Force reactivity if lat/lng hasn't changed
-              });
+          // When the map is clicked, send the coordinates back to the app
+          map.on("click", function (e) {
+            _shiny2.default.onInputChange(map.id + "_click", {
+              lat: e.latlng.lat,
+              lng: e.latlng.lng,
+              ".nonce": Math.random() // Force reactivity if lat/lng hasn't changed
             });
+          });
 
-            var groupTimerId = null;
+          var groupTimerId = null;
 
-            map.on("moveend", function (e) {
-              updateBounds(e.target);
-            }).on("layeradd layerremove", function (e) {
-              // If the layer that's coming or going is a group we created, tell
-              // the server.
-              if (map.layerManager.getGroupNameFromLayerGroup(e.layer)) {
-                // But to avoid chattiness, coalesce events
-                if (groupTimerId) {
-                  clearTimeout(groupTimerId);
-                  groupTimerId = null;
-                }
-                groupTimerId = setTimeout(function () {
-                  groupTimerId = null;
-                  _shiny2.default.onInputChange(map.id + "_groups", map.layerManager.getVisibleGroups());
-                }, 100);
+          map.on("moveend", function (e) {
+            updateBounds(e.target);
+          }).on("layeradd layerremove", function (e) {
+            // If the layer that's coming or going is a group we created, tell
+            // the server.
+            if (map.layerManager.getGroupNameFromLayerGroup(e.layer)) {
+              // But to avoid chattiness, coalesce events
+              if (groupTimerId) {
+                clearTimeout(groupTimerId);
+                groupTimerId = null;
               }
-            });
-          })();
+              groupTimerId = setTimeout(function () {
+                groupTimerId = null;
+                _shiny2.default.onInputChange(map.id + "_groups", map.layerManager.getVisibleGroups());
+              }, 100);
+            }
+          });
         }
         this.doRenderValue(data, map);
       },
@@ -2324,77 +2377,73 @@ var LayerManager = function () {
 
       // Update crosstalk group index
       if (ctGroup) {
-        (function () {
-          if (layer.setStyle) {
-            // Need to save this info so we know what to set opacity to later
-            layer.options.origOpacity = typeof layer.options.opacity !== "undefined" ? layer.options.opacity : 0.5;
-            layer.options.origFillOpacity = typeof layer.options.fillOpacity !== "undefined" ? layer.options.fillOpacity : 0.2;
-          }
+        if (layer.setStyle) {
+          // Need to save this info so we know what to set opacity to later
+          layer.options.origOpacity = typeof layer.options.opacity !== "undefined" ? layer.options.opacity : 0.5;
+          layer.options.origFillOpacity = typeof layer.options.fillOpacity !== "undefined" ? layer.options.fillOpacity : 0.2;
+        }
 
-          var ctg = _this._byCrosstalkGroup[ctGroup];
-          if (!ctg) {
-            (function () {
-              ctg = _this._byCrosstalkGroup[ctGroup] = {};
-              var crosstalk = global.crosstalk;
+        var ctg = this._byCrosstalkGroup[ctGroup];
+        if (!ctg) {
+          ctg = this._byCrosstalkGroup[ctGroup] = {};
+          var crosstalk = global.crosstalk;
 
-              var handleFilter = function handleFilter(e) {
-                if (!e.value) {
-                  var groupKeys = Object.keys(ctg);
-                  for (var i = 0; i < groupKeys.length; i++) {
-                    var key = groupKeys[i];
-                    var _layerInfo = _this._byStamp[ctg[key]];
-                    _this._setVisibility(_layerInfo, true);
-                  }
-                } else {
-                  var selectedKeys = {};
-                  for (var _i = 0; _i < e.value.length; _i++) {
-                    selectedKeys[e.value[_i]] = true;
-                  }
-                  var _groupKeys = Object.keys(ctg);
-                  for (var _i2 = 0; _i2 < _groupKeys.length; _i2++) {
-                    var _key = _groupKeys[_i2];
-                    var _layerInfo2 = _this._byStamp[ctg[_key]];
-                    _this._setVisibility(_layerInfo2, selectedKeys[_groupKeys[_i2]]);
-                  }
-                }
-              };
-              var filterHandle = new crosstalk.FilterHandle(ctGroup);
-              filterHandle.on("change", handleFilter);
+          var handleFilter = function handleFilter(e) {
+            if (!e.value) {
+              var groupKeys = Object.keys(ctg);
+              for (var i = 0; i < groupKeys.length; i++) {
+                var key = groupKeys[i];
+                var _layerInfo = _this._byStamp[ctg[key]];
+                _this._setVisibility(_layerInfo, true);
+              }
+            } else {
+              var selectedKeys = {};
+              for (var _i = 0; _i < e.value.length; _i++) {
+                selectedKeys[e.value[_i]] = true;
+              }
+              var _groupKeys = Object.keys(ctg);
+              for (var _i2 = 0; _i2 < _groupKeys.length; _i2++) {
+                var _key = _groupKeys[_i2];
+                var _layerInfo2 = _this._byStamp[ctg[_key]];
+                _this._setVisibility(_layerInfo2, selectedKeys[_groupKeys[_i2]]);
+              }
+            }
+          };
+          var filterHandle = new crosstalk.FilterHandle(ctGroup);
+          filterHandle.on("change", handleFilter);
 
-              var handleSelection = function handleSelection(e) {
-                if (!e.value || !e.value.length) {
-                  var groupKeys = Object.keys(ctg);
-                  for (var i = 0; i < groupKeys.length; i++) {
-                    var key = groupKeys[i];
-                    var _layerInfo3 = _this._byStamp[ctg[key]];
-                    _this._setOpacity(_layerInfo3, 1.0);
-                  }
-                } else {
-                  var selectedKeys = {};
-                  for (var _i3 = 0; _i3 < e.value.length; _i3++) {
-                    selectedKeys[e.value[_i3]] = true;
-                  }
-                  var _groupKeys2 = Object.keys(ctg);
-                  for (var _i4 = 0; _i4 < _groupKeys2.length; _i4++) {
-                    var _key2 = _groupKeys2[_i4];
-                    var _layerInfo4 = _this._byStamp[ctg[_key2]];
-                    _this._setOpacity(_layerInfo4, selectedKeys[_groupKeys2[_i4]] ? 1.0 : 0.2);
-                  }
-                }
-              };
-              var selHandle = new crosstalk.SelectionHandle(ctGroup);
-              selHandle.on("change", handleSelection);
+          var handleSelection = function handleSelection(e) {
+            if (!e.value || !e.value.length) {
+              var groupKeys = Object.keys(ctg);
+              for (var i = 0; i < groupKeys.length; i++) {
+                var key = groupKeys[i];
+                var _layerInfo3 = _this._byStamp[ctg[key]];
+                _this._setOpacity(_layerInfo3, 1.0);
+              }
+            } else {
+              var selectedKeys = {};
+              for (var _i3 = 0; _i3 < e.value.length; _i3++) {
+                selectedKeys[e.value[_i3]] = true;
+              }
+              var _groupKeys2 = Object.keys(ctg);
+              for (var _i4 = 0; _i4 < _groupKeys2.length; _i4++) {
+                var _key2 = _groupKeys2[_i4];
+                var _layerInfo4 = _this._byStamp[ctg[_key2]];
+                _this._setOpacity(_layerInfo4, selectedKeys[_groupKeys2[_i4]] ? 1.0 : 0.2);
+              }
+            }
+          };
+          var selHandle = new crosstalk.SelectionHandle(ctGroup);
+          selHandle.on("change", handleSelection);
 
-              setTimeout(function () {
-                handleFilter({ value: filterHandle.filteredKeys });
-                handleSelection({ value: selHandle.value });
-              }, 100);
-            })();
-          }
+          setTimeout(function () {
+            handleFilter({ value: filterHandle.filteredKeys });
+            handleSelection({ value: selHandle.value });
+          }, 100);
+        }
 
-          if (!ctg[ctKey]) ctg[ctKey] = [];
-          ctg[ctKey].push(stamp);
-        })();
+        if (!ctg[ctKey]) ctg[ctKey] = [];
+        ctg[ctKey].push(stamp);
       }
 
       // Add to container
@@ -2639,8 +2688,6 @@ exports.default = LayerManager;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 var _jquery = require("./global/jquery");
 
@@ -2968,68 +3015,62 @@ methods.addAwesomeMarkers = function (lat, lng, icon, layerId, group, options, p
 function addLayers(map, category, df, layerFunc) {
   var _loop3 = function _loop3(i) {
     (function () {
-      var _this4 = this;
-
       var layer = layerFunc(df, i);
       if (!_jquery2.default.isEmptyObject(layer)) {
-        (function () {
-          var thisId = df.get(i, "layerId");
-          var thisGroup = df.get(i, "group");
-          _this4.layerManager.addLayer(layer, category, thisId, thisGroup, df.get(i, "ctGroup", true), df.get(i, "ctKey", true));
-          if (layer.bindPopup) {
-            var popup = df.get(i, "popup");
-            var popupOptions = df.get(i, "popupOptions");
-            if (popup !== null) {
-              if (popupOptions !== null) {
-                layer.bindPopup(popup, popupOptions);
-              } else {
-                layer.bindPopup(popup);
-              }
+        var thisId = df.get(i, "layerId");
+        var thisGroup = df.get(i, "group");
+        this.layerManager.addLayer(layer, category, thisId, thisGroup, df.get(i, "ctGroup", true), df.get(i, "ctKey", true));
+        if (layer.bindPopup) {
+          var popup = df.get(i, "popup");
+          var popupOptions = df.get(i, "popupOptions");
+          if (popup !== null) {
+            if (popupOptions !== null) {
+              layer.bindPopup(popup, popupOptions);
+            } else {
+              layer.bindPopup(popup);
             }
           }
-          if (layer.bindTooltip) {
-            var label = df.get(i, "label");
-            var labelOptions = df.get(i, "labelOptions");
-            if (label !== null) {
-              if (labelOptions !== null) {
-                layer.bindTooltip(label, labelOptions);
-              } else {
-                layer.bindTooltip(label);
-              }
+        }
+        if (layer.bindTooltip) {
+          var label = df.get(i, "label");
+          var labelOptions = df.get(i, "labelOptions");
+          if (label !== null) {
+            if (labelOptions !== null) {
+              layer.bindTooltip(label, labelOptions);
+            } else {
+              layer.bindTooltip(label);
             }
           }
-          layer.on("click", mouseHandler(_this4.id, thisId, thisGroup, category + "_click"), _this4);
-          layer.on("mouseover", mouseHandler(_this4.id, thisId, thisGroup, category + "_mouseover"), _this4);
-          layer.on("mouseout", mouseHandler(_this4.id, thisId, thisGroup, category + "_mouseout"), _this4);
-          var highlightStyle = df.get(i, "highlightOptions");
+        }
+        layer.on("click", mouseHandler(this.id, thisId, thisGroup, category + "_click"), this);
+        layer.on("mouseover", mouseHandler(this.id, thisId, thisGroup, category + "_mouseover"), this);
+        layer.on("mouseout", mouseHandler(this.id, thisId, thisGroup, category + "_mouseout"), this);
+        var highlightStyle = df.get(i, "highlightOptions");
 
-          if (!_jquery2.default.isEmptyObject(highlightStyle)) {
-            (function () {
+        if (!_jquery2.default.isEmptyObject(highlightStyle)) {
 
-              var defaultStyle = {};
-              _jquery2.default.each(highlightStyle, function (k, v) {
-                if (k != "bringToFront" && k != "sendToBack") {
-                  if (df.get(i, k)) {
-                    defaultStyle[k] = df.get(i, k);
-                  }
-                }
-              });
+          var defaultStyle = {};
+          _jquery2.default.each(highlightStyle, function (k, v) {
+            if (k != "bringToFront" && k != "sendToBack") {
+              if (df.get(i, k)) {
+                defaultStyle[k] = df.get(i, k);
+              }
+            }
+          });
 
-              layer.on("mouseover", function (e) {
-                this.setStyle(highlightStyle);
-                if (highlightStyle.bringToFront) {
-                  this.bringToFront();
-                }
-              });
-              layer.on("mouseout", function (e) {
-                this.setStyle(defaultStyle);
-                if (highlightStyle.sendToBack) {
-                  this.bringToBack();
-                }
-              });
-            })();
-          }
-        })();
+          layer.on("mouseover", function (e) {
+            this.setStyle(highlightStyle);
+            if (highlightStyle.bringToFront) {
+              this.bringToFront();
+            }
+          });
+          layer.on("mouseout", function (e) {
+            this.setStyle(defaultStyle);
+            if (highlightStyle.sendToBack) {
+              this.bringToBack();
+            }
+          });
+        }
       }
     }).call(map);
   };
@@ -3176,7 +3217,7 @@ methods.addGeoJSON = function (data, layerId, group, style) {
         featureId: feature.id,
         properties: feature.properties
       };
-      var popup = feature.properties.popup;
+      var popup = feature.properties ? feature.properties.popup : null;
       if (typeof popup !== "undefined" && popup !== null) layer.bindPopup(popup);
       layer.on("click", mouseHandler(self.id, layerId, group, "geojson_click", extraInfo), this);
       layer.on("mouseover", mouseHandler(self.id, layerId, group, "geojson_mouseover", extraInfo), this);
@@ -3290,8 +3331,6 @@ methods.clearControls = function () {
 };
 
 methods.addLegend = function (options) {
-  var _this5 = this;
-
   var legend = _leaflet2.default.control({ position: options.position });
   var gradSpan = void 0;
 
@@ -3301,81 +3340,79 @@ methods.addLegend = function (options) {
         labels = options.labels,
         legendHTML = "";
     if (options.type === "numeric") {
-      (function () {
-        // # Formatting constants.
-        var singleBinHeight = 20; // The distance between tick marks, in px
-        var vMargin = 8; // If 1st tick mark starts at top of gradient, how
-        // many extra px are needed for the top half of the
-        // 1st label? (ditto for last tick mark/label)
-        var tickWidth = 4; // How wide should tick marks be, in px?
-        var labelPadding = 6; // How much distance to reserve for tick mark?
-        // (Must be >= tickWidth)
+      // # Formatting constants.
+      var singleBinHeight = 20; // The distance between tick marks, in px
+      var vMargin = 8; // If 1st tick mark starts at top of gradient, how
+      // many extra px are needed for the top half of the
+      // 1st label? (ditto for last tick mark/label)
+      var tickWidth = 4; // How wide should tick marks be, in px?
+      var labelPadding = 6; // How much distance to reserve for tick mark?
+      // (Must be >= tickWidth)
 
-        // # Derived formatting parameters.
+      // # Derived formatting parameters.
 
-        // What's the height of a single bin, in percentage (of gradient height)?
-        // It might not just be 1/(n-1), if the gradient extends past the tick
-        // marks (which can be the case for pretty cut points).
-        var singleBinPct = (options.extra.p_n - options.extra.p_1) / (labels.length - 1);
-        // Each bin is `singleBinHeight` high. How tall is the gradient?
-        var totalHeight = 1 / singleBinPct * singleBinHeight + 1;
-        // How far should the first tick be shifted down, relative to the top
-        // of the gradient?
-        var tickOffset = singleBinHeight / singleBinPct * options.extra.p_1;
+      // What's the height of a single bin, in percentage (of gradient height)?
+      // It might not just be 1/(n-1), if the gradient extends past the tick
+      // marks (which can be the case for pretty cut points).
+      var singleBinPct = (options.extra.p_n - options.extra.p_1) / (labels.length - 1);
+      // Each bin is `singleBinHeight` high. How tall is the gradient?
+      var totalHeight = 1 / singleBinPct * singleBinHeight + 1;
+      // How far should the first tick be shifted down, relative to the top
+      // of the gradient?
+      var tickOffset = singleBinHeight / singleBinPct * options.extra.p_1;
 
-        gradSpan = (0, _jquery2.default)("<span/>").css({
-          "background": "linear-gradient(" + colors + ")",
-          "opacity": options.opacity,
-          "height": totalHeight + "px",
-          "width": "18px",
-          "display": "block",
-          "margin-top": vMargin + "px"
-        });
-        var leftDiv = (0, _jquery2.default)("<div/>").css("float", "left"),
-            rightDiv = (0, _jquery2.default)("<div/>").css("float", "left");
-        leftDiv.append(gradSpan);
-        (0, _jquery2.default)(div).append(leftDiv).append(rightDiv).append((0, _jquery2.default)("<br>"));
+      gradSpan = (0, _jquery2.default)("<span/>").css({
+        "background": "linear-gradient(" + colors + ")",
+        "opacity": options.opacity,
+        "height": totalHeight + "px",
+        "width": "18px",
+        "display": "block",
+        "margin-top": vMargin + "px"
+      });
+      var leftDiv = (0, _jquery2.default)("<div/>").css("float", "left"),
+          rightDiv = (0, _jquery2.default)("<div/>").css("float", "left");
+      leftDiv.append(gradSpan);
+      (0, _jquery2.default)(div).append(leftDiv).append(rightDiv).append((0, _jquery2.default)("<br>"));
 
-        // Have to attach the div to the body at this early point, so that the
-        // svg text getComputedTextLength() actually works, below.
-        document.body.appendChild(div);
+      // Have to attach the div to the body at this early point, so that the
+      // svg text getComputedTextLength() actually works, below.
+      document.body.appendChild(div);
 
-        var ns = "http://www.w3.org/2000/svg";
-        var svg = document.createElementNS(ns, "svg");
-        rightDiv.append(svg);
-        var g = document.createElementNS(ns, "g");
-        (0, _jquery2.default)(g).attr("transform", "translate(0, " + vMargin + ")");
-        svg.appendChild(g);
+      var ns = "http://www.w3.org/2000/svg";
+      var svg = document.createElementNS(ns, "svg");
+      rightDiv.append(svg);
+      var g = document.createElementNS(ns, "g");
+      (0, _jquery2.default)(g).attr("transform", "translate(0, " + vMargin + ")");
+      svg.appendChild(g);
 
-        // max label width needed to set width of svg, and right-justify text
-        var maxLblWidth = 0;
+      // max label width needed to set width of svg, and right-justify text
+      var maxLblWidth = 0;
 
-        // Create tick marks and labels
-        _jquery2.default.each(labels, function (i, label) {
-          var y = tickOffset + i * singleBinHeight + 0.5;
+      // Create tick marks and labels
+      _jquery2.default.each(labels, function (i, label) {
+        var y = tickOffset + i * singleBinHeight + 0.5;
 
-          var thisLabel = document.createElementNS(ns, "text");
-          (0, _jquery2.default)(thisLabel).text(labels[i]).attr("y", y).attr("dx", labelPadding).attr("dy", "0.5ex");
-          g.appendChild(thisLabel);
-          maxLblWidth = Math.max(maxLblWidth, thisLabel.getComputedTextLength());
+        var thisLabel = document.createElementNS(ns, "text");
+        (0, _jquery2.default)(thisLabel).text(labels[i]).attr("y", y).attr("dx", labelPadding).attr("dy", "0.5ex");
+        g.appendChild(thisLabel);
+        maxLblWidth = Math.max(maxLblWidth, thisLabel.getComputedTextLength());
 
-          var thisTick = document.createElementNS(ns, "line");
-          (0, _jquery2.default)(thisTick).attr("x1", 0).attr("x2", tickWidth).attr("y1", y).attr("y2", y).attr("stroke-width", 1);
-          g.appendChild(thisTick);
-        });
+        var thisTick = document.createElementNS(ns, "line");
+        (0, _jquery2.default)(thisTick).attr("x1", 0).attr("x2", tickWidth).attr("y1", y).attr("y2", y).attr("stroke-width", 1);
+        g.appendChild(thisTick);
+      });
 
-        // Now that we know the max label width, we can right-justify
-        (0, _jquery2.default)(svg).find("text").attr("dx", labelPadding + maxLblWidth).attr("text-anchor", "end");
-        // Final size for <svg>
-        (0, _jquery2.default)(svg).css({
-          width: maxLblWidth + labelPadding + "px",
-          height: totalHeight + vMargin * 2 + "px"
-        });
+      // Now that we know the max label width, we can right-justify
+      (0, _jquery2.default)(svg).find("text").attr("dx", labelPadding + maxLblWidth).attr("text-anchor", "end");
+      // Final size for <svg>
+      (0, _jquery2.default)(svg).css({
+        width: maxLblWidth + labelPadding + "px",
+        height: totalHeight + vMargin * 2 + "px"
+      });
 
-        if (options.na_color && _jquery2.default.inArray(options.na_label, labels) < 0) {
-          (0, _jquery2.default)(div).append("<div><i style=\"" + "background:" + options.na_color + ";opacity:" + options.opacity + ";margin-right:" + labelPadding + "px" + ";\"></i>" + options.na_label + "</div>");
-        }
-      })();
+      if (options.na_color && _jquery2.default.inArray(options.na_label, labels) < 0) {
+        (0, _jquery2.default)(div).append("<div><i style=\"" + "background:" + options.na_color + ";opacity:" + options.opacity + ";margin-right:" + labelPadding + "px" + ";\"></i>" + options.na_label + "</div>");
+      }
     } else {
       if (options.na_color && _jquery2.default.inArray(options.na_label, labels) < 0) {
         colors.push(options.na_color);
@@ -3391,41 +3428,39 @@ methods.addLegend = function (options) {
   };
 
   if (options.group) {
-    (function () {
-      // Auto generate a layerID if not provided
-      if (!options.layerId) {
-        options.layerId = _leaflet2.default.Util.stamp(legend);
-      }
+    // Auto generate a layerID if not provided
+    if (!options.layerId) {
+      options.layerId = _leaflet2.default.Util.stamp(legend);
+    }
 
-      var map = _this5;
-      map.on("overlayadd", function (e) {
-        if (e.name === options.group) {
-          map.controls.add(legend, options.layerId);
-        }
-      });
-      map.on("overlayremove", function (e) {
-        if (e.name === options.group) {
-          map.controls.remove(options.layerId);
-        }
-      });
-      map.on("groupadd", function (e) {
-        if (e.name === options.group) {
-          map.controls.add(legend, options.layerId);
-        }
-      });
-      map.on("groupremove", function (e) {
-        if (e.name === options.group) {
-          map.controls.remove(options.layerId);
-        }
-      });
-    })();
+    var map = this;
+    map.on("overlayadd", function (e) {
+      if (e.name === options.group) {
+        map.controls.add(legend, options.layerId);
+      }
+    });
+    map.on("overlayremove", function (e) {
+      if (e.name === options.group) {
+        map.controls.remove(options.layerId);
+      }
+    });
+    map.on("groupadd", function (e) {
+      if (e.name === options.group) {
+        map.controls.add(legend, options.layerId);
+      }
+    });
+    map.on("groupremove", function (e) {
+      if (e.name === options.group) {
+        map.controls.remove(options.layerId);
+      }
+    });
   }
 
   this.controls.add(legend, options.layerId);
 };
 
 methods.addLayersControl = function (baseGroups, overlayGroups, options) {
-  var _this6 = this;
+  var _this4 = this;
 
   // Only allow one layers control at a time
   methods.removeLayersControl.call(this);
@@ -3433,23 +3468,23 @@ methods.addLayersControl = function (baseGroups, overlayGroups, options) {
   var firstLayer = true;
   var base = {};
   _jquery2.default.each((0, _util.asArray)(baseGroups), function (i, g) {
-    var layer = _this6.layerManager.getLayerGroup(g, true);
+    var layer = _this4.layerManager.getLayerGroup(g, true);
     if (layer) {
       base[g] = layer;
 
       // Check if >1 base layers are visible; if so, hide all but the first one
-      if (_this6.hasLayer(layer)) {
+      if (_this4.hasLayer(layer)) {
         if (firstLayer) {
           firstLayer = false;
         } else {
-          _this6.removeLayer(layer);
+          _this4.removeLayer(layer);
         }
       }
     }
   });
   var overlay = {};
   _jquery2.default.each((0, _util.asArray)(overlayGroups), function (i, g) {
-    var layer = _this6.layerManager.getLayerGroup(g, true);
+    var layer = _this4.layerManager.getLayerGroup(g, true);
     if (layer) {
       overlay[g] = layer;
     }
@@ -3483,23 +3518,23 @@ methods.removeScaleBar = function () {
 };
 
 methods.hideGroup = function (group) {
-  var _this7 = this;
+  var _this5 = this;
 
   _jquery2.default.each((0, _util.asArray)(group), function (i, g) {
-    var layer = _this7.layerManager.getLayerGroup(g, true);
+    var layer = _this5.layerManager.getLayerGroup(g, true);
     if (layer) {
-      _this7.removeLayer(layer);
+      _this5.removeLayer(layer);
     }
   });
 };
 
 methods.showGroup = function (group) {
-  var _this8 = this;
+  var _this6 = this;
 
   _jquery2.default.each((0, _util.asArray)(group), function (i, g) {
-    var layer = _this8.layerManager.getLayerGroup(g, true);
+    var layer = _this6.layerManager.getLayerGroup(g, true);
     if (layer) {
-      _this8.addLayer(layer);
+      _this6.addLayer(layer);
     }
   });
 };
@@ -3539,10 +3574,10 @@ function setupShowHideGroupsOnZoom(map) {
 }
 
 methods.setGroupOptions = function (group, options) {
-  var _this9 = this;
+  var _this7 = this;
 
   _jquery2.default.each((0, _util.asArray)(group), function (i, g) {
-    var layer = _this9.layerManager.getLayerGroup(g, true);
+    var layer = _this7.layerManager.getLayerGroup(g, true);
     // This slightly tortured check is because 0 is a valid value for zoomLevels
     if (typeof options.zoomLevels !== "undefined" && options.zoomLevels !== null) {
       layer.zoomLevels = (0, _util.asArray)(options.zoomLevels);
@@ -3694,131 +3729,123 @@ methods.addRasterImage = function (uri, bounds, opacity, attribution, layerId, g
 
     getImageData(function (imgData, w, h, mipmapper) {
       try {
-        var _ret8 = function () {
-          // The Context2D we'll being drawing onto. It's always 256x256.
-          var ctx = canvas.getContext("2d");
+        // The Context2D we'll being drawing onto. It's always 256x256.
+        var ctx = canvas.getContext("2d");
 
-          // Convert our image data's top-left and bottom-right locations into
-          // x/y tile coordinates. This is essentially doing a spherical mercator
-          // projection, then multiplying by 2^zoom.
-          var topLeft = degree2tile(bounds[0][0], bounds[0][1], zoom);
-          var bottomRight = degree2tile(bounds[1][0], bounds[1][1], zoom);
-          // The size of the image in x/y tile coordinates.
-          var extent = { x: bottomRight.x - topLeft.x, y: bottomRight.y - topLeft.y };
+        // Convert our image data's top-left and bottom-right locations into
+        // x/y tile coordinates. This is essentially doing a spherical mercator
+        // projection, then multiplying by 2^zoom.
+        var topLeft = degree2tile(bounds[0][0], bounds[0][1], zoom);
+        var bottomRight = degree2tile(bounds[1][0], bounds[1][1], zoom);
+        // The size of the image in x/y tile coordinates.
+        var extent = { x: bottomRight.x - topLeft.x, y: bottomRight.y - topLeft.y };
 
-          // Short circuit if tile is totally disjoint from image.
-          if (!overlap(tilePoint.x, tilePoint.x + 1, topLeft.x, bottomRight.x)) return {
-              v: void 0
-            };
-          if (!overlap(tilePoint.y, tilePoint.y + 1, topLeft.y, bottomRight.y)) return {
-              v: void 0
-            };
+        // Short circuit if tile is totally disjoint from image.
+        if (!overlap(tilePoint.x, tilePoint.x + 1, topLeft.x, bottomRight.x)) return;
+        if (!overlap(tilePoint.y, tilePoint.y + 1, topLeft.y, bottomRight.y)) return;
 
-          // The linear resolution of the tile we're drawing is always 256px per tile unit.
-          // If the linear resolution (in either direction) of the image is less than 256px
-          // per tile unit, then use nearest neighbor; otherwise, use the canvas's built-in
-          // scaling.
-          var imgRes = {
-            x: w / extent.x,
-            y: h / extent.y
+        // The linear resolution of the tile we're drawing is always 256px per tile unit.
+        // If the linear resolution (in either direction) of the image is less than 256px
+        // per tile unit, then use nearest neighbor; otherwise, use the canvas's built-in
+        // scaling.
+        var imgRes = {
+          x: w / extent.x,
+          y: h / extent.y
+        };
+
+        // We can do the actual drawing in one of three ways:
+        // - Call drawImage(). This is easy and fast, and results in smooth
+        //   interpolation (bilinear?). This is what we want when we are
+        //   reducing the image from its native size.
+        // - Call drawImage() with imageSmoothingEnabled=false. This is easy
+        //   and fast and gives us nearest-neighbor interpolation, which is what
+        //   we want when enlarging the image. However, it's unsupported on many
+        //   browsers (including QtWebkit).
+        // - Do a manual nearest-neighbor interpolation. This is what we'll fall
+        //   back to when enlarging, and imageSmoothingEnabled isn't supported.
+        //   In theory it's slower, but still pretty fast on my machine, and the
+        //   results look the same AFAICT.
+
+        // Is imageSmoothingEnabled supported? If so, we can let canvas do
+        // nearest-neighbor interpolation for us.
+        var smoothingProperty = getCanvasSmoothingProperty(ctx);
+
+        if (smoothingProperty || imgRes.x >= 256 && imgRes.y >= 256) {
+          // Use built-in scaling
+
+          // Turn off anti-aliasing if necessary
+          if (smoothingProperty) {
+            ctx[smoothingProperty] = imgRes.x >= 256 && imgRes.y >= 256;
+          }
+
+          // Don't necessarily draw with the full-size image; if we're
+          // downscaling, use the mipmapper to get a pre-downscaled image
+          // (see comments on Mipmapper class for why this matters).
+          mipmapper.getBySize(extent.x * 256, extent.y * 256, function (mip) {
+            // It's possible that the image will go off the edge of the canvas--
+            // that's OK, the canvas should clip appropriately.
+            ctx.drawImage(mip,
+            // Convert abs tile coords to rel tile coords, then *256 to convert
+            // to rel pixel coords
+            (topLeft.x - tilePoint.x) * 256, (topLeft.y - tilePoint.y) * 256,
+            // Always draw the whole thing and let canvas clip; so we can just
+            // convert from size in tile coords straight to pixels
+            extent.x * 256, extent.y * 256);
+          });
+        } else {
+          // Use manual nearest-neighbor interpolation
+
+          // Calculate the source image pixel coordinates that correspond with
+          // the top-left and bottom-right of this tile. (If the source image
+          // only partially overlaps the tile, we use max/min to limit the
+          // sourceStart/End to only reflect the overlapping portion.)
+          var sourceStart = {
+            x: Math.max(0, Math.floor((tilePoint.x - topLeft.x) * imgRes.x)),
+            y: Math.max(0, Math.floor((tilePoint.y - topLeft.y) * imgRes.y))
+          };
+          var sourceEnd = {
+            x: Math.min(w, Math.ceil((tilePoint.x + 1 - topLeft.x) * imgRes.x)),
+            y: Math.min(h, Math.ceil((tilePoint.y + 1 - topLeft.y) * imgRes.y))
           };
 
-          // We can do the actual drawing in one of three ways:
-          // - Call drawImage(). This is easy and fast, and results in smooth
-          //   interpolation (bilinear?). This is what we want when we are
-          //   reducing the image from its native size.
-          // - Call drawImage() with imageSmoothingEnabled=false. This is easy
-          //   and fast and gives us nearest-neighbor interpolation, which is what
-          //   we want when enlarging the image. However, it's unsupported on many
-          //   browsers (including QtWebkit).
-          // - Do a manual nearest-neighbor interpolation. This is what we'll fall
-          //   back to when enlarging, and imageSmoothingEnabled isn't supported.
-          //   In theory it's slower, but still pretty fast on my machine, and the
-          //   results look the same AFAICT.
+          // The size, in dest pixels, that each source pixel should occupy.
+          // This might be greater or less than 1 (e.g. if x and y resolution
+          // are very different).
+          var pixelSize = {
+            x: 256 / imgRes.x,
+            y: 256 / imgRes.y
+          };
 
-          // Is imageSmoothingEnabled supported? If so, we can let canvas do
-          // nearest-neighbor interpolation for us.
-          var smoothingProperty = getCanvasSmoothingProperty(ctx);
+          // For each pixel in the source image that overlaps the tile...
+          for (var row = sourceStart.y; row < sourceEnd.y; row++) {
+            for (var col = sourceStart.x; col < sourceEnd.x; col++) {
+              // ...extract the pixel data...
+              var i = (row * w + col) * 4;
+              var r = imgData[i];
+              var g = imgData[i + 1];
+              var b = imgData[i + 2];
+              var a = imgData[i + 3];
+              ctx.fillStyle = "rgba(" + [r, g, b, a / 255].join(",") + ")";
 
-          if (smoothingProperty || imgRes.x >= 256 && imgRes.y >= 256) {
-            // Use built-in scaling
+              // ...calculate the corresponding pixel coord in the dest image
+              // where it should be drawn...
+              var pixelPos = {
+                x: (col / imgRes.x + topLeft.x - tilePoint.x) * 256,
+                y: (row / imgRes.y + topLeft.y - tilePoint.y) * 256
+              };
 
-            // Turn off anti-aliasing if necessary
-            if (smoothingProperty) {
-              ctx[smoothingProperty] = imgRes.x >= 256 && imgRes.y >= 256;
-            }
-
-            // Don't necessarily draw with the full-size image; if we're
-            // downscaling, use the mipmapper to get a pre-downscaled image
-            // (see comments on Mipmapper class for why this matters).
-            mipmapper.getBySize(extent.x * 256, extent.y * 256, function (mip) {
-              // It's possible that the image will go off the edge of the canvas--
-              // that's OK, the canvas should clip appropriately.
-              ctx.drawImage(mip,
-              // Convert abs tile coords to rel tile coords, then *256 to convert
-              // to rel pixel coords
-              (topLeft.x - tilePoint.x) * 256, (topLeft.y - tilePoint.y) * 256,
-              // Always draw the whole thing and let canvas clip; so we can just
-              // convert from size in tile coords straight to pixels
-              extent.x * 256, extent.y * 256);
-            });
-          } else {
-            // Use manual nearest-neighbor interpolation
-
-            // Calculate the source image pixel coordinates that correspond with
-            // the top-left and bottom-right of this tile. (If the source image
-            // only partially overlaps the tile, we use max/min to limit the
-            // sourceStart/End to only reflect the overlapping portion.)
-            var sourceStart = {
-              x: Math.max(0, Math.floor((tilePoint.x - topLeft.x) * imgRes.x)),
-              y: Math.max(0, Math.floor((tilePoint.y - topLeft.y) * imgRes.y))
-            };
-            var sourceEnd = {
-              x: Math.min(w, Math.ceil((tilePoint.x + 1 - topLeft.x) * imgRes.x)),
-              y: Math.min(h, Math.ceil((tilePoint.y + 1 - topLeft.y) * imgRes.y))
-            };
-
-            // The size, in dest pixels, that each source pixel should occupy.
-            // This might be greater or less than 1 (e.g. if x and y resolution
-            // are very different).
-            var pixelSize = {
-              x: 256 / imgRes.x,
-              y: 256 / imgRes.y
-            };
-
-            // For each pixel in the source image that overlaps the tile...
-            for (var row = sourceStart.y; row < sourceEnd.y; row++) {
-              for (var col = sourceStart.x; col < sourceEnd.x; col++) {
-                // ...extract the pixel data...
-                var i = (row * w + col) * 4;
-                var r = imgData[i];
-                var g = imgData[i + 1];
-                var b = imgData[i + 2];
-                var a = imgData[i + 3];
-                ctx.fillStyle = "rgba(" + [r, g, b, a / 255].join(",") + ")";
-
-                // ...calculate the corresponding pixel coord in the dest image
-                // where it should be drawn...
-                var pixelPos = {
-                  x: (col / imgRes.x + topLeft.x - tilePoint.x) * 256,
-                  y: (row / imgRes.y + topLeft.y - tilePoint.y) * 256
-                };
-
-                // ...and draw a rectangle there.
-                ctx.fillRect(Math.round(pixelPos.x), Math.round(pixelPos.y),
-                // Looks crazy, but this is necessary to prevent rounding from
-                // causing overlap between this rect and its neighbors. The
-                // minuend is the location of the next pixel, while the
-                // subtrahend is the position of the current pixel (to turn an
-                // absolute coordinate to a width/height). Yes, I had to look
-                // up minuend and subtrahend.
-                Math.round(pixelPos.x + pixelSize.x) - Math.round(pixelPos.x), Math.round(pixelPos.y + pixelSize.y) - Math.round(pixelPos.y));
-              }
+              // ...and draw a rectangle there.
+              ctx.fillRect(Math.round(pixelPos.x), Math.round(pixelPos.y),
+              // Looks crazy, but this is necessary to prevent rounding from
+              // causing overlap between this rect and its neighbors. The
+              // minuend is the location of the next pixel, while the
+              // subtrahend is the position of the current pixel (to turn an
+              // absolute coordinate to a width/height). Yes, I had to look
+              // up minuend and subtrahend.
+              Math.round(pixelPos.x + pixelSize.x) - Math.round(pixelPos.x), Math.round(pixelPos.y + pixelSize.y) - Math.round(pixelPos.y));
             }
           }
-        }();
-
-        if ((typeof _ret8 === "undefined" ? "undefined" : _typeof(_ret8)) === "object") return _ret8.v;
+        }
       } catch (e) {
         error = e;
       } finally {
@@ -3855,7 +3882,7 @@ methods.removeMeasure = function () {
 };
 
 methods.addSelect = function (ctGroup) {
-  var _this10 = this;
+  var _this8 = this;
 
   methods.removeSelect.call(this);
 
@@ -3866,32 +3893,30 @@ methods.addSelect = function (ctGroup) {
       title: "Make a selection",
       onClick: function onClick(btn, map) {
         btn.state("select-active");
-        _this10._locationFilter = new _leaflet2.default.LocationFilter2();
+        _this8._locationFilter = new _leaflet2.default.LocationFilter2();
 
         if (ctGroup) {
-          (function () {
-            var selectionHandle = new global.crosstalk.SelectionHandle(ctGroup);
-            selectionHandle.on("change", function (e) {
-              if (e.sender !== selectionHandle) {
-                if (_this10._locationFilter) {
-                  _this10._locationFilter.disable();
-                  btn.state("select-inactive");
-                }
+          var selectionHandle = new global.crosstalk.SelectionHandle(ctGroup);
+          selectionHandle.on("change", function (e) {
+            if (e.sender !== selectionHandle) {
+              if (_this8._locationFilter) {
+                _this8._locationFilter.disable();
+                btn.state("select-inactive");
               }
-            });
-            var handler = function handler(e) {
-              _this10.layerManager.brush(_this10._locationFilter.getBounds(), { sender: selectionHandle });
-            };
-            _this10._locationFilter.on("enabled", handler);
-            _this10._locationFilter.on("change", handler);
-            _this10._locationFilter.on("disabled", function () {
-              selectionHandle.close();
-              _this10._locationFilter = null;
-            });
-          })();
+            }
+          });
+          var handler = function handler(e) {
+            _this8.layerManager.brush(_this8._locationFilter.getBounds(), { sender: selectionHandle });
+          };
+          _this8._locationFilter.on("enabled", handler);
+          _this8._locationFilter.on("change", handler);
+          _this8._locationFilter.on("disabled", function () {
+            selectionHandle.close();
+            _this8._locationFilter = null;
+          });
         }
 
-        _this10._locationFilter.addTo(map);
+        _this8._locationFilter.addTo(map);
       }
     }, {
       stateName: "select-active",
@@ -3899,9 +3924,9 @@ methods.addSelect = function (ctGroup) {
       title: "Dismiss selection",
       onClick: function onClick(btn, map) {
         btn.state("select-inactive");
-        _this10._locationFilter.disable();
+        _this8._locationFilter.disable();
         // If explicitly dismissed, clear the crosstalk selections
-        _this10.layerManager.unbrush();
+        _this8.layerManager.unbrush();
       }
     }]
   });
@@ -3943,7 +3968,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 // pixel of the original image has some contribution to the downscaled image)
 // as opposed to a single-step downscaling which will discard a lot of data
 // (and with sparse images at small scales can give very surprising results).
-
 var Mipmapper = function () {
   function Mipmapper(img) {
     _classCallCheck(this, Mipmapper);
@@ -4139,7 +4163,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -4201,6 +4224,7 @@ summary {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -4212,18 +4236,6 @@ summary {
   display: none;
 }
 </style>
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
 
 <!-- code folding -->
 
@@ -4244,16 +4256,14 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Project 4: Interactive Data Maps</h1>
+<h1 class="title toc-ignore">Project 5: Interactive Data Maps</h1>
 <h4 class="author">CMSC320</h4>
 
 </div>
 
 
-<p><strong>Posted:</strong> May 2nd, 2019<br />
-<strong>Last Updated:</strong> May 02, 2019<br />
-<strong>Due:</strong> May 14th, 2019</p>
-<p>Use the <code>leaflet</code> package and our previously used Baltimore crime dataset to make an interactive data map of Baltimore Crime.</p>
+<p><strong>Last Updated:</strong> May 06, 2020</p>
+<p>Use <code>leaflet</code> and our previously used Baltimore crime dataset to make an interactive data map of Baltimore Crime.</p>
 <ol style="list-style-type: decimal">
 <li>Use this piece of code to download and prepare data for use in project</li>
 </ol>
@@ -4269,21 +4279,21 @@ dat &lt;- arrest_tab %&gt;%
   sample_n(2000)
 dat</code></pre>
 <pre><code>## # A tibble: 2,000 x 16
-##    arrest   age race  sex   arrestDate arrestTime arrestLocation
-##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;         
-##  1 1.13e7    34 B     M     07/26/2011 20:00      4200 The Alam…
-##  2 1.25e7    18 B     M     04/06/2012 21:30      2700 W Coldsp…
-##  3 1.26e7    18 B     M     10/06/2012 22:40      1400 E Coldsp…
-##  4 1.26e7    29 B     M     09/22/2012 07:20      1600 Smallwoo…
-##  5 1.13e7    18 B     M     08/10/2011 18:50      2300 Eutaw Pl 
-##  6 1.11e7    24 B     M     01/10/2011 14:22      0 W Baltimore…
-##  7 1.24e7    49 B     M     02/10/2012 11:05      2400 E Presto…
-##  8 1.25e7    42 B     F     08/04/2012 12:44      1200 Kitmore …
-##  9 1.26e7    24 B     F     09/27/2012 11:00      2400 Wilkins …
-## 10 1.14e7    20 B     M     12/03/2011 20:01      5800 Radecke …
-## # … with 1,990 more rows, and 9 more variables: incidentOffense &lt;chr&gt;,
-## #   incidentLocation &lt;chr&gt;, charge &lt;chr&gt;, chargeDescription &lt;chr&gt;,
-## #   district &lt;chr&gt;, post &lt;dbl&gt;, neighborhood &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;</code></pre>
+##    arrest   age race  sex   arrestDate arrestTime arrestLocation incidentOffense
+##     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;time&gt;     &lt;chr&gt;          &lt;chr&gt;          
+##  1 1.26e7    18 B     M     11/22/2012 17:55      600 N Carroll… 87-Narcotics   
+##  2 1.24e7    39 B     M     02/17/2012 10:54      800 Vine St    87-Narcotics   
+##  3 1.26e7    27 B     M     12/15/2012 00:20      400 W Fayette… 87-Narcotics   
+##  4 1.26e7    21 W     F     09/17/2012 11:00      2300 E Presto… 87-Narcotics   
+##  5 1.24e7    28 B     M     01/21/2012 19:15      2600 E Monume… 97-Search &amp; Se…
+##  6 1.13e7    20 B     M     09/01/2011 18:46      600 Mlk Blvd   6J-Larceny- Ot…
+##  7 1.24e7    54 B     M     01/18/2012 19:00      1900 N Roseda… 97-Search &amp; Se…
+##  8 1.14e7    27 B     F     10/31/2011 13:00      600 N Dukelan… 24-Towed Vehic…
+##  9 1.25e7    40 B     F     06/21/2012 01:35      4600 Edmondso… Unknown Offense
+## 10 1.25e7    24 B     M     08/25/2012 02:45      1500 Poplar G… 79-Other       
+## # … with 1,990 more rows, and 8 more variables: incidentLocation &lt;chr&gt;,
+## #   charge &lt;chr&gt;, chargeDescription &lt;chr&gt;, district &lt;chr&gt;, post &lt;dbl&gt;,
+## #   neighborhood &lt;chr&gt;, lat &lt;dbl&gt;, lng &lt;dbl&gt;</code></pre>
 <p>Note the attributes <code>lat</code> and <code>lng</code> which indicate geographical location as latitude (<code>lat</code>) and longitude (<code>lng</code>).</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Use the <code>leaflet</code> package to create an interactive map of Baltimore</li>
@@ -4294,8 +4304,8 @@ balto_map &lt;- leaflet(dat) %&gt;%
   addTiles() %&gt;%
   setView(lat=39.29, lng=-76.61, zoom=11)
 balto_map</code></pre>
-<div id="htmlwidget-b95e16a1bc9cd2554ea2" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b95e16a1bc9cd2554ea2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[39.29,-76.61],11,[]]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6147a95e2e07016c98a5" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6147a95e2e07016c98a5">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[39.29,-76.61],11,[]]},"evals":[],"jsHooks":[]}</script>
 <p>You can find more information about leaflet here: <a href="https://rstudio.github.io/leaflet/" class="uri">https://rstudio.github.io/leaflet/</a></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Add graphical elements to display the data. For instance, add circles, with colors indicating sex. Or circles with colors indicating race. Or anything else that strikes your fancy.</li>
@@ -4311,10 +4321,34 @@ balto_map</code></pre>
 <div id="submission" class="section level2">
 <h2>Submission</h2>
 <p>Prepare and knit an Rmarkdown file that includes: (a) code to carry out each of the steps above, (b) output showing the result of your code (in this case the interactive map), and (c) a short prose description of your interactive map (i.e., what are you showing with this data and map). Remember, the writeup you are preparing is intended to communicate your data analysis effectively. Thoughtlessly showing large amounts of output in your writeup defeats that purpose.</p>
-<div id="grading" class="section level4">
-<h4>Grading</h4>
-<p>A simple map, e.g., one showing the distribution of sex of people arrested across Baltimore, will earn full credit. However, more sophisticated analysis, or interactivity (useful informative popups) will earn extra credit applied to the final Projects grade, so I encourage you to be creative.</p>
 </div>
+<div id="python" class="section level2">
+<h2>Python</h2>
+<p>You can use the ipyleaflet widget <a href="https://github.com/jupyter-widgets/ipyleaflet" class="uri">https://github.com/jupyter-widgets/ipyleaflet</a> to implement this in a Jupyter notebook. To submit, export your notebook <strong>as HTML</strong> and submit the resulting html to ELMS.</p>
+<p>Code to prepare data:</p>
+<pre class="python"><code>import pandas as pd
+
+arrest_tab = pd.read_csv(&quot;http://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv&quot;)
+
+dat = arrest_tab[arrest_tab['Location 1'].notna()].copy()
+dat['lat'] = dat['Location 1'].str.extract(&quot;\(([0-9\.\-]*).*\)&quot;, expand=False)
+dat['lng'] = dat['Location 1'].str.extract(&quot;\(.*,(.*)\)&quot;, expand=False)
+dat = dat.sample(n=2000)
+dat</code></pre>
+<pre><code>##            arrest  age  ...            lat              lng
+## 21079  11228179.0   43  ...  39.3041941662   -76.5825949197
+## 25385  11251688.0   33  ...  39.2838826652   -76.6526803509
+## 90588  12550510.0   29  ...  39.2913058814   -76.6109759020
+## 80633  12510228.0   47  ...  39.2832840876   -76.6415732194
+## 41236  11342236.0   34  ...  39.3285689687   -76.5379470973
+## ...           ...  ...  ...            ...              ...
+## 46617  11367459.0   17  ...  39.3175130326   -76.5989345586
+## 59950  12426639.0   28  ...  39.3022106822   -76.5853818828
+## 29524  11276843.0   38  ...  39.3188357266   -76.5871991736
+## 29617  11277189.0   37  ...  39.2822231310   -76.5301553611
+## 52889  12395946.0   38  ...  39.3048082251   -76.6291432190
+## 
+## [2000 rows x 17 columns]</code></pre>
 </div>
 
 
@@ -4334,6 +4368,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

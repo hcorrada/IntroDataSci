@@ -1,0 +1,85 @@
+---
+title: "Project 5: Interactive Data Maps"
+author: "CMSC320"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Last Updated:** `r format(Sys.Date(), "%b %d, %Y")`  
+
+Use `leaflet` and our previously used Baltimore crime dataset
+to make an interactive data map of Baltimore Crime.
+
+1. Use this piece of code to download and prepare data for use in project
+
+```{r get_and_prepare_data, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(stringr)
+
+arrest_tab <- read_csv("http://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv")
+dat <- arrest_tab %>% 
+  filter(!is.na(`Location 1`)) %>%
+  separate(`Location 1`, c("lat","lng"), sep=",") %>%
+  mutate(lat=as.numeric(str_replace(lat, "\\(", ""))) %>%
+  mutate(lng=as.numeric(str_replace(lng, "\\)", ""))) %>%
+  sample_n(2000)
+dat
+```
+
+Note the attributes `lat` and `lng` which indicate geographical location as latitude (`lat`) and longitude (`lng`).
+
+2. Use the `leaflet` package to create an interactive map of Baltimore
+
+```{r start_map, warning=FALSE}
+library(leaflet)
+
+balto_map <- leaflet(dat) %>%
+  addTiles() %>%
+  setView(lat=39.29, lng=-76.61, zoom=11)
+balto_map
+```
+
+You can find more information about leaflet here:
+https://rstudio.github.io/leaflet/
+
+3. Add graphical elements to display the data. For instance, add circles, with colors indicating sex. Or circles with
+colors indicating race. Or anything else that strikes your fancy.
+
+These will be useful:
+
+- https://rstudio.github.io/leaflet/markers.html
+- https://www.rdocumentation.org/packages/leaflet/versions/1.1.0/topics/addControl
+
+4. Embed your map in your Rmarkdown file, knit **to HTML** this time (not PDF) and submit the HTML file to ELMS.
+
+## Submission
+
+Prepare and knit an Rmarkdown file that includes: (a) code to carry out each of the steps above, (b) output showing the result of your code (in this case the interactive map), and (c) a short prose description of your interactive map (i.e., what are you showing with this data and map). Remember, the writeup you are preparing is intended to communicate your data analysis effectively. Thoughtlessly showing large amounts of output in your writeup defeats that purpose.  
+
+## Python
+
+You can use the ipyleaflet widget https://github.com/jupyter-widgets/ipyleaflet
+to implement this
+in a Jupyter notebook. To submit, export your notebook **as HTML** and submit the resulting html to ELMS.
+
+Code to prepare data:
+
+```{r setup_py, echo=FALSE}
+library(reticulate)
+use_condaenv("cmsc320")
+```
+
+```{python get_and_prepare_data_py, message=FALSE, warning=FALSE}
+import pandas as pd
+
+arrest_tab = pd.read_csv("http://www.hcbravo.org/IntroDataSci/misc/BPD_Arrests.csv")
+
+dat = arrest_tab[arrest_tab['Location 1'].notna()].copy()
+dat['lat'] = dat['Location 1'].str.extract("\(([0-9\.\-]*).*\)", expand=False)
+dat['lng'] = dat['Location 1'].str.extract("\(.*,(.*)\)", expand=False)
+dat = dat.sample(n=2000)
+dat
+```

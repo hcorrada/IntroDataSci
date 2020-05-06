@@ -8,7 +8,7 @@ title: CMSC320 Projects
 2. [Data wrangling and EDA](project2/) Due April 3, 2020  
 3. [Regression](project3/) Due April 20, 2020
 4. [Classification](project4/) Due May 6, 2020
-<!-- 4. [Interactive data visualization and mapping](project4/) Due May 14, 2019 -->
+5. [Interactive data visualization and mapping](project5/) Due May 12, 2020
 
 
 [Final Project:](final_project/) Due May 18, 2020
