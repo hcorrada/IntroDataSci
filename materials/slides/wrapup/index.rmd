@@ -22,7 +22,7 @@ library(cowplot)
 
 .banner[![](img/epiviz.png)]
 
-.title[Wrapup: What Next?]
+.title[Introduction to Data Science: Wrapup]
 
 .author[Héctor Corrada Bravo]
 
@@ -45,6 +45,8 @@ layout: true
   - Computational Methods (460, for optimization)
   - Bioinformatics (423, application of things we saw in class)  
   - HCI (434, communication and interaction)  
+  - CMSC 498O: Selected Topics in Computer Science; Introduction to Data Visualization
+Advanced Undergraduate Course (Prof. Leilani Battle)
   
 
 ---
@@ -82,7 +84,7 @@ layout: true
 **Learn new things**
 
 - Python has a lot of useful stuff for data science [http://www.amazon.com/Python-Data-Analysis-Wrangling-IPython/dp/1449319793](http://www.amazon.com/Python-Data-Analysis-Wrangling-IPython/dp/1449319793)
-- Tutorials on Kaggle are pretty good, their new kernels_ area is fun to look at: https://www.kaggle.com/kernels
+- Tutorials on Kaggle are pretty good, their _kernels_ area is fun to look at: https://www.kaggle.com/kernels
 - Hector's Data Science corner: http://www.hcbravo.org/IntroDataSci/datasci_corner/
 - Many resources available online
 

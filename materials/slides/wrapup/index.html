@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Wrapup</title>
     <meta charset="utf-8" />
     <meta name="author" content="Héctor Corrada Bravo" />
-    <meta name="date" content="2019-05-14" />
+    <meta name="date" content="2020-05-10" />
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
@@ -19,13 +19,13 @@ count: false
 
 .banner[![](img/epiviz.png)]
 
-.title[Wrapup: What Next?]
+.title[Introduction to Data Science: Wrapup]
 
 .author[Héctor Corrada Bravo]
 
 .other-info[
 University of Maryland, College Park, USA  
-CMSC320: 2019-05-14
+CMSC320: 2020-05-10
 ]
 
 .logo[![](img/logo.png)]
@@ -42,6 +42,8 @@ layout: true
   - Computational Methods (460, for optimization)
   - Bioinformatics (423, application of things we saw in class)  
   - HCI (434, communication and interaction)  
+  - CMSC 498O: Selected Topics in Computer Science; Introduction to Data Visualization
+Advanced Undergraduate Course (Prof. Leilani Battle)
   
 
 ---
@@ -79,7 +81,7 @@ layout: true
 **Learn new things**
 
 - Python has a lot of useful stuff for data science [http://www.amazon.com/Python-Data-Analysis-Wrangling-IPython/dp/1449319793](http://www.amazon.com/Python-Data-Analysis-Wrangling-IPython/dp/1449319793)
-- Tutorials on Kaggle are pretty good, their new kernels_ area is fun to look at: https://www.kaggle.com/kernels
+- Tutorials on Kaggle are pretty good, their _kernels_ area is fun to look at: https://www.kaggle.com/kernels
 - Hector's Data Science corner: http://www.hcbravo.org/IntroDataSci/datasci_corner/
 - Many resources available online
 
@@ -149,15 +151,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-<script>
-remark.macros['scale'] = function (percentage) {
-  var url = this;
-  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
-};
-</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -165,7 +177,12 @@ remark.macros['scale'] = function (percentage) {
       links[i].target = '_blank';
     }
   }
-})();
+})();</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
 </script>
 
 <script>
