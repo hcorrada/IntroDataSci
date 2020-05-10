@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Neural Networks and Deep Learning</title>
     <meta charset="utf-8" />
     <meta name="author" content="Héctor Corrada Bravo" />
-    <meta name="date" content="2019-05-14" />
+    <meta name="date" content="2020-05-10" />
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
     <link rel="stylesheet" href="custom.css" type="text/css" />
@@ -18,13 +18,13 @@ count: false
 
 .banner[![](img/epiviz.png)]
 
-.title[Neural Networks and Deep Learning]
+.title[Introduction to Data Science: Neural Networks and Deep Learning]
 
 .author[Héctor Corrada Bravo]
 
 .other-info[
 University of Maryland, College Park, USA  
-CMSC 320: 2019-05-14
+CMSC 320: 2020-05-10
 ]
 
 .logo[![](img/logo.png)]
@@ -299,12 +299,6 @@ We will try to predict affordability at the last time-point given in the dataset
 ## Projection-Pursuit Regression
 
 
-
-```
-## Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).
-## This warning is displayed once per session.
-```
-
 &lt;img src="index_files/figure-html/ppr_plot_df-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
@@ -344,7 +338,7 @@ Consider the following procedure
 {} &amp; = &amp; \mathbf{w}_{old} + 2 \alpha \sum_{i=1}^N r_i x_i
 \end{aligned}`
 
-where `\(\gamma\)` is a learning rate. 
+where `\(\alpha\)` is a learning rate. 
 
 ---
 
@@ -352,7 +346,7 @@ where `\(\gamma\)` is a learning rate.
 
 `\begin{aligned}
 \mathbf{w} &amp; = &amp; \mathbf{w}_{old} + 2 \alpha \sum_{i=1}^N (y_i-g(v_i))g'(v_i) x_i \\
-{} &amp; = &amp; \mathbf{w}_{old} + 2 \alpha \sum_{i=1}^N r_i x_i
+{} &amp; = &amp; \mathbf{w}_{old} + 2 \alpha \sum_{i=1}^N \tilde{r}_i x_i
 \end{aligned}`
 
 In the second line we rewrite the gradient in terms of the residual `\(r_i\)` of the current model `\(g(v_i)\)` (using the derived feature `\(v\)`) weighted by, what we could think of, as the _sensitivity_ of the model to changes in derived feature `\(v_i\)`.
@@ -716,6 +710,7 @@ As with other highly-flexible models we have seen previously, feed-forward neura
 We can incorporate penalty terms to control model complexity to some degree.
 
 ---
+exclude: true
 
 ## Overfitting
 
@@ -726,6 +721,7 @@ The most commonly used method for this is to apply a ridge penalty term in the c
 where `\(L\)` is an application appropriate loss-function. 
 
 --
+exclude: true
 
 Our discussion of back-propagation above would incorporate the gradient of this penalty term as appropriate. 
 
@@ -765,7 +761,7 @@ layout: true
 
 ---
 
-As opposed to most other learning methods we have seen so far, the feed-forward neural network yields a non-convex optimization problem. 
+As opposed to other learning methods we have seen so far, the feed-forward neural network yields a non-convex optimization problem. 
 
 --
 
@@ -888,10 +884,12 @@ However, this approach can still be applicable to moderate datasizes with carefu
 
 ---
 layout: true
+exclude: true
 
 ## Regularization of Deep NNs
 
 ---
+exclude: true
 
 Regularization by penalizing parameter norm is frequently used in these cases.
 
@@ -900,6 +898,7 @@ The obective function to minimize in this case is
 `$$J(\theta; X, y) = L(\theta; X, y) + \lambda \Omega(\theta)$$`
 
 --
+exclude: true
 
 - `\(\theta\)` includes all parameters of the network
 
@@ -908,6 +907,7 @@ The obective function to minimize in this case is
 - `\(\Omega\)` is a penalty function on the parameters
 
 ---
+exclude: true
 
 Commonly used functions are
 
@@ -920,6 +920,7 @@ In both of these cases, SGD is easily adapted.
 ---
 layout: true
 class: split-50
+exclude: true
 
 ## Early Stopping
 
@@ -928,18 +929,21 @@ class: split-50
 ]
 
 ---
+exclude: true
 
 .column[
 Another technique frequently used to regularize models is early stopping.
 ]
 
 ---
+exclude: true
 
 .column[
 This is based on the empirical observation that as more training is done, overfitting becomes worse.
 ]
 
 ---
+exclude: true
 
 .column[
 There are _meta-algorithms_ designed to determine when to stop training based on improvement of expected prediction error, and the rate at which parameter models change between training iterations.
@@ -948,6 +952,7 @@ There are _meta-algorithms_ designed to determine when to stop training based on
 ---
 layout: true
 class: split-60
+exclude: true
 
 ## Dropout
 
@@ -956,18 +961,21 @@ class: split-60
 ]
 
 ---
+exclude: true
 
 .column[
 A popular method for regularization, that also addresses the multiple minimum problem is _dropout_.
 ]
 
 ---
+exclude: true
 
 .column[
 Bagging is used to build an ensemble of specifically constructed networks.
 ]
 
 ---
+exclude: true
 
 .column[
 In this case, subnetworks of the network being trained are selected randomly.
@@ -979,28 +987,34 @@ Averaging is used to combine predictions.
 
 ---
 layout: true
+exclude: true
 
 ## Long-term Dependencies
 
 ---
+exclude: true
 
 A significant issue in training deep networks.
 
 As deeper networks are used, multiplication of gradients causes major issues.
 
 ---
+exclude: true
 
 Consider the case of a computational graph where a weight matrix `\(W\)` is repeatedly multiplied.
 
 --
+exclude: true
 
 Suppose matrix `\(W\)` has eigen-value decomposition `\(W=V\mathrm{diag}(\mathbf{\lambda})V'\)`
 
 --
+exclude: true
 
 After `\(t\)` steps, we obtain matrix `\(W^t=V\mathrm{diag}(\mathbf{\lambda})^tV'\)`
 
 --
+exclude: true
 
 What do we expect to happen to weights?
 
@@ -1141,17 +1155,25 @@ https://keras.rstudio.com/articles/examples/addition_rnn.html
 
 
 
+
+
 --
 
 Addition encoded as sequence of one-hot vectors:
 
 ```
-##   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
-## 5    0    0    0    0    0    0    0    1    0     0     0     0
-## 5    0    0    0    0    0    0    0    1    0     0     0     0
-## +    0    1    0    0    0    0    0    0    0     0     0     0
-## 2    0    0    0    0    1    0    0    0    0     0     0     0
-## 2    0    0    0    0    1    0    0    0    0     0     0     0
+##   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+## 5    0    0    0    0    0    0    0    1    0     0
+## 5    0    0    0    0    0    0    0    1    0     0
+## +    0    1    0    0    0    0    0    0    0     0
+## 2    0    0    0    0    1    0    0    0    0     0
+## 2    0    0    0    0    1    0    0    0    0     0
+##   [,11] [,12]
+## 5     0     0
+## 5     0     0
+## +     0     0
+## 2     0     0
+## 2     0     0
 ```
 
 ---
@@ -1166,9 +1188,12 @@ Result encoded as sequence of one-hot vectors
 
 
 ```
-##   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12]
-## 7    0    0    0    0    0    0    0    0    0     1     0     0
-## 7    0    0    0    0    0    0    0    0    0     1     0     0
+##   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+## 7    0    0    0    0    0    0    0    0    0     1
+## 7    0    0    0    0    0    0    0    0    0     1
+##   [,11] [,12]
+## 7     0     0
+## 7     0     0
 ```
 
 --
@@ -1180,23 +1205,23 @@ This is a **sequence-to-sequence** model. Perfect application for recurrent neur
 
 
 ```
-## ___________________________________________________________________________
-## Layer (type)                     Output Shape                  Param #     
-## ===========================================================================
-## lstm (LSTM)                      (None, 128)                   72192       
-## ___________________________________________________________________________
-## repeat_vector (RepeatVector)     (None, 3, 128)                0           
-## ___________________________________________________________________________
-## lstm_1 (LSTM)                    (None, 3, 128)                131584      
-## ___________________________________________________________________________
-## time_distributed (TimeDistribute (None, 3, 12)                 1548        
-## ___________________________________________________________________________
-## activation (Activation)          (None, 3, 12)                 0           
-## ===========================================================================
+## ______________________________________________________
+## Layer (type)            Output Shape         Param #  
+## ======================================================
+## lstm_10 (LSTM)          (None, 128)          72192    
+## ______________________________________________________
+## repeat_vector_5 (Repeat (None, 3, 128)       0        
+## ______________________________________________________
+## lstm_11 (LSTM)          (None, 3, 128)       131584   
+## ______________________________________________________
+## time_distributed_5 (Tim (None, 3, 12)        1548     
+## ______________________________________________________
+## activation_5 (Activatio (None, 3, 12)        0        
+## ======================================================
 ## Total params: 205,324
 ## Trainable params: 205,324
 ## Non-trainable params: 0
-## ___________________________________________________________________________
+## ______________________________________________________
 ```
 
 ---
@@ -1291,15 +1316,25 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-<script>
-remark.macros['scale'] = function (percentage) {
-  var url = this;
-  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
-};
-</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -1307,7 +1342,12 @@ remark.macros['scale'] = function (percentage) {
       links[i].target = '_blank';
     }
   }
-})();
+})();</script>
+<script>
+remark.macros['scale'] = function (percentage) {
+  var url = this;
+  return '<img src="' + url + '" style=width: ' + percentage + '"/>';
+};
 </script>
 
 <script>
