@@ -1,4 +1,6 @@
 library(keras)
+keras::use_condaenv("cmsc320")
+
 library(stringi)
 
 # Function Definitions ----------------------------------------------------
@@ -120,7 +122,7 @@ print(dim(y_val))
 
 HIDDEN_SIZE <- 128
 BATCH_SIZE <- 128
-LAYERS <- 1
+DECODE_LAYERS <- 1
 
 # Initialize sequential model
 model <- keras_model_sequential() 
@@ -140,7 +142,7 @@ model %>%
 # all the outputs so far in the form of (num_samples, timesteps,
 # output_dim). This is necessary as TimeDistributed in the below expects
 # the first dimension to be the timesteps.
-for(i in 1:LAYERS)
+for(i in 1:DECODE_LAYERS)
   model %>% layer_lstm(HIDDEN_SIZE, return_sequences = TRUE)
 
 model %>% 
